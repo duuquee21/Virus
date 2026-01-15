@@ -34,7 +34,7 @@ public class PersonaInfeccion : MonoBehaviour
     {
         if (alreadyInfected) return;
 
-        // --- SOLUCIÓN DE SEGURIDAD ---
+        // --- SOLUCIï¿½N DE SEGURIDAD ---
         // Calculamos la distancia real entre esta persona y el virus
         float distanceToVirus = 100f; // Valor alto por defecto
         if (virusTransform != null)
@@ -42,12 +42,12 @@ public class PersonaInfeccion : MonoBehaviour
             distanceToVirus = Vector2.Distance(transform.position, virusTransform.position);
         }
 
-        // Solo permitimos infectar si el bool está activo Y ADEMÁS está cerca físicamente (ej. menos de 1.5 metros)
+        // Solo permitimos infectar si el bool estï¿½ activo Y ADEMï¿½S estï¿½ cerca fï¿½sicamente (ej. menos de 1.5 metros)
         if (isVirusHovering && distanceToVirus < 3.0f)
         {
             currentInfectionTime += Time.deltaTime;
 
-            // Lógica visual de la barra
+            // Lï¿½gica visual de la barra
             float progress = currentInfectionTime / timeToInfect;
             fillingBarImage.transform.localScale = new Vector3(progress, 1, 1);
 
@@ -65,7 +65,7 @@ public class PersonaInfeccion : MonoBehaviour
             
             if (currentInfectionTime > 0) currentInfectionTime -= Time.deltaTime;
             {
-                currentInfectionTime -= Time.deltaTime * 2; // Baja 2 veces más rápido que sube
+                currentInfectionTime -= Time.deltaTime * 2; // Baja 2 veces mï¿½s rï¿½pido que sube
             }
 
             // Actualizar barra bajando
@@ -92,12 +92,14 @@ public class PersonaInfeccion : MonoBehaviour
     void BecomeInfected()
     {
         alreadyInfected = true;
-
         infectionBarCanvas.SetActive(false);
-
         spritePersona.color = infectedColor;
 
-        Debug.Log(" PERSONA INFECTADA");
+        // CAMBIO: Avisamos al LevelManager
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.RegisterInfection();
+        }
 
     }
 }
