@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Virus
   - Persona
+  - InfectionZone
   layers:
   - Default
   - TransparentFX
