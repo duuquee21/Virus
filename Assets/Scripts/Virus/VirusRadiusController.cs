@@ -2,15 +2,33 @@ using UnityEngine;
 
 public class VirusRadiusController : MonoBehaviour
 {
-    [Header("Visual Radius (this defines capture zone)")]
-    public Transform radiusVisual;
+    public static VirusRadiusController instance;
 
-    // El radio REAL se calcula desde el tamaño del círculo visible
-    public float GetRadius()
+    public float baseScale = 1f;
+    public float scaleStep = 0.5f;
+
+    private int currentLevel = 1;
+
+    void Awake()
     {
-        if (radiusVisual == null)
-            return 0f;
+        instance = this;
+        ApplyScale();
+    }
 
-        return radiusVisual.localScale.x / 2f;
+    public void UpgradeRadius()
+    {
+        currentLevel++;
+        ApplyScale();
+    }
+
+    void ApplyScale()
+    {
+        float newScale = baseScale + (currentLevel - 1) * scaleStep;
+        transform.localScale = new Vector3(newScale, newScale, 1f);
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
     }
 }

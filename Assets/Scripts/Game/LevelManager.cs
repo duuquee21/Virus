@@ -5,47 +5,54 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    [Header("Referencias Importantes")]
+    [Header("Referencias")]
     public GameObject virusPlayer;
-    public VirusMovement virusMovementScript;
 
-    [Header("UI Referencias")]
+    [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
     public GameObject gameOverPanel;
+    public GameObject shopPanel;
 
-    [Header("Configuración Diálogo")]
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    [TextArea] public string[] introLines;
-    private int dialogueIndex;
-
-    [Header("Textos UI")]
+    [Header("UI Text")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI sessionScoreText;
-    public TextMeshProUGUI menuTotalScoreText;
+    public TextMeshProUGUI contagionCoinsText;
+    public TextMeshProUGUI daysRemainingText;
 
-    [Header("Tiempo de partida")]
+    [Header("Gameplay")]
     public float gameDuration = 20f;
-    private float currentTimer;
-
-    [Header("Límite de contagios por ronda")]
     public int maxInfectionsPerRound = 5;
+    public int totalDaysUntilCure = 5;
 
-    public bool isGameActive = false;
-    public int currentSessionInfected = 0;
+    public bool isGameActive;
+
+    public int currentSessionInfected;
+    public int contagionCoins;
+
+    private float currentTimer;
+    private int daysRemaining;
 
     void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
     }
 
     void Start()
     {
-        if (virusPlayer != null && virusMovementScript == null)
-            virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
-
+        ResetDays();
         ShowMainMenu();
+    }
+
+    void ResetDays()
+    {
+        daysRemaining = totalDaysUntilCure;
     }
 
     void Update()
@@ -59,56 +66,7 @@ public class LevelManager : MonoBehaviour
             EndSession();
     }
 
-    public void TryStartGame()
-    {
-        if (PlayerPrefs.GetInt("TutorialSeen", 0) == 0)
-            StartTutorial();
-        else
-            StartSession();
-    }
-
-    void StartTutorial()
-    {
-        menuPanel.SetActive(false);
-        gameUI.SetActive(false);
-        dialoguePanel.SetActive(true);
-
-        if (virusPlayer != null)
-        {
-            virusPlayer.SetActive(true);
-            virusPlayer.transform.position = Vector3.zero;
-            if (virusMovementScript != null)
-                virusMovementScript.enabled = false;
-        }
-
-        dialogueIndex = 0;
-        ShowNextLine();
-    }
-
-    public void ShowNextLine()
-    {
-        if (dialogueIndex < introLines.Length)
-        {
-            dialogueText.text = introLines[dialogueIndex];
-            dialogueIndex++;
-        }
-        else
-        {
-            EndTutorial();
-        }
-    }
-
-    void EndTutorial()
-    {
-        dialoguePanel.SetActive(false);
-        PlayerPrefs.SetInt("TutorialSeen", 1);
-        PlayerPrefs.Save();
-
-        if (virusMovementScript != null)
-            virusMovementScript.enabled = true;
-
-        StartSession();
-    }
+    // ------------------ GAME FLOW ------------------
 
     public void StartSession()
     {
@@ -118,84 +76,103 @@ public class LevelManager : MonoBehaviour
         currentSessionInfected = 0;
         currentTimer = gameDuration;
 
-        UpdateSessionUI();
+        UpdateUI();
 
         menuPanel.SetActive(false);
         gameOverPanel.SetActive(false);
-        dialoguePanel.SetActive(false);
+        shopPanel.SetActive(false);
         gameUI.SetActive(true);
 
-        if (virusPlayer != null)
-        {
-            virusPlayer.SetActive(true);
-            if (virusMovementScript != null)
-                virusMovementScript.enabled = true;
-        }
+        virusPlayer.SetActive(true);
     }
 
     void EndSession()
     {
         isGameActive = false;
 
-        if (Guardado.instance != null)
-            Guardado.instance.AddTotalData(currentSessionInfected);
+        contagionCoins += currentSessionInfected;
+        DecreaseDay();
 
         gameUI.SetActive(false);
         gameOverPanel.SetActive(true);
+        shopPanel.SetActive(false);
 
-        if (virusPlayer != null)
-            virusPlayer.SetActive(false);
+        virusPlayer.SetActive(false);
+
+        UpdateUI();
     }
 
-    public void Button_Restart()
+    void DecreaseDay()
+    {
+        daysRemaining--;
+        if (daysRemaining < 0) daysRemaining = 0;
+    }
+
+    public void RestartDay()
     {
         StartSession();
     }
 
-    public void Button_GoToMenu()
+    public void ResetRun()
+    {
+        contagionCoins = 0;
+        ResetDays();
+        StartSession();
+    }
+
+    // ------------------ SHOP ------------------
+
+    public void OpenShop()
     {
         gameOverPanel.SetActive(false);
-        ShowMainMenu();
+        shopPanel.SetActive(true);
+    }
+
+    public void CloseShop()
+    {
+        shopPanel.SetActive(false);
+        gameOverPanel.SetActive(true);
+    }
+
+    // ------------------ INFECTION ------------------
+
+    public void RegisterInfection()
+    {
+        if (!isGameActive) return;
+        if (currentSessionInfected >= maxInfectionsPerRound) return;
+
+        currentSessionInfected++;
+        UpdateUI();
+
+        if (currentSessionInfected >= maxInfectionsPerRound)
+            EndSession();
+    }
+
+    // ------------------ UI ------------------
+
+    public void UpdateUI()
+    {
+        sessionScoreText.text = "Hoy: " + currentSessionInfected + " / " + maxInfectionsPerRound;
+        contagionCoinsText.text = "Monedas: " + contagionCoins;
+        daysRemainingText.text = "Quedan " + daysRemaining + " días";
     }
 
     void ShowMainMenu()
     {
+        menuPanel.SetActive(true);
         gameUI.SetActive(false);
         gameOverPanel.SetActive(false);
-        dialoguePanel.SetActive(false);
-        menuPanel.SetActive(true);
+        shopPanel.SetActive(false);
 
-        if (virusPlayer != null)
-            virusPlayer.SetActive(false);
-
-        if (Guardado.instance != null)
-            menuTotalScoreText.text = "TOTAL INFECTADOS: " + Guardado.instance.totalInfected;
+        virusPlayer.SetActive(false);
     }
+
+    // ------------------ CLEAN ------------------
 
     void CleanUpScene()
     {
         GameObject[] survivors = GameObject.FindGameObjectsWithTag("Persona");
         foreach (GameObject person in survivors)
             Destroy(person);
-    }
-
-    public void RegisterInfection()
-    {
-        if (!isGameActive) return;
-
-        if (currentSessionInfected >= maxInfectionsPerRound)
-            return;
-
-        currentSessionInfected++;
-        UpdateSessionUI();
-
-        // 👉 MISMO FINAL QUE POR TIEMPO
-        if (currentSessionInfected >= maxInfectionsPerRound)
-            EndSession();
-    }
-
-    void UpdateSessionUI()
-    {
-        sessionScoreText.text = "Infectados: " + currentSessionInfected + " / " + maxInfectionsPerRound;
     }
 }

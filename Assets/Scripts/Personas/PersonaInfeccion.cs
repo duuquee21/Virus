@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PersonaInfeccion : MonoBehaviour
 {
-    public float timeToInfect = 2f;
+    // ⏱ Tiempo global mejorable por upgrades
+    public static float globalInfectTime = 2f;
 
     public SpriteRenderer spritePersona;
     public Color infectedColor = Color.red;
@@ -32,32 +33,28 @@ public class PersonaInfeccion : MonoBehaviour
         else
             currentInfectionTime -= Time.deltaTime * 2f;
 
-        currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, timeToInfect);
+        currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
 
-        float progress = currentInfectionTime / timeToInfect;
+        float progress = currentInfectionTime / globalInfectTime;
         fillingBarImage.transform.localScale = new Vector3(progress, 1f, 1f);
 
         if (currentInfectionTime > 0)
             infectionBarCanvas.SetActive(true);
 
-        if (currentInfectionTime >= timeToInfect)
+        if (currentInfectionTime >= globalInfectTime)
             BecomeInfected();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!alreadyInfected && other.CompareTag("InfectionZone"))
-        {
             isInsideZone = true;
-        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("InfectionZone"))
-        {
             isInsideZone = false;
-        }
     }
 
     void BecomeInfected()

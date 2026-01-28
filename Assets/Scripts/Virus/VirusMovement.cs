@@ -1,11 +1,19 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class VirusMovement : MonoBehaviour
 {
-    [Header("Configuración")]
-    public float moveSpeed = 50f; 
+    public static VirusMovement instance;
+
+    [Header("ConfiguraciÃ³n")]
+    public float moveSpeed = 80f;
+
     private Rigidbody2D rb;
     private Vector2 movementInput;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -14,20 +22,23 @@ public class VirusMovement : MonoBehaviour
 
     void Update()
     {
-        
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        // Guardamos la dirección, y usamos .normalized para que no corra más en diagonal
         movementInput = new Vector2(moveX, moveY).normalized;
     }
 
     void FixedUpdate()
     {
-        
         if (movementInput.magnitude > 0)
         {
             rb.AddForce(movementInput * moveSpeed);
         }
+    }
+
+    // ðŸ‘‰ usado por upgrades
+    public void SetSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
     }
 }
