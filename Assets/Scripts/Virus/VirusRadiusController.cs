@@ -23,9 +23,25 @@ public class VirusRadiusController : MonoBehaviour
 
     void ApplyScale()
     {
-        float newScale = baseScale + (currentLevel - 1) * scaleStep;
-        transform.localScale = new Vector3(newScale, newScale, 1f);
+        float newRadius = baseScale + (currentLevel - 1) * scaleStep;
+
+        // Collider real de contagio
+        CircleCollider2D collider = GetComponentInChildren<CircleCollider2D>();
+        if (collider != null)
+            collider.radius = newRadius;
+
+        // Aro visual
+        RadiusLineRenderer line = GetComponentInChildren<RadiusLineRenderer>();
+        if (line != null)
+            line.DrawCircle(newRadius);
+
+        // (opcional) sprite rojo si aún lo usas
+        Transform redSprite = transform.Find("InfectionRadiusVisual");
+        if (redSprite != null)
+            redSprite.localScale = new Vector3(newRadius * 2f, newRadius * 2f, 1f);
     }
+
+
 
     public int GetCurrentLevel()
     {
