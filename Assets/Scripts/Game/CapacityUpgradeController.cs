@@ -37,4 +37,10 @@ public class CapacityUpgradeController : MonoBehaviour
     {
         return currentLevel;
     }
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplyCapacity();
+    }
+
 }

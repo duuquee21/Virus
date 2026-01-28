@@ -30,12 +30,8 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 
     void ApplySpeed()
     {
-        if (PersonaInfeccion.globalInfectTime == null) return;
-
         float newTime = baseInfectTime - (currentLevel - 1) * reductionStep;
-
-        if (newTime < 0.2f)
-            newTime = 0.2f;
+        if (newTime < 0.2f) newTime = 0.2f;
 
         PersonaInfeccion.globalInfectTime = newTime;
     }
@@ -43,5 +39,11 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
     public int GetCurrentLevel()
     {
         return currentLevel;
+    }
+
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplySpeed();
     }
 }

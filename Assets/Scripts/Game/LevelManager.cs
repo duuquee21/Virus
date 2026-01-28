@@ -117,8 +117,16 @@ public class LevelManager : MonoBehaviour
     {
         contagionCoins = 0;
         ResetDays();
+
+        VirusRadiusController.instance.ResetUpgrade();
+        CapacityUpgradeController.instance.ResetUpgrade();
+        SpeedUpgradeController.instance.ResetUpgrade();
+        TimeUpgradeController.instance.ResetUpgrade();
+        InfectionSpeedUpgradeController.instance.ResetUpgrade();
+
         StartSession();
     }
+
 
     // ------------------ SHOP ------------------
 

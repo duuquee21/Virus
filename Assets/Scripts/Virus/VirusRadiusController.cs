@@ -31,4 +31,10 @@ public class VirusRadiusController : MonoBehaviour
     {
         return currentLevel;
     }
+
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplyScale();
+    }
 }

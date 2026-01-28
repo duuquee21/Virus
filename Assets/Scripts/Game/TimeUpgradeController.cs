@@ -40,4 +40,10 @@ public class TimeUpgradeController : MonoBehaviour
     {
         return currentLevel;
     }
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplyTime();
+    }
+
 }

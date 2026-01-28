@@ -37,4 +37,10 @@ public class SpeedUpgradeController : MonoBehaviour
     {
         return currentLevel;
     }
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplySpeed();
+    }
+
 }
