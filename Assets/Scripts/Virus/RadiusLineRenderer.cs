@@ -11,7 +11,6 @@ public class RadiusLineRenderer : MonoBehaviour
     {
         line = GetComponent<LineRenderer>();
         line.positionCount = segments + 1;
-        DrawCircle(1f);
     }
 
     public void DrawCircle(float radius)

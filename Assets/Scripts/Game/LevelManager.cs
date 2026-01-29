@@ -62,8 +62,12 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        // Intentamos pillar el script de movimiento automáticamente si se te olvida ponerlo
-        if (virusPlayer != null && virusMovementScript == null) 
+#if UNITY_EDITOR
+        PlayerPrefs.DeleteAll();   // Limpia progreso SOLO al probar en Unity
+        PlayerPrefs.Save();
+#endif
+
+        if (virusPlayer != null && virusMovementScript == null)
             virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
 
         ResetDays();

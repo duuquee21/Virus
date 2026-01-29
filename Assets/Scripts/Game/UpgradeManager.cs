@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class UpgradeManager : MonoBehaviour
     public int infectBaseCost = 7;
     public TextMeshProUGUI infectLevelText;
     public TextMeshProUGUI infectCostText;
+
+    bool isBlinking = false;
 
     void Awake()
     {
@@ -67,39 +70,72 @@ public class UpgradeManager : MonoBehaviour
     public void BuyRadioUpgrade()
     {
         int level = VirusRadiusController.instance.GetCurrentLevel();
-        TryBuy(GetRadioCost(level), () => VirusRadiusController.instance.UpgradeRadius());
+        TryBuy(GetRadioCost(level),
+            () => VirusRadiusController.instance.UpgradeRadius(),
+            radioCostText);
     }
 
     public void BuyCapacityUpgrade()
     {
         int level = CapacityUpgradeController.instance.GetCurrentLevel();
-        TryBuy(GetCapacityCost(level), () => CapacityUpgradeController.instance.UpgradeCapacity());
+        TryBuy(GetCapacityCost(level),
+            () => CapacityUpgradeController.instance.UpgradeCapacity(),
+            capacityCostText);
     }
 
     public void BuySpeedUpgrade()
     {
         int level = SpeedUpgradeController.instance.GetCurrentLevel();
-        TryBuy(GetSpeedCost(level), () => SpeedUpgradeController.instance.UpgradeSpeed());
+        TryBuy(GetSpeedCost(level),
+            () => SpeedUpgradeController.instance.UpgradeSpeed(),
+            speedCostText);
     }
 
     public void BuyTimeUpgrade()
     {
         int level = TimeUpgradeController.instance.GetCurrentLevel();
-        TryBuy(GetTimeCost(level), () => TimeUpgradeController.instance.UpgradeTime());
+        TryBuy(GetTimeCost(level),
+            () => TimeUpgradeController.instance.UpgradeTime(),
+            timeCostText);
     }
 
     public void BuyInfectionUpgrade()
     {
         int level = InfectionSpeedUpgradeController.instance.GetCurrentLevel();
-        TryBuy(GetInfectCost(level), () => InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed());
+        TryBuy(GetInfectCost(level),
+            () => InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(),
+            infectCostText);
     }
 
-    void TryBuy(int cost, System.Action upgradeAction)
+    void TryBuy(int cost, System.Action upgradeAction, TextMeshProUGUI costText)
     {
-        if (LevelManager.instance.contagionCoins < cost) return;
+        if (LevelManager.instance.contagionCoins < cost)
+        {
+            if (!isBlinking)
+                StartCoroutine(BlinkRoutine(costText));
+
+            return;
+        }
 
         LevelManager.instance.contagionCoins -= cost;
         upgradeAction.Invoke();
         LevelManager.instance.UpdateUI();
+    }
+
+    IEnumerator BlinkRoutine(TextMeshProUGUI text)
+    {
+        isBlinking = true;
+        Color normal = Color.white;
+
+        for (int i = 0; i < 3; i++)
+        {
+            text.color = Color.red;
+            yield return new WaitForSeconds(0.15f);
+            text.color = normal;
+            yield return new WaitForSeconds(0.15f);
+        }
+
+        text.color = normal;
+        isBlinking = false;
     }
 }
