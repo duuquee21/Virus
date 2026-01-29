@@ -15,6 +15,11 @@ public class PersonaInfeccion : MonoBehaviour
     private float currentInfectionTime;
     private bool isInsideZone = false;
     public bool alreadyInfected = false;
+    
+    [Header("Shiny Settings")]
+    public bool isShiny = false;
+    public Color shinyColor = Color.yellow;
+    public int shinyReward = 1;
 
     void Start()
     {
@@ -64,6 +69,26 @@ public class PersonaInfeccion : MonoBehaviour
         spritePersona.color = infectedColor;
 
         if (LevelManager.instance != null)
-            LevelManager.instance.RegisterInfection();
+        {
+            LevelManager.instance.RegisterInfection(); 
+        }
+        
+        if(isShiny)
+        {
+            if (Guardado.instance != null)
+            {
+                Guardado.instance.AddShinyDNA(shinyReward);
+            }
+        }
     }
+
+    public void MakeShiny()
+    {
+        isShiny = true;
+        spritePersona.color = shinyColor;
+        
+        transform.localScale = transform.localScale * 1.2f; 
+    }
+    
+    
 }
