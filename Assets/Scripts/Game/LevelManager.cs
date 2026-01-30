@@ -170,6 +170,12 @@ public class LevelManager : MonoBehaviour
         if (virusMovementScript != null) virusMovementScript.enabled = true;
     }
 
+    public void ActivateMap(int zoneID)
+    {
+        // De momento no hace nada, solo mantiene compatibilidad
+    }
+
+
     void EndSession()
     {
         isGameActive = false;

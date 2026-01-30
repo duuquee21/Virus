@@ -994,7 +994,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 559352606}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2524,7 +2524,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 640661308}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3529,9 +3529,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 651453187}
-  - {fileID: 1573178145}
+  m_Children: []
   m_Father: {fileID: 1870291122}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3555,8 +3553,8 @@ MonoBehaviour:
   cost: 0
   zoneName: Barrio Normal
   myButton: {fileID: 406363792}
-  statusText: {fileID: 1573178146}
-  nameText: {fileID: 651453188}
+  statusText: {fileID: 0}
+  nameText: {fileID: 0}
 --- !u!114 &406363792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6291,7 +6289,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1146240853}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6656,6 +6654,7 @@ RectTransform:
   - {fileID: 145525712}
   - {fileID: 1896450788}
   - {fileID: 2041343776}
+  - {fileID: 119810595}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9692,11 +9691,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1935879841}
   shopPanel: {fileID: 1979308603}
   shinyPanel: {fileID: 858966969}
-  zonePanel: {fileID: 1870291121}
-  mapList:
-  - {fileID: 304110044}
-  - {fileID: 1493158146}
-  - {fileID: 616486150}
+  zonePanel: {fileID: 0}
   dialoguePanel: {fileID: 855896236}
   dialogueText: {fileID: 890345651}
   introLines:
@@ -10922,7 +10917,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 559352606}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11688,7 +11683,6 @@ Transform:
   m_Children:
   - {fileID: 304110045}
   - {fileID: 1493158147}
-  - {fileID: 616486151}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546190354
@@ -14182,8 +14176,6 @@ RectTransform:
   - {fileID: 862604456}
   - {fileID: 1304799810}
   - {fileID: 406363790}
-  - {fileID: 1146240853}
-  - {fileID: 559352606}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -14486,7 +14478,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1146240853}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15034,7 +15026,6 @@ RectTransform:
   - {fileID: 2058485999}
   - {fileID: 224117802}
   - {fileID: 968005369}
-  - {fileID: 640661308}
   - {fileID: 1211032532}
   - {fileID: 155685049}
   m_Father: {fileID: 190756179}
@@ -15143,7 +15134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1979308604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16499,3 +16490,8 @@ SceneRoots:
   - {fileID: 190756179}
   - {fileID: 853356727}
   - {fileID: 1538493144}
+  - {fileID: 122058031}
+  - {fileID: 260921534}
+  - {fileID: 833181779}
+  - {fileID: 1434619006}
+  - {fileID: 1879694207}
