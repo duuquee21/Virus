@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Referencias")]
     public GameObject virusPlayer;
-    public VirusMovement virusMovementScript; // <--- Referencia al script de movimiento (para congelarlo)
+    public VirusMovement virusMovementScript;
 
     [Header("UI Panels")]
     public GameObject menuPanel;
@@ -16,39 +16,39 @@ public class LevelManager : MonoBehaviour
     public GameObject shopPanel;
     public GameObject shinyPanel;
 
-    // --- NUEVO: REFERENCIAS DEL TUTORIAL ---
     [Header("Tutorial / Diálogo")]
-    public GameObject dialoguePanel; 
+    public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
     [TextArea] public string[] introLines;
     private int dialogueIndex;
-    // ---------------------------------------
 
     [Header("UI Text")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI sessionScoreText;
     public TextMeshProUGUI contagionCoinsText;
     public TextMeshProUGUI daysRemainingText;
+    public TextMeshProUGUI shinyStoreText;
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
     public int totalDaysUntilCure = 5;
 
+    [Header("Economía")]
+    public int coinsPerInfection = 1;
+
+    [Header("LogicaShiny")]
+    public int shinyDay;
+    public bool isShinyCollectedInRun = false;
+    public GameObject indicadorMejoraVerde;
+
     public bool isGameActive;
 
     public int currentSessionInfected;
     public int contagionCoins;
 
-    private float currentTimer;
-    private int daysRemaining;
-
-    [Header("LogicaShiny")] 
-    public int shinyDay;
-    public bool isShinyCollectedInRun = false;
-    public TextMeshProUGUI shinyStoreText;
-    
-    public GameObject indicadorMejoraVerde;
+    float currentTimer;
+    int daysRemaining;
 
     void Awake()
     {
@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        PlayerPrefs.DeleteAll();   // Limpia progreso SOLO al probar en Unity
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 #endif
 
@@ -90,29 +90,21 @@ public class LevelManager : MonoBehaviour
             EndSession();
     }
 
-    // ------------------ LOGICA DEL TUTORIAL (NUEVO) ------------------
+    // -------------------- TUTORIAL --------------------
 
-    // 1. ESTA ES LA FUNCIÓN QUE PONES AHORA EN EL BOTÓN "JUGAR" DEL MENÚ
     public void TryStartGame()
     {
-        // Si no ha visto el tutorial (valor 0), lo iniciamos
         if (PlayerPrefs.GetInt("TutorialSeen", 0) == 0)
-        {
             StartTutorial();
-        }
         else
-        {
-            // Si ya lo vio, empieza la run normal (ResetRun limpia todo y empieza)
             ResetRun();
-        }
     }
 
     void StartTutorial()
     {
-        menuPanel.SetActive(false); // Ocultar menú
-        dialoguePanel.SetActive(true); // Mostrar bocadillo
+        menuPanel.SetActive(false);
+        dialoguePanel.SetActive(true);
 
-        // Mostramos al jugador para que "hable", pero lo congelamos
         virusPlayer.SetActive(true);
         virusPlayer.transform.position = Vector3.zero;
         if (virusMovementScript != null) virusMovementScript.enabled = false;
@@ -121,7 +113,6 @@ public class LevelManager : MonoBehaviour
         ShowNextLine();
     }
 
-    // Pon esta función en el botón invisible del bocadillo
     public void ShowNextLine()
     {
         if (dialogueIndex < introLines.Length)
@@ -130,27 +121,22 @@ public class LevelManager : MonoBehaviour
             dialogueIndex++;
         }
         else
-        {
             EndTutorial();
-        }
     }
 
     void EndTutorial()
     {
         dialoguePanel.SetActive(false);
-        
-        // Marcamos tutorial como visto
+
         PlayerPrefs.SetInt("TutorialSeen", 1);
         PlayerPrefs.Save();
 
-        // Descongelamos movimiento
         if (virusMovementScript != null) virusMovementScript.enabled = true;
 
-        // EMPEZAMOS LA RUN REAL
         ResetRun();
     }
 
-    // ------------------ GAME FLOW ORIGINAL ------------------
+    // -------------------- RUN --------------------
 
     public void StartSession()
     {
@@ -159,42 +145,19 @@ public class LevelManager : MonoBehaviour
         isGameActive = true;
         currentSessionInfected = 0;
         currentTimer = gameDuration;
-        
-        //logica shiny;
-        
-        PopulationManager populationManager = FindObjectOfType<PopulationManager>();
 
+        PopulationManager populationManager = FindObjectOfType<PopulationManager>();
         if (populationManager != null)
         {
             if (daysRemaining == shinyDay)
-            {
                 populationManager.ConfigureRound(true);
-            }
             else
-            {
                 populationManager.ConfigureRound(false);
-            }
         }
-        
-        
-        if (PlayerPrefs.GetInt("ShinyLuck", 0) > 0)
-        {
-            // Si es mayor que 0, está comprada -> ENCENDEMOS el cuadrado
-            if (indicadorMejoraVerde != null) indicadorMejoraVerde.SetActive(true);
-        }
-        else
-        {
-            // Si es 0, no la tiene -> APAGAMOS el cuadrado
-            if (indicadorMejoraVerde != null) indicadorMejoraVerde.SetActive(false);
-        }
-        // ------------------------------------------------------------------
 
         UpdateUI();
-        
-        
 
-        // Aseguramos que el tutorial no estorbe
-        if(dialoguePanel != null) dialoguePanel.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
         menuPanel.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -203,17 +166,15 @@ public class LevelManager : MonoBehaviour
         gameUI.SetActive(true);
 
         virusPlayer.SetActive(true);
-        // Aseguramos que se pueda mover al empezar la sesión
         if (virusMovementScript != null) virusMovementScript.enabled = true;
-        
-       
     }
 
     void EndSession()
     {
         isGameActive = false;
 
-        contagionCoins += currentSessionInfected;
+        contagionCoins += currentSessionInfected * Guardado.instance.coinMultiplier;
+
         DecreaseDay();
 
         gameUI.SetActive(false);
@@ -239,25 +200,38 @@ public class LevelManager : MonoBehaviour
 
     public void ResetRun()
     {
-        contagionCoins = 0;
         ResetDays();
         isShinyCollectedInRun = false;
-        
-        //dia con shiny aleatorio
-        
-        shinyDay = Random.Range(1, totalDaysUntilCure+ 1);
 
-        // NOTA: Asegúrate de que estos singletons existan en tu escena o dará error
+        shinyDay = Random.Range(1, totalDaysUntilCure + 1);
+
+        // reset upgrades normales
         if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
         if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.ResetUpgrade();
         if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
         if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
         if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
 
+        // reaplicar bonus permanente random
+        if (Guardado.instance)
+            Guardado.instance.ApplyPermanentInitialUpgrade();
+
+        RecalculateCoinsPerInfection();
+
+        // 👉 monedas iniciales del árbol
+        contagionCoins = Guardado.instance.startingCoins;
+
         StartSession();
     }
 
-    // ------------------ SHOP ------------------
+    // -------------------- ECONOMÍA --------------------
+
+    public void RecalculateCoinsPerInfection()
+    {
+        coinsPerInfection = Guardado.instance.coinMultiplier;
+    }
+
+    // -------------------- SHOP --------------------
 
     public void OpenShop()
     {
@@ -270,12 +244,13 @@ public class LevelManager : MonoBehaviour
         shopPanel.SetActive(false);
         gameOverPanel.SetActive(true);
     }
+
     public void CloseShiny()
     {
         shinyPanel.SetActive(false);
         gameOverPanel.SetActive(true);
     }
-    
+
     public void ShinyShop()
     {
         gameOverPanel.SetActive(false);
@@ -283,9 +258,7 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
-   
-
-    // ------------------ INFECTION ------------------
+    // -------------------- INFECCIÓN --------------------
 
     public void RegisterInfection()
     {
@@ -299,7 +272,7 @@ public class LevelManager : MonoBehaviour
             EndSession();
     }
 
-    // ------------------ UI ------------------
+    // -------------------- UI --------------------
 
     public void UpdateUI()
     {
@@ -307,11 +280,8 @@ public class LevelManager : MonoBehaviour
         contagionCoinsText.text = "Monedas: " + contagionCoins;
         daysRemainingText.text = "Quedan " + daysRemaining + " días";
 
-        // --- ESTO ES LO QUE FALTABA AQUÍ ---
         if (shinyStoreText != null && Guardado.instance != null)
-        {
             shinyStoreText.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
-        }
     }
 
     void ShowMainMenu()
@@ -320,12 +290,12 @@ public class LevelManager : MonoBehaviour
         gameUI.SetActive(false);
         gameOverPanel.SetActive(false);
         shopPanel.SetActive(false);
-        if(dialoguePanel != null) dialoguePanel.SetActive(false); // Ocultar dialogo por si acaso
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
         virusPlayer.SetActive(false);
     }
 
-    // ------------------ CLEAN ------------------
+    // -------------------- CLEAN --------------------
 
     void CleanUpScene()
     {

@@ -1,5 +1,4 @@
-using UnityEngine;
-using TMPro;
+﻿using UnityEngine;
 
 public class Guardado : MonoBehaviour
 {
@@ -8,26 +7,32 @@ public class Guardado : MonoBehaviour
     public int totalInfected = 0;
     public int shinyDNA = 0;
 
-    private void Awake()
+    // -------- PERMANENTES DEL ÁRBOL --------
+
+    public int freeInitialUpgrade = -1;   // upgrade random inicial
+    public int coinMultiplier = 1;        // x1, x2, x3, x4, x5
+    public int startingCoins = 0;         // 0, 50, 100, etc
+
+    void Awake()
     {
-        // Singleton: Si ya existe uno, me destruyo
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
-            return; // Importante salir para no ejecutar lo de abajo
+            return;
         }
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         LoadData();
     }
+
+    // -------- ECONOMÍA BASE --------
 
     public void AddShinyDNA(int amountShiny)
     {
         shinyDNA += amountShiny;
         SaveData();
-        Debug.Log("Nuevo Shiny Total: " + shinyDNA); // Chivato para confirmar
     }
 
     public void AddTotalData(int amount)
@@ -36,11 +41,59 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
+    // -------- RANDOM UPGRADE INICIAL --------
+
+    public void AssignRandomInitialUpgrade()
+    {
+        if (freeInitialUpgrade != -1) return;
+
+        freeInitialUpgrade = Random.Range(0, 5);
+        SaveData();
+
+        ApplyPermanentInitialUpgrade();
+    }
+
+    public void ApplyPermanentInitialUpgrade()
+    {
+        if (freeInitialUpgrade == -1) return;
+
+        switch (freeInitialUpgrade)
+        {
+            case 0: VirusRadiusController.instance.UpgradeRadius(); break;
+            case 1: CapacityUpgradeController.instance.UpgradeCapacity(); break;
+            case 2: SpeedUpgradeController.instance.UpgradeSpeed(); break;
+            case 3: TimeUpgradeController.instance.UpgradeTime(); break;
+            case 4: InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(); break;
+        }
+    }
+
+    // -------- HABILIDADES ECONOMÍA --------
+
+    public void SetCoinMultiplier(int value)
+    {
+        if (value <= coinMultiplier) return;
+        coinMultiplier = value;
+        SaveData();
+    }
+
+    public void SetStartingCoins(int value)
+    {
+        if (value <= startingCoins) return;
+        startingCoins = value;
+        SaveData();
+    }
+
+    // -------- SAVE / LOAD --------
+
     void SaveData()
     {
-        // CORREGIDO: Ahora guardamos las VARIABLES, no un 0
         PlayerPrefs.SetInt("TotalInfected", totalInfected);
         PlayerPrefs.SetInt("TotalShinyDNA", shinyDNA);
+
+        PlayerPrefs.SetInt("FreeInitialUpgrade", freeInitialUpgrade);
+        PlayerPrefs.SetInt("CoinMultiplier", coinMultiplier);
+        PlayerPrefs.SetInt("StartingCoins", startingCoins);
+
         PlayerPrefs.Save();
     }
 
@@ -48,5 +101,9 @@ public class Guardado : MonoBehaviour
     {
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
         shinyDNA = PlayerPrefs.GetInt("TotalShinyDNA", 0);
+
+        freeInitialUpgrade = PlayerPrefs.GetInt("FreeInitialUpgrade", -1);
+        coinMultiplier = PlayerPrefs.GetInt("CoinMultiplier", 1);
+        startingCoins = PlayerPrefs.GetInt("StartingCoins", 0);
     }
 }

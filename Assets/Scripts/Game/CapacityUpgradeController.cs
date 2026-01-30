@@ -25,22 +25,29 @@ public class CapacityUpgradeController : MonoBehaviour
         ApplyCapacity();
     }
 
+    // NUEVO — para bonus inicial permanente
+    public void SetLevel(int level)
+    {
+        currentLevel = Mathf.Max(1, level);
+        ApplyCapacity();
+    }
+
     void ApplyCapacity()
     {
         if (LevelManager.instance == null) return;
-
-        int newCapacity = baseCapacity + (currentLevel - 1) * capacityStep;
+        int newCapacity = UpgradeManager.instance.GetCapacityValueByTable(currentLevel);
         LevelManager.instance.maxInfectionsPerRound = newCapacity;
+
     }
 
     public int GetCurrentLevel()
     {
         return currentLevel;
     }
+
     public void ResetUpgrade()
     {
         currentLevel = 1;
         ApplyCapacity();
     }
-
 }

@@ -1,16 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TimeUpgradeController : MonoBehaviour
 {
     public static TimeUpgradeController instance;
 
-    [Header("Tiempo base por d�a")]
-    public float baseTime = 20f;
+    int[] timeValues = { 30, 40, 50, 60, 75, 90 };
 
-    [Header("Incremento por nivel")]
-    public float timeStep = 5f;
-
-    private int currentLevel = 1;
+    int currentLevel = 1;
 
     void Awake()
     {
@@ -24,6 +20,8 @@ public class TimeUpgradeController : MonoBehaviour
 
     public void UpgradeTime()
     {
+        if (currentLevel >= timeValues.Length) return;
+
         currentLevel++;
         ApplyTime();
     }
@@ -32,18 +30,25 @@ public class TimeUpgradeController : MonoBehaviour
     {
         if (LevelManager.instance == null) return;
 
-        float newTime = baseTime + (currentLevel - 1) * timeStep;
-        LevelManager.instance.gameDuration = newTime;
+        int index = Mathf.Clamp(currentLevel - 1, 0, timeValues.Length - 1);
+        LevelManager.instance.gameDuration = timeValues[index];
     }
 
     public int GetCurrentLevel()
     {
         return currentLevel;
     }
+
     public void ResetUpgrade()
     {
         currentLevel = 1;
         ApplyTime();
     }
 
+    // 🔥 usado por bonus permanente
+    public void SetLevel(int level)
+    {
+        currentLevel = Mathf.Clamp(level, 1, timeValues.Length);
+        ApplyTime();
+    }
 }

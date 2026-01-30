@@ -4,10 +4,17 @@ public class SpeedUpgradeController : MonoBehaviour
 {
     public static SpeedUpgradeController instance;
 
-    public float baseSpeed = 80f;
-    public float speedStep = 20f;
+    int currentLevel = 1;
 
-    private int currentLevel = 1;
+    // VALORES SEGÚN TU TABLA (80 = 100%)
+    float[] speedValues =
+    {
+        80f,   // Nivel 1 (base)
+        96f,   // 120%
+        112f,  // 140%
+        136f,  // 170%
+        160f   // 200%
+    };
 
     void Awake()
     {
@@ -16,31 +23,41 @@ public class SpeedUpgradeController : MonoBehaviour
 
     void Start()
     {
-        ApplySpeed(); // ahora sí es seguro
+        ApplySpeed();
     }
 
     public void UpgradeSpeed()
     {
-        currentLevel++;
-        ApplySpeed();
+        if (currentLevel < speedValues.Length)
+        {
+            currentLevel++;
+            ApplySpeed();
+        }
     }
 
     void ApplySpeed()
     {
         if (VirusMovement.instance == null) return;
 
-        float newSpeed = baseSpeed + (currentLevel - 1) * speedStep;
-        VirusMovement.instance.SetSpeed(newSpeed);
+        int index = Mathf.Clamp(currentLevel - 1, 0, speedValues.Length - 1);
+        VirusMovement.instance.SetSpeed(speedValues[index]);
     }
 
     public int GetCurrentLevel()
     {
         return currentLevel;
     }
+
     public void ResetUpgrade()
     {
         currentLevel = 1;
         ApplySpeed();
     }
 
+    // Para bonus del árbol
+    public void SetLevel(int level)
+    {
+        currentLevel = Mathf.Clamp(level, 1, speedValues.Length);
+        ApplySpeed();
+    }
 }

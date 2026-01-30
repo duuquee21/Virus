@@ -28,6 +28,13 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
         ApplySpeed();
     }
 
+    // NUEVO — para bonus inicial permanente
+    public void SetLevel(int level)
+    {
+        currentLevel = Mathf.Max(1, level);
+        ApplySpeed();
+    }
+
     void ApplySpeed()
     {
         float newTime = baseInfectTime - (currentLevel - 1) * reductionStep;

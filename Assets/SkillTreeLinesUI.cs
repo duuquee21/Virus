@@ -8,69 +8,94 @@ public class SkillTreeLinesUI : MonoBehaviour
     {
         public RectTransform from;
         public RectTransform to;
-        public Image lineInstance;
+        public Image line;
+        public bool unlocked;
     }
 
-    public RectTransform canvasRoot;
+    public RectTransform fixedCanvas;
     public Image linePrefab;
-
-    [Header("Connections")]
-    public Connection[] connections;
 
     public Color lockedColor = Color.gray;
     public Color unlockedColor = Color.green;
 
-    public void DrawConnections()
+    public Connection[] connections;
+
+    void Start()
     {
         foreach (var c in connections)
         {
-            if (!c.from || !c.to) continue;
-
-            if (c.lineInstance == null)
-            {
-                c.lineInstance = Instantiate(linePrefab, canvasRoot);
-                c.lineInstance.name = "Line";
-                c.lineInstance.transform.SetAsFirstSibling();
-            }
-
-            PositionLine(c.lineInstance.rectTransform, c.from, c.to);
-
-            bool active = c.from.gameObject.activeSelf && c.to.gameObject.activeSelf;
-            c.lineInstance.gameObject.SetActive(active);
-
-            if (active)
-                c.lineInstance.color = lockedColor;
+            c.line = Instantiate(linePrefab, fixedCanvas);
+            c.line.transform.SetAsFirstSibling();   // detrás de todo
+            c.line.gameObject.SetActive(false);
+            c.line.color = lockedColor;
+            c.unlocked = false;
         }
     }
 
-    public void UnlockLine(RectTransform unlockedNode)
+
+    void LateUpdate()
     {
         foreach (var c in connections)
         {
-            if (c.to == unlockedNode && c.lineInstance)
-                c.lineInstance.color = unlockedColor;
+            if (!c.line.gameObject.activeSelf) continue;
+            PositionLine(c.line.rectTransform, c.from, c.to);
         }
     }
 
     void PositionLine(RectTransform line, RectTransform a, RectTransform b)
     {
-        Vector2 posA = GetLocalPosition(a);
-        Vector2 posB = GetLocalPosition(b);
+        Vector2 A = WorldToUI(a.position);
+        Vector2 B = WorldToUI(b.position);
 
-        Vector2 dir = posB - posA;
-        float distance = dir.magnitude;
+        Vector2 dir = B - A;
+        float dist = dir.magnitude;
 
-        line.sizeDelta = new Vector2(distance, 4);
-        line.localPosition = posA + dir / 2f;
+        line.sizeDelta = new Vector2(dist, 4f);
+        line.anchoredPosition = A + dir * 0.5f;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        line.localRotation = Quaternion.Euler(0, 0, angle);
+        line.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    Vector2 GetLocalPosition(RectTransform target)
+    Vector2 WorldToUI(Vector3 worldPos)
     {
-        Vector3 worldPos = target.position;
-        Vector3 localPos = canvasRoot.InverseTransformPoint(worldPos);
+        Vector2 screen = RectTransformUtility.WorldToScreenPoint(null, worldPos);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            fixedCanvas,
+            screen,
+            null,
+            out Vector2 localPos
+        );
+
         return localPos;
+    }
+
+    // Mostrar ramas posibles en gris
+    public void ShowFrom(RectTransform fromNode)
+    {
+        foreach (var c in connections)
+        {
+            if (c.from == fromNode)
+            {
+                c.line.gameObject.SetActive(true);
+                c.line.color = lockedColor;
+            }
+        }
+    }
+
+    // Marcar rama comprada en verde
+    public void Unlock(RectTransform fromNode, RectTransform toNode)
+    {
+        foreach (var c in connections)
+        {
+            if (c.from == fromNode && c.to == toNode)
+            {
+                c.unlocked = true;
+                c.line.gameObject.SetActive(true);
+                c.line.color = unlockedColor;
+                return;
+            }
+        }
     }
 }

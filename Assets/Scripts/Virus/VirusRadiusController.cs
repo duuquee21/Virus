@@ -4,10 +4,20 @@ public class VirusRadiusController : MonoBehaviour
 {
     public static VirusRadiusController instance;
 
+    // Tu base sigue existiendo (100%)
     public float baseScale = 1f;
-    public float scaleStep = 0.5f;
 
-    private int currentLevel = 1;
+    // Progresión real de la tabla
+    float[] radiusMultipliers = {
+        1f,     // 100%
+        1.2f,   // 120%
+        1.5f,   // 150%
+        2f,     // 200%
+        2.5f,   // 250%
+        3f      // 300% (FULL)
+    };
+
+    private int currentLevelIndex = 0;
 
     void Awake()
     {
@@ -17,40 +27,49 @@ public class VirusRadiusController : MonoBehaviour
 
     public void UpgradeRadius()
     {
-        currentLevel++;
+        if (IsMaxLevel()) return;
+
+        currentLevelIndex++;
+        ApplyScale();
+    }
+
+    // BONUS PERMANENTE / SET DIRECTO
+    public void SetLevel(int level)
+    {
+        currentLevelIndex = Mathf.Clamp(level - 1, 0, radiusMultipliers.Length - 1);
         ApplyScale();
     }
 
     void ApplyScale()
     {
-        float newRadius = baseScale + (currentLevel - 1) * scaleStep;
+        float newRadius = baseScale * radiusMultipliers[currentLevelIndex];
 
-        // Collider real de contagio
         CircleCollider2D collider = GetComponentInChildren<CircleCollider2D>();
         if (collider != null)
             collider.radius = newRadius;
 
-        // Aro visual
         RadiusLineRenderer line = GetComponentInChildren<RadiusLineRenderer>();
         if (line != null)
             line.DrawCircle(newRadius);
 
-        // (opcional) sprite rojo si aún lo usas
         Transform redSprite = transform.Find("InfectionRadiusVisual");
         if (redSprite != null)
             redSprite.localScale = new Vector3(newRadius * 2f, newRadius * 2f, 1f);
     }
 
-
-
     public int GetCurrentLevel()
     {
-        return currentLevel;
+        return currentLevelIndex + 1;
+    }
+
+    public bool IsMaxLevel()
+    {
+        return currentLevelIndex >= radiusMultipliers.Length - 1;
     }
 
     public void ResetUpgrade()
     {
-        currentLevel = 1;
+        currentLevelIndex = 0;
         ApplyScale();
     }
 }
