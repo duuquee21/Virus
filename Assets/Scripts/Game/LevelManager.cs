@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject shopPanel;
     public GameObject shinyPanel;
+    public GameObject zonePanel;
 
     [Header("Tutorial / Diálogo")]
     public GameObject dialoguePanel;
