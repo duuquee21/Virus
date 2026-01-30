@@ -15,7 +15,13 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject shopPanel;
     public GameObject shinyPanel;
+    public GameObject zonePanel;
 
+    
+    [Header("SistemaZonas")]
+    public GameObject[] mapList;
+    
+    
     // --- NUEVO: REFERENCIAS DEL TUTORIAL ---
     [Header("Tutorial / Diálogo")]
     public GameObject dialoguePanel; 
@@ -29,6 +35,7 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI sessionScoreText;
     public TextMeshProUGUI contagionCoinsText;
     public TextMeshProUGUI daysRemainingText;
+    public TextMeshProUGUI zoneCurrencyText;
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
@@ -49,6 +56,41 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI shinyStoreText;
     
     public GameObject indicadorMejoraVerde;
+    
+    
+    
+    public void OpenZoneShop()
+    {
+        gameOverPanel.SetActive(false);
+        zonePanel.SetActive(true);
+        UpdateUI();
+    }
+
+    public void CloseZoneShop()
+    {
+        zonePanel.SetActive(false);
+        gameOverPanel.SetActive(true);
+    }
+
+    // Función para cambiar el mapa activo
+    public void ActivateMap(int mapIndex)
+    {
+        // 1. Guardamos en memoria cuál es el mapa actual
+        PlayerPrefs.SetInt("CurrentMapIndex", mapIndex);
+        PlayerPrefs.Save();
+
+        // 2. Apagamos TODOS los mapas
+        foreach (GameObject map in mapList)
+        {
+            if(map != null) map.SetActive(false);
+        }
+
+        // 3. Encendemos SOLO el elegido
+        if (mapIndex >= 0 && mapIndex < mapList.Length)
+        {
+            if(mapList[mapIndex] != null) mapList[mapIndex].SetActive(true);
+        }
+    }
 
     void Awake()
     {
@@ -160,6 +202,9 @@ public class LevelManager : MonoBehaviour
         currentSessionInfected = 0;
         currentTimer = gameDuration;
         
+        int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0); // 0 es el mapa por defecto
+        ActivateMap(savedMap);
+        
         //logica shiny;
         
         PopulationManager populationManager = FindObjectOfType<PopulationManager>();
@@ -214,6 +259,17 @@ public class LevelManager : MonoBehaviour
         isGameActive = false;
 
         contagionCoins += currentSessionInfected;
+        isGameActive = false;
+
+        // Sumamos a la variable local (para mostrar en el día)
+        contagionCoins += currentSessionInfected;
+        
+        // --- AÑADIR ESTO: ENVIAMOS EL DINERO AL BANCO (GUARDADO) ---
+        if (Guardado.instance != null)
+        {
+            // Guardamos los infectados de esta sesión en el total acumulado
+            Guardado.instance.AddTotalData(currentSessionInfected);
+        }
         DecreaseDay();
 
         gameUI.SetActive(false);
@@ -311,6 +367,10 @@ public class LevelManager : MonoBehaviour
         if (shinyStoreText != null && Guardado.instance != null)
         {
             shinyStoreText.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
+        }
+        if (zoneCurrencyText != null && Guardado.instance != null)
+        {
+            zoneCurrencyText.text = "Total Infectados: " + Guardado.instance.totalInfected;
         }
     }
 
