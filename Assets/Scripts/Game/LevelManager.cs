@@ -33,6 +33,11 @@ public class LevelManager : MonoBehaviour
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
+
+    // IMPORTANTE: este es el BASE (lo que tenías = 5)
+    public int baseDaysUntilCure = 5;
+
+    // este es el TOTAL REAL (base + bonus)
     public int totalDaysUntilCure = 5;
 
     [Header("Economía")]
@@ -71,8 +76,33 @@ public class LevelManager : MonoBehaviour
         if (virusPlayer != null && virusMovementScript == null)
             virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
 
+        RecalculateTotalDaysUntilCure();
         ResetDays();
         ShowMainMenu();
+    }
+
+    // NUEVO: recalcular totalDaysUntilCure con el bonus permanente
+    public void RecalculateTotalDaysUntilCure()
+    {
+        int bonus = 0;
+        if (Guardado.instance != null)
+            bonus = Guardado.instance.bonusDaysPermanent;
+
+        int previousTotal = totalDaysUntilCure; // Guardamos el anterior
+        totalDaysUntilCure = baseDaysUntilCure + bonus;
+
+        // --- ESTO ES LO QUE FALTA ---
+        // Si el total ha aumentado (compraste una mejora), 
+        // le sumamos esa diferencia a los días que le quedan al jugador actualmente
+        if (totalDaysUntilCure > previousTotal)
+        {
+            int diferencia = totalDaysUntilCure - previousTotal;
+            daysRemaining += diferencia;
+        }
+
+        if (totalDaysUntilCure < 1) totalDaysUntilCure = 1;
+
+        UpdateUI(); // Refrescar el texto en pantalla
     }
 
     void ResetDays()
@@ -90,8 +120,6 @@ public class LevelManager : MonoBehaviour
         if (currentTimer <= 0)
             EndSession();
     }
-
-    // -------------------- TUTORIAL --------------------
 
     public void TryStartGame()
     {
@@ -137,8 +165,6 @@ public class LevelManager : MonoBehaviour
         ResetRun();
     }
 
-    // -------------------- RUN --------------------
-
     public void StartSession()
     {
         CleanUpScene();
@@ -172,9 +198,8 @@ public class LevelManager : MonoBehaviour
 
     public void ActivateMap(int zoneID)
     {
-        // De momento no hace nada, solo mantiene compatibilidad
+        // compatibilidad
     }
-
 
     void EndSession()
     {
@@ -207,38 +232,34 @@ public class LevelManager : MonoBehaviour
 
     public void ResetRun()
     {
+        // IMPORTANTE: recalcula días antes de ResetDays
+        RecalculateTotalDaysUntilCure();
+
         ResetDays();
         isShinyCollectedInRun = false;
 
         shinyDay = Random.Range(1, totalDaysUntilCure + 1);
 
-        // reset upgrades normales
         if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
         if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.ResetUpgrade();
         if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
         if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
         if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
 
-        // reaplicar bonus permanente random
         if (Guardado.instance)
             Guardado.instance.ApplyPermanentInitialUpgrade();
 
         RecalculateCoinsPerInfection();
 
-        // 👉 monedas iniciales del árbol
         contagionCoins = Guardado.instance.startingCoins;
 
         StartSession();
     }
 
-    // -------------------- ECONOMÍA --------------------
-
     public void RecalculateCoinsPerInfection()
     {
         coinsPerInfection = Guardado.instance.coinMultiplier;
     }
-
-    // -------------------- SHOP --------------------
 
     public void OpenShop()
     {
@@ -265,8 +286,6 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
-    // -------------------- INFECCIÓN --------------------
-
     public void RegisterInfection()
     {
         if (!isGameActive) return;
@@ -278,8 +297,6 @@ public class LevelManager : MonoBehaviour
         if (currentSessionInfected >= maxInfectionsPerRound)
             EndSession();
     }
-
-    // -------------------- UI --------------------
 
     public void UpdateUI()
     {
@@ -301,8 +318,6 @@ public class LevelManager : MonoBehaviour
 
         virusPlayer.SetActive(false);
     }
-
-    // -------------------- CLEAN --------------------
 
     void CleanUpScene()
     {

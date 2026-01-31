@@ -19,7 +19,21 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         StartWith500Coins,
         StartWith2500Coins,
         StartWith25000Coins,
-        StartWith50000Coins   // 🔥 NUEVO
+        StartWith50000Coins,
+        ReduceSpawnInterval20,
+        ReduceSpawnInterval40,
+        ReduceSpawnInterval60,
+        ReduceSpawnInterval80,
+        ReduceSpawnInterval100,
+        IncreasePopulation25,
+        IncreasePopulation50,
+        AddDays5,
+        AddDays10
+
+
+
+
+        // 🔥 NUEVO
     }
 
     [Header("Datos")]
@@ -123,6 +137,48 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.StartWith50000Coins:
                 Guardado.instance.SetStartingCoins(50000);
                 break;
+
+            case SkillEffectType.ReduceSpawnInterval20:
+                Guardado.instance.AddSpawnSpeedBonus(0.20f);
+                break;
+
+            case SkillEffectType.ReduceSpawnInterval40:
+                Guardado.instance.AddSpawnSpeedBonus(0.40f);
+                break;
+
+            case SkillEffectType.ReduceSpawnInterval60:
+                Guardado.instance.AddSpawnSpeedBonus(0.60f);
+                break;
+
+            case SkillEffectType.ReduceSpawnInterval80:
+                Guardado.instance.AddSpawnSpeedBonus(0.80f);
+                break;
+
+            case SkillEffectType.ReduceSpawnInterval100:
+                Guardado.instance.AddSpawnSpeedBonus(1.00f);
+                break;
+            case SkillEffectType.IncreasePopulation25:
+                Guardado.instance.AddPopulationBonus(0.25f);
+                break;
+            case SkillEffectType.IncreasePopulation50:
+                Guardado.instance.AddPopulationBonus(0.50f);
+                break;
+            case SkillEffectType.AddDays5:
+                Guardado.instance.AddBonusDays(5);
+                break;
+
+            case SkillEffectType.AddDays10:
+                Guardado.instance.AddBonusDays(10);
+                break;
+            }
+
+        // --- AÑADE ESTO AQUÍ (Fuera del switch) ---
+        // Esto se ejecutará siempre que compres CUALQUIER habilidad.
+        // Como RecalculateTotalDaysUntilCure mira el valor de Guardado.instance.bonusDaysPermanent,
+        // se actualizará correctamente si la habilidad era de días.
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.RecalculateTotalDaysUntilCure();
         }
     }
 

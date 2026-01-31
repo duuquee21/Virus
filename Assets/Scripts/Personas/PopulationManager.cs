@@ -6,6 +6,9 @@ public class PopulationManager : MonoBehaviour
 
     public float spawnInterval = 3f;
     public float maxPopulation = 15f;
+    float baseSpawnInterval;
+    public float baseMaxPopulation = 15f;
+
 
     // area de aparicion
 
@@ -37,9 +40,13 @@ public class PopulationManager : MonoBehaviour
         {
             shinyIndex = -1;
         }
-        
+
+        baseSpawnInterval = spawnInterval;
+        ApplySpawnBonus();
+
+
     }
-    
+
     void Update()
     {
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
@@ -52,6 +59,9 @@ public class PopulationManager : MonoBehaviour
             SpawnPerson();
             timer = 0;
         }
+        float bonus = Guardado.instance.populationBonus;
+        maxPopulation = baseMaxPopulation * (1f + bonus);
+
     }
 
     void SpawnPerson()
@@ -77,5 +87,18 @@ public class PopulationManager : MonoBehaviour
 
     }
 
-  
+    void ApplySpawnBonus()
+    {
+        if (Guardado.instance == null) return;
+
+        float bonus = Guardado.instance.spawnSpeedBonus;
+
+        spawnInterval = baseSpawnInterval * (1f - bonus);
+
+        if (spawnInterval < 0.3f)
+            spawnInterval = 0.3f; // límite de seguridad
+    }
+
+
+
 }

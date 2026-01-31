@@ -5,13 +5,17 @@ public class Guardado : MonoBehaviour
     public static Guardado instance;
 
     public int totalInfected = 0;
-    public int shinyDNA = 0;
+    public int shinyDNA = 10000000;
 
     // -------- PERMANENTES DEL ÁRBOL --------
-
     public int freeInitialUpgrade = -1;   // upgrade random inicial
     public int coinMultiplier = 1;        // x1, x2, x3, x4, x5
-    public int startingCoins = 0;         // 0, 50, 100, etc
+    public int startingCoins = 0;         // 0, 50, 100, 500, etc
+    public float spawnSpeedBonus = 0f;    // 0.2 = -20%, 0.4 = -40%...
+    public float populationBonus = 0f;    // 0.25 = +25%, 0.5 = +50%...
+
+    // NUEVO: DIAS EXTRA PERMANENTES (+5, +10, etc)
+    public int bonusDaysPermanent = 0;
 
     void Awake()
     {
@@ -27,7 +31,9 @@ public class Guardado : MonoBehaviour
         LoadData();
     }
 
-    // -------- ECONOMÍA BASE --------
+    // ==============================
+    // ECONOMÍA BASE
+    // ==============================
 
     public void AddShinyDNA(int amountShiny)
     {
@@ -41,7 +47,9 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    // -------- RANDOM UPGRADE INICIAL --------
+    // ==============================
+    // RANDOM UPGRADE INICIAL
+    // ==============================
 
     public void AssignRandomInitialUpgrade()
     {
@@ -67,7 +75,9 @@ public class Guardado : MonoBehaviour
         }
     }
 
-    // -------- HABILIDADES ECONOMÍA --------
+    // ==============================
+    // HABILIDADES ECONOMÍA
+    // ==============================
 
     public void SetCoinMultiplier(int value)
     {
@@ -83,7 +93,34 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    // -------- SAVE / LOAD --------
+    public void AddSpawnSpeedBonus(float amount)
+    {
+        spawnSpeedBonus += amount;
+        SaveData();
+    }
+
+    public void AddPopulationBonus(float amount)
+    {
+        populationBonus += amount;
+        SaveData();
+    }
+
+    // ==============================
+    // NUEVO: DIAS EXTRA
+    // ==============================
+
+    public void AddBonusDays(int days)
+    {
+        // Si quieres evitar repetir la misma mejora (ej: +5 dos veces), cámbialo:
+        // if (days <= bonusDaysPermanent) return;  (pero esto compararía mal)
+        // Lo correcto sería manejarlo por "nivel" en el árbol.
+        bonusDaysPermanent += days;
+        SaveData();
+    }
+
+    // ==============================
+    // SAVE / LOAD
+    // ==============================
 
     void SaveData()
     {
@@ -93,6 +130,12 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("FreeInitialUpgrade", freeInitialUpgrade);
         PlayerPrefs.SetInt("CoinMultiplier", coinMultiplier);
         PlayerPrefs.SetInt("StartingCoins", startingCoins);
+
+        PlayerPrefs.SetFloat("SpawnSpeedBonus", spawnSpeedBonus);
+        PlayerPrefs.SetFloat("PopulationBonus", populationBonus);
+
+        // NUEVO
+        PlayerPrefs.SetInt("BonusDaysPermanent", bonusDaysPermanent);
 
         PlayerPrefs.Save();
     }
@@ -105,5 +148,11 @@ public class Guardado : MonoBehaviour
         freeInitialUpgrade = PlayerPrefs.GetInt("FreeInitialUpgrade", -1);
         coinMultiplier = PlayerPrefs.GetInt("CoinMultiplier", 1);
         startingCoins = PlayerPrefs.GetInt("StartingCoins", 0);
+
+        spawnSpeedBonus = PlayerPrefs.GetFloat("SpawnSpeedBonus", 0f);
+        populationBonus = PlayerPrefs.GetFloat("PopulationBonus", 0f);
+
+        // NUEVO
+        bonusDaysPermanent = PlayerPrefs.GetInt("BonusDaysPermanent", 0);
     }
 }
