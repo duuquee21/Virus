@@ -84,16 +84,12 @@ public class LevelManager : MonoBehaviour
     // NUEVO: recalcular totalDaysUntilCure con el bonus permanente
     public void RecalculateTotalDaysUntilCure()
     {
-        int bonus = 0;
-        if (Guardado.instance != null)
-            bonus = Guardado.instance.bonusDaysPermanent;
+        int bonus = (Guardado.instance != null) ? Guardado.instance.bonusDaysPermanent : 0;
 
-        int previousTotal = totalDaysUntilCure; // Guardamos el anterior
+        int previousTotal = totalDaysUntilCure;
         totalDaysUntilCure = baseDaysUntilCure + bonus;
 
-        // --- ESTO ES LO QUE FALTA ---
-        // Si el total ha aumentado (compraste una mejora), 
-        // le sumamos esa diferencia a los días que le quedan al jugador actualmente
+        // Si compramos una mejora de días durante la partida, se suman a los días actuales
         if (totalDaysUntilCure > previousTotal)
         {
             int diferencia = totalDaysUntilCure - previousTotal;
@@ -102,9 +98,8 @@ public class LevelManager : MonoBehaviour
 
         if (totalDaysUntilCure < 1) totalDaysUntilCure = 1;
 
-        UpdateUI(); // Refrescar el texto en pantalla
+        UpdateUI(); // Refresca el contador de días en el panel
     }
-
     void ResetDays()
     {
         daysRemaining = totalDaysUntilCure;

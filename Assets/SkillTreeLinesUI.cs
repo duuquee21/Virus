@@ -25,19 +25,18 @@ public class SkillTreeLinesUI : MonoBehaviour
         foreach (var c in connections)
         {
             c.line = Instantiate(linePrefab, fixedCanvas);
-            c.line.transform.SetAsFirstSibling();   // detrás de todo
+            c.line.transform.SetAsFirstSibling();
             c.line.gameObject.SetActive(false);
             c.line.color = lockedColor;
             c.unlocked = false;
         }
     }
 
-
     void LateUpdate()
     {
         foreach (var c in connections)
         {
-            if (!c.line.gameObject.activeSelf) continue;
+            if (c.line == null || !c.line.gameObject.activeSelf) continue;
             PositionLine(c.line.rectTransform, c.from, c.to);
         }
     }
@@ -60,18 +59,11 @@ public class SkillTreeLinesUI : MonoBehaviour
     Vector2 WorldToUI(Vector3 worldPos)
     {
         Vector2 screen = RectTransformUtility.WorldToScreenPoint(null, worldPos);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            fixedCanvas,
-            screen,
-            null,
-            out Vector2 localPos
-        );
-
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(fixedCanvas, screen, null, out Vector2 localPos);
         return localPos;
     }
 
-    // Mostrar ramas posibles en gris
+    // Mostrar líneas en gris (cuando un padre se desbloquea)
     public void ShowFrom(RectTransform fromNode)
     {
         foreach (var c in connections)
@@ -79,22 +71,28 @@ public class SkillTreeLinesUI : MonoBehaviour
             if (c.from == fromNode)
             {
                 c.line.gameObject.SetActive(true);
-                c.line.color = lockedColor;
+                // Si el nodo de destino ya está desbloqueado por otra rama, la ponemos verde
+                SkillNode targetNode = c.to.GetComponent<SkillNode>();
+                if (targetNode != null && targetNode.IsUnlocked)
+                    c.line.color = unlockedColor;
+                else
+                    c.line.color = lockedColor;
             }
         }
     }
 
-    // Marcar rama comprada en verde
+    // Activar el color verde (solo cuando el nodo destino se compra)
     public void Unlock(RectTransform fromNode, RectTransform toNode)
     {
         foreach (var c in connections)
         {
-            if (c.from == fromNode && c.to == toNode)
+            // Buscamos todas las conexiones que lleguen a ese nodo recien comprado
+            // porque si tiene dos padres, AMBAS líneas deben ponerse verdes
+            if (c.to == toNode)
             {
                 c.unlocked = true;
                 c.line.gameObject.SetActive(true);
                 c.line.color = unlockedColor;
-                return;
             }
         }
     }

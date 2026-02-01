@@ -15,10 +15,11 @@ public class PersonaInfeccion : MonoBehaviour
     private float currentInfectionTime;
     private bool isInsideZone = false;
     public bool alreadyInfected = false;
-    
+
     [Header("Shiny Settings")]
     public bool isShiny = false;
     public Color shinyColor = Color.yellow;
+    // Ya no usaremos este 'shinyReward' fijo, usaremos el de Guardado
     public int shinyReward = 1;
 
     void Start()
@@ -70,15 +71,25 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (LevelManager.instance != null)
         {
-            LevelManager.instance.RegisterInfection(); 
+            LevelManager.instance.RegisterInfection();
         }
-        
-        if(isShiny)
+
+        if (isShiny)
         {
             if (Guardado.instance != null)
             {
-                Guardado.instance.AddShinyDNA(shinyReward);
+                // CAMBIO CLAVE: Usamos la función que calcula (Suma * Multiplicador Base)
+                // Esto permite que si tienes +2 de suma y compras x7, recibas 14, 
+                // pero si luego compras x10, pases a recibir 20 (no 140).
+                int cantidadFinal = Guardado.instance.GetFinalShinyValue();
+                Guardado.instance.AddShinyDNA(cantidadFinal);
+
+                Debug.Log("¡Shiny Infectado! Valor Base (" + Guardado.instance.shinyValueSum +
+                          ") x Multiplicador (" + Guardado.instance.shinyMultiplier + ") = " + cantidadFinal);
             }
+
+            if (LevelManager.instance != null)
+                LevelManager.instance.isShinyCollectedInRun = true;
         }
     }
 
@@ -86,9 +97,6 @@ public class PersonaInfeccion : MonoBehaviour
     {
         isShiny = true;
         spritePersona.color = shinyColor;
-        
-        transform.localScale = transform.localScale * 1.2f; 
+        transform.localScale = transform.localScale * 1.2f;
     }
-    
-    
 }
