@@ -1566,10 +1566,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 169.175, y: -40.21997}
+  m_SizeDelta: {x: 338.35, y: 80.43994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141406160
 MonoBehaviour:
@@ -3885,10 +3885,10 @@ RectTransform:
   - {fileID: 171250021}
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75.77, y: -100.54993}
+  m_SizeDelta: {x: 151.54, y: 40.21997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356647270
 MonoBehaviour:
@@ -9867,7 +9867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13461,15 +13461,6 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1935879841}
   shopPanel: {fileID: 1979308603}
   shinyPanel: {fileID: 858966969}
-  zonePanel: {fileID: 0}
-  dialoguePanel: {fileID: 855896236}
-  dialogueText: {fileID: 890345651}
-  introLines:
-  - HOLA SOY EL VIRUS
-  - MATARE A TODOS
-  - 'POR QUE SI
-
-'
   timerText: {fileID: 1370056813}
   sessionScoreText: {fileID: 1529213483}
   contagionCoinsText: {fileID: 278002307}
@@ -13479,13 +13470,11 @@ MonoBehaviour:
   maxInfectionsPerRound: 5
   baseDaysUntilCure: 5
   totalDaysUntilCure: 0
-  coinsPerInfection: 1
-  shinyDay: 0
-  isShinyCollectedInRun: 0
-  indicadorMejoraVerde: {fileID: 0}
   isGameActive: 0
   currentSessionInfected: 0
   contagionCoins: 0
+  isShinyCollectedInRun: 0
+  shinyDay: 0
 --- !u!4 &1157957838
 Transform:
   m_ObjectHideFlags: 0
@@ -13586,7 +13575,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1157957837}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: ShinyShop
+        m_MethodName: OpenShinyShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16833,7 +16822,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1157957837}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: CloseShiny
+        m_MethodName: CloseShinyShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19914,7 +19903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1979308604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20603,7 +20592,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 354, y: 226}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -3507.2832, y: -3212.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041343777
 MonoBehaviour:
@@ -21032,7 +21021,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1157957837}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: RestartDay
+        m_MethodName: StartSession
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

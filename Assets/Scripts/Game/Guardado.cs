@@ -7,7 +7,7 @@ public class Guardado : MonoBehaviour
     public int totalInfected = 0;
     public int shinyDNA = 10000000;
 
-    // -------- PERMANENTES DEL ÁRBOL --------
+    [Header("Permanentes del Árbol")]
     public int freeInitialUpgrade = -1;
     public int coinMultiplier = 1;
     public int startingCoins = 0;
@@ -15,10 +15,10 @@ public class Guardado : MonoBehaviour
     public float populationBonus = 0f;
 
     [Header("Shiny Economy")]
-    // Cambiamos shinyValueMultiplier por estas dos variables:
-    public int shinyValueSum = 1;      // Lo que se suma (+1, +3...)
-    public int shinyMultiplier = 1;    // El multiplicador base (x5, x7...)
+    public int shinyValueSum = 1;      // +1, +3, etc.
+    public int shinyMultiplier = 1;    // x5, x7, x10 (Sustituye, no acumula)
 
+    [Header("Otros")]
     public int bonusDaysPermanent = 0;
 
     void Awake()
@@ -32,13 +32,16 @@ public class Guardado : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+#if UNITY_EDITOR
+        Debug.Log("<color=cyan>Editor: Reseteando PlayerPrefs para una prueba limpia.</color>");
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+#endif
+
         LoadData();
     }
 
-    // ==============================
-    // ECONOMÍA BASE
-    // ==============================
-
+    // --- ECONOMÍA Y DATOS ---
     public void AddShinyDNA(int amountShiny)
     {
         shinyDNA += amountShiny;
@@ -51,21 +54,15 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    // ==============================
-    // LÓGICA SHINY (MULTIPLICADORES BASE)
-    // ==============================
-
-    // Para habilidades de SUMA (+1, +3)
+    // --- LÓGICA DE MULTIPLICADORES (SISTEMA BASE) ---
     public void IncreaseShinyValueSum(int amount)
     {
         shinyValueSum += amount;
         SaveData();
     }
 
-    // Para habilidades de MULTIPLICADOR (x5, x7, x10)
     public void SetShinyMultiplier(int newMultiplier)
     {
-        // Solo actualizamos si el nuevo multiplicador es mayor
         if (newMultiplier > shinyMultiplier)
         {
             shinyMultiplier = newMultiplier;
@@ -73,15 +70,17 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    // Esta función la usará PersonaInfeccion para dar el ADN
     public int GetFinalShinyValue()
     {
         return shinyValueSum * shinyMultiplier;
     }
 
-    // ==============================
-    // RANDOM UPGRADE INICIAL
-    // ==============================
+    // --- MEJORAS DEL ÁRBOL ---
+    public void SetCoinMultiplier(int value) { if (value > coinMultiplier) coinMultiplier = value; SaveData(); }
+    public void SetStartingCoins(int value) { if (value > startingCoins) startingCoins = value; SaveData(); }
+    public void AddSpawnSpeedBonus(float amount) { spawnSpeedBonus += amount; SaveData(); }
+    public void AddPopulationBonus(float amount) { populationBonus += amount; SaveData(); }
+    public void AddBonusDays(int days) { bonusDaysPermanent += days; SaveData(); }
 
     public void AssignRandomInitialUpgrade()
     {
@@ -96,53 +95,13 @@ public class Guardado : MonoBehaviour
         if (freeInitialUpgrade == -1) return;
         switch (freeInitialUpgrade)
         {
-            case 0: VirusRadiusController.instance.UpgradeRadius(); break;
-            case 1: CapacityUpgradeController.instance.UpgradeCapacity(); break;
-            case 2: SpeedUpgradeController.instance.UpgradeSpeed(); break;
-            case 3: TimeUpgradeController.instance.UpgradeTime(); break;
-            case 4: InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(); break;
+            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.UpgradeRadius(); break;
+            case 1: if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.UpgradeCapacity(); break;
+            case 2: if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.UpgradeSpeed(); break;
+            case 3: if (TimeUpgradeController.instance) TimeUpgradeController.instance.UpgradeTime(); break;
+            case 4: if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(); break;
         }
     }
-
-    // ==============================
-    // HABILIDADES VARIAS
-    // ==============================
-
-    public void SetCoinMultiplier(int value)
-    {
-        if (value <= coinMultiplier) return;
-        coinMultiplier = value;
-        SaveData();
-    }
-
-    public void SetStartingCoins(int value)
-    {
-        if (value <= startingCoins) return;
-        startingCoins = value;
-        SaveData();
-    }
-
-    public void AddSpawnSpeedBonus(float amount)
-    {
-        spawnSpeedBonus += amount;
-        SaveData();
-    }
-
-    public void AddPopulationBonus(float amount)
-    {
-        populationBonus += amount;
-        SaveData();
-    }
-
-    public void AddBonusDays(int days)
-    {
-        bonusDaysPermanent += days;
-        SaveData();
-    }
-
-    // ==============================
-    // SAVE / LOAD (ACTUALIZADO)
-    // ==============================
 
     void SaveData()
     {
@@ -154,27 +113,22 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpawnSpeedBonus", spawnSpeedBonus);
         PlayerPrefs.SetFloat("PopulationBonus", populationBonus);
         PlayerPrefs.SetInt("BonusDaysPermanent", bonusDaysPermanent);
-
-        // NUEVAS VARIABLES SHINY
         PlayerPrefs.SetInt("ShinyValueSum", shinyValueSum);
         PlayerPrefs.SetInt("ShinyMultiplier", shinyMultiplier);
-
         PlayerPrefs.Save();
     }
 
     void LoadData()
     {
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
-        shinyDNA = PlayerPrefs.GetInt("TotalShinyDNA", 0);
+        shinyDNA = PlayerPrefs.GetInt("TotalShinyDNA", 10000000);
         freeInitialUpgrade = PlayerPrefs.GetInt("FreeInitialUpgrade", -1);
         coinMultiplier = PlayerPrefs.GetInt("CoinMultiplier", 1);
         startingCoins = PlayerPrefs.GetInt("StartingCoins", 0);
         spawnSpeedBonus = PlayerPrefs.GetFloat("SpawnSpeedBonus", 0f);
         populationBonus = PlayerPrefs.GetFloat("PopulationBonus", 0f);
         bonusDaysPermanent = PlayerPrefs.GetInt("BonusDaysPermanent", 0);
-
-        // NUEVAS VARIABLES SHINY
-        shinyValueSum = PlayerPrefs.GetInt("ShinyValueSum", 1); // Default 1
-        shinyMultiplier = PlayerPrefs.GetInt("ShinyMultiplier", 1); // Default 1
+        shinyValueSum = PlayerPrefs.GetInt("ShinyValueSum", 1);
+        shinyMultiplier = PlayerPrefs.GetInt("ShinyMultiplier", 1);
     }
 }
