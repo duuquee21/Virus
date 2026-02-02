@@ -14,6 +14,7 @@ public class Guardado : MonoBehaviour
     public float spawnSpeedBonus = 0f;
     public float populationBonus = 0f;
     public bool zoneDiscountActive= false;
+    public int extraShiniesPerRound = 0;
 
     [Header("Shiny Economy")]
     public int shinyValueSum = 1;      // +1, +3, etc.
@@ -83,6 +84,7 @@ public class Guardado : MonoBehaviour
     public void AddPopulationBonus(float amount) { populationBonus += amount; SaveData(); }
     public void AddBonusDays(int days) { bonusDaysPermanent += days; SaveData(); }
     public void ActivateZoneDiscount(){zoneDiscountActive = true; SaveData();}
+    public void AddExtraShiny() { extraShiniesPerRound++; SaveData(); }
 
     public void AssignRandomInitialUpgrade()
     {
@@ -118,6 +120,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("ShinyValueSum", shinyValueSum);
         PlayerPrefs.SetInt("ShinyMultiplier", shinyMultiplier);
         PlayerPrefs.SetInt("ZoneDiscount", zoneDiscountActive? 1:0);
+        PlayerPrefs.SetInt("ExtraShinies", extraShiniesPerRound);
         PlayerPrefs.Save();
     }
 
@@ -134,5 +137,6 @@ public class Guardado : MonoBehaviour
         shinyValueSum = PlayerPrefs.GetInt("ShinyValueSum", 1);
         shinyMultiplier = PlayerPrefs.GetInt("ShinyMultiplier", 1);
         zoneDiscountActive = PlayerPrefs.GetInt("!ZoneDiscount", 0) == 1;
+        extraShiniesPerRound = PlayerPrefs.GetInt("ExtraShinies", 0);
     }
 }

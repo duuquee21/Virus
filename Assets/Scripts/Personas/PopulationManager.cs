@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic; // <--- 1. NECESARIO PARA USAR LISTAS
 
 public class PopulationManager : MonoBehaviour
 {
@@ -11,9 +12,7 @@ public class PopulationManager : MonoBehaviour
     
     public int initialPopulation = 10;
 
-
     // area de aparicion
-
     public Vector2 spawnAreaMin = new Vector2(-8, -4);
     public Vector2 spawnAreaMax = new Vector2(8, 4);
     
@@ -21,11 +20,11 @@ public class PopulationManager : MonoBehaviour
     private float timer;
     private int personsSpawnedToday = 0; 
     private bool spawnShinyToday = false; 
-    private int shinyIndex = -1;
-
-   
     
-    //probabilidad shiny 
+    // 2. CAMBIO: En vez de 'int shinyIndex', usamos una lista
+    private List<int> shinyIndices = new List<int>();
+
+    // probabilidad shiny 
     public float shinyChance = 10f;
     
     public void ConfigureRound(bool hasShiny)
@@ -33,14 +32,38 @@ public class PopulationManager : MonoBehaviour
         spawnShinyToday = hasShiny;
         personsSpawnedToday = 0;
         timer = 0;
+        
+        // Limpiamos la lista del día anterior para no mezclar
+        shinyIndices.Clear();
 
         if (spawnShinyToday)
         {
-            shinyIndex = Random.Range(1,10);
-        }
-        else
-        {
-            shinyIndex = -1;
+            // 3. CAMBIO: Calculamos cuántos Shinies tocan hoy
+            // Base (1) + Los que hayas comprado en el árbol
+            int totalShinies = 1;
+            
+            if (Guardado.instance != null)
+            {
+                totalShinies += Guardado.instance.extraShiniesPerRound;
+            }
+
+            // Generamos los números aleatorios (ej: persona 3 y persona 8)
+            for (int i = 0; i < totalShinies; i++)
+            {
+                int newIndex;
+                int safety = 0;
+                
+                // Buscamos un número que no esté repetido
+                do
+                {
+                    // Rango: desde el 1 hasta los iniciales + 10 extra
+                    newIndex = Random.Range(1, initialPopulation + 10);
+                    safety++;
+                } 
+                while (shinyIndices.Contains(newIndex) && safety < 50);
+
+                shinyIndices.Add(newIndex);
+            }
         }
 
         baseSpawnInterval = spawnInterval;
@@ -50,8 +73,6 @@ public class PopulationManager : MonoBehaviour
         {
             SpawnPerson();
         }
-
-
     }
 
     void Update()
@@ -66,9 +87,13 @@ public class PopulationManager : MonoBehaviour
             SpawnPerson();
             timer = 0;
         }
-        float bonus = Guardado.instance.populationBonus;
-        maxPopulation = baseMaxPopulation * (1f + bonus);
-
+        
+        // Seguridad por si Guardado no existe
+        if (Guardado.instance != null)
+        {
+            float bonus = Guardado.instance.populationBonus;
+            maxPopulation = baseMaxPopulation * (1f + bonus);
+        }
     }
 
     void SpawnPerson()
@@ -80,18 +105,17 @@ public class PopulationManager : MonoBehaviour
         GameObject newPerson = Instantiate(personPrefab, spawnPos, Quaternion.identity);
         
         personsSpawnedToday++;
-        // verificar si es el shiny 
-
-        if (spawnShinyToday && personsSpawnedToday == shinyIndex)
+        
+        // 4. CAMBIO: Verificar si el número actual está en la LISTA
+        if (spawnShinyToday && shinyIndices.Contains(personsSpawnedToday))
         {
             PersonaInfeccion infeccion = newPerson.GetComponent<PersonaInfeccion>();
             if (infeccion != null)
             {
                 infeccion.MakeShiny();
-                Debug.Log("Ha nacido el shiny");
+                Debug.Log("Ha nacido el shiny número: " + personsSpawnedToday);
             }
         }
-
     }
 
     void ApplySpawnBonus()
@@ -103,9 +127,6 @@ public class PopulationManager : MonoBehaviour
         spawnInterval = baseSpawnInterval * (1f - bonus);
 
         if (spawnInterval < 0.3f)
-            spawnInterval = 0.3f; // l�mite de seguridad
+            spawnInterval = 0.3f; // límite de seguridad
     }
-
-
-
 }

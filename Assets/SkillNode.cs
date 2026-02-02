@@ -17,7 +17,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         MultiplyShinyX5,     // Multiplica x5 (Base)
         MultiplyShinyX7,     // Multiplica x7 (Base)
         MultiplyShinyX10,    // Multiplica x10 (Base)
-        HalveZoneCosts
+        HalveZoneCosts,
+        AddExtraShiny
+        
     }
 
     [Header("Datos")]
@@ -113,6 +115,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.AddDays5: Guardado.instance.AddBonusDays(5); break;
             case SkillEffectType.AddDays10: Guardado.instance.AddBonusDays(10); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
+            case SkillEffectType.AddExtraShiny: Guardado.instance.AddExtraShiny(); break;
 
             // --- LÓGICA DE SUMA SHINY ---
             case SkillEffectType.IncreaseShinyValue1:
