@@ -15,6 +15,8 @@ public class Guardado : MonoBehaviour
     public float populationBonus = 0f;
     public bool zoneDiscountActive= false;
     public int extraShiniesPerRound = 0;
+    public int coinsPerZoneDaily = 0;
+    public int shinyPerZoneDaily = 0;
 
     [Header("Shiny Economy")]
     public int shinyValueSum = 1;      // +1, +3, etc.
@@ -85,13 +87,31 @@ public class Guardado : MonoBehaviour
     public void AddBonusDays(int days) { bonusDaysPermanent += days; SaveData(); }
     public void ActivateZoneDiscount(){zoneDiscountActive = true; SaveData();}
     public void AddExtraShiny() { extraShiniesPerRound++; SaveData(); }
-
+    public void SetZonePassiveIncome(int amount)
+    {
+        // Esto garantiza que si compras la de 1000, 
+        // no se sume a la de 500, sino que la sustituya.
+        if (amount > coinsPerZoneDaily)
+        {
+            coinsPerZoneDaily = amount;
+        }
+        SaveData();
+    }
     public void AssignRandomInitialUpgrade()
     {
         if (freeInitialUpgrade != -1) return;
         freeInitialUpgrade = Random.Range(0, 5);
         SaveData();
         ApplyPermanentInitialUpgrade();
+    }
+
+    public void SetShinyPassiveIncome(int amount)
+    {
+        if (amount > shinyPerZoneDaily)
+        {
+            shinyPerZoneDaily = amount;
+        }
+        SaveData();
     }
 
     public void ApplyPermanentInitialUpgrade()
@@ -121,6 +141,8 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("ShinyMultiplier", shinyMultiplier);
         PlayerPrefs.SetInt("ZoneDiscount", zoneDiscountActive? 1:0);
         PlayerPrefs.SetInt("ExtraShinies", extraShiniesPerRound);
+        PlayerPrefs.SetInt("CoinsPerZoneDaily", coinsPerZoneDaily);
+        PlayerPrefs.SetInt("ShinyPerZoneDaily", shinyPerZoneDaily);
         PlayerPrefs.Save();
     }
 
@@ -138,5 +160,7 @@ public class Guardado : MonoBehaviour
         shinyMultiplier = PlayerPrefs.GetInt("ShinyMultiplier", 1);
         zoneDiscountActive = PlayerPrefs.GetInt("!ZoneDiscount", 0) == 1;
         extraShiniesPerRound = PlayerPrefs.GetInt("ExtraShinies", 0);
+        coinsPerZoneDaily = PlayerPrefs.GetInt("CoinsPerZoneDaily", 0);
+        shinyPerZoneDaily = PlayerPrefs.GetInt("ShinyPerZoneDaily", 0);
     }
 }

@@ -92,6 +92,7 @@ public class LevelManager : MonoBehaviour
     public void OpenShinyShop() { gameOverPanel.SetActive(false); shinyPanel.SetActive(true); UpdateUI(); }
     public void CloseShinyShop() { shinyPanel.SetActive(false); gameOverPanel.SetActive(true); }
     public void OpenZoneShop() { gameOverPanel.SetActive(false); if(zonePanel != null) zonePanel.SetActive(true); UpdateUI(); 
+
     }
     
     public void CloseZoneShop() { if(zonePanel != null) zonePanel.SetActive(false); gameOverPanel.SetActive(true); }
@@ -144,26 +145,54 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
+        // 1. CÁLCULO DE INGRESOS PASIVOS (Monedas y ADN Shiny)
+        if (Guardado.instance != null)
+        {
+            int numeroZonas = GetTotalUnlockedZones();
+
+            // Ingreso de Monedas normales
+            if (Guardado.instance.coinsPerZoneDaily > 0)
+            {
+                int totalMonedas = numeroZonas * Guardado.instance.coinsPerZoneDaily;
+                contagionCoins += totalMonedas;
+                Debug.Log($"<color=green>Ingreso diario:</color> +{totalMonedas} monedas");
+            }
+
+            // --- NUEVO: Ingreso de ADN Shiny ---
+            if (Guardado.instance.shinyPerZoneDaily > 0)
+            {
+                int totalShiny = numeroZonas * Guardado.instance.shinyPerZoneDaily;
+                Guardado.instance.AddShinyDNA(totalShiny); // Sumamos directamente al guardado permanente
+                Debug.Log($"<color=magenta>ADN Shiny pasivo:</color> +{totalShiny}");
+            }
+        }
+
+        // 2. PREPARACIÓN DE LA ESCENA
         CleanUpScene();
-        
+
+        // Cargar el mapa guardado
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
-        
+
+        // 3. INICIO DE VARIABLES DE SESIÓN
         isGameActive = true;
         currentSessionInfected = 0;
         currentTimer = gameDuration;
 
+        // Configurar la probabilidad de Shiny para la población
         PopulationManager pm = FindObjectOfType<PopulationManager>();
         if (pm != null) pm.ConfigureRound(daysRemaining == shinyDay);
 
+        // 4. ACTIVACIÓN DE INTERFAZ Y JUGADOR
         UpdateUI();
         menuPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         gameUI.SetActive(true);
         virusPlayer.SetActive(true);
-        if (virusMovementScript != null) virusMovementScript.enabled = true;
-    }
 
+        if (virusMovementScript != null)
+            virusMovementScript.enabled = true;
+    }
     public void RegisterInfection()
     {
         if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
@@ -253,5 +282,20 @@ public class LevelManager : MonoBehaviour
                 Destroy(persona.gameObject); 
             }
         }
+    }
+
+    public int GetTotalUnlockedZones()
+    {
+        // Esto asume que tienes un sistema de guardado para las zonas.
+        // Si no, podemos contar cuántos ZoneItems tienen 'unlocked' en true.
+        int count = 0;
+        // Por ahora, como mínimo siempre tienes 1 (la inicial)
+        count = 1;
+
+        // Aquí deberías chequear tus PlayerPrefs de zonas:
+        if (PlayerPrefs.GetInt("Zone_1_Unlocked", 0) == 1) count++;
+        if (PlayerPrefs.GetInt("Zone_2_Unlocked", 0) == 1) count++;
+
+        return count;
     }
 }

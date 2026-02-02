@@ -9,12 +9,11 @@ public class SkillTreeLinesUI : MonoBehaviour
         public RectTransform from;
         public RectTransform to;
         public Image line;
-        public bool unlocked;
+        [HideInInspector] public bool unlocked;
     }
 
     public RectTransform fixedCanvas;
     public Image linePrefab;
-
     public Color lockedColor = Color.gray;
     public Color unlockedColor = Color.green;
 
@@ -24,6 +23,9 @@ public class SkillTreeLinesUI : MonoBehaviour
     {
         foreach (var c in connections)
         {
+            // Verificamos que los nodos existan antes de crear la línea
+            if (c.from == null || c.to == null) continue;
+
             c.line = Instantiate(linePrefab, fixedCanvas);
             c.line.transform.SetAsFirstSibling();
             c.line.gameObject.SetActive(false);
@@ -36,13 +38,36 @@ public class SkillTreeLinesUI : MonoBehaviour
     {
         foreach (var c in connections)
         {
-            if (c.line == null || !c.line.gameObject.activeSelf) continue;
+            // --- PROTECCIÓN ANTIERRORES ---
+            // Si la línea o los nodos han sido destruidos, saltamos esta conexión
+            if (c == null || c.from == null || c.to == null || c.line == null)
+                continue;
+
+            // Solo dibujamos si ambos nodos están activos en la jerarquía
+            if (!c.from.gameObject.activeInHierarchy || !c.to.gameObject.activeInHierarchy)
+            {
+                c.line.gameObject.SetActive(false);
+                continue;
+            }
+
+            // Si llegamos aquí, todo es seguro
+            c.line.gameObject.SetActive(true);
             PositionLine(c.line.rectTransform, c.from, c.to);
+
+            // Color dinámico según el estado del nodo destino
+            SkillNode targetNode = c.to.GetComponent<SkillNode>();
+            if (targetNode != null && targetNode.IsUnlocked)
+                c.line.color = unlockedColor;
+            else
+                c.line.color = lockedColor;
         }
     }
 
     void PositionLine(RectTransform line, RectTransform a, RectTransform b)
     {
+        // Doble verificación de seguridad
+        if (a == null || b == null || line == null) return;
+
         Vector2 A = WorldToUI(a.position);
         Vector2 B = WorldToUI(b.position);
 
@@ -58,40 +83,21 @@ public class SkillTreeLinesUI : MonoBehaviour
 
     Vector2 WorldToUI(Vector3 worldPos)
     {
+        if (fixedCanvas == null) return Vector2.zero;
         Vector2 screen = RectTransformUtility.WorldToScreenPoint(null, worldPos);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(fixedCanvas, screen, null, out Vector2 localPos);
         return localPos;
     }
 
-    // Mostrar líneas en gris (cuando un padre se desbloquea)
-    public void ShowFrom(RectTransform fromNode)
-    {
-        foreach (var c in connections)
-        {
-            if (c.from == fromNode)
-            {
-                c.line.gameObject.SetActive(true);
-                // Si el nodo de destino ya está desbloqueado por otra rama, la ponemos verde
-                SkillNode targetNode = c.to.GetComponent<SkillNode>();
-                if (targetNode != null && targetNode.IsUnlocked)
-                    c.line.color = unlockedColor;
-                else
-                    c.line.color = lockedColor;
-            }
-        }
-    }
+    public void ShowFrom(RectTransform fromNode) { /* El LateUpdate se encarga ahora */ }
 
-    // Activar el color verde (solo cuando el nodo destino se compra)
     public void Unlock(RectTransform fromNode, RectTransform toNode)
     {
         foreach (var c in connections)
         {
-            // Buscamos todas las conexiones que lleguen a ese nodo recien comprado
-            // porque si tiene dos padres, AMBAS líneas deben ponerse verdes
-            if (c.to == toNode)
+            if (c != null && c.to == toNode && c.line != null)
             {
                 c.unlocked = true;
-                c.line.gameObject.SetActive(true);
                 c.line.color = unlockedColor;
             }
         }
