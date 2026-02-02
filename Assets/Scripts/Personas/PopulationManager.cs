@@ -8,6 +8,8 @@ public class PopulationManager : MonoBehaviour
     public float maxPopulation = 15f;
     float baseSpawnInterval;
     public float baseMaxPopulation = 15f;
+    
+    public int initialPopulation = 10;
 
 
     // area de aparicion
@@ -43,6 +45,11 @@ public class PopulationManager : MonoBehaviour
 
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
+
+        for (int i = 0; i < initialPopulation; i++)
+        {
+            SpawnPerson();
+        }
 
 
     }
@@ -96,7 +103,7 @@ public class PopulationManager : MonoBehaviour
         spawnInterval = baseSpawnInterval * (1f - bonus);
 
         if (spawnInterval < 0.3f)
-            spawnInterval = 0.3f; // límite de seguridad
+            spawnInterval = 0.3f; // lï¿½mite de seguridad
     }
 
 

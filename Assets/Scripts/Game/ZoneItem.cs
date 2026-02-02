@@ -18,57 +18,58 @@ public class ZoneItem : MonoBehaviour
 
     void Start()
     {
-        
         if (mapIndex == 0) isUnlocked = true;
         else isUnlocked = PlayerPrefs.GetInt("ZoneUnlocked_" + mapIndex, 0) == 1;
 
-        if (nameText != null) nameText.text = zoneName + " (" + cost + ")";
-        
         UpdateUI();
+    }
+
+    int GetFinalCost()
+    {
+        if (Guardado.instance != null && Guardado.instance.zoneDiscountActive)
+        {
+            return cost / 2; 
+        }
+        return cost; 
     }
 
     void Update()
     {
-        
         UpdateUI();
     }
 
     public void OnClickButton()
     {
-        if (isUnlocked)
-        {
-            // SI YA LO TENGO -> LO EQUIPO
-            EquipZone();
-        }
-        else
-        {
-            // SI NO LO TENGO -> INTENTO COMPRARLO
-            TryBuyZone();
-        }
+        if (isUnlocked) EquipZone();
+        else TryBuyZone();
     }
 
     void TryBuyZone()
     {
-        if (Guardado.instance == null) return;
+        // CAMBIO: Ahora miramos el LEVELMANAGER (donde están las monedas)
+        if (LevelManager.instance == null) return;
 
-        // Verificamos si tiene suficiente gente infectada TOTAL
-        if (Guardado.instance.totalInfected >= cost)
+        int finalPrice = GetFinalCost(); 
+        int misMonedas = LevelManager.instance.contagionCoins; // <--- AQUÍ ESTÁ EL CAMBIO
+
+        Debug.Log("Intentando comprar. Precio: " + finalPrice + " | Tienes Monedas: " + misMonedas);
+
+        if (misMonedas >= finalPrice)
         {
-            // 1. Restamos el precio (Gastar gente)
-            // Nota: AddTotalData suma, así que pasamos el costo en negativo para restar
-            Guardado.instance.AddTotalData(-cost); 
+            // 1. RESTAMOS LAS MONEDAS (Del LevelManager)
+            LevelManager.instance.contagionCoins -= finalPrice;
+            LevelManager.instance.UpdateUI(); // Actualizamos los textos de la pantalla
 
             // 2. Desbloqueamos
             isUnlocked = true;
             PlayerPrefs.SetInt("ZoneUnlocked_" + mapIndex, 1);
             PlayerPrefs.Save();
 
-            // 3. Equipamos automáticamente al comprar
             EquipZone();
         }
         else
         {
-            Debug.Log("¡No tienes suficientes infectados!");
+            Debug.Log("¡No tienes suficientes Monedas!");
         }
     }
 
@@ -82,29 +83,39 @@ public class ZoneItem : MonoBehaviour
 
     void UpdateUI()
     {
-        int currentEquipped = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        if (LevelManager.instance == null) return;
 
+        int currentEquipped = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int currentPrice = GetFinalCost(); 
+        int misMonedas = LevelManager.instance.contagionCoins; 
+        string bonusText = "";
+        
+        if (mapIndex == 1) bonusText = " (x2 Oro)";
+        if (mapIndex == 2) bonusText = " (x3 Oro)";
         if (isUnlocked)
+            
         {
             if (currentEquipped == mapIndex)
             {
                 statusText.text = "EQUIPADO";
-                myButton.interactable = false; // Ya lo tienes puesto
+                myButton.interactable = false; 
+                if(nameText) nameText.text = zoneName + bonusText;
             }
             else
             {
                 statusText.text = "SELECCIONAR";
                 myButton.interactable = true;
+                if(nameText) nameText.text = zoneName + bonusText + " (" + currentPrice + ")";
             }
-            // Si ya es tuyo, quitamos el precio del nombre
             if(nameText) nameText.text = zoneName; 
         }
         else
         {
             statusText.text = "COMPRAR";
-            
-            // Solo se ilumina si tienes dinero
-            bool canAfford = Guardado.instance.totalInfected >= cost;
+            if(nameText) nameText.text = zoneName + " (" + currentPrice + ")" + " (" + bonusText + ")"; 
+
+            // COMPARAMOS CON LAS MONEDAS REALES
+            bool canAfford = misMonedas >= currentPrice; 
             myButton.interactable = canAfford;
         }
     }

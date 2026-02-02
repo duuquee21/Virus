@@ -4,6 +4,10 @@ using TMPro;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+    
+    [Header("Sistema de Zonas")]
+    
+    public GameObject[] mapList;
 
     [Header("Referencias")]
     public GameObject virusPlayer;
@@ -15,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject shopPanel;
     public GameObject shinyPanel;
+    public GameObject zonePanel;
 
     [Header("UI Text")]
     public TextMeshProUGUI timerText;
@@ -22,7 +27,8 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI contagionCoinsText;
     public TextMeshProUGUI daysRemainingText;
     public TextMeshProUGUI shinyStoreText;
-
+    public TextMeshProUGUI zoneCurrencyText;
+    
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
@@ -85,7 +91,10 @@ public class LevelManager : MonoBehaviour
 
     public void OpenShinyShop() { gameOverPanel.SetActive(false); shinyPanel.SetActive(true); UpdateUI(); }
     public void CloseShinyShop() { shinyPanel.SetActive(false); gameOverPanel.SetActive(true); }
-
+    public void OpenZoneShop() { gameOverPanel.SetActive(false); if(zonePanel != null) zonePanel.SetActive(true); UpdateUI(); 
+    }
+    
+    public void CloseZoneShop() { if(zonePanel != null) zonePanel.SetActive(false); gameOverPanel.SetActive(true); }
     public void ReturnToMenu()
     {
         gameOverPanel.SetActive(false);
@@ -94,7 +103,26 @@ public class LevelManager : MonoBehaviour
         ShowMainMenu();
     }
 
-    public void ActivateMap(int zoneID) { Debug.Log("Activando zona: " + zoneID); }
+    public void ActivateMap(int zoneID) 
+    { 
+        Debug.Log("Activando zona: " + zoneID);
+        
+        
+        PlayerPrefs.SetInt("CurrentMapIndex", zoneID);
+        PlayerPrefs.Save();
+
+       
+        foreach (GameObject map in mapList)
+        {
+            if (map != null) map.SetActive(false);
+        }
+
+        
+        if (zoneID >= 0 && zoneID < mapList.Length)
+        {
+            if (mapList[zoneID] != null) mapList[zoneID].SetActive(true);
+        }
+    }
 
     // --- GAMEPLAY ---
     public void ResetRun()
@@ -116,6 +144,11 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
+        CleanUpScene();
+        
+        int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        ActivateMap(savedMap);
+        
         isGameActive = true;
         currentSessionInfected = 0;
         currentTimer = gameDuration;
@@ -142,13 +175,42 @@ public class LevelManager : MonoBehaviour
     void EndSession()
     {
         isGameActive = false;
-        contagionCoins += currentSessionInfected * Guardado.instance.coinMultiplier;
+
+        
+        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int zoneMultiplier = 1; 
+
+        // 2. APLICAR BONUS SEGÚN EL MAPA
+        if (mapIndex == 1) // Zona Roja
+        {
+            zoneMultiplier = 2; 
+        }
+        else if (mapIndex == 2) 
+        {
+            zoneMultiplier = 3; 
+        }
+
+        // 3. CALCULAR EL TOTAL (Infectados * Mejoras * Bonus de Zona)
+        int earnings = currentSessionInfected * Guardado.instance.coinMultiplier * zoneMultiplier;
+        
+      
+        contagionCoins += earnings;
+        
+        
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.AddTotalData(currentSessionInfected);
+        }
+
         daysRemaining--;
         if (daysRemaining < 0) daysRemaining = 0;
 
         gameUI.SetActive(false);
         gameOverPanel.SetActive(true);
         virusPlayer.SetActive(false);
+        
+      
+        
         UpdateUI();
     }
 
@@ -159,6 +221,11 @@ public class LevelManager : MonoBehaviour
         daysRemainingText.text = "Quedan " + daysRemaining + " días";
         if (shinyStoreText != null && Guardado.instance != null)
             shinyStoreText.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
+        if (zoneCurrencyText != null)
+        {
+           
+            zoneCurrencyText.text = "Tienes: " + contagionCoins + " Monedas";
+        }
     }
 
     void ShowMainMenu()
@@ -167,5 +234,24 @@ public class LevelManager : MonoBehaviour
         gameUI.SetActive(false);
         gameOverPanel.SetActive(false);
         virusPlayer.SetActive(false);
+        
+        
+    }
+    
+    
+    
+    
+    void CleanUpScene()
+    {
+        
+        PersonaInfeccion[] genteEnPantalla = FindObjectsOfType<PersonaInfeccion>();
+
+        foreach (PersonaInfeccion persona in genteEnPantalla)
+        {
+            if (persona != null)
+            {
+                Destroy(persona.gameObject); 
+            }
+        }
     }
 }

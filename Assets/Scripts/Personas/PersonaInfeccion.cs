@@ -73,6 +73,12 @@ public class PersonaInfeccion : MonoBehaviour
         {
             LevelManager.instance.RegisterInfection();
         }
+        
+        if (InfectionFeedback.instance != null)
+        {
+            InfectionFeedback.instance.PlayEffect(transform.position);
+        }
+        
 
         if (isShiny)
         {
