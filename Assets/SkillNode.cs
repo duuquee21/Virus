@@ -126,6 +126,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
+        
+        if (unlocked) return;
+        
+        // Si no tiene dinero, suena ERROR
+        if (Guardado.instance.shinyDNA < shinyCost) 
+        {
+            AudioManager.instance.PlayError();
+            return;
+        }
+
+        // Si compra con éxito:
+        AudioManager.instance.PlayBuyUpgrade(); // <--- SONIDO DE ÉXITO
+        
         if (unlocked || (button != null && !button.interactable)) return;
         if (Guardado.instance.shinyDNA < shinyCost) return;
 

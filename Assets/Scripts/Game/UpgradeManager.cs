@@ -224,17 +224,29 @@ public class UpgradeManager : MonoBehaviour
 
     void TryBuy(int cost, System.Action upgradeAction, TextMeshProUGUI costText)
     {
+        // --- CASO DE ERROR: NO HAY DINERO ---
         if (LevelManager.instance.contagionCoins < cost)
         {
+            // SONIDO ERROR
+            if (AudioManager.instance != null) AudioManager.instance.PlayError();
+
             if (!isBlinking)
                 StartCoroutine(BlinkRoutine(costText));
             return;
         }
 
+        // --- CASO DE ÉXITO: COMPRA REALIZADA ---
+        
+        // SONIDO COMPRA
+        // Usamos el mismo sonido de "Upgrade" del árbol, pero si quieres otro
+        // puedes crear PlayBuyGameItem() en el AudioManager.
+        if (AudioManager.instance != null) AudioManager.instance.PlayBuyUpgrade();
+
         LevelManager.instance.contagionCoins -= cost;
         upgradeAction.Invoke();
         LevelManager.instance.UpdateUI();
     }
+    
 
     IEnumerator BlinkRoutine(TextMeshProUGUI text)
     {
@@ -252,6 +264,7 @@ public class UpgradeManager : MonoBehaviour
         text.color = normal;
         isBlinking = false;
     }
+   
 
     // ===============================
     // BONUS PERMANENTE DEL ÁRBOL
