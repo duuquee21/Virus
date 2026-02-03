@@ -4,10 +4,8 @@ public class VirusRadiusController : MonoBehaviour
 {
     public static VirusRadiusController instance;
 
-    // Tu base sigue existiendo (100%)
     public float baseScale = 1f;
 
-    // Progresión real de la tabla
     float[] radiusMultipliers = {
         1f,     // 100%
         1.2f,   // 120%
@@ -22,6 +20,10 @@ public class VirusRadiusController : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
         ApplyScale();
     }
 
@@ -33,39 +35,47 @@ public class VirusRadiusController : MonoBehaviour
         ApplyScale();
     }
 
-    // BONUS PERMANENTE / SET DIRECTO
     public void SetLevel(int level)
     {
         currentLevelIndex = Mathf.Clamp(level - 1, 0, radiusMultipliers.Length - 1);
         ApplyScale();
     }
 
-    void ApplyScale()
+    // Esta es la función que hace la magia
+    public void ApplyScale()
     {
-        float newRadius = baseScale * radiusMultipliers[currentLevelIndex];
+        // 1. Calculamos el radio base según el nivel de la tienda
+        float shopRadius = baseScale * radiusMultipliers[currentLevelIndex];
 
+        // 2. Aplicamos el multiplicador del Árbol de Habilidades (1.25, 1.5, etc.)
+        // Si no tienes ninguna habilidad, el valor en Guardado debe ser 1f
+        float skillMultiplier = 1f;
+        if (Guardado.instance != null)
+        {
+            skillMultiplier = Guardado.instance.radiusMultiplier;
+        }
+
+        float finalRadius = shopRadius * skillMultiplier;
+
+        // 3. Aplicamos el radio final a los componentes
         CircleCollider2D collider = GetComponentInChildren<CircleCollider2D>();
         if (collider != null)
-            collider.radius = newRadius;
+            collider.radius = finalRadius;
 
         RadiusLineRenderer line = GetComponentInChildren<RadiusLineRenderer>();
         if (line != null)
-            line.DrawCircle(newRadius);
+            line.DrawCircle(finalRadius);
 
         Transform redSprite = transform.Find("InfectionRadiusVisual");
         if (redSprite != null)
-            redSprite.localScale = new Vector3(newRadius * 2f, newRadius * 2f, 1f);
+            redSprite.localScale = new Vector3(finalRadius * 2f, finalRadius * 2f, 1f);
+
+        Debug.Log($"Radio Actualizado: Base({shopRadius}) x Multiplicador({skillMultiplier}) = {finalRadius}");
     }
 
-    public int GetCurrentLevel()
-    {
-        return currentLevelIndex + 1;
-    }
+    public int GetCurrentLevel() => currentLevelIndex + 1;
 
-    public bool IsMaxLevel()
-    {
-        return currentLevelIndex >= radiusMultipliers.Length - 1;
-    }
+    public bool IsMaxLevel() => currentLevelIndex >= radiusMultipliers.Length - 1;
 
     public void ResetUpgrade()
     {

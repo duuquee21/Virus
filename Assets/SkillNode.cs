@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-[RequireComponent(typeof(CanvasGroup))] // Necesario para la transparencia
+[RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public enum SkillEffectType
@@ -14,19 +14,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ReduceSpawnInterval20, ReduceSpawnInterval40, ReduceSpawnInterval60, ReduceSpawnInterval80, ReduceSpawnInterval100,
         IncreasePopulation25, IncreasePopulation50,
         AddDays5, AddDays10,
-        IncreaseShinyValue1,
-        IncreaseShinyValue3,
-        MultiplyShinyX5,
-        MultiplyShinyX7,
-        MultiplyShinyX10,
-        HalveZoneCosts,
-        AddExtraShiny,
-        ZoneIncome100,
-        ZoneIncome250,
-        ZoneIncome500,
-        ZoneIncome1000,
-        ZoneIncome5000,
-        ShinyPassivePerZone
+        IncreaseShinyValue1, IncreaseShinyValue3,
+        MultiplyShinyX5, MultiplyShinyX7, MultiplyShinyX10,
+        HalveZoneCosts, AddExtraShiny,
+        ZoneIncome100, ZoneIncome250, ZoneIncome500, ZoneIncome1000, ZoneIncome5000,
+        ShinyPassivePerZone,
+        MultiplyRadius125, MultiplyRadius150, MultiplyRadius200,
+        GuaranteedShinyEffect,
+        MultiplySpeed125, MultiplySpeed150,
+        InfectSpeed50, InfectSpeed100,
+        KeepUpgradesOnResetEffect,
+        ShinyCaptureSpeed50,  // +50% velocidad contra Shinies
+        ShinyCaptureSpeed100  // +100% velocidad contra Shinies
     }
 
     [Header("Datos")]
@@ -46,76 +45,47 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public GameObject lockIcon;
     public Image nodeImage;
     public TextMeshProUGUI skillNameText;
-    public CanvasGroup canvasGroup; // Para controlar visibilidad sin desactivar
+    public CanvasGroup canvasGroup;
 
     [Header("Audio")]
-    public AudioSource audioSource; // Arrastra un AudioSource aquí o al objeto padre
-    public AudioClip unlockSound;   // Arrastra aquí tu sonido de "clinck"
+    public AudioSource audioSource;
+    public AudioClip unlockSound;
 
     private bool unlocked = false;
     public bool IsUnlocked => unlocked;
 
-    void Awake()
-    {
-        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    void Start()
-    {
-        CheckIfShouldShow();
-    }
+    void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
+    void Start() { CheckIfShouldShow(); }
 
     public void CheckIfShouldShow()
     {
-        // 1. SI YA ESTÁ COMPRADO
         if (unlocked)
         {
-            SetAppearance(true, 1f, false); // Visible, opaco, sin clics (ya es tuyo)
+            SetAppearance(true, 1f, false);
             SetState(false, Color.gray, false);
             return;
         }
 
-        // 2. SI ES NODO ROOT (Sin padres)
         if (requiredParentNodes == null || requiredParentNodes.Length == 0)
         {
-            SetAppearance(true, 1f, true); // Visible, opaco, clickable
+            SetAppearance(true, 1f, true);
             SetState(true, Color.white, false);
             return;
         }
 
-        // 3. COMPROBACIÓN DE PADRES
         bool allParentsUnlocked = true;
         bool atLeastOneParentUnlocked = false;
 
         foreach (var parent in requiredParentNodes)
         {
-            if (parent != null && parent.IsUnlocked)
-                atLeastOneParentUnlocked = true;
-            else
-                allParentsUnlocked = false;
+            if (parent != null && parent.IsUnlocked) atLeastOneParentUnlocked = true;
+            else allParentsUnlocked = false;
         }
 
-        // --- LÓGICA DE REVELACIÓN ---
-        if (allParentsUnlocked)
-        {
-            // DISPONIBLE: Se ve perfecto y se puede comprar
-            SetAppearance(true, 1f, true);
-            SetState(true, Color.white, false);
-        }
-        else if (atLeastOneParentUnlocked)
-        {
-            // FANTASMA: Se ve la línea y una sombra del nodo, pero no se puede clicar
-            // Alpha 0.15f hace que sea una "sugerencia" visual
-            SetAppearance(true, 0.15f, false);
-            SetState(false, Color.black, true);
-        }
-        else
-        {
-            // OCULTO: Si ningún padre está comprado, desaparece todo
-            SetAppearance(false, 0f, false);
-        }
+        if (allParentsUnlocked) { SetAppearance(true, 1f, true); SetState(true, Color.white, false); }
+        else if (atLeastOneParentUnlocked) { SetAppearance(true, 0.15f, false); SetState(false, Color.black, true); }
+        else { SetAppearance(false, 0f, false); }
 
-        // Forzar a las líneas a actualizarse
         UpdateLinesVisuals();
     }
 
@@ -125,12 +95,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (canvasGroup != null)
         {
             canvasGroup.alpha = alpha;
-            canvasGroup.blocksRaycasts = canClick; // Evita que el Tooltip salga en nodos fantasma
+            canvasGroup.blocksRaycasts = canClick;
         }
-
         if (isActive && alpha > 0)
         {
-            // Asegurar que el texto y demás hijos se vean (tu bug anterior)
             foreach (Transform child in transform) child.gameObject.SetActive(true);
             if (skillNameText != null) skillNameText.enabled = true;
         }
@@ -138,17 +106,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     void UpdateLinesVisuals()
     {
-        SkillTreeLinesUI lines = FindObjectOfType<SkillTreeLinesUI>();
+        SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
         if (lines != null && requiredParentNodes != null)
         {
-            RectTransform myRect = GetComponent<RectTransform>();
             foreach (var parent in requiredParentNodes)
             {
-                if (parent != null && parent.IsUnlocked)
-                {
-                    // Esto dibuja la línea gris desde el padre hacia este nodo fantasma
-                    lines.ShowFrom(parent.GetComponent<RectTransform>());
-                }
+                if (parent != null && parent.IsUnlocked) lines.ShowFrom(parent.GetComponent<RectTransform>());
             }
         }
     }
@@ -165,12 +128,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (unlocked || (button != null && !button.interactable)) return;
         if (Guardado.instance.shinyDNA < shinyCost) return;
 
-        // --- NUEVO: REPRODUCIR SONIDO ---
-        if (audioSource != null && unlockSound != null)
-        {
-            audioSource.PlayOneShot(unlockSound);
-        }
-        // -------------------------------
+        if (audioSource != null && unlockSound != null) audioSource.PlayOneShot(unlockSound);
 
         Guardado.instance.shinyDNA -= shinyCost;
         unlocked = true;
@@ -180,10 +138,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (nextNodes != null)
         {
-            foreach (var child in nextNodes)
-            {
-                if (child != null) child.CheckIfShouldShow();
-            }
+            foreach (var child in nextNodes) if (child != null) child.CheckIfShouldShow();
         }
 
         LevelManager.instance.UpdateUI();
@@ -192,6 +147,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void ApplyEffect()
     {
         if (Guardado.instance == null) return;
+
         switch (effectType)
         {
             case SkillEffectType.RandomInitialUpgrade: Guardado.instance.AssignRandomInitialUpgrade(); break;
@@ -227,8 +183,50 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.MultiplyShinyX5: Guardado.instance.SetShinyMultiplier(5); break;
             case SkillEffectType.MultiplyShinyX7: Guardado.instance.SetShinyMultiplier(7); break;
             case SkillEffectType.MultiplyShinyX10: Guardado.instance.SetShinyMultiplier(10); break;
-            case SkillEffectType.ShinyPassivePerZone:
-                Guardado.instance.SetShinyPassiveIncome(1); // Da 1 por zona
+            case SkillEffectType.ShinyPassivePerZone: Guardado.instance.SetShinyPassiveIncome(1); break;
+
+            case SkillEffectType.MultiplyRadius125:
+                Guardado.instance.SetRadiusMultiplier(1.25f);
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+            case SkillEffectType.MultiplyRadius150:
+                Guardado.instance.SetRadiusMultiplier(1.50f);
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+            case SkillEffectType.MultiplyRadius200:
+                Guardado.instance.SetRadiusMultiplier(2.00f);
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+
+            case SkillEffectType.GuaranteedShinyEffect:
+                Guardado.instance.ActivateGuaranteedShiny();
+                break;
+
+            case SkillEffectType.MultiplySpeed125:
+                Guardado.instance.SetSpeedMultiplier(1.25f);
+                if (VirusMovement.instance != null) VirusMovement.instance.ApplySpeedMultiplier();
+                break;
+            case SkillEffectType.MultiplySpeed150:
+                Guardado.instance.SetSpeedMultiplier(1.50f);
+                if (VirusMovement.instance != null) VirusMovement.instance.ApplySpeedMultiplier();
+                break;
+
+            case SkillEffectType.InfectSpeed50:
+                Guardado.instance.SetInfectSpeedMultiplier(1.5f);
+                break;
+            case SkillEffectType.InfectSpeed100:
+                Guardado.instance.SetInfectSpeedMultiplier(2.0f);
+                break;
+
+            // --- NUEVOS EFECTOS PARA SHINIES ---
+            case SkillEffectType.ShinyCaptureSpeed50:
+                Guardado.instance.SetShinyCaptureMultiplier(1.5f);
+                break;
+            case SkillEffectType.ShinyCaptureSpeed100:
+                Guardado.instance.SetShinyCaptureMultiplier(2.0f);
+                break;
+            case SkillEffectType.KeepUpgradesOnResetEffect:
+                Guardado.instance.ActivateKeepUpgrades();
                 break;
         }
         if (LevelManager.instance != null) LevelManager.instance.RecalculateTotalDaysUntilCure();

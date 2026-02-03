@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class PersonaInfeccion : MonoBehaviour
 {
-    // ⏱ Tiempo global mejorable por upgrades
+    // ⏱ Tiempo global base para infectar a alguien
     public static float globalInfectTime = 2f;
 
     public SpriteRenderer spritePersona;
@@ -19,7 +19,6 @@ public class PersonaInfeccion : MonoBehaviour
     [Header("Shiny Settings")]
     public bool isShiny = false;
     public Color shinyColor = Color.yellow;
-    // Ya no usaremos este 'shinyReward' fijo, usaremos el de Guardado
     public int shinyReward = 1;
 
     void Start()
@@ -35,17 +34,44 @@ public class PersonaInfeccion : MonoBehaviour
         if (alreadyInfected) return;
 
         if (isInsideZone)
-            currentInfectionTime += Time.deltaTime;
-        else
-            currentInfectionTime -= Time.deltaTime * 2f;
+        {
+            // --- LÓGICA DE VELOCIDAD DIFERENCIADA ---
+            float multiplier = 1f;
 
+            if (Guardado.instance != null)
+            {
+                if (isShiny)
+                {
+                    // Si es Shiny, usamos el multiplicador del árbol de habilidades "Shiny Capture"
+                    multiplier = Guardado.instance.shinyCaptureMultiplier;
+                }
+                else
+                {
+                    // Si es normal, usamos el multiplicador de "Infect Speed" normal
+                    multiplier = Guardado.instance.infectSpeedMultiplier;
+                }
+            }
+
+            // Aplicamos el multiplicador al progreso
+            currentInfectionTime += Time.deltaTime * multiplier;
+        }
+        else
+        {
+            // Si sale de la zona, la barra baja (el doble de rápido para penalizar)
+            currentInfectionTime -= Time.deltaTime * 2f;
+        }
+
+        // Aseguramos que el tiempo esté entre 0 y el máximo
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
 
+        // Actualizamos la barra visualmente
         float progress = currentInfectionTime / globalInfectTime;
         fillingBarImage.transform.localScale = new Vector3(progress, 1f, 1f);
 
         if (currentInfectionTime > 0)
             infectionBarCanvas.SetActive(true);
+        else
+            infectionBarCanvas.SetActive(false);
 
         if (currentInfectionTime >= globalInfectTime)
             BecomeInfected();
@@ -73,25 +99,18 @@ public class PersonaInfeccion : MonoBehaviour
         {
             LevelManager.instance.RegisterInfection();
         }
-        
+
         if (InfectionFeedback.instance != null)
         {
             InfectionFeedback.instance.PlayEffect(transform.position);
         }
-        
 
         if (isShiny)
         {
             if (Guardado.instance != null)
             {
-                // CAMBIO CLAVE: Usamos la función que calcula (Suma * Multiplicador Base)
-                // Esto permite que si tienes +2 de suma y compras x7, recibas 14, 
-                // pero si luego compras x10, pases a recibir 20 (no 140).
                 int cantidadFinal = Guardado.instance.GetFinalShinyValue();
                 Guardado.instance.AddShinyDNA(cantidadFinal);
-
-                Debug.Log("¡Shiny Infectado! Valor Base (" + Guardado.instance.shinyValueSum +
-                          ") x Multiplicador (" + Guardado.instance.shinyMultiplier + ") = " + cantidadFinal);
             }
 
             if (LevelManager.instance != null)
