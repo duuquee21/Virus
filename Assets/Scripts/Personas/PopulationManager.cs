@@ -109,4 +109,31 @@ public class PopulationManager : MonoBehaviour
         spawnInterval = baseSpawnInterval * (1f - bonus);
         if (spawnInterval < 0.3f) spawnInterval = 0.3f;
     }
+
+    void OnDrawGizmos()
+    {
+        // Color del área de spawn
+        Gizmos.color = new Color(0f, 1f, 0f, 0.25f);
+
+        // Centro y tamaño del rectángulo
+        Vector3 center = new Vector3(
+            (spawnAreaMin.x + spawnAreaMax.x) / 2f,
+            (spawnAreaMin.y + spawnAreaMax.y) / 2f,
+            0f
+        );
+
+        Vector3 size = new Vector3(
+            Mathf.Abs(spawnAreaMax.x - spawnAreaMin.x),
+            Mathf.Abs(spawnAreaMax.y - spawnAreaMin.y),
+            0.1f
+        );
+
+        // Área rellena
+        Gizmos.DrawCube(center, size);
+
+        // Borde más visible
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(center, size);
+    }
+
 }

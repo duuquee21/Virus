@@ -4,9 +4,14 @@ public class VirusMovement : MonoBehaviour
 {
     public static VirusMovement instance;
 
-    [Header("Configuración")]
-    public float baseMoveSpeed = 80f; // La velocidad que te da la tienda de monedas
-    private float currentFinalSpeed; // La velocidad real aplicada (Base * Multiplicador Árbol)
+    [Header("Configuración de Velocidad")]
+    public float baseMoveSpeed = 80f;
+    private float currentFinalSpeed;
+
+    [Header("Suavizado")]
+    [Range(0.1f, 20f)]
+    public float acceleration = 5f; // Cuanto más bajo, más tarda en arrancar y frenar
+    public float linearDrag = 2f;    // Resistencia al movimiento (ayuda a frenar suavemente)
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
@@ -19,46 +24,48 @@ public class VirusMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        ApplySpeedMultiplier(); // Calcular al empezar
+
+        // Ajustamos el Drag para que no se deslice infinitamente
+        rb.linearDamping = linearDrag;
+
+        ApplySpeedMultiplier();
     }
 
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        // GetAxis (sin Raw) ya tiene un pequeño suavizado integrado por Unity
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
 
-        movementInput = new Vector2(moveX, moveY).normalized;
+        movementInput = new Vector2(moveX, moveY);
     }
 
     void FixedUpdate()
     {
-        if (movementInput.magnitude > 0)
-        {
-            // Usamos currentFinalSpeed en lugar de moveSpeed directamente
-            rb.AddForce(movementInput * currentFinalSpeed);
-        }
+        // Calculamos la velocidad deseada
+        Vector2 targetVelocity = movementInput * currentFinalSpeed;
+
+        // Calculamos la diferencia entre la velocidad actual y la deseada
+        Vector2 velocityChange = targetVelocity - rb.linearVelocity;
+
+        // Aplicamos una fuerza proporcional a la aceleración
+        rb.AddForce(velocityChange * acceleration);
     }
 
-    // --- FUNCIÓN CLAVE ---
     public void ApplySpeedMultiplier()
     {
         float skillMultiplier = 1f;
-
-        // Leemos el multiplicador del árbol (1.25, 1.5, etc.)
         if (Guardado.instance != null)
         {
             skillMultiplier = Guardado.instance.speedMultiplier;
         }
 
         currentFinalSpeed = baseMoveSpeed * skillMultiplier;
-
-        Debug.Log($"Velocidad Actualizada: Base({baseMoveSpeed}) x Árbol({skillMultiplier}) = {currentFinalSpeed}");
     }
 
-    // 👉 Usado por UpgradeManager (Tienda normal de monedas)
     public void SetSpeed(float newSpeed)
     {
         baseMoveSpeed = newSpeed;
-        ApplySpeedMultiplier(); // Re-calculamos con el multiplicador del árbol aplicado
+        ApplySpeedMultiplier();
     }
 }

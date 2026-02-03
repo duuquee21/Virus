@@ -3,60 +3,62 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float moveSpeed = 2f;
-    public float waitTime = 1f; //tiempo quieto antes de moverse
+    public float waitTime = 1f;
 
-    // limitar movimiento al mapa
-
-    public Vector2 minPosition = new Vector2(-8, -4);
-    public Vector2 maxPosition = new Vector2(8, 4);
+    // Margen para que no se salga justo del borde
+    public float screenPadding = 0.5f;
 
     private Vector2 targetPosition;
     private float waitCounter;
     private bool isWalking;
 
+    Camera cam;
 
     void Start()
     {
+        cam = Camera.main;
         PickNewTarget();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isWalking)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-            //si llegamos, el contador svolvera a 0
-            if(Vector2.Distance(transform.position,targetPosition) < 0.1f)
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                targetPosition,
+                moveSpeed * Time.deltaTime
+            );
+
+            if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
             {
                 isWalking = false;
                 waitCounter = waitTime;
             }
         }
-
         else
         {
-            //tiempo de espera
-
             waitCounter -= Time.deltaTime;
 
             if (waitCounter <= 0)
-            {
                 PickNewTarget();
-            }
         }
     }
 
     void PickNewTarget()
     {
-        //elegir coordenadas aleatorias
+        // Convertimos los bordes de la pantalla a mundo
+        Vector2 minWorld = cam.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 maxWorld = cam.ViewportToWorldPoint(new Vector2(1, 1));
 
-        float randomX = Random.Range(minPosition.x, maxPosition.y);
-        float randomY = Random.Range(maxPosition.x, minPosition.y);
+        // Aplicamos padding
+        minWorld += Vector2.one * screenPadding;
+        maxWorld -= Vector2.one * screenPadding;
+
+        float randomX = Random.Range(minWorld.x, maxWorld.x);
+        float randomY = Random.Range(minWorld.y, maxWorld.y);
 
         targetPosition = new Vector2(randomX, randomY);
         isWalking = true;
-
     }
-
 }
