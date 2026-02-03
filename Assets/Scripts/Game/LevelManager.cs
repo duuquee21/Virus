@@ -37,7 +37,8 @@ public class LevelManager : MonoBehaviour
     [Header("Configuración Shiny (75% Chance)")]
     public float shinyChance = 0.75f;
     private bool shinyAlreadySpawnedInRun = false;
-    private bool isShinyDayToday = false;
+    // CAMBIO: Ahora usamos un int para saber cuántos Shinies crear hoy
+    private int shiniesToSpawnToday = 0;
 
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
@@ -58,7 +59,6 @@ public class LevelManager : MonoBehaviour
         if (virusPlayer != null && virusMovementScript == null)
             virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
 
-        // --- LIMPIEZA DE SEGURIDAD AL DAR "PLAY" ---
         ForceHardReset();
 
         RecalculateTotalDaysUntilCure();
@@ -66,15 +66,12 @@ public class LevelManager : MonoBehaviour
         ShowMainMenu();
     }
 
-    // Asegura que al pulsar PLAY en Unity todo empiece en Nivel 1
     void ForceHardReset()
     {
         if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
         if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.ResetUpgrade();
         if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
         if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
-
-        // Corregido: Llamamos a ResetUpgrade en lugar de Upgrade para evitar subir al nivel 2
         if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
 
         Debug.Log("<color=cyan>Seguridad:</color> Todos los niveles de la tienda reiniciados para nueva sesión.");
@@ -103,7 +100,6 @@ public class LevelManager : MonoBehaviour
         if (currentTimer <= 0) EndSession();
     }
 
-    // --- NAVEGACIÓN ---
     public void TryStartGame() { ResetRun(); }
     public void OpenShop() { gameOverPanel.SetActive(false); shopPanel.SetActive(true); }
     public void CloseShop() { shopPanel.SetActive(false); gameOverPanel.SetActive(true); }
@@ -136,7 +132,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // --- GAMEPLAY CORE ---
     public void ResetRun()
     {
         RecalculateTotalDaysUntilCure();
@@ -144,9 +139,9 @@ public class LevelManager : MonoBehaviour
 
         isShinyCollectedInRun = false;
         shinyAlreadySpawnedInRun = false;
-        isShinyDayToday = false;
+        // CAMBIO: Reseteamos la cuenta de shinies
+        shiniesToSpawnToday = 0;
 
-        // --- LÓGICA DE PERSISTENCIA ---
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset)
         {
             if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
@@ -162,7 +157,6 @@ public class LevelManager : MonoBehaviour
             Debug.Log("<color=green>Habilidad Activa:</color> Se mantienen los niveles de la tienda.");
         }
 
-        // Aplicar el bonus gratuito inicial DESPUÉS del reset si existe
         if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
 
         contagionCoins = Guardado.instance.startingCoins;
@@ -171,7 +165,6 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        // 1. INGRESOS PASIVOS
         if (Guardado.instance != null)
         {
             int numeroZonas = GetTotalUnlockedZones();
@@ -182,21 +175,29 @@ public class LevelManager : MonoBehaviour
                 Guardado.instance.AddShinyDNA(numeroZonas * Guardado.instance.shinyPerZoneDaily);
         }
 
-        // 2. SORTEO SHINY
-        isShinyDayToday = false;
+        // --- LÓGICA DE DOBLE SHINY ---
+        shiniesToSpawnToday = 0;
         if (!shinyAlreadySpawnedInRun)
         {
             float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny) ? 1.0f : shinyChance;
 
             if (Random.value <= probabilidadActual)
             {
-                isShinyDayToday = true;
+                // Si tiene la habilidad de doble shiny comprada
+                if (Guardado.instance != null && Guardado.instance.extraShiniesPerRound > 0)
+                {
+                    shiniesToSpawnToday = 2;
+                    Debug.Log("<color=yellow>¡Sorteo Shiny Ganado: Aparecerán 2!</color>");
+                }
+                else
+                {
+                    shiniesToSpawnToday = 1;
+                    Debug.Log("<color=yellow>Sorteo Shiny Ganado: Aparecerá 1.</color>");
+                }
                 shinyAlreadySpawnedInRun = true;
-                Debug.Log("<color=yellow>Sorteo Shiny Ganado.</color>");
             }
         }
 
-        // 3. PREPARACIÓN DE ESCENA
         CleanUpScene();
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
@@ -206,9 +207,9 @@ public class LevelManager : MonoBehaviour
         currentTimer = gameDuration;
 
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-        if (pm != null) pm.ConfigureRound(isShinyDayToday);
+        // CAMBIO: Ahora pasamos el número exacto de shinies (0, 1 o 2)
+        if (pm != null) pm.ConfigureRound(shiniesToSpawnToday);
 
-        // 4. UI Y ACTIVACIÓN
         UpdateUI();
         menuPanel.SetActive(false);
         gameOverPanel.SetActive(false);

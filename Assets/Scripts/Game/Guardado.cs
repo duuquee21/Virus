@@ -143,6 +143,8 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
+        PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
+
         PlayerPrefs.Save();
     }
 
@@ -168,6 +170,7 @@ public class Guardado : MonoBehaviour
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
         shinyCaptureMultiplier = PlayerPrefs.GetFloat("ShinyCaptureMult", 1.0f);
+        doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
     }
 
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
@@ -190,4 +193,17 @@ public class Guardado : MonoBehaviour
     public void IncreaseShinyValueSum(int val) { shinyValueSum += val; SaveData(); }
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
+    // En Guardado.cs
+    public bool doubleShinySkill = false; // Habilidad de doble Shiny
+
+    public void ActivateDoubleShiny()
+    {
+        doubleShinySkill = true;
+        SaveData();
+    }
+
+    // En SaveData añadir:
+    
+// En LoadData añadir:
+
 }
