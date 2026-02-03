@@ -37,7 +37,8 @@ public class LevelManager : MonoBehaviour
     [Header("Configuración Shiny (75% Chance)")]
     public float shinyChance = 0.75f;
     private bool shinyAlreadySpawnedInRun = false;
-    // CAMBIO: Ahora usamos un int para saber cuántos Shinies crear hoy
+    // FIJAR: Hemos añadido de nuevo esta variable para evitar el error
+    private bool isShinyDayToday = false;
     private int shiniesToSpawnToday = 0;
 
     [HideInInspector] public bool isGameActive;
@@ -111,11 +112,11 @@ public class LevelManager : MonoBehaviour
     public void ReturnToMenu()
     {
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
-        
+
         gameOverPanel.SetActive(false);
         shopPanel.SetActive(false);
         shinyPanel.SetActive(false);
-        
+
         ShowMainMenu();
     }
 
@@ -142,21 +143,17 @@ public class LevelManager : MonoBehaviour
 
         isShinyCollectedInRun = false;
         shinyAlreadySpawnedInRun = false;
-        isShinyDayToday = false;
-        
-        
+        isShinyDayToday = false; // Ahora esta línea ya no dará error
+        shiniesToSpawnToday = 0;
+
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
 
-        
         for (int i = 1; i <= 10; i++)
         {
-            PlayerPrefs.SetInt("ZoneUnlocked_" + i, 0); // 0 = Bloqueado
+            PlayerPrefs.SetInt("ZoneUnlocked_" + i, 0);
         }
-        
-        
-        PlayerPrefs.Save();
 
-        
+        PlayerPrefs.Save();
         ActivateMap(0);
 
         // --- LÓGICA DE PERSISTENCIA ---
@@ -192,18 +189,20 @@ public class LevelManager : MonoBehaviour
             if (Guardado.instance.shinyPerZoneDaily > 0)
                 Guardado.instance.AddShinyDNA(numeroZonas * Guardado.instance.shinyPerZoneDaily);
         }
-        //musica
+
         if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
         // --- LÓGICA DE DOBLE SHINY ---
         shiniesToSpawnToday = 0;
+        isShinyDayToday = false; // Resetear el estado para el nuevo día
+
         if (!shinyAlreadySpawnedInRun)
         {
             float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny) ? 1.0f : shinyChance;
 
             if (Random.value <= probabilidadActual)
             {
-                // Si tiene la habilidad de doble shiny comprada
+                isShinyDayToday = true; //
                 if (Guardado.instance != null && Guardado.instance.extraShiniesPerRound > 0)
                 {
                     shiniesToSpawnToday = 2;
@@ -227,8 +226,7 @@ public class LevelManager : MonoBehaviour
         currentTimer = gameDuration;
 
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-        // CAMBIO: Ahora pasamos el número exacto de shinies (0, 1 o 2)
-        if (pm != null) pm.ConfigureRound(shiniesToSpawnToday);
+        if (pm != null) pm.ConfigureRound(shiniesToSpawnToday); // Usamos shiniesToSpawnToday
 
         UpdateUI();
         menuPanel.SetActive(false);
@@ -260,7 +258,8 @@ public class LevelManager : MonoBehaviour
 
         daysRemaining--;
         if (daysRemaining < 0) daysRemaining = 0;
-        AudioManager.instance.SwitchToMenuMusic();
+        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+
         gameUI.SetActive(false);
         gameOverPanel.SetActive(true);
         virusPlayer.SetActive(false);
