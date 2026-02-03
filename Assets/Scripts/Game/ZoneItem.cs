@@ -16,8 +16,11 @@ public class ZoneItem : MonoBehaviour
 
     private bool isUnlocked = false;
 
-    void Start()
+    
+    void OnEnable()
     {
+      
+
         if (mapIndex == 0) isUnlocked = true;
         else isUnlocked = PlayerPrefs.GetInt("ZoneUnlocked_" + mapIndex, 0) == 1;
 
@@ -43,24 +46,26 @@ public class ZoneItem : MonoBehaviour
         if (isUnlocked) EquipZone();
         else TryBuyZone();
     }
-
     void TryBuyZone()
     {
-        // CAMBIO: Ahora miramos el LEVELMANAGER (donde están las monedas)
         if (LevelManager.instance == null) return;
 
+        
         int finalPrice = GetFinalCost(); 
-        int misMonedas = LevelManager.instance.contagionCoins; // <--- AQUÍ ESTÁ EL CAMBIO
-
-        Debug.Log("Intentando comprar. Precio: " + finalPrice + " | Tienes Monedas: " + misMonedas);
+        int misMonedas = LevelManager.instance.contagionCoins;
+        Debug.Log("¡COMPRANDO! Precio: " + finalPrice + " | Monedas antes: " + LevelManager.instance.contagionCoins);
 
         if (misMonedas >= finalPrice)
         {
-            // 1. RESTAMOS LAS MONEDAS (Del LevelManager)
-            LevelManager.instance.contagionCoins -= finalPrice;
-            LevelManager.instance.UpdateUI(); // Actualizamos los textos de la pantalla
+            
+            if (AudioManager.instance != null) AudioManager.instance.PlayBuyZone();
 
-            // 2. Desbloqueamos
+            
+            LevelManager.instance.contagionCoins -= finalPrice; 
+            
+            LevelManager.instance.UpdateUI();
+
+            
             isUnlocked = true;
             PlayerPrefs.SetInt("ZoneUnlocked_" + mapIndex, 1);
             PlayerPrefs.Save();
@@ -69,7 +74,7 @@ public class ZoneItem : MonoBehaviour
         }
         else
         {
-            Debug.Log("¡No tienes suficientes Monedas!");
+            if (AudioManager.instance != null) AudioManager.instance.PlayError();
         }
     }
 

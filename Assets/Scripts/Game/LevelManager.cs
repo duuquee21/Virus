@@ -114,9 +114,12 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+        
         gameOverPanel.SetActive(false);
         shopPanel.SetActive(false);
         shinyPanel.SetActive(false);
+        
         ShowMainMenu();
     }
 
@@ -145,6 +148,21 @@ public class LevelManager : MonoBehaviour
         isShinyCollectedInRun = false;
         shinyAlreadySpawnedInRun = false;
         isShinyDayToday = false;
+        
+        
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
+
+        
+        for (int i = 1; i <= 10; i++)
+        {
+            PlayerPrefs.SetInt("ZoneUnlocked_" + i, 0); // 0 = Bloqueado
+        }
+        
+        
+        PlayerPrefs.Save();
+
+        
+        ActivateMap(0);
 
         // --- LÓGICA DE PERSISTENCIA ---
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset)
@@ -181,6 +199,8 @@ public class LevelManager : MonoBehaviour
             if (Guardado.instance.shinyPerZoneDaily > 0)
                 Guardado.instance.AddShinyDNA(numeroZonas * Guardado.instance.shinyPerZoneDaily);
         }
+        //musica
+        if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
         // 2. SORTEO SHINY
         isShinyDayToday = false;
@@ -239,7 +259,7 @@ public class LevelManager : MonoBehaviour
 
         daysRemaining--;
         if (daysRemaining < 0) daysRemaining = 0;
-
+        AudioManager.instance.SwitchToMenuMusic();
         gameUI.SetActive(false);
         gameOverPanel.SetActive(true);
         virusPlayer.SetActive(false);
