@@ -21,6 +21,11 @@ public class PopulationManager : MonoBehaviour
 
     private List<int> shinyIndices = new List<int>();
 
+
+    [Header("Spawn Animation")]
+    public float growDuration = 0.4f;
+
+
     // Este método ahora recibe el número exacto (0, 1 o 2) desde LevelManager
     public void ConfigureRound(int shinyCount)
     {
@@ -88,9 +93,19 @@ public class PopulationManager : MonoBehaviour
         Vector3 spawnPos = new Vector3(x, y, 0);
 
         GameObject newPerson = Instantiate(personPrefab, spawnPos, Quaternion.identity);
+
+        // Guardamos la escala original
+        Vector3 targetScale = newPerson.transform.localScale;
+
+        // Empieza en 0
+        newPerson.transform.localScale = Vector3.zero;
+
+        // Animación de crecimiento
+        StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
+
         personsSpawnedToday++;
 
-        // Verificamos si esta persona específica debe ser Shiny
+        // Verificamos si debe ser Shiny
         if (shinyIndices.Contains(personsSpawnedToday))
         {
             PersonaInfeccion infeccion = newPerson.GetComponent<PersonaInfeccion>();
@@ -109,4 +124,53 @@ public class PopulationManager : MonoBehaviour
         spawnInterval = baseSpawnInterval * (1f - bonus);
         if (spawnInterval < 0.3f) spawnInterval = 0.3f;
     }
+
+    System.Collections.IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
+    {
+        float t = 0f;
+
+        while (t < growDuration)
+        {
+            if (target == null) yield break;
+
+            t += Time.deltaTime;
+            float normalized = t / growDuration;
+
+            // Suavizado bonito
+            float eased = Mathf.SmoothStep(0f, 1f, normalized);
+
+            target.localScale = Vector3.Lerp(Vector3.zero, finalScale, eased);
+            yield return null;
+        }
+
+        if (target != null)
+            target.localScale = finalScale;
+    }
+
+    void OnDrawGizmos()
+    {
+        // Color del área de spawn
+        Gizmos.color = new Color(0f, 1f, 0f, 0.25f);
+
+        // Centro y tamaño del rectángulo
+        Vector3 center = new Vector3(
+            (spawnAreaMin.x + spawnAreaMax.x) / 2f,
+            (spawnAreaMin.y + spawnAreaMax.y) / 2f,
+            0f
+        );
+
+        Vector3 size = new Vector3(
+            Mathf.Abs(spawnAreaMax.x - spawnAreaMin.x),
+            Mathf.Abs(spawnAreaMax.y - spawnAreaMin.y),
+            0.1f
+        );
+
+        // Área rellena
+        Gizmos.DrawCube(center, size);
+
+        // Borde más visible
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(center, size);
+    }
+
 }
