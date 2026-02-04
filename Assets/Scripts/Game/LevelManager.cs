@@ -51,6 +51,7 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public int currentSessionInfected;
     [HideInInspector] public int contagionCoins;
     [HideInInspector] public bool isShinyCollectedInRun = false;
+    [HideInInspector] public bool shinyCaughtToday = false;
 
     float currentTimer;
     int daysRemaining;
@@ -206,7 +207,8 @@ public class LevelManager : MonoBehaviour
 
         // --- LÓGICA DE DOBLE SHINY ---
         shiniesToSpawnToday = 0;
-        isShinyDayToday = false; // Resetear el estado para el nuevo día
+        isShinyDayToday = false;
+        shinyCaughtToday = false;// Resetear el estado para el nuevo día
 
         if (!shinyAlreadySpawnedInRun)
         {
@@ -264,7 +266,11 @@ public class LevelManager : MonoBehaviour
 
         int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int zoneMultiplier = (mapIndex == 1) ? 2 : (mapIndex == 2) ? 3 : 1;
-        int earnings = currentSessionInfected * (Guardado.instance != null ? Guardado.instance.coinMultiplier : 1) * zoneMultiplier;
+        int shinyBonusMultiplier = shinyCaughtToday ? 3 : 1;
+        int earnings = currentSessionInfected 
+                       * (Guardado.instance != null ? Guardado.instance.coinMultiplier : 1) 
+                       * zoneMultiplier 
+                       * shinyBonusMultiplier;        
         contagionCoins += earnings;
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
@@ -424,5 +430,12 @@ public class LevelManager : MonoBehaviour
 
         // Iniciamos la sesión sin resetear nada
         StartSession();
+    }
+
+    public void OnShinyCaptured()
+    {
+        shinyCaughtToday = true;
+        isShinyCollectedInRun = true;
+        Debug.Log("¡Shiny Cazado! Multiplicador x3 activado para hoy.");
     }
 }
