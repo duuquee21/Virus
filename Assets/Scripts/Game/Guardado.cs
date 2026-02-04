@@ -43,9 +43,9 @@ public class Guardado : MonoBehaviour
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        LoadData();
 
-        /*if (resetOnPlay)
+        // Lógica de Reset on Play restaurada
+        if (resetOnPlay)
         {
             Debug.Log("<color=red><b>[BORRADO TOTAL]:</b> Empezando partida limpia desde CERO.</color>");
             PlayerPrefs.DeleteAll();
@@ -55,7 +55,6 @@ public class Guardado : MonoBehaviour
         {
             LoadData();
         }
-        */
     }
 
     void OnValidate()
@@ -96,6 +95,8 @@ public class Guardado : MonoBehaviour
         bonusDaysPermanent = 0;
         doubleShinySkill = false;
 
+        // Limpiar también el estado de la partida en curso
+        ClearRunState();
         SaveData();
     }
 
@@ -197,13 +198,13 @@ public class Guardado : MonoBehaviour
     public void IncreaseShinyValueSum(int val) { shinyValueSum += val; SaveData(); }
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
-
     public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
 
+    // --- SISTEMA DE PERSISTENCIA DE RUNDA ---
 
     public void SaveRunState(int currentDay, int currentCoins, int currentMap)
     {
-        PlayerPrefs.SetInt("RunInProgress" , 1); // 1 HAY UNA PARTIDA GUARDADA
+        PlayerPrefs.SetInt("RunInProgress", 1); // 1 = Hay una partida guardada
         PlayerPrefs.SetInt("RunDay", currentDay);
         PlayerPrefs.SetInt("RunCoins", currentCoins);
         PlayerPrefs.SetInt("RunMap", currentMap);
@@ -218,7 +219,7 @@ public class Guardado : MonoBehaviour
 
     public bool HasSavedGame()
     {
-        return PlayerPrefs.GetInt("RunInProgress", 0)==1;
+        return PlayerPrefs.GetInt("RunInProgress", 0) == 1;
     }
 
     public string GetContinueDetails()
@@ -227,5 +228,4 @@ public class Guardado : MonoBehaviour
         int coins = PlayerPrefs.GetInt("RunCoins", 0);
         return "Dia. " + day + "\nDinero: " + coins;
     }
-    
 }
