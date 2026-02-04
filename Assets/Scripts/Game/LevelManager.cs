@@ -8,12 +8,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Sistema de Zonas")]
     public GameObject[] mapList;
-    
-    [Header("Selector de Modo")]
-    public GameObject modeSelectionPanel;
-    public UnityEngine.UI.Button continueButton; // Arrastra el BOTÓN ENTERO
-    public TextMeshProUGUI
-        continueInfoText;
+  
     [Header("Referencias")]
     public GameObject virusPlayer;
     public VirusMovement virusMovementScript;
