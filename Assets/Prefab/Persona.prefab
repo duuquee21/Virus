@@ -160,9 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   moveSpeed: 2
-  waitTime: 1
-  minPosition: {x: -17.7, y: -10}
-  maxPosition: {x: 17.7, y: 10}
+  waitTime: 0
+  screenPadding: 0.5
+  rangoFrecuencia: {x: 1, y: 3}
+  rangoMagnitud: {x: 0.05, y: 0.2}
 --- !u!1 &3233182737108227665
 GameObject:
   m_ObjectHideFlags: 0
