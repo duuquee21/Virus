@@ -43,8 +43,9 @@ public class Guardado : MonoBehaviour
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadData();
 
-        if (resetOnPlay)
+        /*if (resetOnPlay)
         {
             Debug.Log("<color=red><b>[BORRADO TOTAL]:</b> Empezando partida limpia desde CERO.</color>");
             PlayerPrefs.DeleteAll();
@@ -54,6 +55,7 @@ public class Guardado : MonoBehaviour
         {
             LoadData();
         }
+        */
     }
 
     void OnValidate()
@@ -197,4 +199,33 @@ public class Guardado : MonoBehaviour
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
 
     public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
+
+
+    public void SaveRunState(int currentDay, int currentCoins, int currentMap)
+    {
+        PlayerPrefs.SetInt("RunInProgress" , 1); // 1 HAY UNA PARTIDA GUARDADA
+        PlayerPrefs.SetInt("RunDay", currentDay);
+        PlayerPrefs.SetInt("RunCoins", currentCoins);
+        PlayerPrefs.SetInt("RunMap", currentMap);
+        PlayerPrefs.Save();
+    }
+
+    public void ClearRunState()
+    {
+        PlayerPrefs.SetInt("RunInProgress", 0);
+        PlayerPrefs.Save();
+    }
+
+    public bool HasSavedGame()
+    {
+        return PlayerPrefs.GetInt("RunInProgress", 0)==1;
+    }
+
+    public string GetContinueDetails()
+    {
+        int day = PlayerPrefs.GetInt("RunDay", 1);
+        int coins = PlayerPrefs.GetInt("RunCoins", 0);
+        return "Dia. " + day + "\nDinero: " + coins;
+    }
+    
 }

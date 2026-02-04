@@ -7,7 +7,12 @@ public class LevelManager : MonoBehaviour
 
     [Header("Sistema de Zonas")]
     public GameObject[] mapList;
-
+    
+    [Header("Selector de Modo")]
+    public GameObject modeSelectionPanel;
+    public UnityEngine.UI.Button continueButton; // Arrastra el BOTÓN ENTERO
+    public TextMeshProUGUI
+        continueInfoText;
     [Header("Referencias")]
     public GameObject virusPlayer;
     public VirusMovement virusMovementScript;
@@ -281,6 +286,18 @@ public class LevelManager : MonoBehaviour
         {
             dayOverPanel.SetActive(true); // Si quedan días, mostramos panel de tienda/siguiente día
         }
+        
+        if (daysRemaining > 0) // Solo guardamos si sigues vivo
+        {
+            int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+            if (Guardado.instance) 
+                Guardado.instance.SaveRunState(daysRemaining, contagionCoins, currentMap);
+        }
+        else 
+        {
+            // Si es el último día o Game Over, borramos la partida guardada
+            if (Guardado.instance) Guardado.instance.ClearRunState();
+        }
 
         UpdateUI();
     }
@@ -347,5 +364,65 @@ public class LevelManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Zone_1_Unlocked", 0) == 1) count++;
         if (PlayerPrefs.GetInt("Zone_2_Unlocked", 0) == 1) count++;
         return count;
+    }
+    
+    // --- LÓGICA DE NUEVA PARTIDA / CONTINUAR ---
+
+    // 1. ESTO SE PONE EN EL BOTÓN "JUGAR" DEL MENÚ PRINCIPAL
+    public void OpenModeSelection()
+    {
+        menuPanel.SetActive(false); // Ocultamos menú principal
+        modeSelectionPanel.SetActive(true); // Mostramos el selector
+
+        // Comprobamos si hay partida guardada
+        if (Guardado.instance != null && Guardado.instance.HasSavedGame())
+        {
+            continueButton.interactable = true; // Activamos botón
+            continueInfoText.text = Guardado.instance.GetContinueDetails();
+        }
+        else
+        {
+            continueButton.interactable = false; // Bloqueamos botón (se ve gris)
+            continueInfoText.text = "Sin datos";
+        }
+    }
+
+    // 2. ESTO SE PONE EN EL BOTÓN "NUEVA PARTIDA"
+    public void Button_NewGame()
+    {
+        // Borramos cualquier save anterior para empezar de 0
+        if (Guardado.instance) Guardado.instance.ClearRunState();
+        
+        modeSelectionPanel.SetActive(false);
+        ResetRun(); // Tu función que resetea todo y empieza
+    }
+
+    // 3. ESTO SE PONE EN EL BOTÓN "CONTINUAR"
+    public void Button_Continue()
+    {
+        modeSelectionPanel.SetActive(false);
+        LoadRunAndStart();
+    }
+
+    // 4. ESTO SE PONE EN EL BOTÓN "CERRAR (X)"
+    public void CloseModeSelection()
+    {
+        modeSelectionPanel.SetActive(false);
+        menuPanel.SetActive(true);
+    }
+
+    // Lógica interna para cargar los datos
+    void LoadRunAndStart()
+    {
+        // Cargamos datos del disco a la memoria RAM
+        daysRemaining = PlayerPrefs.GetInt("Run_Day", totalDaysUntilCure);
+        contagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
+        int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
+        
+        PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
+        PlayerPrefs.Save();
+
+        // Iniciamos la sesión sin resetear nada
+        StartSession();
     }
 }
