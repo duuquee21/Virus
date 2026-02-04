@@ -284,7 +284,27 @@ public class LevelManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         virusPlayer.SetActive(false);
     }
+    // Añade esto al final de LevelManager.cs
+    public void SetCurrentTimerDebug(float newTime)
+    {
+        currentTimer = newTime;
+    }
 
+    // Método para que el Debug Menu cambie el tiempo base
+    public void SetGameDuration(float newDuration)
+    {
+        gameDuration = newDuration;
+        Debug.Log($"<color=yellow>LevelManager:</color> Duración de partida cambiada a {newDuration}s");
+    }
+
+    // Método para forzar el tiempo actual (si la partida ya ha empezado)
+    public void ForceCurrentTimer(float secondsLeft)
+    {
+        if (isGameActive)
+        {
+            currentTimer = secondsLeft;
+        }
+    }
     void CleanUpScene()
     {
         PersonaInfeccion[] genteEnPantalla = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);

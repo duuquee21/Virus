@@ -23,6 +23,7 @@ public class Guardado : MonoBehaviour
     public int shinyPerZoneDaily = 0;
     public bool guaranteedShiny = false;
     public bool keepUpgradesOnReset = false;
+    public bool doubleShinySkill = false; // Habilidad de doble Shiny
 
     [Header("Multiplicadores")]
     public float radiusMultiplier = 1.0f;
@@ -55,7 +56,6 @@ public class Guardado : MonoBehaviour
         }
     }
 
-    // Limpia los valores en el Inspector para que se vea "en base" al dar Play
     void OnValidate()
     {
         if (resetOnPlay && !Application.isPlaying)
@@ -92,11 +92,12 @@ public class Guardado : MonoBehaviour
         shinyValueSum = 1;
         shinyMultiplier = 1;
         bonusDaysPermanent = 0;
+        doubleShinySkill = false;
 
         SaveData();
     }
 
-    // --- MÉTODOS RESTAURADOS PARA MEJORAS INICIALES ---
+    // --- MEJORAS INICIALES ---
 
     public void AssignRandomInitialUpgrade()
     {
@@ -119,7 +120,7 @@ public class Guardado : MonoBehaviour
         }
     }
 
-    // --- MÉTODOS DE ACTUALIZACIÓN ---
+    // --- SISTEMA DE GUARDADO ---
 
     public void SaveData()
     {
@@ -144,11 +145,10 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
         PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
-
         PlayerPrefs.Save();
     }
 
-    void LoadData()
+    public void LoadData()
     {
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
         shinyDNA = PlayerPrefs.GetInt("TotalShinyDNA", 0);
@@ -173,6 +173,8 @@ public class Guardado : MonoBehaviour
         doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
     }
 
+    // --- MÉTODOS PÚBLICOS PARA ACTIVAR HABILIDADES ---
+
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
     public void SetShinyCaptureMultiplier(float val) { shinyCaptureMultiplier = val; SaveData(); }
@@ -193,17 +195,6 @@ public class Guardado : MonoBehaviour
     public void IncreaseShinyValueSum(int val) { shinyValueSum += val; SaveData(); }
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
-    // En Guardado.cs
-    public bool doubleShinySkill = false; // Habilidad de doble Shiny
 
-    public void ActivateDoubleShiny()
-    {
-        doubleShinySkill = true;
-        SaveData();
-    }
-
-    // En SaveData añadir:
-    
-// En LoadData añadir:
-
+    public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
 }
