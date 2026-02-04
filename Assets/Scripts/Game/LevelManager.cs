@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -17,17 +18,18 @@ public class LevelManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject dayOverPanel;
     public GameObject gameOverPanel;
-    public GameObject shopPanel;
     public GameObject shinyPanel;
     public GameObject zonePanel;
 
-    [Header("UI Text")]
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI sessionScoreText;
-    public TextMeshProUGUI contagionCoinsText;
-    public TextMeshProUGUI daysRemainingText;
-    public TextMeshProUGUI shinyStoreText;
-    public TextMeshProUGUI zoneCurrencyText;
+
+    [Header("UI Text (Listas)")]
+    public List<TextMeshProUGUI> timerTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> sessionScoreTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> contagionCoinsTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> daysRemainingTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> shinyStoreTexts = new List<TextMeshProUGUI>();
+
+
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
@@ -99,29 +101,45 @@ public class LevelManager : MonoBehaviour
         if (!isGameActive) return;
 
         currentTimer -= Time.deltaTime;
-        timerText.text = currentTimer.ToString("F1") + "s";
+        foreach (var t in timerTexts)
+        {
+            if (t != null)
+                t.text = currentTimer.ToString("F1") + "s";
+        }
 
         if (currentTimer <= 0)
         {
             EndSessionDay(); // Esta función ahora decidirá si es GameOver o no
         }
+      
     }
 
-    public void TryStartGame() { ResetRun(); }
-    public void OpenShop() { dayOverPanel.SetActive(false); gameOverPanel.SetActive(false); shopPanel.SetActive(true); }
-    public void CloseShop() { shopPanel.SetActive(false); dayOverPanel.SetActive(true); gameOverPanel.SetActive(false); }
-    public void OpenShinyShop() { gameOverPanel.SetActive(false); dayOverPanel.SetActive(false); shinyPanel.SetActive(true); UpdateUI(); }
-    public void CloseShinyShop() { shinyPanel.SetActive(false); dayOverPanel.SetActive(false); gameOverPanel.SetActive(true); }
+    public void TryStartGame() { ResetRunData(); }
+    public void OpenShinyShop() { shinyPanel.SetActive(true); UpdateUI(); }
+    public void CloseShinyShop() { shinyPanel.SetActive(false); UpdateUI(); }
     public void OpenZoneShop() { gameOverPanel.SetActive(false); dayOverPanel.SetActive(false); if (zonePanel != null) zonePanel.SetActive(true); UpdateUI(); }
     public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); dayOverPanel.SetActive(true); gameOverPanel.SetActive(false); }
 
+
+    public void NewGameFromMainMenu()
+    {
+        ResetRunData();
+
+        menuPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        gameUI.SetActive(false);
+        virusPlayer.SetActive(false);
+
+        dayOverPanel.SetActive(true);   // 👈 Se abre directamente
+        UpdateUI();
+    }
     public void ReturnToMenu()
     {
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
         gameOverPanel.SetActive(false);
         dayOverPanel.SetActive(false); 
-        shopPanel.SetActive(false);
+      
         shinyPanel.SetActive(false);
 
         ShowMainMenu();
@@ -143,27 +161,25 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void ResetRun()
+    void ResetRunData()
     {
         RecalculateTotalDaysUntilCure();
         ResetDays();
 
         isShinyCollectedInRun = false;
         shinyAlreadySpawnedInRun = false;
-        isShinyDayToday = false; // Ahora esta línea ya no dará error
+        isShinyDayToday = false;
         shiniesToSpawnToday = 0;
 
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
 
         for (int i = 1; i <= 10; i++)
-        {
             PlayerPrefs.SetInt("ZoneUnlocked_" + i, 0);
-        }
 
         PlayerPrefs.Save();
         ActivateMap(0);
 
-        // --- LÓGICA DE PERSISTENCIA ---
+        // --- Persistencia ---
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset)
         {
             if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
@@ -171,22 +187,19 @@ public class LevelManager : MonoBehaviour
             if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
             if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
             if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
-
-            Debug.Log("<color=red>Run Reset:</color> Niveles reiniciados al nivel 1 por falta de habilidad de persistencia.");
-        }
-        else
-        {
-            Debug.Log("<color=green>Habilidad Activa:</color> Se mantienen los niveles de la tienda.");
         }
 
-        if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
+        if (Guardado.instance)
+            Guardado.instance.ApplyPermanentInitialUpgrade();
 
-        contagionCoins = Guardado.instance.startingCoins;
-        StartSession();
+        contagionCoins = Guardado.instance != null ? Guardado.instance.startingCoins : 0;
     }
 
     public void StartSession()
     {
+        menuPanel.SetActive(false);
+        dayOverPanel.SetActive(false);
+
         if (Guardado.instance != null)
         {
             int numeroZonas = GetTotalUnlockedZones();
@@ -245,6 +258,8 @@ public class LevelManager : MonoBehaviour
         if (virusMovementScript != null) virusMovementScript.enabled = true;
     }
 
+  
+
     public void RegisterInfection()
     {
         if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
@@ -295,13 +310,25 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        sessionScoreText.text = "Hoy: " + currentSessionInfected + " / " + maxInfectionsPerRound;
-        contagionCoinsText.text = "Monedas: " + contagionCoins;
-        daysRemainingText.text = "Quedan " + daysRemaining + " días";
-        if (shinyStoreText != null && Guardado.instance != null)
-            shinyStoreText.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
-        if (zoneCurrencyText != null)
-            zoneCurrencyText.text = "Tienes: " + contagionCoins + " Monedas";
+        foreach (var t in sessionScoreTexts)
+            if (t != null)
+                t.text = "Hoy: " + currentSessionInfected + " / " + maxInfectionsPerRound;
+
+        foreach (var t in contagionCoinsTexts)
+            if (t != null)
+                t.text = "Monedas: " + contagionCoins;
+
+        foreach (var t in daysRemainingTexts)
+            if (t != null)
+                t.text = "Quedan " + daysRemaining + " días";
+
+        if (Guardado.instance != null)
+        {
+            foreach (var t in shinyStoreTexts)
+                if (t != null)
+                    t.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
+        }
+
     }
 
     void ShowMainMenu()
@@ -310,6 +337,16 @@ public class LevelManager : MonoBehaviour
         gameUI.SetActive(false);
         gameOverPanel.SetActive(false);
         virusPlayer.SetActive(false);
+    }
+
+    public void LostToMenu()
+    {
+        ResetRunData();
+        menuPanel.SetActive(true);
+        gameUI.SetActive(false);
+        gameOverPanel.SetActive(false);
+        virusPlayer.SetActive(false);
+
     }
     // Añade esto al final de LevelManager.cs
     public void SetCurrentTimerDebug(float newTime)
@@ -346,6 +383,7 @@ public class LevelManager : MonoBehaviour
         int count = 1;
         if (PlayerPrefs.GetInt("Zone_1_Unlocked", 0) == 1) count++;
         if (PlayerPrefs.GetInt("Zone_2_Unlocked", 0) == 1) count++;
+        UpdateUI();
         return count;
     }
 }

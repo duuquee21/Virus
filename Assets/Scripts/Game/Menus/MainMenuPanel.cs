@@ -16,11 +16,17 @@ public class MainMenuPanel : MonoBehaviour
 
     public void OpenSettings()
     {
-        mainMenuPanel.SetActive(false);
+
         settingsPanel.SetActive(true);
     }
 
     public void CloseSettings()
+    {
+        settingsPanel.SetActive(false);
+
+    }
+
+    public void BackToMainMenu()
     {
         settingsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
