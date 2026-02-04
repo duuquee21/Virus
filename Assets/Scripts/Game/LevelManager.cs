@@ -8,7 +8,12 @@ public class LevelManager : MonoBehaviour
 
     [Header("Sistema de Zonas")]
     public GameObject[] mapList;
-
+    
+    [Header("Selector de Modo")]
+    public GameObject modeSelectionPanel;
+    public UnityEngine.UI.Button continueButton; // Arrastra el BOTÓN ENTERO
+    public TextMeshProUGUI
+        continueInfoText;
     [Header("Referencias")]
     public GameObject virusPlayer;
     public VirusMovement virusMovementScript;
@@ -51,6 +56,7 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public int currentSessionInfected;
     [HideInInspector] public int contagionCoins;
     [HideInInspector] public bool isShinyCollectedInRun = false;
+    [HideInInspector] public bool shinyCaughtToday = false;
 
     float currentTimer;
     int daysRemaining;
@@ -319,6 +325,18 @@ public class LevelManager : MonoBehaviour
         else
         {
             dayOverPanel.SetActive(true); // Si quedan días, mostramos panel de tienda/siguiente día
+        }
+        
+        if (daysRemaining > 0) // Solo guardamos si sigues vivo
+        {
+            int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+            if (Guardado.instance) 
+                Guardado.instance.SaveRunState(daysRemaining, contagionCoins, currentMap);
+        }
+        else 
+        {
+            // Si es el último día o Game Over, borramos la partida guardada
+            if (Guardado.instance) Guardado.instance.ClearRunState();
         }
 
         UpdateUI();
