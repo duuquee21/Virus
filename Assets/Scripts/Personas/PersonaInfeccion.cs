@@ -105,16 +105,9 @@ public class PersonaInfeccion : MonoBehaviour
             InfectionFeedback.instance.PlayEffect(transform.position);
         }
 
-        if (isShiny)
+        if (isShiny && LevelManager.instance != null)
         {
-            if (Guardado.instance != null)
-            {
-                int cantidadFinal = Guardado.instance.GetFinalShinyValue();
-                Guardado.instance.AddShinyDNA(cantidadFinal);
-            }
-
-            if (LevelManager.instance != null)
-                LevelManager.instance.isShinyCollectedInRun = true;
+            LevelManager.instance.RegisterShinyCapture(this);
         }
     }
 

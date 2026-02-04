@@ -44,6 +44,9 @@ public class LevelManager : MonoBehaviour
     private bool isShinyDayToday = false;
     private int shiniesToSpawnToday = 0;
 
+    private List<PersonaInfeccion> shinysThisDay = new List<PersonaInfeccion>();
+    private int shiniesCapturedToday = 0;
+
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
     [HideInInspector] public int contagionCoins;
@@ -200,6 +203,7 @@ public class LevelManager : MonoBehaviour
         menuPanel.SetActive(false);
         dayOverPanel.SetActive(false);
 
+        // --- Ingresos pasivos por zonas ---
         if (Guardado.instance != null)
         {
             int numeroZonas = GetTotalUnlockedZones();
@@ -212,32 +216,25 @@ public class LevelManager : MonoBehaviour
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
-        // --- LÓGICA DE DOBLE SHINY ---
+        // --- Preparar Shinys para la sesión ---
+        shinysThisDay.Clear();
+        shiniesCapturedToday = 0;
+        isShinyDayToday = false;
         shiniesToSpawnToday = 0;
-        isShinyDayToday = false; // Resetear el estado para el nuevo día
 
-        if (!shinyAlreadySpawnedInRun)
+        float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny)
+            ? 1.0f
+            : shinyChance;
+
+        if (Random.value <= probabilidadActual)
         {
-            float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny) ? 1.0f : shinyChance;
-
-            if (Random.value <= probabilidadActual)
-            {
-                isShinyDayToday = true; //
-                if (Guardado.instance != null && Guardado.instance.extraShiniesPerRound > 0)
-                {
-                    shiniesToSpawnToday = 2;
-                    Debug.Log("<color=yellow>¡Sorteo Shiny Ganado: Aparecerán 2!</color>");
-                }
-                else
-                {
-                    shiniesToSpawnToday = 1;
-                    Debug.Log("<color=yellow>Sorteo Shiny Ganado: Aparecerá 1.</color>");
-                }
-                shinyAlreadySpawnedInRun = true;
-            }
+            isShinyDayToday = true;
+            shiniesToSpawnToday = (Guardado.instance != null && Guardado.instance.extraShiniesPerRound > 0) ? 2 : 1;
+            Debug.Log("<color=yellow>¡Sorteo Shiny Ganado: Aparecerán " + shiniesToSpawnToday + "!</color>");
         }
 
         CleanUpScene();
+
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
 
@@ -245,8 +242,18 @@ public class LevelManager : MonoBehaviour
         currentSessionInfected = 0;
         currentTimer = gameDuration;
 
+        // --- Configurar población ---
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-        if (pm != null) pm.ConfigureRound(shiniesToSpawnToday); // Usamos shiniesToSpawnToday
+        if (pm != null)
+            pm.ConfigureRound(shiniesToSpawnToday); // Spawnea los Shinys
+
+        // --- Guardar referencias de los Shinys que aparecen ---
+        PersonaInfeccion[] allPersonas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
+        foreach (var p in allPersonas)
+        {
+            if (p.isShiny)
+                shinysThisDay.Add(p);
+        }
 
         UpdateUI();
         menuPanel.SetActive(false);
@@ -258,7 +265,8 @@ public class LevelManager : MonoBehaviour
         if (virusMovementScript != null) virusMovementScript.enabled = true;
     }
 
-  
+
+
 
     public void RegisterInfection()
     {
@@ -274,8 +282,24 @@ public class LevelManager : MonoBehaviour
 
         int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int zoneMultiplier = (mapIndex == 1) ? 2 : (mapIndex == 2) ? 3 : 1;
-        int earnings = currentSessionInfected * (Guardado.instance != null ? Guardado.instance.coinMultiplier : 1) * zoneMultiplier;
-        contagionCoins += earnings;
+       
+
+        int baseMultiplier = Guardado.instance != null ?
+                        Guardado.instance.coinMultiplier : 1;
+
+        int shinyMultiplier = Guardado.instance != null ?
+                              Guardado.instance.shinyMultiplier : 1;
+
+        int shiniesCaptured = shiniesCapturedToday; // ✅ solo los que se capturaron
+
+        EndDayResultsPanel.instance.ShowResults(
+            currentSessionInfected,
+            baseMultiplier,
+            zoneMultiplier,
+            shiniesCaptured,
+            shinyMultiplier
+        );
+
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
 
@@ -386,4 +410,35 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
         return count;
     }
+
+    public void OnEndDayResultsFinished(int earnings, int shinies)
+    {
+        contagionCoins += earnings;
+
+        if (Guardado.instance != null)
+            Guardado.instance.AddShinyDNA(shinies);
+
+        if (daysRemaining <= 0)
+            GameOver();
+        else
+            dayOverPanel.SetActive(true);
+
+        UpdateUI();
+    }
+
+    public void RegisterShinyCapture(PersonaInfeccion shiny)
+    {
+        if (shiny == null) return;
+
+        if (!shinysThisDay.Contains(shiny)) return; // evitar dobles registros
+
+        shiniesCapturedToday++;
+        shinysThisDay.Remove(shiny);
+
+        int cantidadFinal = Guardado.instance != null ? Guardado.instance.GetFinalShinyValue() : 1;
+        Guardado.instance.AddShinyDNA(cantidadFinal);
+
+        UpdateUI();
+    }
+
 }
