@@ -124,4 +124,15 @@ public class ZoneItem : MonoBehaviour
             myButton.interactable = canAfford;
         }
     }
+
+    public bool IsUnlocked()
+    {
+        return isUnlocked;
+    }
+
+    public bool CanAfford()
+    {
+        if (LevelManager.instance == null) return false;
+        return LevelManager.instance.contagionCoins >= GetFinalCost();
+    }
 }

@@ -1,53 +1,72 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
-public class OrbitaSistema : MonoBehaviour
+public class OrbitaSistemaUI : MonoBehaviour
 {
-    public Transform[] planetas; // Tus planetas en la escena
-    public float radioX = 10f;   // Ancho de la elipse
-    public float radioY = 3f;    // Alto de la elipse (para el efecto inclinado)
-    public float escalaMin = 0.5f; // TamaÒo del planeta al fondo
-    public float escalaMax = 2.0f; // TamaÒo del planeta al frente
-    public float suavizado = 5f;
+    public RectTransform[] planetas;   // IM√ÅGENES UI
+    public float radioX = 300f;
+    public float radioY = 120f;
 
-    private float anguloObjetivo = 0f;
-    private float anguloActual = 0f;
-    private float separacionAngulo;
+    public float escalaMin = 0.6f;
+    public float escalaMax = 1.4f;
+    public float suavizado = 6f;
+
+    float anguloObjetivo = 0f;
+    float anguloActual = 0f;
+    float separacionAngulo;
 
     void Start()
     {
-        // Dividimos los 360 grados entre el n˙mero de planetas
         separacionAngulo = (2 * Mathf.PI) / planetas.Length;
     }
 
     void Update()
     {
-        // TransiciÛn suave entre posiciones
         anguloActual = Mathf.Lerp(anguloActual, anguloObjetivo, Time.deltaTime * suavizado);
 
         for (int i = 0; i < planetas.Length; i++)
         {
-            // Calculamos el ·ngulo individual de cada planeta
-            float anguloPlaneta = anguloActual + (i * separacionAngulo);
+            float angulo = anguloActual + i * separacionAngulo;
 
-            // 1. PosiciÛn en la elipse (X, Y)
-            float x = Mathf.Cos(anguloPlaneta) * radioX;
-            float y = Mathf.Sin(anguloPlaneta) * radioY;
-            planetas[i].localPosition = new Vector3(x, y, 0);
+            float x = Mathf.Cos(angulo) * radioX;
+            float y = Mathf.Sin(angulo) * radioY;
 
-            // 2. Efecto de TamaÒo (Escala)
-            // Usamos el valor de Y para saber si est· "cerca" o "lejos"
-            // t va de 0 a 1 (0 arriba/atr·s, 1 abajo/adelante)
-            float t = (Mathf.Sin(anguloPlaneta) + 1f) / 2f;
+            // POSICI√ìN UI
+            planetas[i].anchoredPosition = new Vector2(x, y);
+
+            float t = (Mathf.Sin(angulo) + 1f) / 2f;
             float escala = Mathf.Lerp(escalaMin, escalaMax, t);
-            planetas[i].localScale = new Vector3(escala, escala, 1);
+            planetas[i].localScale = Vector3.one * escala;
 
-            // 3. Orden de dibujado (Opcional)
-            // Para que los planetas de delante tapen a los de atr·s
-            SpriteRenderer sr = planetas[i].GetComponent<SpriteRenderer>();
-            if (sr != null) sr.sortingOrder = Mathf.RoundToInt(t * 100);
+            // ORDEN VISUAL (el de delante encima)
+            planetas[i].SetSiblingIndex(Mathf.RoundToInt(t * 100));
         }
     }
 
-    public void Siguiente() => anguloObjetivo -= separacionAngulo;
-    public void Anterior() => anguloObjetivo += separacionAngulo;
+    public void Siguiente()
+    {
+        anguloObjetivo -= separacionAngulo;
+    }
+
+    public void Anterior()
+    {
+        anguloObjetivo += separacionAngulo;
+    }
+
+    // üî• IMPORTANTE: detectar cu√°l est√° al frente
+    public RectTransform GetPlanetaAlFrente()
+    {
+        RectTransform frente = planetas[0];
+        float maxEscala = planetas[0].localScale.x;
+
+        foreach (var p in planetas)
+        {
+            if (p.localScale.x > maxEscala)
+            {
+                maxEscala = p.localScale.x;
+                frente = p;
+            }
+        }
+
+        return frente;
+    }
 }
