@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
+    public GameObject dayOverPanel;
     public GameObject gameOverPanel;
     public GameObject shopPanel;
     public GameObject shinyPanel;
@@ -96,24 +97,30 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (!isGameActive) return;
+
         currentTimer -= Time.deltaTime;
         timerText.text = currentTimer.ToString("F1") + "s";
-        if (currentTimer <= 0) EndSession();
+
+        if (currentTimer <= 0)
+        {
+            EndSessionDay(); // Esta función ahora decidirá si es GameOver o no
+        }
     }
 
     public void TryStartGame() { ResetRun(); }
-    public void OpenShop() { gameOverPanel.SetActive(false); shopPanel.SetActive(true); }
-    public void CloseShop() { shopPanel.SetActive(false); gameOverPanel.SetActive(true); }
-    public void OpenShinyShop() { gameOverPanel.SetActive(false); shinyPanel.SetActive(true); UpdateUI(); }
-    public void CloseShinyShop() { shinyPanel.SetActive(false); gameOverPanel.SetActive(true); }
-    public void OpenZoneShop() { gameOverPanel.SetActive(false); if (zonePanel != null) zonePanel.SetActive(true); UpdateUI(); }
-    public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); gameOverPanel.SetActive(true); }
+    public void OpenShop() { dayOverPanel.SetActive(false); gameOverPanel.SetActive(false); shopPanel.SetActive(true); }
+    public void CloseShop() { shopPanel.SetActive(false); dayOverPanel.SetActive(true); gameOverPanel.SetActive(false); }
+    public void OpenShinyShop() { gameOverPanel.SetActive(false); dayOverPanel.SetActive(false); shinyPanel.SetActive(true); UpdateUI(); }
+    public void CloseShinyShop() { shinyPanel.SetActive(false); dayOverPanel.SetActive(false); gameOverPanel.SetActive(true); }
+    public void OpenZoneShop() { gameOverPanel.SetActive(false); dayOverPanel.SetActive(false); if (zonePanel != null) zonePanel.SetActive(true); UpdateUI(); }
+    public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); dayOverPanel.SetActive(true); gameOverPanel.SetActive(false); }
 
     public void ReturnToMenu()
     {
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
         gameOverPanel.SetActive(false);
+        dayOverPanel.SetActive(false); 
         shopPanel.SetActive(false);
         shinyPanel.SetActive(false);
 
@@ -230,6 +237,7 @@ public class LevelManager : MonoBehaviour
 
         UpdateUI();
         menuPanel.SetActive(false);
+        dayOverPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         gameUI.SetActive(true);
         virusPlayer.SetActive(true);
@@ -242,28 +250,47 @@ public class LevelManager : MonoBehaviour
         if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
         currentSessionInfected++;
         UpdateUI();
-        if (currentSessionInfected >= maxInfectionsPerRound) EndSession();
+        if (currentSessionInfected >= maxInfectionsPerRound) EndSessionDay();
     }
 
-    void EndSession()
+    void EndSessionDay()
     {
         isGameActive = false;
+
         int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int zoneMultiplier = (mapIndex == 1) ? 2 : (mapIndex == 2) ? 3 : 1;
-
         int earnings = currentSessionInfected * (Guardado.instance != null ? Guardado.instance.coinMultiplier : 1) * zoneMultiplier;
         contagionCoins += earnings;
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
 
+        // Restamos el día
         daysRemaining--;
-        if (daysRemaining < 0) daysRemaining = 0;
-        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
+        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
         gameUI.SetActive(false);
-        gameOverPanel.SetActive(true);
         virusPlayer.SetActive(false);
+
+        // LÓGICA DE DECISIÓN:
+        if (daysRemaining <= 0)
+        {
+            daysRemaining = 0;
+            GameOver(); // Si no quedan días, saltamos a GameOver
+        }
+        else
+        {
+            dayOverPanel.SetActive(true); // Si quedan días, mostramos panel de tienda/siguiente día
+        }
+
         UpdateUI();
+    }
+
+   public void GameOver()
+    {
+        // Ya no necesitas recalcular monedas aquí porque EndSessionDay ya lo hizo
+        dayOverPanel.SetActive(false);
+        gameOverPanel.SetActive(true);
+        Debug.Log("Game Over: Se acabaron los días.");
     }
 
     public void UpdateUI()
