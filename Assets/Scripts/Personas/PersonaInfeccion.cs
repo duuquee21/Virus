@@ -105,16 +105,23 @@ public class PersonaInfeccion : MonoBehaviour
             InfectionFeedback.instance.PlayEffect(transform.position);
         }
 
+        // --- AQUÍ ESTÁ EL CAMBIO ---
         if (isShiny)
         {
+            // 1. Dar ADN (Guardado)
             if (Guardado.instance != null)
             {
                 int cantidadFinal = Guardado.instance.GetFinalShinyValue();
                 Guardado.instance.AddShinyDNA(cantidadFinal);
             }
 
+            // 2. Avisar al LevelManager para el Bonus de Monedas x3 (NUEVO)
             if (LevelManager.instance != null)
-                LevelManager.instance.isShinyCollectedInRun = true;
+            {
+                // Esta función (que creamos en el paso anterior) activa el bonus de hoy
+                // y también marca isShinyCollectedInRun = true
+                LevelManager.instance.OnShinyCaptured(); 
+            }
         }
     }
 
