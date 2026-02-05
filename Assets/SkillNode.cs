@@ -26,7 +26,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         KeepUpgradesOnResetEffect,
         ShinyCaptureSpeed50,  // +50% velocidad contra Shinies
         ShinyCaptureSpeed100 ,
-        DoubleShinyEffect// +100% velocidad contra Shinies
+        DoubleShinyEffect,
+        KeepZonesOnReset// +100% velocidad contra Shinies
     }
 
     [Header("Datos")]
@@ -244,6 +245,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
             case SkillEffectType.DoubleShinyEffect:
                 Guardado.instance.ActivateDoubleShiny();
+                break;
+            // En SkillNode.cs, dentro de ApplyEffect()
+            case SkillEffectType.KeepZonesOnReset:
+                Guardado.instance.ActivateKeepZones();
                 break;
         }
         if (LevelManager.instance != null) LevelManager.instance.RecalculateTotalDaysUntilCure();

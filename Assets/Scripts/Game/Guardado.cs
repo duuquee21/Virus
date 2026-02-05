@@ -24,6 +24,7 @@ public class Guardado : MonoBehaviour
     public bool guaranteedShiny = false;
     public bool keepUpgradesOnReset = false;
     public bool doubleShinySkill = false; // Habilidad de doble Shiny
+    public bool keepZonesUnlocked = false;
 
     [Header("Multiplicadores")]
     public float radiusMultiplier = 1.0f;
@@ -148,6 +149,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
         PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
+        PlayerPrefs.SetInt("KeepZones", keepZonesUnlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -174,6 +176,7 @@ public class Guardado : MonoBehaviour
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
         shinyCaptureMultiplier = PlayerPrefs.GetFloat("ShinyCaptureMult", 1.0f);
         doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
+        keepZonesUnlocked = PlayerPrefs.GetInt("KeepZones", 0) == 1;
     }
 
     // --- MÉTODOS PÚBLICOS PARA ACTIVAR HABILIDADES ---
@@ -199,6 +202,12 @@ public class Guardado : MonoBehaviour
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
     public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
+    // En Guardado.cs
+    public void ActivateKeepZones()
+    {
+        keepZonesUnlocked = true; // Esta es la variable que chequea ZoneItem
+        SaveData();
+    }
 
     // --- SISTEMA DE PERSISTENCIA DE RUNDA ---
 

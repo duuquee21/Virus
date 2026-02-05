@@ -10,7 +10,7 @@ public class MainMenuPanel : MonoBehaviour
         
         if (LevelManager.instance != null)
         {
-            LevelManager.instance.TryStartGame();
+            LevelManager.instance.NewGameFromMainMenu();
         }
     }
 
