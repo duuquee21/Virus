@@ -26,11 +26,11 @@ public class SimpleWorldShadow : MonoBehaviour
         // Posición global fija abajo-derecha
         transform.position = (Vector2)target.position + worldOffset;
 
-        // Misma escala que el target (opcional)
+        // Copiar escala
         transform.localScale = target.localScale * scaleMultiplier;
 
-        // Forzar rotación cero
-        transform.rotation = Quaternion.identity;
+        // ? Copiar rotación EXACTA del target
+        transform.rotation = target.rotation;
     }
 
     void Start()

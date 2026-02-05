@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     float currentTimer;
     int daysRemaining;
+    private int shinysCapturedToday;
 
     void Awake()
     {
@@ -368,10 +369,17 @@ public class LevelManager : MonoBehaviour
     public void RegisterShinyCapture(PersonaInfeccion shiny)
     {
         if (shiny == null || !shinysThisDay.Contains(shiny)) return;
-        shiniesCapturedToday++;
+
+        shinysCapturedToday++;
         shinysThisDay.Remove(shiny);
+
         int cantidadFinal = Guardado.instance != null ? Guardado.instance.GetFinalShinyValue() : 1;
         Guardado.instance.AddShinyDNA(cantidadFinal);
+
+        if (VirusEvolverController.instance != null)
+            VirusEvolverController.instance.RegisterShiny();
+
         UpdateUI();
     }
+
 }
