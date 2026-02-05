@@ -16,6 +16,7 @@ public class ZoneItem : MonoBehaviour
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI benefitText; // Texto UI para el beneficio
+    public TextMeshProUGUI stockText; // Arrastra un texto nuevo aquí en el Inspector
 
     [Header("Colores de Estado")]
     public Color luzColor = Color.white; // Brilla (seleccionable o comprable)
@@ -127,22 +128,42 @@ public class ZoneItem : MonoBehaviour
         int currentPrice = GetFinalCost();
         bool puedeComprarlo = LevelManager.instance.contagionCoins >= currentPrice;
 
-        // Actualizar textos
-        if (nameText != null) nameText.text = zoneName;
-        if (benefitText != null) benefitText.text = zoneBenefit;
+        // --- BLOQUE: MOSTRAR STOCK ---
+        if (stockText != null)
+        {
+            int restantes = LevelManager.instance.GetStockRestante(mapIndex);
+            stockText.text = "Shinies: " + restantes;
+            stockText.color = (restantes > 0) ? Color.yellow : Color.red;
+        }
 
+        // --- BLOQUE CORREGIDO: BENEFICIO DINÁMICO ---
+        // Si mapIndex es 0 (Zona 1) -> x1
+        // Si mapIndex es 1 (Zona 2) -> x2
+        // Si mapIndex es 2 (Zona 3) -> x3
+        int multiplicadorCalculado = mapIndex + 1;
+        zoneBenefit = "Infección x" + multiplicadorCalculado;
+
+        if (benefitText != null)
+        {
+            benefitText.text = zoneBenefit;
+            // Opcional: Si es la zona más alta (x3), pon el texto en un color especial
+            benefitText.color = (multiplicadorCalculado >= 3) ? new Color(1f, 0.8f, 0f) : Color.white;
+        }
+
+        // Actualizar nombre
+        if (nameText != null) nameText.text = zoneName;
+
+        // --- LÓGICA DE ESTADOS (DESBLOQUEO/EQUIPADO) ---
         if (isUnlocked)
         {
             if (esElEquipado)
             {
-                // EQUIPADO: Se ve oscuro para indicar que ya está puesto
                 statusText.text = "ACTIVO";
                 myButton.interactable = false;
                 if (planetImage != null) planetImage.color = apagadoColor;
             }
             else
             {
-                // DESBLOQUEADO PERO NO EQUIPADO: Brilla para que lo elijas
                 statusText.text = "EQUIPAR";
                 myButton.interactable = true;
                 if (planetImage != null) planetImage.color = luzColor;
@@ -150,7 +171,6 @@ public class ZoneItem : MonoBehaviour
         }
         else
         {
-            // BLOQUEADO: Brilla solo si tienes el dinero para comprarlo
             statusText.text = "COMPRAR (" + currentPrice + ")";
             myButton.interactable = puedeComprarlo;
 
