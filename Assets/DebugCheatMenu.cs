@@ -134,7 +134,7 @@ public class DebugCheatMenu : MonoBehaviour
 
         // --- TOGGLES ---
         Header("ESTADOS ESPECIALES", ref y);
-        Guardado.instance.doubleShinySkill = GUI.Toggle(new Rect(0, y, 400, 35), Guardado.instance.doubleShinySkill, " Habilidad Doble Shiny", toggleStyle); y += 40;
+        //Guardado.instance.doubleShinySkill = GUI.Toggle(new Rect(0, y, 400, 35), Guardado.instance.doubleShinySkill, " Habilidad Doble Shiny", toggleStyle); y += 40;
         Guardado.instance.guaranteedShiny = GUI.Toggle(new Rect(0, y, 400, 35), Guardado.instance.guaranteedShiny, " Shiny Garantizado", toggleStyle); y += 40;
         Guardado.instance.keepUpgradesOnReset = GUI.Toggle(new Rect(0, y, 400, 35), Guardado.instance.keepUpgradesOnReset, " Persistencia Mejoras", toggleStyle); y += 50;
 
