@@ -23,9 +23,9 @@ public class Guardado : MonoBehaviour
     public int shinyPerZoneDaily = 0;
     public bool guaranteedShiny = false;
     public bool keepUpgradesOnReset = false;
-    public bool doubleShinySkill = false; // Habilidad de doble Shiny
+    //public bool doubleShinySkill = false; // Habilidad de doble Shiny
     public bool keepZonesUnlocked = false;
-    public bool habilidadPlusOneShiny = false;
+    //public bool habilidadPlusOneShiny = false;
 
     [Header("Multiplicadores")]
     public float radiusMultiplier = 1.0f;
@@ -95,7 +95,7 @@ public class Guardado : MonoBehaviour
         shinyValueSum = 1;
         shinyMultiplier = 1;
         bonusDaysPermanent = 0;
-        doubleShinySkill = false;
+        //doubleShinySkill = false;
 
         // Limpiar también el estado de la partida en curso
         ClearRunState();
@@ -149,7 +149,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
-        PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
+        //PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
         PlayerPrefs.SetInt("KeepZones", keepZonesUnlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
@@ -176,7 +176,7 @@ public class Guardado : MonoBehaviour
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
         shinyCaptureMultiplier = PlayerPrefs.GetFloat("ShinyCaptureMult", 1.0f);
-        doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
+        //doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
         keepZonesUnlocked = PlayerPrefs.GetInt("KeepZones", 0) == 1;
     }
 
@@ -202,7 +202,7 @@ public class Guardado : MonoBehaviour
     public void IncreaseShinyValueSum(int val) { shinyValueSum += val; SaveData(); }
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
-    public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
+    //public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
     // En Guardado.cs
     public void ActivateKeepZones()
     {
@@ -211,7 +211,7 @@ public class Guardado : MonoBehaviour
     }
     public void ActivarPlusOneShiny()
     {
-        habilidadPlusOneShiny = true;
+        //habilidadPlusOneShiny = true;
         SaveData();
         Debug.Log("Habilidad +1 Shiny Extra activada.");
     }

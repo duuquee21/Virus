@@ -244,9 +244,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.KeepUpgradesOnResetEffect:
                 Guardado.instance.ActivateKeepUpgrades();
                 break;
-            case SkillEffectType.DoubleShinyEffect:
-                Guardado.instance.ActivateDoubleShiny();
-                break;
+            //case SkillEffectType.DoubleShinyEffect:
+                //Guardado.instance.ActivateDoubleShiny();
+                //break;
             // En SkillNode.cs, dentro de ApplyEffect()
             case SkillEffectType.KeepZonesOnReset:
                 Guardado.instance.ActivateKeepZones();

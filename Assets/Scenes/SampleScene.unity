@@ -15238,7 +15238,7 @@ MonoBehaviour:
   shinyCost: 1
   nextNodes:
   - {fileID: 1073670516}
-  - {fileID: 1073670516}
+  - {fileID: 506391029}
   requiredParentNodes: []
   effectType: 21
   button: {fileID: 805961572}
