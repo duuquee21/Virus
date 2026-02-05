@@ -27,7 +27,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ShinyCaptureSpeed50,  // +50% velocidad contra Shinies
         ShinyCaptureSpeed100 ,
         DoubleShinyEffect,
-        KeepZonesOnReset// +100% velocidad contra Shinies
+        KeepZonesOnReset,
+        ExtraShiny// +100% velocidad contra Shinies
     }
 
     [Header("Datos")]
@@ -249,6 +250,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // En SkillNode.cs, dentro de ApplyEffect()
             case SkillEffectType.KeepZonesOnReset:
                 Guardado.instance.ActivateKeepZones();
+                break;
+            case SkillEffectType.ExtraShiny:
+                Guardado.instance.AddExtraShinyLevel(); // Cada compra suma +1 al contador
                 break;
         }
         if (LevelManager.instance != null) LevelManager.instance.RecalculateTotalDaysUntilCure();

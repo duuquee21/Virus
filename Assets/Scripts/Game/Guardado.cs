@@ -25,6 +25,7 @@ public class Guardado : MonoBehaviour
     public bool keepUpgradesOnReset = false;
     public bool doubleShinySkill = false; // Habilidad de doble Shiny
     public bool keepZonesUnlocked = false;
+    public bool habilidadPlusOneShiny = false;
 
     [Header("Multiplicadores")]
     public float radiusMultiplier = 1.0f;
@@ -208,7 +209,18 @@ public class Guardado : MonoBehaviour
         keepZonesUnlocked = true; // Esta es la variable que chequea ZoneItem
         SaveData();
     }
-
+    public void ActivarPlusOneShiny()
+    {
+        habilidadPlusOneShiny = true;
+        SaveData();
+        Debug.Log("Habilidad +1 Shiny Extra activada.");
+    }
+    public void AddExtraShinyLevel()
+    {
+        extraShiniesPerRound++; // Suma 1 al nivel actual
+        SaveData();
+        Debug.Log("Nivel de Shiny Extra: " + extraShiniesPerRound);
+    }
     // --- SISTEMA DE PERSISTENCIA DE RUNDA ---
 
     public void SaveRunState(int currentDay, int currentCoins, int currentMap)

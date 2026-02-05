@@ -214,17 +214,30 @@ public class LevelManager : MonoBehaviour
         shinysThisDay.Clear();
         shiniesCapturedToday = 0;
 
+        // --- LÓGICA ACUMULATIVA: Si sale el 75%, sumamos el base + extras ---
         float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny) ? 1.0f : shinyChance;
+
         if (Random.value <= probabilidadActual)
         {
             isShinyDayToday = true;
-            shiniesToSpawnToday = (Guardado.instance != null && Guardado.instance.extraShiniesPerRound > 0) ? 2 : 1;
+
+            // Empezamos con 1 (el premio base por ganar el sorteo)
+            int cantidadFinal = 1;
+
+            // Sumamos el valor de la variable extra (que ahora será un número: 1, 2, 3...)
+            if (Guardado.instance != null)
+            {
+                cantidadFinal += Guardado.instance.extraShiniesPerRound;
+            }
+
+            shiniesToSpawnToday = cantidadFinal;
         }
         else
         {
             isShinyDayToday = false;
-            shiniesToSpawnToday = 0;
+            shiniesToSpawnToday = 0; // Si falla el 75%, no sale ninguno
         }
+        // ------------------------------------------------------------------
 
         CleanUpScene();
 
@@ -246,7 +259,6 @@ public class LevelManager : MonoBehaviour
         if (virusMovementScript != null) virusMovementScript.enabled = true;
         UpdateUI();
     }
-
     public void RegisterInfection()
     {
         if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
