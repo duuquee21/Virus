@@ -39,13 +39,6 @@ public class PersonaInfeccion : MonoBehaviour
 
     void Update()
     {
-
-        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
-        {
-            // Opcional: Ocultar barra si el día acabó y no se infectó
-            if (!alreadyInfected) infectionBarCanvas.SetActive(false);
-            return;
-        }
         if (alreadyInfected) return;
 
         if (isInsideZone)
