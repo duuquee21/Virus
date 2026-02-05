@@ -1,0 +1,3219 @@
+fileFormatVersion: 2
+guid: e2eef02f406bf134f9bd44b028e0cdc0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2637068649811761156
+    second: PlanetaFinal_0
+  - first:
+      213: -1608770546129294638
+    second: PlanetaFinal_1
+  - first:
+      213: 8980788475893363142
+    second: PlanetaFinal_2
+  - first:
+      213: -3319773912829561072
+    second: PlanetaFinal_3
+  - first:
+      213: -7318422273535229035
+    second: PlanetaFinal_4
+  - first:
+      213: 7029230881591178376
+    second: PlanetaFinal_5
+  - first:
+      213: -8788573215336657873
+    second: PlanetaFinal_6
+  - first:
+      213: 2843513341916360074
+    second: PlanetaFinal_7
+  - first:
+      213: -5395439423580710359
+    second: PlanetaFinal_8
+  - first:
+      213: -1026509800082110377
+    second: PlanetaFinal_9
+  - first:
+      213: -9156918854040272027
+    second: PlanetaFinal_10
+  - first:
+      213: -2687201692742616369
+    second: PlanetaFinal_11
+  - first:
+      213: 5221902397280353760
+    second: PlanetaFinal_12
+  - first:
+      213: 88121734372099065
+    second: PlanetaFinal_13
+  - first:
+      213: 7016456226072405661
+    second: PlanetaFinal_14
+  - first:
+      213: -6765928597253216470
+    second: PlanetaFinal_15
+  - first:
+      213: 8773422003459788037
+    second: PlanetaFinal_16
+  - first:
+      213: -6379474902552617690
+    second: PlanetaFinal_17
+  - first:
+      213: 5210447974539500504
+    second: PlanetaFinal_18
+  - first:
+      213: 7707509332467276292
+    second: PlanetaFinal_19
+  - first:
+      213: -3865312322460693954
+    second: PlanetaFinal_20
+  - first:
+      213: 240991247624924017
+    second: PlanetaFinal_21
+  - first:
+      213: -730816534705389540
+    second: PlanetaFinal_22
+  - first:
+      213: -8898039655389147555
+    second: PlanetaFinal_23
+  - first:
+      213: -8459744757388388638
+    second: PlanetaFinal_24
+  - first:
+      213: 4234989730101719401
+    second: PlanetaFinal_25
+  - first:
+      213: 110720919429764831
+    second: PlanetaFinal_26
+  - first:
+      213: -8746621688819404075
+    second: PlanetaFinal_27
+  - first:
+      213: 3044431624020785394
+    second: PlanetaFinal_28
+  - first:
+      213: 5174725657376310622
+    second: PlanetaFinal_29
+  - first:
+      213: -8575953529984079682
+    second: PlanetaFinal_30
+  - first:
+      213: 815964419643427246
+    second: PlanetaFinal_31
+  - first:
+      213: -9192722266232070795
+    second: PlanetaFinal_32
+  - first:
+      213: 446493919389067295
+    second: PlanetaFinal_33
+  - first:
+      213: -7888041298516556041
+    second: PlanetaFinal_34
+  - first:
+      213: 1424521865450237436
+    second: PlanetaFinal_35
+  - first:
+      213: -4873631804981744818
+    second: PlanetaFinal_36
+  - first:
+      213: 3618033932099654276
+    second: PlanetaFinal_37
+  - first:
+      213: -8783157385110938833
+    second: PlanetaFinal_38
+  - first:
+      213: -7465355191220191461
+    second: PlanetaFinal_39
+  - first:
+      213: -6820134751522947269
+    second: PlanetaFinal_40
+  - first:
+      213: 5859161258534991939
+    second: PlanetaFinal_41
+  - first:
+      213: -8038866609590535062
+    second: PlanetaFinal_42
+  - first:
+      213: 2016449931985784613
+    second: PlanetaFinal_43
+  - first:
+      213: -456154112204009029
+    second: PlanetaFinal_44
+  - first:
+      213: 7003347950308489208
+    second: PlanetaFinal_45
+  - first:
+      213: -7326888290238016398
+    second: PlanetaFinal_46
+  - first:
+      213: -1329112465265882017
+    second: PlanetaFinal_47
+  - first:
+      213: -6248831224215305642
+    second: PlanetaFinal_48
+  - first:
+      213: 4042049292578172927
+    second: PlanetaFinal_49
+  - first:
+      213: -1873573760609027484
+    second: PlanetaFinal_50
+  - first:
+      213: -3387616396211715925
+    second: PlanetaFinal_51
+  - first:
+      213: -1184510734550472665
+    second: PlanetaFinal_52
+  - first:
+      213: -1754262429877025201
+    second: PlanetaFinal_53
+  - first:
+      213: 751079305732078651
+    second: PlanetaFinal_54
+  - first:
+      213: 8990399625918730687
+    second: PlanetaFinal_55
+  - first:
+      213: 8314218319498749681
+    second: PlanetaFinal_56
+  - first:
+      213: 6636947796466947562
+    second: PlanetaFinal_57
+  - first:
+      213: 3823357189126289937
+    second: PlanetaFinal_58
+  - first:
+      213: -6524789508991125615
+    second: PlanetaFinal_59
+  - first:
+      213: 6850717678707103738
+    second: PlanetaFinal_60
+  - first:
+      213: 1800097427691190707
+    second: PlanetaFinal_61
+  - first:
+      213: 460539332336441679
+    second: PlanetaFinal_62
+  - first:
+      213: 3676558942103909708
+    second: PlanetaFinal_63
+  - first:
+      213: -8366047989281196939
+    second: PlanetaFinal_64
+  - first:
+      213: -8675829819366537573
+    second: PlanetaFinal_65
+  - first:
+      213: 5725549990451924694
+    second: PlanetaFinal_66
+  - first:
+      213: -6074928640294786457
+    second: PlanetaFinal_67
+  - first:
+      213: 6574770141429476712
+    second: PlanetaFinal_68
+  - first:
+      213: -457236171419419719
+    second: PlanetaFinal_69
+  - first:
+      213: 6661647393827168114
+    second: PlanetaFinal_70
+  - first:
+      213: -5881931155591982775
+    second: PlanetaFinal_71
+  - first:
+      213: -5339457618281239451
+    second: PlanetaFinal_72
+  - first:
+      213: 5893452877855330542
+    second: PlanetaFinal_73
+  - first:
+      213: 6816389208940959782
+    second: PlanetaFinal_74
+  - first:
+      213: -1031270535481079622
+    second: PlanetaFinal_75
+  - first:
+      213: 8195338507784130359
+    second: PlanetaFinal_76
+  - first:
+      213: -5175244693359280047
+    second: PlanetaFinal_77
+  - first:
+      213: 7680997679833777672
+    second: PlanetaFinal_78
+  - first:
+      213: -7892128236378621574
+    second: PlanetaFinal_79
+  - first:
+      213: 5031988844516311778
+    second: PlanetaFinal_80
+  - first:
+      213: 8597029964992453909
+    second: PlanetaFinal_81
+  - first:
+      213: 3562622101449985707
+    second: PlanetaFinal_82
+  - first:
+      213: 4224473137990118219
+    second: PlanetaFinal_83
+  - first:
+      213: -8047419346946197980
+    second: PlanetaFinal_84
+  - first:
+      213: 7006196703643718324
+    second: PlanetaFinal_85
+  - first:
+      213: 435823994080728968
+    second: PlanetaFinal_86
+  - first:
+      213: -5816233764892202934
+    second: PlanetaFinal_87
+  - first:
+      213: 1273447142502711892
+    second: PlanetaFinal_88
+  - first:
+      213: -3881094832256888670
+    second: PlanetaFinal_89
+  - first:
+      213: 4652796662058140843
+    second: PlanetaFinal_90
+  - first:
+      213: 8276575082685543310
+    second: PlanetaFinal_91
+  - first:
+      213: 7631940550943194089
+    second: PlanetaFinal_92
+  - first:
+      213: 7446843060825219950
+    second: PlanetaFinal_93
+  - first:
+      213: 1354593422967023494
+    second: PlanetaFinal_94
+  - first:
+      213: -5425249317816745796
+    second: PlanetaFinal_95
+  - first:
+      213: -1396798990802386453
+    second: PlanetaFinal_96
+  - first:
+      213: -3079416097073137940
+    second: PlanetaFinal_97
+  - first:
+      213: 6191108179386852541
+    second: PlanetaFinal_98
+  - first:
+      213: -3090020645008997027
+    second: PlanetaFinal_99
+  - first:
+      213: 4696897262196604435
+    second: PlanetaFinal_100
+  - first:
+      213: 2840993333912024082
+    second: PlanetaFinal_101
+  - first:
+      213: -5166582366365659365
+    second: PlanetaFinal_102
+  - first:
+      213: -5401468722704778815
+    second: PlanetaFinal_103
+  - first:
+      213: -6205490772452513760
+    second: PlanetaFinal_104
+  - first:
+      213: -1677200095131138428
+    second: PlanetaFinal_105
+  - first:
+      213: -7632053019116956107
+    second: PlanetaFinal_106
+  - first:
+      213: 7963916803504520421
+    second: PlanetaFinal_107
+  - first:
+      213: 5671276855333201684
+    second: PlanetaFinal_108
+  - first:
+      213: -5000624010956307085
+    second: PlanetaFinal_109
+  - first:
+      213: -5047837022190341046
+    second: PlanetaFinal_110
+  - first:
+      213: 216089977827728583
+    second: PlanetaFinal_111
+  - first:
+      213: 2311164571392626701
+    second: PlanetaFinal_112
+  - first:
+      213: -113364141411314752
+    second: PlanetaFinal_113
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlanetaFinal_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf7a6a7e800476bd0800000000000000
+      internalID: -2637068649811761156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_1
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2da2ad046bf7ca9e0800000000000000
+      internalID: -1608770546129294638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_2
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c1bb8c598b22ac70800000000000000
+      internalID: 8980788475893363142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_3
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0177f27173bcde1d0800000000000000
+      internalID: -3319773912829561072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_4
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59340a587bdbf6a90800000000000000
+      internalID: -7318422273535229035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_5
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 884b27d8e38dc8160800000000000000
+      internalID: 7029230881591178376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2c88597937b80680800000000000000
+      internalID: -8788573215336657873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_7
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8d2203a150367720800000000000000
+      internalID: 2843513341916360074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_8
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a55563e6c8f15b0800000000000000
+      internalID: -5395439423580710359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_9
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75806a786ca11c1f0800000000000000
+      internalID: -1026509800082110377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_10
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5634ad351d61ce080800000000000000
+      internalID: -9156918854040272027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_11
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fca7f304c4425bad0800000000000000
+      internalID: -2687201692742616369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_12
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0edf7a1409ce77840800000000000000
+      internalID: 5221902397280353760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_13
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f38d322042193100800000000000000
+      internalID: 88121734372099065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d96af1943c57f5160800000000000000
+      internalID: 7016456226072405661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_15
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a27a019c9c79a12a0800000000000000
+      internalID: -6765928597253216470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_16
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d01dc14d471c970800000000000000
+      internalID: 8773422003459788037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_17
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62dd4d3406d8777a0800000000000000
+      internalID: -6379474902552617690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_18
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8db9413a3da3f4840800000000000000
+      internalID: 5210447974539500504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_19
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a58b8d6e296fa60800000000000000
+      internalID: 7707509332467276292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_20
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3a4ac90ce6ab5ac0800000000000000
+      internalID: -3865312322460693954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_21
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b69ac434c285300800000000000000
+      internalID: 240991247624924017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_22
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1047e4db3e9bd5f0800000000000000
+      internalID: -730816534705389540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_23
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5ec037c310d38480800000000000000
+      internalID: -8898039655389147555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_24
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e6546df6f2f89a80800000000000000
+      internalID: -8459744757388388638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_25
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 961f32ab8b4b5ca30800000000000000
+      internalID: 4234989730101719401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_26
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6d0dfe61c598100800000000000000
+      internalID: 110720919429764831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_27
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d231356ae1cd9680800000000000000
+      internalID: -8746621688819404075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_28
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f879b49e6eff3a20800000000000000
+      internalID: 3044431624020785394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_29
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55c30a819150d740800000000000000
+      internalID: 5174725657376310622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_30
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb8aa0ba3b71cf880800000000000000
+      internalID: -8575953529984079682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_31
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea944360153e25b00800000000000000
+      internalID: 815964419643427246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_32
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57dd962ddc3ec6080800000000000000
+      internalID: -9192722266232070795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_33
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f18ae83aad3423600800000000000000
+      internalID: 446493919389067295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_34
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f64f4c4b3c088290800000000000000
+      internalID: -7888041298516556041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_35
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfd20f4d61be4c310800000000000000
+      internalID: 1424521865450237436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_36
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4b640ae1b16d5cb0800000000000000
+      internalID: -4873631804981744818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_37
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4821c1c21b6d53230800000000000000
+      internalID: 3618033932099654276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_38
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2b1d16b4e4fb1680800000000000000
+      internalID: -8783157385110938833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_39
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1fb339b10bb56890800000000000000
+      internalID: -7465355191220191461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_40
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f7d2ff3930a51a0800000000000000
+      internalID: -6820134751522947269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_41
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34875b81f1cef4150800000000000000
+      internalID: 5859161258534991939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_42
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6c7b9a0965307090800000000000000
+      internalID: -8038866609590535062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_43
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52f8f5f878edbfb10800000000000000
+      internalID: 2016449931985784613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_44
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb11f33704a6ba9f0800000000000000
+      internalID: -456154112204009029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_45
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f7f8900bd3e03160800000000000000
+      internalID: 7003347950308489208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_46
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274d4676be9a15a90800000000000000
+      internalID: -7326888290238016398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_47
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5c8849314b0e8de0800000000000000
+      internalID: -1329112465265882017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_48
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 652074bfb11b749a0800000000000000
+      internalID: -6248831224215305642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_49
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fffadb87a6e381830800000000000000
+      internalID: 4042049292578172927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_50
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46af762679abff5e0800000000000000
+      internalID: -1873573760609027484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_51
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba0038406d4ccf0d0800000000000000
+      internalID: -3387616396211715925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_52
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7286b7243c5cf8fe0800000000000000
+      internalID: -1184510734550472665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_53
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f46cd505d9b97a7e0800000000000000
+      internalID: -1754262429877025201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_54
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3cbe4036ae5c6a00800000000000000
+      internalID: 751079305732078651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_55
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1d0bb93d054cc70800000000000000
+      internalID: 8990399625918730687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_56
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f6a4cec289026370800000000000000
+      internalID: 8314218319498749681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_57
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae559395bdc2b1c50800000000000000
+      internalID: 6636947796466947562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_58
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11afe434b1b4f0530800000000000000
+      internalID: 3823357189126289937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_59
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 197736ae28a4375a0800000000000000
+      internalID: -6524789508991125615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_60
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af753df9e63a21f50800000000000000
+      internalID: 6850717678707103738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_61
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b9b0aab21b3bf810800000000000000
+      internalID: 1800097427691190707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_62
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f49520d251a246600800000000000000
+      internalID: 460539332336441679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_63
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c45b3ebe0e2c50330800000000000000
+      internalID: 3676558942103909708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_64
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 574f501dda3d5eb80800000000000000
+      internalID: -8366047989281196939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_65
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b968aeceeb2499780800000000000000
+      internalID: -8675829819366537573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_66
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dec0ac816d357f40800000000000000
+      internalID: 5725549990451924694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_67
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76ae167869481bba0800000000000000
+      internalID: -6074928640294786457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_68
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86dafb7eb964e3b50800000000000000
+      internalID: 6574770141429476712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_69
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bbf518ef1297a9f0800000000000000
+      internalID: -457236171419419719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_70
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27f99ff720de27c50800000000000000
+      internalID: 6661647393827168114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_71
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94113ad17ce2f5ea0800000000000000
+      internalID: -5881931155591982775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_72
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56ce719f59f66e5b0800000000000000
+      internalID: -5339457618281239451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_73
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee01215ea20c9c150800000000000000
+      internalID: 5893452877855330542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_74
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6285bb9eedda89e50800000000000000
+      internalID: 6816389208940959782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_75
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8c25179e030b1f0800000000000000
+      internalID: -1031270535481079622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_76
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73f8d8ab3f0bbb170800000000000000
+      internalID: 8195338507784130359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_77
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 150489afe56dd28b0800000000000000
+      internalID: -5175244693359280047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_78
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8068713b1b2689a60800000000000000
+      internalID: 7680997679833777672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_79
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7972dcee27897290800000000000000
+      internalID: -7892128236378621574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_80
+      rect:
+        serializedVersion: 2
+        x: 961
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e28f17813735d540800000000000000
+      internalID: 5031988844516311778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_81
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51d93c24439ce4770800000000000000
+      internalID: 8597029964992453909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_82
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baec1e9fce9f07130800000000000000
+      internalID: 3562622101449985707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_83
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4ba411dfe750aa30800000000000000
+      internalID: 4224473137990118219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_84
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4267aa2bdb2d15090800000000000000
+      internalID: -8047419346946197980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_85
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2523318c20b3160800000000000000
+      internalID: 7006196703643718324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_86
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88716cf0d9b5c0600800000000000000
+      internalID: 435823994080728968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_87
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a48a7f0e436984fa0800000000000000
+      internalID: -5816233764892202934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_88
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4524c19dd613ca110800000000000000
+      internalID: 1273447142502711892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_89
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a059bf10d4932ac0800000000000000
+      internalID: -3881094832256888670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_90
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba4491e99ed029040800000000000000
+      internalID: 4652796662058140843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_91
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e833250cf2d4cd270800000000000000
+      internalID: 8276575082685543310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_92
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eb3eddce791ae960800000000000000
+      internalID: 7631940550943194089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_93
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e63e19a0f40885760800000000000000
+      internalID: 7446843060825219950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_94
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 687a70f8a8b7cc210800000000000000
+      internalID: 1354593422967023494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_95
+      rect:
+        serializedVersion: 2
+        x: 1141
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb04a995d74a5b4b0800000000000000
+      internalID: -5425249317816745796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_96
+      rect:
+        serializedVersion: 2
+        x: 1153
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be1899ae7b29d9ce0800000000000000
+      internalID: -1396798990802386453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_97
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce6f55a0067b345d0800000000000000
+      internalID: -3079416097073137940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_98
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db46e56561c3be550800000000000000
+      internalID: 6191108179386852541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_99
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d558d91589a0e15d0800000000000000
+      internalID: -3090020645008997027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_100
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31ebbbbbc2bbe2140800000000000000
+      internalID: 4696897262196604435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_101
+      rect:
+        serializedVersion: 2
+        x: 1213
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 214341d826c3d6720800000000000000
+      internalID: 2840993333912024082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_102
+      rect:
+        serializedVersion: 2
+        x: 1225
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1f4af526bc9c48b0800000000000000
+      internalID: -5166582366365659365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_103
+      rect:
+        serializedVersion: 2
+        x: 1237
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c97ccd90d02a05b0800000000000000
+      internalID: -5401468722704778815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_104
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 028e003450ba1e9a0800000000000000
+      internalID: -6205490772452513760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_105
+      rect:
+        serializedVersion: 2
+        x: 1261
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4860570566369b8e0800000000000000
+      internalID: -1677200095131138428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_106
+      rect:
+        serializedVersion: 2
+        x: 1273
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53616982730851690800000000000000
+      internalID: -7632053019116956107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_107
+      rect:
+        serializedVersion: 2
+        x: 1285
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ecb6ad5324858e60800000000000000
+      internalID: 7963916803504520421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_108
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 417a701904c64be40800000000000000
+      internalID: 5671276855333201684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_109
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37509abd4f63a9ab0800000000000000
+      internalID: -5000624010956307085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_110
+      rect:
+        serializedVersion: 2
+        x: 1321
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a44774019fa72f9b0800000000000000
+      internalID: -5047837022190341046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_111
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cc91ff90b4bff200800000000000000
+      internalID: 216089977827728583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_112
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00535fbee7e21020800000000000000
+      internalID: 2311164571392626701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_113
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c359ecf9ef3d6ef0800000000000000
+      internalID: -113364141411314752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_114
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638a830f23e51ef48974470487b633a1
+      internalID: -590450996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_115
+      rect:
+        serializedVersion: 2
+        x: 1381
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbe54e6f5891a894ba7d95fea359c4f0
+      internalID: 353167100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_116
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe451acb56296c49a85472ce561dbaf
+      internalID: 1085370611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_117
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724ecfd7c1e9d204cbb1cc5de6a15b85
+      internalID: -382182731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_118
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e434a5002c3966a498f74084ff42f254
+      internalID: -391358410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlanetaFinal_119
+      rect:
+        serializedVersion: 2
+        x: 1429
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb0765e864c7ef245b6cc504ccf7d7ed
+      internalID: 1114617501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 59fbf3709dea4474bb9e09d89fc3d054
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PlanetaFinal_0: -2637068649811761156
+      PlanetaFinal_1: -1608770546129294638
+      PlanetaFinal_10: -9156918854040272027
+      PlanetaFinal_100: 4696897262196604435
+      PlanetaFinal_101: 2840993333912024082
+      PlanetaFinal_102: -5166582366365659365
+      PlanetaFinal_103: -5401468722704778815
+      PlanetaFinal_104: -6205490772452513760
+      PlanetaFinal_105: -1677200095131138428
+      PlanetaFinal_106: -7632053019116956107
+      PlanetaFinal_107: 7963916803504520421
+      PlanetaFinal_108: 5671276855333201684
+      PlanetaFinal_109: -5000624010956307085
+      PlanetaFinal_11: -2687201692742616369
+      PlanetaFinal_110: -5047837022190341046
+      PlanetaFinal_111: 216089977827728583
+      PlanetaFinal_112: 2311164571392626701
+      PlanetaFinal_113: -113364141411314752
+      PlanetaFinal_114: -590450996
+      PlanetaFinal_115: 353167100
+      PlanetaFinal_116: 1085370611
+      PlanetaFinal_117: -382182731
+      PlanetaFinal_118: -391358410
+      PlanetaFinal_119: 1114617501
+      PlanetaFinal_12: 5221902397280353760
+      PlanetaFinal_13: 88121734372099065
+      PlanetaFinal_14: 7016456226072405661
+      PlanetaFinal_15: -6765928597253216470
+      PlanetaFinal_16: 8773422003459788037
+      PlanetaFinal_17: -6379474902552617690
+      PlanetaFinal_18: 5210447974539500504
+      PlanetaFinal_19: 7707509332467276292
+      PlanetaFinal_2: 8980788475893363142
+      PlanetaFinal_20: -3865312322460693954
+      PlanetaFinal_21: 240991247624924017
+      PlanetaFinal_22: -730816534705389540
+      PlanetaFinal_23: -8898039655389147555
+      PlanetaFinal_24: -8459744757388388638
+      PlanetaFinal_25: 4234989730101719401
+      PlanetaFinal_26: 110720919429764831
+      PlanetaFinal_27: -8746621688819404075
+      PlanetaFinal_28: 3044431624020785394
+      PlanetaFinal_29: 5174725657376310622
+      PlanetaFinal_3: -3319773912829561072
+      PlanetaFinal_30: -8575953529984079682
+      PlanetaFinal_31: 815964419643427246
+      PlanetaFinal_32: -9192722266232070795
+      PlanetaFinal_33: 446493919389067295
+      PlanetaFinal_34: -7888041298516556041
+      PlanetaFinal_35: 1424521865450237436
+      PlanetaFinal_36: -4873631804981744818
+      PlanetaFinal_37: 3618033932099654276
+      PlanetaFinal_38: -8783157385110938833
+      PlanetaFinal_39: -7465355191220191461
+      PlanetaFinal_4: -7318422273535229035
+      PlanetaFinal_40: -6820134751522947269
+      PlanetaFinal_41: 5859161258534991939
+      PlanetaFinal_42: -8038866609590535062
+      PlanetaFinal_43: 2016449931985784613
+      PlanetaFinal_44: -456154112204009029
+      PlanetaFinal_45: 7003347950308489208
+      PlanetaFinal_46: -7326888290238016398
+      PlanetaFinal_47: -1329112465265882017
+      PlanetaFinal_48: -6248831224215305642
+      PlanetaFinal_49: 4042049292578172927
+      PlanetaFinal_5: 7029230881591178376
+      PlanetaFinal_50: -1873573760609027484
+      PlanetaFinal_51: -3387616396211715925
+      PlanetaFinal_52: -1184510734550472665
+      PlanetaFinal_53: -1754262429877025201
+      PlanetaFinal_54: 751079305732078651
+      PlanetaFinal_55: 8990399625918730687
+      PlanetaFinal_56: 8314218319498749681
+      PlanetaFinal_57: 6636947796466947562
+      PlanetaFinal_58: 3823357189126289937
+      PlanetaFinal_59: -6524789508991125615
+      PlanetaFinal_6: -8788573215336657873
+      PlanetaFinal_60: 6850717678707103738
+      PlanetaFinal_61: 1800097427691190707
+      PlanetaFinal_62: 460539332336441679
+      PlanetaFinal_63: 3676558942103909708
+      PlanetaFinal_64: -8366047989281196939
+      PlanetaFinal_65: -8675829819366537573
+      PlanetaFinal_66: 5725549990451924694
+      PlanetaFinal_67: -6074928640294786457
+      PlanetaFinal_68: 6574770141429476712
+      PlanetaFinal_69: -457236171419419719
+      PlanetaFinal_7: 2843513341916360074
+      PlanetaFinal_70: 6661647393827168114
+      PlanetaFinal_71: -5881931155591982775
+      PlanetaFinal_72: -5339457618281239451
+      PlanetaFinal_73: 5893452877855330542
+      PlanetaFinal_74: 6816389208940959782
+      PlanetaFinal_75: -1031270535481079622
+      PlanetaFinal_76: 8195338507784130359
+      PlanetaFinal_77: -5175244693359280047
+      PlanetaFinal_78: 7680997679833777672
+      PlanetaFinal_79: -7892128236378621574
+      PlanetaFinal_8: -5395439423580710359
+      PlanetaFinal_80: 5031988844516311778
+      PlanetaFinal_81: 8597029964992453909
+      PlanetaFinal_82: 3562622101449985707
+      PlanetaFinal_83: 4224473137990118219
+      PlanetaFinal_84: -8047419346946197980
+      PlanetaFinal_85: 7006196703643718324
+      PlanetaFinal_86: 435823994080728968
+      PlanetaFinal_87: -5816233764892202934
+      PlanetaFinal_88: 1273447142502711892
+      PlanetaFinal_89: -3881094832256888670
+      PlanetaFinal_9: -1026509800082110377
+      PlanetaFinal_90: 4652796662058140843
+      PlanetaFinal_91: 8276575082685543310
+      PlanetaFinal_92: 7631940550943194089
+      PlanetaFinal_93: 7446843060825219950
+      PlanetaFinal_94: 1354593422967023494
+      PlanetaFinal_95: -5425249317816745796
+      PlanetaFinal_96: -1396798990802386453
+      PlanetaFinal_97: -3079416097073137940
+      PlanetaFinal_98: 6191108179386852541
+      PlanetaFinal_99: -3090020645008997027
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
