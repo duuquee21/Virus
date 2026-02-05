@@ -12,20 +12,21 @@ public class Guardado : MonoBehaviour
     public int shinyDNA = 0;
 
     [Header("Permanentes del Árbol")]
-    public int freeInitialUpgrade = -1; // -1 significa ninguna
+    public int freeInitialUpgrade = -1;
     public int coinMultiplier = 1;
     public int startingCoins = 0;
     public float spawnSpeedBonus = 0f;
     public float populationBonus = 0f;
     public bool zoneDiscountActive = false;
+
+    // Esta es la variable clave para el stock extra por zona
     public int extraShiniesPerRound = 0;
+
     public int coinsPerZoneDaily = 0;
     public int shinyPerZoneDaily = 0;
     public bool guaranteedShiny = false;
     public bool keepUpgradesOnReset = false;
-    //public bool doubleShinySkill = false; // Habilidad de doble Shiny
     public bool keepZonesUnlocked = false;
-    //public bool habilidadPlusOneShiny = false;
 
     [Header("Multiplicadores")]
     public float radiusMultiplier = 1.0f;
@@ -46,7 +47,6 @@ public class Guardado : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Lógica de Reset on Play restaurada
         if (resetOnPlay)
         {
             Debug.Log("<color=red><b>[BORRADO TOTAL]:</b> Empezando partida limpia desde CERO.</color>");
@@ -56,20 +56,6 @@ public class Guardado : MonoBehaviour
         else
         {
             LoadData();
-        }
-    }
-
-    void OnValidate()
-    {
-        if (resetOnPlay && !Application.isPlaying)
-        {
-            totalInfected = 0;
-            shinyDNA = 0;
-            freeInitialUpgrade = -1;
-            coinMultiplier = 1;
-            startingCoins = 0;
-            radiusMultiplier = 1.0f;
-            speedMultiplier = 1.0f;
         }
     }
 
@@ -95,37 +81,11 @@ public class Guardado : MonoBehaviour
         shinyValueSum = 1;
         shinyMultiplier = 1;
         bonusDaysPermanent = 0;
-        //doubleShinySkill = false;
+        keepZonesUnlocked = false;
 
-        // Limpiar también el estado de la partida en curso
         ClearRunState();
         SaveData();
     }
-
-    // --- MEJORAS INICIALES ---
-
-    public void AssignRandomInitialUpgrade()
-    {
-        if (freeInitialUpgrade != -1) return;
-        freeInitialUpgrade = Random.Range(0, 5);
-        SaveData();
-        ApplyPermanentInitialUpgrade();
-    }
-
-    public void ApplyPermanentInitialUpgrade()
-    {
-        if (freeInitialUpgrade == -1) return;
-        switch (freeInitialUpgrade)
-        {
-            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.UpgradeRadius(); break;
-            case 1: if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.UpgradeCapacity(); break;
-            case 2: if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.UpgradeSpeed(); break;
-            case 3: if (TimeUpgradeController.instance) TimeUpgradeController.instance.UpgradeTime(); break;
-            case 4: if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(); break;
-        }
-    }
-
-    // --- SISTEMA DE GUARDADO ---
 
     public void SaveData()
     {
@@ -149,7 +109,6 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
-        //PlayerPrefs.SetInt("DoubleShiny", doubleShinySkill ? 1 : 0);
         PlayerPrefs.SetInt("KeepZones", keepZonesUnlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
@@ -176,15 +135,25 @@ public class Guardado : MonoBehaviour
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
         shinyCaptureMultiplier = PlayerPrefs.GetFloat("ShinyCaptureMult", 1.0f);
-        //doubleShinySkill = PlayerPrefs.GetInt("DoubleShiny", 0) == 1;
         keepZonesUnlocked = PlayerPrefs.GetInt("KeepZones", 0) == 1;
     }
 
-    // --- MÉTODOS PÚBLICOS PARA ACTIVAR HABILIDADES ---
+    // --- MÉTODOS PÚBLICOS ---
 
+    public void AddExtraShinyLevel()
+    {
+        extraShiniesPerRound++; // Aumenta el nivel permanente
+        SaveData();
+
+        // Avisamos al LevelManager para que sume +1 al stock de la partida actual
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.ActualizarStockPorCompraHabilidad();
+        }
+    }
+
+    public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
-    public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
-    public void SetShinyCaptureMultiplier(float val) { shinyCaptureMultiplier = val; SaveData(); }
     public void AddShinyDNA(int val) { shinyDNA += val; SaveData(); }
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
     public int GetFinalShinyValue() => shinyValueSum * shinyMultiplier;
@@ -196,36 +165,32 @@ public class Guardado : MonoBehaviour
     public void AddPopulationBonus(float val) { populationBonus += val; SaveData(); }
     public void AddBonusDays(int val) { bonusDaysPermanent += val; SaveData(); }
     public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
-    public void AddExtraShiny() { extraShiniesPerRound++; SaveData(); }
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetShinyPassiveIncome(int val) { shinyPerZoneDaily = val; SaveData(); }
     public void IncreaseShinyValueSum(int val) { shinyValueSum += val; SaveData(); }
     public void SetShinyMultiplier(int val) { shinyMultiplier = val; SaveData(); }
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
-    //public void ActivateDoubleShiny() { doubleShinySkill = true; SaveData(); }
-    // En Guardado.cs
-    public void ActivateKeepZones()
+    public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
+    public void SetShinyCaptureMultiplier(float val) { shinyCaptureMultiplier = val; SaveData(); }
+
+    public void ApplyPermanentInitialUpgrade()
     {
-        keepZonesUnlocked = true; // Esta es la variable que chequea ZoneItem
-        SaveData();
+        if (freeInitialUpgrade == -1) return;
+        switch (freeInitialUpgrade)
+        {
+            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.UpgradeRadius(); break;
+            case 1: if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.UpgradeCapacity(); break;
+            case 2: if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.UpgradeSpeed(); break;
+            case 3: if (TimeUpgradeController.instance) TimeUpgradeController.instance.UpgradeTime(); break;
+            case 4: if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed(); break;
+        }
     }
-    public void ActivarPlusOneShiny()
-    {
-        //habilidadPlusOneShiny = true;
-        SaveData();
-        Debug.Log("Habilidad +1 Shiny Extra activada.");
-    }
-    public void AddExtraShinyLevel()
-    {
-        extraShiniesPerRound++; // Suma 1 al nivel actual
-        SaveData();
-        Debug.Log("Nivel de Shiny Extra: " + extraShiniesPerRound);
-    }
-    // --- SISTEMA DE PERSISTENCIA DE RUNDA ---
+
+    // --- SISTEMA DE PERSISTENCIA DE RUN ---
 
     public void SaveRunState(int currentDay, int currentCoins, int currentMap)
     {
-        PlayerPrefs.SetInt("RunInProgress", 1); // 1 = Hay una partida guardada
+        PlayerPrefs.SetInt("RunInProgress", 1);
         PlayerPrefs.SetInt("RunDay", currentDay);
         PlayerPrefs.SetInt("RunCoins", currentCoins);
         PlayerPrefs.SetInt("RunMap", currentMap);
@@ -238,15 +203,18 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public bool HasSavedGame()
+    public void AssignRandomInitialUpgrade()
     {
-        return PlayerPrefs.GetInt("RunInProgress", 0) == 1;
+        if (freeInitialUpgrade != -1) return;
+        freeInitialUpgrade = Random.Range(0, 5);
+        SaveData();
+        ApplyPermanentInitialUpgrade();
     }
 
-    public string GetContinueDetails()
+    // Esto es un "puente" para que los scripts viejos no den error
+    public void AddExtraShiny()
     {
-        int day = PlayerPrefs.GetInt("RunDay", 1);
-        int coins = PlayerPrefs.GetInt("RunCoins", 0);
-        return "Dia. " + day + "\nDinero: " + coins;
+        AddExtraShinyLevel();
     }
+    public bool HasSavedGame() => PlayerPrefs.GetInt("RunInProgress", 0) == 1;
 }
