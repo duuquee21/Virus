@@ -32,40 +32,43 @@ public class PopulationManager : MonoBehaviour
         shiniesRemainingToSpawn = shinyCount;
         personsSpawnedToday = 0;
         timer = 0;
-
         shinyIndices.Clear();
 
         if (shiniesRemainingToSpawn > 0)
         {
-            // Generamos tantos índices como shinies haya pedido el LevelManager
+            // --- AJUSTE DE RANGO ---
+            // Si hay pocos shinies (como en la Zona 1), los forzamos a aparecer 
+            // casi siempre dentro de la población inicial (initialPopulation).
+            int maxRange = initialPopulation + (shiniesRemainingToSpawn * 2);
+
             for (int i = 0; i < shiniesRemainingToSpawn; i++)
             {
                 int newIndex;
                 int safety = 0;
-
                 do
                 {
-                    // Rango: desde la primera persona hasta la población inicial + margen
-                    newIndex = Random.Range(1, initialPopulation + 5);
+                    // Rango desde 1 hasta el máximo calculado
+                    newIndex = Random.Range(1, maxRange);
                     safety++;
                 }
-                while (shinyIndices.Contains(newIndex) && safety < 50);
+                while (shinyIndices.Contains(newIndex) && safety < 100);
 
                 shinyIndices.Add(newIndex);
             }
-            Debug.Log("<color=cyan>PopulationManager:</color> Índices Shiny para hoy: " + string.Join(", ", shinyIndices));
+
+            shinyIndices.Sort();
+            Debug.Log("<color=cyan>PopulationManager:</color> Stock para esta zona: " + shiniesRemainingToSpawn + ". Aparecerán en los índices: " + string.Join(", ", shinyIndices));
         }
 
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
-        // Spawn inicial
+        // Spawn inicial: Aquí nacerán los primeros shinies si su índice es <= initialPopulation
         for (int i = 0; i < initialPopulation; i++)
         {
             SpawnPerson();
         }
     }
-
     void Update()
     {
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
