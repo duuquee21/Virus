@@ -8,16 +8,18 @@ public class ZoneItem : MonoBehaviour
     public int mapIndex = 1;
     public int cost = 100;
     public string zoneName = "Parque Central";
+    public string zoneBenefit = "Infección x1"; // Texto para el multiplicador
 
     [Header("Referencias UI")]
     public Button myButton;
     public Image planetImage; // Arrastra aquí la imagen del planeta
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI benefitText; // Texto UI para el beneficio
 
     [Header("Colores de Estado")]
-    public Color luzColor = Color.white; // Brilla (seleccionable)
-    public Color apagadoColor = new Color(0.4f, 0.4f, 0.4f, 1f); // Oscuro (bloqueado/activo)
+    public Color luzColor = Color.white; // Brilla (seleccionable o comprable)
+    public Color apagadoColor = new Color(0.4f, 0.4f, 0.4f, 1f); // Oscuro (bloqueado y sin dinero)
 
     private bool isUnlocked = false;
 
@@ -38,28 +40,24 @@ public class ZoneItem : MonoBehaviour
 
             if (tieneHabilidadMeta)
             {
-                // SI TIENE LA HABILIDAD: Simplemente cargamos lo que haya en el disco
                 isUnlocked = yaCompradoEnPrefs;
             }
             else
             {
-                // SI NO TIENE LA HABILIDAD: 
-                // Solo se mantiene desbloqueado si ya lo compramos Y el LevelManager 
-                // no ha borrado los datos todavía (es decir, seguimos en la misma partida).
                 isUnlocked = yaCompradoEnPrefs;
-
-                // OJO: Aquí NO debes poner PlayerPrefs.SetInt(..., 0) porque si lo haces,
-                // borrarás la compra que el jugador hizo hace 1 minuto en la misma partida.
             }
         }
         UpdateUI();
     }
+
+    // FUNCIÓN CORREGIDA: Ahora todas las rutas devuelven un valor
     int GetFinalCost()
     {
         if (Guardado.instance != null && Guardado.instance.zoneDiscountActive)
         {
             return cost / 2;
         }
+
         return cost;
     }
 
@@ -108,9 +106,6 @@ public class ZoneItem : MonoBehaviour
         }
     }
 
-    // Estas funciones permiten que otros scripts (como BotonZonaOrbital) 
-    // consulten el estado de este planeta.
-
     public bool IsUnlocked()
     {
         return isUnlocked;
@@ -119,8 +114,6 @@ public class ZoneItem : MonoBehaviour
     public bool CanAfford()
     {
         if (LevelManager.instance == null) return false;
-
-        // Compara las monedas actuales con el coste (con o sin descuento)
         return LevelManager.instance.contagionCoins >= GetFinalCost();
     }
 
@@ -131,18 +124,25 @@ public class ZoneItem : MonoBehaviour
         int currentEquipped = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         bool esElEquipado = (currentEquipped == mapIndex);
 
+        int currentPrice = GetFinalCost();
+        bool puedeComprarlo = LevelManager.instance.contagionCoins >= currentPrice;
+
+        // Actualizar textos
+        if (nameText != null) nameText.text = zoneName;
+        if (benefitText != null) benefitText.text = zoneBenefit;
+
         if (isUnlocked)
         {
             if (esElEquipado)
             {
-                // EQUIPADO: Sin luz, no se puede pulsar
+                // EQUIPADO: Se ve oscuro para indicar que ya está puesto
                 statusText.text = "ACTIVO";
                 myButton.interactable = false;
                 if (planetImage != null) planetImage.color = apagadoColor;
             }
             else
             {
-                // COMPRADO: Con luz, se puede seleccionar
+                // DESBLOQUEADO PERO NO EQUIPADO: Brilla para que lo elijas
                 statusText.text = "EQUIPAR";
                 myButton.interactable = true;
                 if (planetImage != null) planetImage.color = luzColor;
@@ -150,13 +150,14 @@ public class ZoneItem : MonoBehaviour
         }
         else
         {
-            // BLOQUEADO: Oscuro
-            int currentPrice = GetFinalCost();
+            // BLOQUEADO: Brilla solo si tienes el dinero para comprarlo
             statusText.text = "COMPRAR (" + currentPrice + ")";
-            myButton.interactable = (LevelManager.instance.contagionCoins >= currentPrice);
-            if (planetImage != null) planetImage.color = apagadoColor;
-        }
+            myButton.interactable = puedeComprarlo;
 
-        if (nameText != null) nameText.text = zoneName;
+            if (planetImage != null)
+            {
+                planetImage.color = puedeComprarlo ? luzColor : apagadoColor;
+            }
+        }
     }
 }
