@@ -63,6 +63,12 @@ public class VirusMovement : MonoBehaviour
         currentFinalSpeed = baseMoveSpeed * skillMultiplier;
     }
 
+    public Vector2 GetMovementDirection()
+    {
+        return movementInput.normalized;
+    }
+
+
     public void SetSpeed(float newSpeed)
     {
         baseMoveSpeed = newSpeed;

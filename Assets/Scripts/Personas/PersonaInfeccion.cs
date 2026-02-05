@@ -25,11 +25,15 @@ public class PersonaInfeccion : MonoBehaviour
     public float flashDuration = 0.1f; // Cuánto tiempo se queda en blanco
     public float fadeDuration = 0.5f;  // Cuánto tarda en pasar de blanco a rojo
 
+    private Color originalColor;
+
+
     void Start()
     {
         if (spritePersona == null)
             spritePersona = GetComponent<SpriteRenderer>();
 
+        originalColor = spritePersona.color;   // 👈 NUEVO
         infectionBarCanvas.SetActive(false);
     }
 
@@ -88,7 +92,7 @@ public class PersonaInfeccion : MonoBehaviour
             LevelManager.instance.RegisterInfection();
 
         if (InfectionFeedback.instance != null)
-            InfectionFeedback.instance.PlayEffect(transform.position);
+            InfectionFeedback.instance.PlayEffect(transform.position, originalColor);
 
         if (isShiny && LevelManager.instance != null)
             LevelManager.instance.RegisterShinyCapture(this);

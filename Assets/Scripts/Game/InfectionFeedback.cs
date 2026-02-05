@@ -27,12 +27,20 @@ public class InfectionFeedback : MonoBehaviour
             cameraTransform = Camera.main.transform;
     }
 
-    public void PlayEffect(Vector3 position)
+    public void PlayEffect(Vector3 position, Color particleColor)
     {
         // 1. VISUAL
         if (infectionParticles != null)
         {
             GameObject vfx = Instantiate(infectionParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = particleColor * 1.3f;
+            }
+
             Destroy(vfx, 2f);
         }
 
