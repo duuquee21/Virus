@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections; // Importante para usar Corrutinas
 
 public class PersonaInfeccion : MonoBehaviour
 {
-    // ⏱ Tiempo global base para infectar a alguien
     public static float globalInfectTime = 2f;
 
     public SpriteRenderer spritePersona;
@@ -21,6 +21,10 @@ public class PersonaInfeccion : MonoBehaviour
     public Color shinyColor = Color.yellow;
     public int shinyReward = 1;
 
+    [Header("Visual Feedback Settings")]
+    public float flashDuration = 0.1f; // Cuánto tiempo se queda en blanco
+    public float fadeDuration = 0.5f;  // Cuánto tarda en pasar de blanco a rojo
+
     void Start()
     {
         if (spritePersona == null)
@@ -35,36 +39,19 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (isInsideZone)
         {
-            // --- LÓGICA DE VELOCIDAD DIFERENCIADA ---
             float multiplier = 1f;
-
             if (Guardado.instance != null)
             {
-                if (isShiny)
-                {
-                    // Si es Shiny, usamos el multiplicador del árbol de habilidades "Shiny Capture"
-                    multiplier = Guardado.instance.shinyCaptureMultiplier;
-                }
-                else
-                {
-                    // Si es normal, usamos el multiplicador de "Infect Speed" normal
-                    multiplier = Guardado.instance.infectSpeedMultiplier;
-                }
+                multiplier = isShiny ? Guardado.instance.shinyCaptureMultiplier : Guardado.instance.infectSpeedMultiplier;
             }
-
-            // Aplicamos el multiplicador al progreso
             currentInfectionTime += Time.deltaTime * multiplier;
         }
         else
         {
-            // Si sale de la zona, la barra baja (el doble de rápido para penalizar)
             currentInfectionTime -= Time.deltaTime * 2f;
         }
 
-        // Aseguramos que el tiempo esté entre 0 y el máximo
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
-
-        // Actualizamos la barra visualmente
         float progress = currentInfectionTime / globalInfectTime;
         fillingBarImage.transform.localScale = new Vector3(progress, 1f, 1f);
 
@@ -93,22 +80,40 @@ public class PersonaInfeccion : MonoBehaviour
     {
         alreadyInfected = true;
         infectionBarCanvas.SetActive(false);
-        spritePersona.color = infectedColor;
+
+        // Iniciamos la secuencia de color
+        StartCoroutine(InfectionColorSequence());
 
         if (LevelManager.instance != null)
-        {
             LevelManager.instance.RegisterInfection();
-        }
 
         if (InfectionFeedback.instance != null)
-        {
             InfectionFeedback.instance.PlayEffect(transform.position);
-        }
 
         if (isShiny && LevelManager.instance != null)
-        {
             LevelManager.instance.RegisterShinyCapture(this);
+    }
+
+    private IEnumerator InfectionColorSequence()
+    {
+        // 1. Cambio instantáneo a Blanco
+        spritePersona.color = Color.white;
+
+        // 2. Esperar un instante (el destello)
+        yield return new WaitForSeconds(flashDuration);
+
+        // 3. Fade suave hacia el color infectado
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            // Interpola linealmente entre Blanco y el color final
+            spritePersona.color = Color.Lerp(Color.white, infectedColor, elapsed / fadeDuration);
+            yield return null;
         }
+
+        // Asegurar que termine exactamente en el color deseado
+        spritePersona.color = infectedColor;
     }
 
     public void MakeShiny()

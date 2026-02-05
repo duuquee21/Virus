@@ -16842,8 +16842,13 @@ MonoBehaviour:
   infectionParticles: {fileID: 7197056637472312061, guid: c481fbc601207be4f9314d86f8e6b386, type: 3}
   audioSource: {fileID: 905437688}
   infectionSounds:
-  - {fileID: 8300000, guid: 6c8b04a68c4bb024bac77743eec2f069, type: 3}
-  - {fileID: 8300000, guid: b2293c284702bc14ba869679a0cdc1fe, type: 3}
+  - {fileID: 8300000, guid: e46bc00b61aab8b40bc8eee286035672, type: 3}
+  - {fileID: 8300000, guid: e85f56a62653aa14ab9862f26c643eff, type: 3}
+  - {fileID: 8300000, guid: 9f34862150028894da81f102830bbc31, type: 3}
+  - {fileID: 8300000, guid: d1ece1009b6684143ba8947c866359c0, type: 3}
+  cameraTransform: {fileID: 519420032}
+  shakeDuration: 0.1
+  shakeMagnitude: 0.075
 --- !u!1 &912880731
 GameObject:
   m_ObjectHideFlags: 0
