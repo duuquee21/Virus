@@ -255,33 +255,50 @@ public class LevelManager : MonoBehaviour
         if (currentSessionInfected >= maxInfectionsPerRound) EndSessionDay();
     }
 
+    // --- DENTRO DE LEVELMANAGER.CS ---
+
     void EndSessionDay()
     {
         isGameActive = false;
+
+        // --- NUEVO: EFECTO CÁMARA LENTA ---
+        Time.timeScale = 0.2f; // El juego corre al 20% de velocidad
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Mantiene la fluidez física
+
+        gameUI.SetActive(false);
+        if (virusMovementScript != null) virusMovementScript.enabled = false;
+
         int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int zoneMultiplier = (mapIndex == 1) ? 2 : (mapIndex == 2) ? 3 : 1;
         int baseMultiplier = Guardado.instance != null ? Guardado.instance.coinMultiplier : 1;
         int sMultiplier = Guardado.instance != null ? Guardado.instance.shinyMultiplier : 1;
 
         if (EndDayResultsPanel.instance != null)
+        {
             EndDayResultsPanel.instance.ShowResults(currentSessionInfected, baseMultiplier, zoneMultiplier, shiniesCapturedToday, sMultiplier);
+        }
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
-
         daysRemaining--;
-        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
-        gameUI.SetActive(false);
-        virusPlayer.SetActive(false);
-
-        if (daysRemaining <= 0) { daysRemaining = 0; GameOver(); }
-        else
-        {
-            dayOverPanel.SetActive(true);
-            if (Guardado.instance) Guardado.instance.SaveRunState(daysRemaining, contagionCoins, mapIndex);
-        }
-        UpdateUI();
     }
 
+    public void OnEndDayResultsFinished(int earnings, int shinies)
+    {
+        // --- NUEVO: RESTABLECER TIEMPO ---
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        contagionCoins += earnings;
+        if (Guardado.instance != null) Guardado.instance.AddShinyDNA(shinies);
+
+        virusPlayer.SetActive(false);
+        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+
+        if (daysRemaining <= 0) GameOver();
+        else dayOverPanel.SetActive(true);
+
+        UpdateUI();
+    }
     public void GameOver()
     {
         dayOverPanel.SetActive(false);
@@ -323,15 +340,7 @@ public class LevelManager : MonoBehaviour
         return count;
     }
 
-    public void OnEndDayResultsFinished(int earnings, int shinies)
-    {
-        contagionCoins += earnings;
-        if (Guardado.instance != null) Guardado.instance.AddShinyDNA(shinies);
-        if (daysRemaining <= 0) GameOver();
-        else dayOverPanel.SetActive(true);
-        UpdateUI();
-    }
-
+   
     public void RegisterShinyCapture(PersonaInfeccion shiny)
     {
         if (shiny == null || !shinysThisDay.Contains(shiny)) return;
