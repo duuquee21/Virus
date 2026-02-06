@@ -4,35 +4,42 @@ using TMPro;
 
 public class BotonConfirmarZonaOrbital : MonoBehaviour
 {
-    public OrbitaSistemaUI orbitaSistema;
-    public Button confirmarButton;
-    public TextMeshProUGUI textoBoton;
+    [Header("Referencias")]
+    public OrbitaSistemaUI orbitaSistema; 
+    public Button confirmarButton;        
+    public TextMeshProUGUI textoBoton;    
 
     void Update()
     {
         ActualizarEstado();
     }
 
+    
     void ActualizarEstado()
     {
+        if (orbitaSistema == null) return;
+
         RectTransform planeta = orbitaSistema.GetPlanetaAlFrente();
+        if (planeta == null) return;
+
+        
         ZoneItem zone = planeta.GetComponent<ZoneItem>();
 
         if (zone == null)
         {
             confirmarButton.interactable = false;
+            textoBoton.text = "ERROR";
             return;
         }
 
-        // Zona NO comprada
+        
         if (!zone.IsUnlocked())
         {
             bool puedeComprar = zone.CanAfford();
-
-            textoBoton.text = "COMPRAR";
-            confirmarButton.interactable = puedeComprar;
+            textoBoton.text = "COMPRAR"; 
+            confirmarButton.interactable = puedeComprar; 
         }
-        // Zona comprada
+        
         else
         {
             textoBoton.text = "JUGAR";
@@ -40,24 +47,34 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
         }
     }
 
+    
     public void OnClickConfirmar()
     {
-        RectTransform planeta = orbitaSistema.GetPlanetaAlFrente();
-        ZoneItem zone = planeta.GetComponent<ZoneItem>();
+        if (orbitaSistema == null) return;
 
+        RectTransform planeta = orbitaSistema.GetPlanetaAlFrente();
+        if (planeta == null) return;
+
+        ZoneItem zone = planeta.GetComponent<ZoneItem>();
         if (zone == null) return;
 
-        // Si no está comprada → comprar
+        
         if (!zone.IsUnlocked())
         {
-            zone.OnClickButton();   // Compra
+            
+            zone.OnClickButton(); 
+            
+           
+            ActualizarEstado(); 
         }
         else
         {
-            // Selecciona zona
+            
+            
+            
             LevelManager.instance.ActivateMap(zone.mapIndex);
 
-            // Inicia partida
+            
             LevelManager.instance.StartSession();
         }
     }

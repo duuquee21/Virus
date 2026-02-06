@@ -7,8 +7,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    [Header("Selector de Modo")]
-    public GameObject modeSelectionPanel;
+    [Header("Selector de Modo (Menú Principal)")]
+    // modeSelectionPanel ya no se usa, pero lo dejo por si tienes referencias perdidas
+    public GameObject modeSelectionPanel; 
     public Button continueButton;
     public TextMeshProUGUI continueInfoText;
 
@@ -67,11 +68,17 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        // 1. CORRECCIÓN DE VOLUMEN (Recuperada)
+        float volumenGuardado = PlayerPrefs.GetFloat("VolumenGlobal", 1f);
+        AudioListener.volume = volumenGuardado;
+
         if (virusPlayer != null && virusMovementScript == null)
             virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
 
         ForceHardReset();
         RecalculateTotalDaysUntilCure();
+        
+        // Al iniciar, mostramos menú principal y configuramos el botón continuar
         ShowMainMenu();
     }
 
@@ -86,57 +93,78 @@ public class LevelManager : MonoBehaviour
     public void RegisterInfection()
     {
         if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
-
-        // Sumamos 1 a la capacidad usada hoy
         currentSessionInfected++;
-
         UpdateUI();
-
-        // Si llegamos al tope de capacidad, se acaba el día
-        if (currentSessionInfected >= maxInfectionsPerRound)
-            EndSessionDay();
+        if (currentSessionInfected >= maxInfectionsPerRound) EndSessionDay();
     }
 
     // ---------------------------------------------------------
-    // --- SISTEMA DE MENÚ ---
+    // --- SISTEMA DE MENÚ (CORREGIDO) ---
     // ---------------------------------------------------------
 
-    public void OpenModeSelection()
+    // Esta función controla qué botones se ven y si están activos
+    void ShowMainMenu()
     {
-        menuPanel.SetActive(false);
-        modeSelectionPanel.SetActive(true);
+        menuPanel.SetActive(true);
 
-        if (Guardado.instance != null && Guardado.instance.HasSavedGame())
+        // Ocultar resto de paneles
+        gameUI.SetActive(false);
+        gameOverPanel.SetActive(false);
+        if (dayOverPanel) dayOverPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        shinyPanel.SetActive(false);
+        if (zonePanel) zonePanel.SetActive(false);
+        if (modeSelectionPanel) modeSelectionPanel.SetActive(false); // Por si acaso
+        
+        virusPlayer.SetActive(false);
+
+        // --- LÓGICA BOTÓN CONTINUAR ---
+        if (continueButton != null)
         {
-            continueButton.interactable = true;
-            continueInfoText.text = Guardado.instance.GetContinueDetails();
-        }
-        else
-        {
-            continueButton.interactable = false;
-            continueInfoText.text = "Sin datos";
+            continueButton.gameObject.SetActive(true);
+
+            if (Guardado.instance != null && Guardado.instance.HasSavedGame())
+            {
+                // HAY PARTIDA: Botón activo
+                continueButton.interactable = true;
+                if (continueInfoText)
+                {
+                    continueInfoText.text = Guardado.instance.GetContinueDetails();
+                    continueInfoText.alpha = 1f;
+                }
+            }
+            else
+            {
+                // NO HAY PARTIDA: Botón gris
+                continueButton.interactable = false;
+                if (continueInfoText)
+                {
+                    continueInfoText.text = "Sin datos";
+                    continueInfoText.alpha = 0.5f;
+                }
+            }
         }
     }
 
+    // 1. BOTÓN "NUEVA PARTIDA"
     public void Button_NewGame()
     {
-        if (Guardado.instance) Guardado.instance.ResetAllProgress();
-        modeSelectionPanel.SetActive(false);
-        NewGameFromMainMenu();
+        // Borramos todo el progreso permanentemente
+        if (Guardado.instance) 
+        {
+            Guardado.instance.ResetAllProgress();
+        }
+
+        NewGameFromMainMenu(); 
     }
 
+    // 2. BOTÓN "CONTINUAR"
     public void Button_Continue()
     {
-        modeSelectionPanel.SetActive(false);
         LoadRunAndStart();
     }
 
-    public void CloseModeSelection()
-    {
-        modeSelectionPanel.SetActive(false);
-        menuPanel.SetActive(true);
-    }
-
+    // Lógica para cargar los datos (CORREGIDA PARA NO EMPEZAR DIRECTO)
     void LoadRunAndStart()
     {
         daysRemaining = PlayerPrefs.GetInt("Run_Day", totalDaysUntilCure);
@@ -148,8 +176,32 @@ public class LevelManager : MonoBehaviour
 
         if (stockShiniesZonas.Count == 0) InicializarStockDeShinies();
 
-        StartSession();
+        // --- AQUÍ ESTÁ EL CAMBIO ---
+        // NO llamamos a StartSession(). Vamos al panel de preparación (DayOverPanel)
+        menuPanel.SetActive(false);
+        gameUI.SetActive(false);
+        dayOverPanel.SetActive(true); // <--- MOSTRAMOS EL PANEL
+        
+        UpdateUI(); // Actualizamos visualmente
     }
+
+    // Lógica nueva partida (CORREGIDA PARA NO EMPEZAR DIRECTO)
+    public void NewGameFromMainMenu()
+    {
+        ResetRunData();
+        
+        // --- AQUÍ ESTÁ EL CAMBIO ---
+        menuPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        gameUI.SetActive(false);
+        dayOverPanel.SetActive(true); // <--- MOSTRAMOS EL PANEL
+        
+        UpdateUI();
+    }
+
+    // ---------------------------------------------------------
+    // --- FIN SISTEMA DE MENÚ ---
+    // ---------------------------------------------------------
 
     void ForceHardReset()
     {
@@ -195,15 +247,6 @@ public class LevelManager : MonoBehaviour
     public void OpenZoneShop() { if (zonePanel != null) zonePanel.SetActive(true); UpdateUI(); }
     public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); }
 
-    public void NewGameFromMainMenu()
-    {
-        ResetRunData();
-        menuPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        dayOverPanel.SetActive(false);
-        StartSession();
-    }
-
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
@@ -218,7 +261,7 @@ public class LevelManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         if (dayOverPanel) dayOverPanel.SetActive(false);
         shinyPanel.SetActive(false);
-        modeSelectionPanel.SetActive(false);
+        if (modeSelectionPanel) modeSelectionPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
 
         ShowMainMenu();
@@ -273,13 +316,22 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void TryStartGame() { OpenModeSelection(); }
+    // Métodos legacy/sobrantes que he dejado para evitar errores de referencias perdidas
+    public void OpenModeSelection() { /* Ya no se usa */ }
+    public void CloseModeSelection() { /* Ya no se usa */ }
+    public void TryStartGame() { /* Ya no se usa */ }
 
+    // --- START SESSION CORREGIDO ---
     public void StartSession()
     {
-        dayOverPanel.SetActive(false);
-        modeSelectionPanel.SetActive(false);
+        // 1. Cerrar todos los paneles previos
+        if (dayOverPanel) dayOverPanel.SetActive(false);
+        if (modeSelectionPanel) modeSelectionPanel.SetActive(false);
+        if (menuPanel) menuPanel.SetActive(false);
 
+        Time.timeScale = 1f;
+
+        // 3. Ingresos Pasivos
         if (Guardado.instance != null)
         {
             int numeroZonas = GetTotalUnlockedZones();
@@ -297,7 +349,7 @@ public class LevelManager : MonoBehaviour
 
         int indexActual = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         if (!stockShiniesZonas.ContainsKey(indexActual)) InicializarStockDeShinies();
-        int stockDisponible = stockShiniesZonas[indexActual];
+        int stockDisponible = stockShiniesZonas.ContainsKey(indexActual) ? stockShiniesZonas[indexActual] : 0;
 
         float probabilidadActual = (Guardado.instance != null && Guardado.instance.guaranteedShiny) ? 1.0f : shinyChance;
 
@@ -397,15 +449,6 @@ public class LevelManager : MonoBehaviour
         {
             foreach (var t in shinyStoreTexts) if (t != null) t.text = "ADN Shiny: " + Guardado.instance.shinyDNA;
         }
-    }
-
-    void ShowMainMenu()
-    {
-        menuPanel.SetActive(true);
-        gameUI.SetActive(false);
-        gameOverPanel.SetActive(false);
-        modeSelectionPanel.SetActive(false);
-        virusPlayer.SetActive(false);
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }
