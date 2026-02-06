@@ -9514,7 +9514,7 @@ GameObject:
   - component: {fileID: 510665371}
   - component: {fileID: 510665372}
   - component: {fileID: 510665373}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: InfectionRadiusVisual
   m_TagString: InfectionZone
   m_Icon: {fileID: 0}
@@ -12847,7 +12847,7 @@ GameObject:
   - component: {fileID: 661213049}
   - component: {fileID: 661213051}
   - component: {fileID: 661213050}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: InfectionRadiusLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21559,7 +21559,7 @@ GameObject:
   - component: {fileID: 1129471498}
   - component: {fileID: 1129471499}
   - component: {fileID: 1129471501}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: VirusPlayer
   m_TagString: Virus
   m_Icon: {fileID: 0}
