@@ -5,7 +5,7 @@ public class Guardado : MonoBehaviour
     public static Guardado instance;
 
     [Header("Debug Herramientas")]
-    public bool resetOnPlay = true;
+    public bool resetOnPlay = false;
 
     [Header("Datos de Juego")]
     public int totalInfected = 0;
@@ -18,10 +18,8 @@ public class Guardado : MonoBehaviour
     public float spawnSpeedBonus = 0f;
     public float populationBonus = 0f;
     public bool zoneDiscountActive = false;
-
-    // Esta es la variable clave para el stock extra por zona
+    public bool earlyShinyUnlocked = false; // Necesaria para evitar errores
     public int extraShiniesPerRound = 0;
-
     public int coinsPerZoneDaily = 0;
     public int shinyPerZoneDaily = 0;
     public bool guaranteedShiny = false;
@@ -33,12 +31,8 @@ public class Guardado : MonoBehaviour
     public float speedMultiplier = 1.0f;
     public float infectSpeedMultiplier = 1.0f;
     public float shinyCaptureMultiplier = 1.0f;
-
-    [Header("Shiny Economy")]
     public int shinyValueSum = 1;
     public int shinyMultiplier = 1;
-
-    [Header("Otros")]
     public int bonusDaysPermanent = 0;
 
     void Awake()
@@ -49,7 +43,6 @@ public class Guardado : MonoBehaviour
 
         if (resetOnPlay)
         {
-            Debug.Log("<color=red><b>[BORRADO TOTAL]:</b> Empezando partida limpia desde CERO.</color>");
             PlayerPrefs.DeleteAll();
             HardResetVariables();
         }
@@ -61,29 +54,14 @@ public class Guardado : MonoBehaviour
 
     public void HardResetVariables()
     {
-        totalInfected = 0;
-        shinyDNA = 0;
-        freeInitialUpgrade = -1;
-        coinMultiplier = 1;
-        startingCoins = 0;
-        spawnSpeedBonus = 0f;
-        populationBonus = 0f;
-        zoneDiscountActive = false;
-        extraShiniesPerRound = 0;
-        coinsPerZoneDaily = 0;
-        shinyPerZoneDaily = 0;
-        guaranteedShiny = false;
-        keepUpgradesOnReset = false;
-        radiusMultiplier = 1.0f;
-        speedMultiplier = 1.0f;
-        infectSpeedMultiplier = 1.0f;
-        shinyCaptureMultiplier = 1.0f;
-        shinyValueSum = 1;
-        shinyMultiplier = 1;
-        bonusDaysPermanent = 0;
-        keepZonesUnlocked = false;
+        // Reseteo de variables...
+        totalInfected = 0; shinyDNA = 0; freeInitialUpgrade = -1; coinMultiplier = 1; startingCoins = 0;
+        spawnSpeedBonus = 0f; populationBonus = 0f; zoneDiscountActive = false; extraShiniesPerRound = 0;
+        coinsPerZoneDaily = 0; shinyPerZoneDaily = 0; guaranteedShiny = false; keepUpgradesOnReset = false;
+        radiusMultiplier = 1.0f; speedMultiplier = 1.0f; infectSpeedMultiplier = 1.0f; shinyCaptureMultiplier = 1.0f;
+        shinyValueSum = 1; shinyMultiplier = 1; bonusDaysPermanent = 0; keepZonesUnlocked = false; earlyShinyUnlocked = false;
 
-        ClearRunState();
+        ClearRunState(); // Borrar partida guardada al resetear todo
         SaveData();
     }
 
@@ -91,7 +69,7 @@ public class Guardado : MonoBehaviour
     {
         PlayerPrefs.SetInt("TotalInfected", totalInfected);
         PlayerPrefs.SetInt("TotalShinyDNA", shinyDNA);
-        PlayerPrefs.SetInt("FreeInitialUpgrade", freeInitialUpgrade);
+        // ... (resto de tus guardados normales) ...
         PlayerPrefs.SetInt("CoinMultiplier", coinMultiplier);
         PlayerPrefs.SetInt("StartingCoins", startingCoins);
         PlayerPrefs.SetFloat("SpawnSpeedBonus", spawnSpeedBonus);
@@ -110,6 +88,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ShinyCaptureMult", shinyCaptureMultiplier);
         PlayerPrefs.SetInt("KeepZones", keepZonesUnlocked ? 1 : 0);
+        PlayerPrefs.SetInt("EarlyShiny", earlyShinyUnlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -117,7 +96,7 @@ public class Guardado : MonoBehaviour
     {
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
         shinyDNA = PlayerPrefs.GetInt("TotalShinyDNA", 0);
-        freeInitialUpgrade = PlayerPrefs.GetInt("FreeInitialUpgrade", -1);
+        // ... (resto de tus cargas normales) ...
         coinMultiplier = PlayerPrefs.GetInt("CoinMultiplier", 1);
         startingCoins = PlayerPrefs.GetInt("StartingCoins", 0);
         spawnSpeedBonus = PlayerPrefs.GetFloat("SpawnSpeedBonus", 0f);
@@ -136,22 +115,11 @@ public class Guardado : MonoBehaviour
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
         shinyCaptureMultiplier = PlayerPrefs.GetFloat("ShinyCaptureMult", 1.0f);
         keepZonesUnlocked = PlayerPrefs.GetInt("KeepZones", 0) == 1;
+        earlyShinyUnlocked = PlayerPrefs.GetInt("EarlyShiny", 0) == 1;
     }
 
-    // --- MÉTODOS PÚBLICOS ---
-
-    public void AddExtraShinyLevel()
-    {
-        extraShiniesPerRound++; // Aumenta el nivel permanente
-        SaveData();
-
-        // Avisamos al LevelManager para que sume +1 al stock de la partida actual
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.ActualizarStockPorCompraHabilidad();
-        }
-    }
-
+    // --- MÉTODOS PÚBLICOS DEL ÁRBOL ---
+    public void AddExtraShinyLevel() { extraShiniesPerRound++; SaveData(); }
     public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
     public void AddShinyDNA(int val) { shinyDNA += val; SaveData(); }
@@ -172,6 +140,7 @@ public class Guardado : MonoBehaviour
     public void ActivateGuaranteedShiny() { guaranteedShiny = true; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
     public void SetShinyCaptureMultiplier(float val) { shinyCaptureMultiplier = val; SaveData(); }
+    public void UnlockEarlyShiny() { earlyShinyUnlocked = true; SaveData(); }
 
     public void ApplyPermanentInitialUpgrade()
     {
@@ -186,23 +155,6 @@ public class Guardado : MonoBehaviour
         }
     }
 
-    // --- SISTEMA DE PERSISTENCIA DE RUN ---
-
-    public void SaveRunState(int currentDay, int currentCoins, int currentMap)
-    {
-        PlayerPrefs.SetInt("RunInProgress", 1);
-        PlayerPrefs.SetInt("RunDay", currentDay);
-        PlayerPrefs.SetInt("RunCoins", currentCoins);
-        PlayerPrefs.SetInt("RunMap", currentMap);
-        PlayerPrefs.Save();
-    }
-
-    public void ClearRunState()
-    {
-        PlayerPrefs.SetInt("RunInProgress", 0);
-        PlayerPrefs.Save();
-    }
-
     public void AssignRandomInitialUpgrade()
     {
         if (freeInitialUpgrade != -1) return;
@@ -210,11 +162,52 @@ public class Guardado : MonoBehaviour
         SaveData();
         ApplyPermanentInitialUpgrade();
     }
+    public void AddExtraShiny() { AddExtraShinyLevel(); }
 
-    // Esto es un "puente" para que los scripts viejos no den error
-    public void AddExtraShiny()
+    // ----------------------------------------------------------------------
+    // --- SISTEMA DE NUEVA PARTIDA / CONTINUAR (IMPORTANTE) ---
+    // ----------------------------------------------------------------------
+
+    public void SaveRunState(int currentDay, int currentCoins, int currentMap)
     {
-        AddExtraShinyLevel();
+        PlayerPrefs.SetInt("Run_InProgress", 1); 
+        PlayerPrefs.SetInt("Run_Day", currentDay);
+        PlayerPrefs.SetInt("Run_Coins", currentCoins);
+        PlayerPrefs.SetInt("Run_Map", currentMap);
+        PlayerPrefs.Save();
     }
-    public bool HasSavedGame() => PlayerPrefs.GetInt("RunInProgress", 0) == 1;
+
+    public void ClearRunState()
+    {
+        PlayerPrefs.SetInt("Run_InProgress", 0);
+        PlayerPrefs.Save();
+    }
+
+    public bool HasSavedGame()
+    {
+        return PlayerPrefs.GetInt("Run_InProgress", 0) == 1;
+    }
+
+    public string GetContinueDetails()
+    {
+        int day = PlayerPrefs.GetInt("Run_Day", 1);
+        int coins = PlayerPrefs.GetInt("Run_Coins", 0);
+        return "Día: " + day + " - Monedas: " + coins;
+    }
+      // ... (resto del script)
+
+    // --- FUNCIÓN DE BORRADO TOTAL (FÁBRICA) ---
+    public void ResetAllProgress()
+    {
+        Debug.Log("<color=red>BORRADO TOTAL: Iniciando nueva partida desde cero.</color>");
+        
+        
+        PlayerPrefs.DeleteAll();
+
+        
+        HardResetVariables(); 
+        
+        
+        SaveData();
+    }
 }
