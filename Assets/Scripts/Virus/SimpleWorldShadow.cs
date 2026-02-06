@@ -9,10 +9,13 @@ public class SimpleWorldShadow : MonoBehaviour
     public float scaleMultiplier = 1f;
     [Range(0f, 1f)] public float alpha = 0.5f;
     public Color shadowColor = Color.black;
-    public string sortingLayerName = ""; // Opcional: para poner la sombra en una capa específica
 
-    private SpriteRenderer parentSR;   // El render del personaje
-    private SpriteRenderer shadowSR;   // El render de la sombra (creado por código)
+    [Header("Capa de la Sombra")]
+    [Tooltip("El valor exacto de Order in Layer que tendrá la sombra.")]
+    public int shadowOrder = -1;
+
+    private SpriteRenderer parentSR;
+    private SpriteRenderer shadowSR;
     private GameObject shadowObj;
 
     void Start()
@@ -21,19 +24,14 @@ public class SimpleWorldShadow : MonoBehaviour
 
         if (parentSR != null)
         {
-            // 1. Crear el objeto de la sombra como hijo
             shadowObj = new GameObject("GeneratedShadow");
             shadowObj.transform.parent = transform;
 
-            // 2. Configurar el SpriteRenderer de la sombra
             shadowSR = shadowObj.AddComponent<SpriteRenderer>();
             shadowSR.color = new Color(shadowColor.r, shadowColor.g, shadowColor.b, alpha);
 
-            // 3. Orden de dibujado (siempre uno por debajo del padre)
-            if (!string.IsNullOrEmpty(sortingLayerName))
-                shadowSR.sortingLayerName = sortingLayerName;
-
-            shadowSR.sortingOrder = parentSR.sortingOrder - 1;
+            // Asignamos el orden directamente al inicio
+            shadowSR.sortingOrder = shadowOrder;
         }
     }
 
@@ -41,16 +39,18 @@ public class SimpleWorldShadow : MonoBehaviour
     {
         if (parentSR == null || shadowSR == null) return;
 
-        // Sincronizar el sprite actual de la animación
+        // Sincronizar el sprite
         shadowSR.sprite = parentSR.sprite;
         shadowSR.flipX = parentSR.flipX;
         shadowSR.flipY = parentSR.flipY;
 
-        // Mantener la sombra en posición global (ignorando rotación/escala relativa del padre si fuera necesario)
-        // Aquí calculamos la posición sumando el offset a la posición actual del padre
+        // Forzar el orden manual en cada frame (por si lo cambias en el inspector en tiempo real)
+        shadowSR.sortingOrder = shadowOrder;
+
+        // Posicionamiento
         shadowObj.transform.position = (Vector2)transform.position + worldOffset;
 
-        // Sincronizar escala y rotación
+        // Escala y rotación
         shadowObj.transform.localScale = transform.localScale * scaleMultiplier;
         shadowObj.transform.rotation = transform.rotation;
     }

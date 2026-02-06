@@ -7,15 +7,16 @@ TagManager:
   - Virus
   - Persona
   - InfectionZone
+  - Pared
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemies
   - Water
   - UI
-  - 
-  - 
+  - CelulasFlotantes
+  - Player
   - 
   - 
   - 
@@ -43,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Sombras
+    uniqueID: 1797806121
     locked: 0
   m_RenderingLayers:
   - Default
