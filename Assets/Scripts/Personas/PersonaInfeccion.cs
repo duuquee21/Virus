@@ -1,16 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections; // Importante para usar Corrutinas
+using System.Collections;
 
 public class PersonaInfeccion : MonoBehaviour
 {
     public static float globalInfectTime = 2f;
 
-    public SpriteRenderer spritePersona;
-    public Color infectedColor = Color.red;
+    [Header("Sprites de Evolución (Personaje)")]
+    public Sprite[] fasesSprites; // Hex, Pent, Cuad, Tria, Circ
 
-    public GameObject infectionBarCanvas;
+    [Header("Sprites de Contorno (Barra de Carga)")]
+    public Sprite[] contornosFases; // 👈 NUEVO: Pon aquí los bordes (Hexágono, Pentágono, etc.)
+
+    [Header("Colores por Fase (Normales)")]
+    public Color[] coloresFases;
+
+    [Header("Configuración de Carga Radial")]
+    public Color colorCargaInicial = Color.green;
+    public Color colorCargaFinal = Color.red;
+
+    [Header("Referencias")]
+    public SpriteRenderer spritePersona;
     public Image fillingBarImage;
+    public GameObject infectionBarCanvas;
 
     private float currentInfectionTime;
     private bool isInsideZone = false;
@@ -19,28 +31,35 @@ public class PersonaInfeccion : MonoBehaviour
     [Header("Shiny Settings")]
     public bool isShiny = false;
     public Color shinyColor = Color.yellow;
-    public int shinyReward = 1;
+    public Sprite spriteCirculoShiny;
+    public Sprite contornoShiny; // Borde para el Shiny
 
     [Header("Visual Feedback Settings")]
-    public float flashDuration = 0.1f; // Cuánto tiempo se queda en blanco
-    public float fadeDuration = 0.5f;  // Cuánto tarda en pasar de blanco a rojo
+    public float flashDuration = 0.1f;
+    public float fadeDuration = 0.5f;
+    public Color infectedColor = Color.red;
 
     private Color originalColor;
-
+    private int faseActual = 0;
 
     void Start()
     {
         if (spritePersona == null)
             spritePersona = GetComponent<SpriteRenderer>();
 
-        originalColor = spritePersona.color;   // 👈 NUEVO
+        originalColor = spritePersona.color;
         infectionBarCanvas.SetActive(false);
+
+        if (fillingBarImage != null) fillingBarImage.fillAmount = 0;
+
+        ActualizarVisualFase();
     }
 
     void Update()
     {
         if (alreadyInfected) return;
 
+        // --- LÓGICA DE TIEMPO ---
         if (isInsideZone)
         {
             float multiplier = 1f;
@@ -57,27 +76,89 @@ public class PersonaInfeccion : MonoBehaviour
 
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
         float progress = currentInfectionTime / globalInfectTime;
-        fillingBarImage.transform.localScale = new Vector3(progress, 1f, 1f);
 
-        if (currentInfectionTime > 0)
-            infectionBarCanvas.SetActive(true);
-        else
-            infectionBarCanvas.SetActive(false);
+        // --- ACTUALIZAR BARRA DE CARGA ---
+        if (fillingBarImage != null)
+        {
+            fillingBarImage.fillAmount = progress;
+            // El borde cambia de color según el progreso
+            fillingBarImage.color = Color.Lerp(colorCargaInicial, colorCargaFinal, progress);
+        }
+
+        // Mostrar el Canvas solo cuando hay progreso
+        infectionBarCanvas.SetActive(currentInfectionTime > 0);
 
         if (currentInfectionTime >= globalInfectTime)
+        {
+            if (isShiny) BecomeInfected();
+            else IntentarAvanzarFase();
+        }
+    }
+
+    void IntentarAvanzarFase()
+    {
+        currentInfectionTime = 0f;
+        faseActual++;
+
+        if (faseActual < fasesSprites.Length)
+        {
+            ActualizarVisualFase();
+            StartCoroutine(FlashCambioFase());
+        }
+        else
+        {
             BecomeInfected();
+        }
+    }
+
+    void ActualizarVisualFase()
+    {
+        if (isShiny)
+        {
+            spritePersona.sprite = spriteCirculoShiny;
+            spritePersona.color = shinyColor;
+            if (fillingBarImage != null && contornoShiny != null)
+                fillingBarImage.sprite = contornoShiny;
+        }
+        else if (faseActual < fasesSprites.Length)
+        {
+            // Cambiamos el cuerpo de la persona
+            spritePersona.sprite = fasesSprites[faseActual];
+
+            if (faseActual < coloresFases.Length)
+                spritePersona.color = coloresFases[faseActual];
+
+            // 👈 TU IDEA BRILLANTE: Cambiamos el dibujo de la barra de carga para que coincida
+            if (fillingBarImage != null && faseActual < contornosFases.Length)
+            {
+                fillingBarImage.sprite = contornosFases[faseActual];
+            }
+        }
+    }
+
+    public void MakeShiny()
+    {
+        isShiny = true;
+        ActualizarVisualFase();
+        transform.localScale = transform.localScale * 1.2f;
+    }
+
+    private IEnumerator FlashCambioFase()
+    {
+        Color col = spritePersona.color;
+        spritePersona.color = Color.white;
+        yield return new WaitForSeconds(0.05f);
+        spritePersona.color = col;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!alreadyInfected && other.CompareTag("InfectionZone"))
-            isInsideZone = true;
+        if (!alreadyInfected && other.CompareTag("InfectionZone")) isInsideZone = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("InfectionZone"))
-            isInsideZone = false;
+        if (other.CompareTag("InfectionZone")) isInsideZone = false;
     }
 
     void BecomeInfected()
@@ -85,45 +166,26 @@ public class PersonaInfeccion : MonoBehaviour
         alreadyInfected = true;
         infectionBarCanvas.SetActive(false);
 
-        // Iniciamos la secuencia de color
-        StartCoroutine(InfectionColorSequence());
-
-        if (LevelManager.instance != null)
-            LevelManager.instance.RegisterInfection();
-
         if (InfectionFeedback.instance != null)
             InfectionFeedback.instance.PlayEffect(transform.position, originalColor);
 
-        if (isShiny && LevelManager.instance != null)
-            LevelManager.instance.RegisterShinyCapture(this);
+        StartCoroutine(InfectionColorSequence());
+
+        if (LevelManager.instance != null) LevelManager.instance.RegisterInfection();
+        if (isShiny && LevelManager.instance != null) LevelManager.instance.RegisterShinyCapture(this);
     }
 
     private IEnumerator InfectionColorSequence()
     {
-        // 1. Cambio instantáneo a Blanco
         spritePersona.color = Color.white;
-
-        // 2. Esperar un instante (el destello)
         yield return new WaitForSeconds(flashDuration);
-
-        // 3. Fade suave hacia el color infectado
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            // Interpola linealmente entre Blanco y el color final
             spritePersona.color = Color.Lerp(Color.white, infectedColor, elapsed / fadeDuration);
             yield return null;
         }
-
-        // Asegurar que termine exactamente en el color deseado
         spritePersona.color = infectedColor;
-    }
-
-    public void MakeShiny()
-    {
-        isShiny = true;
-        spritePersona.color = shinyColor;
-        transform.localScale = transform.localScale * 1.2f;
     }
 }
