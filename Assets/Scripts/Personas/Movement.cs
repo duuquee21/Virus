@@ -2,82 +2,83 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public float waitTime = 1f;
-    public float screenPadding = 0.5f;
-
-    [Header("Límites de Oscilación Aleatoria")]
-    public Vector2 rangoFrecuencia = new Vector2(3f, 6f);
-    public Vector2 rangoMagnitud = new Vector2(0.05f, 0.2f);
-
-    private float frecuenciaIndividual;
-    private float magnitudIndividual;
-    private float offsetFase; // Para que no todos oscilen sincronizados
-
-    private Vector2 targetPosition;
-    private float waitCounter;
-    private bool isWalking;
-    private Vector3 posSinOscilacion;
-
-    Camera cam;
+    public float velocidadBase = 5f;
+    private Vector2 direccion;
+    private Rigidbody2D rb;
+    private bool estaEmpujado = false;
+    private bool estaGirando = false;
 
     void Start()
     {
-        cam = Camera.main;
-        posSinOscilacion = transform.position;
-
-        // Asignamos valores únicos para esta instancia
-        frecuenciaIndividual = Random.Range(rangoFrecuencia.x, rangoFrecuencia.y);
-        magnitudIndividual = Random.Range(rangoMagnitud.x, rangoMagnitud.y);
-        offsetFase = Random.Range(0f, 2f * Mathf.PI); // Un punto aleatorio en la onda seno
-
-        PickNewTarget();
+        rb = GetComponent<Rigidbody2D>();
+        float angulo = Random.Range(0f, 360f);
+        direccion = new Vector2(Mathf.Cos(angulo * Mathf.Deg2Rad),
+                                Mathf.Sin(angulo * Mathf.Deg2Rad)).normalized;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // Calculamos la oscilación usando sus valores únicos
-        // Sumamos offsetFase para desincronizarlo de los demás
-        float seno = Mathf.Sin((Time.time * frecuenciaIndividual) + offsetFase);
-        float offsetVisual = seno * magnitudIndividual;
-
-        if (isWalking)
+        if (!estaEmpujado)
         {
-            posSinOscilacion = Vector2.MoveTowards(
-                posSinOscilacion,
-                targetPosition,
-                moveSpeed * Time.deltaTime
-            );
+            // Detenemos la velocidad física para usar movimiento cinemático
+            rb.linearVelocity = Vector2.zero;
 
-            if (Vector2.Distance(posSinOscilacion, targetPosition) < 0.1f)
+            // Si ya no hay impulso, detenemos el giro residual pero MANTENEMOS la rotación actual
+            if (!estaGirando && rb.angularVelocity != 0)
             {
-                isWalking = false;
-                waitCounter = waitTime;
+                rb.angularVelocity = 0;
+                // Eliminamos la línea: transform.rotation = Quaternion.identity;
             }
+
+            // Movimiento constante en la nueva dirección capturada tras el empuje
+            rb.MovePosition(rb.position + direccion * velocidadBase * Time.fixedDeltaTime);
         }
         else
         {
-            waitCounter -= Time.deltaTime;
-            if (waitCounter <= 0)
-                PickNewTarget();
+            // Detectamos cuando la inercia baja para retomar el control
+            if (rb.linearVelocity.magnitude <= velocidadBase)
+            {
+                // Capturamos la inercia final como nueva dirección de marcha
+                if (rb.linearVelocity.magnitude > 0.1f)
+                {
+                    direccion = rb.linearVelocity.normalized;
+                }
+
+                estaEmpujado = false;
+                estaGirando = false;
+            }
         }
-
-        // Aplicamos la posición final (Base + Oscilación)
-        transform.position = posSinOscilacion + new Vector3(0, offsetVisual, 0);
     }
 
-    void PickNewTarget()
+    public void AplicarEmpuje(Vector2 direccionEmpuje, float fuerza, float torque)
     {
-        Vector2 minWorld = cam.ViewportToWorldPoint(new Vector2(0, 0));
-        Vector2 maxWorld = cam.ViewportToWorldPoint(new Vector2(1, 1));
+        estaEmpujado = true;
+        estaGirando = true;
 
-        minWorld += Vector2.one * screenPadding;
-        maxWorld -= Vector2.one * screenPadding;
+        rb.AddForce(direccionEmpuje * fuerza, ForceMode2D.Impulse);
 
-        float randomX = Random.Range(minWorld.x, maxWorld.x);
-        float randomY = Random.Range(minWorld.y, maxWorld.y);
-
-        targetPosition = new Vector2(randomX, randomY);
-        isWalking = true;
+        // Torque aleatorio para rotación orgánica
+        float direccionGiro = Random.Range(-1f, 1f);
+        rb.AddTorque(direccionGiro * torque, ForceMode2D.Impulse);
     }
+
+    private void OnTriggerEnter2D(Collider2D otro)
+    {
+        if (otro.CompareTag("Pared"))
+        {
+            Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
+            Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
+
+            // Reflejamos tanto la dirección lógica como la velocidad física
+            direccion = Vector2.Reflect(direccion, normal).normalized;
+
+            if (estaEmpujado)
+            {
+                rb.linearVelocity = Vector2.Reflect(rb.linearVelocity, normal);
+            }
+        }
+    }
+
+    public void CambiarDireccion(Vector2 nuevaDireccion) => direccion = nuevaDireccion.normalized;
+    public Vector2 GetDireccion() => direccion;
 }

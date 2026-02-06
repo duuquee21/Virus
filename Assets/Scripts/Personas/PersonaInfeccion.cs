@@ -39,8 +39,14 @@ public class PersonaInfeccion : MonoBehaviour
     private Color originalColor;
     private int faseActual = 0;
 
+    public float fuerzaRetroceso = 8f; // Fuerza del empuje
+    public float fuerzaRotacion = 5f; // Nueva variable para el torque
+    private Transform transformInfector; // Para saber de dónde viene el virus
+    private Movement movementScript;
+
     void Start()
     {
+        movementScript = GetComponent<Movement>();
         if (spritePersona == null) spritePersona = GetComponent<SpriteRenderer>();
         originalColor = spritePersona.color;
         infectionBarCanvas.SetActive(false);
@@ -86,17 +92,29 @@ public class PersonaInfeccion : MonoBehaviour
         // --- DINERO POR PROGRESO ---
         if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
         {
-            // Sumamos solo MONEDAS, no cuenta para la capacidad del día
             LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
+        }
+
+        // --- NUEVO: FEEDBACK DE SONIDO DE FASE ---
+        if (InfectionFeedback.instance != null)
+        {
+            InfectionFeedback.instance.PlayPhaseChangeSound();
         }
 
         currentInfectionTime = 0f;
         faseActual++;
-
         if (faseActual < fasesSprites.Length)
         {
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
+
+            if (transformInfector != null && movementScript != null)
+            {
+                Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
+
+                // Llamamos al nuevo método con torque
+                movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
+            }
         }
         else
         {
@@ -152,7 +170,14 @@ public class PersonaInfeccion : MonoBehaviour
         spritePersona.color = col;
     }
 
-    void OnTriggerEnter2D(Collider2D other) { if (!alreadyInfected && other.CompareTag("InfectionZone")) isInsideZone = true; }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!alreadyInfected && other.CompareTag("InfectionZone"))
+        {
+            isInsideZone = true;
+            transformInfector = other.transform; // Guardamos la referencia
+        }
+    }
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
 
     private IEnumerator InfectionColorSequence()

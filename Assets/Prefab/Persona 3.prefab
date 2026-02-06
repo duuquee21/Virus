@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1022134751278509905}
   - component: {fileID: 4942063453776025627}
   - component: {fileID: 2679614929921104373}
+  - component: {fileID: -1386243149060013738}
   m_Layer: 3
   m_Name: Persona 3
   m_TagString: Persona
@@ -117,12 +118,12 @@ MonoBehaviour:
   - {fileID: -995702870920561920, guid: c13c5b8ac0efab041a9cb2ef9aa5e9fd, type: 3}
   - {fileID: 1780699529462240134, guid: cc296ed3e5d6bda4da3444708cbdc7d8, type: 3}
   coloresFases: []
-  colorCargaInicial: {r: 0, g: 0, b: 0, a: 1}
-  colorCargaFinal: {r: 1, g: 0, b: 0.05479765, a: 1}
+  monedasPorFase: 0500000004000000030000000200000001000000
   spritePersona: {fileID: 8087179694804657894}
   fillingBarImage: {fileID: 7164301842471071001}
   infectionBarCanvas: {fileID: 3615576847840162509}
-  alreadyInfected: 0
+  colorCargaInicial: {r: 0, g: 0, b: 0, a: 1}
+  colorCargaFinal: {r: 1, g: 0, b: 0.05479765, a: 1}
   isShiny: 0
   shinyColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   spriteCirculoShiny: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
@@ -130,6 +131,9 @@ MonoBehaviour:
   flashDuration: 0.05
   fadeDuration: 0.25
   infectedColor: {r: 1, g: 0, b: 0, a: 1}
+  alreadyInfected: 0
+  fuerzaRetroceso: 20
+  fuerzaRotacion: 12.5
 --- !u!58 &1022134751278509905
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +144,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e552f9882d48b304d9306536a59326b3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -160,7 +164,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -178,11 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b424c1ea7dc5c4d43b58114b8a2839ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
-  moveSpeed: 2
-  waitTime: 0
-  screenPadding: 0.5
-  rangoFrecuencia: {x: 1, y: 3}
-  rangoMagnitud: {x: 0.05, y: 0.2}
+  velocidadBase: 2
 --- !u!114 &2679614929921104373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +200,33 @@ MonoBehaviour:
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
   shadowOrder: -1
+--- !u!50 &-1386243149060013738
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721460322803742226}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0.5
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: e552f9882d48b304d9306536a59326b3, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2854257277852047839
 GameObject:
   m_ObjectHideFlags: 0

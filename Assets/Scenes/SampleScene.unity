@@ -17671,6 +17671,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e85f56a62653aa14ab9862f26c643eff, type: 3}
   - {fileID: 8300000, guid: 9f34862150028894da81f102830bbc31, type: 3}
   - {fileID: 8300000, guid: d1ece1009b6684143ba8947c866359c0, type: 3}
+  phaseChangeSounds:
+  - {fileID: 8300000, guid: d6c574210e0aa1747bbff1f6ed4b2256, type: 3}
+  - {fileID: 8300000, guid: 2ee17dc805a35c74fa3a4bc3659f5ee6, type: 3}
   cameraTransform: {fileID: 519420032}
   shakeDuration: 0.1
   shakeMagnitude: 0.075

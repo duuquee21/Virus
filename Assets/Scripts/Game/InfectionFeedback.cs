@@ -12,6 +12,7 @@ public class InfectionFeedback : MonoBehaviour
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
     public AudioClip[] infectionSounds;
+    public AudioClip[] phaseChangeSounds; // NUEVO: Sonidos para cambios de fase intermedios
 
     [Header("Cámara & Shake")]
     public Transform cameraTransform; // Arrastra la Cámara Principal aquí
@@ -58,7 +59,22 @@ public class InfectionFeedback : MonoBehaviour
             StartCoroutine(Shake());
         }
     }
+    public void PlayPhaseChangeSound()
+    {
+        if (audioSource != null && phaseChangeSounds.Length > 0)
+        {
+            AudioClip clip = phaseChangeSounds[Random.Range(0, phaseChangeSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
+        }
 
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake());
+        }
+    }
     private IEnumerator Shake()
     {
         Vector3 originalPos = cameraTransform.localPosition;
