@@ -193,4 +193,34 @@ public class PersonaInfeccion : MonoBehaviour
         }
         spritePersona.color = infectedColor;
     }
+
+    public void IntentarAvanzarFasePorChoque()
+    {
+        // Solo avanza si NO está infectado Y si NO es la última fase disponible
+        // (fasesSprites.Length - 1) es el índice de la última fase antes de la infección total
+        if (!alreadyInfected && faseActual < fasesSprites.Length - 1)
+        {
+            Debug.Log($"<color=cyan>Choque fuerte: Avanzando a fase {faseActual + 1}</color>");
+
+            // Copiamos la lógica de avance pero sin riesgo de llegar a BecomeInfected()
+            if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
+            {
+                LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
+            }
+
+            if (InfectionFeedback.instance != null)
+            {
+                InfectionFeedback.instance.PlayPhaseChangeSound();
+            }
+
+            currentInfectionTime = 0f;
+            faseActual++;
+            ActualizarVisualFase();
+            StartCoroutine(FlashCambioFase());
+        }
+        else if (faseActual >= fasesSprites.Length - 1)
+        {
+            Debug.Log("<color=orange>Choque detectado, pero ya está en la fase máxima. No se infectará por choque.</color>");
+        }
+    }
 }

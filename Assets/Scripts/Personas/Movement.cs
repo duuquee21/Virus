@@ -66,10 +66,25 @@ public class Movement : MonoBehaviour
     {
         if (otro.CompareTag("Pared"))
         {
+            // Calculamos la velocidad actual del Rigidbody
+            float velocidadChoque = rb.linearVelocity.magnitude;
+
+            // DEBUG: Esto aparecerá en tu consola para que calibres el número
+            Debug.Log($"<color=white>Velocidad de impacto:</color> <b>{velocidadChoque:F2}</b>");
+
+            // Si la velocidad es mayor a 5 y es un choque físico (estaEmpujado)
+            if (velocidadChoque > 5f)
+            {
+                PersonaInfeccion scriptInfeccion = GetComponent<PersonaInfeccion>();
+                if (scriptInfeccion != null)
+                {
+                    scriptInfeccion.IntentarAvanzarFasePorChoque();
+                }
+            }
+
+            // --- Lógica de rebote normal ---
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
-
-            // Reflejamos tanto la dirección lógica como la velocidad física
             direccion = Vector2.Reflect(direccion, normal).normalized;
 
             if (estaEmpujado)
