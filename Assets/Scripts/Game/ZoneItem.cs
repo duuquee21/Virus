@@ -98,7 +98,18 @@ public class ZoneItem : MonoBehaviour
         {
             LevelManager.instance.ActivateMap(mapIndex);
 
-            // Refrescar todos los botones de la escena para que cambien las luces
+            // --- NUEVA LÓGICA ---
+            // Buscamos el PopulationManager y le asignamos el prefab correspondiente al mapIndex
+            PopulationManager popManager = Object.FindFirstObjectByType<PopulationManager>();
+            if (popManager != null)
+            {
+                // Aquí asumo que: 
+                // Si mapIndex es 0 (Zona 1) usa prefab 0
+                // Si mapIndex es 1 (Zona 2) usa prefab 1... etc.
+                popManager.SetZonePrefab(mapIndex);
+            }
+
+            // Refrescar todos los botones
             ZoneItem[] todosLosScripts = Object.FindObjectsByType<ZoneItem>(FindObjectsSortMode.None);
             foreach (ZoneItem item in todosLosScripts)
             {
@@ -106,7 +117,6 @@ public class ZoneItem : MonoBehaviour
             }
         }
     }
-
     public bool IsUnlocked()
     {
         return isUnlocked;

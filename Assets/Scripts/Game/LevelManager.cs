@@ -252,12 +252,22 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMapIndex", zoneID);
         PlayerPrefs.Save();
 
+        // 1. Activar el objeto visual del mapa
         for (int i = 0; i < mapList.Length; i++)
         {
             if (mapList[i] != null) mapList[i].SetActive(i == zoneID);
         }
-    }
 
+        // 2. NUEVO: Avisar al PopulationManager para que cambie el Prefab
+        // Buscamos el script en la escena y llamamos a la función de selección
+        PopulationManager popManager = Object.FindFirstObjectByType<PopulationManager>();
+        if (popManager != null)
+        {
+            // Esto cambiará el prefab actual y la vista previa (Preview) 
+            // basándose en el orden que tengas en el array de prefabs.
+            popManager.SelectPrefab(zoneID);
+        }
+    }
     public void InicializarStockDeShinies()
     {
         stockShiniesZonas.Clear();

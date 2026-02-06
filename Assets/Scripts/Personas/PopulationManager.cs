@@ -3,30 +3,53 @@ using System.Collections.Generic;
 
 public class PopulationManager : MonoBehaviour
 {
-    public GameObject personPrefab;
+    [Header("Prefabs & Selection")]
+    [Tooltip("Arrastra aquí tus 4 prefabs de personajes")]
+    public GameObject[] personPrefabs;
+    private GameObject currentPrefab; // El prefab activo actualmente
 
+    [Header("Settings")]
     public float spawnInterval = 3f;
     public float maxPopulation = 15f;
     float baseSpawnInterval;
     public float baseMaxPopulation = 15f;
-
     public int initialPopulation = 10;
 
+    [Header("Spawn Area")]
     public Vector2 spawnAreaMin = new Vector2(-8, -4);
     public Vector2 spawnAreaMax = new Vector2(8, 4);
-
-    private float timer;
-    private int personsSpawnedToday = 0;
-    private int shiniesRemainingToSpawn = 0; // Cambiado a int para control exacto
-
-    private List<int> shinyIndices = new List<int>();
-
 
     [Header("Spawn Animation")]
     public float growDuration = 0.4f;
 
+    private float timer;
+    private int personsSpawnedToday = 0;
+    private int shiniesRemainingToSpawn = 0;
+    private List<int> shinyIndices = new List<int>();
 
-    // Este método ahora recibe el número exacto (0, 1 o 2) desde LevelManager
+    void Awake()
+    {
+        // Inicializamos con el primer prefab por defecto para evitar errores
+        if (personPrefabs.Length > 0)
+        {
+            currentPrefab = personPrefabs[0];
+        }
+    }
+
+    // MÉTODO PARA LOS BOTONES (Pasar índice 0, 1, 2 o 3)
+    public void SelectPrefab(int index)
+    {
+        if (index >= 0 && index < personPrefabs.Length)
+        {
+            currentPrefab = personPrefabs[index];
+            Debug.Log("<color=green>PopulationManager:</color> Prefab cambiado a: " + currentPrefab.name);
+        }
+        else
+        {
+            Debug.LogWarning("Índice de prefab fuera de rango.");
+        }
+    }
+
     public void ConfigureRound(int shinyCount)
     {
         shiniesRemainingToSpawn = shinyCount;
@@ -36,9 +59,6 @@ public class PopulationManager : MonoBehaviour
 
         if (shiniesRemainingToSpawn > 0)
         {
-            // --- AJUSTE DE RANGO ---
-            // Si hay pocos shinies (como en la Zona 1), los forzamos a aparecer 
-            // casi siempre dentro de la población inicial (initialPopulation).
             int maxRange = initialPopulation + (shiniesRemainingToSpawn * 2);
 
             for (int i = 0; i < shiniesRemainingToSpawn; i++)
@@ -47,7 +67,6 @@ public class PopulationManager : MonoBehaviour
                 int safety = 0;
                 do
                 {
-                    // Rango desde 1 hasta el máximo calculado
                     newIndex = Random.Range(1, maxRange);
                     safety++;
                 }
@@ -63,12 +82,12 @@ public class PopulationManager : MonoBehaviour
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
-        // Spawn inicial: Aquí nacerán los primeros shinies si su índice es <= initialPopulation
         for (int i = 0; i < initialPopulation; i++)
         {
             SpawnPerson();
         }
     }
+
     void Update()
     {
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
@@ -91,24 +110,26 @@ public class PopulationManager : MonoBehaviour
 
     void SpawnPerson()
     {
+        if (currentPrefab == null)
+        {
+            Debug.LogError("No hay un prefab seleccionado en PopulationManager.");
+            return;
+        }
+
         float x = Random.Range(spawnAreaMin.x, spawnAreaMax.x);
         float y = Random.Range(spawnAreaMin.y, spawnAreaMax.y);
         Vector3 spawnPos = new Vector3(x, y, 0);
 
-        GameObject newPerson = Instantiate(personPrefab, spawnPos, Quaternion.identity);
+        // Instanciamos el prefab seleccionado actualmente
+        GameObject newPerson = Instantiate(currentPrefab, spawnPos, Quaternion.identity);
 
-        // Guardamos la escala original
         Vector3 targetScale = newPerson.transform.localScale;
-
-        // Empieza en 0
         newPerson.transform.localScale = Vector3.zero;
-
-        // Animación de crecimiento
         StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
 
         personsSpawnedToday++;
 
-        // Verificamos si debe ser Shiny
+        // Lógica de Shiny
         if (shinyIndices.Contains(personsSpawnedToday))
         {
             PersonaInfeccion infeccion = newPerson.GetComponent<PersonaInfeccion>();
@@ -131,49 +152,33 @@ public class PopulationManager : MonoBehaviour
     System.Collections.IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
     {
         float t = 0f;
-
         while (t < growDuration)
         {
             if (target == null) yield break;
-
             t += Time.deltaTime;
             float normalized = t / growDuration;
-
-            // Suavizado bonito
             float eased = Mathf.SmoothStep(0f, 1f, normalized);
-
             target.localScale = Vector3.Lerp(Vector3.zero, finalScale, eased);
             yield return null;
         }
-
-        if (target != null)
-            target.localScale = finalScale;
+        if (target != null) target.localScale = finalScale;
     }
 
     void OnDrawGizmos()
     {
-        // Color del área de spawn
         Gizmos.color = new Color(0f, 1f, 0f, 0.25f);
-
-        // Centro y tamaño del rectángulo
-        Vector3 center = new Vector3(
-            (spawnAreaMin.x + spawnAreaMax.x) / 2f,
-            (spawnAreaMin.y + spawnAreaMax.y) / 2f,
-            0f
-        );
-
-        Vector3 size = new Vector3(
-            Mathf.Abs(spawnAreaMax.x - spawnAreaMin.x),
-            Mathf.Abs(spawnAreaMax.y - spawnAreaMin.y),
-            0.1f
-        );
-
-        // Área rellena
+        Vector3 center = new Vector3((spawnAreaMin.x + spawnAreaMax.x) / 2f, (spawnAreaMin.y + spawnAreaMax.y) / 2f, 0f);
+        Vector3 size = new Vector3(Mathf.Abs(spawnAreaMax.x - spawnAreaMin.x), Mathf.Abs(spawnAreaMax.y - spawnAreaMin.y), 0.1f);
         Gizmos.DrawCube(center, size);
-
-        // Borde más visible
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(center, size);
     }
 
+    // Añade esto a tu PopulationManager actual
+    public void SetZonePrefab(int index)
+    {
+        // Usamos el mismo SelectPrefab que ya tenías para actualizar el modelo y la preview
+        SelectPrefab(index);
+        Debug.Log("<color=orange>PopulationManager:</color> Cambiando a prefab de zona: " + index);
+    }
 }
