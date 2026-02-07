@@ -16543,6 +16543,10 @@ PrefabInstance:
       propertyPath: velocidadBase
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 993558091819621251, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 66d21514f26c50f4090ff8dd2a05d454, type: 2}
     - target: {fileID: 1101618740221776521, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.34
