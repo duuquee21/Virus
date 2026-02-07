@@ -8,6 +8,7 @@ TagManager:
   - Persona
   - InfectionZone
   - Pared
+  - Coral
   layers:
   - Default
   - TransparentFX

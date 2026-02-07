@@ -58,26 +58,32 @@ public class PersonaInfeccion : MonoBehaviour
     {
         if (alreadyInfected) return;
 
-        // Lógica de incremento/decremento de tiempo
+        // 1. Lógica de incremento/decremento
         if (isInsideZone)
         {
             float multiplier = 1f;
             if (Guardado.instance != null)
                 multiplier = isShiny ? Guardado.instance.shinyCaptureMultiplier : Guardado.instance.infectSpeedMultiplier;
+
             currentInfectionTime += Time.deltaTime * multiplier;
         }
         else
         {
+            // Si quieres que la barra se recupere (se llene de nuevo) al salir:
             currentInfectionTime -= Time.deltaTime * 2f;
         }
 
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
         float progress = currentInfectionTime / globalInfectTime;
 
-        // --- CAMBIO CLAVE: GESTIÓN DE BARRAS POR ORDEN ---
-        ActualizarProgresoBarras(progress);
+        // 2. Mantener el Canvas siempre encendido
+        // Eliminamos: infectionBarCanvas.SetActive(currentInfectionTime > 0 || faseActual > 0);
+        if (!infectionBarCanvas.activeSelf)
+        {
+            infectionBarCanvas.SetActive(true);
+        }
 
-        infectionBarCanvas.SetActive(currentInfectionTime > 0 || faseActual > 0);
+        ActualizarProgresoBarras(progress);
 
         if (currentInfectionTime >= globalInfectTime)
         {
@@ -89,28 +95,22 @@ public class PersonaInfeccion : MonoBehaviour
     {
         if (fillingBarImages == null) return;
 
+        float inverseProgress = 1f - progress; // 1 = Llena, 0 = Vacía
+
         for (int i = 0; i < fillingBarImages.Length; i++)
         {
             if (fillingBarImages[i] == null) continue;
 
-            // Solo la barra que coincide con la fase actual estará activa
             if (i == faseActual)
             {
                 fillingBarImages[i].gameObject.SetActive(true);
-                fillingBarImages[i].fillAmount = progress;
+                fillingBarImages[i].fillAmount = inverseProgress;
 
-                // Efecto visual de color de carga (opcional)
-                fillingBarImages[i].color = Color.Lerp(colorCargaInicial, colorCargaFinal, progress);
-
-                // Aseguramos que el sprite del contorno sea el correcto para esta fase
-                if (i < contornosFases.Length)
-                {
-                    fillingBarImages[i].sprite = contornosFases[i];
-                }
+                // Color: Lerp de Verde (lleno) a Rojo (vacío)
+                fillingBarImages[i].color = Color.Lerp(colorCargaFinal, colorCargaInicial, inverseProgress);
             }
             else
             {
-                // Todas las demás barras se desactivan
                 fillingBarImages[i].gameObject.SetActive(false);
             }
         }
@@ -120,9 +120,6 @@ public class PersonaInfeccion : MonoBehaviour
         if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
             LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
 
-        if (InfectionFeedback.instance != null)
-            InfectionFeedback.instance.PlayPhaseChangeSound();
-
         currentInfectionTime = 0f;
         faseActual++;
 
@@ -130,6 +127,15 @@ public class PersonaInfeccion : MonoBehaviour
         {
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
+
+            // --- CORRECCIÓN AQUÍ ---
+            if (InfectionFeedback.instance != null)
+            {
+                // Ahora llamamos al efecto visual y de sonido completo
+                InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
+            }
+            // -----------------------
+
             if (transformInfector != null && movementScript != null)
             {
                 Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
@@ -141,7 +147,6 @@ public class PersonaInfeccion : MonoBehaviour
             BecomeInfected();
         }
     }
-
     void BecomeInfected()
     {
         alreadyInfected = true;
@@ -236,7 +241,7 @@ public class PersonaInfeccion : MonoBehaviour
 
             if (InfectionFeedback.instance != null)
             {
-                InfectionFeedback.instance.PlayPhaseChangeSound();
+                InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
             }
 
             currentInfectionTime = 0f;

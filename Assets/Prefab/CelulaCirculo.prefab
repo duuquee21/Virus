@@ -114,8 +114,8 @@ MonoBehaviour:
   fillingBarImages:
   - {fileID: 7164301842471071001}
   infectionBarCanvas: {fileID: 3615576847840162509}
-  colorCargaInicial: {r: 0, g: 0, b: 0, a: 1}
-  colorCargaFinal: {r: 1, g: 0, b: 0, a: 1}
+  colorCargaInicial: {r: 1, g: 1, b: 1, a: 1}
+  colorCargaFinal: {r: 1, g: 1, b: 1, a: 1}
   monedasPorFase: 0600000005000000040000000300000000000000
   isShiny: 0
   shinyColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -123,7 +123,7 @@ MonoBehaviour:
   contornoShiny: {fileID: 1780699529462240134, guid: cc296ed3e5d6bda4da3444708cbdc7d8, type: 3}
   flashDuration: 0.05
   fadeDuration: 0.25
-  infectedColor: {r: 1, g: 0, b: 0, a: 1}
+  infectedColor: {r: 1, g: 1, b: 1, a: 1}
   alreadyInfected: 0
   fuerzaRetroceso: 20
   fuerzaRotacion: 12.5

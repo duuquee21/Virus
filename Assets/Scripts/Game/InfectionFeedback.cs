@@ -8,14 +8,15 @@ public class InfectionFeedback : MonoBehaviour
 
     [Header("Efectos Visuales (VFX)")]
     public GameObject infectionParticles;
+    public GameObject infection1Particles;
 
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
     public AudioClip[] infectionSounds;
-    public AudioClip[] phaseChangeSounds; // NUEVO: Sonidos para cambios de fase intermedios
+    public AudioClip[] phaseChangeSounds; 
 
     [Header("Cámara & Shake")]
-    public Transform cameraTransform; // Arrastra la Cámara Principal aquí
+    public Transform cameraTransform; 
     public float shakeDuration = 0.2f;
     public float shakeMagnitude = 0.1f;
 
@@ -31,15 +32,15 @@ public class InfectionFeedback : MonoBehaviour
     public void PlayEffect(Vector3 position, Color particleColor)
     {
         // 1. VISUAL
-        if (infectionParticles != null)
+        if (infection1Particles != null)
         {
-            GameObject vfx = Instantiate(infectionParticles, position, Quaternion.identity);
+            GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
 
             ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
             if (ps != null)
             {
                 var main = ps.main;
-                main.startColor = particleColor * 1.3f;
+                main.startColor = Color.white * 1.3f;
             }
 
             Destroy(vfx, 2f);
@@ -59,6 +60,33 @@ public class InfectionFeedback : MonoBehaviour
             StartCoroutine(Shake());
         }
     }
+
+    public void PlayPhaseChangeEffect(Vector3 position, Color particleColor)
+    {
+        // 1. VISUAL
+        if (infectionParticles != null)
+        {
+            GameObject vfx = Instantiate(infectionParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+
+        PlayPhaseChangeSound();
+
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake());
+        }
+    }
+
     public void PlayPhaseChangeSound()
     {
         if (audioSource != null && phaseChangeSounds.Length > 0)
@@ -69,11 +97,6 @@ public class InfectionFeedback : MonoBehaviour
             audioSource.PlayOneShot(clip);
         }
 
-        // 3. SHAKE DE CÁMARA
-        if (cameraTransform != null)
-        {
-            StartCoroutine(Shake());
-        }
     }
     private IEnumerator Shake()
     {
