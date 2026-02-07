@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JellyPhysicsMaterial
-  m_Shader: {fileID: 4800000, guid: 96faaf0a7ac01544a814d4726f350cc0, type: 3}
+  m_Name: MaterialAmeba
+  m_Shader: {fileID: 4800000, guid: 77dacfd43e84f654cbaadfe7d4ad43d4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,13 +24,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 780334316f8e20f48b974176204b7a86, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9c81ee33f71e29d45b8863fcdbc5bdb1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _Deform: 0
-    m_Colors:
-    - _ImpactPos: {r: 0, g: 0, b: 0, a: 0}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -10,17 +10,40 @@ public class FloatingCellMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Material mat;
     private Coroutine jellyAnim;
+
+
     // Control de múltiples impactos
     private Vector4[] impacts = new Vector4[4]; // Array para el shader
     private bool[] slotOcupado = new bool[4];
 
+    private SpriteRenderer sr;
+    private MaterialPropertyBlock propBlock;
+
+
+
+
+    void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        propBlock = new MaterialPropertyBlock();
+    }
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        mat = GetComponent<SpriteRenderer>().material;
         direccion = new Vector2(1, 1).normalized;
-        // Inicializar array
-        mat.SetVectorArray("_Impacts", impacts);
+        rb = GetComponent<Rigidbody2D>();
+     
+        mat = GetComponent<SpriteRenderer>().material;
+        // Inicializar el bloque de propiedades
+        ActualizarShader();
+    }
+
+    private void ActualizarShader()
+    {
+        // Esta es la clave: le pasamos los datos al bloque, y el bloque al renderer
+        sr.GetPropertyBlock(propBlock);
+        propBlock.SetVectorArray("_Impacts", impacts);
+        sr.SetPropertyBlock(propBlock);
     }
 
     void FixedUpdate()
@@ -42,8 +65,17 @@ public class FloatingCellMovement : MonoBehaviour
             if (!slotOcupado[i]) { slot = i; break; }
         }
 
-        // Si hay slot libre (máximo 4 choques a la vez), lanzamos la vibración
-        if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot));
+        if (otro.CompareTag("Virus"))
+        {
+            // Si es un choque con otro virus, la vibración es positiva
+            if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+        }
+        else
+        {
+            // Si es un choque con una pared, la vibración es negativa
+            if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
+        }
+    
 
         if (otro.CompareTag("Pared"))
         {
@@ -75,7 +107,7 @@ public class FloatingCellMovement : MonoBehaviour
         return direccion;
     }
 
-    IEnumerator DoJelly(Vector3 localPos, int slot)
+    IEnumerator DoJelly(Vector3 localPos, int slot, int signo)
     {
         slotOcupado[slot] = true;
         impacts[slot].x = localPos.x;
@@ -88,15 +120,25 @@ public class FloatingCellMovement : MonoBehaviour
         {
             t += Time.deltaTime / duracion;
             float decaimiento = Mathf.Exp(-t * 4.0f);
-            float deformacion = Mathf.Sin(t * Mathf.PI * 10.0f) * decaimiento * 0.6f;
 
-            impacts[slot].z = deformacion; // Actualizamos solo la deformación de este slot
-            mat.SetVectorArray("_Impacts", impacts);
+            if(signo < 0)
+            {
+                float deformacion = -Mathf.Sin(t * Mathf.PI * 10.0f) * decaimiento * 0.6f;
+                impacts[slot].z = deformacion;
+            }
+            if (signo > 0)
+            {
+                float deformacion = Mathf.Sin(t * Mathf.PI * 10.0f) * decaimiento * 0.6f;
+                impacts[slot].z = deformacion;
+            }
+
+            // Actualizamos mediante el PropertyBlock
+            ActualizarShader();
             yield return null;
         }
 
         impacts[slot].z = 0;
-        mat.SetVectorArray("_Impacts", impacts);
+        ActualizarShader();
         slotOcupado[slot] = false;
     }
 }

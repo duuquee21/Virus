@@ -16543,6 +16543,10 @@ PrefabInstance:
       propertyPath: velocidadBase
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 457764784879710838, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e24b13c634ff2c4894fa7b14ec866f0, type: 2}
     - target: {fileID: 993558091819621251, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -16570,6 +16574,14 @@ PrefabInstance:
     - target: {fileID: 1907138783147929805, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: scaleMultiplier
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415849594946486106, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415849594946486106, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2480030405535150559, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16611,6 +16623,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2885076463293863453, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -589647056663222921, guid: 9c81ee33f71e29d45b8863fcdbc5bdb1, type: 3}
+    - target: {fileID: 2885076463293863453, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e24b13c634ff2c4894fa7b14ec866f0, type: 2}
     - target: {fileID: 3467496920630813658, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.19
@@ -16636,6 +16656,10 @@ PrefabInstance:
       value: -9.36
       objectReference: {fileID: 0}
     - target: {fileID: 8579177560547776743, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8579177560547776743, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: m_TagString
       value: Coral
       objectReference: {fileID: 0}
@@ -16651,6 +16675,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8902011560066552638, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1196714461}
+    - targetCorrespondingSourceObject: {fileID: 8902011560066552638, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1196714465}
     - targetCorrespondingSourceObject: {fileID: 1124561565965060441, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       insertIndex: 1
       addedObject: {fileID: 738758317}
@@ -19187,8 +19214,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationManager
   personPrefabs:
-  - {fileID: 721460322803742226, guid: 74ba6861be3e9c4468db4c37d4844fcc, type: 3}
   - {fileID: 721460322803742226, guid: 3675eacfc16703444a65af482e9b7e05, type: 3}
+  - {fileID: 721460322803742226, guid: 74ba6861be3e9c4468db4c37d4844fcc, type: 3}
   - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
   - {fileID: 721460322803742226, guid: 943c7809a43780a47a4ff80b9a80719b, type: 3}
   - {fileID: 721460322803742226, guid: e03f34b674809684eb98b1b7fd010be1, type: 3}
@@ -22346,6 +22373,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
   fuerzaEmpujeObjetos: 15
+--- !u!50 &1196714465
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196714457}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1202006082
 GameObject:
   m_ObjectHideFlags: 0
