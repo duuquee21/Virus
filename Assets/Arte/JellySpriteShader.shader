@@ -1,20 +1,10 @@
-Shader "Custom/JellySprite" {
+Shader "Custom/JellyMultiImpact" {
     Properties {
         _MainTex ("Sprite Texture", 2D) = "white" {}
-        _ImpactPos ("Impact Position", Vector) = (0,0,0,0)
-        _Deform ("Deformation Amount", Float) = 0
     }
     SubShader {
-        Tags { 
-            "RenderType"="Transparent" 
-            "Queue"="Transparent" 
-            "CanUseSpriteAtlas"="True" 
-        }
-        
-        Cull Off
-        Lighting Off
-        ZWrite Off
-        Blend SrcAlpha OneMinusSrcAlpha
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" "CanUseSpriteAtlas"="True" }
+        Cull Off Lighting Off ZWrite Off Blend SrcAlpha OneMinusSrcAlpha
 
         Pass {
             CGPROGRAM
@@ -23,57 +13,52 @@ Shader "Custom/JellySprite" {
             #include "UnityCG.cginc"
 
             struct appdata_t {
-                float4 vertex   : POSITION;
+                float4 vertex : POSITION;
                 float2 texcoord : TEXCOORD0;
-                float4 color    : COLOR;
+                float4 color : COLOR;
             };
 
             struct v2f {
-                float4 vertex   : SV_POSITION;
-                float2 texcoord  : TEXCOORD0;
-                fixed4 color    : COLOR;
+                float4 vertex : SV_POSITION;
+                float2 texcoord : TEXCOORD0;
+                fixed4 color : COLOR;
             };
 
             sampler2D _MainTex;
-            float4 _ImpactPos;
-            float _Deform;
+            // Arrays para manejar hasta 4 impactos simultáneos
+            // x, y = posición local | z = deformación | w = radio/suavizado
+            float4 _Impacts[4]; 
 
-           v2f vert(appdata_t v) {
-    v2f o;
+            v2f vert(appdata_t v) {
+                v2f o;
+                float2 totalDeform = float2(0,0);
+                float2 dirFromCenter = normalize(v.vertex.xy);
 
-    // 1. Dirección desde el centro del círculo hacia el vértice actual
-    float2 dirFromCenter = normalize(v.vertex.xy);
-    
-    // 2. Distancia del impacto al vértice
-    float distToImpact = distance(v.vertex.xy, _ImpactPos.xy);
-    
-    // 3. Determinamos si el impacto es "externo" o "interno"
-    // Si la distancia del impacto al centro es mayor que la del vértice, viene de fuera.
-    float impactDistFromCenter = length(_ImpactPos.xy);
-    float vertexDistFromCenter = length(v.vertex.xy);
-    
-    // Si viene de fuera, el factor es negativo (hacia adentro)
-    // Si viene de dentro, el factor es positivo (hacia afuera)
-    float directionFactor = (impactDistFromCenter > vertexDistFromCenter) ? -1.0 : 1.0;
+                for(int i = 0; i < 4; i++) {
+                    float2 impactPos = _Impacts[i].xy;
+                    float deformAmount = _Impacts[i].z;
+                    
+                    float distToImpact = distance(v.vertex.xy, impactPos);
+                    float radius = 0.5;
+                    float normalizedDist = saturate(distToImpact / radius);
+                    float falloff = 1.0 - smoothstep(0.0, 1.0, normalizedDist);
+                    
+                    float impactDistFromCenter = length(impactPos);
+                    float vertexDistFromCenter = length(v.vertex.xy);
+                    float directionFactor = (impactDistFromCenter > vertexDistFromCenter) ? -1.0 : 1.0;
 
-    // 4. Suavizado de la zona de influencia
-    float radius = 0.8;
-    float falloff = saturate(1.0 - (distToImpact / radius));
-    float softEffect = pow(falloff, 3.0) * _Deform;
+                    totalDeform += dirFromCenter * (falloff * falloff * (3.0 - 2.0 * falloff) * deformAmount * directionFactor);
+                }
 
-    // 5. Aplicamos el movimiento en el eje que conecta el centro con el vértice
-    v.vertex.xy += dirFromCenter * softEffect * directionFactor;
-
-    o.vertex = UnityObjectToClipPos(v.vertex);
-    o.texcoord = v.texcoord;
-    o.color = v.color;
-    return o;
-}
-
+                v.vertex.xy += totalDeform;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.texcoord = v.texcoord;
+                o.color = v.color;
+                return o;
+            }
 
             fixed4 frag(v2f i) : SV_Target {
-                fixed4 col = tex2D(_MainTex, i.texcoord) * i.color;
-                return col;
+                return tex2D(_MainTex, i.texcoord) * i.color;
             }
             ENDCG
         }

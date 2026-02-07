@@ -10,13 +10,17 @@ public class FloatingCellMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Material mat;
     private Coroutine jellyAnim;
+    // Control de múltiples impactos
+    private Vector4[] impacts = new Vector4[4]; // Array para el shader
+    private bool[] slotOcupado = new bool[4];
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Importante: Usamos .material para crear una instancia única por objeto
         mat = GetComponent<SpriteRenderer>().material;
         direccion = new Vector2(1, 1).normalized;
+        // Inicializar array
+        mat.SetVectorArray("_Impacts", impacts);
     }
 
     void FixedUpdate()
@@ -26,41 +30,38 @@ public class FloatingCellMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otro)
     {
-        Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
+        if (otro.CompareTag("InfectionZone")) return;
 
-        // Obtenemos el punto más cercano del choque
         Vector2 puntoGlobal = otro.ClosestPoint(transform.position);
-
-        // Lo transformamos a coordenadas locales del círculo
         Vector3 puntoLocal = transform.InverseTransformPoint(puntoGlobal);
 
-        // Lanzamos la animación
-        if (jellyAnim != null) StopCoroutine(jellyAnim);
-        jellyAnim = StartCoroutine(DoJelly(puntoLocal));
+        // Buscar un slot libre para la animación
+        int slot = -1;
+        for (int i = 0; i < 4; i++)
+        {
+            if (!slotOcupado[i]) { slot = i; break; }
+        }
+
+        // Si hay slot libre (máximo 4 choques a la vez), lanzamos la vibración
+        if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot));
 
         if (otro.CompareTag("Pared"))
         {
-           
-            Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
+            Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
             direccion = Vector2.Reflect(direccion, normal).normalized;
         }
-        // 2. Si choca con cualquier otra cosa -> EMPUJA
         else
         {
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
             if (rbOtro != null)
             {
-                // Calculamos dirección desde el centro de la bola hacia el objeto
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
-
-                // Aplicamos impulso instantáneo
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
             }
         }
-
     }
 
-  
+
 
 
     // Añade esto dentro de FloatingCellMovement.cs
@@ -74,29 +75,28 @@ public class FloatingCellMovement : MonoBehaviour
         return direccion;
     }
 
-    IEnumerator DoJelly(Vector3 localPos)
+    IEnumerator DoJelly(Vector3 localPos, int slot)
     {
-        mat.SetVector("_ImpactPos", localPos);
-        float t = 0;
+        slotOcupado[slot] = true;
+        impacts[slot].x = localPos.x;
+        impacts[slot].y = localPos.y;
 
-        // 1. Aumentamos la duración (antes era 0.5s, ahora 2.0s para que dure el rebote)
-        float duracion = 2.0f;
+        float t = 0;
+        float duracion = 1.5f;
 
         while (t < 1.0f)
         {
             t += Time.deltaTime / duracion;
+            float decaimiento = Mathf.Exp(-t * 4.0f);
+            float deformacion = Mathf.Sin(t * Mathf.PI * 10.0f) * decaimiento * 0.6f;
 
-            // 2. Oscilación con decaimiento:
-            // - Sin(t * PI * 10): El '10' determina cuántas veces rebota (frecuencia).
-            // - (1.0f - t): Hace que la fuerza baje linealmente hasta cero.
-            // - El 0.5f final es la fuerza inicial del impacto.
-            float decaimiento = Mathf.Exp(-t * 3.0f);
-            float deformacion = Mathf.Sin(t * Mathf.PI * 12.0f) * decaimiento * 0.6f;
-
-            mat.SetFloat("_Deform", deformacion);
+            impacts[slot].z = deformacion; // Actualizamos solo la deformación de este slot
+            mat.SetVectorArray("_Impacts", impacts);
             yield return null;
         }
 
-        mat.SetFloat("_Deform", 0);
+        impacts[slot].z = 0;
+        mat.SetVectorArray("_Impacts", impacts);
+        slotOcupado[slot] = false;
     }
 }
