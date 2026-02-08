@@ -13,21 +13,13 @@ public class PersonaInfeccion : MonoBehaviour
 
     [Header("Referencias Visuales")]
     public SpriteRenderer spritePersona;
-    // La lista de imágenes de las barras (una por cada fase)
     public Image[] fillingBarImages;
     public GameObject infectionBarCanvas;
     public Color colorCargaInicial = Color.green;
     public Color colorCargaFinal = Color.red;
 
-    // ... (resto de variables como monedasPorFase, shiny, etc., se mantienen igual) ...
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
-
-    [Header("Shiny Settings")]
-    public bool isShiny = false;
-    public Color shinyColor = Color.yellow;
-    public Sprite spriteCirculoShiny;
-    public Sprite contornoShiny;
 
     [Header("Feedback Infección Final")]
     public float flashDuration = 0.1f;
@@ -58,27 +50,21 @@ public class PersonaInfeccion : MonoBehaviour
     {
         if (alreadyInfected) return;
 
-        // 1. Lógica de incremento/decremento
         if (isInsideZone)
         {
-            float multiplier = 1f;
-            if (Guardado.instance != null)
-                multiplier = isShiny ? Guardado.instance.shinyCaptureMultiplier : Guardado.instance.infectSpeedMultiplier;
-
+            // Ahora solo usa el multiplicador de velocidad de infección normal
+            float multiplier = (Guardado.instance != null) ? Guardado.instance.infectSpeedMultiplier : 1f;
             currentInfectionTime += Time.deltaTime * multiplier;
         }
         else
         {
-            // Si quieres que la barra se recupere (se llene de nuevo) al salir:
             currentInfectionTime -= Time.deltaTime * 2f;
         }
 
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, globalInfectTime);
         float progress = currentInfectionTime / globalInfectTime;
 
-        // 2. Mantener el Canvas siempre encendido
-        // Eliminamos: infectionBarCanvas.SetActive(currentInfectionTime > 0 || faseActual > 0);
-        if (!infectionBarCanvas.activeSelf)
+        if (!infectionBarCanvas.activeSelf && currentInfectionTime > 0)
         {
             infectionBarCanvas.SetActive(true);
         }
@@ -87,15 +73,15 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (currentInfectionTime >= globalInfectTime)
         {
-            if (isShiny) BecomeInfected();
-            else IntentarAvanzarFase();
+            IntentarAvanzarFase();
         }
     }
+
     void ActualizarProgresoBarras(float progress)
     {
         if (fillingBarImages == null) return;
 
-        float inverseProgress = 1f - progress; // 1 = Llena, 0 = Vacía
+        float inverseProgress = 1f - progress;
 
         for (int i = 0; i < fillingBarImages.Length; i++)
         {
@@ -105,8 +91,6 @@ public class PersonaInfeccion : MonoBehaviour
             {
                 fillingBarImages[i].gameObject.SetActive(true);
                 fillingBarImages[i].fillAmount = inverseProgress;
-
-                // Color: Lerp de Verde (lleno) a Rojo (vacío)
                 fillingBarImages[i].color = Color.Lerp(colorCargaFinal, colorCargaInicial, inverseProgress);
             }
             else
@@ -115,6 +99,7 @@ public class PersonaInfeccion : MonoBehaviour
             }
         }
     }
+
     void IntentarAvanzarFase()
     {
         if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
@@ -128,13 +113,10 @@ public class PersonaInfeccion : MonoBehaviour
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
 
-            // --- CORRECCIÓN AQUÍ ---
             if (InfectionFeedback.instance != null)
             {
-                // Ahora llamamos al efecto visual y de sonido completo
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
             }
-            // -----------------------
 
             if (transformInfector != null && movementScript != null)
             {
@@ -147,6 +129,7 @@ public class PersonaInfeccion : MonoBehaviour
             BecomeInfected();
         }
     }
+
     void BecomeInfected()
     {
         alreadyInfected = true;
@@ -160,27 +143,16 @@ public class PersonaInfeccion : MonoBehaviour
         if (LevelManager.instance != null)
         {
             LevelManager.instance.RegisterInfection();
-            if (isShiny) LevelManager.instance.RegisterShinyCapture(this);
         }
     }
 
     void ActualizarVisualFase()
     {
-        if (isShiny)
-        {
-            spritePersona.sprite = spriteCirculoShiny;
-            spritePersona.color = shinyColor;
-
-            // Si es Shiny, podrías querer que solo se vea la primera barra con el contorno shiny
-            if (fillingBarImages.Length > 0 && fillingBarImages[0] != null)
-                fillingBarImages[0].sprite = contornoShiny;
-        }
-        else if (faseActual < fasesSprites.Length)
+        if (faseActual < fasesSprites.Length)
         {
             spritePersona.sprite = fasesSprites[faseActual];
             if (faseActual < coloresFases.Length) spritePersona.color = coloresFases[faseActual];
 
-            // Asignar el contorno correspondiente a cada barra según su fase
             for (int i = 0; i < fillingBarImages.Length; i++)
             {
                 if (fillingBarImages[i] != null && i < contornosFases.Length)
@@ -190,8 +162,6 @@ public class PersonaInfeccion : MonoBehaviour
             }
         }
     }
-
-    public void MakeShiny() { isShiny = true; ActualizarVisualFase(); transform.localScale *= 1.2f; }
 
     private IEnumerator FlashCambioFase()
     {
@@ -206,9 +176,10 @@ public class PersonaInfeccion : MonoBehaviour
         if (!alreadyInfected && other.CompareTag("InfectionZone"))
         {
             isInsideZone = true;
-            transformInfector = other.transform; // Guardamos la referencia
+            transformInfector = other.transform;
         }
     }
+
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
 
     private IEnumerator InfectionColorSequence()
@@ -227,13 +198,8 @@ public class PersonaInfeccion : MonoBehaviour
 
     public void IntentarAvanzarFasePorChoque()
     {
-        // Solo avanza si NO está infectado Y si NO es la última fase disponible
-        // (fasesSprites.Length - 1) es el índice de la última fase antes de la infección total
         if (!alreadyInfected && faseActual < fasesSprites.Length - 1)
         {
-            Debug.Log($"<color=cyan>Choque fuerte: Avanzando a fase {faseActual + 1}</color>");
-
-            // Copiamos la lógica de avance pero sin riesgo de llegar a BecomeInfected()
             if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
             {
                 LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
@@ -248,20 +214,6 @@ public class PersonaInfeccion : MonoBehaviour
             faseActual++;
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
-        }
-        else if (faseActual >= fasesSprites.Length - 1)
-        {
-            Debug.Log("<color=orange>Choque detectado, pero ya está en la fase máxima. No se infectará por choque.</color>");
-        }
-    }
-
-    void ActualizarSpritesDeBarras(Sprite nuevoSprite)
-    {
-        if (fillingBarImages == null || nuevoSprite == null) return;
-
-        foreach (Image img in fillingBarImages)
-        {
-            if (img != null) img.sprite = nuevoSprite;
         }
     }
 }

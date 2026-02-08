@@ -5,16 +5,15 @@ using TMPro;
 public class BotonConfirmarZonaOrbital : MonoBehaviour
 {
     [Header("Referencias")]
-    public OrbitaSistemaUI orbitaSistema; 
-    public Button confirmarButton;        
-    public TextMeshProUGUI textoBoton;    
+    public OrbitaSistemaUI orbitaSistema;
+    public Button confirmarButton;
+    public TextMeshProUGUI textoBoton;
 
     void Update()
     {
         ActualizarEstado();
     }
 
-    
     void ActualizarEstado()
     {
         if (orbitaSistema == null) return;
@@ -22,7 +21,6 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
         RectTransform planeta = orbitaSistema.GetPlanetaAlFrente();
         if (planeta == null) return;
 
-        
         ZoneItem zone = planeta.GetComponent<ZoneItem>();
 
         if (zone == null)
@@ -32,14 +30,14 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
             return;
         }
 
-        
+        // Si la zona no está desbloqueada, el botón sirve para COMPRAR
         if (!zone.IsUnlocked())
         {
             bool puedeComprar = zone.CanAfford();
-            textoBoton.text = "COMPRAR"; 
-            confirmarButton.interactable = puedeComprar; 
+            textoBoton.text = "COMPRAR";
+            confirmarButton.interactable = puedeComprar;
         }
-        
+        // Si ya está desbloqueada, el botón sirve para JUGAR
         else
         {
             textoBoton.text = "JUGAR";
@@ -47,7 +45,6 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
         }
     }
 
-    
     public void OnClickConfirmar()
     {
         if (orbitaSistema == null) return;
@@ -58,23 +55,18 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
         ZoneItem zone = planeta.GetComponent<ZoneItem>();
         if (zone == null) return;
 
-        
         if (!zone.IsUnlocked())
         {
-            
-            zone.OnClickButton(); 
-            
-           
-            ActualizarEstado(); 
+            // Llama a la compra en ZoneItem (que ya limpiamos de Shinies)
+            zone.OnClickButton();
+            ActualizarEstado();
         }
         else
         {
-            
-            
-            
+            // Activa el mapa seleccionado
             LevelManager.instance.ActivateMap(zone.mapIndex);
 
-            
+            // Inicia la sesión de juego normal
             LevelManager.instance.StartSession();
         }
     }
