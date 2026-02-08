@@ -25,7 +25,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         CapacityLevel2, CapacityLevel3, CapacityLevel4, CapacityLevel5, CapacityLevel6,
         TimeLevel2, TimeLevel3, TimeLevel4, TimeLevel5, TimeLevel6,
         InfectionSpeedLevel2, InfectionSpeedLevel3, InfectionSpeedLevel4, InfectionSpeedLevel5, InfectionSpeedLevel6,
-        // Referencias obsoletas (mantener para evitar errores en Inspector)
+        // Habilidades de Duplicación por Choque
+        DuplicateOnHit20, DuplicateOnHit40, DuplicateOnHit60, DuplicateOnHit80, DuplicateOnHit100,
+        // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
         ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny
@@ -220,6 +222,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.KeepZonesOnReset:
                 Guardado.instance.ActivateKeepZones();
                 break;
+
+            // --- NUEVOS CASOS DE DUPLICACIÓN ---
+            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(0.20f); break;
+            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(0.40f); break;
+            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(0.60f); break;
+            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(0.80f); break;
+            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(1.00f); break;
 
             // NIVELES DE MEJORAS
             case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(2); break;

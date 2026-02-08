@@ -54,4 +54,14 @@ public class SimpleWorldShadow : MonoBehaviour
         shadowObj.transform.localScale = transform.localScale * scaleMultiplier;
         shadowObj.transform.rotation = transform.rotation;
     }
+
+    // Añade esto dentro de la clase SimpleWorldShadow
+    public void CleanupShadow()
+    {
+        if (shadowObj != null)
+        {
+            DestroyImmediate(shadowObj);
+            shadowObj = null;
+        }
+    }
 }

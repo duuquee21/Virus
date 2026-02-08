@@ -21,6 +21,11 @@ public class Guardado : MonoBehaviour
     public bool keepUpgradesOnReset = false;
     public bool keepZonesUnlocked = false;
 
+    // --- NUEVA VARIABLE ---
+    [Header("Habilidad Especial")]
+    public float probabilidadDuplicarChoque = 0f;
+
+
     [Header("Multiplicadores de Virus")]
     public float radiusMultiplier = 1.0f;
     public float speedMultiplier = 1.0f;
@@ -55,6 +60,7 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
+        probabilidadDuplicarChoque = 0f; // Reset aquí también
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
@@ -77,6 +83,10 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("RadiusMult", radiusMultiplier);
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
+
+        // --- GUARDAR PROBABILIDAD ---
+        PlayerPrefs.SetFloat("ProbDuplicar", probabilidadDuplicarChoque);
+
         PlayerPrefs.Save();
     }
 
@@ -94,9 +104,12 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = PlayerPrefs.GetFloat("RadiusMult", 1.0f);
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
+
+        // --- CARGAR PROBABILIDAD ---
+        probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
     }
 
-    // --- MÉTODOS PÚBLICOS PARA EL ÁRBOL DE HABILIDADES ---
+    // --- MÉTODOS PÚBLICOS ---
     public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
@@ -109,6 +122,14 @@ public class Guardado : MonoBehaviour
     public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
+
+    // --- CORRECCIÓN AQUÍ: AÑADIDO SaveData() ---
+    public void SetDuplicateProbability(float amount)
+    {
+        probabilidadDuplicarChoque = amount;
+        SaveData(); // ¡Esto es lo que faltaba!
+        Debug.Log("<color=green>Probabilidad de Duplicación guardada:</color> " + amount);
+    }
 
     public void ApplyPermanentInitialUpgrade()
     {
@@ -131,11 +152,9 @@ public class Guardado : MonoBehaviour
         ApplyPermanentInitialUpgrade();
     }
 
-    // --- SISTEMA DE PERSISTENCIA DE PARTIDA (RUN) ---
     public void SaveRunState(int ignoredDay, int currentCoins, int currentMap)
     {
         PlayerPrefs.SetInt("Run_InProgress", 1);
-        // Aunque no hay días, guardamos un valor 0 para no romper la estructura de carga
         PlayerPrefs.SetInt("Run_Day", 0);
         PlayerPrefs.SetInt("Run_Coins", currentCoins);
         PlayerPrefs.SetInt("Run_Map", currentMap);
