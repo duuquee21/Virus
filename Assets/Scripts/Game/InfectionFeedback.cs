@@ -30,7 +30,7 @@ public class InfectionFeedback : MonoBehaviour
             cameraTransform = Camera.main.transform;
     }
 
-    public void PlayEffect(Vector3 position, Color particleColor, int sonido )
+    public void PlayEffect(Vector3 position, Color particleColor )
     {
         // 1. VISUAL
         if (infection1Particles != null)
@@ -50,15 +50,10 @@ public class InfectionFeedback : MonoBehaviour
         // 2. SONIDO
         if (audioSource != null && infectionSounds.Length > 0)
         {
-            AudioClip clip = null;
-            if (sonido == 1)
-            {
-                clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
-            }
-            if(sonido == 2)
-            {
-                clip = bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)];
-            }
+
+             AudioClip   clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
+
+
 
             audioSource.pitch = Random.Range(0.85f, 1.15f);
             audioSource.PlayOneShot(clip);
@@ -67,7 +62,7 @@ public class InfectionFeedback : MonoBehaviour
         // 3. SHAKE DE CÁMARA
         if (cameraTransform != null)
         {
-            StartCoroutine(Shake());
+            StartCoroutine(Shake(2));
         }
     }
 
@@ -93,7 +88,7 @@ public class InfectionFeedback : MonoBehaviour
         // 3. SHAKE DE CÁMARA
         if (cameraTransform != null)
         {
-            StartCoroutine(Shake());
+            StartCoroutine(Shake(1));
         }
     }
 
@@ -108,7 +103,7 @@ public class InfectionFeedback : MonoBehaviour
         }
 
     }
-    private IEnumerator Shake()
+    private IEnumerator Shake(int ShakeAmountMultiplier)
     {
         Vector3 originalPos = cameraTransform.localPosition;
         float elapsed = 0.0f;
@@ -116,8 +111,8 @@ public class InfectionFeedback : MonoBehaviour
         while (elapsed < shakeDuration)
         {
             // Genera un punto aleatorio dentro de una esfera multiplicado por la intensidad
-            float x = Random.Range(-1f, 1f) * shakeMagnitude;
-            float y = Random.Range(-1f, 1f) * shakeMagnitude;
+            float x = Random.Range(-1f, 1f) * shakeMagnitude*ShakeAmountMultiplier;
+            float y = Random.Range(-1f, 1f) * shakeMagnitude*ShakeAmountMultiplier;
 
             cameraTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
 
@@ -128,4 +123,42 @@ public class InfectionFeedback : MonoBehaviour
 
         cameraTransform.localPosition = originalPos; // Vuelve a la normalidad
     }
+
+    public void PlayUltraEffect(Vector3 position, Color particleColor)
+    {
+        // 1. VISUAL
+        if (infection1Particles != null)
+        {
+            GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+
+        // 2. SONIDO
+        if (audioSource != null && bolaBlancaSounds.Length > 0)
+        {
+
+            AudioClip clip = bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)];
+
+
+
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
+            audioSource.PlayOneShot(clip);
+        }
+
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake(3));
+        }
+    }
+
+
 }

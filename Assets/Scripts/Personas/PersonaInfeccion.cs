@@ -42,6 +42,7 @@ public class PersonaInfeccion : MonoBehaviour
     private Transform transformInfector;
     private Movement movementScript;
 
+    public ParticleSystem particulasDeFuego;
     void Start()
     {
         movementScript = GetComponent<Movement>();
@@ -162,7 +163,7 @@ public class PersonaInfeccion : MonoBehaviour
         infectionBarCanvas.SetActive(false);
 
         if (InfectionFeedback.instance != null)
-            InfectionFeedback.instance.PlayEffect(transform.position, originalColor,1);
+            InfectionFeedback.instance.PlayEffect(transform.position, originalColor);
         particulasDeFuego?.Play();
 
         if (LevelManager.instance != null) LevelManager.instance.RegisterInfection();
@@ -268,5 +269,5 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
-    public bool EsFaseMaxima() => alreadyInfected || faseActual >= fasesSprites.Length - 1;
+    public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
 }

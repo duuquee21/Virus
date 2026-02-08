@@ -20,7 +20,7 @@ public class PlanetCrontrollator : MonoBehaviour
 
             if (scriptInfeccion != null&&scriptInfeccion.alreadyInfected)
             {
-                InfectionFeedback.instance.PlayEffect(collision.transform.position, Color.white,2);
+                InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
                 TakeDamage(damageAmount*2);
                 Destroy(collision.gameObject);
                 return;
