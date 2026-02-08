@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6712935922332986484}
+  - {fileID: 8641728452748631500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8087179694804657894
@@ -117,16 +118,13 @@ MonoBehaviour:
   colorCargaInicial: {r: 1, g: 1, b: 1, a: 1}
   colorCargaFinal: {r: 1, g: 1, b: 1, a: 1}
   monedasPorFase: 0600000005000000040000000300000000000000
-  isShiny: 0
-  shinyColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  spriteCirculoShiny: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  contornoShiny: {fileID: 1780699529462240134, guid: cc296ed3e5d6bda4da3444708cbdc7d8, type: 3}
   flashDuration: 0.05
   fadeDuration: 0.25
   infectedColor: {r: 1, g: 1, b: 1, a: 1}
   alreadyInfected: 0
   fuerzaRetroceso: 20
   fuerzaRotacion: 12.5
+  particulasDeFuego: {fileID: 6792429654394685659}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -549,3 +547,70 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &8733613753447024397
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 23905682265333423}
+    m_Modifications:
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7197056637472312061, guid: b457124e12d126841a43d191f9db8717, type: 3}
+      propertyPath: m_Name
+      value: VirusJiggleExplosion 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b457124e12d126841a43d191f9db8717, type: 3}
+--- !u!198 &6792429654394685659 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2843893043477303254, guid: b457124e12d126841a43d191f9db8717, type: 3}
+  m_PrefabInstance: {fileID: 8733613753447024397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8641728452748631500 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: b457124e12d126841a43d191f9db8717, type: 3}
+  m_PrefabInstance: {fileID: 8733613753447024397}
+  m_PrefabAsset: {fileID: 0}

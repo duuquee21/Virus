@@ -7,6 +7,7 @@ public class PlanetCrontrollator : MonoBehaviour
     public float health = 100f;
     public float damageAmount = 1;
     public Image healthBar; // Arrastra aquí el Fill de tu barra de vida
+    
 
 
 
@@ -17,15 +18,24 @@ public class PlanetCrontrollator : MonoBehaviour
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             PersonaInfeccion scriptInfeccion = collision.gameObject.GetComponent<PersonaInfeccion>();
 
+            if (scriptInfeccion != null&&scriptInfeccion.alreadyInfected)
+            {
+                InfectionFeedback.instance.PlayEffect(collision.transform.position, Color.white,2);
+                TakeDamage(damageAmount*2);
+                Destroy(collision.gameObject);
+                return;
+            }
+
             if (rb != null && scriptInfeccion != null)
             {
                 float fuerzaImpacto = rb.linearVelocity.magnitude;
 
-                if (fuerzaImpacto > 5f)
+                if (fuerzaImpacto > 6.5f)
                 {
                     // REGLA: Si la persona ya es fase máxima, NO quitamos vida
                     if (scriptInfeccion.EsFaseMaxima())
                     {
+                        TakeDamage(damageAmount);
                         Debug.Log("<color=green>Impacto de Fase Final: Planeta Protegido.</color>");
                     }
                     else

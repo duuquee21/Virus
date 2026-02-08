@@ -14,6 +14,7 @@ public class InfectionFeedback : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] infectionSounds;
     public AudioClip[] phaseChangeSounds; 
+    public AudioClip[] bolaBlancaSounds;
 
     [Header("Cámara & Shake")]
     public Transform cameraTransform; 
@@ -29,7 +30,7 @@ public class InfectionFeedback : MonoBehaviour
             cameraTransform = Camera.main.transform;
     }
 
-    public void PlayEffect(Vector3 position, Color particleColor)
+    public void PlayEffect(Vector3 position, Color particleColor, int sonido )
     {
         // 1. VISUAL
         if (infection1Particles != null)
@@ -49,7 +50,16 @@ public class InfectionFeedback : MonoBehaviour
         // 2. SONIDO
         if (audioSource != null && infectionSounds.Length > 0)
         {
-            AudioClip clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
+            AudioClip clip = null;
+            if (sonido == 1)
+            {
+                clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
+            }
+            if(sonido == 2)
+            {
+                clip = bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)];
+            }
+
             audioSource.pitch = Random.Range(0.85f, 1.15f);
             audioSource.PlayOneShot(clip);
         }

@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private bool estaEmpujado = false;
     private bool estaGirando = false;
+    private PersonaInfeccion personaInfeccion;
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class Movement : MonoBehaviour
         float angulo = Random.Range(0f, 360f);
         direccion = new Vector2(Mathf.Cos(angulo * Mathf.Deg2Rad),
                                 Mathf.Sin(angulo * Mathf.Deg2Rad)).normalized;
+            personaInfeccion = GetComponent<PersonaInfeccion>();
     }
 
     void FixedUpdate()
@@ -73,19 +75,35 @@ public class Movement : MonoBehaviour
     {
         if (otro.CompareTag("Pared"))
         {
-            float velocidadChoque = rb.linearVelocity.magnitude;
-
-        
-
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
 
-            transform.position = (Vector2)transform.position + (normal * 0.1f);
+            // Rebote de la dirección base
             direccion = Vector2.Reflect(direccion, normal).normalized;
 
             if (estaEmpujado)
             {
-                rb.linearVelocity = Vector2.Reflect(rb.linearVelocity, normal);
+                // Calculamos el nuevo vector de rebote
+                Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
+
+                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 5f)
+                {
+                    Debug.Log("<color=blue>Rebote de Fase Final: Velocidad Constante Aplicada.</color>");
+
+                    // 1. Calculamos la dirección del rebote (normalizada, vale 1)
+                    Vector2 direccionRebote = Vector2.Reflect(rb.linearVelocity, normal).normalized;
+
+                    // 2. Definimos la velocidad fija que queremos
+                    float velocidadFija = 30f;
+
+                    // 3. Asignamos: Dirección * Velocidad deseada
+                    rb.linearVelocity = direccionRebote * velocidadFija;
+                }
+                else
+                {
+                    // Rebote normal
+                    rb.linearVelocity = nuevaVelocidad;
+                }
             }
         }
     }
