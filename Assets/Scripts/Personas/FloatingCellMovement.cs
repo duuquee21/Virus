@@ -19,6 +19,9 @@ public class FloatingCellMovement : MonoBehaviour
     private SpriteRenderer sr;
     private MaterialPropertyBlock propBlock;
 
+    public AudioSource audioSource;
+    public AudioClip reboteVirusClip;
+
 
 
 
@@ -69,21 +72,32 @@ public class FloatingCellMovement : MonoBehaviour
         {
             // Si es un choque con otro virus, la vibración es positiva
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+
+            Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
+            if (rbOtro != null)
+            {
+                Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
+                rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
+            }
+                if (audioSource != null && reboteVirusClip != null)
+                {
+                    audioSource.PlayOneShot(reboteVirusClip);
+                }
+        }
+        else if (otro.CompareTag("Pared"))
+        {
+            if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+            Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
+            direccion = Vector2.Reflect(direccion, normal).normalized;
+        }
+        else if (otro.CompareTag("Coral"))
+        {
+            if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
         }
         else
         {
             // Si es un choque con una pared, la vibración es negativa
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
-        }
-    
-
-        if (otro.CompareTag("Pared"))
-        {
-            Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
-            direccion = Vector2.Reflect(direccion, normal).normalized;
-        }
-        else
-        {
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
             if (rbOtro != null)
             {

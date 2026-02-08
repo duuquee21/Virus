@@ -37,7 +37,7 @@ Shader "Custom/JellyMultiImpact" {
     for(int i = 0; i < 4; i++) {
         float2 impactPos = _Impacts[i].xy;
         float strength = _Impacts[i].z; // Positivo = afuera, Negativo = adentro
-        float radius = 0.9; 
+        float radius = 1.2; 
 
         float distToImpact = distance(originalPos, impactPos);
         

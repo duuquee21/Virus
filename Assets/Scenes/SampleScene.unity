@@ -14874,6 +14874,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
   fuerzaEmpujeObjetos: 15
+  audioSource: {fileID: 1534932859}
+  reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!1 &752240593
 GameObject:
   m_ObjectHideFlags: 0
@@ -16770,6 +16772,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1538493144}
     m_Modifications:
     - target: {fileID: 170045079182887240, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1534932859}
+    - target: {fileID: 170045079182887240, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: fuerzaEmpuje
       value: 15
       objectReference: {fileID: 0}
@@ -16777,6 +16783,10 @@ PrefabInstance:
       propertyPath: velocidadBase
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 170045079182887240, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
+      propertyPath: reboteVirusClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
     - target: {fileID: 457764784879710838, guid: 21b46e2cdf35a8c4a80dff9b842daefe, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -17225,19 +17235,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 881041233}
-        m_TargetAssemblyTypeName: ControlVolumen, Assembly-CSharp
-        m_MethodName: CambiarVolumen
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &881041232
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22802,6 +22800,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
   fuerzaEmpujeObjetos: 15
+  audioSource: {fileID: 1534932859}
+  reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!50 &1196714465
 Rigidbody2D:
   serializedVersion: 5

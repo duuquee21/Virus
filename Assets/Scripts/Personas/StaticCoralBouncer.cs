@@ -17,6 +17,9 @@ public class StaticBumper : MonoBehaviour
     private SpriteRenderer sr;
     private MaterialPropertyBlock propBlock;
 
+    public AudioSource audioSource;
+    public AudioClip reboteVirusClip;
+
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -56,10 +59,14 @@ public class StaticBumper : MonoBehaviour
             if (!slotOcupado[i]) { slot = i; break; }
         }
 
-        if (otro.CompareTag("Virus"))
+        if (otro.CompareTag("Virus") )
         {
             // Si es un choque con otro virus, la vibración es positiva
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+            if (audioSource != null && reboteVirusClip != null)
+            {
+                audioSource.PlayOneShot(reboteVirusClip);
+            }
         }
         else
         {
