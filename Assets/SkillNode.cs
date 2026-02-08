@@ -28,13 +28,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ShinyCaptureSpeed100 ,
         DoubleShinyEffect,
         KeepZonesOnReset,
-        ExtraShiny// +100% velocidad contra Shinies
+        ExtraShiny,
+        RadiusLevel2, RadiusLevel3,RadiusLevel4,RadiusLevel5, RadiusLevel6,
+        SpeedLevel2, SpeedLevel3, SpeedLevel4, SpeedLevel5,
+        CapacityLevel2, CapacityLevel3, CapacityLevel4, CapacityLevel5, CapacityLevel6,
+        TimeLevel2, TimeLevel3, TimeLevel4, TimeLevel5, TimeLevel6,
+        InfectionSpeedLevel2, InfectionSpeedLevel3, InfectionSpeedLevel4, InfectionSpeedLevel5, InfectionSpeedLevel6,// +100% velocidad contra Shinies
     }
 
     [Header("Datos")]
     public string skillName;
     [TextArea] public string description;
-    public int shinyCost = 1;
+    public int CoinCost = 1;
 
     [Header("Ramas")]
     public SkillNode[] nextNodes;
@@ -128,25 +133,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
-        
         if (unlocked) return;
-        
-        // Si no tiene dinero, suena ERROR
-        if (Guardado.instance.shinyDNA < shinyCost) 
+
+        // 1. Cambiamos la comprobación de ADN Shiny por Monedas de Contagio
+        // Usamos LevelManager.instance.contagionCoins
+        if (LevelManager.instance.contagionCoins < CoinCost)
         {
-            AudioManager.instance.PlayError();
+            if (AudioManager.instance != null) AudioManager.instance.PlayError();
             return;
         }
 
-        // Si compra con éxito:
-        AudioManager.instance.PlayBuyUpgrade(); // <--- SONIDO DE ÉXITO
-        
-        if (unlocked || (button != null && !button.interactable)) return;
-        if (Guardado.instance.shinyDNA < shinyCost) return;
+        // 2. Ejecutamos la compra
+        if (AudioManager.instance != null) AudioManager.instance.PlayBuyUpgrade();
 
         if (audioSource != null && unlockSound != null) audioSource.PlayOneShot(unlockSound);
 
-        Guardado.instance.shinyDNA -= shinyCost;
+        // 3. Restamos de las monedas de contagio en lugar de ADN
+        LevelManager.instance.contagionCoins -= CoinCost;
+
         unlocked = true;
 
         SetState(false, Color.gray, false);
@@ -157,6 +161,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             foreach (var child in nextNodes) if (child != null) child.CheckIfShouldShow();
         }
 
+        // Actualizamos toda la UI para que se refleje el gasto de monedas
         LevelManager.instance.UpdateUI();
     }
 
@@ -254,6 +259,78 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.ExtraShiny:
                 Guardado.instance.AddExtraShinyLevel(); // Cada compra suma +1 al contador
                 break;
+            case SkillEffectType.RadiusLevel2:
+                VirusRadiusController.instance.SetLevel(2);
+                break;
+            case SkillEffectType.RadiusLevel3:
+                VirusRadiusController.instance.SetLevel(3);
+                break;
+            case SkillEffectType.RadiusLevel4:
+                VirusRadiusController.instance.SetLevel(4);
+                break;
+            case SkillEffectType.RadiusLevel5:
+                VirusRadiusController.instance.SetLevel(5);
+                break;
+            case SkillEffectType.RadiusLevel6:
+                VirusRadiusController.instance.SetLevel(6);
+                break;
+            case SkillEffectType.SpeedLevel2:
+                SpeedUpgradeController.instance.SetLevel(2);
+                break;
+            case SkillEffectType.SpeedLevel3:
+                SpeedUpgradeController.instance.SetLevel(3);
+                break;
+            case SkillEffectType.SpeedLevel4:
+                 SpeedUpgradeController.instance.SetLevel(4);
+                 break;
+            case SkillEffectType.SpeedLevel5:
+                SpeedUpgradeController.instance.SetLevel(5);
+                break;
+            case SkillEffectType.CapacityLevel2:
+                CapacityUpgradeController.instance.SetLevel(2);
+                break;
+            case SkillEffectType.CapacityLevel3:
+            CapacityUpgradeController.instance.SetLevel(3);
+                break;
+            case SkillEffectType.CapacityLevel4:
+            CapacityUpgradeController.instance.SetLevel(4);
+                break;
+            case SkillEffectType.CapacityLevel5:
+            CapacityUpgradeController.instance.SetLevel(5);
+                break;
+            case SkillEffectType.CapacityLevel6:
+            CapacityUpgradeController.instance.SetLevel(6);
+                break;
+            case SkillEffectType.TimeLevel2:
+                TimeUpgradeController.instance.SetLevel(2);
+                break;
+            case SkillEffectType.TimeLevel3:
+            TimeUpgradeController.instance.SetLevel(3);
+                break;
+            case SkillEffectType.TimeLevel4:
+            TimeUpgradeController.instance.SetLevel(4);
+                break;
+            case SkillEffectType.TimeLevel5:
+            TimeUpgradeController.instance.SetLevel(5);
+                break;
+            case SkillEffectType.TimeLevel6:
+            TimeUpgradeController.instance.SetLevel(6);
+                break;
+            case SkillEffectType.InfectionSpeedLevel2:
+                InfectionSpeedUpgradeController.instance.SetLevel(2);
+                break;
+            case SkillEffectType.InfectionSpeedLevel3:
+                InfectionSpeedUpgradeController.instance.SetLevel(3);
+                break;
+            case SkillEffectType.InfectionSpeedLevel4:
+            InfectionSpeedUpgradeController.instance.SetLevel(4);
+                break;
+            case SkillEffectType.InfectionSpeedLevel5:
+            InfectionSpeedUpgradeController.instance.SetLevel(5);
+                break;
+            case SkillEffectType.InfectionSpeedLevel6:
+            InfectionSpeedUpgradeController.instance.SetLevel(6);
+                break;
         }
         if (LevelManager.instance != null) LevelManager.instance.RecalculateTotalDaysUntilCure();
     }
@@ -261,7 +338,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (canvasGroup != null && canvasGroup.alpha > 0.5f && SkillTooltip.instance)
-            SkillTooltip.instance.Show(skillName, description, shinyCost);
+            SkillTooltip.instance.Show(skillName, description, CoinCost);
     }
     public void OnPointerExit(PointerEventData eventData) { if (SkillTooltip.instance) SkillTooltip.instance.Hide(); }
 }

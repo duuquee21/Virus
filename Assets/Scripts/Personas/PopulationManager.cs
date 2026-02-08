@@ -6,7 +6,7 @@ public class PopulationManager : MonoBehaviour
     [Header("Prefabs & Selection")]
     [Tooltip("Arrastra aquí tus 4 prefabs de personajes")]
     public GameObject[] personPrefabs;
-    private GameObject currentPrefab; // El prefab activo actualmente
+    private GameObject currentPrefab;
 
     [Header("Settings")]
     public float spawnInterval = 3f;
@@ -24,19 +24,15 @@ public class PopulationManager : MonoBehaviour
 
     private float timer;
     private int personsSpawnedToday = 0;
-    private int shiniesRemainingToSpawn = 0;
-    private List<int> shinyIndices = new List<int>();
 
     void Awake()
     {
-        // Inicializamos con el primer prefab por defecto para evitar errores
         if (personPrefabs.Length > 0)
         {
             currentPrefab = personPrefabs[0];
         }
     }
 
-    // MÉTODO PARA LOS BOTONES (Pasar índice 0, 1, 2 o 3)
     public void SelectPrefab(int index)
     {
         if (index >= 0 && index < personPrefabs.Length)
@@ -50,38 +46,17 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    public void ConfigureRound(int shinyCount)
+    // El parámetro shinyCount se mantiene para no romper la llamada desde LevelManager, 
+    // pero el cuerpo del método ya no hace nada con él.
+    public void ConfigureRound(int ignoredShinyCount)
     {
-        shiniesRemainingToSpawn = shinyCount;
         personsSpawnedToday = 0;
         timer = 0;
-        shinyIndices.Clear();
-
-        if (shiniesRemainingToSpawn > 0)
-        {
-            int maxRange = initialPopulation + (shiniesRemainingToSpawn * 2);
-
-            for (int i = 0; i < shiniesRemainingToSpawn; i++)
-            {
-                int newIndex;
-                int safety = 0;
-                do
-                {
-                    newIndex = Random.Range(1, maxRange);
-                    safety++;
-                }
-                while (shinyIndices.Contains(newIndex) && safety < 100);
-
-                shinyIndices.Add(newIndex);
-            }
-
-            shinyIndices.Sort();
-            Debug.Log("<color=cyan>PopulationManager:</color> Stock para esta zona: " + shiniesRemainingToSpawn + ". Aparecerán en los índices: " + string.Join(", ", shinyIndices));
-        }
 
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
+        // Spawn inicial de habitantes normales
         for (int i = 0; i < initialPopulation; i++)
         {
             SpawnPerson();
@@ -120,7 +95,6 @@ public class PopulationManager : MonoBehaviour
         float y = Random.Range(spawnAreaMin.y, spawnAreaMax.y);
         Vector3 spawnPos = new Vector3(x, y, 0);
 
-        // Instanciamos el prefab seleccionado actualmente
         GameObject newPerson = Instantiate(currentPrefab, spawnPos, Quaternion.identity);
 
         Vector3 targetScale = newPerson.transform.localScale;
@@ -128,17 +102,7 @@ public class PopulationManager : MonoBehaviour
         StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
 
         personsSpawnedToday++;
-
-        // Lógica de Shiny
-        if (shinyIndices.Contains(personsSpawnedToday))
-        {
-            PersonaInfeccion infeccion = newPerson.GetComponent<PersonaInfeccion>();
-            if (infeccion != null)
-            {
-                infeccion.MakeShiny();
-                Debug.Log("<color=yellow>¡Ha nacido un Shiny!</color> Persona nº: " + personsSpawnedToday);
-            }
-        }
+        // LÓGICA DE SHINY ELIMINADA
     }
 
     void ApplySpawnBonus()
@@ -174,11 +138,8 @@ public class PopulationManager : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
-    // Añade esto a tu PopulationManager actual
     public void SetZonePrefab(int index)
     {
-        // Usamos el mismo SelectPrefab que ya tenías para actualizar el modelo y la preview
         SelectPrefab(index);
-        Debug.Log("<color=orange>PopulationManager:</color> Cambiando a prefab de zona: " + index);
     }
 }
