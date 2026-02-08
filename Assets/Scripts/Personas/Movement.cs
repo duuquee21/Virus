@@ -20,25 +20,19 @@ public class Movement : MonoBehaviour
     {
         if (!estaEmpujado)
         {
-            // Detenemos la velocidad física para usar movimiento cinemático
             rb.linearVelocity = Vector2.zero;
 
-            // Si ya no hay impulso, detenemos el giro residual pero MANTENEMOS la rotación actual
             if (!estaGirando && rb.angularVelocity != 0)
             {
                 rb.angularVelocity = 0;
-                // Eliminamos la línea: transform.rotation = Quaternion.identity;
             }
 
-            // Movimiento constante en la nueva dirección capturada tras el empuje
             rb.MovePosition(rb.position + direccion * velocidadBase * Time.fixedDeltaTime);
         }
         else
         {
-            // Detectamos cuando la inercia baja para retomar el control
             if (rb.linearVelocity.magnitude <= velocidadBase)
             {
-                // Capturamos la inercia final como nueva dirección de marcha
                 if (rb.linearVelocity.magnitude > 0.1f)
                 {
                     direccion = rb.linearVelocity.normalized;
@@ -50,14 +44,27 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Aplica un empuje con fuerza constante.
+    /// </summary>
+    /// <param name="direccionEmpuje">Vector de dirección (se normalizará internamente).</param>
+    /// <param name="fuerza">Magnitud fija del impacto.</param>
+    /// <param name="torque">Fuerza de rotación.</param>
     public void AplicarEmpuje(Vector2 direccionEmpuje, float fuerza, float torque)
     {
         estaEmpujado = true;
         estaGirando = true;
 
-        rb.AddForce(direccionEmpuje * fuerza, ForceMode2D.Impulse);
+        // NORMALIZACIÓN: Esto hace que la distancia no importe. 
+        // El vector solo indica "hacia dónde", y la variable 'fuerza' decide "cuánto".
+        Vector2 direccionNormalizada = direccionEmpuje.normalized;
 
-        // Torque aleatorio para rotación orgánica
+        // Reiniciamos la velocidad actual para que empujes previos no se sumen de forma extraña
+        rb.linearVelocity = Vector2.zero;
+
+        // Aplicamos la fuerza constante
+        rb.AddForce(direccionNormalizada * fuerza, ForceMode2D.Impulse);
+
         float direccionGiro = Random.Range(-1f, 1f);
         rb.AddTorque(direccionGiro * torque, ForceMode2D.Impulse);
     }
@@ -66,33 +73,18 @@ public class Movement : MonoBehaviour
     {
         if (otro.CompareTag("Pared"))
         {
-            // 1. Cálculo de velocidad e Infección
             float velocidadChoque = rb.linearVelocity.magnitude;
 
-            if (velocidadChoque > 5f)
-            {
-                PersonaInfeccion scriptInfeccion = GetComponent<PersonaInfeccion>();
-                if (scriptInfeccion != null)
-                {
-                    scriptInfeccion.IntentarAvanzarFasePorChoque();
-                }
-            }
+        
 
-            // 2. Cálculo de la Normal del choque
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
 
-            // --- SOLUCIÓN AL BLOQUEO ---
-            // Movemos el objeto un poquito hacia afuera de la pared para que no se "entierre"
-            // 0.1f es suficiente para sacarlo del área de colisión
             transform.position = (Vector2)transform.position + (normal * 0.1f);
-
-            // 3. Lógica de rebote
             direccion = Vector2.Reflect(direccion, normal).normalized;
 
             if (estaEmpujado)
             {
-                // Reflejamos la velocidad para que salga rebotado físicamente
                 rb.linearVelocity = Vector2.Reflect(rb.linearVelocity, normal);
             }
         }

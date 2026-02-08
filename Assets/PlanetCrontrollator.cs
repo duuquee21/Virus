@@ -8,29 +8,39 @@ public class PlanetCrontrollator : MonoBehaviour
     public float damageAmount = 1;
     public Image healthBar; // Arrastra aquí el Fill de tu barra de vida
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Persona"))
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            PersonaInfeccion scriptInfeccion = collision.gameObject.GetComponent<PersonaInfeccion>();
 
-            if (rb != null)
+            if (rb != null && scriptInfeccion != null)
             {
-                // 1. Detectamos el impacto fuerte para el daño de la pared
                 float fuerzaImpacto = rb.linearVelocity.magnitude;
 
                 if (fuerzaImpacto > 5f)
                 {
-                    Debug.Log($"<color=cyan>Impacto fuerte en pared:</color> <b>{fuerzaImpacto:F2}</b>");
-                    TakeDamage(damageAmount);
-                }
+                    // REGLA: Si la persona ya es fase máxima, NO quitamos vida
+                    if (scriptInfeccion.EsFaseMaxima())
+                    {
+                        Debug.Log("<color=green>Impacto de Fase Final: Planeta Protegido.</color>");
+                    }
+                    else
+                    {
+                        // Si no es fase máxima, recibe daño normal
+                        TakeDamage(damageAmount);
+                        Debug.Log("<color=red>Impacto Fuerte: Planeta Dañado.</color>" + damageAmount+ health);
+                    }
 
-                // NOTA: Hemos eliminado el "rb.linearVelocity = Vector2.zero" 
-                // para permitir que la Persona rebote y no se quede pegada.
+                    // En ambos casos llamamos a la lógica de la persona para que se infecte o avance
+                    scriptInfeccion.IntentarAvanzarFasePorChoque();
+                }
             }
         }
     }
-
     void TakeDamage(float amount)
     {
         health -= amount;
