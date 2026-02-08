@@ -23,14 +23,16 @@ public class LevelManager : MonoBehaviour
     public GameObject menuPanel;
     public GameObject gameUI;
     public GameObject dayOverPanel;
-    public GameObject gameOverPanel; // Ahora solo se usará si el jugador decide resetear
-    public GameObject zonePanel;
+    public GameObject gameOverPanel;
+    public GameObject shinyPanel; // Panel de la Tienda de ADN/Mejoras
+    public GameObject zonePanel;  // Panel de Selección de Mapas
     public GameObject pausePanel;
 
     [Header("UI Text (Listas)")]
     public List<TextMeshProUGUI> timerTexts = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> sessionScoreTexts = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> contagionCoinsTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> shinyStoreTexts = new List<TextMeshProUGUI>(); // Texto para mostrar ADN Shiny
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
@@ -60,6 +62,13 @@ public class LevelManager : MonoBehaviour
         ShowMainMenu();
     }
 
+    // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
+    public void OpenShinyShop() { if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
+    public void CloseShinyShop() { if (shinyPanel != null) shinyPanel.SetActive(false); }
+
+    public void OpenZoneShop() { if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
+    public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); }
+
     public void AddCoins(int amount)
     {
         contagionCoins += amount;
@@ -82,6 +91,7 @@ public class LevelManager : MonoBehaviour
         if (dayOverPanel) dayOverPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
+        if (shinyPanel) shinyPanel.SetActive(false);
 
         virusPlayer.SetActive(false);
 
@@ -153,8 +163,6 @@ public class LevelManager : MonoBehaviour
         if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
     }
 
-    // ELIMINADO: RecalculateTotalDaysUntilCure
-
     void Update()
     {
         if (!isGameActive) return;
@@ -169,16 +177,12 @@ public class LevelManager : MonoBehaviour
         if (currentTimer <= 0) EndSessionDay();
     }
 
-    public void OpenZoneShop() { if (zonePanel != null) zonePanel.SetActive(true); UpdateUI(); }
-    public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); }
-
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
         if (Guardado.instance)
         {
             int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-            // Guardamos solo monedas y mapa (sin días)
             Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
         }
 
@@ -187,6 +191,7 @@ public class LevelManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         if (dayOverPanel) dayOverPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
 
         ShowMainMenu();
     }
@@ -277,8 +282,6 @@ public class LevelManager : MonoBehaviour
         }
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
-
-        // ELIMINADO: daysRemaining--
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -291,7 +294,6 @@ public class LevelManager : MonoBehaviour
         virusPlayer.SetActive(false);
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
-        // SIEMPRE vuelve al DayOverPanel (No hay derrota por tiempo)
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         if (Guardado.instance) Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
         dayOverPanel.SetActive(true);
@@ -310,8 +312,6 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var t in sessionScoreTexts) if (t != null) t.text = "Hoy: " + currentSessionInfected + " / " + maxInfectionsPerRound;
         foreach (var t in contagionCoinsTexts) if (t != null) t.text = "Monedas: " + contagionCoins;
-
-        // ELIMINADO: daysRemainingTexts
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }
