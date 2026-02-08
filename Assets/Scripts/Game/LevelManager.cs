@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -344,6 +345,61 @@ public class LevelManager : MonoBehaviour
             pausePanel.SetActive(true);
             Time.timeScale = 0f;
             if (virusMovementScript != null) virusMovementScript.enabled = false;
+        }
+    }
+    // --- AÑADIR ESTO A TU LevelManager.cs ---
+
+    // --- AÑADE O MODIFICA ESTO EN LevelManager.cs ---
+
+    public void NextMapTransition()
+    {
+        // Solo permitimos una transición a la vez para evitar errores si chocan dos personas a la vez
+        if (!isGameActive) return;
+
+        StartCoroutine(WaitAndChangeMap());
+    }
+
+    private IEnumerator WaitAndChangeMap()
+    {
+        isGameActive = false; // Pausamos el juego
+        Debug.Log("<color=orange>¡Planeta derrotado! Preparando siguiente zona...</color>");
+
+        // 1. Espera de 2 segundos para ver el efecto visual
+        yield return new WaitForSecondsRealtime(2f);
+
+        // 2. Calculamos el índice del siguiente mapa
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int nextMap = currentMap + 1;
+
+        if (nextMap < mapList.Length)
+        {
+            // 3. Limpiamos las personas del mapa anterior
+            CleanUpScene();
+
+            // 4. Activamos el nuevo mapa visualmente
+            // (Esto también le dice al PopulationManager qué prefab usar)
+            ActivateMap(nextMap);
+
+            // 5. ¡ESTA ES LA CLAVE!: Forzamos el spawn de la nueva población
+            PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
+            if (pm != null)
+            {
+                // Reiniciamos el contador de shinies y forzamos el spawn inicial
+                // Usamos 0 shinies por ahora o el valor que quieras para la nueva zona
+                pm.ConfigureRound(0);
+            }
+
+            // 6. Reset de variables de sesión
+            currentSessionInfected = 0;
+            currentTimer = gameDuration;
+            isGameActive = true;
+
+            Debug.Log("<color=green>Nueva zona lista con sus prefabs correspondientes.</color>");
+        }
+        else
+        {
+            Debug.Log("¡Fin del juego!");
+            ReturnToMenu();
         }
     }
 }

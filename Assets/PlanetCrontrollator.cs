@@ -60,9 +60,20 @@ public class PlanetCrontrollator : MonoBehaviour
         }
     }
 
+    // --- ACTUALIZA ESTA FUNCIÓN EN PlanetCrontrollator.cs ---
+
     void Die()
     {
-        // Lógica de destrucción o Game Over
-        Destroy(gameObject);
+        // En lugar de destruir el planeta, avisamos al LevelManager
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.NextMapTransition();
+        }
+
+        // Desactivamos el script para que no se llame a Die() varias veces por choques extra
+        this.enabled = false;
+
+        // Opcional: Podrías desactivar el SpriteRenderer aquí para que "desaparezca" visualmente
+        // GetComponent<SpriteRenderer>().enabled = false;
     }
 }
