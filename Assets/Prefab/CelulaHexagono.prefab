@@ -108,7 +108,7 @@ MonoBehaviour:
   fasesSprites:
   - {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
   - {fileID: 1056779427979464144, guid: a5951b777a75b2f4eaac1dec8fd18d6c, type: 3}
-  - {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  - {fileID: 7482667652216324306, guid: ffb8efc13df201e4b99b6051d5efdcd0, type: 3}
   - {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   - {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   contornosFases:
@@ -230,7 +230,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &2854257277852047839
 GameObject:
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+  m_Sprite: {fileID: 5737056317920266090, guid: c9215bfc5c5b40d4bb9fbcc7cbf93540, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

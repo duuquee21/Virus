@@ -6,6 +6,7 @@ public class FloatingCellMovement : MonoBehaviour
 {
     public float velocidadBase = 5f;
     public float fuerzaEmpuje = 10f; // Ajusta esto para que el Virus lo sienta
+    public float fuerzaEmpujeCelulas = 15f; // Fuerza de empuje al chocar con paredes
     private Vector2 direccion;
     private Rigidbody2D rb;
     private Material mat;
@@ -99,7 +100,8 @@ public class FloatingCellMovement : MonoBehaviour
             // Si es un choque con una pared, la vibración es negativa
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
-            if (rbOtro != null)
+            
+            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f)
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);

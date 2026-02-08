@@ -66,13 +66,9 @@ public class Movement : MonoBehaviour
     {
         if (otro.CompareTag("Pared"))
         {
-            // Calculamos la velocidad actual del Rigidbody
+            // 1. Cálculo de velocidad e Infección
             float velocidadChoque = rb.linearVelocity.magnitude;
 
-            // DEBUG: Esto aparecerá en tu consola para que calibres el número
-            Debug.Log($"<color=white>Velocidad de impacto:</color> <b>{velocidadChoque:F2}</b>");
-
-            // Si la velocidad es mayor a 5 y es un choque físico (estaEmpujado)
             if (velocidadChoque > 5f)
             {
                 PersonaInfeccion scriptInfeccion = GetComponent<PersonaInfeccion>();
@@ -82,13 +78,21 @@ public class Movement : MonoBehaviour
                 }
             }
 
-            // --- Lógica de rebote normal ---
+            // 2. Cálculo de la Normal del choque
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
+
+            // --- SOLUCIÓN AL BLOQUEO ---
+            // Movemos el objeto un poquito hacia afuera de la pared para que no se "entierre"
+            // 0.1f es suficiente para sacarlo del área de colisión
+            transform.position = (Vector2)transform.position + (normal * 0.1f);
+
+            // 3. Lógica de rebote
             direccion = Vector2.Reflect(direccion, normal).normalized;
 
             if (estaEmpujado)
             {
+                // Reflejamos la velocidad para que salga rebotado físicamente
                 rb.linearVelocity = Vector2.Reflect(rb.linearVelocity, normal);
             }
         }

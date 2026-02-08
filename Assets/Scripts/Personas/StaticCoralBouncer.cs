@@ -5,7 +5,10 @@ public class StaticBumper : MonoBehaviour
 {
     [Header("Configuración de Fuerzas")]
     public float fuerzaReboteBola = 1.0f; // Multiplicador para el rebote de la bola
-    public float fuerzaEmpujeObjetos = 15f; // Fuerza de empuje para el Virus/Enemigos
+    public float velocidadBase = 5f;
+    public float fuerzaEmpuje = 10f; // Ajusta esto para que el Virus lo sienta
+    public float fuerzaEmpujeCelulas = 15f; // Fuerza de empuje al chocar con paredes
+
 
 
     private Material mat;
@@ -46,7 +49,6 @@ public class StaticBumper : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otro)
     {
-
         if (otro.CompareTag("InfectionZone")) return;
 
         Vector2 puntoGlobal = otro.ClosestPoint(transform.position);
@@ -59,74 +61,41 @@ public class StaticBumper : MonoBehaviour
             if (!slotOcupado[i]) { slot = i; break; }
         }
 
-        if (otro.CompareTag("Virus") )
+        if (otro.CompareTag("Virus"))
         {
             // Si es un choque con otro virus, la vibración es positiva
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+
+            Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
+            if (rbOtro != null)
+            {
+                Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
+                rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
+            }
             if (audioSource != null && reboteVirusClip != null)
             {
                 audioSource.PlayOneShot(reboteVirusClip);
             }
+        } 
+        else if (otro.CompareTag("Coral"))
+        {
+            if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
         }
         else
         {
             // Si es un choque con una pared, la vibración es negativa
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
-        }
+            Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
 
-
-        // 1. Intentamos obtener el Rigidbody2D del objeto que entró
-
-        Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
-
-
-        if (rbOtro != null)
-
-        {
-
-            // Calculamos la dirección desde el centro de este objeto hacia el otro
-
-            Vector2 direccionHaciaAfuera = (otro.transform.position - transform.position).normalized;
-
-            // 2. CASO ESPECIAL: LA BOLA
-
-            // Verificamos si es la bola para que cambie su vector de dirección
-
-            FloatingCellMovement movBola = otro.GetComponent<FloatingCellMovement>();
-
-            if (movBola != null)
-
+            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f)
             {
-                // Calculamos la normal del rebote basada en la posición
-
-                Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
-
-                Vector2 normal = ((Vector2)otro.transform.position - puntoImpacto).normalized;
-
-                // Reflejamos su dirección actual
-
-                Vector2 nuevaDireccion = Vector2.Reflect(movBola.GetDireccion(), normal);
-
-                movBola.CambiarDireccion(nuevaDireccion);
-
-                // Opcional: Le damos un pequeño impulso extra para que no se pegue
-
-                rbOtro.AddForce(direccionHaciaAfuera * fuerzaReboteBola, ForceMode2D.Impulse);
-
-            }
-
-            // 3. RESTO DE OBJETOS (Virus, Enemigos, etc.)
-
-            else
-            {
-                // Aplicamos el empujón físico a cualquier cosa que tenga Rigidbody
-
-                rbOtro.AddForce(direccionHaciaAfuera * fuerzaEmpujeObjetos, ForceMode2D.Impulse);
+                Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
+                rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
             }
         }
     }
 
-       
+
 
     IEnumerator DoJelly(Vector3 localPos, int slot, int signo)
     {

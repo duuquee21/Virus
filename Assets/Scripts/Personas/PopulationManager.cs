@@ -42,11 +42,11 @@ public class PopulationManager : MonoBehaviour
         if (index >= 0 && index < personPrefabs.Length)
         {
             currentPrefab = personPrefabs[index];
-            Debug.Log("<color=green>PopulationManager:</color> Prefab cambiado a: " + currentPrefab.name);
+          //  Debug.Log("<color=green>PopulationManager:</color> Prefab cambiado a: " + currentPrefab.name);
         }
         else
         {
-            Debug.LogWarning("Índice de prefab fuera de rango.");
+          //  Debug.LogWarning("Índice de prefab fuera de rango.");
         }
     }
 
@@ -136,7 +136,7 @@ public class PopulationManager : MonoBehaviour
             if (infeccion != null)
             {
                 infeccion.MakeShiny();
-                Debug.Log("<color=yellow>¡Ha nacido un Shiny!</color> Persona nº: " + personsSpawnedToday);
+              //  Debug.Log("<color=yellow>¡Ha nacido un Shiny!</color> Persona nº: " + personsSpawnedToday);
             }
         }
     }
