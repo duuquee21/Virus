@@ -9,6 +9,7 @@ TagManager:
   - InfectionZone
   - Pared
   - Coral
+  - SpawnArea
   layers:
   - Default
   - TransparentFX
