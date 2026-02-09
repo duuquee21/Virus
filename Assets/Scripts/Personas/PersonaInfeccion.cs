@@ -211,28 +211,55 @@ public class PersonaInfeccion : MonoBehaviour
             {
                 float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
 
+                // Solo reacciona si el atacante viene con suficiente velocidad
                 if (velocidadImpacto > 6.5f)
                 {
-                    // Lógica de probabilidad de Carambola
-                    if (Random.value <= Guardado.instance.probabilidadCarambola)
+                    // --- 1. CARAMBOLA SUPREMA (Transferencia + Rebote Opuesto) ---
+                    if (Guardado.instance.carambolaSupremaActiva)
+                    {
+                        Vector2 velocidadOriginal = rbAtacante.linearVelocity;
+
+                        // El atacante REBOTA hacia atrás con la misma fuerza
+                        rbAtacante.linearVelocity = -velocidadOriginal;
+
+                        // Tú sales disparado hacia ADELANTE con la fuerza original
+                        rb.linearVelocity = velocidadOriginal;
+
+                        IntentarAvanzarFasePorChoque();
+                        StartCoroutine(StunPersona(0.5f));
+                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.8f));
+
+                        Debug.Log("Carambola SUPREMA: Acción y Reacción activa.");
+                    }
+                    // --- 2. CARAMBOLA PRO (Transferencia + Atacante se para) ---
+                    else if (Guardado.instance.carambolaProActiva)
+                    {
+                        Vector2 inerciaRecibida = rbAtacante.linearVelocity;
+
+                        rbAtacante.linearVelocity = Vector2.zero;
+                        rbAtacante.angularVelocity = 0f;
+
+                        rb.linearVelocity = inerciaRecibida;
+
+                        IntentarAvanzarFasePorChoque();
+                        StartCoroutine(StunPersona(0.5f));
+                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.8f));
+
+                        Debug.Log("Carambola PRO: Inercia transferida.");
+                    }
+                    // --- 3. REBOTE NORMAL (Probabilidad) ---
+                    else if (Random.value <= Guardado.instance.probabilidadCarambola)
                     {
                         IntentarAvanzarFasePorChoque();
                         if (Guardado.instance.paredInfectivaActiva) scriptAtacante.IntentarAvanzarFasePorChoque();
-                    }
 
-                    // Dirección de separación
-                    Vector2 dirSeparacion = (transform.position - other.transform.position).normalized;
+                        Vector2 dirSeparacion = (transform.position - other.transform.position).normalized;
+                        rb.linearVelocity = dirSeparacion * (velocidadImpacto * 0.5f);
+                        rbAtacante.linearVelocity = -dirSeparacion * (velocidadImpacto * 0.5f);
 
-                    // Efecto en nosotros
-                    if (rb != null)
-                    {
-                        rb.linearVelocity = dirSeparacion * 0.8f;
                         StartCoroutine(StunPersona(0.7f));
+                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.7f));
                     }
-
-                    // Efecto en el atacante
-                    rbAtacante.linearVelocity = -dirSeparacion * 0.8f;
-                    scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.7f));
                 }
             }
         }

@@ -30,7 +30,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
-        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva,
+        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva, CarambolaPro, CarambolaSuprema
     }
 
     [Header("Datos")]
@@ -263,6 +263,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // En SkillNode.cs, dentro del switch de efectos:
             case SkillEffectType.ParedInfectiva:
                 Guardado.instance.ActivarParedInfectiva();
+                break;
+            case SkillEffectType.CarambolaPro:
+                Guardado.instance.ActivarCarambolaPro();
+                break;
+            case SkillEffectType.CarambolaSuprema:
+                Guardado.instance.ActivarCarambolaSuprema();
                 break;
             default:
                 Debug.Log("Este efecto ha sido eliminado o no está implementado.");

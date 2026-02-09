@@ -22,6 +22,10 @@ public class Guardado : MonoBehaviour
     public bool keepZonesUnlocked = false;
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
+    [Header("Habilidad Especial")]
+    public bool carambolaProActiva = false;
+    public bool carambolaSupremaActiva = false; // <--- NUEVA VARIABLE
+
 
 
     [Header("Habilidades de Choque")]
@@ -135,6 +139,18 @@ public class Guardado : MonoBehaviour
     public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
+
+    public void ActivarCarambolaPro()
+    {
+        carambolaProActiva = true;
+        SaveData();
+        Debug.Log("<color=cyan>Carambola PRO Activada: Inercia cinética habilitada.</color>");
+    }
+    public void ActivarCarambolaSuprema()
+    {
+        carambolaSupremaActiva = true;
+        SaveData();
+    }
 
     // --- CORRECCIÓN AQUÍ: AÑADIDO SaveData() ---
     public void SetDuplicateProbability(float amount)
