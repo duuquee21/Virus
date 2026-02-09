@@ -7,7 +7,7 @@ public class PlanetCrontrollator : MonoBehaviour
     public float health = 100f;
     public float damageAmount = 1;
     public Image healthBar; // Arrastra aquí el Fill de tu barra de vida
-    
+
 
 
 
@@ -18,10 +18,11 @@ public class PlanetCrontrollator : MonoBehaviour
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             PersonaInfeccion scriptInfeccion = collision.gameObject.GetComponent<PersonaInfeccion>();
 
-            if (scriptInfeccion != null&&scriptInfeccion.alreadyInfected)
+            // Si ya está infectado, lógica de daño explosivo y destrucción (se mantiene igual)
+            if (scriptInfeccion != null && scriptInfeccion.alreadyInfected)
             {
                 InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
-                TakeDamage(damageAmount*2);
+                TakeDamage(damageAmount * 2);
                 Destroy(collision.gameObject);
                 return;
             }
@@ -30,23 +31,23 @@ public class PlanetCrontrollator : MonoBehaviour
             {
                 float fuerzaImpacto = rb.linearVelocity.magnitude;
 
+                // Solo actuamos si el impacto es suficientemente fuerte
                 if (fuerzaImpacto > 6.5f)
                 {
-                    // REGLA: Si la persona ya es fase máxima, NO quitamos vida
-                    if (scriptInfeccion.EsFaseMaxima())
+                    // --- LÓGICA DE DAÑO AL PLANETA (Se mantiene siempre) ---
+                    TakeDamage(damageAmount);
+
+                    // --- LÓGICA DE HABILIDAD: AVANCE DE FASE ---
+                    // Solo si la habilidad está activa en el guardado, la persona baja de fase al chocar
+                    if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
                     {
-                        TakeDamage(damageAmount);
-                        Debug.Log("<color=green>Impacto de Fase Final: Planeta Protegido.</color>");
+                        scriptInfeccion.IntentarAvanzarFasePorChoque();
+                        Debug.Log("<color=cyan>Habilidad Pared Activa: Persona baja de fase por impacto.</color>");
                     }
                     else
                     {
-                        // Si no es fase máxima, recibe daño normal
-                        TakeDamage(damageAmount);
-                        Debug.Log("<color=red>Impacto Fuerte: Planeta Dañado.</color>" + damageAmount+ health);
+                        Debug.Log("Impacto detectado, pero no tienes la habilidad de 'Paredes Infectivas'.");
                     }
-
-                    // En ambos casos llamamos a la lógica de la persona para que se infecte o avance
-                    scriptInfeccion.IntentarAvanzarFasePorChoque();
                 }
             }
         }

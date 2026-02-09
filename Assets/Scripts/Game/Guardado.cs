@@ -20,8 +20,10 @@ public class Guardado : MonoBehaviour
     public int coinsPerZoneDaily = 0;
     public bool keepUpgradesOnReset = false;
     public bool keepZonesUnlocked = false;
+    [Header("Habilidades de Entorno")]
+    public bool paredInfectivaActiva = false;
 
-    [Header("Habilidades de Choque")]
+
     [Header("Habilidades de Choque")]
     // 0.2 = 20%, 0.4 = 40%, etc.
     public float probabilidadCarambola = 0f;
@@ -140,6 +142,11 @@ public class Guardado : MonoBehaviour
         probabilidadDuplicarChoque = amount;
         SaveData(); // ¡Esto es lo que faltaba!
         Debug.Log("<color=green>Probabilidad de Duplicación guardada:</color> " + amount);
+    }
+    public void ActivarParedInfectiva()
+    {
+        paredInfectivaActiva = true;
+        SaveData();
     }
 
     public void ApplyPermanentInitialUpgrade()
