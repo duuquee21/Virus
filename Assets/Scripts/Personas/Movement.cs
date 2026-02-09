@@ -86,7 +86,7 @@ public class Movement : MonoBehaviour
                 // Calculamos el nuevo vector de rebote
                 Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
 
-                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 5f)
+                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 5f && Guardado.instance.paredInfectivaActiva)
                 {
                     Debug.Log("<color=blue>Rebote de Fase Final: Velocidad Constante Aplicada.</color>");
 

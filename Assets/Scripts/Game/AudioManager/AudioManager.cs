@@ -67,7 +67,7 @@ public class AudioManager : MonoBehaviour
     private IEnumerator FadeTrack(AudioClip newClip)
     {
         float currentTime = 0f;
-        float startVolume = musicSource.volume;
+        float startVolume = 0f;
 
         // Bajar volumen de la fuente (no del mixer)
         while (currentTime < fadeDuration)
@@ -89,6 +89,6 @@ public class AudioManager : MonoBehaviour
             musicSource.volume = Mathf.Lerp(0f, 1f, currentTime / fadeDuration);
             yield return null;
         }
-        musicSource.volume = 1f;
+        musicSource.volume = 0f;
     }
 }
