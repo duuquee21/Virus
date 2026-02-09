@@ -24,8 +24,18 @@ public class Guardado : MonoBehaviour
     public bool paredInfectivaActiva = false;
     [Header("Habilidad Especial")]
     public bool carambolaProActiva = false;
-    public bool carambolaSupremaActiva = false; // <--- NUEVA VARIABLE
-                                                // Dentro de la clase Guardado
+    public bool carambolaSupremaActiva = false;
+
+    [Header("Mejoras de Daño Individuales")]
+    public int dañoExtraCirculo = 0;
+    public int dañoExtraTriangulo = 0;
+    public int dañoExtraCuadrado = 0;
+    public int dañoExtraPentagono = 0;
+    public int dañoExtraHexagono = 0;
+
+    // Ejemplo de método para activar una (repetir para las demás)
+    // <--- NUEVA VARIABLE
+                                                                               // Dentro de la clase Guardado
     public int dañoExtraHabilidad = 0; // 0 por defecto, 1 cuando se compre la mejora
 
     // Opcional: añade esto para que el sistema de habilidades lo active
@@ -90,6 +100,12 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
+        dañoExtraCirculo = 0;
+        dañoExtraTriangulo = 0;
+        dañoExtraCuadrado = 0;
+        dañoExtraPentagono = 0;
+        dañoExtraHexagono = 0;
+
 
         ClearRunState();
         SaveData();
@@ -112,6 +128,14 @@ public class Guardado : MonoBehaviour
 
         // --- GUARDAR PROBABILIDAD ---
         PlayerPrefs.SetFloat("ProbDuplicar", probabilidadDuplicarChoque);
+        PlayerPrefs.SetInt("DmgCirculo", dañoExtraCirculo);
+        PlayerPrefs.SetInt("DmgTriangulo", dañoExtraTriangulo);
+        PlayerPrefs.SetInt("DmgCuadrado", dañoExtraCuadrado);
+        PlayerPrefs.SetInt("DmgPentagono", dañoExtraPentagono);
+        PlayerPrefs.SetInt("DmgHexagono", dañoExtraHexagono);
+        PlayerPrefs.SetInt("CarambolaPro", carambolaProActiva ? 1 : 0);
+        PlayerPrefs.SetInt("CarambolaSuprema", carambolaSupremaActiva ? 1 : 0);
+        PlayerPrefs.SetInt("ParedInfectiva", paredInfectivaActiva ? 1 : 0);
 
         PlayerPrefs.Save();
     }
@@ -130,6 +154,14 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = PlayerPrefs.GetFloat("RadiusMult", 1.0f);
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
+        dañoExtraCirculo = PlayerPrefs.GetInt("DmgCirculo", 0);
+        dañoExtraTriangulo = PlayerPrefs.GetInt("DmgTriangulo", 0);
+        dañoExtraCuadrado = PlayerPrefs.GetInt("DmgCuadrado", 0);
+        dañoExtraPentagono = PlayerPrefs.GetInt("DmgPentagono", 0);
+        dañoExtraHexagono = PlayerPrefs.GetInt("DmgHexagono", 0);
+        carambolaProActiva = PlayerPrefs.GetInt("CarambolaPro", 0) == 1;
+        carambolaSupremaActiva = PlayerPrefs.GetInt("CarambolaSuprema", 0) == 1;
+        paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectiva", 0) == 1;
 
         // --- CARGAR PROBABILIDAD ---
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
@@ -149,6 +181,12 @@ public class Guardado : MonoBehaviour
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
 
+    // Métodos para activar las mejoras desde la tienda
+    public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
+    public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; SaveData(); }
+    public void ActivarDañoExtraCuadrado() { dañoExtraCuadrado = 1; SaveData(); }
+    public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
+    public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarCarambolaPro()
     {
         carambolaProActiva = true;

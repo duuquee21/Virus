@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PlanetCrontrollator : MonoBehaviour
 {
-    public float health = 100f;
-    public float damageAmount = 1;
-    public Image healthBar; // Arrastra aquí el Fill de tu barra de vida
+    [Header("Estadísticas")]
+    public float maxHealth = 100f;
+    private float currentHealth;
 
+    [Header("UI")]
+    public Image healthBar;
 
-
+    void Start()
+    {
+        currentHealth = maxHealth; // Inicializamos con la vida máxima
+        ActualizarUI();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,75 +25,73 @@ public class PlanetCrontrollator : MonoBehaviour
 
             if (scriptInfeccion != null)
             {
-                // OBTENEMOS EL DAÑO SEGÚN LA FORMA (Círculo=5, Triángulo=4, etc.)
-                // Esta función la añadimos en el script PersonaInfeccion abajo
-                float dañoDeEstaFigura = scriptInfeccion.ObtenerDañoTotal();
+                // Obtenemos el daño (Círculo 5, Triángulo 4, etc.)
+                float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
 
                 // CASO 1: YA ESTÁ INFECTADO (Explosión)
                 if (scriptInfeccion.alreadyInfected)
                 {
                     InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
-
-                    // Hace el doble de su daño base al explotar
-                    TakeDamage(dañoDeEstaFigura * 2);
-
+                    TakeDamage(dañoCalculado * 2);
                     Destroy(collision.gameObject);
                     return;
                 }
 
-                // CASO 2: IMPACTO FÍSICO (Persona normal golpeando el planeta)
+                // CASO 2: IMPACTO FÍSICO
                 if (rb != null)
                 {
+                    // IMPORTANTE: Debug para ver si la fuerza es suficiente
                     float fuerzaImpacto = rb.linearVelocity.magnitude;
 
                     if (fuerzaImpacto > 6.5f)
                     {
-                        // Aplicamos el daño correspondiente a su forma
-                        TakeDamage(dañoDeEstaFigura);
+                        TakeDamage(dañoCalculado);
 
-                        // Lógica de Paredes Infectivas (Bajar de fase al chocar)
                         if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
                         {
                             scriptInfeccion.IntentarAvanzarFasePorChoque();
                         }
                     }
+                    else
+                    {
+                        // Si no hace daño, es porque la velocidad es baja
+                        
+                    }
                 }
             }
         }
     }
-    void TakeDamage(float amount)
+
+    public void TakeDamage(float amount)
     {
-        health -= amount;
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Evita vida negativa
 
-        // 4. Actualizamos la interfaz visual (Health Bar)
-        if (healthBar != null)
-        {
-            // Asumiendo que el fillAmount va de 0 a 1 y la vida inicial era 100
-            healthBar.fillAmount = health / 100f;
-        }
+        ActualizarUI();
 
-        Debug.Log("Vida restante: " + health);
+        Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    // --- ACTUALIZA ESTA FUNCIÓN EN PlanetCrontrollator.cs ---
+    void ActualizarUI()
+    {
+        if (healthBar != null)
+        {
+            // Ahora la división siempre es correcta
+            healthBar.fillAmount = currentHealth / maxHealth;
+        }
+    }
 
     void Die()
     {
-        // En lugar de destruir el planeta, avisamos al LevelManager
         if (LevelManager.instance != null)
         {
             LevelManager.instance.NextMapTransition();
         }
-
-        // Desactivamos el script para que no se llame a Die() varias veces por choques extra
         this.enabled = false;
-
-        // Opcional: Podrías desactivar el SpriteRenderer aquí para que "desaparezca" visualmente
-        // GetComponent<SpriteRenderer>().enabled = false;
     }
 }

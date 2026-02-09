@@ -30,7 +30,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
-        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva, CarambolaPro, CarambolaSuprema
+        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva, CarambolaPro, CarambolaSuprema, DmgCirculo,
+        DmgTriangulo,
+        DmgCuadrado,
+        DmgPentagono,
+        DmgHexagono
     }
 
     [Header("Datos")]
@@ -159,6 +163,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Guardado.instance == null) return;
 
+        // Debug general para saber qué nodo se acaba de activar
+        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillName}");
+
         switch (effectType)
         {
             case SkillEffectType.RandomInitialUpgrade: Guardado.instance.AssignRandomInitialUpgrade(); break;
@@ -187,91 +194,62 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.ZoneIncome1000: Guardado.instance.SetZonePassiveIncome(1000); break;
             case SkillEffectType.ZoneIncome5000: Guardado.instance.SetZonePassiveIncome(5000); break;
 
-            case SkillEffectType.MultiplyRadius125:
-                Guardado.instance.SetRadiusMultiplier(1.25f);
-                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
-                break;
-            case SkillEffectType.MultiplyRadius150:
-                Guardado.instance.SetRadiusMultiplier(1.50f);
-                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
-                break;
-            case SkillEffectType.MultiplyRadius200:
-                Guardado.instance.SetRadiusMultiplier(2.00f);
-                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+            case SkillEffectType.MultiplyRadius125: Guardado.instance.SetRadiusMultiplier(1.25f); break;
+            case SkillEffectType.MultiplyRadius150: Guardado.instance.SetRadiusMultiplier(1.50f); break;
+            case SkillEffectType.MultiplyRadius200: Guardado.instance.SetRadiusMultiplier(2.00f); break;
+
+            // --- DEBUGS DE NIVELES (Para los controladores de mejoras) ---
+            case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(2); Debug.Log("Mejora: Radius -> Nivel 2"); break;
+            case SkillEffectType.RadiusLevel3: VirusRadiusController.instance.SetLevel(3); Debug.Log("Mejora: Radius -> Nivel 3"); break;
+            case SkillEffectType.RadiusLevel4: VirusRadiusController.instance.SetLevel(4); Debug.Log("Mejora: Radius -> Nivel 4"); break;
+            case SkillEffectType.RadiusLevel5: VirusRadiusController.instance.SetLevel(5); Debug.Log("Mejora: Radius -> Nivel 5"); break;
+            case SkillEffectType.RadiusLevel6: VirusRadiusController.instance.SetLevel(6); Debug.Log("Mejora: Radius -> Nivel 6"); break;
+
+            case SkillEffectType.SpeedLevel2: SpeedUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Speed -> Nivel 2"); break;
+            case SkillEffectType.SpeedLevel3: SpeedUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Speed -> Nivel 3"); break;
+            case SkillEffectType.SpeedLevel4: SpeedUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Speed -> Nivel 4"); break;
+            case SkillEffectType.SpeedLevel5: SpeedUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Speed -> Nivel 5"); break;
+
+            case SkillEffectType.CapacityLevel2: CapacityUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Capacity -> Nivel 2"); break;
+            case SkillEffectType.CapacityLevel3: CapacityUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Capacity -> Nivel 3"); break;
+            case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Capacity -> Nivel 4"); break;
+            case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Capacity -> Nivel 5"); break;
+            case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Capacity -> Nivel 6"); break;
+
+            // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---
+            // --- DAÑO POR FORMA (CORREGIDO: Fase 0 = Hexágono) ---
+            case SkillEffectType.DmgHexagono:
+                Guardado.instance.dañoExtraHexagono = 1;
+                // Si tienes un array llamado 'dañoPorFase' en Guardado, podrías usar: Guardado.instance.dañoPorFase[0] += 1;
+                Debug.Log("<color=magenta>Dmg Extra:</color> Hexágono activado -> Corresponde a <b>FASE 0</b> (Elemento 0 del Array)");
+                Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.MultiplySpeed125:
-                Guardado.instance.SetSpeedMultiplier(1.25f);
-                if (VirusMovement.instance != null) VirusMovement.instance.ApplySpeedMultiplier();
-                break;
-            case SkillEffectType.MultiplySpeed150:
-                Guardado.instance.SetSpeedMultiplier(1.50f);
-                if (VirusMovement.instance != null) VirusMovement.instance.ApplySpeedMultiplier();
+            case SkillEffectType.DmgPentagono:
+                Guardado.instance.dañoExtraPentagono = 1;
+                Debug.Log("<color=orange>Dmg Extra:</color> Pentágono activado -> Corresponde a <b>FASE 1</b> (Elemento 1 del Array)");
+                Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.InfectSpeed50:
-                Guardado.instance.SetInfectSpeedMultiplier(1.5f);
-                break;
-            case SkillEffectType.InfectSpeed100:
-                Guardado.instance.SetInfectSpeedMultiplier(2.0f);
-                break;
-
-            case SkillEffectType.KeepUpgradesOnResetEffect:
-                Guardado.instance.ActivateKeepUpgrades();
-                break;
-            case SkillEffectType.KeepZonesOnReset:
-                Guardado.instance.ActivateKeepZones();
+            case SkillEffectType.DmgCuadrado:
+                Guardado.instance.dañoExtraCuadrado = 1;
+                Debug.Log("<color=yellow>Dmg Extra:</color> Cuadrado activado -> Corresponde a <b>FASE 2</b> (Elemento 2 del Array)");
+                Guardado.instance.SaveData();
                 break;
 
-            // --- NUEVOS CASOS DE DUPLICACIÓN ---
-            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(0.20f); break;
-            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(0.40f); break;
-            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(0.60f); break;
-            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(0.80f); break;
-            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(1.00f); break;
+            case SkillEffectType.DmgTriangulo:
+                Guardado.instance.dañoExtraTriangulo = 1;
+                Debug.Log("<color=green>Dmg Extra:</color> Triángulo activado -> Corresponde a <b>FASE 3</b> (Elemento 3 del Array)");
+                Guardado.instance.SaveData();
+                break;
 
-            // NIVELES DE MEJORAS
-            case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(2); break;
-            case SkillEffectType.RadiusLevel3: VirusRadiusController.instance.SetLevel(3); break;
-            case SkillEffectType.RadiusLevel4: VirusRadiusController.instance.SetLevel(4); break;
-            case SkillEffectType.RadiusLevel5: VirusRadiusController.instance.SetLevel(5); break;
-            case SkillEffectType.RadiusLevel6: VirusRadiusController.instance.SetLevel(6); break;
-            case SkillEffectType.SpeedLevel2: SpeedUpgradeController.instance.SetLevel(2); break;
-            case SkillEffectType.SpeedLevel3: SpeedUpgradeController.instance.SetLevel(3); break;
-            case SkillEffectType.SpeedLevel4: SpeedUpgradeController.instance.SetLevel(4); break;
-            case SkillEffectType.SpeedLevel5: SpeedUpgradeController.instance.SetLevel(5); break;
-            case SkillEffectType.CapacityLevel2: CapacityUpgradeController.instance.SetLevel(2); break;
-            case SkillEffectType.CapacityLevel3: CapacityUpgradeController.instance.SetLevel(3); break;
-            case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(4); break;
-            case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(5); break;
-            case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(6); break;
-            case SkillEffectType.TimeLevel2: TimeUpgradeController.instance.SetLevel(2); break;
-            case SkillEffectType.TimeLevel3: TimeUpgradeController.instance.SetLevel(3); break;
-            case SkillEffectType.TimeLevel4: TimeUpgradeController.instance.SetLevel(4); break;
-            case SkillEffectType.TimeLevel5: TimeUpgradeController.instance.SetLevel(5); break;
-            case SkillEffectType.TimeLevel6: TimeUpgradeController.instance.SetLevel(6); break;
-            case SkillEffectType.InfectionSpeedLevel2: InfectionSpeedUpgradeController.instance.SetLevel(2); break;
-            case SkillEffectType.InfectionSpeedLevel3: InfectionSpeedUpgradeController.instance.SetLevel(3); break;
-            case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(4); break;
-            case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(5); break;
-            case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(6); break;
-            case SkillEffectType.Carambola20: Guardado.instance.SetProbabilidadCarambola(0.2f); break;
-            case SkillEffectType.Carambola40: Guardado.instance.SetProbabilidadCarambola(0.40f); break;
-            case SkillEffectType.Carambola60: Guardado.instance.SetProbabilidadCarambola(0.60f); break;
-            case SkillEffectType.Carambola80: Guardado.instance.SetProbabilidadCarambola(0.80f); break;
-            case SkillEffectType.Carambola100: Guardado.instance.SetProbabilidadCarambola(1.00f); break;
-            // En SkillNode.cs, dentro del switch de efectos:
-            case SkillEffectType.ParedInfectiva:
-                Guardado.instance.ActivarParedInfectiva();
-                break;
-            case SkillEffectType.CarambolaPro:
-                Guardado.instance.ActivarCarambolaPro();
-                break;
-            case SkillEffectType.CarambolaSuprema:
-                Guardado.instance.ActivarCarambolaSuprema();
+            case SkillEffectType.DmgCirculo:
+                Guardado.instance.dañoExtraCirculo = 1;
+                Debug.Log("<color=cyan>Dmg Extra:</color> Círculo activado -> Corresponde a <b>FASE 4</b> (Elemento 4 del Array)");
+                Guardado.instance.SaveData();
                 break;
             default:
-                Debug.Log("Este efecto ha sido eliminado o no está implementado.");
+                Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
         }
     }
