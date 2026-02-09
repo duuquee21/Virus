@@ -42,10 +42,16 @@ public class PersonaInfeccion : MonoBehaviour
     private Transform transformInfector;
     private Movement movementScript;
 
+    // --- REFERENCIA QUE FALTABA ---
+    private Rigidbody2D rb;
+
     public ParticleSystem particulasDeFuego;
+
     void Start()
     {
         movementScript = GetComponent<Movement>();
+        rb = GetComponent<Rigidbody2D>(); // Asignación del Rigidbody
+
         if (spritePersona == null) spritePersona = GetComponent<SpriteRenderer>();
         originalColor = spritePersona.color;
 
@@ -57,11 +63,7 @@ public class PersonaInfeccion : MonoBehaviour
 
     void Update()
     {
-        if (alreadyInfected)
-        {
- 
-            return;
-        }
+        if (alreadyInfected) return;
 
         float resistenciaActual = (faseActual < resistenciaPorFase.Length) ? resistenciaPorFase[faseActual] : 1f;
         float tiempoNecesarioEstaFase = globalInfectTime * resistenciaActual;
@@ -88,8 +90,6 @@ public class PersonaInfeccion : MonoBehaviour
         {
             IntentarAvanzarFase();
         }
-
-        
     }
 
     void ActualizarProgresoBarras(float progress)
@@ -114,8 +114,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
-    // --- NUEVA FUNCIÓN PARA EL CLON ---
-    public void EstablecerFaseDirecta(int fase)
+    public void EstablecerFaseDirecta(int fase)
     {
         faseActual = fase;
         currentInfectionTime = 0f;
@@ -158,12 +157,12 @@ public class PersonaInfeccion : MonoBehaviour
 
     void BecomeInfected()
     {
-       
         alreadyInfected = true;
-        infectionBarCanvas.SetActive(false);
+        if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
         if (InfectionFeedback.instance != null)
             InfectionFeedback.instance.PlayEffect(transform.position, originalColor);
+
         particulasDeFuego?.Play();
 
         if (LevelManager.instance != null) LevelManager.instance.RegisterInfection();
@@ -196,47 +195,68 @@ public class PersonaInfeccion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Lógica del Virus (InfectionZone) - Se mantiene igual
         if (!alreadyInfected && other.CompareTag("InfectionZone"))
         {
             isInsideZone = true;
             transformInfector = other.transform;
         }
-
-        // Lógica de Carambola con Probabilidad
         else if (!alreadyInfected && other.CompareTag("Persona"))
         {
             if (Guardado.instance == null) return;
 
-            // --- CALCULAR PROBABILIDAD ---
-            float probabilidad = Guardado.instance.probabilidadCarambola;
-            float dado = Random.value; // Saca un número entre 0.0 y 1.0
+            Rigidbody2D rbAtacante = other.GetComponent<Rigidbody2D>();
+            PersonaInfeccion scriptAtacante = other.GetComponent<PersonaInfeccion>();
 
-            // Solo si el dado es menor o igual a nuestra probabilidad, se activa
-            if (dado <= probabilidad)
+            if (rbAtacante != null && scriptAtacante != null)
             {
-                PersonaInfeccion otraPersona = other.GetComponent<PersonaInfeccion>();
-                Rigidbody2D rbEnemigo = other.GetComponent<Rigidbody2D>();
+                float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
 
-                // Verificamos que la otra persona tenga velocidad (que sea ella la que nos golpea)
-                if (otraPersona != null && rbEnemigo != null && rbEnemigo.linearVelocity.magnitude > 1.5f)
+                if (velocidadImpacto > 6.5f)
                 {
-                    Debug.Log($"<color=green>¡ÉXITO CARAMBOLA!</color> Prob: {probabilidad * 100}% | Dado: {dado:F2}");
+                    // Lógica de probabilidad de Carambola
+                    if (Random.value <= Guardado.instance.probabilidadCarambola)
+                    {
+                        IntentarAvanzarFasePorChoque();
+                        if (Guardado.instance.paredInfectivaActiva) scriptAtacante.IntentarAvanzarFasePorChoque();
+                    }
 
-                    IntentarAvanzarFasePorChoque();
+                    // Dirección de separación
+                    Vector2 dirSeparacion = (transform.position - other.transform.position).normalized;
 
-                    // Aplicamos empuje para que la cadena siga
-                    Vector2 dirEmpuje = (transform.position - other.transform.position).normalized;
-                    movementScript?.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
+                    // Efecto en nosotros
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = dirSeparacion * 0.8f;
+                        StartCoroutine(StunPersona(0.7f));
+                    }
+
+                    // Efecto en el atacante
+                    rbAtacante.linearVelocity = -dirSeparacion * 0.8f;
+                    scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.7f));
                 }
-            }
-            else if (probabilidad > 0)
-            {
-                // Este log es solo para que veas cuando falla por probabilidad
-                Debug.Log($"<color=red>Fallo Carambola:</color> El dado ({dado:F2}) fue mayor que la probabilidad ({probabilidad:F2})");
             }
         }
     }
+
+    public IEnumerator StunPersona(float tiempo)
+    {
+        if (movementScript != null && rb != null)
+        {
+            // 1. Desactivamos la IA de movimiento
+            movementScript.enabled = false;
+
+            // 2. Aplicamos solo el giro físico
+            rb.angularVelocity = 720f;
+
+            yield return new WaitForSeconds(tiempo);
+
+            // 3. Restauramos físicas y movimiento
+            rb.angularVelocity = 0f;
+            transform.rotation = Quaternion.identity; // Se endereza
+            movementScript.enabled = true; // Vuelve a caminar
+        }
+    }
+
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
 
     private IEnumerator InfectionColorSequence()
@@ -253,40 +273,26 @@ public class PersonaInfeccion : MonoBehaviour
         spritePersona.color = infectedColor;
     }
 
-
     public void IntentarAvanzarFasePorChoque()
     {
         if (alreadyInfected) return;
 
-        // --- LÓGICA DE HABILIDAD CON DEBUGS ---
-        if (Guardado.instance != null)
+        if (Guardado.instance != null)
         {
             float probActual = Guardado.instance.probabilidadDuplicarChoque;
-            float dado = Random.value; // Tira un dado entre 0.0 y 1.0
-
-            Debug.Log($"<color=cyan>[Habilidad Duplicar]</color> Probabilidad: {probActual * 100}% | Dado sacado: {dado:F2}");
+            float dado = Random.value;
 
             if (dado <= probActual)
             {
                 PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
                 if (pm != null)
                 {
-                    Debug.Log("<color=magenta><b>¡ÉXITO!</b></color> Duplicando persona en fase: " + faseActual);
                     pm.InstanciarCopia(transform.position, faseActual, this.gameObject);
                 }
             }
-            else
-            {
-                Debug.Log("<color=red>Fallo:</color> El dado fue mayor que la probabilidad.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró la instancia de Guardado para verificar la probabilidad.");
         }
 
-        // --- LÓGICA NORMAL DE AVANCE ---
-        if (faseActual < fasesSprites.Length - 1)
+        if (faseActual < fasesSprites.Length - 1)
         {
             if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
                 LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
