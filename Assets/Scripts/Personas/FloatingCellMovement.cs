@@ -91,9 +91,19 @@ public class FloatingCellMovement : MonoBehaviour
             Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
             direccion = Vector2.Reflect(direccion, normal).normalized;
         }
-        else if (otro.CompareTag("Coral"))
+        else if (otro.CompareTag("Coral") ) // Añade el tag que use tu StaticBumper
         {
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
+
+            // CALCULAR EL REBOTE
+            // Obtenemos la normal del choque
+            Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
+
+            // Reflejamos la dirección actual usando la normal de la superficie
+            direccion = Vector2.Reflect(direccion, normal).normalized;
+
+            // Opcional: Pequeño empuje para evitar que se quede pegado
+            rb.position += direccion * 0.1f;
         }
         else
         {

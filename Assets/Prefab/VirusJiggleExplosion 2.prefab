@@ -4907,4 +4907,4 @@ MonoBehaviour:
   offset: {x: 0.1, y: -0.1, z: 0}
   shadowColor: {r: 0, g: 0, b: 0, a: 0.92156863}
   sortingLayerName: Default
-  shadowSortingOrder: -1
+  shadowSortingOrder: 10
