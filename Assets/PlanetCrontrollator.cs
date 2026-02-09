@@ -18,35 +18,39 @@ public class PlanetCrontrollator : MonoBehaviour
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             PersonaInfeccion scriptInfeccion = collision.gameObject.GetComponent<PersonaInfeccion>();
 
-            // Si ya está infectado, lógica de daño explosivo y destrucción (se mantiene igual)
-            if (scriptInfeccion != null && scriptInfeccion.alreadyInfected)
+            if (scriptInfeccion != null)
             {
-                InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
-                TakeDamage(damageAmount * 2);
-                Destroy(collision.gameObject);
-                return;
-            }
+                // OBTENEMOS EL DAÑO SEGÚN LA FORMA (Círculo=5, Triángulo=4, etc.)
+                // Esta función la añadimos en el script PersonaInfeccion abajo
+                float dañoDeEstaFigura = scriptInfeccion.ObtenerDañoTotal();
 
-            if (rb != null && scriptInfeccion != null)
-            {
-                float fuerzaImpacto = rb.linearVelocity.magnitude;
-
-                // Solo actuamos si el impacto es suficientemente fuerte
-                if (fuerzaImpacto > 6.5f)
+                // CASO 1: YA ESTÁ INFECTADO (Explosión)
+                if (scriptInfeccion.alreadyInfected)
                 {
-                    // --- LÓGICA DE DAÑO AL PLANETA (Se mantiene siempre) ---
-                    TakeDamage(damageAmount);
+                    InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
 
-                    // --- LÓGICA DE HABILIDAD: AVANCE DE FASE ---
-                    // Solo si la habilidad está activa en el guardado, la persona baja de fase al chocar
-                    if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
+                    // Hace el doble de su daño base al explotar
+                    TakeDamage(dañoDeEstaFigura * 2);
+
+                    Destroy(collision.gameObject);
+                    return;
+                }
+
+                // CASO 2: IMPACTO FÍSICO (Persona normal golpeando el planeta)
+                if (rb != null)
+                {
+                    float fuerzaImpacto = rb.linearVelocity.magnitude;
+
+                    if (fuerzaImpacto > 6.5f)
                     {
-                        scriptInfeccion.IntentarAvanzarFasePorChoque();
-                        Debug.Log("<color=cyan>Habilidad Pared Activa: Persona baja de fase por impacto.</color>");
-                    }
-                    else
-                    {
-                        Debug.Log("Impacto detectado, pero no tienes la habilidad de 'Paredes Infectivas'.");
+                        // Aplicamos el daño correspondiente a su forma
+                        TakeDamage(dañoDeEstaFigura);
+
+                        // Lógica de Paredes Infectivas (Bajar de fase al chocar)
+                        if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
+                        {
+                            scriptInfeccion.IntentarAvanzarFasePorChoque();
+                        }
                     }
                 }
             }
