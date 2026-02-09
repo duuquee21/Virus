@@ -13,15 +13,20 @@ public class CamaraLookAhead : MonoBehaviour
     public bool activarLookAhead = true;
     public float lookAheadDistance = 3f; 
     public float lookAheadSpeed = 2f;    
-    public float movementThreshold = 0.1f; 
+    public float movementThreshold = 0.1f;
 
-    
+    [Header("Limites Map")]
+    public BoxCollider2D mapBounds;
+
+
     private Vector3 currentVelocity; 
     private Vector3 lookAheadPos;    
-    private Vector3 lastTargetPos;   
+    private Vector3 lastTargetPos;
+    private Camera cam;
 
     void Start()
     {
+        cam = GetComponent<Camera>();
         if (target != null)
         {
             lastTargetPos = target.position;
@@ -65,10 +70,28 @@ public class CamaraLookAhead : MonoBehaviour
         }
 
       
-        Vector3 finalPos = targetBasicPos + lookAheadPos;
+        Vector3 desiredPos = targetBasicPos + lookAheadPos;
 
-        
-        transform.position = Vector3.SmoothDamp(transform.position, finalPos, ref currentVelocity, smoothTime);
+        //aplicar los limites
+
+        if (mapBounds != null)
+        {
+            float camHeight = cam.orthographicSize;
+            float camWidth = camHeight * cam.aspect;
+
+            Bounds b = mapBounds.bounds;
+
+            float minX = b.min.x + camWidth;
+            float maxX = b.max.x -  camWidth;
+            float minY = b.min.y + camHeight;
+            float maxY = b.max.y - camHeight;
+
+            // restringir X e Y 
+
+            desiredPos.x = Mathf.Clamp(desiredPos.x, minX, maxX);
+            desiredPos.y = Mathf.Clamp(desiredPos.y, minY, maxY);
+        }
+        transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref currentVelocity, smoothTime);
 
        
         lastTargetPos = target.position;
