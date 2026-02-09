@@ -17,6 +17,11 @@ public class PersonaInfeccion : MonoBehaviour
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
+    [Header("Ajustes de Daño (Predeterminado)")]
+    [Header("Ajustes de Daño")]
+    // Este es el array que te faltaba declarar:
+    public float[] dañoPorFasePredeterminado = { 5f, 4f, 3f, 2f, 1f };
+
 
     [Header("Referencias Visuales")]
     public SpriteRenderer spritePersona;
@@ -183,6 +188,21 @@ public class PersonaInfeccion : MonoBehaviour
                     fillingBarImages[i].sprite = contornosFases[i];
             }
         }
+    }
+    public float ObtenerDañoTotal()
+    {
+        // 1. Obtenemos el daño base según la fase (0=Círculo... 4=Hexágono)
+        float dañoBase = (faseActual < dañoPorFasePredeterminado.Length) ? dañoPorFasePredeterminado[faseActual] : 1f;
+
+        // 2. Sumamos el bono de la habilidad si existe en el Guardado
+        int bonoHabilidad = 0;
+        if (Guardado.instance != null)
+        {
+            // Esta variable la creas en Guardado.cs cuando compres la mejora
+            bonoHabilidad = Guardado.instance.dañoExtraHabilidad;
+        }
+
+        return dañoBase + bonoHabilidad;
     }
 
     private IEnumerator FlashCambioFase()

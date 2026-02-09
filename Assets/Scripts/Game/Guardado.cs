@@ -25,6 +25,15 @@ public class Guardado : MonoBehaviour
     [Header("Habilidad Especial")]
     public bool carambolaProActiva = false;
     public bool carambolaSupremaActiva = false; // <--- NUEVA VARIABLE
+                                                // Dentro de la clase Guardado
+    public int dañoExtraHabilidad = 0; // 0 por defecto, 1 cuando se compre la mejora
+
+    // Opcional: añade esto para que el sistema de habilidades lo active
+    public void ActivarMejoraDaño()
+    {
+        dañoExtraHabilidad = 1;
+        SaveData(); // Si tienes un método para guardar
+    }
 
 
 
