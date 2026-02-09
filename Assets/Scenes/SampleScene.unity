@@ -12580,7 +12580,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4762b76f5504f0449635a2384d40b94, type: 3}
   m_Name: 
@@ -23416,9 +23416,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationManager
   personPrefabs:
+  - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
   - {fileID: 721460322803742226, guid: e03f34b674809684eb98b1b7fd010be1, type: 3}
   - {fileID: 721460322803742226, guid: f9037910fa7c4c941bf89a55919f1636, type: 3}
-  - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
   - {fileID: 721460322803742226, guid: 943c7809a43780a47a4ff80b9a80719b, type: 3}
   - {fileID: 721460322803742226, guid: 3675eacfc16703444a65af482e9b7e05, type: 3}
   spawnInterval: 3
@@ -26759,8 +26759,8 @@ MonoBehaviour:
   continueButton: {fileID: 274989555}
   continueInfoText: {fileID: 1505891112}
   mapList:
-  - {fileID: 5809081172215269369}
   - {fileID: 1562793253}
+  - {fileID: 5809081172215269369}
   - {fileID: 553569673}
   virusPlayer: {fileID: 1129471492}
   virusMovementScript: {fileID: 1129471498}
@@ -46303,6 +46303,18 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1534932859}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1686978979045989572, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0057138
