@@ -196,10 +196,45 @@ public class PersonaInfeccion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Lógica del Virus (InfectionZone) - Se mantiene igual
         if (!alreadyInfected && other.CompareTag("InfectionZone"))
         {
             isInsideZone = true;
             transformInfector = other.transform;
+        }
+
+        // Lógica de Carambola con Probabilidad
+        else if (!alreadyInfected && other.CompareTag("Persona"))
+        {
+            if (Guardado.instance == null) return;
+
+            // --- CALCULAR PROBABILIDAD ---
+            float probabilidad = Guardado.instance.probabilidadCarambola;
+            float dado = Random.value; // Saca un número entre 0.0 y 1.0
+
+            // Solo si el dado es menor o igual a nuestra probabilidad, se activa
+            if (dado <= probabilidad)
+            {
+                PersonaInfeccion otraPersona = other.GetComponent<PersonaInfeccion>();
+                Rigidbody2D rbEnemigo = other.GetComponent<Rigidbody2D>();
+
+                // Verificamos que la otra persona tenga velocidad (que sea ella la que nos golpea)
+                if (otraPersona != null && rbEnemigo != null && rbEnemigo.linearVelocity.magnitude > 1.5f)
+                {
+                    Debug.Log($"<color=green>¡ÉXITO CARAMBOLA!</color> Prob: {probabilidad * 100}% | Dado: {dado:F2}");
+
+                    IntentarAvanzarFasePorChoque();
+
+                    // Aplicamos empuje para que la cadena siga
+                    Vector2 dirEmpuje = (transform.position - other.transform.position).normalized;
+                    movementScript?.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
+                }
+            }
+            else if (probabilidad > 0)
+            {
+                // Este log es solo para que veas cuando falla por probabilidad
+                Debug.Log($"<color=red>Fallo Carambola:</color> El dado ({dado:F2}) fue mayor que la probabilidad ({probabilidad:F2})");
+            }
         }
     }
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
@@ -217,6 +252,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
         spritePersona.color = infectedColor;
     }
+
 
     public void IntentarAvanzarFasePorChoque()
     {
