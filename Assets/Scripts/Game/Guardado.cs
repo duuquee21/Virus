@@ -21,6 +21,17 @@ public class Guardado : MonoBehaviour
     public bool keepUpgradesOnReset = false;
     public bool keepZonesUnlocked = false;
 
+    [Header("Habilidades de Choque")]
+    [Header("Habilidades de Choque")]
+    // 0.2 = 20%, 0.4 = 40%, etc.
+    public float probabilidadCarambola = 0f;
+
+
+
+    // Recuerda añadir PlayerPrefs.GetFloat y SetFloat para "ProbCarambola" 
+    // en tus métodos LoadData y SaveData como hiciste con la otra probabilidad.
+
+
     // --- NUEVA VARIABLE ---
     [Header("Habilidad Especial")]
     public float probabilidadDuplicarChoque = 0f;
@@ -174,6 +185,12 @@ public class Guardado : MonoBehaviour
         int coins = PlayerPrefs.GetInt("Run_Coins", 0);
         return "Modo Infinito - Monedas: " + coins;
     }
+    public void SetProbabilidadCarambola(float valor)
+    {
+        probabilidadCarambola = valor;
+        SaveData();
+    }
+
 
     public void ResetAllProgress()
     {

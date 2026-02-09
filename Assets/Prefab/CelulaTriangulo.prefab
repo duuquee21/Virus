@@ -113,6 +113,13 @@ MonoBehaviour:
   - {fileID: -995702870920561920, guid: c13c5b8ac0efab041a9cb2ef9aa5e9fd, type: 3}
   - {fileID: 1780699529462240134, guid: cc296ed3e5d6bda4da3444708cbdc7d8, type: 3}
   coloresFases: []
+  resistenciaPorFase:
+  - 1
+  - 1.2
+  - 1.5
+  - 1.8
+  - 2.2
+  monedasPorFase: 0600000005000000040000000300000000000000
   spritePersona: {fileID: 8087179694804657894}
   fillingBarImages:
   - {fileID: 1237082774850512365}
@@ -120,13 +127,12 @@ MonoBehaviour:
   infectionBarCanvas: {fileID: 3615576847840162509}
   colorCargaInicial: {r: 1, g: 1, b: 1, a: 1}
   colorCargaFinal: {r: 1, g: 1, b: 1, a: 1}
-  monedasPorFase: 0600000005000000040000000300000000000000
   flashDuration: 0.05
   fadeDuration: 0.25
   infectedColor: {r: 1, g: 1, b: 1, a: 1}
-  alreadyInfected: 0
   fuerzaRetroceso: 20
   fuerzaRotacion: 12.5
+  alreadyInfected: 0
   particulasDeFuego: {fileID: 675135378299861466}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
