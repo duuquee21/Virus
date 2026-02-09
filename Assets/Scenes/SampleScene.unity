@@ -12582,18 +12582,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4762b76f5504f0449635a2384d40b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1129471497}
-  offset: {x: 0, y: 0, z: -10}
+  offset: {x: 0, y: 0, z: -5}
   smoothTime: 1
   activarLookAhead: 1
   lookAheadDistance: 5
   lookAheadSpeed: 5
   movementThreshold: 0.1
+  mapBounds: {fileID: 1976773731}
 --- !u!1 &520813264
 GameObject:
   m_ObjectHideFlags: 0
@@ -20354,7 +20355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.931885, y: 20.312134}
+  m_AnchoredPosition: {x: 10.931885, y: 20.312012}
   m_SizeDelta: {x: 2479.6333, y: 2565.1697}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858966971
@@ -23418,9 +23419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationManager
   personPrefabs:
+  - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
   - {fileID: 721460322803742226, guid: e03f34b674809684eb98b1b7fd010be1, type: 3}
   - {fileID: 721460322803742226, guid: f9037910fa7c4c941bf89a55919f1636, type: 3}
-  - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
   - {fileID: 721460322803742226, guid: 943c7809a43780a47a4ff80b9a80719b, type: 3}
   - {fileID: 721460322803742226, guid: 3675eacfc16703444a65af482e9b7e05, type: 3}
   spawnInterval: 3
@@ -26934,8 +26935,8 @@ MonoBehaviour:
   continueButton: {fileID: 274989555}
   continueInfoText: {fileID: 1505891112}
   mapList:
-  - {fileID: 5809081172215269369}
   - {fileID: 1562793253}
+  - {fileID: 5809081172215269369}
   - {fileID: 553569673}
   virusPlayer: {fileID: 1129471492}
   virusMovementScript: {fileID: 1129471498}
@@ -42691,6 +42692,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973393721}
   m_CullTransparentMesh: 1
+--- !u!1 &1976773729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976773730}
+  - component: {fileID: 1976773731}
+  m_Layer: 0
+  m_Name: LimitesCamara
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1976773730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976773729}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.94, y: 0.13, z: -0.009601593}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1976773731
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976773729}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.17018127, y: 0.21159887}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 36.103516, y: 25.485378}
+  m_EdgeRadius: 0
 --- !u!1 &1979154198
 GameObject:
   m_ObjectHideFlags: 0
@@ -46614,6 +46693,18 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1534932859}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062089402347356959, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1686978979045989572, guid: 6d41ef2c9b3dd0149b0feab48235a419, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0057138
@@ -47001,3 +47092,4 @@ SceneRoots:
   - {fileID: 190756179}
   - {fileID: 360132466}
   - {fileID: 1939121404}
+  - {fileID: 1976773730}
