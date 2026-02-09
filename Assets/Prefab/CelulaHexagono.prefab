@@ -126,6 +126,12 @@ MonoBehaviour:
   - 1.8
   - 2.2
   monedasPorFase: 0600000005000000040000000300000000000000
+  "da\xF1oPorFasePredeterminado":
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
   spritePersona: {fileID: 8087179694804657894}
   fillingBarImages:
   - {fileID: 7767994401335635738}
