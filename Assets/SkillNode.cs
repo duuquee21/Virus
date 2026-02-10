@@ -225,6 +225,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.CarambolaPro:
                 Guardado.instance.ActivarCarambolaPro();
                 break;
+            case SkillEffectType.CarambolaSuprema:
+                Guardado.instance.ActivarCarambolaSuprema();
+                break;
 
             // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---
             // --- DAÑO POR FORMA (CORREGIDO: Fase 0 = Hexágono) ---

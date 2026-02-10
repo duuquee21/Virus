@@ -567,7 +567,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
-  fuerzaEmpujeObjetos: 15
+  velocidadBase: 5
+  fuerzaEmpuje: 10
+  fuerzaEmpujeCelulas: 15
   audioSource: {fileID: 0}
   reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!212 &7658091068114395835
@@ -735,7 +737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
-  fuerzaEmpujeObjetos: 15
+  velocidadBase: 5
+  fuerzaEmpuje: 10
+  fuerzaEmpujeCelulas: 15
   audioSource: {fileID: 0}
   reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!212 &2491553071743060955
@@ -1065,7 +1069,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
-  fuerzaEmpujeObjetos: 15
+  velocidadBase: 5
+  fuerzaEmpuje: 10
+  fuerzaEmpujeCelulas: 15
   audioSource: {fileID: 0}
   reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!212 &4815935809077248963
@@ -1380,7 +1386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuerzaReboteBola: 1
-  fuerzaEmpujeObjetos: 15
+  velocidadBase: 5
+  fuerzaEmpuje: 10
+  fuerzaEmpujeCelulas: 15
   audioSource: {fileID: 0}
   reboteVirusClip: {fileID: 8300000, guid: d411ea27c44fbcd45a5b973e6fedc14b, type: 3}
 --- !u!212 &77919880795768228

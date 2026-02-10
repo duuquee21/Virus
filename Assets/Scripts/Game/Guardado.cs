@@ -20,12 +20,15 @@ public class Guardado : MonoBehaviour
     public int coinsPerZoneDaily = 0;
     public bool keepUpgradesOnReset = false;
     public bool keepZonesUnlocked = false;
+
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
+
     [Header("Habilidad Especial")]
     public bool carambolaNormalActiva = false;
     public bool carambolaProActiva = false;
     public bool carambolaSupremaActiva = false;
+    public float probabilidadDuplicarChoque = 0f;
 
     [Header("Mejoras de Daño Individuales")]
     public int dañoExtraCirculo = 0;
@@ -33,31 +36,7 @@ public class Guardado : MonoBehaviour
     public int dañoExtraCuadrado = 0;
     public int dañoExtraPentagono = 0;
     public int dañoExtraHexagono = 0;
-
-    // Ejemplo de método para activar una (repetir para las demás)
-    // <--- NUEVA VARIABLE
-                                                                               // Dentro de la clase Guardado
-    public int dañoExtraHabilidad = 0; // 0 por defecto, 1 cuando se compre la mejora
-
-    // Opcional: añade esto para que el sistema de habilidades lo active
-    public void ActivarMejoraDaño()
-    {
-        dañoExtraHabilidad = 1;
-        SaveData(); // Si tienes un método para guardar
-    }
-
-
-
-
-
-    // Recuerda añadir PlayerPrefs.GetFloat y SetFloat para "ProbCarambola" 
-    // en tus métodos LoadData y SaveData como hiciste con la otra probabilidad.
-
-
-    // --- NUEVA VARIABLE ---
-    [Header("Habilidad Especial")]
-    public float probabilidadDuplicarChoque = 0f;
-
+    public int dañoExtraHabilidad = 0;
 
     [Header("Multiplicadores de Virus")]
     public float radiusMultiplier = 1.0f;
@@ -93,16 +72,24 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
-        probabilidadDuplicarChoque = 0f; // Reset aquí también
+
+        // Reset Carambolas
+        carambolaNormalActiva = false;
+        carambolaProActiva = false;
+        carambolaSupremaActiva = false;
+        probabilidadDuplicarChoque = 0f;
+
+        paredInfectivaActiva = false;
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
+
         dañoExtraCirculo = 0;
         dañoExtraTriangulo = 0;
         dañoExtraCuadrado = 0;
         dañoExtraPentagono = 0;
         dañoExtraHexagono = 0;
-
+        dañoExtraHabilidad = 0;
 
         ClearRunState();
         SaveData();
@@ -123,16 +110,20 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
 
-        // --- GUARDAR PROBABILIDAD ---
+        // --- GUARDAR HABILIDADES ---
         PlayerPrefs.SetFloat("ProbDuplicar", probabilidadDuplicarChoque);
+        PlayerPrefs.SetInt("CarambolaNormal", carambolaNormalActiva ? 1 : 0);
+        PlayerPrefs.SetInt("CarambolaPro", carambolaProActiva ? 1 : 0);
+        PlayerPrefs.SetInt("CarambolaSuprema", carambolaSupremaActiva ? 1 : 0);
+        PlayerPrefs.SetInt("ParedInfectiva", paredInfectivaActiva ? 1 : 0);
+
+        // --- GUARDAR DAÑO ---
         PlayerPrefs.SetInt("DmgCirculo", dañoExtraCirculo);
         PlayerPrefs.SetInt("DmgTriangulo", dañoExtraTriangulo);
         PlayerPrefs.SetInt("DmgCuadrado", dañoExtraCuadrado);
         PlayerPrefs.SetInt("DmgPentagono", dañoExtraPentagono);
         PlayerPrefs.SetInt("DmgHexagono", dañoExtraHexagono);
-        PlayerPrefs.SetInt("CarambolaPro", carambolaProActiva ? 1 : 0);
-        PlayerPrefs.SetInt("CarambolaSuprema", carambolaSupremaActiva ? 1 : 0);
-        PlayerPrefs.SetInt("ParedInfectiva", paredInfectivaActiva ? 1 : 0);
+        PlayerPrefs.SetInt("DmgHabilidadGeneral", dañoExtraHabilidad);
 
         PlayerPrefs.Save();
     }
@@ -151,22 +142,24 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = PlayerPrefs.GetFloat("RadiusMult", 1.0f);
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
+
+        // --- CARGAR DAÑO ---
         dañoExtraCirculo = PlayerPrefs.GetInt("DmgCirculo", 0);
         dañoExtraTriangulo = PlayerPrefs.GetInt("DmgTriangulo", 0);
         dañoExtraCuadrado = PlayerPrefs.GetInt("DmgCuadrado", 0);
         dañoExtraPentagono = PlayerPrefs.GetInt("DmgPentagono", 0);
         dañoExtraHexagono = PlayerPrefs.GetInt("DmgHexagono", 0);
+        dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
+
+        // --- CARGAR HABILIDADES (CORREGIDO) ---
+        carambolaNormalActiva = PlayerPrefs.GetInt("CarambolaNormal", 0) == 1;
         carambolaProActiva = PlayerPrefs.GetInt("CarambolaPro", 0) == 1;
         carambolaSupremaActiva = PlayerPrefs.GetInt("CarambolaSuprema", 0) == 1;
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectiva", 0) == 1;
-
-        // --- CARGAR PROBABILIDAD ---
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
     }
 
     // --- MÉTODOS PÚBLICOS ---
-    public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
-    public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
     public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
     public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
@@ -177,45 +170,41 @@ public class Guardado : MonoBehaviour
     public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
+    public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
+    public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
 
-    // Métodos para activar las mejoras desde la tienda
+    // Métodos de Daño
     public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
     public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; SaveData(); }
     public void ActivarDañoExtraCuadrado() { dañoExtraCuadrado = 1; SaveData(); }
     public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
+    public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
 
-
-    public void ActivarCarambolaNormal()
-    {
-        carambolaNormalActiva = true;
-        SaveData();
-    }
+    // Métodos Carambola
+    public void ActivarCarambolaNormal() { carambolaNormalActiva = true; SaveData(); }
     public void ActivarCarambolaPro()
     {
         carambolaProActiva = true;
         SaveData();
-        Debug.Log("<color=cyan>Carambola PRO Activada: Inercia cinética habilitada.</color>");
+        Debug.Log("<color=cyan>Carambola PRO Activada</color>");
     }
     public void ActivarCarambolaSuprema()
     {
         carambolaSupremaActiva = true;
         SaveData();
+        Debug.Log("<color=yellow>Carambola SUPREMA Activada</color>");
     }
 
-    // --- CORRECCIÓN AQUÍ: AÑADIDO SaveData() ---
     public void SetDuplicateProbability(float amount)
     {
         probabilidadDuplicarChoque = amount;
-        SaveData(); // ¡Esto es lo que faltaba!
-        Debug.Log("<color=green>Probabilidad de Duplicación guardada:</color> " + amount);
-    }
-    public void ActivarParedInfectiva()
-    {
-        paredInfectivaActiva = true;
         SaveData();
     }
 
+    public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
+
+    // --- SISTEMA DE PARTIDA ---
     public void ApplyPermanentInitialUpgrade()
     {
         if (freeInitialUpgrade == -1) return;
@@ -240,7 +229,6 @@ public class Guardado : MonoBehaviour
     public void SaveRunState(int ignoredDay, int currentCoins, int currentMap)
     {
         PlayerPrefs.SetInt("Run_InProgress", 1);
-        PlayerPrefs.SetInt("Run_Day", 0);
         PlayerPrefs.SetInt("Run_Coins", currentCoins);
         PlayerPrefs.SetInt("Run_Map", currentMap);
         PlayerPrefs.Save();
@@ -259,13 +247,10 @@ public class Guardado : MonoBehaviour
         int coins = PlayerPrefs.GetInt("Run_Coins", 0);
         return "Modo Infinito - Monedas: " + coins;
     }
-  
-
 
     public void ResetAllProgress()
     {
         PlayerPrefs.DeleteAll();
         HardResetVariables();
-        SaveData();
     }
 }
