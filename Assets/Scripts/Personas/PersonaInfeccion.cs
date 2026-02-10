@@ -131,7 +131,13 @@ public class PersonaInfeccion : MonoBehaviour
     void IntentarAvanzarFase()
     {
         if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
-            LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
+        {
+            
+            int puntosAVisualizar = monedasPorFase[faseActual];
+
+         
+            LevelManager.instance.MostrarPuntosVoladores(transform.position, puntosAVisualizar);
+        }
 
         currentInfectionTime = 0f;
         faseActual++;
@@ -163,7 +169,8 @@ public class PersonaInfeccion : MonoBehaviour
 
     void BecomeInfected()
     {
-       
+        Debug.Log(">>> 1. INFECCIÓN FINAL INICIADA en " + gameObject.name);
+
         alreadyInfected = true;
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
@@ -172,7 +179,26 @@ public class PersonaInfeccion : MonoBehaviour
 
         particulasDeFuego?.Play();
 
-        if (LevelManager.instance != null) LevelManager.instance.RegisterInfection();
+        // AQUÍ ESTÁ LA CLAVE
+        if (LevelManager.instance != null) 
+        {
+            Debug.Log(">>> 2. LEVEL MANAGER ENCONTRADO. Intentando lanzar puntos...");
+            
+            LevelManager.instance.RegisterInfection();
+
+            int puntosFinales = 10; 
+            
+            // Llamada al texto
+            LevelManager.instance.MostrarPuntosVoladores(transform.position, puntosFinales);
+            Debug.Log(">>> 3. LLAMADA REALIZADA a MostrarPuntosVoladores");
+            
+            LevelManager.instance.AddCoins(puntosFinales);
+        }
+        else
+        {
+            // SI SALE ESTO, EL PROBLEMA ES EL PASO 1
+            Debug.LogError("!!! ERROR FATAL: LevelManager.instance es NULL. El script no encuentra al Manager.");
+        }
 
         StartCoroutine(InfectionColorSequence());
     }

@@ -19,6 +19,11 @@ public class LevelManager : MonoBehaviour
     [Header("Referencias")]
     public GameObject virusPlayer;
     public VirusMovement virusMovementScript;
+    
+    [Header("Feedback Visual Puntos")]
+    public GameObject prefabTextoPuntos; 
+    public RectTransform marcadorDestinoUI;
+    public Canvas canvasPrincipal; 
 
     [Header("UI Panels")]
     public GameObject menuPanel;
@@ -47,8 +52,15 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this) { Destroy(gameObject); return; }
-        instance = this;
+        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -400,6 +412,27 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("¡Fin del juego!");
             ReturnToMenu();
+        }
+    }
+
+    public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
+    {
+        AddCoins(puntosGanados); // Sumamos el dinero
+
+        // --- ESTA LÍNEA TIENE QUE ESTAR ASÍ (Con los == null) ---
+        if (prefabTextoPuntos == null || canvasPrincipal == null || marcadorDestinoUI == null)
+        {
+            // Si falta algo, avisamos pero NO petamos el juego
+            Debug.LogWarning("Faltan referencias en LevelManager para el texto volador");
+            return;
+        }
+        
+        GameObject nuevoTexto = Instantiate(prefabTextoPuntos, canvasPrincipal.transform);
+        FloatingScoreUI scriptVuelo = nuevoTexto.GetComponent<FloatingScoreUI>();
+        
+        if (scriptVuelo != null)
+        {
+            scriptVuelo.IniciarViaje(puntosGanados, posicionPersona, marcadorDestinoUI, canvasPrincipal);
         }
     }
 }
