@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PlanetCrontrollator : MonoBehaviour
 {
-    public float health = 100f;
-    public float damageAmount = 1;
-    public Image healthBar; // Arrastra aquí el Fill de tu barra de vida
+    [Header("Estadï¿½sticas")]
+    public float maxHealth = 100f;
+    private float currentHealth;
 
+    [Header("UI")]
+    public Image healthBar;
 
-
+    void Start()
+    {
+        currentHealth = maxHealth; // Inicializamos con la vida mï¿½xima
+        ActualizarUI();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,34 +25,32 @@ public class PlanetCrontrollator : MonoBehaviour
 
             if (scriptInfeccion != null)
             {
-                // OBTENEMOS EL DAÑO SEGÚN LA FORMA (Círculo=5, Triángulo=4, etc.)
-                // Esta función la añadimos en el script PersonaInfeccion abajo
-                float dañoDeEstaFigura = scriptInfeccion.ObtenerDañoTotal();
+                // Obtenemos el daï¿½o (Cï¿½rculo 5, Triï¿½ngulo 4, etc.)
+                float daï¿½oCalculado = scriptInfeccion.ObtenerDaï¿½oTotal();
 
-                // CASO 1: YA ESTÁ INFECTADO (Explosión)
+                // CASO 1: YA ESTï¿½ INFECTADO (Explosiï¿½n)
                 if (scriptInfeccion.alreadyInfected)
                 {
                     InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
 
-                    // Hace el doble de su daño base al explotar
-                    TakeDamage(dañoDeEstaFigura);
+                    // Hace el doble de su daï¿½o base al explotar
+                    TakeDamage(daï¿½oDeEstaFigura);
 
                     Destroy(collision.gameObject);
                     return;
                 }
          
 
-                // CASO 2: IMPACTO FÍSICO (Persona normal golpeando el planeta)
+                // CASO 2: IMPACTO Fï¿½SICO
                 if (rb != null)
                 {
+                    // IMPORTANTE: Debug para ver si la fuerza es suficiente
                     float fuerzaImpacto = rb.linearVelocity.magnitude;
 
                     if (fuerzaImpacto > 6.5f)
                     {
-                        // Aplicamos el daño correspondiente a su forma
-                        TakeDamage(dañoDeEstaFigura);
+                        TakeDamage(daï¿½oCalculado);
 
-                        // Lógica de Paredes Infectivas (Bajar de fase al chocar)
                         if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
                         {
                             scriptInfeccion.IntentarAvanzarFasePorChoque();
@@ -56,46 +59,49 @@ public class PlanetCrontrollator : MonoBehaviour
                         {
                             // CASO 3: CARAMBOLA NORMAL ACTIVA (Golpeando el planeta con una persona no infectada)
                             InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
-                            TakeDamage(dañoDeEstaFigura); 
+                            TakeDamage(daï¿½oDeEstaFigura); 
                         }
+                    }
+                    else
+                    {
+                        // Si no hace daï¿½o, es porque la velocidad es baja
+                        
                     }
                 }
             }
         }
     }
-    void TakeDamage(float amount)
+
+    public void TakeDamage(float amount)
     {
-        health -= amount;
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Evita vida negativa
 
-        // 4. Actualizamos la interfaz visual (Health Bar)
-        if (healthBar != null)
-        {
-            // Asumiendo que el fillAmount va de 0 a 1 y la vida inicial era 100
-            healthBar.fillAmount = health / 100f;
-        }
+        ActualizarUI();
 
-        Debug.Log("Vida restante: " + health);
+        Debug.Log($"<color=red>Daï¿½o recibido: {amount}. Vida restante: {currentHealth}</color>");
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    // --- ACTUALIZA ESTA FUNCIÓN EN PlanetCrontrollator.cs ---
+    void ActualizarUI()
+    {
+        if (healthBar != null)
+        {
+            // Ahora la divisiï¿½n siempre es correcta
+            healthBar.fillAmount = currentHealth / maxHealth;
+        }
+    }
 
     void Die()
     {
-        // En lugar de destruir el planeta, avisamos al LevelManager
         if (LevelManager.instance != null)
         {
             LevelManager.instance.NextMapTransition();
         }
-
-        // Desactivamos el script para que no se llame a Die() varias veces por choques extra
         this.enabled = false;
-
-        // Opcional: Podrías desactivar el SpriteRenderer aquí para que "desaparezca" visualmente
-        // GetComponent<SpriteRenderer>().enabled = false;
     }
 }

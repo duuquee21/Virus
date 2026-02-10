@@ -17,10 +17,9 @@ public class PersonaInfeccion : MonoBehaviour
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
-    [Header("Ajustes de Daño (Predeterminado)")]
     [Header("Ajustes de Daño")]
-    // Este es el array que te faltaba declarar:
-    public float[] dañoPorFasePredeterminado = { 5f, 4f, 3f, 2f, 1f };
+    // Fase 0 (Círculo) = 5 | Fase 1 (Triángulo) = 4 | Fase 2 (Cuadrado) = 3 | Fase 3 (Pentágono) = 2 | Fase 4 (Hexágono) = 1
+    public float[] dañoPorFasePredeterminado = { 1f, 2f, 3f, 4f, 5f };
 
 
     [Header("Referencias Visuales")]
@@ -194,15 +193,21 @@ public class PersonaInfeccion : MonoBehaviour
     }
     public float ObtenerDañoTotal()
     {
-        // 1. Obtenemos el daño base según la fase (0=Círculo... 4=Hexágono)
+        // 1. Daño base según la forma
         float dañoBase = (faseActual < dañoPorFasePredeterminado.Length) ? dañoPorFasePredeterminado[faseActual] : 1f;
 
-        // 2. Sumamos el bono de la habilidad si existe en el Guardado
+        // 2. Sumar la mejora específica de esta fase
         int bonoHabilidad = 0;
         if (Guardado.instance != null)
         {
-            // Esta variable la creas en Guardado.cs cuando compres la mejora
-            bonoHabilidad = Guardado.instance.dañoExtraHabilidad;
+            switch (faseActual)
+            {
+                case 0: bonoHabilidad = Guardado.instance.dañoExtraCirculo; break;
+                case 1: bonoHabilidad = Guardado.instance.dañoExtraTriangulo; break;
+                case 2: bonoHabilidad = Guardado.instance.dañoExtraCuadrado; break;
+                case 3: bonoHabilidad = Guardado.instance.dañoExtraPentagono; break;
+                case 4: bonoHabilidad = Guardado.instance.dañoExtraHexagono; break;
+            }
         }
 
         return dañoBase + bonoHabilidad;
