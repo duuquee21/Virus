@@ -59,7 +59,7 @@ public class PlanetCrontrollator : MonoBehaviour
                         {
                             // CASO 3: CARAMBOLA NORMAL ACTIVA (Golpeando el planeta con una persona no infectada)
                             InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
-                            TakeDamage(dañoCalculado); 
+                            
                         }
                     }
                     else

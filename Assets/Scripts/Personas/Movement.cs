@@ -154,10 +154,21 @@ public class Movement : MonoBehaviour
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, false);
                 }
 
-                // 3. SELECCIÓN DE MULTIPLICADOR DE CARAMBOLA
-                if (Guardado.instance.carambolaSupremaActiva) mTransmision = 1f;
-                else if (Guardado.instance.carambolaProActiva) mTransmision = esVelocidadBaja ? 1f : 0.5f;
-                else if (Guardado.instance.carambolaNormalActiva) mTransmision = esVelocidadBaja ? 1f : 0.15f;
+                if (Guardado.instance.carambolaSupremaActiva)
+                {
+                    // Megapro (Suprema): Siempre transmite el 100%
+                    mTransmision = 1f;
+                }
+                else if (Guardado.instance.carambolaProActiva)
+                {
+                    // Pro: 100% en velocidad baja, 50% en velocidad alta
+                    mTransmision = esVelocidadBaja ? 1f : 0.75f;
+                }
+                else if (Guardado.instance.carambolaNormalActiva)
+                {
+                    // Normal: 100% en velocidad baja, 15% en velocidad alta
+                    mTransmision = esVelocidadBaja ? 1f : 0.15f;
+                }
 
                 // 4. APLICACIÓN DE VELOCIDADES CON LÓGICA DE FASE MÁXIMA
                 float fuerzaExtra = esVelocidadBaja ? 1.2f : 1f;
