@@ -25,16 +25,16 @@ public class PlanetCrontrollator : MonoBehaviour
 
             if (scriptInfeccion != null)
             {
-                // Obtenemos el da�o (C�rculo 5, Tri�ngulo 4, etc.)
-                float da�oCalculado = scriptInfeccion.ObtenerDa�oTotal();
+                // Obtenemos el daño (Círculo 5, Triángulo 4, etc.)
+                float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
 
                 // CASO 1: YA EST� INFECTADO (Explosi�n)
                 if (scriptInfeccion.alreadyInfected)
                 {
                     InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
 
-                    // Hace el doble de su da�o base al explotar
-                    TakeDamage(da�oDeEstaFigura);
+                    // Hace el doble de su daño base al explotar
+                    TakeDamage(dañoCalculado);
 
                     Destroy(collision.gameObject);
                     return;
@@ -49,7 +49,7 @@ public class PlanetCrontrollator : MonoBehaviour
 
                     if (fuerzaImpacto > 6.5f)
                     {
-                        TakeDamage(da�oCalculado);
+                        TakeDamage(dañoCalculado);
 
                         if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
                         {
@@ -59,7 +59,7 @@ public class PlanetCrontrollator : MonoBehaviour
                         {
                             // CASO 3: CARAMBOLA NORMAL ACTIVA (Golpeando el planeta con una persona no infectada)
                             InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
-                            TakeDamage(da�oDeEstaFigura); 
+                            TakeDamage(dañoCalculado); 
                         }
                     }
                     else

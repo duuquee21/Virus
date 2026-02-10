@@ -30,7 +30,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
-        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva, CarambolaPro, CarambolaSuprema, DmgCirculo,
+        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, ParedInfectiva, CarambolaNormal, CarambolaPro, CarambolaSuprema, DmgCirculo,
         DmgTriangulo,
         DmgCuadrado,
         DmgPentagono,
@@ -215,6 +215,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Capacity -> Nivel 4"); break;
             case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Capacity -> Nivel 5"); break;
             case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Capacity -> Nivel 6"); break;
+
+            case SkillEffectType.ParedInfectiva:
+                Guardado.instance.ActivarParedInfectiva();
+                break;
+            case SkillEffectType.CarambolaNormal:
+                Guardado.instance.ActivarCarambolaNormal();
+                break;
+            case SkillEffectType.CarambolaPro:
+                Guardado.instance.ActivarCarambolaPro();
+                break;
 
             // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---
             // --- DAÑO POR FORMA (CORREGIDO: Fase 0 = Hexágono) ---
