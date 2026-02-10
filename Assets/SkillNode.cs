@@ -34,7 +34,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         DmgTriangulo,
         DmgCuadrado,
         DmgPentagono,
-        DmgHexagono
+        DmgHexagono, ReboteConCoral,
     }
 
     [Header("Datos")]
@@ -227,6 +227,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
             case SkillEffectType.CarambolaSuprema:
                 Guardado.instance.ActivarCarambolaSuprema();
+                break;
+            case SkillEffectType.ReboteConCoral:
+                Guardado.instance.ReboteConCoral();
                 break;
 
             // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---

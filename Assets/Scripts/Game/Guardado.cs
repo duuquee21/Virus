@@ -23,6 +23,7 @@ public class Guardado : MonoBehaviour
 
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
+    public bool virusReboteActiva = false;
 
     [Header("Habilidad Especial")]
     public bool carambolaNormalActiva = false;
@@ -183,6 +184,7 @@ public class Guardado : MonoBehaviour
 
     // Métodos Carambola
     public void ActivarCarambolaNormal() { carambolaNormalActiva = true; SaveData(); }
+    public void ReboteConCoral() { virusReboteActiva = true; SaveData(); }
     public void ActivarCarambolaPro()
     {
         carambolaProActiva = true;
