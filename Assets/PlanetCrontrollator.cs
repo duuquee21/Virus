@@ -30,11 +30,12 @@ public class PlanetCrontrollator : MonoBehaviour
                     InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
 
                     // Hace el doble de su daño base al explotar
-                    TakeDamage(dañoDeEstaFigura * 2);
+                    TakeDamage(dañoDeEstaFigura);
 
                     Destroy(collision.gameObject);
                     return;
                 }
+         
 
                 // CASO 2: IMPACTO FÍSICO (Persona normal golpeando el planeta)
                 if (rb != null)
@@ -50,6 +51,12 @@ public class PlanetCrontrollator : MonoBehaviour
                         if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
                         {
                             scriptInfeccion.IntentarAvanzarFasePorChoque();
+                        }
+                        if (Guardado.instance != null && !Guardado.instance.paredInfectivaActiva)
+                        {
+                            // CASO 3: CARAMBOLA NORMAL ACTIVA (Golpeando el planeta con una persona no infectada)
+                            InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
+                            TakeDamage(dañoDeEstaFigura); 
                         }
                     }
                 }

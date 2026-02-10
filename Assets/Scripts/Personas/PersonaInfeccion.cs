@@ -47,6 +47,8 @@ public class PersonaInfeccion : MonoBehaviour
     private Transform transformInfector;
     private Movement movementScript;
 
+
+
     // --- REFERENCIA QUE FALTABA ---
     private Rigidbody2D rb;
 
@@ -162,6 +164,7 @@ public class PersonaInfeccion : MonoBehaviour
 
     void BecomeInfected()
     {
+       
         alreadyInfected = true;
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
@@ -220,89 +223,11 @@ public class PersonaInfeccion : MonoBehaviour
             isInsideZone = true;
             transformInfector = other.transform;
         }
-        else if (!alreadyInfected && other.CompareTag("Persona"))
-        {
-            if (Guardado.instance == null) return;
-
-            Rigidbody2D rbAtacante = other.GetComponent<Rigidbody2D>();
-            PersonaInfeccion scriptAtacante = other.GetComponent<PersonaInfeccion>();
-
-            if (rbAtacante != null && scriptAtacante != null)
-            {
-                float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
-
-                // Solo reacciona si el atacante viene con suficiente velocidad
-                if (velocidadImpacto > 6.5f)
-                {
-                    // --- 1. CARAMBOLA SUPREMA (Transferencia + Rebote Opuesto) ---
-                    if (Guardado.instance.carambolaSupremaActiva)
-                    {
-                        Vector2 velocidadOriginal = rbAtacante.linearVelocity;
-
-                        // El atacante REBOTA hacia atrás con la misma fuerza
-                        rbAtacante.linearVelocity = -velocidadOriginal;
-
-                        // Tú sales disparado hacia ADELANTE con la fuerza original
-                        rb.linearVelocity = velocidadOriginal;
-
-                        IntentarAvanzarFasePorChoque();
-                        StartCoroutine(StunPersona(0.5f));
-                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.8f));
-
-                        Debug.Log("Carambola SUPREMA: Acción y Reacción activa.");
-                    }
-                    // --- 2. CARAMBOLA PRO (Transferencia + Atacante se para) ---
-                    else if (Guardado.instance.carambolaProActiva)
-                    {
-                        Vector2 inerciaRecibida = rbAtacante.linearVelocity;
-
-                        rbAtacante.linearVelocity = Vector2.zero;
-                        rbAtacante.angularVelocity = 0f;
-
-                        rb.linearVelocity = inerciaRecibida;
-
-                        IntentarAvanzarFasePorChoque();
-                        StartCoroutine(StunPersona(0.5f));
-                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.8f));
-
-                        Debug.Log("Carambola PRO: Inercia transferida.");
-                    }
-                    // --- 3. REBOTE NORMAL (Probabilidad) ---
-                    else if (Random.value <= Guardado.instance.probabilidadCarambola)
-                    {
-                        IntentarAvanzarFasePorChoque();
-                        if (Guardado.instance.paredInfectivaActiva) scriptAtacante.IntentarAvanzarFasePorChoque();
-
-                        Vector2 dirSeparacion = (transform.position - other.transform.position).normalized;
-                        rb.linearVelocity = dirSeparacion * (velocidadImpacto * 0.5f);
-                        rbAtacante.linearVelocity = -dirSeparacion * (velocidadImpacto * 0.5f);
-
-                        StartCoroutine(StunPersona(0.7f));
-                        scriptAtacante.StartCoroutine(scriptAtacante.StunPersona(0.7f));
-                    }
-                }
-            }
-        }
+       
+        
     }
 
-    public IEnumerator StunPersona(float tiempo)
-    {
-        if (movementScript != null && rb != null)
-        {
-            // 1. Desactivamos la IA de movimiento
-            movementScript.enabled = false;
-
-            // 2. Aplicamos solo el giro físico
-            rb.angularVelocity = 720f;
-
-            yield return new WaitForSeconds(tiempo);
-
-            // 3. Restauramos físicas y movimiento
-            rb.angularVelocity = 0f;
-            transform.rotation = Quaternion.identity; // Se endereza
-            movementScript.enabled = true; // Vuelve a caminar
-        }
-    }
+    
 
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
 

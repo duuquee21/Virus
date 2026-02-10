@@ -23,6 +23,7 @@ public class Guardado : MonoBehaviour
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
     [Header("Habilidad Especial")]
+    public bool carambolaNormalActiva = false;
     public bool carambolaProActiva = false;
     public bool carambolaSupremaActiva = false; // <--- NUEVA VARIABLE
                                                 // Dentro de la clase Guardado
@@ -36,10 +37,6 @@ public class Guardado : MonoBehaviour
     }
 
 
-
-    [Header("Habilidades de Choque")]
-    // 0.2 = 20%, 0.4 = 40%, etc.
-    public float probabilidadCarambola = 0f;
 
 
 
@@ -149,6 +146,13 @@ public class Guardado : MonoBehaviour
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
 
+
+
+    public void ActivarCarambolaNormal()
+    {
+        carambolaNormalActiva = true;
+        SaveData();
+    }
     public void ActivarCarambolaPro()
     {
         carambolaProActiva = true;
@@ -217,11 +221,7 @@ public class Guardado : MonoBehaviour
         int coins = PlayerPrefs.GetInt("Run_Coins", 0);
         return "Modo Infinito - Monedas: " + coins;
     }
-    public void SetProbabilidadCarambola(float valor)
-    {
-        probabilidadCarambola = valor;
-        SaveData();
-    }
+  
 
 
     public void ResetAllProgress()

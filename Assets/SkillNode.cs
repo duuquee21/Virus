@@ -30,7 +30,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
-        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, Carambola20, Carambola40, Carambola60, Carambola80, Carambola100, ParedInfectiva, CarambolaPro, CarambolaSuprema
+        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, ParedInfectiva,CarambolaNormal, CarambolaPro, CarambolaSuprema
     }
 
     [Header("Datos")]
@@ -255,14 +255,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(4); break;
             case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(5); break;
             case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(6); break;
-            case SkillEffectType.Carambola20: Guardado.instance.SetProbabilidadCarambola(0.2f); break;
-            case SkillEffectType.Carambola40: Guardado.instance.SetProbabilidadCarambola(0.40f); break;
-            case SkillEffectType.Carambola60: Guardado.instance.SetProbabilidadCarambola(0.60f); break;
-            case SkillEffectType.Carambola80: Guardado.instance.SetProbabilidadCarambola(0.80f); break;
-            case SkillEffectType.Carambola100: Guardado.instance.SetProbabilidadCarambola(1.00f); break;
+        
             // En SkillNode.cs, dentro del switch de efectos:
             case SkillEffectType.ParedInfectiva:
                 Guardado.instance.ActivarParedInfectiva();
+                break;
+            case SkillEffectType.CarambolaNormal:
+                Guardado.instance.ActivarCarambolaNormal();
                 break;
             case SkillEffectType.CarambolaPro:
                 Guardado.instance.ActivarCarambolaPro();

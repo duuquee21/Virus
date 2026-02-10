@@ -781,9 +781,10 @@ MonoBehaviour:
   keepUpgradesOnReset: 0
   keepZonesUnlocked: 0
   paredInfectivaActiva: 0
+  carambolaNormalActiva: 0
   carambolaProActiva: 0
   carambolaSupremaActiva: 0
-  probabilidadCarambola: 0
+  "da\xF1oExtraHabilidad": 0
   probabilidadDuplicarChoque: 0
   radiusMultiplier: 1
   speedMultiplier: 1
@@ -18798,7 +18799,7 @@ MonoBehaviour:
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
-  effectType: 84
+  effectType: 80
   button: {fileID: 802097013}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -21301,6 +21302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infectionParticles: {fileID: 7197056637472312061, guid: c481fbc601207be4f9314d86f8e6b386, type: 3}
   infection1Particles: {fileID: 7197056637472312061, guid: 593b933e964939b4a80ed1d667999a84, type: 3}
+  basicImpactParticles: {fileID: 7197056637472312061, guid: f0cbd88ed6cee73448129ea3a99571c8, type: 3}
   audioSource: {fileID: 1534932859}
   infectionSounds:
   - {fileID: 8300000, guid: e46bc00b61aab8b40bc8eee286035672, type: 3}
@@ -21312,6 +21314,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2ee17dc805a35c74fa3a4bc3659f5ee6, type: 3}
   bolaBlancaSounds:
   - {fileID: 8300000, guid: c7a45613f44523f40a5ec660ab4ea047, type: 3}
+  basicWallImpactSounds:
+  - {fileID: 8300000, guid: 311f4b522d7b7344bb12ef66f68988b6, type: 3}
+  basicImpactSounds:
+  - {fileID: 8300000, guid: 4918b790e4be9c349bb3cdda75974199, type: 3}
   cameraTransform: {fileID: 519420032}
   shakeDuration: 0.1
   shakeMagnitude: 0.075
@@ -21942,7 +21948,7 @@ MonoBehaviour:
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
-  effectType: 83
+  effectType: 78
   button: {fileID: 932488386}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -24964,7 +24970,7 @@ MonoBehaviour:
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
-  effectType: 82
+  effectType: 79
   button: {fileID: 1050803136}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -27762,7 +27768,7 @@ MonoBehaviour:
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
-  effectType: 85
+  effectType: 81
   button: {fileID: 1162838972}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -47934,7 +47940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85117ea3727423645947fc4eda35c261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 1000
   damageAmount: 1
   healthBar: {fileID: 256834188}
 --- !u!1001 &7078994464328464079
@@ -47971,6 +47977,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339637598510893597, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536392256252915285, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536392256252915285, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536392256252915285, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
+      propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5883677203468953227, guid: acdb528afab51504ea82fe8c8477c436, type: 3}

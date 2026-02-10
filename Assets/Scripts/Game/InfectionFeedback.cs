@@ -9,12 +9,16 @@ public class InfectionFeedback : MonoBehaviour
     [Header("Efectos Visuales (VFX)")]
     public GameObject infectionParticles;
     public GameObject infection1Particles;
+    public GameObject basicImpactParticles;
 
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
     public AudioClip[] infectionSounds;
     public AudioClip[] phaseChangeSounds; 
     public AudioClip[] bolaBlancaSounds;
+    public AudioClip[] basicWallImpactSounds;
+    public AudioClip[] basicImpactSounds;
+
 
     [Header("Cámara & Shake")]
     public Transform cameraTransform; 
@@ -103,6 +107,91 @@ public class InfectionFeedback : MonoBehaviour
         }
 
     }
+    public void PlayBasicImpactSoundAgainstWall()
+    {
+        if (audioSource != null && basicWallImpactSounds.Length > 0)
+        {
+            AudioClip clip = basicWallImpactSounds[Random.Range(0, basicWallImpactSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
+        }
+
+    }
+    public void PlayBasicImpactSound()
+    {
+        if (audioSource != null && basicImpactSounds.Length > 0)
+        {
+            AudioClip clip = basicImpactSounds[Random.Range(0, basicImpactSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
+        }
+
+    }
+
+    public void PlayBasicImpactEffectAgainstWall(Vector3 position, Color particleColor)
+    {
+        // 1. VISUAL
+        if (basicImpactParticles != null)
+        {
+            GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+
+        PlayBasicImpactSoundAgainstWall();
+
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake(1));
+        }
+    }
+
+    public void PlayBasicImpactEffect(Vector3 position, Color particleColor,bool sonido)
+    {
+        // 1. VISUAL
+        if (basicImpactParticles != null)
+        {
+
+            GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+
+                // Accedemos al valor constante actual y lo multiplicamos
+                float currentSize = main.startSize.constant;
+                main.startSize = currentSize * 0.5f;
+            }
+
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+        if (sonido)
+        {
+            PlayBasicImpactSound();
+        }
+     
+    }
+
+
     private IEnumerator Shake(int ShakeAmountMultiplier)
     {
         Vector3 originalPos = cameraTransform.localPosition;

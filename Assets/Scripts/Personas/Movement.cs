@@ -22,6 +22,10 @@ public class Movement : MonoBehaviour
     {
         if (!estaEmpujado)
         {
+            if (personaInfeccion.alreadyInfected)
+            {
+                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 22.5f);
+            }
             // En lugar de MovePosition, asignamos velocidad constante.
             // Esto ayuda a que el motor detecte mejor los triggers al moverse.
             rb.linearVelocity = direccion * velocidadBase;
@@ -33,6 +37,10 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            if (personaInfeccion.alreadyInfected)
+            {
+                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 22.5f);
+            }
             // Lógica de frenado por fricción natural o manual
             if (rb.linearVelocity.magnitude <= velocidadBase)
             {
@@ -86,7 +94,7 @@ public class Movement : MonoBehaviour
                 // Calculamos el nuevo vector de rebote
                 Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
 
-                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 5f && Guardado.instance.paredInfectivaActiva)
+                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.paredInfectivaActiva)
                 {
                     Debug.Log("<color=blue>Rebote de Fase Final: Velocidad Constante Aplicada.</color>");
 
@@ -106,8 +114,87 @@ public class Movement : MonoBehaviour
                 }
             }
         }
-    }
+        else if (!personaInfeccion.alreadyInfected && otro.CompareTag("Persona"))
+        {
+            if (Guardado.instance == null) return;
 
+            if (!Guardado.instance.carambolaNormalActiva &&
+            !Guardado.instance.carambolaProActiva &&
+            !Guardado.instance.carambolaSupremaActiva)
+                return;
+
+            Rigidbody2D rbAtacante = otro.GetComponent<Rigidbody2D>();
+            Movement movAtacante = otro.GetComponent<Movement>();
+            PersonaInfeccion scriptAtacante = otro.GetComponent<PersonaInfeccion>();
+
+            if (rbAtacante != null && movAtacante != null && scriptAtacante != null)
+            {
+                // 1. CÁLCULO DE FÍSICA
+                Vector2 puntoContacto = otro.ClosestPoint(transform.position);
+                Vector2 normalChoque = ((Vector2)transform.position - puntoContacto).normalized;
+                if (normalChoque == Vector2.zero) normalChoque = rbAtacante.linearVelocity.normalized;
+
+                float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
+                float mTransmision = 1f;
+                bool esVelocidadBaja = velocidadImpacto <= 6.5f;
+
+                // 2. LÓGICA DE FASES
+                if (!esVelocidadBaja && Guardado.instance.paredInfectivaActiva)
+                {
+                    personaInfeccion.IntentarAvanzarFasePorChoque();
+                    scriptAtacante.IntentarAvanzarFasePorChoque();
+                    Debug.Log("<color=green>Impacto fuerte detectado: Intentando avanzar fase.</color>");
+                }
+                else if(!esVelocidadBaja)
+                {
+                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white,true);
+                }
+                else if(esVelocidadBaja)
+                {
+                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, false);
+                }
+
+                // 3. SELECCIÓN DE MULTIPLICADOR DE CARAMBOLA
+                if (Guardado.instance.carambolaSupremaActiva) mTransmision = 1f;
+                else if (Guardado.instance.carambolaProActiva) mTransmision = esVelocidadBaja ? 1f : 0.5f;
+                else if (Guardado.instance.carambolaNormalActiva) mTransmision = esVelocidadBaja ? 1f : 0.15f;
+
+                // 4. APLICACIÓN DE VELOCIDADES CON LÓGICA DE FASE MÁXIMA
+                float fuerzaExtra = esVelocidadBaja ? 1.2f : 1f;
+
+                // Lógica para el receptor (this)
+                if (personaInfeccion.EsFaseMaxima()&&Guardado.instance.paredInfectivaActiva)
+                {
+                    rb.linearVelocity = normalChoque * 22.5f;
+                }
+                else
+                {
+                    rb.linearVelocity = normalChoque * (velocidadImpacto * mTransmision * fuerzaExtra);
+                }
+
+                // Lógica para el atacante (otro)
+                float factorReboteAtacante = esVelocidadBaja ? 0.8f : mTransmision;
+                if (scriptAtacante.EsFaseMaxima())
+                {
+                    rbAtacante.linearVelocity = -normalChoque * 22.5f;
+                }
+                else
+                {
+                    rbAtacante.linearVelocity = -normalChoque * (velocidadImpacto * factorReboteAtacante * fuerzaExtra);
+                }
+
+                // 5. ACTUALIZACIÓN DE ESTADOS DE MOVIMIENTO
+                this.estaEmpujado = true;
+                this.direccion = rb.linearVelocity.normalized;
+                movAtacante.SetEstaEmpujado(true, rbAtacante.linearVelocity.normalized);
+            }
+        }
+    }
+    public void SetEstaEmpujado(bool estado, Vector2 nuevaDir)
+    {
+        estaEmpujado = estado;
+        if (estado) direccion = nuevaDir;
+    }
     public void CambiarDireccion(Vector2 nuevaDireccion) => direccion = nuevaDireccion.normalized;
     public Vector2 GetDireccion() => direccion;
 }
