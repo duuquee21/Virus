@@ -42,7 +42,7 @@ public class PersonaInfeccion : MonoBehaviour
     private bool isInsideZone = false;
     public bool alreadyInfected = false;
     private Color originalColor;
-    private int faseActual = 0;
+    public int faseActual; // Ahora el planeta sí puede leerla
     private Transform transformInfector;
     private Movement movementScript;
 
@@ -280,39 +280,63 @@ public class PersonaInfeccion : MonoBehaviour
     {
         if (alreadyInfected) return;
 
+        // --- Lógica de Duplicación (Mantenemos tu código) ---
         if (Guardado.instance != null)
         {
             float probActual = Guardado.instance.probabilidadDuplicarChoque;
-            float dado = Random.value;
-
-            if (dado <= probActual)
+            if (Random.value <= probActual)
             {
                 PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-                if (pm != null)
-                {
-                    pm.InstanciarCopia(transform.position, faseActual, this.gameObject);
-                }
+                if (pm != null) pm.InstanciarCopia(transform.position, faseActual, this.gameObject);
             }
         }
 
+        // --- LÓGICA DE EVOLUCIÓN POR PARED ---
+        // Obtenemos el nivel de la pared para saber qué tan fuerte es el impacto
+        int nivelPared = Guardado.instance != null ? Guardado.instance.nivelParedInfectiva : 0;
+
+        // Si el nivel de la pared es mucho mayor que la fase actual, 
+        // podemos hacer que se infecte del todo o que avance varias fases.
+        // Por ahora, haremos que avance a la siguiente fase de forma segura:
+
         if (faseActual < fasesSprites.Length - 1)
         {
+            // Recompensa económica por evolucionar
             if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
                 LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
 
+            // Feedback visual
             if (InfectionFeedback.instance != null)
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
 
+            // EVOLUCIÓN: Subimos la fase
             currentInfectionTime = 0f;
             faseActual++;
+
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
+
+            Debug.Log($"<color=cyan>[Pared]</color> Evolución forzada a Fase: {faseActual}");
         }
         else
         {
+            // Si ya está en la última fase (ej. Hexágono), se infecta totalmente
             BecomeInfected();
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.collider.CompareTag("Wall")) return;
+
+        if (Guardado.instance == null) return;
+        if (Guardado.instance.nivelParedInfectiva <= 0) return;
+
+        Debug.Log("<color=magenta>[PARED]</color> Choque detectado");
+
+        IntentarAvanzarFasePorChoque();
+    }
+
 
     public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
 }

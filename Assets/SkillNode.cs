@@ -30,11 +30,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
-        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, ParedInfectiva, CarambolaNormal, CarambolaPro, CarambolaSuprema, DmgCirculo,
+        ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, CarambolaNormal, CarambolaPro, CarambolaSuprema, DmgCirculo,
         DmgTriangulo,
         DmgCuadrado,
         DmgPentagono,
-        DmgHexagono, ReboteConCoral,
+        DmgHexagono, ReboteConCoral, // Sustituye ParedInfectiva por estos niveles
+        ParedInfectiva_Nivel1, // Solo Hexágonos
+        ParedInfectiva_Nivel2, // Hexágonos + Pentágonos
+        ParedInfectiva_Nivel3, // + Cuadrados
+        ParedInfectiva_Nivel4, // + Triángulos
+        ParedInfectiva_Nivel5, // + Círculos (Rompe todo)
     }
 
     [Header("Datos")]
@@ -216,18 +221,65 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Capacity -> Nivel 5"); break;
             case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Capacity -> Nivel 6"); break;
 
-            case SkillEffectType.ParedInfectiva:
+            case SkillEffectType.TimeLevel2: TimeUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Time -> Nivel 2"); break;
+                case SkillEffectType.TimeLevel3: TimeUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Time -> Nivel 3"); break;
+            case SkillEffectType.TimeLevel4: TimeUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Time -> Nivel 4"); break;
+            case SkillEffectType.TimeLevel5: TimeUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Time -> Nivel 5"); break;
+
+            case SkillEffectType.TimeLevel6: TimeUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Time -> Nivel 6"); break;
+            case SkillEffectType.InfectionSpeedLevel2: InfectionSpeedUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Infection Speed -> Nivel 2"); break;
+            case SkillEffectType.InfectionSpeedLevel3: InfectionSpeedUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Infection Speed -> Nivel 3"); break;
+            case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Infection Speed -> Nivel 4"); break;
+            case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Infection Speed -> Nivel 5"); break;
+            case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Infection Speed -> Nivel 6"); break;
+
+            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(1.25f); break;
+            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(1.50f); break;
+
+            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(0.50f); break;
+                case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(1.00f); break;
+            case SkillEffectType.KeepUpgradesOnResetEffect: Guardado.instance.keepUpgradesOnReset = true; break;
+            // Reparación de Zonas (Usando el método que ya existe en Guardado)
+            case SkillEffectType.KeepZonesOnReset:
+                Guardado.instance.ActivateKeepZones();
+                break;
+
+            // Reparación de Duplicación (Cambiado de 'SetDuplicateOnHitChance' a 'SetDuplicateProbability')
+            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(0.20f); break;
+            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(0.40f); break;
+            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(0.60f); break;
+            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(0.80f); break;
+            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(1.00f); break;
+
+
+            case SkillEffectType.CarambolaNormal: Guardado.instance.ActivarCarambolaNormal(); break;
+                    case SkillEffectType.CarambolaPro: Guardado.instance.ActivarCarambolaPro(); break;
+                        case SkillEffectType.CarambolaSuprema: Guardado.instance.ActivarCarambolaSuprema(); break;
+            case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
+                Guardado.instance.SetNivelParedInfectiva(1);
                 break;
-            case SkillEffectType.CarambolaNormal:
-                Guardado.instance.ActivarCarambolaNormal();
+
+            case SkillEffectType.ParedInfectiva_Nivel2:
+                Guardado.instance.ActivarParedInfectiva();
+                Guardado.instance.SetNivelParedInfectiva(2);
                 break;
-            case SkillEffectType.CarambolaPro:
-                Guardado.instance.ActivarCarambolaPro();
+
+            case SkillEffectType.ParedInfectiva_Nivel3:
+                Guardado.instance.ActivarParedInfectiva();
+                Guardado.instance.SetNivelParedInfectiva(3);
                 break;
-            case SkillEffectType.CarambolaSuprema:
-                Guardado.instance.ActivarCarambolaSuprema();
+
+            case SkillEffectType.ParedInfectiva_Nivel4:
+                Guardado.instance.ActivarParedInfectiva();
+                Guardado.instance.SetNivelParedInfectiva(4);
                 break;
+
+            case SkillEffectType.ParedInfectiva_Nivel5:
+                Guardado.instance.ActivarParedInfectiva();
+                Guardado.instance.SetNivelParedInfectiva(5);
+                break;
+
             case SkillEffectType.ReboteConCoral:
                 Guardado.instance.ReboteConCoral();
                 break;

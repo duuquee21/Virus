@@ -23,6 +23,7 @@ public class Guardado : MonoBehaviour
 
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
+    public int nivelParedInfectiva = 0; // 0 = desactivada, 1-5 niveles
     public bool virusReboteActiva = false;
 
     [Header("Habilidad Especial")]
@@ -73,18 +74,15 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
-
-        // Reset Carambolas
         carambolaNormalActiva = false;
         carambolaProActiva = false;
         carambolaSupremaActiva = false;
         probabilidadDuplicarChoque = 0f;
-
         paredInfectivaActiva = false;
+        nivelParedInfectiva = 0;
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
-
         dañoExtraCirculo = 0;
         dañoExtraTriangulo = 0;
         dañoExtraCuadrado = 0;
@@ -110,22 +108,18 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("RadiusMult", radiusMultiplier);
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
-
-        // --- GUARDAR HABILIDADES ---
         PlayerPrefs.SetFloat("ProbDuplicar", probabilidadDuplicarChoque);
         PlayerPrefs.SetInt("CarambolaNormal", carambolaNormalActiva ? 1 : 0);
         PlayerPrefs.SetInt("CarambolaPro", carambolaProActiva ? 1 : 0);
         PlayerPrefs.SetInt("CarambolaSuprema", carambolaSupremaActiva ? 1 : 0);
-        PlayerPrefs.SetInt("ParedInfectiva", paredInfectivaActiva ? 1 : 0);
-
-        // --- GUARDAR DAÑO ---
+        PlayerPrefs.SetInt("ParedInfectivaActiva", paredInfectivaActiva ? 1 : 0);
+        PlayerPrefs.SetInt("NivelPared", nivelParedInfectiva);
         PlayerPrefs.SetInt("DmgCirculo", dañoExtraCirculo);
         PlayerPrefs.SetInt("DmgTriangulo", dañoExtraTriangulo);
         PlayerPrefs.SetInt("DmgCuadrado", dañoExtraCuadrado);
         PlayerPrefs.SetInt("DmgPentagono", dañoExtraPentagono);
         PlayerPrefs.SetInt("DmgHexagono", dañoExtraHexagono);
         PlayerPrefs.SetInt("DmgHabilidadGeneral", dañoExtraHabilidad);
-
         PlayerPrefs.Save();
     }
 
@@ -143,24 +137,21 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = PlayerPrefs.GetFloat("RadiusMult", 1.0f);
         speedMultiplier = PlayerPrefs.GetFloat("SpeedMult", 1.0f);
         infectSpeedMultiplier = PlayerPrefs.GetFloat("InfectSpeedMult", 1.0f);
-
-        // --- CARGAR DAÑO ---
         dañoExtraCirculo = PlayerPrefs.GetInt("DmgCirculo", 0);
         dañoExtraTriangulo = PlayerPrefs.GetInt("DmgTriangulo", 0);
         dañoExtraCuadrado = PlayerPrefs.GetInt("DmgCuadrado", 0);
         dañoExtraPentagono = PlayerPrefs.GetInt("DmgPentagono", 0);
         dañoExtraHexagono = PlayerPrefs.GetInt("DmgHexagono", 0);
         dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
-
-        // --- CARGAR HABILIDADES (CORREGIDO) ---
         carambolaNormalActiva = PlayerPrefs.GetInt("CarambolaNormal", 0) == 1;
         carambolaProActiva = PlayerPrefs.GetInt("CarambolaPro", 0) == 1;
         carambolaSupremaActiva = PlayerPrefs.GetInt("CarambolaSuprema", 0) == 1;
-        paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectiva", 0) == 1;
+        paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
+        nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
     }
 
-    // --- MÉTODOS PÚBLICOS ---
+    // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
     public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
     public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
@@ -182,34 +173,28 @@ public class Guardado : MonoBehaviour
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
 
-    // Métodos Carambola
+    // Métodos Carambola y Pared
     public void ActivarCarambolaNormal() { carambolaNormalActiva = true; SaveData(); }
     public void ReboteConCoral() { virusReboteActiva = true; SaveData(); }
-    public void ActivarCarambolaPro()
-    {
-        carambolaProActiva = true;
-        SaveData();
-        Debug.Log("<color=cyan>Carambola PRO Activada</color>");
-    }
-    public void ActivarCarambolaSuprema()
-    {
-        carambolaSupremaActiva = true;
-        SaveData();
-        Debug.Log("<color=yellow>Carambola SUPREMA Activada</color>");
-    }
-
-    public void SetDuplicateProbability(float amount)
-    {
-        probabilidadDuplicarChoque = amount;
-        SaveData();
-    }
-
+    public void ActivarCarambolaPro() { carambolaProActiva = true; SaveData(); }
+    public void ActivarCarambolaSuprema() { carambolaSupremaActiva = true; SaveData(); }
     public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
 
-    // --- SISTEMA DE PARTIDA ---
+    // --- REPARACIÓN DE ERRORES ESPECÍFICOS ---
+    public void SetNivelParedInfectiva(int nivel) { nivelParedInfectiva = nivel; SaveData(); }
+    public void SetDuplicateProbability(float amount) { probabilidadDuplicarChoque = amount; SaveData(); }
+    // Este método cubre el error de SetInfectionSpeedBonus
+    public void SetInfectionSpeedBonus(float amount) { infectSpeedMultiplier = amount; SaveData(); }
+
+    // --- SOLUCIÓN A LOS ERRORES DE REFERENCIA ---
+
+    // Este método aplica físicamente la mejora gratuita al empezar una partida
     public void ApplyPermanentInitialUpgrade()
     {
         if (freeInitialUpgrade == -1) return;
+
+        Debug.Log("<color=green>Aplicando Mejora Inicial Permanente:</color> Tipo " + freeInitialUpgrade);
+
         switch (freeInitialUpgrade)
         {
             case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.UpgradeRadius(); break;
@@ -220,12 +205,20 @@ public class Guardado : MonoBehaviour
         }
     }
 
+    // Este método devuelve el texto que sale en el botón de "Continuar" del menú
+    public string GetContinueDetails()
+    {
+        // Recuperamos las monedas de la partida en curso guardadas en PlayerPrefs
+        int coins = PlayerPrefs.GetInt("Run_Coins", 0);
+        return "Modo Infinito - Monedas: " + coins;
+    }
+
+    // --- SISTEMA DE PARTIDA ---
     public void AssignRandomInitialUpgrade()
     {
         if (freeInitialUpgrade != -1) return;
         freeInitialUpgrade = Random.Range(0, 5);
         SaveData();
-        ApplyPermanentInitialUpgrade();
     }
 
     public void SaveRunState(int ignoredDay, int currentCoins, int currentMap)
@@ -243,16 +236,5 @@ public class Guardado : MonoBehaviour
     }
 
     public bool HasSavedGame() => PlayerPrefs.GetInt("Run_InProgress", 0) == 1;
-
-    public string GetContinueDetails()
-    {
-        int coins = PlayerPrefs.GetInt("Run_Coins", 0);
-        return "Modo Infinito - Monedas: " + coins;
-    }
-
-    public void ResetAllProgress()
-    {
-        PlayerPrefs.DeleteAll();
-        HardResetVariables();
-    }
+    public void ResetAllProgress() { PlayerPrefs.DeleteAll(); HardResetVariables(); }
 }
