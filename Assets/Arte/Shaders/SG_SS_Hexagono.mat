@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_ScrollingShader
+  m_Name: SG_SS_Hexagono
   m_Shader: {fileID: -6465566751694194690, guid: f711758a0f29afe4ab1d8d6ab9250868, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainText:
-        m_Texture: {fileID: 2800000, guid: aae81e5da5d9a954aa29457727fb9383, type: 3}
+        m_Texture: {fileID: 2800000, guid: f2d859da0085e4b419aefab9fd805db9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
