@@ -13,32 +13,32 @@ public class InfectionFeedback : MonoBehaviour
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
     public AudioClip[] infectionSounds;
-    public AudioClip[] phaseChangeSounds; 
+    public AudioClip[] phaseChangeSounds;
     public AudioClip[] bolaBlancaSounds;
     public AudioClip[] basicWallImpactSounds;
     public AudioClip[] basicImpactSounds;
 
     [Header("Modo Musical (Racha)")]
-    public bool activarModoMusical = true; 
+    public bool activarModoMusical = true;
     [Tooltip("Arrastra aquí el sonido 'Ding' o 'Blip' para la racha")]
-    public AudioClip sonidoMusicalCombo; 
-    
-    public float tiempoParaResetear = 2.0f; 
+    public AudioClip sonidoMusicalCombo;
+
+    public float tiempoParaResetear = 2.0f;
 
     [Header("Ajustes de Limpieza")]
-    public float cooldownSonido = 0.15f; 
+    public float cooldownSonido = 0.15f;
     private float tiempoUltimoSonidoJugado = -1f;
 
     // Escala Arcade
-    private float[] escalaMayor = new float[] { 
-        1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.5f, 3.0f 
+    private float[] escalaMayor = new float[] {
+        1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.5f, 3.0f
     };
 
-    private int indiceNotaActual = 0; 
+    private int indiceNotaActual = 0;
     private float ultimoTiempoInfeccion;
 
     [Header("Cámara & Shake")]
-    public Transform cameraTransform; 
+    public Transform cameraTransform;
     public float shakeDuration = 0.2f;
     public float shakeMagnitude = 0.1f;
 
@@ -75,12 +75,12 @@ public class InfectionFeedback : MonoBehaviour
 
     private bool PuedeSonar()
     {
-        if (Time.time - tiempoUltimoSonidoJugado < cooldownSonido) return false; 
+        if (Time.time - tiempoUltimoSonidoJugado < cooldownSonido) return false;
         tiempoUltimoSonidoJugado = Time.time;
         return true;
     }
 
-    public void PlayEffect(Vector3 position, Color particleColor )
+    public void PlayEffect(Vector3 position, Color particleColor)
     {
         // VFX
         if (infection1Particles != null)
@@ -90,7 +90,7 @@ public class InfectionFeedback : MonoBehaviour
         }
 
         // SONIDO
-        if (audioSource != null && PuedeSonar()) 
+        if (audioSource != null && PuedeSonar())
         {
             ProcesarSonidoLogico(infectionSounds);
         }
@@ -110,7 +110,7 @@ public class InfectionFeedback : MonoBehaviour
 
     public void PlayPhaseChangeSound()
     {
-        if (audioSource != null && PuedeSonar()) 
+        if (audioSource != null && PuedeSonar())
         {
             ProcesarSonidoLogico(phaseChangeSounds);
         }
@@ -125,7 +125,7 @@ public class InfectionFeedback : MonoBehaviour
             int nota = ActualizarYObtenerNota();
 
             // 2. DECISIÓN:
-            if (nota == 0) 
+            if (nota == 0)
             {
                 // ES EL PRIMER GOLPE: Suena "normal" (sonido de impacto básico o el de la lista)
                 // Usamos el sonido básico para no gastar el efecto especial todavía
@@ -135,7 +135,7 @@ public class InfectionFeedback : MonoBehaviour
                     audioSource.PlayOneShot(sonidosPorDefecto[Random.Range(0, sonidosPorDefecto.Length)]);
                 }
             }
-            else 
+            else
             {
                 // ES EL SEGUNDO GOLPE O MÁS: ¡MÚSICA!
                 audioSource.pitch = escalaMayor[nota];
@@ -151,8 +151,8 @@ public class InfectionFeedback : MonoBehaviour
     }
 
     // --- RESTO IGUAL ---
-    public void PlayBasicImpactSoundAgainstWall() { if(audioSource!=null) audioSource.PlayOneShot(basicWallImpactSounds[0]); }
-    public void PlayBasicImpactSound() { if(audioSource!=null) audioSource.PlayOneShot(basicImpactSounds[0]); }
+    public void PlayBasicImpactSoundAgainstWall() { if (audioSource != null) audioSource.PlayOneShot(basicWallImpactSounds[0]); }
+    public void PlayBasicImpactSound() { if (audioSource != null) audioSource.PlayOneShot(basicImpactSounds[0]); }
 
     public void PlayBasicImpactEffectAgainstWall(Vector3 position, Color particleColor)
     {
@@ -166,7 +166,7 @@ public class InfectionFeedback : MonoBehaviour
         if (basicImpactParticles != null)
         {
             GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
-            if (vfx.GetComponent<ParticleSystem>() != null) 
+            if (vfx.GetComponent<ParticleSystem>() != null)
             {
                 var main = vfx.GetComponent<ParticleSystem>().main;
                 main.startSize = main.startSize.constant * 0.5f;
@@ -181,7 +181,7 @@ public class InfectionFeedback : MonoBehaviour
         if (infection1Particles != null) Instantiate(infection1Particles, position, Quaternion.identity);
         if (audioSource != null && bolaBlancaSounds.Length > 0)
         {
-            audioSource.pitch = Random.Range(0.85f, 1.15f); 
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
             audioSource.PlayOneShot(bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)]);
         }
         if (cameraTransform != null) StartCoroutine(Shake(3));
