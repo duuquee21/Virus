@@ -46,6 +46,8 @@ public class PersonaInfeccion : MonoBehaviour
     private Transform transformInfector;
     private Movement movementScript;
 
+    private Coroutine colorCoroutine;
+
 
 
     // --- REFERENCIA QUE FALTABA ---
@@ -145,7 +147,7 @@ public class PersonaInfeccion : MonoBehaviour
         if (faseActual < fasesSprites.Length)
         {
             ActualizarVisualFase();
-            StartCoroutine(FlashCambioFase());
+            IniciarCambioColor(FlashCambioFase());
 
             if (InfectionFeedback.instance != null)
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
@@ -200,7 +202,7 @@ public class PersonaInfeccion : MonoBehaviour
             Debug.LogError("!!! ERROR FATAL: LevelManager.instance es NULL. El script no encuentra al Manager.");
         }
 
-        StartCoroutine(InfectionColorSequence());
+        IniciarCambioColor(InfectionColorSequence());
     }
 
     void ActualizarVisualFase()
@@ -241,10 +243,14 @@ public class PersonaInfeccion : MonoBehaviour
 
     private IEnumerator FlashCambioFase()
     {
-        Color col = spritePersona.color;
+        // Guardamos el color que debería tener según su fase actual
+        Color colorObjetivo = (faseActual < coloresFases.Length) ? coloresFases[faseActual] : originalColor;
+
         spritePersona.color = Color.white;
         yield return new WaitForSeconds(0.05f);
-        spritePersona.color = col;
+
+        // Forzamos que vuelva al color de la fase, no al blanco
+        spritePersona.color = colorObjetivo;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -266,14 +272,19 @@ public class PersonaInfeccion : MonoBehaviour
     {
         spritePersona.color = Color.white;
         yield return new WaitForSeconds(flashDuration);
+
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
+            // Usamos una variable temporal para evitar saltos visuales
             spritePersona.color = Color.Lerp(Color.white, infectedColor, elapsed / fadeDuration);
             yield return null;
         }
+
+        // SEGURO: Forzamos el color final
         spritePersona.color = infectedColor;
+        colorCoroutine = null;
     }
 
     public void IntentarAvanzarFasePorChoque()
@@ -335,6 +346,12 @@ public class PersonaInfeccion : MonoBehaviour
         Debug.Log("<color=magenta>[PARED]</color> Choque detectado");
 
         IntentarAvanzarFasePorChoque();
+    }
+
+    private void IniciarCambioColor(IEnumerator nuevaCorrutina)
+    {
+        if (colorCoroutine != null) StopCoroutine(colorCoroutine);
+        colorCoroutine = StartCoroutine(nuevaCorrutina);
     }
 
 

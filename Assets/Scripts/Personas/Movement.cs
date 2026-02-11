@@ -103,7 +103,7 @@ public class Movement : MonoBehaviour
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
 
-            // Rebote de la direcci�n base
+            // Rebote de la direccion base
             direccion = Vector2.Reflect(direccion, normal).normalized;
 
             if (estaEmpujado)
@@ -157,24 +157,30 @@ public class Movement : MonoBehaviour
                 // 1. CÁLCULO DE FÍSICA
                 Vector2 puntoContacto = otro.ClosestPoint(transform.position);
                 Vector2 normalChoque = ((Vector2)transform.position - puntoContacto).normalized;
+
+                if (normalChoque.sqrMagnitude < 0.01f)
+                {
+                    normalChoque = ((Vector2)transform.position - (Vector2)otro.transform.position).normalized;
+                }
+
                 if (normalChoque == Vector2.zero) normalChoque = rbAtacante.linearVelocity.normalized;
 
                 float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
-                float mTransmision = 1f;
-                bool esVelocidadBaja = velocidadImpacto <= 6.5f;
+                float mTransmision = 1f;    
+                float velocidadMaximaEnChoque = Mathf.Max(rb.linearVelocity.magnitude, rbAtacante.linearVelocity.magnitude);
+                bool hayImpactoFuerte = velocidadMaximaEnChoque > 6.5f;
 
-                // 2. LÓGICA DE FASES
-                if (!esVelocidadBaja && Guardado.instance.paredInfectivaActiva)
+                if (hayImpactoFuerte && Guardado.instance.paredInfectivaActiva)
                 {
                     personaInfeccion.IntentarAvanzarFasePorChoque();
                     scriptAtacante.IntentarAvanzarFasePorChoque();
-                    Debug.Log("<color=green>Impacto fuerte detectado: Intentando avanzar fase.</color>");
+                    Debug.Log("Impacto fuerte detectado por cualquiera de los dos.");
                 }
-                else if(!esVelocidadBaja)
+                else if(hayImpactoFuerte)
                 {
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white,true);
                 }
-                else if(esVelocidadBaja)
+                else if(!hayImpactoFuerte)
                 {
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, false);
                 }
@@ -187,17 +193,16 @@ public class Movement : MonoBehaviour
                 else if (Guardado.instance.carambolaProActiva)
                 {
                     // Pro: 100% en velocidad baja, 50% en velocidad alta
-                    mTransmision = esVelocidadBaja ? 1f : 0.75f;
+                    mTransmision = hayImpactoFuerte ? 0.75f : 1f;
                 }
                 else if (Guardado.instance.carambolaNormalActiva)
                 {
                     // Normal: 100% en velocidad baja, 15% en velocidad alta
-                    mTransmision = esVelocidadBaja ? 1f : 0.15f;
+                    mTransmision = hayImpactoFuerte ? 0.15f : 1f;
                 }
 
                 // 4. APLICACIÓN DE VELOCIDADES CON LÓGICA DE FASE MÁXIMA
-                float fuerzaExtra = esVelocidadBaja ? 1.2f : 1f;
-
+                float fuerzaExtra = hayImpactoFuerte ? 1.2f : 1f;
                 // Lógica para el receptor (this)
                 if (personaInfeccion.EsFaseMaxima()&&Guardado.instance.paredInfectivaActiva)
                 {
@@ -209,9 +214,9 @@ public class Movement : MonoBehaviour
                 }
 
                 // Lógica para el atacante (otro)
-                float factorReboteAtacante = esVelocidadBaja ? 0.8f : mTransmision;
+                float factorReboteAtacante = hayImpactoFuerte ? 0.8f : mTransmision;
                 if (scriptAtacante.EsFaseMaxima())
-                {
+                {   
                     rbAtacante.linearVelocity = -normalChoque * 22.5f;
                 }
                 else
