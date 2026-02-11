@@ -44,6 +44,11 @@ public class LevelManager : MonoBehaviour
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
 
+
+    [Header("Configuración Inicial por Zona")]
+    public int[] faseInicialPorMapa;
+
+
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
     [HideInInspector] public int contagionCoins;

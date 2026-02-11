@@ -139,7 +139,6 @@ public class PopulationManager : MonoBehaviour
             }
         }
     }
-
     void SpawnPerson()
     {
         if (currentPrefab == null || currentSpawnCollider == null) return;
@@ -148,6 +147,18 @@ public class PopulationManager : MonoBehaviour
         if (!currentSpawnCollider.OverlapPoint(spawnPos)) return;
 
         GameObject newPerson = Instantiate(currentPrefab, spawnPos, Quaternion.identity);
+
+        // 🔥 NUEVO: aplicar fase según mapa
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+        PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
+        if (script != null && LevelManager.instance != null)
+        {
+            if (currentMap < LevelManager.instance.faseInicialPorMapa.Length)
+            {
+                script.EstablecerFaseDirecta(LevelManager.instance.faseInicialPorMapa[currentMap]);
+            }
+        }
 
         Vector3 targetScale = newPerson.transform.localScale;
         newPerson.transform.localScale = Vector3.zero;

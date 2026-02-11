@@ -26302,11 +26302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationManager
   personPrefabs:
-  - {fileID: 721460322803742226, guid: e03f34b674809684eb98b1b7fd010be1, type: 3}
   - {fileID: 721460322803742226, guid: 97a678ff9fed10b449ca29ee49abacd0, type: 3}
-  - {fileID: 721460322803742226, guid: f9037910fa7c4c941bf89a55919f1636, type: 3}
-  - {fileID: 721460322803742226, guid: 943c7809a43780a47a4ff80b9a80719b, type: 3}
-  - {fileID: 721460322803742226, guid: 3675eacfc16703444a65af482e9b7e05, type: 3}
   spawnInterval: 3
   maxPopulation: 15
   baseMaxPopulation: 15
@@ -30347,6 +30343,7 @@ MonoBehaviour:
   shinyStoreTexts: []
   gameDuration: 5
   maxInfectionsPerRound: 5
+  faseInicialPorMapa: 020000000100000002000000
   isGameActive: 0
   currentSessionInfected: 0
   contagionCoins: 0
