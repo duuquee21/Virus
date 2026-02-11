@@ -9,6 +9,8 @@ public class Movement : MonoBehaviour
     private bool estaGirando = false;
     private PersonaInfeccion personaInfeccion;
 
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,16 +22,28 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
+        // 1. Definimos la velocidad objetivo
+        float velocidadObjetivo = velocidadBase;
+
+        // Si está infectado, su velocidad objetivo sube a 20f
+        if (personaInfeccion != null && personaInfeccion.alreadyInfected)
+        {
+            velocidadObjetivo = 20f;
+        }
+
         if (!estaEmpujado)
         {
-            if (personaInfeccion.alreadyInfected)
-            {
-                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 22.5f);
-            }
-            // En lugar de MovePosition, asignamos velocidad constante.
-            // Esto ayuda a que el motor detecte mejor los triggers al moverse.
-            rb.linearVelocity = direccion * velocidadBase;
+            // 2. RECUPERACIÓN DE VELOCIDAD
+            // Usamos MoveTowards para que si la velocidad bajó por un choque, 
+            // suba rápidamente de nuevo hacia la velocidad objetivo (20f si está infectado)
+            float aceleracionRapida = 50f; // Ajusta este valor para una recuperación más o menos súbita
 
+            Vector2 velocidadActual = rb.linearVelocity;
+            Vector2 velocidadDeseada = direccion * velocidadObjetivo;
+
+            rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
+
+            // Limpieza de rotación
             if (!estaGirando && rb.angularVelocity != 0)
             {
                 rb.angularVelocity = 0;
@@ -37,12 +51,15 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if (personaInfeccion.alreadyInfected)
+            // Lógica cuando ha sido empujado (Knockback)
+            // Limitamos la velocidad máxima si está infectado para que no salga disparado al infinito
+            if (personaInfeccion != null && personaInfeccion.alreadyInfected)
             {
-                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 22.5f);
+                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 25f);
             }
-            // Lógica de frenado por fricción natural o manual
-            if (rb.linearVelocity.magnitude <= velocidadBase)
+
+            // Si la velocidad cae por debajo de la base, recuperamos el control
+            if (rb.linearVelocity.magnitude <= velocidadObjetivo)
             {
                 if (rb.linearVelocity.magnitude > 0.1f)
                 {
@@ -116,6 +133,15 @@ public class Movement : MonoBehaviour
         }
         else if (!personaInfeccion.alreadyInfected && otro.CompareTag("Persona"))
         {
+            PersonaInfeccion scriptAtacante = otro.GetComponent<PersonaInfeccion>();
+
+            // NUEVA CONDICIÓN: Si el otro está infectado, ignoramos el rebote manual
+            if (scriptAtacante != null && scriptAtacante.alreadyInfected)
+            {
+                personaInfeccion.IntentarAvanzarFasePorChoque();
+                scriptAtacante.IntentarAvanzarFasePorChoque();
+                return;
+            }
             if (Guardado.instance == null) return;
 
             if (!Guardado.instance.carambolaNormalActiva &&
@@ -125,8 +151,7 @@ public class Movement : MonoBehaviour
 
             Rigidbody2D rbAtacante = otro.GetComponent<Rigidbody2D>();
             Movement movAtacante = otro.GetComponent<Movement>();
-            PersonaInfeccion scriptAtacante = otro.GetComponent<PersonaInfeccion>();
-
+           
             if (rbAtacante != null && movAtacante != null && scriptAtacante != null)
             {
                 // 1. CÁLCULO DE FÍSICA

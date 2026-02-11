@@ -89,11 +89,6 @@ public class InfectionFeedback : MonoBehaviour
 
         PlayPhaseChangeSound();
 
-        // 3. SHAKE DE CÁMARA
-        if (cameraTransform != null)
-        {
-            StartCoroutine(Shake(1));
-        }
     }
 
     public void PlayPhaseChangeSound()

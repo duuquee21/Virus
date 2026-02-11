@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic; // Necesario para el Dictionary
 
 public class PlanetCrontrollator : MonoBehaviour
 {
@@ -10,75 +11,81 @@ public class PlanetCrontrollator : MonoBehaviour
     [Header("UI")]
     public Image healthBar;
 
+    // SISTEMA DE SEGURIDAD: Guarda el tiempo del último impacto por cada objeto
+    private Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
+    private float cooldownTime = 0.1f;
+
     void Start()
     {
         currentHealth = maxHealth;
         ActualizarUI();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // Método centralizado para procesar el impacto y evitar repetición
+    private void ProcesarImpacto(GameObject obj, Vector3 posicion)
     {
-        if (collision.gameObject.CompareTag("Persona"))
+        int id = obj.GetInstanceID();
+
+        if (lastImpactTimes.ContainsKey(id) && Time.time < lastImpactTimes[id] + cooldownTime)
+            return;
+
+        lastImpactTimes[id] = Time.time;
+
+        PersonaInfeccion scriptInfeccion = obj.GetComponent<PersonaInfeccion>();
+        if (scriptInfeccion == null) return;
+
+        float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
+
+        // CASO 1: YA ESTÁ INFECTADO (Explosión)
+        if (scriptInfeccion.alreadyInfected)
         {
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            PersonaInfeccion scriptInfeccion = collision.gameObject.GetComponent<PersonaInfeccion>();
+            InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
+            TakeDamage(dañoCalculado);
+            Destroy(obj);
+            return;
+        }
 
-            if (scriptInfeccion != null)
+        // CASO 2: IMPACTO FÍSICO
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            float fuerzaImpacto = rb.linearVelocity.magnitude;
+            if (fuerzaImpacto > 6.5f)
             {
-                // Obtenemos el daño según la forma
-                float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
+                TakeDamage(dañoCalculado);
 
-                // CASO 1: YA ESTÁ INFECTADO (Explosión al chocar)
-                if (scriptInfeccion.alreadyInfected)
+                if (Guardado.instance != null)
                 {
-                    InfectionFeedback.instance.PlayUltraEffect(collision.transform.position, Color.white);
-                    TakeDamage(dañoCalculado);
-                    Destroy(collision.gameObject);
-                    return;
-                }
-
-                // CASO 2: IMPACTO FÍSICO (Forma no infectada)
-                if (rb != null)
-                {
-                    // Usamos linearVelocity para versiones modernas de Unity, o velocity para antiguas
-                    float fuerzaImpacto = rb.linearVelocity.magnitude;
-
-                    if (fuerzaImpacto > 6.5f)
-                    {
-                        // El planeta siempre recibe daño si el golpe es fuerte
-                        TakeDamage(dañoCalculado);
-
-                        // LÓGICA DE PARED INFECTIVA POR FASES
-                        if (Guardado.instance != null && Guardado.instance.paredInfectivaActiva)
-                        {
-                            int nivelPared = Guardado.instance.nivelParedInfectiva;
-
-                            // IMPORTANTE: Asegúrate que en PersonaInfeccion la variable se llame 'faseActual'
-                            // Hexágono = 0, Pentágono = 1, Cuadrado = 2, Triángulo = 3, Círculo = 4
-                            int faseForma = scriptInfeccion.faseActual;
-
-                            // Si nivel es 1, infecta fase 0. Si nivel es 2, infecta 0 y 1...
-                            if (nivelPared > faseForma)
-                            {
-                                Debug.Log($"<color=green>[Pared]</color> Nivel {nivelPared} INFECTA a Fase {faseForma}");
-                                scriptInfeccion.IntentarAvanzarFasePorChoque();
-                            }
-                            else
-                            {
-                                // El nivel de la pared es muy bajo para esta forma
-                                Debug.Log($"<color=orange>[Pared]</color> Nivel {nivelPared} es insuficiente para Fase {faseForma}");
-                                InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
-                            }
-                        }
-                        else
-                        {
-                            // Si la habilidad no está comprada, solo hace efecto visual de chispa
-                            InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(collision.transform.position, Color.white);
-                        }
-                    }
+                    if (Guardado.instance.paredInfectivaActiva)
+                        scriptInfeccion.IntentarAvanzarFasePorChoque();
+                    else
+                        InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
                 }
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Persona"))
+        {
+            ProcesarImpacto(collision.gameObject, collision.transform.position);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Persona"))
+        {
+            ProcesarImpacto(collision.gameObject, collision.transform.position);
+        }
+    }
+
+    // Limpieza opcional: Para evitar que el diccionario crezca infinitamente
+    private void Update()
+    {
+        // Cada cierto tiempo podrías limpiar IDs antiguos, 
+        // aunque para un juego pequeño no es crítico.
     }
 
     public void TakeDamage(float amount)
@@ -86,29 +93,18 @@ public class PlanetCrontrollator : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         ActualizarUI();
-
-        Debug.Log($"<color=red>Daño al Planeta: {amount}. Vida: {currentHealth}</color>");
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
+        if (currentHealth <= 0) Die();
     }
 
     void ActualizarUI()
     {
-        if (healthBar != null)
-        {
-            healthBar.fillAmount = currentHealth / maxHealth;
-        }
+        if (healthBar != null) healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     void Die()
     {
-        if (LevelManager.instance != null)
-        {
-            LevelManager.instance.NextMapTransition();
-        }
+        if (LevelManager.instance != null) LevelManager.instance.NextMapTransition();
         this.enabled = false;
     }
 }
