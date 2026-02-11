@@ -170,17 +170,21 @@ public class Movement : MonoBehaviour
                 float velocidadMaximaEnChoque = Mathf.Max(rb.linearVelocity.magnitude, rbAtacante.linearVelocity.magnitude);
                 bool hayImpactoFuerte = velocidadMaximaEnChoque > 6.5f;
 
-                if (hayImpactoFuerte && Guardado.instance.paredInfectivaActiva)
+                if (hayImpactoFuerte && (Guardado.instance.nivelParedInfectiva > personaInfeccion.faseActual))
                 {
                     personaInfeccion.IntentarAvanzarFasePorChoque();
+                    Debug.Log("Impacto fuerte detectado por cualquiera de los dos.");
+                }
+                if (hayImpactoFuerte && (Guardado.instance.nivelParedInfectiva > scriptAtacante.faseActual))
+                {
                     scriptAtacante.IntentarAvanzarFasePorChoque();
                     Debug.Log("Impacto fuerte detectado por cualquiera de los dos.");
                 }
-                else if(hayImpactoFuerte)
+                else if (hayImpactoFuerte)
                 {
-                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white,true);
+                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
                 }
-                else if(!hayImpactoFuerte)
+                else if (!hayImpactoFuerte)
                 {
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, false);
                 }

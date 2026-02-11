@@ -56,7 +56,7 @@ public class PlanetCrontrollator : MonoBehaviour
 
                 if (Guardado.instance != null)
                 {
-                    if (Guardado.instance.paredInfectivaActiva)
+                    if (Guardado.instance.nivelParedInfectiva > scriptInfeccion.faseActual)
                         scriptInfeccion.IntentarAvanzarFasePorChoque();
                     else
                         InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
