@@ -87,7 +87,7 @@ public class StaticBumper : MonoBehaviour
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
 
-            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f)
+            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f &&  Guardado.instance.virusReboteActiva)
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);

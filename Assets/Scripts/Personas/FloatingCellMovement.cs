@@ -115,6 +115,10 @@ public class FloatingCellMovement : MonoBehaviour
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
+                if (audioSource != null && reboteVirusClip != null)
+                {
+                    audioSource.PlayOneShot(reboteVirusClip);
+                }
             }
         }
     }

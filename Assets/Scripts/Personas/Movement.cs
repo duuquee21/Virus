@@ -111,7 +111,7 @@ public class Movement : MonoBehaviour
                 // Calculamos el nuevo vector de rebote
                 Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
 
-                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.paredInfectivaActiva)
+                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.nivelParedInfectiva == 6)
                 {
                     Debug.Log("<color=blue>Rebote de Fase Final: Velocidad Constante Aplicada.</color>");
 
@@ -192,12 +192,12 @@ public class Movement : MonoBehaviour
                 if (Guardado.instance.carambolaSupremaActiva)
                 {
                     // Megapro (Suprema): Siempre transmite el 100%
-                    mTransmision = 1f;
+                    mTransmision = hayImpactoFuerte ? 1f : 1f;
                 }
                 else if (Guardado.instance.carambolaProActiva)
                 {
                     // Pro: 100% en velocidad baja, 50% en velocidad alta
-                    mTransmision = hayImpactoFuerte ? 0.75f : 1f;
+                    mTransmision = hayImpactoFuerte ? 0.5f : 1f;
                 }
                 else if (Guardado.instance.carambolaNormalActiva)
                 {
@@ -208,7 +208,7 @@ public class Movement : MonoBehaviour
                 // 4. APLICACIÓN DE VELOCIDADES CON LÓGICA DE FASE MÁXIMA
                 float fuerzaExtra = hayImpactoFuerte ? 1.2f : 1f;
                 // Lógica para el receptor (this)
-                if (personaInfeccion.EsFaseMaxima()&&Guardado.instance.paredInfectivaActiva)
+                if (personaInfeccion.EsFaseMaxima()&&Guardado.instance.nivelParedInfectiva == 6)
                 {
                     rb.linearVelocity = normalChoque * 22.5f;
                 }

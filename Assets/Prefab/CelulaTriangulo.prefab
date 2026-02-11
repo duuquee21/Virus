@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 90
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.20000002, g: 0.20000002, b: 0.20000002, a: 1}
   m_FlipX: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   fuerzaRetroceso: 20
   fuerzaRotacion: 12.5
   alreadyInfected: 0
+  faseActual: 0
   particulasDeFuego: {fileID: 675135378299861466}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
@@ -206,7 +207,7 @@ MonoBehaviour:
   scaleMultiplier: 2
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  shadowOrder: -1
+  shadowOrder: 1
 --- !u!50 &2737708874454977866
 Rigidbody2D:
   serializedVersion: 5
@@ -449,7 +450,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 89
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6959222624884858417
 MonoBehaviour:
