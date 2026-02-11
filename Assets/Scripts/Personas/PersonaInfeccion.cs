@@ -11,6 +11,8 @@ public class PersonaInfeccion : MonoBehaviour
     public Sprite[] contornosFases;
     public Color[] coloresFases;
 
+
+    public static int[] evolucionesEntreFases = new int[5];
     [Header("Dificultad por Fase")]
     [Tooltip("Multiplicador de tiempo: 1 = 2s, 1.5 = 3s, etc.")]
     public float[] resistenciaPorFase = { 1f, 1.2f, 1.5f, 1.8f, 2.2f };
@@ -132,17 +134,26 @@ public class PersonaInfeccion : MonoBehaviour
 
     void IntentarAvanzarFase()
     {
+        int faseAnterior = faseActual; // <-- DEBUG: guardamos fase antes del cambio
+
         if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
         {
-            
             int puntosAVisualizar = monedasPorFase[faseActual];
-
-         
             LevelManager.instance.MostrarPuntosVoladores(transform.position, puntosAVisualizar);
         }
 
         currentInfectionTime = 0f;
         faseActual++;
+
+        // Guardar estadística de evolución
+        if (faseAnterior < evolucionesEntreFases.Length)
+        {
+            evolucionesEntreFases[faseAnterior]++;
+            Debug.Log($"[ESTADÍSTICA] Evolución {faseAnterior} → {faseActual} | Total: {evolucionesEntreFases[faseAnterior]}");
+        }
+
+
+        Debug.Log($"[EVOLUCIÓN ZONA] {gameObject.name} pasó de Fase {faseAnterior} a Fase {faseActual}");
 
         if (faseActual < fasesSprites.Length)
         {
@@ -160,12 +171,8 @@ public class PersonaInfeccion : MonoBehaviour
         }
         else
         {
+            Debug.Log($"[EVOLUCIÓN FINAL] {gameObject.name} alcanzó infección completa desde Fase {faseAnterior}");
             BecomeInfected();
-            if (transformInfector != null && movementScript != null)
-            {
-                Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
-                movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
-            }
         }
     }
 

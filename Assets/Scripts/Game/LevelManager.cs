@@ -270,6 +270,13 @@ public class LevelManager : MonoBehaviour
 
         isGameActive = true;
         currentSessionInfected = 0;
+
+        // Reset estadísticas de evolución entre fases
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        {
+            PersonaInfeccion.evolucionesEntreFases[i] = 0;
+        }
+
         currentTimer = gameDuration;
 
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();

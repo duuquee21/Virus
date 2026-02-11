@@ -14,6 +14,9 @@ public class EndDayResultsPanel : MonoBehaviour
     public TextMeshProUGUI zoneText;
     public TextMeshProUGUI finalCoinsText;
 
+    [Header("Evolución por Fases")]
+    public TextMeshProUGUI fasesEvolutionText;
+
     [Header("Shiny UI")]
     public TextMeshProUGUI shinyFoundText;
     public TextMeshProUGUI shinyMultiplierText;
@@ -31,6 +34,8 @@ public class EndDayResultsPanel : MonoBehaviour
     private int finalShinies;
     private bool isAnimating = false;
     private bool skipRequested = false;
+    private string fullFasesEvolution;
+
 
     // Guardamos los strings para el salto instantáneo
     private string fullInfected, fullMult, fullZone, fullFinalCoins;
@@ -65,6 +70,15 @@ public class EndDayResultsPanel : MonoBehaviour
         continueButton.gameObject.SetActive(true);
         if (buttonText != null) buttonText.text = "Omitir";
 
+        // Construimos texto de evoluciones entre fases
+        fullFasesEvolution =
+            "Evoluciones:\n" +
+            "0 → 1: " + PersonaInfeccion.evolucionesEntreFases[0] + "\n" +
+            "1 → 2: " + PersonaInfeccion.evolucionesEntreFases[1] + "\n" +
+            "2 → 3: " + PersonaInfeccion.evolucionesEntreFases[2] + "\n" +
+            "3 → 4: " + PersonaInfeccion.evolucionesEntreFases[3];
+
+
         StartCoroutine(AnimateResults());
     }
 
@@ -94,6 +108,10 @@ public class EndDayResultsPanel : MonoBehaviour
         if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
 
         yield return StartCoroutine(TypeText(shinyFinalText, fullShinyFinal));
+
+        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
+
+        yield return StartCoroutine(TypeText(fasesEvolutionText, fullFasesEvolution));
 
         // Finalizar
         FinishAnimation();
@@ -133,6 +151,8 @@ public class EndDayResultsPanel : MonoBehaviour
         shinyFoundText.text = fullShinyFound;
         shinyMultiplierText.text = fullShinyMult;
         shinyFinalText.text = fullShinyFinal;
+        fasesEvolutionText.text = fullFasesEvolution;
+
     }
 
     public void OnClickContinue()
@@ -154,5 +174,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         infectedText.text = multiplierText.text = zoneText.text = finalCoinsText.text = "";
         shinyFoundText.text = shinyMultiplierText.text = shinyFinalText.text = "";
+        fasesEvolutionText.text = "";
     }
+
 }
