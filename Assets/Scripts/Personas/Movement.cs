@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
@@ -109,6 +109,8 @@ public class Movement : MonoBehaviour
             {
                 Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
                 if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.nivelParedInfectiva == 6)
+
+                if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.nivelParedInfectiva == 5)
                 {
                     Vector2 direccionRebote = Vector2.Reflect(rb.linearVelocity, normal).normalized;
                     rb.linearVelocity = direccionRebote * 30f;
@@ -202,9 +204,8 @@ public class Movement : MonoBehaviour
                 else if (Guardado.instance.carambolaNormalActiva) mTransmision = hayImpactoFuerte ? 0.15f : 1f;
 
                 float fuerzaExtra = hayImpactoFuerte ? 1.2f : 1f;
-                
-                // Aplicar velocidad a "Este"
-                if (personaInfeccion.EsFaseMaxima() && Guardado.instance.nivelParedInfectiva == 6)
+                // Lógica para el receptor (this)
+                if (personaInfeccion.EsFaseMaxima()&&Guardado.instance.nivelParedInfectiva == 5)
                 {
                     rb.linearVelocity = normalChoque * 22.5f;
                 }
