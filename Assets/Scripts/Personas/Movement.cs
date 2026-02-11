@@ -141,8 +141,10 @@ public class Movement : MonoBehaviour
                 // Solo el objeto con el ID menor ejecuta la lógica para evitar duplicidad
                 if (gameObject.GetInstanceID() < otro.gameObject.GetInstanceID())
                 {
-                    personaInfeccion.IntentarAvanzarFasePorChoque();
-                    scriptAtacante.IntentarAvanzarFasePorChoque();
+                    personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+
+
+                    scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
                 }
                 return;
             }
@@ -181,13 +183,15 @@ public class Movement : MonoBehaviour
                     {
                         if (Guardado.instance.nivelParedInfectiva > personaInfeccion.faseActual)
                         {
-                            personaInfeccion.IntentarAvanzarFasePorChoque();
+                            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
                         }
+
                         if (Guardado.instance.nivelParedInfectiva > scriptAtacante.faseActual)
                         {
-                            scriptAtacante.IntentarAvanzarFasePorChoque();
+                            scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
                         }
                     }
+
                 }
                 else if (hayImpactoFuerte)
                 {

@@ -9,37 +9,45 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("UI")]
     public GameObject panel;
-    public TextMeshProUGUI infectedText;
-    public TextMeshProUGUI multiplierText;
-    public TextMeshProUGUI zoneText;
-    public TextMeshProUGUI finalCoinsText;
 
-    [Header("Evolución por Fases")]
-    public TextMeshProUGUI fasesEvolutionText;
-
-    [Header("Shiny UI")]
-    public TextMeshProUGUI shinyFoundText;
-    public TextMeshProUGUI shinyMultiplierText;
-    public TextMeshProUGUI shinyFinalText;
+    [Header("Evoluciones")]
+    public TextMeshProUGUI zonaEvolutionText;
+    public TextMeshProUGUI choqueEvolutionText;
+    public TextMeshProUGUI carambolaEvolutionText;
 
     [Header("Button Config")]
     public Button continueButton;
-    public TextMeshProUGUI buttonText; // Arrastra el texto del botón aquí en el inspector
+    public TextMeshProUGUI buttonText;
 
-    [Header("Timing (Unscaled)")]
+    [Header("Monedas")]
+    public TextMeshProUGUI monedasPartidaText;
+    public TextMeshProUGUI monedasTotalesText;
+
+
+    [Header("Timing")]
     public float letterSpeed = 0.03f;
     public float stepDelay = 0.5f;
 
-    private int finalCoins;
-    private int finalShinies;
     private bool isAnimating = false;
     private bool skipRequested = false;
-    private string fullFasesEvolution;
+
+    private string fullZonaEvolution;
+    private string fullChoqueEvolution;
+    private string fullCarambolaEvolution;
+
+    private string fullMonedasPartida;
+    private string fullMonedasTotales;
 
 
-    // Guardamos los strings para el salto instantáneo
-    private string fullInfected, fullMult, fullZone, fullFinalCoins;
-    private string fullShinyFound, fullShinyMult, fullShinyFinal;
+    // Nombres reales de tus fases (orden correcto según tu sistema)
+    private readonly string[] nombresFases =
+    {
+        "Hexágono",
+        "Pentágono",
+        "Cuadrado",
+        "Triángulo",
+        "Círculo"
+    };
 
     void Awake()
     {
@@ -47,37 +55,50 @@ public class EndDayResultsPanel : MonoBehaviour
         panel.SetActive(false);
     }
 
-    public void ShowResults(int infected, int baseMultiplier, int zoneMultiplier, int shiniesCaptured, int shinyMultiplier)
+    public void ShowResults(int monedasGanadas, int monedasTotales)
     {
-        // Calculamos valores finales
-        finalCoins = infected * baseMultiplier * zoneMultiplier;
-        finalShinies = shiniesCaptured * shinyMultiplier;
+        Time.timeScale = 0f;
+        // ---- MONEDAS ----
+        fullMonedasPartida = "<b>Monedas ganadas:</b> " + monedasGanadas;
+        fullMonedasTotales = "<b>Monedas totales:</b> " + monedasTotales;
 
-        // Preparamos los textos
-        fullInfected = "Infectados: " + infected;
-        fullMult = "x " + baseMultiplier;
-        fullZone = "x " + zoneMultiplier;
-        fullFinalCoins = "= " + finalCoins + " monedas";
+        // ---------------- ZONA ----------------
+        fullZonaEvolution = "<b>Evoluciones por Zona</b>\n\n";
 
-        fullShinyFound = "Shinys capturados: " + shiniesCaptured;
-        fullShinyMult = "x " + shinyMultiplier;
-        fullShinyFinal = "= " + finalShinies + " ADN Shiny";
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length - 1; i++)
+        {
+            fullZonaEvolution +=
+                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
+                PersonaInfeccion.evolucionesEntreFases[i] + "\n";
+        }
+
+        // ---------------- PARED ----------------
+        fullChoqueEvolution = "\n<b>Evoluciones por Pared</b>\n\n";
+
+        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length - 1; i++)
+        {
+            fullChoqueEvolution +=
+                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
+                PersonaInfeccion.evolucionesPorChoque[i] + "\n";
+        }
+
+        // ---------------- CARAMBOLA ----------------
+        fullCarambolaEvolution = "\n<b>Evoluciones por Carambola</b>\n\n";
+
+        for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length - 1; i++)
+        {
+            fullCarambolaEvolution +=
+                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
+                PersonaInfeccion.evolucionesCarambola[i] + "\n";
+        }
 
         panel.SetActive(true);
 
-        // Configuramos botón como "Omitir"
         skipRequested = false;
         continueButton.gameObject.SetActive(true);
-        if (buttonText != null) buttonText.text = "Omitir";
 
-        // Construimos texto de evoluciones entre fases
-        fullFasesEvolution =
-            "Evoluciones:\n" +
-            "0 → 1: " + PersonaInfeccion.evolucionesEntreFases[0] + "\n" +
-            "1 → 2: " + PersonaInfeccion.evolucionesEntreFases[1] + "\n" +
-            "2 → 3: " + PersonaInfeccion.evolucionesEntreFases[2] + "\n" +
-            "3 → 4: " + PersonaInfeccion.evolucionesEntreFases[3];
-
+        if (buttonText != null)
+            buttonText.text = "Omitir";
 
         StartCoroutine(AnimateResults());
     }
@@ -87,39 +108,28 @@ public class EndDayResultsPanel : MonoBehaviour
         isAnimating = true;
         ClearTexts();
 
-        // Secuencia de Monedas
-        yield return StartCoroutine(TypeText(infectedText, fullInfected));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
+        yield return StartCoroutine(TypeText(zonaEvolutionText, fullZonaEvolution));
+        yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(multiplierText, fullMult));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
+        yield return StartCoroutine(TypeText(choqueEvolutionText, fullChoqueEvolution));
+        yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(zoneText, fullZone));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
+        yield return StartCoroutine(TypeText(carambolaEvolutionText, fullCarambolaEvolution));
+        yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(finalCoinsText, fullFinalCoins));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay * 1.5f);
+        yield return StartCoroutine(TypeText(monedasPartidaText, fullMonedasPartida));
+        yield return new WaitForSecondsRealtime(stepDelay);
 
-        // Secuencia de Shinies
-        yield return StartCoroutine(TypeText(shinyFoundText, fullShinyFound));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
+        yield return StartCoroutine(TypeText(monedasTotalesText, fullMonedasTotales));
 
-        yield return StartCoroutine(TypeText(shinyMultiplierText, fullShinyMult));
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        yield return StartCoroutine(TypeText(shinyFinalText, fullShinyFinal));
-
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        yield return StartCoroutine(TypeText(fasesEvolutionText, fullFasesEvolution));
-
-        // Finalizar
         FinishAnimation();
     }
+
 
     IEnumerator TypeText(TextMeshProUGUI textComponent, string fullText)
     {
         textComponent.text = "";
+
         if (skipRequested)
         {
             textComponent.text = fullText;
@@ -129,11 +139,13 @@ public class EndDayResultsPanel : MonoBehaviour
         foreach (char c in fullText)
         {
             textComponent.text += c;
+
             if (skipRequested)
             {
                 textComponent.text = fullText;
                 yield break;
             }
+
             yield return new WaitForSecondsRealtime(letterSpeed);
         }
     }
@@ -141,40 +153,39 @@ public class EndDayResultsPanel : MonoBehaviour
     void FinishAnimation()
     {
         isAnimating = false;
-        if (buttonText != null) buttonText.text = "Continuar";
 
-        // Aseguramos que todos los textos estén completos por si hubo skip
-        infectedText.text = fullInfected;
-        multiplierText.text = fullMult;
-        zoneText.text = fullZone;
-        finalCoinsText.text = fullFinalCoins;
-        shinyFoundText.text = fullShinyFound;
-        shinyMultiplierText.text = fullShinyMult;
-        shinyFinalText.text = fullShinyFinal;
-        fasesEvolutionText.text = fullFasesEvolution;
+        if (buttonText != null)
+            buttonText.text = "Continuar";
+
+        zonaEvolutionText.text = fullZonaEvolution;
+        choqueEvolutionText.text = fullChoqueEvolution;
+        carambolaEvolutionText.text = fullCarambolaEvolution;
+        monedasPartidaText.text = fullMonedasPartida;
+        monedasTotalesText.text = fullMonedasTotales;
 
     }
-
     public void OnClickContinue()
     {
         if (isAnimating)
         {
-            // Si está animando, marcamos el skip
             skipRequested = true;
         }
         else
         {
-            // Si ya terminó, cerramos y volvemos al Manager
             panel.SetActive(false);
-            LevelManager.instance.OnEndDayResultsFinished(finalCoins, finalShinies);
+            Time.timeScale = 1f; // Reanuda el juego
+            LevelManager.instance.OnEndDayResultsFinished(0, 0);
         }
     }
 
     void ClearTexts()
     {
-        infectedText.text = multiplierText.text = zoneText.text = finalCoinsText.text = "";
-        shinyFoundText.text = shinyMultiplierText.text = shinyFinalText.text = "";
-        fasesEvolutionText.text = "";
+        zonaEvolutionText.text = "";
+        choqueEvolutionText.text = "";
+        carambolaEvolutionText.text = "";
+        monedasPartidaText.text = "";
+        monedasTotalesText.text = "";
     }
+
 
 }

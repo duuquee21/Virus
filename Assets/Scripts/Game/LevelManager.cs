@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     public Button continueButton;
     public TextMeshProUGUI continueInfoText;
 
+
+
     [Header("Sistema de Zonas")]
     public GameObject[] mapList;
 
@@ -43,6 +45,7 @@ public class LevelManager : MonoBehaviour
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
+    [HideInInspector] public int monedasGanadasSesion;
 
 
     [Header("Configuración Inicial por Zona")]
@@ -89,9 +92,11 @@ public class LevelManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        contagionCoins += amount;
+        contagionCoins += amount;        // Total acumulado
+        monedasGanadasSesion += amount;  // Solo esta partida
         UpdateUI();
     }
+
 
     public void RegisterInfection()
     {
@@ -270,11 +275,17 @@ public class LevelManager : MonoBehaviour
 
         isGameActive = true;
         currentSessionInfected = 0;
+        monedasGanadasSesion = 0;
+
 
         // Reset estadísticas de evolución entre fases
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
             PersonaInfeccion.evolucionesEntreFases[i] = 0;
+        }
+        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
+        {
+            PersonaInfeccion.evolucionesPorChoque[i] = 0;
         }
 
         currentTimer = gameDuration;
@@ -303,8 +314,13 @@ public class LevelManager : MonoBehaviour
 
         if (EndDayResultsPanel.instance != null)
         {
-            EndDayResultsPanel.instance.ShowResults(currentSessionInfected, baseMultiplier, zoneMultiplier, 0, 1);
+            EndDayResultsPanel.instance.ShowResults(
+                monedasGanadasSesion,
+                contagionCoins
+            );
         }
+
+
 
         if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
     }

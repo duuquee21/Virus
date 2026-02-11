@@ -13,6 +13,8 @@ public class PersonaInfeccion : MonoBehaviour
 
 
     public static int[] evolucionesEntreFases = new int[5];
+    public static int[] evolucionesPorChoque = new int[5];
+    public static int[] evolucionesCarambola = new int[5];
     [Header("Dificultad por Fase")]
     [Tooltip("Multiplicador de tiempo: 1 = 2s, 1.5 = 3s, etc.")]
     public float[] resistenciaPorFase = { 1f, 1.2f, 1.5f, 1.8f, 2.2f };
@@ -69,6 +71,11 @@ public class PersonaInfeccion : MonoBehaviour
 
         ActualizarVisualFase();
         ActualizarProgresoBarras(0f);
+    }
+    public enum TipoChoque
+    {
+        Wall,
+        Carambola
     }
 
     void Update()
@@ -293,55 +300,38 @@ public class PersonaInfeccion : MonoBehaviour
         spritePersona.color = infectedColor;
         colorCoroutine = null;
     }
-
-    public void IntentarAvanzarFasePorChoque()
+    public void IntentarAvanzarFasePorChoque(TipoChoque tipo)
     {
         if (alreadyInfected) return;
 
-        // --- Lógica de Duplicación (Mantenemos tu código) ---
-        if (Guardado.instance != null)
-        {
-            float probActual = Guardado.instance.probabilidadDuplicarChoque;
-            if (Random.value <= probActual)
-            {
-                PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-                if (pm != null) pm.InstanciarCopia(transform.position, faseActual, this.gameObject);
-            }
-        }
-
-        // --- LÓGICA DE EVOLUCIÓN POR PARED ---
-        // Obtenemos el nivel de la pared para saber qué tan fuerte es el impacto
-        int nivelPared = Guardado.instance != null ? Guardado.instance.nivelParedInfectiva : 0;
-
-        // Si el nivel de la pared es mucho mayor que la fase actual, 
-        // podemos hacer que se infecte del todo o que avance varias fases.
-        // Por ahora, haremos que avance a la siguiente fase de forma segura:
+        int faseAnterior = faseActual;
 
         if (faseActual < fasesSprites.Length - 1)
         {
-            // Recompensa económica por evolucionar
-            if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
-                LevelManager.instance.AddCoins(monedasPorFase[faseActual]);
-
-            // Feedback visual
-            if (InfectionFeedback.instance != null)
-                InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
-
-            // EVOLUCIÓN: Subimos la fase
             currentInfectionTime = 0f;
             faseActual++;
 
+            if (faseAnterior < evolucionesPorChoque.Length)
+            {
+                if (tipo == TipoChoque.Wall)
+                {
+                    evolucionesPorChoque[faseAnterior]++;
+                }
+                else if (tipo == TipoChoque.Carambola)
+                {
+                    evolucionesCarambola[faseAnterior]++;
+                }
+            }
+
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
-
-            Debug.Log($"<color=cyan>[Pared]</color> Evolución forzada a Fase: {faseActual}");
         }
         else
         {
-            // Si ya está en la última fase (ej. Hexágono), se infecta totalmente
             BecomeInfected();
         }
     }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -352,7 +342,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         Debug.Log("<color=magenta>[PARED]</color> Choque detectado");
 
-        IntentarAvanzarFasePorChoque();
+        IntentarAvanzarFasePorChoque(TipoChoque.Wall);
     }
 
     private void IniciarCambioColor(IEnumerator nuevaCorrutina)
