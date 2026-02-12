@@ -21,6 +21,8 @@ public class PersonaInfeccion : MonoBehaviour
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
+    private readonly int[] valorPorFase = { 1, 2, 3, 4, 5 };
+
     [Header("Ajustes de Daño")]
     // Fase 0 (Círculo) = 5 | Fase 1 (Triángulo) = 4 | Fase 2 (Cuadrado) = 3 | Fase 3 (Pentágono) = 2 | Fase 4 (Hexágono) = 1
     public float[] dañoPorFasePredeterminado = { 1f, 2f, 3f, 4f, 5f };
@@ -141,29 +143,32 @@ public class PersonaInfeccion : MonoBehaviour
 
     void IntentarAvanzarFase()
     {
-        int faseAnterior = faseActual; // <-- DEBUG: guardamos fase antes del cambio
+        // 1. SEGURIDAD: Si ya está infectado o ya pasó el límite, ignoramos cualquier llamada extra
+        if (alreadyInfected || faseActual >= fasesSprites.Length) return;
 
-        if (LevelManager.instance != null && faseActual < monedasPorFase.Length)
-        {
-            int puntosAVisualizar = monedasPorFase[faseActual];
-            LevelManager.instance.MostrarPuntosVoladores(transform.position, puntosAVisualizar);
-        }
-
-        currentInfectionTime = 0f;
+        int faseAnterior = faseActual;
+        currentInfectionTime = 0f; // Reset inmediato del progreso para evitar re-entrada
         faseActual++;
 
-        // Guardar estadística de evolución
+        // 2. SISTEMA DE RECOMPENSAS (Unificado aquí)
+        if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
+        {
+            int monedasADar = valorPorFase[faseAnterior];
+            LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+        }
+
+
+        // 3. ESTADÍSTICAS
         if (faseAnterior < evolucionesEntreFases.Length)
         {
             evolucionesEntreFases[faseAnterior]++;
-            Debug.Log($"[ESTADÍSTICA] Evolución {faseAnterior} → {faseActual} | Total: {evolucionesEntreFases[faseAnterior]}");
+            Debug.Log($"[EVOLUCIÓN] {gameObject.name}: {faseAnterior} -> {faseActual}");
         }
 
-
-        Debug.Log($"[EVOLUCIÓN ZONA] {gameObject.name} pasó de Fase {faseAnterior} a Fase {faseActual}");
-
+        // 4. CAMBIO VISUAL O FINALIZACIÓN
         if (faseActual < fasesSprites.Length)
         {
+            // Aún no es el final: Cambiamos sprite y damos feedback de empuje
             ActualizarVisualFase();
             IniciarCambioColor(FlashCambioFase());
 
@@ -178,16 +183,15 @@ public class PersonaInfeccion : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[EVOLUCIÓN FINAL] {gameObject.name} alcanzó infección completa desde Fase {faseAnterior}");
+            // ES EL FINAL: Infección completa
             BecomeInfected();
         }
     }
-
     void BecomeInfected()
     {
-        Debug.Log(">>> 1. INFECCIÓN FINAL INICIADA en " + gameObject.name);
-
+        // Si ya entramos aquí por IntentarAvanzarFase, marcamos como infectado
         alreadyInfected = true;
+
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
         if (InfectionFeedback.instance != null)
@@ -195,25 +199,10 @@ public class PersonaInfeccion : MonoBehaviour
 
         particulasDeFuego?.Play();
 
-        // AQUÍ ESTÁ LA CLAVE
-        if (LevelManager.instance != null) 
+        if (LevelManager.instance != null)
         {
-            Debug.Log(">>> 2. LEVEL MANAGER ENCONTRADO. Intentando lanzar puntos...");
-            
             LevelManager.instance.RegisterInfection();
-
-            int puntosFinales = 10; 
-            
-            // Llamada al texto
-            LevelManager.instance.MostrarPuntosVoladores(transform.position, puntosFinales);
-            Debug.Log(">>> 3. LLAMADA REALIZADA a MostrarPuntosVoladores");
-            
-            LevelManager.instance.AddCoins(puntosFinales);
-        }
-        else
-        {
-            // SI SALE ESTO, EL PROBLEMA ES EL PASO 1
-            Debug.LogError("!!! ERROR FATAL: LevelManager.instance es NULL. El script no encuentra al Manager.");
+            // NO poner MostrarPuntosVoladores aquí, ya se hizo en IntentarAvanzarFase
         }
 
         IniciarCambioColor(InfectionColorSequence());
@@ -311,6 +300,7 @@ public class PersonaInfeccion : MonoBehaviour
             currentInfectionTime = 0f;
             faseActual++;
 
+            // -------- ESTADÍSTICAS --------
             if (faseAnterior < evolucionesPorChoque.Length)
             {
                 if (tipo == TipoChoque.Wall)
@@ -323,6 +313,13 @@ public class PersonaInfeccion : MonoBehaviour
                 }
             }
 
+            // -------- RECOMPENSA UNIFICADA --------
+            if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
+            {
+                int monedasADar = valorPorFase[faseAnterior];
+                LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+            }
+
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
         }
@@ -333,6 +330,7 @@ public class PersonaInfeccion : MonoBehaviour
     }
 
 
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.collider.CompareTag("Wall")) return;
@@ -340,9 +338,11 @@ public class PersonaInfeccion : MonoBehaviour
         if (Guardado.instance == null) return;
         if (Guardado.instance.nivelParedInfectiva <= 0) return;
 
-        Debug.Log("<color=magenta>[PARED]</color> Choque detectado");
-
-        IntentarAvanzarFasePorChoque(TipoChoque.Wall);
+        // 🔹 IMPORTANTE: comprobar si esa fase puede evolucionar por pared
+        if (Guardado.instance.nivelParedInfectiva > faseActual)
+        {
+            IntentarAvanzarFasePorChoque(TipoChoque.Wall);
+        }
     }
 
     private void IniciarCambioColor(IEnumerator nuevaCorrutina)

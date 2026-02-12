@@ -42,12 +42,22 @@ public class EndDayResultsPanel : MonoBehaviour
     // Nombres reales de tus fases (orden correcto según tu sistema)
     private readonly string[] nombresFases =
     {
-        "Hexágono",
-        "Pentágono",
-        "Cuadrado",
-        "Triángulo",
-        "Círculo"
-    };
+    "Hexágono",
+    "Pentágono",
+    "Cuadrado",
+    "Triángulo",
+    "Círculo",
+    "Bola Blanca"
+};
+
+    private readonly int[] valorZonaPorFase =
+{
+    1, // Hexágono → Pentágono
+    2, // Pentágono → Cuadrado
+    3, // Cuadrado → Triángulo
+    4, // Triángulo → Círculo
+    5  // Círculo → Bola Blanca
+};
 
     void Awake()
     {
@@ -58,6 +68,11 @@ public class EndDayResultsPanel : MonoBehaviour
     public void ShowResults(int monedasGanadas, int monedasTotales)
     {
         Time.timeScale = 0f;
+
+
+        int totalZonaGeneral = 0;
+        int totalParedGeneral = 0;
+        int totalCarambolaGeneral = 0;
         // ---- MONEDAS ----
         fullMonedasPartida = "<b>Monedas ganadas:</b> " + monedasGanadas;
         fullMonedasTotales = "<b>Monedas totales:</b> " + monedasTotales;
@@ -65,32 +80,58 @@ public class EndDayResultsPanel : MonoBehaviour
         // ---------------- ZONA ----------------
         fullZonaEvolution = "<b>Evoluciones por Zona</b>\n\n";
 
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length - 1; i++)
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
+            int cantidad = PersonaInfeccion.evolucionesEntreFases[i];
+            int valorBase = valorZonaPorFase[i];
+            int total = cantidad * valorBase;
+            totalZonaGeneral += total;
+
             fullZonaEvolution +=
                 nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                PersonaInfeccion.evolucionesEntreFases[i] + "\n";
+                cantidad + "  (" + valorBase + " × " + cantidad + " = " + total + ")\n";
         }
+        fullZonaEvolution += "\n<b>TOTAL ZONA: " + totalZonaGeneral + " monedas</b>\n";
 
         // ---------------- PARED ----------------
         fullChoqueEvolution = "\n<b>Evoluciones por Pared</b>\n\n";
 
-        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length - 1; i++)
+        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
+            int cantidad = PersonaInfeccion.evolucionesPorChoque[i];
+            int valorBase = valorZonaPorFase[i];
+            int total = cantidad * valorBase;
+            totalParedGeneral += total;
+
             fullChoqueEvolution +=
                 nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                PersonaInfeccion.evolucionesPorChoque[i] + "\n";
+                cantidad + "  (" +
+                valorBase + " × " +
+                cantidad + " = " +
+                total + ")\n";
         }
+
+        fullChoqueEvolution += "\n<b>TOTAL PARED: " + totalParedGeneral + " monedas</b>\n";
 
         // ---------------- CARAMBOLA ----------------
         fullCarambolaEvolution = "\n<b>Evoluciones por Carambola</b>\n\n";
 
-        for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length - 1; i++)
+        for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
+            int cantidad = PersonaInfeccion.evolucionesCarambola[i];
+            int valorBase = valorZonaPorFase[i];
+            int total = cantidad * valorBase;
+            totalCarambolaGeneral += total;
+
             fullCarambolaEvolution +=
                 nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                PersonaInfeccion.evolucionesCarambola[i] + "\n";
+                cantidad + "  (" +
+                valorBase + " × " +
+                cantidad + " = " +
+                total + ")\n";
         }
+        fullCarambolaEvolution += "\n<b>TOTAL CARAMBOLA: " + totalCarambolaGeneral + " monedas</b>\n";
+
 
         panel.SetActive(true);
 
