@@ -86,7 +86,13 @@ public class LevelManager : MonoBehaviour
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
     public void OpenShinyShop() { if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
-    public void CloseShinyShop() { if (shinyPanel != null) shinyPanel.SetActive(false); }
+    public void CloseShinyShop() { 
+        if (shinyPanel != null) 
+        shinyPanel.SetActive(false); 
+        dayOverPanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejorass
+
+
+    }
 
     public void OpenZoneShop() { if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
     public void CloseZoneShop() { if (zonePanel != null) zonePanel.SetActive(false); }
@@ -468,4 +474,24 @@ public class LevelManager : MonoBehaviour
             scriptVuelo.IniciarViaje(puntosGanados, posicionPersona, marcadorDestinoUI, canvasPrincipal);
         }
     }
+
+    public void OpenSkillTreePanel()
+    {
+        Debug.Log("BOTON PULSADO - Abriendo Skill Tree");
+        // Cerrar todos los paneles primero
+        if (menuPanel) menuPanel.SetActive(false);
+        if (gameUI) gameUI.SetActive(false);
+        if (dayOverPanel) dayOverPanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (shinyPanel) zonePanel.SetActive(false);
+
+        // Abrir panel de habilidades
+        if (zonePanel) shinyPanel.SetActive(true);
+
+        Time.timeScale = 1f; // aseguramos que no esté pausado
+    }
+
+
+
 }

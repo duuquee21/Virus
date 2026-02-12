@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "key": "btn_jugar", "value": "JUGAR" },
+    { "key": "btn_salir", "value": "SALIR" },
+    { "key": "btn_ajustes", "value": "AJUSTES" },
+    { "key": "btn_continuar", "value": "CONTINUAR" }
+  ]
+}
