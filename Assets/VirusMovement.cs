@@ -16,6 +16,8 @@ public class VirusMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movementInput;
 
+    private ManagerAnimacionJugador managerAnimacionJugador;
+
     void Awake()
     {
         instance = this;
@@ -24,6 +26,7 @@ public class VirusMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        managerAnimacionJugador = GetComponent<ManagerAnimacionJugador>();
 
         // Ajustamos el Drag para que no se deslice infinitamente
         rb.linearDamping = linearDrag;
@@ -33,7 +36,15 @@ public class VirusMovement : MonoBehaviour
 
     void Update()
     {
-        // GetAxis (sin Raw) ya tiene un pequeño suavizado integrado por Unity
+        // 1. Verificamos si existe el manager y si NO es jugable
+        if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
+        {
+            // Reseteamos el input a cero para que se detenga inmediatamente
+            movementInput = Vector2.zero;
+            return;
+        }
+
+        // 2. Si es jugable, procesamos el movimiento normalmente
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 

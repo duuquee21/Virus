@@ -10,15 +10,20 @@ public class PlanetCrontrollator : MonoBehaviour
 
     [Header("UI")]
     public Image healthBar;
+    public bool nivelFinal = false;
 
     // SISTEMA DE SEGURIDAD: Guarda el tiempo del último impacto por cada objeto
     private Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
 
+    private AnimacionFinalPlaneta animacionFinalPlaneta;
+    
+
     void Start()
     {
         currentHealth = maxHealth;
         ActualizarUI();
+        animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
     }
 
     // Método centralizado para procesar el impacto y evitar repetición
@@ -104,7 +109,13 @@ public class PlanetCrontrollator : MonoBehaviour
 
     void Die()
     {
-        if (LevelManager.instance != null) LevelManager.instance.NextMapTransition();
-        this.enabled = false;
+        if (nivelFinal)
+        {
+            animacionFinalPlaneta.EjecutarSecuenciaVibracion();
+        }
+        else
+        {
+           LevelManager.instance.NextMapTransition();
+        }
     }
 }

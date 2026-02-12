@@ -149,6 +149,7 @@ MonoBehaviour:
   fuerzaRotacion: 12.5
   alreadyInfected: 0
   faseActual: 0
+  shakeIntensity: 0.05
   particulasDeFuego: {fileID: 5683650011450178379}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
@@ -199,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   velocidadBase: 2
+  fuerzaAtraccion: 2
+  duracionAbsorcion: 4
 --- !u!114 &2679614929921104373
 MonoBehaviour:
   m_ObjectHideFlags: 0

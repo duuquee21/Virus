@@ -10,6 +10,17 @@ public class Movement : MonoBehaviour
     private PersonaInfeccion personaInfeccion;
 
 
+    private GameObject jugadorVirus;
+    private ManagerAnimacionJugador managerAnimacionJugador;
+    public float fuerzaAtraccion = 10f; // Ajusta este valor a tu gusto
+
+    private bool efectoIniciado = false;
+    private Vector3 posicionInicialEfecto;
+    private Vector3 escalaInicialEfecto;
+    private float tiempoEfecto = 0f;
+    public float duracionAbsorcion = 1.5f; // Segundos que tarda en desaparecer
+
+
 
     void Start()
     {
@@ -18,10 +29,22 @@ public class Movement : MonoBehaviour
         direccion = new Vector2(Mathf.Cos(angulo * Mathf.Deg2Rad),
                                 Mathf.Sin(angulo * Mathf.Deg2Rad)).normalized;
         personaInfeccion = GetComponent<PersonaInfeccion>();
+
+        jugadorVirus = GameObject.FindGameObjectWithTag("Virus");
+        if (jugadorVirus != null)
+        {
+            managerAnimacionJugador = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
+        }
     }
 
     void FixedUpdate()
     {
+        if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
+        {
+            EjecutarEfectoAbsorcion();
+            return; // Bloquea el resto del movimiento
+        }
+
         // 1. Definimos la velocidad objetivo
         float velocidadObjetivo = velocidadBase;
 
@@ -33,17 +56,32 @@ public class Movement : MonoBehaviour
 
         if (!estaEmpujado)
         {
-            // 2. RECUPERACIÓN DE VELOCIDAD
-            // Usamos MoveTowards para que si la velocidad bajó por un choque, 
-            // suba rápidamente de nuevo hacia la velocidad objetivo (20f si está infectado)
-            float aceleracionRapida = 50f; // Ajusta este valor para una recuperación más o menos súbita
-
+            float aceleracionRapida = 50f;
             Vector2 velocidadActual = rb.linearVelocity;
+
+            // --- CORRECCIÓN AQUÍ ---
+            // 1. Empezamos con la velocidad de patrulla normal
             Vector2 velocidadDeseada = direccion * velocidadObjetivo;
 
-            rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
+            // 2. Lógica de atracción
+            if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
+            {
+                // Calculamos el centro de la pantalla en coordenadas del mundo
+                // Usamos la cámara principal para asegurar que el centro sea el que ve el jugador
+                Vector2 centroPantallaMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
 
-            // Limpieza de rotación
+                // Calculamos la dirección hacia ese punto central
+                Vector2 direccionHaciaCentro = (centroPantallaMundo - (Vector2)transform.position).normalized;
+
+                // Sumamos la fuerza de atracción hacia el centro
+                velocidadDeseada += direccionHaciaCentro * fuerzaAtraccion;
+            }
+          
+
+            // 3. Aplicamos el resultado final al Rigidbody
+            rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
+            // -----------------------
+
             if (!estaGirando && rb.angularVelocity != 0)
             {
                 rb.angularVelocity = 0;
@@ -69,6 +107,7 @@ public class Movement : MonoBehaviour
                 estaGirando = false;
             }
         }
+
     }
 
     /// <summary>
@@ -255,4 +294,26 @@ public class Movement : MonoBehaviour
     }
     public void CambiarDireccion(Vector2 nuevaDireccion) => direccion = nuevaDireccion.normalized;
     public Vector2 GetDireccion() => direccion;
+    private void EjecutarEfectoAbsorcion()
+    {
+        if (!efectoIniciado)
+        {
+            efectoIniciado = true;
+            posicionInicialEfecto = transform.position;
+            escalaInicialEfecto = transform.localScale;
+            rb.linearVelocity = Vector2.zero;
+            rb.isKinematic = true; // Evita colisiones durante el efecto
+        }
+
+        tiempoEfecto += Time.fixedDeltaTime;
+        float progreso = Mathf.Clamp01(tiempoEfecto / duracionAbsorcion);
+
+        Vector3 centroMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        centroMundo.z = transform.position.z;
+
+        transform.position = Vector3.Lerp(posicionInicialEfecto, centroMundo, progreso);
+        transform.localScale = Vector3.Lerp(escalaInicialEfecto, Vector3.zero, progreso);
+
+        if (progreso >= 1f) gameObject.SetActive(false);
+    }
 }

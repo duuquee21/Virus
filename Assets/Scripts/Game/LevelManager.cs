@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     public GameObject modeSelectionPanel;
     public Button continueButton;
     public TextMeshProUGUI continueInfoText;
+    public GameObject jugadorVirus;
 
 
 
@@ -401,44 +402,48 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator WaitAndChangeMap()
     {
-        isGameActive = false; // Pausamos el juego
+        isGameActive = false;
         Debug.Log("<color=orange>¡Planeta derrotado! Preparando siguiente zona...</color>");
 
-        // 1. Espera de 2 segundos para ver el efecto visual
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(0.5f); // Un breve respiro
 
-        // 2. Calculamos el índice del siguiente mapa
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int nextMap = currentMap + 1;
 
         if (nextMap < mapList.Length)
         {
-            // 3. Limpiamos las personas del mapa anterior
             CleanUpScene();
 
-            // 4. Activamos el nuevo mapa visualmente
-            // (Esto también le dice al PopulationManager qué prefab usar)
-            ActivateMap(nextMap);
-
-            // 5. ¡ESTA ES LA CLAVE!: Forzamos el spawn de la nueva población
-            PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-            if (pm != null)
+            // --- LÓGICA DE REINICIO MEJORADA ---
+            if (virusPlayer != null)
             {
-                // Reiniciamos el contador de shinies y forzamos el spawn inicial
-                // Usamos 0 shinies por ahora o el valor que quieras para la nueva zona
-                pm.ConfigureRound(0);
+                // Buscamos el componente y reseteamos todo el sistema de animación
+                ManagerAnimacionJugador animManager = virusPlayer.GetComponent<ManagerAnimacionJugador>();
+                if (animManager != null)
+                {
+                    animManager.ResetearEstado();
+                }
+                else
+                {
+                    // Backup por si no tiene el script
+                    virusPlayer.SetActive(true);
+                    virusPlayer.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+                }
             }
 
-            // 6. Reset de variables de sesión
+            ActivateMap(nextMap);
+
+            PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
+            if (pm != null) pm.ConfigureRound(0);
+
             currentSessionInfected = 0;
             currentTimer = gameDuration;
             isGameActive = true;
 
-            Debug.Log("<color=green>Nueva zona lista con sus prefabs correspondientes.</color>");
+            Debug.Log("<color=green>Nueva zona lista y sistemas reiniciados.</color>");
         }
         else
         {
-            Debug.Log("¡Fin del juego!");
             ReturnToMenu();
         }
     }
