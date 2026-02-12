@@ -250,6 +250,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 6594957224854219565}
+  prefabExplosion1: {fileID: 0}
+  tiempoExpansion1: 0.5
+  escalaFinal1: 25
+  prefabExplosion2: {fileID: 0}
+  tiempoExpansion2: 1.5
+  escalaFinal2: 40
+  tiempoCierreAScale0: 0.5
+  prefabFragmentos: {fileID: 0}
+  puntoGeneracion: {fileID: 0}
+  escalaFragmentos: {x: 1, y: 1, z: 1}
 --- !u!212 &2577887302438156197
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -943,7 +953,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -5
   m_Sprite: {fileID: -6315336195868297758, guid: d4137c5229a4f3f43a7f94b17f8586e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1030,7 +1040,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

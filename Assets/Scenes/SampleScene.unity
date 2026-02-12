@@ -52100,7 +52100,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: maxHealth
-      value: 100000
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaFinal
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaFinal1
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaFinal2
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: prefabFinalA
+      value: 
+      objectReference: {fileID: 6214641366947435504, guid: ae9879b37cbe4844fb8e5b5c8689e2cf, type: 3}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: prefabFinalB
+      value: 
+      objectReference: {fileID: 6146892208569847470, guid: d8edd0759e0738044af0ded8e08821d1, type: 3}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: tiempoExpansion
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: prefabExplosion1
+      value: 
+      objectReference: {fileID: 6214641366947435504, guid: ae9879b37cbe4844fb8e5b5c8689e2cf, type: 3}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: prefabExplosion2
+      value: 
+      objectReference: {fileID: 6146892208569847470, guid: d8edd0759e0738044af0ded8e08821d1, type: 3}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: tiempoExpansion1
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: tiempoExpansion2
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: tiempoCierreAScale0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaObjetosFinales
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaObjetosFinalesA
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: escalaObjetosFinalesB
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1475283828534509066, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_IsActive
@@ -52112,7 +52168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2587287707760716598, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_SortingOrder
-      value: -1
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 2760427107428801773, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_IsActive
@@ -59001,6 +59057,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 256834188}
+  prefabExplosion1: {fileID: 0}
+  tiempoExpansion1: 0.5
+  escalaFinal1: 25
+  prefabExplosion2: {fileID: 0}
+  tiempoExpansion2: 1.5
+  escalaFinal2: 40
+  prefabFinalA: {fileID: 0}
+  prefabFinalB: {fileID: 0}
+  escalaObjetosFinalesA: 15
+  escalaObjetosFinalesB: 15
+  tiempoCierreAScale0: 0.5
 --- !u!1001 &6822848866263450557
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic; // Necesario para el Dictionary
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlanetCrontrollator : MonoBehaviour
 {
@@ -11,21 +12,38 @@ public class PlanetCrontrollator : MonoBehaviour
     [Header("UI")]
     public Image healthBar;
 
-    // SISTEMA DE SEGURIDAD: Guarda el tiempo del último impacto por cada objeto
+    [Header("Muerte y Efectos")]
+    public List<Transform> spawnPointsEfectos; // Asignar en Inspector
+    public float intensidadVibracion = 0.1f;
+    public AnimacionFinalNivel animacionFinalNivel;
+
+    private bool isDead = false;
     private Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
+
+    [Header("Configuración Fragmentos")]
+    public GameObject prefabFragmentos;
+    public Vector3 offsetFragmentos = Vector3.zero;
+    public Vector3 escalaFragmentos = Vector3.one;
+
+    private SpriteRenderer spriteRenderer;
+    private Vector3 posicionOriginal;
 
     void Start()
     {
         currentHealth = maxHealth;
+        posicionOriginal = transform.position;
         ActualizarUI();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        // Intentar obtener el componente si no está asignado
+        if (animacionFinalNivel == null) animacionFinalNivel = GetComponent<AnimacionFinalNivel>();
     }
 
-    // Método centralizado para procesar el impacto y evitar repetición
     private void ProcesarImpacto(GameObject obj, Vector3 posicion)
     {
-        int id = obj.GetInstanceID();
+        if (isDead) return;
 
+        int id = obj.GetInstanceID();
         if (lastImpactTimes.ContainsKey(id) && Time.time < lastImpactTimes[id] + cooldownTime)
             return;
 
@@ -36,7 +54,9 @@ public class PlanetCrontrollator : MonoBehaviour
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
 
-        // CASO 1: YA ESTÁ INFECTADO (Explosión)
+        // Verificamos si este golpe matará al objeto
+        bool seraGolpeLetal = (currentHealth - dañoCalculado) <= 0;
+
         if (scriptInfeccion.alreadyInfected)
         {
             InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
@@ -45,7 +65,6 @@ public class PlanetCrontrollator : MonoBehaviour
             return;
         }
 
-        // CASO 2: IMPACTO FÍSICO
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -54,12 +73,16 @@ public class PlanetCrontrollator : MonoBehaviour
             {
                 TakeDamage(dañoCalculado);
 
-                if (Guardado.instance != null)
+                // Solo ejecutamos el feedback de pared si NO ha muerto
+                if (!seraGolpeLetal)
                 {
-                    if (Guardado.instance.nivelParedInfectiva > scriptInfeccion.faseActual)
-                        scriptInfeccion.IntentarAvanzarFasePorChoque();
-                    else
-                        InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
+                    if (Guardado.instance != null)
+                    {
+                        if (Guardado.instance.nivelParedInfectiva > scriptInfeccion.faseActual)
+                            scriptInfeccion.IntentarAvanzarFasePorChoque();
+                        else
+                            InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
+                    }
                 }
             }
         }
@@ -67,33 +90,22 @@ public class PlanetCrontrollator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Persona"))
-        {
-            ProcesarImpacto(collision.gameObject, collision.transform.position);
-        }
+        if (collision.CompareTag("Persona")) ProcesarImpacto(collision.gameObject, collision.transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Persona"))
-        {
-            ProcesarImpacto(collision.gameObject, collision.transform.position);
-        }
-    }
-
-    // Limpieza opcional: Para evitar que el diccionario crezca infinitamente
-    private void Update()
-    {
-        // Cada cierto tiempo podrías limpiar IDs antiguos, 
-        // aunque para un juego pequeño no es crítico.
+        if (collision.gameObject.CompareTag("Persona")) ProcesarImpacto(collision.gameObject, collision.transform.position);
     }
 
     public void TakeDamage(float amount)
     {
+        if (isDead) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         ActualizarUI();
-        Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
+
         if (currentHealth <= 0) Die();
     }
 
@@ -104,7 +116,71 @@ public class PlanetCrontrollator : MonoBehaviour
 
     void Die()
     {
-        if (LevelManager.instance != null) LevelManager.instance.NextMapTransition();
-        this.enabled = false;
+        if (isDead) return;
+        isDead = true;
+
+        // En lugar de destruir/desactivar todo ya, empezamos la secuencia de muerte
+        StartCoroutine(SecuenciaMuerte());
+    }
+
+    private IEnumerator SecuenciaMuerte()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        float tiempoPasado = 0;
+        float duracionMuerte = 4f;
+
+        while (tiempoPasado < duracionMuerte)
+        {
+            transform.position = posicionOriginal + (Vector3)Random.insideUnitCircle * intensidadVibracion;
+            if (spawnPointsEfectos != null && spawnPointsEfectos.Count > 0)
+            {
+                if (Random.value > 0.85f)
+                {
+                    Transform puntoAleatorio = spawnPointsEfectos[Random.Range(0, spawnPointsEfectos.Count)];
+                    InfectionFeedback.instance.PlayPhaseChangeEffect(puntoAleatorio.position, Color.white);
+                }
+            }
+            tiempoPasado += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = posicionOriginal;
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+
+        // --- LÓGICA DE FRAGMENTOS MODIFICADA ---
+        if (prefabFragmentos != null)
+        {
+            GameObject restos = Instantiate(prefabFragmentos, transform.position + offsetFragmentos, transform.rotation);
+            restos.transform.localScale = escalaFragmentos;
+
+            // Intentamos obtener el gestor del objeto instanciado
+            GestorDeFragmentos gestor = restos.GetComponent<GestorDeFragmentos>();
+
+            if (gestor != null)
+            {
+                // Nos suscribimos al evento: "Cuando termines, ejecuta FinalizarNivel"
+                gestor.OnFragmentosAgotados += FinalizarNivel;
+            }
+            else
+            {
+                // Si por error el prefab no tiene el script, terminamos de una vez
+                FinalizarNivel();
+            }
+        }
+        else
+        {
+            // Si no hay fragmentos, la animación salta directo
+            FinalizarNivel();
+        }
+    }
+
+    // Método que será llamado por la señal de los fragmentos
+    private void FinalizarNivel()
+    {
+        Debug.Log("Todos los fragmentos absorbidos. Iniciando animación final.");
+        if (animacionFinalNivel != null)
+        {
+            animacionFinalNivel.Ejecutar();
+        }
     }
 }

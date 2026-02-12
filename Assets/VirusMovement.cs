@@ -15,6 +15,7 @@ public class VirusMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
+    public bool playable = true;
 
     void Awake()
     {
@@ -33,6 +34,8 @@ public class VirusMovement : MonoBehaviour
 
     void Update()
     {
+        if (!playable) return;
+
         // GetAxis (sin Raw) ya tiene un pequeño suavizado integrado por Unity
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
