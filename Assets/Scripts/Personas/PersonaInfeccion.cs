@@ -202,8 +202,17 @@ public class PersonaInfeccion : MonoBehaviour
         if (LevelManager.instance != null)
         {
             LevelManager.instance.RegisterInfection();
-            // NO poner MostrarPuntosVoladores aquí, ya se hizo en IntentarAvanzarFase
         }
+
+        // --- NUEVA LÓGICA DE EMPUJE AL INFECTARSE ---
+        if (transformInfector != null && movementScript != null)
+        {
+            // Calculamos la dirección desde el infector hacia la persona
+            Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
+            // Aplicamos la misma fuerza que usas en el cambio de fase
+            movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
+        }
+        // --------------------------------------------
 
         IniciarCambioColor(InfectionColorSequence());
     }

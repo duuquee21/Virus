@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class InfectionFeedback : MonoBehaviour
 {
     public static InfectionFeedback instance;
@@ -18,24 +19,6 @@ public class InfectionFeedback : MonoBehaviour
     public AudioClip[] basicWallImpactSounds;
     public AudioClip[] basicImpactSounds;
 
-    [Header("Modo Musical (Racha)")]
-    public bool activarModoMusical = true;
-    [Tooltip("Arrastra aquí el sonido 'Ding' o 'Blip' para la racha")]
-    public AudioClip sonidoMusicalCombo;
-
-    public float tiempoParaResetear = 2.0f;
-
-    [Header("Ajustes de Limpieza")]
-    public float cooldownSonido = 0.15f;
-    private float tiempoUltimoSonidoJugado = -1f;
-
-    // Escala Arcade
-    private float[] escalaMayor = new float[] {
-        1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.5f, 3.0f
-    };
-
-    private int indiceNotaActual = 0;
-    private float ultimoTiempoInfeccion;
 
     [Header("Cámara & Shake")]
     public Transform cameraTransform;
@@ -45,160 +28,221 @@ public class InfectionFeedback : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
+
+        // Si no asignas la cámara, intenta buscar la principal por defecto
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
     }
 
-    // --- CAMBIO: Ahora devuelve el ÍNDICE (0, 1, 2...) no el pitch ---
-    private int ActualizarYObtenerNota()
-    {
-        // Si pasó mucho tiempo, reseteamos a 0 (Primer golpe)
-        if (Time.time - ultimoTiempoInfeccion > tiempoParaResetear)
-        {
-            indiceNotaActual = 0;
-        }
-        else
-        {
-            // Si estamos en racha, sumamos
-            indiceNotaActual++;
-        }
-
-        // Tope
-        if (indiceNotaActual >= escalaMayor.Length)
-        {
-            indiceNotaActual = escalaMayor.Length - 1;
-        }
-
-        ultimoTiempoInfeccion = Time.time;
-        return indiceNotaActual;
-    }
-
-    private bool PuedeSonar()
-    {
-        if (Time.time - tiempoUltimoSonidoJugado < cooldownSonido) return false;
-        tiempoUltimoSonidoJugado = Time.time;
-        return true;
-    }
-
     public void PlayEffect(Vector3 position, Color particleColor)
     {
-        // VFX
+        // 1. VISUAL
         if (infection1Particles != null)
         {
             GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
             Destroy(vfx, 2f);
         }
 
-        // SONIDO
-        if (audioSource != null && PuedeSonar())
+        // 2. SONIDO
+        if (audioSource != null && infectionSounds.Length > 0)
         {
-            ProcesarSonidoLogico(infectionSounds);
+
+            AudioClip clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
+
+
+
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
+            audioSource.PlayOneShot(clip);
         }
 
-        if (cameraTransform != null) StartCoroutine(Shake(2));
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake(2));
+        }
     }
 
     public void PlayPhaseChangeEffect(Vector3 position, Color particleColor)
     {
+        // 1. VISUAL
         if (infectionParticles != null)
         {
             GameObject vfx = Instantiate(infectionParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
             Destroy(vfx, 2f);
         }
+
         PlayPhaseChangeSound();
+
     }
 
     public void PlayPhaseChangeSound()
     {
-        if (audioSource != null && PuedeSonar())
+        if (audioSource != null && phaseChangeSounds.Length > 0)
         {
-            ProcesarSonidoLogico(phaseChangeSounds);
+            AudioClip clip = phaseChangeSounds[Random.Range(0, phaseChangeSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
         }
-    }
 
-    // --- FUNCIÓN MAESTRA QUE DECIDE QUÉ SONIDO TOCAR ---
-    private void ProcesarSonidoLogico(AudioClip[] sonidosPorDefecto)
+    }
+    public void PlayBasicImpactSoundAgainstWall()
     {
-        if (activarModoMusical && sonidoMusicalCombo != null)
+        if (audioSource != null && basicWallImpactSounds.Length > 0)
         {
-            // 1. Calculamos en qué nota estamos
-            int nota = ActualizarYObtenerNota();
+            AudioClip clip = basicWallImpactSounds[Random.Range(0, basicWallImpactSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
+        }
 
-            // 2. DECISIÓN:
-            if (nota == 0)
-            {
-                // ES EL PRIMER GOLPE: Suena "normal" (sonido de impacto básico o el de la lista)
-                // Usamos el sonido básico para no gastar el efecto especial todavía
-                if (sonidosPorDefecto.Length > 0)
-                {
-                    audioSource.pitch = Random.Range(0.9f, 1.1f);
-                    audioSource.PlayOneShot(sonidosPorDefecto[Random.Range(0, sonidosPorDefecto.Length)]);
-                }
-            }
-            else
-            {
-                // ES EL SEGUNDO GOLPE O MÁS: ¡MÚSICA!
-                audioSource.pitch = escalaMayor[nota];
-                audioSource.PlayOneShot(sonidoMusicalCombo);
-            }
-        }
-        else if (sonidosPorDefecto.Length > 0)
-        {
-            // Modo clásico (sin música activada)
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
-            audioSource.PlayOneShot(sonidosPorDefecto[Random.Range(0, sonidosPorDefecto.Length)]);
-        }
     }
+    public void PlayBasicImpactSound()
+    {
+        if (audioSource != null && basicImpactSounds.Length > 0)
+        {
+            AudioClip clip = basicImpactSounds[Random.Range(0, basicImpactSounds.Length)];
+            // Un pitch un poco más alto para que suene "progresivo"
+            audioSource.pitch = Random.Range(1.1f, 1.3f);
+            audioSource.PlayOneShot(clip);
+        }
 
-    // --- RESTO IGUAL ---
-    public void PlayBasicImpactSoundAgainstWall() { if (audioSource != null) audioSource.PlayOneShot(basicWallImpactSounds[0]); }
-    public void PlayBasicImpactSound() { if (audioSource != null) audioSource.PlayOneShot(basicImpactSounds[0]); }
+    }
 
     public void PlayBasicImpactEffectAgainstWall(Vector3 position, Color particleColor)
     {
-        if (basicImpactParticles != null) Instantiate(basicImpactParticles, position, Quaternion.identity);
+        // 1. VISUAL
+        if (basicImpactParticles != null)
+        {
+            GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+
         PlayBasicImpactSoundAgainstWall();
-        if (cameraTransform != null) StartCoroutine(Shake(1));
+
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake(1));
+        }
     }
 
     public void PlayBasicImpactEffect(Vector3 position, Color particleColor, bool sonido)
     {
+        // 1. VISUAL
         if (basicImpactParticles != null)
         {
+
             GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
-            if (vfx.GetComponent<ParticleSystem>() != null)
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+
+            if (ps != null)
             {
-                var main = vfx.GetComponent<ParticleSystem>().main;
-                main.startSize = main.startSize.constant * 0.5f;
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+
+                // Accedemos al valor constante actual y lo multiplicamos
+                float currentSize = main.startSize.constant;
+                main.startSize = currentSize * 0.5f;
             }
+
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
             Destroy(vfx, 2f);
         }
-        if (sonido) PlayBasicImpactSound();
+        if (sonido)
+        {
+            PlayBasicImpactSound();
+        }
+
     }
 
-    public void PlayUltraEffect(Vector3 position, Color particleColor)
-    {
-        if (infection1Particles != null) Instantiate(infection1Particles, position, Quaternion.identity);
-        if (audioSource != null && bolaBlancaSounds.Length > 0)
-        {
-            audioSource.pitch = Random.Range(0.85f, 1.15f);
-            audioSource.PlayOneShot(bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)]);
-        }
-        if (cameraTransform != null) StartCoroutine(Shake(3));
-    }
 
     private IEnumerator Shake(int ShakeAmountMultiplier)
     {
         Vector3 originalPos = cameraTransform.localPosition;
         float elapsed = 0.0f;
+
         while (elapsed < shakeDuration)
         {
+            // Genera un punto aleatorio dentro de una esfera multiplicado por la intensidad
             float x = Random.Range(-1f, 1f) * shakeMagnitude * ShakeAmountMultiplier;
             float y = Random.Range(-1f, 1f) * shakeMagnitude * ShakeAmountMultiplier;
-            cameraTransform.localPosition = originalPos + new Vector3(x, y, 0);
+
+            cameraTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+
             elapsed += Time.deltaTime;
-            yield return null;
+
+            yield return null; // Espera al siguiente frame
         }
-        cameraTransform.localPosition = originalPos;
+
+        cameraTransform.localPosition = originalPos; // Vuelve a la normalidad
     }
+
+    public void PlayUltraEffect(Vector3 position, Color particleColor)
+    {
+        // 1. VISUAL
+        if (infection1Particles != null)
+        {
+            GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
+
+            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                main.startColor = Color.white * 1.3f;
+            }
+
+            Destroy(vfx, 2f);
+        }
+
+        // 2. SONIDO
+        if (audioSource != null && bolaBlancaSounds.Length > 0)
+        {
+
+            AudioClip clip = bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)];
+
+
+
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
+            audioSource.PlayOneShot(clip);
+        }
+
+        // 3. SHAKE DE CÁMARA
+        if (cameraTransform != null)
+        {
+            StartCoroutine(Shake(3));
+        }
+    }
+
+
 }
