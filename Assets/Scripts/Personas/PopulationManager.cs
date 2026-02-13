@@ -15,6 +15,7 @@ public class PopulationManager : MonoBehaviour
     public float baseMaxPopulation = 15f;
     public int initialPopulation = 10;
 
+
     [Header("Spawn Area Logic")]
     private Collider2D currentSpawnCollider;
     public float margenSeguridad = 0.5f;
@@ -118,7 +119,7 @@ public class PopulationManager : MonoBehaviour
 
         if (LevelManager.instance != null && LevelManager.instance.isGameActive)
         {
-            CheckForOutsiders();
+            //  CheckForOutsiders();
         }
 
         int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;

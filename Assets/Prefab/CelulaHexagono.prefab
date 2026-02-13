@@ -202,6 +202,7 @@ MonoBehaviour:
   velocidadBase: 2
   fuerzaAtraccion: 2
   duracionAbsorcion: 4
+  friccionDuranteAnimacion: 10
 --- !u!114 &2679614929921104373
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -452,31 +452,31 @@ public class LevelManager : MonoBehaviour
         }
     }
 
- private IEnumerator WaitAndChangeMap()
-{
-    // En lugar de isGameActive = false (que detiene el spawn), 
-    // podrías dejarlo activo si quieres que sigan naciendo durante la transición.
-    
-    yield return new WaitForSecondsRealtime(0.5f);
-
-    int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-    int nextMap = currentMap + 1;
-
-    if (nextMap < mapList.Length)
+    private IEnumerator WaitAndChangeMap()
     {
-        ActivateMap(nextMap);
-        yield return new WaitForEndOfFrame();
+        // En lugar de isGameActive = false (que detiene el spawn), 
+        // podrías dejarlo activo si quieres que sigan naciendo durante la transición.
 
-        PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-        if (pm != null) 
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int nextMap = currentMap + 1;
+
+        if (nextMap < mapList.Length)
         {
-            pm.RefreshSpawnArea(); // Ahora los nuevos nacerán en el nuevo mapa
+            ActivateMap(nextMap);
+            yield return new WaitForEndOfFrame();
+
+            PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
+            if (pm != null)
+            {
+                pm.RefreshSpawnArea(); // Ahora los nuevos nacerán en el nuevo mapa
+            }
+
+            // No reseteamos currentSessionInfected si quieres que sea una sola carrera continua
+            // currentSessionInfected = 0; 
         }
-        
-        // No reseteamos currentSessionInfected si quieres que sea una sola carrera continua
-        // currentSessionInfected = 0; 
     }
-}
 
     public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
     {
