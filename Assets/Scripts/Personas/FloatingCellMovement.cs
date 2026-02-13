@@ -52,7 +52,11 @@ public class FloatingCellMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + direccion * velocidadBase * Time.fixedDeltaTime);
+        if  (LevelManager.instance != null && LevelManager.instance.isGameActive)
+        {
+            rb.MovePosition(rb.position + direccion * velocidadBase * Time.fixedDeltaTime);
+        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D otro)

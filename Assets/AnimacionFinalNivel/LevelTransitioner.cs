@@ -24,13 +24,22 @@ public class LevelTransitioner : MonoBehaviour
     private Camera mainCam;
     public ManualSetCycler manualSetCycler;
 
+    [Header("Configuración de Zoom Cámara")]
+    public float zoomMaximo = 7f;
+    public float velocidadZoomIn = 5f;
+    public float velocidadZoomOut = 3f;
+    private float zoomOriginal;
+
     // 2. Crea el Evento Estático
     public static event Action<float> OnImpactShake;
+
+
 
 
     void Awake()
     {
         mainCam = Camera.main;
+        zoomOriginal = mainCam.orthographicSize; // <--- Añade esto
     }
 
     public void StartLevelTransition()
@@ -70,6 +79,7 @@ public class LevelTransitioner : MonoBehaviour
         while (velocidadActual < velocidadMaxima)
         {
             velocidadActual += aceleracion * Time.deltaTime;
+            mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * Time.deltaTime);
             if (mapaVisual)
             {
                 mapaVisual.transform.Rotate(Vector3.forward, velocidadActual * Time.deltaTime);
@@ -125,6 +135,7 @@ public class LevelTransitioner : MonoBehaviour
         // Al invocar esto, el Cycler (que estaba esperando en su WaitForSeconds) 
         // empezará a encogerse justo en este frame, coincidiendo con el Shake.
         OnImpactShake?.Invoke(intensidadImpacto);
+        mainCam.orthographicSize = zoomOriginal; // Para asegurar que quede exacto al terminar
         StartCoroutine(DryImpactShake());
 
         if (planeta != null) planeta.isInvulnerable = false;
