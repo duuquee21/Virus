@@ -15287,7 +15287,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 12.5
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -27981,6 +27981,7 @@ MonoBehaviour:
   maxPopulation: 15
   baseMaxPopulation: 15
   initialPopulation: 15
+  tiempoGraciaFuera: 2
   margenSeguridad: 0.5
   growDuration: 0.4
   fuerzaImpulsoClon: 2
@@ -31437,6 +31438,19 @@ MonoBehaviour:
   spriteRenderer: {fileID: 426624705}
   alphaMin: 0.3
   alphaMax: 0.6
+--- !u!114 &1129471500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129471492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6a417b23d1a3d4f89af1d99830365b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplicadorMasa: 1
 --- !u!1 &1133120312
 GameObject:
   m_ObjectHideFlags: 0
@@ -55121,6 +55135,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1129471500}
+    - targetCorrespondingSourceObject: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1129471499}
   m_SourcePrefab: {fileID: 100100000, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
@@ -55470,6 +55487,10 @@ PrefabInstance:
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: maxHealth
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: delayMuerte
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1475283828534509066, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_IsActive
@@ -62395,6 +62416,8 @@ MonoBehaviour:
   healthBar: {fileID: 256834188}
   nivelFinal: 0
   isInvulnerable: 0
+  delayMuerte: 1.5
+  fuerzaVibracion: 0.1
 --- !u!1001 &6822848866263450557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62415,6 +62438,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -6591260169448047233, guid: 0958057df3189a740a087e55baeffa72, type: 3}
+    - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
+      propertyPath: delayMuerte
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7010969261559080418, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: m_Name
       value: ZonaPentagonal
@@ -62619,7 +62650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5079583239021565218, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7222527036379001605, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: m_LocalPosition.x

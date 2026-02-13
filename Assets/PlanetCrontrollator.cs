@@ -1,6 +1,7 @@
+using System.Collections;
+using System.Collections.Generic; // Necesario para el Dictionary
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic; // Necesario para el Dictionary
 
 public class PlanetCrontrollator : MonoBehaviour
 {
@@ -18,15 +19,23 @@ public class PlanetCrontrollator : MonoBehaviour
 
     private AnimacionFinalPlaneta animacionFinalPlaneta;
 
+
+
     [Header("Estado")]
     public bool isInvulnerable = false; // Nueva variable
 
+
+    [Header("Ajustes de Muerte")]
+    public float delayMuerte = 1.5f;
+    public float fuerzaVibracion = 0.1f;
+    private Vector3 posOriginal;
 
     void Start()
     {
         currentHealth = maxHealth;
         ActualizarUI();
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
+        posOriginal = transform.position;
     }
 
     // Método centralizado para procesar el impacto y evitar repetición
@@ -130,7 +139,23 @@ public class PlanetCrontrollator : MonoBehaviour
         }
         else
         {
-           LevelManager.instance.NextMapTransition();
+            // Iniciamos la vibración y el retraso
+            StartCoroutine(VibrarYPasarNivel());
         }
+    }
+
+    IEnumerator VibrarYPasarNivel()
+    {
+        float tiempo = 0;
+        while (tiempo < delayMuerte)
+        {
+            // Crea el movimiento aleatorio
+            transform.position = posOriginal + (Vector3)Random.insideUnitCircle * fuerzaVibracion;
+            tiempo += Time.deltaTime;
+            yield return null; // Espera al siguiente frame
+        }
+
+        transform.position = posOriginal; // Reset de posición
+        LevelManager.instance.NextMapTransition(); // Cambio de mapa
     }
 }
