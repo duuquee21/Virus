@@ -22,6 +22,7 @@ public class LevelTransitioner : MonoBehaviour
     private float velocidadActual = 0f;
     private Vector3 escalaOriginal = Vector3.one;
     private Camera mainCam;
+    public ManualSetCycler manualSetCycler;
 
     // 2. Crea el Evento Estático
     public static event Action<float> OnImpactShake;
@@ -45,6 +46,9 @@ public class LevelTransitioner : MonoBehaviour
 
         int currentIdx = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         GameObject mapaVisual = LevelManager.instance.mapList[currentIdx];
+        // --- BUSCA ESTA PARTE EN TU LEVELTRANSITIONER ---
+        float tiempoAcel = velocidadMaxima / aceleracion;
+        float tiempoFren = velocidadMaxima / frenado;
 
         if (mapaVisual)
         {
@@ -52,10 +56,10 @@ public class LevelTransitioner : MonoBehaviour
 
             // --- NUEVA CONEXIÓN: Avisar al ManualSetCycler ---
             // Buscamos el script en el mapa actual o sus hijos
-            ManualSetCycler cycler = mapaVisual.GetComponentInChildren<ManualSetCycler>();
-            if (cycler != null)
+          
+            if (manualSetCycler != null)
             {
-                cycler.TriggerTransition();
+                manualSetCycler.TriggerTransition(tiempoAcel, tiempoFren);
             }
         }
 
@@ -107,6 +111,7 @@ public class LevelTransitioner : MonoBehaviour
             if (mapaVisual)
             {
                 mapaVisual.transform.Rotate(Vector3.forward, velocidadActual * Time.deltaTime);
+                // El mapa sigue creciendo suavemente hacia su escalaOriginal
                 mapaVisual.transform.localScale = Vector3.Lerp(mapaVisual.transform.localScale, escalaOriginal, suavizadoEscala * Time.deltaTime);
             }
             yield return null;
@@ -115,10 +120,10 @@ public class LevelTransitioner : MonoBehaviour
         // --- IMPACTO FINAL ---
         mapaVisual.transform.localRotation = Quaternion.identity;
         mapaVisual.transform.localScale = escalaOriginal;
-        // 3. Disparamos el evento para TODOS los objetos
-        OnImpactShake?.Invoke(intensidadImpacto);
 
-        // Lanzamos el impacto seco
+        // Al invocar esto, el Cycler (que estaba esperando en su WaitForSeconds) 
+        // empezará a encogerse justo en este frame, coincidiendo con el Shake.
+        OnImpactShake?.Invoke(intensidadImpacto);
         StartCoroutine(DryImpactShake());
 
         if (planeta != null) planeta.isInvulnerable = false;
