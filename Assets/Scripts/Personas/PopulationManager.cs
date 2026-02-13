@@ -95,10 +95,15 @@ public class PopulationManager : MonoBehaviour
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
+        // ❌ ELIMINA O COMENTA ESTO: No queremos borrar a nadie al cambiar de nivel
+        /*
         GameObject[] antiguos = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (var p in antiguos)Destroy(p);
+        foreach (var p in antiguos) Destroy(p);
+        */
 
-        for (int i = 0; i < initialPopulation; i++)
+        // Opcional: Solo spawnear la diferencia si hay poca gente
+        int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
+        for (int i = 0; i < (initialPopulation - currentCount); i++)
         {
             SpawnPerson();
         }
@@ -106,10 +111,15 @@ public class PopulationManager : MonoBehaviour
 
     void Update()
     {
+        // Mantenemos esto para que el spawn sea constante
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
 
         timer += Time.deltaTime;
-        CheckForOutsiders();
+
+        if (LevelManager.instance != null && LevelManager.instance.isGameActive)
+        {
+            CheckForOutsiders();
+        }
 
         int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
 

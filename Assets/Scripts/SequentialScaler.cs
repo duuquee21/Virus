@@ -44,7 +44,7 @@ public class ManualSetCycler : MonoBehaviour
     }
 
     [ContextMenu("▶ Ejecutar Transición")]
-    public void TriggerTransition()
+    public void TriggerTransition(float transicion, float frenado)
     {
         if (isBusy) 
         {
@@ -58,7 +58,7 @@ public class ManualSetCycler : MonoBehaviour
             return;
         }
 
-        StartCoroutine(ExecuteTransitionSequence());
+        StartCoroutine(ExecuteTransitionSequence(transicion, transicion));
     }
 
     private void InitializeSets()
@@ -79,91 +79,56 @@ public class ManualSetCycler : MonoBehaviour
         }
     }
 
-    private IEnumerator ExecuteTransitionSequence()
+    private IEnumerator ExecuteTransitionSequence(float tiempoAceleracion, float tiempoFrenado)
     {
         isBusy = true;
 
-        // Definir quién se va y quién viene
         int nextSetIndex = (currentSetIndex + 1) % objectSets.Count;
-        
-        ObjectSet setSaliente = objectSets[currentSetIndex]; // El que está visible ahora
-        ObjectSet setEntrante = objectSets[nextSetIndex];    // El que vendrá después
+        ObjectSet setSaliente = objectSets[currentSetIndex];
+        ObjectSet setEntrante = objectSets[nextSetIndex];
 
-        // =================================================================================
-        // PASO 1: EL CONJUNTO ACTUAL SE VUELVE GRANDE... 
-        // ¡ESPERA! El conjunto actual YA es grande y visible. 
-        // Según tu petición: "quiero que se haga grande... cambie... y se haga pequeño".
-        // Esto implica que la secuencia empieza con el set INACTIVO haciéndose grande.
-        // =================================================================================
-
-        // Nota: Para que el efecto visual sea "Del set 1 pasamos al 2":
-        // 1. Set 1 desaparece (se hace pequeño? O swap directo?)
-        // Según tu prompt anterior: "Primero se hacen grandes... cambian... vuelven a tamaño inicial".
-        // Voy a interpretar el flujo más común de UI/Juego:
-        // Set A (Visible) -> Se hace pequeño -> Set B (Invisible) se hace Grande.
-        
-        // PERO, tu prompt dice textualmente: "Cojo 6 objetos y los voy haciendo mas grandes... 
-        // cuando todos hayan alcanzado el tamaño... cambie por otros... y vuelvan a su tamaño inicial (pequeño)".
-        
-        // INTERPRETACIÓN CORRECTA DE TU PROMPT:
-        // 1. Estado Inicial: Set A está PEQUEÑO (o invisible/pequeño).
-        // 2. Animación: Set A crece secuencialmente hasta ser GRANDE.
-        // 3. Swap: En el momento cumbre (todos grandes), cambiamos los modelos de A por los de B (Swap instantáneo).
-        // 4. Animación: Set B (que ahora está grande porque sustituyó a A) se hace PEQUEÑO secuencialmente.
-        
-        // --- FASE 1: CRECER (Set Actual) ---
-        // Aseguramos que el set actual está activo y pequeño antes de empezar
+        // --- FASE 1: CRECER (Acompaña la aceleración del mapa) ---
         foreach (var obj in setSaliente.objects)
         {
-            if(obj != null) { obj.SetActive(true); obj.transform.localScale = smallScale; }
-        }
-
-        // Animación de crecer (LENTA)
-        for (int i = 0; i < setSaliente.objects.Count; i++)
-        {
-            if (setSaliente.objects[i] != null)
+            if (obj != null)
             {
-                StartCoroutine(AnimateScale(setSaliente.objects[i], smallScale, bigScale, growDuration));
-                yield return new WaitForSeconds(growStagger);
+                obj.SetActive(true);
+                StartCoroutine(AnimateScale(obj, smallScale, bigScale, tiempoAceleracion));
             }
         }
-        
-        // Esperar a que el último termine de crecer
-        yield return new WaitForSeconds(growDuration);
 
-        // --- FASE 2: EL CAMBIAZO (Swap) ---
-        // Apagamos el viejo
+        yield return new WaitForSeconds(tiempoAceleracion);
+
+        // --- FASE 2: CAMBIAZO ---
         foreach (var obj in setSaliente.objects) if (obj != null) obj.SetActive(false);
 
-        // Encendemos el nuevo YA GRANDE
         foreach (var obj in setEntrante.objects)
         {
             if (obj != null)
             {
+                // Aparecen ya en tamaño GRANDE y se quedan así durante el frenado
                 obj.transform.localScale = bigScale;
                 obj.SetActive(true);
             }
         }
 
-        // Breve pausa técnica (opcional, 1 frame) para asegurar que Unity renderiza el cambio
-        yield return null; 
+        // --- FASE 3: ESPERA DEL FRENADO ---
+        // Esperamos el tiempo que el mapa tarda en frenar SIN hacer nada en las escalas
+        yield return new WaitForSeconds(tiempoFrenado);
 
-        // --- FASE 3: ENCOGER (Set Nuevo) ---
-        // Animación de encoger (RÁPIDA)
-        for (int i = 0; i < setEntrante.objects.Count; i++)
+        // --- FASE 4: ENCOGER (Impacto Post-Frenado) ---
+        // Ahora que el mapa se detuvo, ejecutamos el encogimiento para el "golpe" visual
+        foreach (var obj in setEntrante.objects)
         {
-            if (setEntrante.objects[i] != null)
+            if (obj != null)
             {
-                // De Grande a Pequeño, usando shrinkDuration
-                StartCoroutine(AnimateScale(setEntrante.objects[i], bigScale, smallScale, shrinkDuration));
-                yield return new WaitForSeconds(shrinkStagger);
+                StartCoroutine(AnimateScale(obj, bigScale, smallScale, tiempoFrenado));
             }
         }
 
-        // Esperar a que termine de encogerse el último
-        yield return new WaitForSeconds(shrinkDuration);
+        // Esperamos a que termine esta última animación antes de liberar el script
+        yield return new WaitForSeconds(tiempoFrenado);
 
-        // --- FINAL ---
         currentSetIndex = nextSetIndex;
         isBusy = false;
     }

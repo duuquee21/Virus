@@ -20,6 +20,9 @@ public class Movement : MonoBehaviour
     private float tiempoEfecto = 0f;
     public float duracionAbsorcion = 1.5f; // Segundos que tarda en desaparecer
 
+    [Header("Ajustes de Transición")]
+    public float friccionDuranteAnimacion = 15f; // Mayor valor = frenazo más seco
+
 
 
     void Start()
@@ -44,7 +47,20 @@ public class Movement : MonoBehaviour
             EjecutarEfectoAbsorcion();
             return; // Bloquea el resto del movimiento
         }
+            
+        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
+        {
+            // Aplicamos fricción constante hacia el cero
+            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, friccionDuranteAnimacion * Time.fixedDeltaTime);
+            rb.angularVelocity = Mathf.MoveTowards(rb.angularVelocity, 0, friccionDuranteAnimacion * 5f * Time.fixedDeltaTime);
+            return; // Bloquea el resto del movimiento
+        }
 
+        ManejarMovimientoNormal();
+    }
+
+    private void ManejarMovimientoNormal()
+    {
         // 1. Definimos la velocidad objetivo
         float velocidadObjetivo = velocidadBase;
 
@@ -76,7 +92,7 @@ public class Movement : MonoBehaviour
                 // Sumamos la fuerza de atracción hacia el centro
                 velocidadDeseada += direccionHaciaCentro * fuerzaAtraccion;
             }
-          
+
 
             // 3. Aplicamos el resultado final al Rigidbody
             rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
@@ -107,7 +123,6 @@ public class Movement : MonoBehaviour
                 estaGirando = false;
             }
         }
-
     }
 
     /// <summary>
