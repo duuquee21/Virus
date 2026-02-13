@@ -375,6 +375,41 @@ public class LevelManager : MonoBehaviour
         for (int i = 1; i <= 10; i++) if (PlayerPrefs.GetInt("ZoneUnlocked_" + i, 0) == 1) count++;
         return count;
     }
+    public void SoftRestartRun()
+    {
+        Debug.Log("Soft Restart ejecutado");
+
+        // 1️⃣ Monedas a 0
+        contagionCoins = 0;
+        monedasGanadasSesion = 0;
+
+        // 2️⃣ Volver a zona 0
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
+        PlayerPrefs.Save();
+        ActivateMap(0);
+
+        // 3️⃣ Resetear vida del planeta
+        PlanetCrontrollator planet = Object.FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+            planet.ResetHealthToInitial();
+
+        // 4️⃣ Resetear estado de partida
+        isGameActive = false;
+        currentSessionInfected = 0;
+        currentTimer = gameDuration;
+
+        // 5️⃣ Limpiar escena
+        CleanUpScene();
+
+        // 6️⃣ Volver a pantalla de inicio de día
+        if (gameUI) gameUI.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (zonePanel) zonePanel.SetActive(false);
+        if (dayOverPanel) dayOverPanel.SetActive(true);
+
+        UpdateUI();
+    }
+
 
     public void TogglePause()
     {

@@ -102,6 +102,16 @@ public class PlanetCrontrollator : MonoBehaviour
         if (healthBar != null) healthBar.fillAmount = currentHealth / maxHealth;
     }
 
+    public void ResetHealthToInitial()
+    {
+        currentHealth = maxHealth;
+        lastImpactTimes.Clear(); // limpiamos el sistema de seguridad
+        this.enabled = true;     // por si se había desactivado al morir
+        ActualizarUI();
+
+        Debug.Log("<color=green>Planeta reseteado a vida máxima</color>");
+    }
+
     void Die()
     {
         if (LevelManager.instance != null) LevelManager.instance.NextMapTransition();
