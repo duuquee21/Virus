@@ -27,6 +27,9 @@ public class LevelTransitioner : MonoBehaviour
     // 2. Crea el Evento Estático
     public static event Action<float> OnImpactShake;
 
+    [Header("Ajustes de Transición")]
+    public float friccionDuranteAnimacion = 15f; // Mayor valor = frenazo más seco
+
     void Awake()
     {
         mainCam = Camera.main;

@@ -452,47 +452,31 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAndChangeMap()
+ private IEnumerator WaitAndChangeMap()
+{
+    // En lugar de isGameActive = false (que detiene el spawn), 
+    // podrías dejarlo activo si quieres que sigan naciendo durante la transición.
+    
+    yield return new WaitForSecondsRealtime(0.5f);
+
+    int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+    int nextMap = currentMap + 1;
+
+    if (nextMap < mapList.Length)
     {
-        isGameActive = false;
-        yield return new WaitForSecondsRealtime(0.5f);
+        ActivateMap(nextMap);
+        yield return new WaitForEndOfFrame();
 
-        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        int nextMap = currentMap + 1;
-
-        if (nextMap < mapList.Length)
+        PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
+        if (pm != null) 
         {
-            // 1. Cambiar índice y activar mapa físico
-            ActivateMap(nextMap);
-
-            // 2. IMPORTANTE: Esperar al final del frame para que Unity registre 
-            // que los objetos nuevos están activos y el tag "SpawnArea" sea localizable.
-            yield return new WaitForEndOfFrame();
-
-            // 3. Resetear jugador
-            if (virusPlayer != null)
-            {
-                ManagerAnimacionJugador animManager = virusPlayer.GetComponent<ManagerAnimacionJugador>();
-                if (animManager != null) animManager.ResetearEstado();
-                virusPlayer.SetActive(true);
-            }
-
-            // 4. Configurar población DESPUÉS de que el mapa está activo
-            PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-            if (pm != null)
-            {
-                pm.ConfigureRound(0);
-            }
-
-            currentSessionInfected = 0;
-            currentTimer = gameDuration;
-            isGameActive = true;
+            pm.RefreshSpawnArea(); // Ahora los nuevos nacerán en el nuevo mapa
         }
-        else
-        {
-            ReturnToMenu();
-        }
+        
+        // No reseteamos currentSessionInfected si quieres que sea una sola carrera continua
+        // currentSessionInfected = 0; 
     }
+}
 
     public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
     {
