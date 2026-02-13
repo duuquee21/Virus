@@ -46,9 +46,21 @@ public class LevelTransitioner : MonoBehaviour
         int currentIdx = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         GameObject mapaVisual = LevelManager.instance.mapList[currentIdx];
 
-        if (mapaVisual) escalaOriginal = mapaVisual.transform.localScale;
+        if (mapaVisual)
+        {
+            escalaOriginal = mapaVisual.transform.localScale;
+
+            // --- NUEVA CONEXIÓN: Avisar al ManualSetCycler ---
+            // Buscamos el script en el mapa actual o sus hijos
+            ManualSetCycler cycler = mapaVisual.GetComponentInChildren<ManualSetCycler>();
+            if (cycler != null)
+            {
+                cycler.TriggerTransition();
+            }
+        }
 
         // --- FASE 1: ACELERAR Y ENCOGER ---
+        // Al empezar este bucle, el mapa empieza a girar y la escala ya ha sido activada arriba
         Vector3 escalaObjetivoMin = escalaOriginal * escalaMinima;
         while (velocidadActual < velocidadMaxima)
         {
