@@ -39,7 +39,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Nivel2, // Hexágonos + Pentágonos
         ParedInfectiva_Nivel3, // + Cuadrados
         ParedInfectiva_Nivel4, // + Triángulos
-        ParedInfectiva_Nivel5, // + Círculos (Rompe todo)
+        ParedInfectiva_Nivel5,
+        DestroyCoralOnInfectedImpact
     }
 
     [Header("Datos")]
@@ -316,6 +317,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Debug.Log("<color=cyan>Dmg Extra:</color> Círculo activado -> Corresponde a <b>FASE 4</b> (Elemento 4 del Array)");
                 Guardado.instance.SaveData();
                 break;
+            case SkillEffectType.DestroyCoralOnInfectedImpact:
+                Guardado.instance.destroyCoralOnInfectedImpact = true;
+                Guardado.instance.SaveData();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;

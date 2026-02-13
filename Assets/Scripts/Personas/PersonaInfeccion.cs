@@ -329,6 +329,13 @@ public class PersonaInfeccion : MonoBehaviour
                 Desaparecer();
             }
         }
+        
+        {
+            Debug.Log($"[TRIGGER] {gameObject.name} tocó {other.name} | Tag: {other.tag} | alreadyInfected: {alreadyInfected}");
+
+
+        }
+
     }
 
     void Desaparecer()
@@ -339,7 +346,7 @@ public class PersonaInfeccion : MonoBehaviour
             InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.red, true);
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 
@@ -409,17 +416,34 @@ public class PersonaInfeccion : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log($"[COLISION] {gameObject.name} chocó con {collision.collider.name} | Tag: {collision.collider.tag} | alreadyInfected: {alreadyInfected}");
+
+        // --- Habilidad nueva ---
+        if (alreadyInfected &&
+            Guardado.instance != null &&
+            Guardado.instance.destroyCoralOnInfectedImpact &&
+            collision.collider.CompareTag("Coral"))
+        {
+            Debug.Log("<color=red>[IMPACTO CORAL]</color> Destruyendo Coral y Bola Blanca");
+
+            //Destroy(collision.collider.gameObject);
+            //Destroy(gameObject);
+            return;
+        }
+
+        // --- Pared infectiva ---
         if (!collision.collider.CompareTag("Wall")) return;
 
         if (Guardado.instance == null) return;
         if (Guardado.instance.nivelParedInfectiva <= 0) return;
 
-        // 🔹 IMPORTANTE: comprobar si esa fase puede evolucionar por pared
         if (Guardado.instance.nivelParedInfectiva > faseActual)
         {
+            Debug.Log("<color=blue>[PARED INFECTIVA]</color> Evolución por choque con pared");
             IntentarAvanzarFasePorChoque(TipoChoque.Wall);
         }
     }
+
 
     private void IniciarCambioColor(IEnumerator nuevaCorrutina)
     {
