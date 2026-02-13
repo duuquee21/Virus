@@ -275,7 +275,7 @@ public class LevelManager : MonoBehaviour
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
-        CleanUpScene();
+      //  CleanUpScene();
 
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
@@ -400,53 +400,59 @@ public class LevelManager : MonoBehaviour
 
     public void NextMapTransition()
     {
-        // Solo permitimos una transición a la vez para evitar errores si chocan dos personas a la vez
         if (!isGameActive) return;
 
-        StartCoroutine(WaitAndChangeMap());
+        // Buscamos el script de transición en la escena
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+
+        if (transitioner != null)
+        {
+            // Si existe el script de las rotaciones, que él tome el control
+            transitioner.StartLevelTransition();
+        }
+        else
+        {
+            // Si por alguna razón no está el script de giro, 
+            // hace el cambio normal que tenías antes para no romper el juego
+            StartCoroutine(WaitAndChangeMap());
+        }
     }
 
     private IEnumerator WaitAndChangeMap()
     {
         isGameActive = false;
-        Debug.Log("<color=orange>¡Planeta derrotado! Preparando siguiente zona...</color>");
-
-        yield return new WaitForSecondsRealtime(0.5f); // Un breve respiro
+        yield return new WaitForSecondsRealtime(0.5f);
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int nextMap = currentMap + 1;
 
         if (nextMap < mapList.Length)
         {
-            CleanUpScene();
-
-            // --- LÓGICA DE REINICIO MEJORADA ---
-            if (virusPlayer != null)
-            {
-                // Buscamos el componente y reseteamos todo el sistema de animación
-                ManagerAnimacionJugador animManager = virusPlayer.GetComponent<ManagerAnimacionJugador>();
-                if (animManager != null)
-                {
-                    animManager.ResetearEstado();
-                }
-                else
-                {
-                    // Backup por si no tiene el script
-                    virusPlayer.SetActive(true);
-                    virusPlayer.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
-                }
-            }
-
+            // 1. Cambiar índice y activar mapa físico
             ActivateMap(nextMap);
 
+            // 2. IMPORTANTE: Esperar al final del frame para que Unity registre 
+            // que los objetos nuevos están activos y el tag "SpawnArea" sea localizable.
+            yield return new WaitForEndOfFrame();
+
+            // 3. Resetear jugador
+            if (virusPlayer != null)
+            {
+                ManagerAnimacionJugador animManager = virusPlayer.GetComponent<ManagerAnimacionJugador>();
+                if (animManager != null) animManager.ResetearEstado();
+                virusPlayer.SetActive(true);
+            }
+
+            // 4. Configurar población DESPUÉS de que el mapa está activo
             PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
-            if (pm != null) pm.ConfigureRound(0);
+            if (pm != null)
+            {
+                pm.ConfigureRound(0);
+            }
 
             currentSessionInfected = 0;
             currentTimer = gameDuration;
             isGameActive = true;
-
-            Debug.Log("<color=green>Nueva zona lista y sistemas reiniciados.</color>");
         }
         else
         {

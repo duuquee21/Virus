@@ -17,7 +17,10 @@ public class PlanetCrontrollator : MonoBehaviour
     private float cooldownTime = 0.1f;
 
     private AnimacionFinalPlaneta animacionFinalPlaneta;
-    
+
+    [Header("Estado")]
+    public bool isInvulnerable = false; // Nueva variable
+
 
     void Start()
     {
@@ -92,9 +95,11 @@ public class PlanetCrontrollator : MonoBehaviour
         // Cada cierto tiempo podrías limpiar IDs antiguos, 
         // aunque para un juego pequeño no es crítico.
     }
-
     public void TakeDamage(float amount)
     {
+        // Si es invulnerable, ignoramos el daño por completo
+        if (isInvulnerable) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         ActualizarUI();
