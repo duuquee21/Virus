@@ -30,6 +30,7 @@ public class Guardado : MonoBehaviour
     public bool carambolaNormalActiva = false;
     public bool carambolaProActiva = false;
     public bool carambolaSupremaActiva = false;
+    public bool destroyCoralOnInfectedImpact = false;
     public float probabilidadDuplicarChoque = 0f;
 
     [Header("Mejoras de Daño Individuales")]
@@ -39,6 +40,8 @@ public class Guardado : MonoBehaviour
     public int dañoExtraPentagono = 0;
     public int dañoExtraHexagono = 0;
     public int dañoExtraHabilidad = 0;
+
+
 
     [Header("Multiplicadores de Virus")]
     public float radiusMultiplier = 1.0f;
