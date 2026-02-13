@@ -54,6 +54,14 @@ public class PersonaInfeccion : MonoBehaviour
 
     private Coroutine colorCoroutine;
 
+    private ManagerAnimacionJugador managerAnimacion; // Nueva referencia
+
+    public float shakeIntensity = 0.05f;
+    private Vector3 originalPosition;
+    private Vector3 initialPosition;
+    private bool positionSaved = false;
+
+
 
 
     // --- REFERENCIA QUE FALTABA ---
@@ -73,6 +81,11 @@ public class PersonaInfeccion : MonoBehaviour
 
         ActualizarVisualFase();
         ActualizarProgresoBarras(0f);
+        GameObject jugadorVirus = GameObject.FindGameObjectWithTag("Virus");
+        if (jugadorVirus != null)
+        {
+            managerAnimacion = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
+        }
     }
     public enum TipoChoque
     {
@@ -89,26 +102,59 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (isInsideZone)
         {
-            float multiplier = 1f;
-            if (Guardado.instance != null) multiplier = Guardado.instance.infectSpeedMultiplier;
-            currentInfectionTime += Time.deltaTime * multiplier;
+            // CASO A: Jugador Jugable (Infección normal)
+            if (managerAnimacion == null || managerAnimacion.playable)
+            {
+                if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
+
+                float multiplier = 1f;
+                if (Guardado.instance != null) multiplier = Guardado.instance.infectSpeedMultiplier;
+                currentInfectionTime += Time.deltaTime * multiplier;
+            }
+            // CASO B: Jugador NO Jugable (Atracción al centro)
+            else
+            {
+                // 1. Calculamos la distancia al centro de la pantalla
+                Vector3 centroMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+                centroMundo.z = 0; // Asegurar que estamos en el mismo plano 2D
+                float distanciaAlCentro = Vector2.Distance(transform.position, (Vector2)centroMundo);
+
+                // 2. Solo vibramos si ya estamos "cerca" del centro (ej. radio de 0.5)
+                if (distanciaAlCentro < 0.5f)
+                {
+                    if (!positionSaved)
+                    {
+                        initialPosition = transform.position;
+                        positionSaved = true;
+                    }
+
+                    float currentShake = 0.05f;
+                    float offsetX = Random.Range(-1f, 1f) * currentShake;
+                    float offsetY = Random.Range(-1f, 1f) * currentShake;
+
+                    transform.position = initialPosition + new Vector3(offsetX, offsetY, 0);
+                }
+                else
+                {
+                    // Si aún no llegamos al centro exacto, reseteamos la posición base para que el Movement.cs 
+                    // pueda seguir moviéndolo suavemente sin saltos
+                    if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
+                }
+            }
         }
         else
         {
+            // Fuera de zona: Reset
+            if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
             currentInfectionTime -= Time.deltaTime * 2f;
         }
 
+        // ... resto del código de barras y avance de fase ...
         currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, tiempoNecesarioEstaFase);
         float progress = currentInfectionTime / tiempoNecesarioEstaFase;
-
-        if (!infectionBarCanvas.activeSelf) infectionBarCanvas.SetActive(true);
-
         ActualizarProgresoBarras(progress);
 
-        if (currentInfectionTime >= tiempoNecesarioEstaFase)
-        {
-            IntentarAvanzarFase();
-        }
+        if (currentInfectionTime >= tiempoNecesarioEstaFase) IntentarAvanzarFase();
     }
 
     void ActualizarProgresoBarras(float progress)

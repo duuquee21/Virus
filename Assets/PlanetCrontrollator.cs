@@ -10,15 +10,23 @@ public class PlanetCrontrollator : MonoBehaviour
 
     [Header("UI")]
     public Image healthBar;
+    public bool nivelFinal = false;
 
     // SISTEMA DE SEGURIDAD: Guarda el tiempo del último impacto por cada objeto
     private Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
 
+    private AnimacionFinalPlaneta animacionFinalPlaneta;
+
+    [Header("Estado")]
+    public bool isInvulnerable = false; // Nueva variable
+
+
     void Start()
     {
         currentHealth = maxHealth;
         ActualizarUI();
+        animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
     }
 
     // Método centralizado para procesar el impacto y evitar repetición
@@ -87,9 +95,11 @@ public class PlanetCrontrollator : MonoBehaviour
         // Cada cierto tiempo podrías limpiar IDs antiguos, 
         // aunque para un juego pequeño no es crítico.
     }
-
     public void TakeDamage(float amount)
     {
+        // Si es invulnerable, ignoramos el daño por completo
+        if (isInvulnerable) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         ActualizarUI();
@@ -114,7 +124,13 @@ public class PlanetCrontrollator : MonoBehaviour
 
     void Die()
     {
-        if (LevelManager.instance != null) LevelManager.instance.NextMapTransition();
-        this.enabled = false;
+        if (nivelFinal)
+        {
+            animacionFinalPlaneta.EjecutarSecuenciaVibracion();
+        }
+        else
+        {
+           LevelManager.instance.NextMapTransition();
+        }
     }
 }

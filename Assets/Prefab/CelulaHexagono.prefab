@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
-  m_Color: {r: 0.55677366, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.6627451, g: 0.3137255, b: 0.3372549, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   fuerzaRotacion: 12.5
   alreadyInfected: 0
   faseActual: 0
+  shakeIntensity: 0.05
   particulasDeFuego: {fileID: 5683650011450178379}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
@@ -199,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   velocidadBase: 2
+  fuerzaAtraccion: 2
+  duracionAbsorcion: 4
 --- !u!114 &2679614929921104373
 MonoBehaviour:
   m_ObjectHideFlags: 0

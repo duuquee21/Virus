@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     public GameObject modeSelectionPanel;
     public Button continueButton;
     public TextMeshProUGUI continueInfoText;
+    public GameObject jugadorVirus;
 
 
 
@@ -274,7 +275,7 @@ public class LevelManager : MonoBehaviour
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
-        CleanUpScene();
+      //  CleanUpScene();
 
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
@@ -434,52 +435,62 @@ public class LevelManager : MonoBehaviour
 
     public void NextMapTransition()
     {
-        // Solo permitimos una transición a la vez para evitar errores si chocan dos personas a la vez
         if (!isGameActive) return;
 
-        StartCoroutine(WaitAndChangeMap());
+        // Buscamos el script de transición en la escena
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+
+        if (transitioner != null)
+        {
+            // Si existe el script de las rotaciones, que él tome el control
+            transitioner.StartLevelTransition();
+        }
+        else
+        {
+            // Si por alguna razón no está el script de giro, 
+            // hace el cambio normal que tenías antes para no romper el juego
+            StartCoroutine(WaitAndChangeMap());
+        }
     }
 
     private IEnumerator WaitAndChangeMap()
     {
-        isGameActive = false; // Pausamos el juego
-        Debug.Log("<color=orange>¡Planeta derrotado! Preparando siguiente zona...</color>");
+        isGameActive = false;
+        yield return new WaitForSecondsRealtime(0.5f);
 
-        // 1. Espera de 2 segundos para ver el efecto visual
-        yield return new WaitForSecondsRealtime(2f);
-
-        // 2. Calculamos el índice del siguiente mapa
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int nextMap = currentMap + 1;
 
         if (nextMap < mapList.Length)
         {
-            // 3. Limpiamos las personas del mapa anterior
-            CleanUpScene();
-
-            // 4. Activamos el nuevo mapa visualmente
-            // (Esto también le dice al PopulationManager qué prefab usar)
+            // 1. Cambiar índice y activar mapa físico
             ActivateMap(nextMap);
 
-            // 5. ¡ESTA ES LA CLAVE!: Forzamos el spawn de la nueva población
+            // 2. IMPORTANTE: Esperar al final del frame para que Unity registre 
+            // que los objetos nuevos están activos y el tag "SpawnArea" sea localizable.
+            yield return new WaitForEndOfFrame();
+
+            // 3. Resetear jugador
+            if (virusPlayer != null)
+            {
+                ManagerAnimacionJugador animManager = virusPlayer.GetComponent<ManagerAnimacionJugador>();
+                if (animManager != null) animManager.ResetearEstado();
+                virusPlayer.SetActive(true);
+            }
+
+            // 4. Configurar población DESPUÉS de que el mapa está activo
             PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
             if (pm != null)
             {
-                // Reiniciamos el contador de shinies y forzamos el spawn inicial
-                // Usamos 0 shinies por ahora o el valor que quieras para la nueva zona
                 pm.ConfigureRound(0);
             }
 
-            // 6. Reset de variables de sesión
             currentSessionInfected = 0;
             currentTimer = gameDuration;
             isGameActive = true;
-
-            Debug.Log("<color=green>Nueva zona lista con sus prefabs correspondientes.</color>");
         }
         else
         {
-            Debug.Log("¡Fin del juego!");
             ReturnToMenu();
         }
     }

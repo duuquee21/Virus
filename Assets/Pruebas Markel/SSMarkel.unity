@@ -599,26 +599,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Guardado
   resetOnPlay: 1
   totalInfected: 0
-  shinyDNA: 0
   freeInitialUpgrade: -1
   coinMultiplier: 1
   startingCoins: 0
   spawnSpeedBonus: 0
   populationBonus: 0
   zoneDiscountActive: 0
-  extraShiniesPerRound: 0
   coinsPerZoneDaily: 0
-  shinyPerZoneDaily: 0
-  guaranteedShiny: 0
   keepUpgradesOnReset: 0
   keepZonesUnlocked: 0
+  paredInfectivaActiva: 0
+  nivelParedInfectiva: 0
+  virusReboteActiva: 0
+  carambolaNormalActiva: 0
+  carambolaProActiva: 0
+  carambolaSupremaActiva: 0
+  probabilidadDuplicarChoque: 0
+  "da\xF1oExtraCirculo": 0
+  "da\xF1oExtraTriangulo": 0
+  "da\xF1oExtraCuadrado": 0
+  "da\xF1oExtraPentagono": 0
+  "da\xF1oExtraHexagono": 0
+  "da\xF1oExtraHabilidad": 0
   radiusMultiplier: 1
   speedMultiplier: 1
   infectSpeedMultiplier: 1
-  shinyCaptureMultiplier: 1
-  shinyValueSum: 1
-  shinyMultiplier: 1
-  bonusDaysPermanent: 0
 --- !u!4 &38468938
 Transform:
   m_ObjectHideFlags: 0
@@ -891,7 +896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +200%
-  shinyCost: 2
+  CoinCost: 1
   nextNodes:
   - {fileID: 1220417568}
   - {fileID: 2076359407}
@@ -1412,7 +1417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 22
@@ -1584,7 +1589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +20% de persona por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1336181681}
   requiredParentNodes: []
@@ -2990,7 +2995,7 @@ MonoBehaviour:
   scaleMultiplier: 5
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  sortingLayerName: 
+  shadowOrder: -1
 --- !u!212 &184050256
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3774,7 +3779,7 @@ MonoBehaviour:
   scaleMultiplier: 1
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  sortingLayerName: 
+  shadowOrder: -1
 --- !u!114 &228091701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3894,7 +3899,7 @@ MonoBehaviour:
   scaleMultiplier: 1
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  sortingLayerName: 
+  shadowOrder: -1
 --- !u!114 &232901725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4135,7 +4140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 22
@@ -5856,7 +5861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Multi de Shiny
   description: Monedas del shiny x10
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 802792255}
   requiredParentNodes: []
@@ -6859,7 +6864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +100% de persona por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 252481898}
   requiredParentNodes: []
@@ -7012,7 +7017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Zonas Reset
   description: Las zonas compradas se mantienen entre resetos
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2118875022}
   requiredParentNodes: []
@@ -7436,7 +7441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +60% de persona por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 445640193}
   requiredParentNodes: []
@@ -8095,7 +8100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +80% de persona por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 412912439}
   requiredParentNodes: []
@@ -8384,7 +8389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 22
@@ -9026,7 +9031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 22
@@ -9198,7 +9203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Descuento Zonas
   description: -50% decuento en la tienda de zonas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 27
@@ -9555,6 +9560,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9710,6 +9716,24 @@ MonoBehaviour:
   lookAheadDistance: 0.3
   smoothSpeed: 2.5
   virusMovement: {fileID: 1129471498}
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ca24b3814bdf74f93cd94181580585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grupoA:
+  - {fileID: 1768152847}
+  grupoB:
+  - {fileID: 1214256787}
+  aceleracion: 500
+  velocidadMaxima: 2000
 --- !u!1 &520813264
 GameObject:
   m_ObjectHideFlags: 0
@@ -9767,7 +9791,7 @@ MonoBehaviour:
   description: '+5 dias de cura
 
 '
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2100670667}
   requiredParentNodes: []
@@ -9920,7 +9944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1387940920}
   requiredParentNodes:
@@ -10254,7 +10278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 55039538}
   - {fileID: 639775619}
@@ -11825,7 +11849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Velcoidad de captura
   description: x2 Velocidad de captura de shiny
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 458302546}
   - {fileID: 1800229051}
@@ -12477,7 +12501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2076359407}
   requiredParentNodes:
@@ -13241,7 +13265,6 @@ MonoBehaviour:
   statusText: {fileID: 35706971}
   nameText: {fileID: 1528213099}
   benefitText: {fileID: 0}
-  stockText: {fileID: 0}
   luzColor: {r: 1, g: 1, b: 1, a: 1}
   apagadoColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
 --- !u!114 &671526777
@@ -13993,7 +14016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Aumento Radio
   description: Area de captura de mas de radio x2
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 980715996}
   requiredParentNodes: []
@@ -14290,7 +14313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 500 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 827093180}
   - {fileID: 523954232}
@@ -14444,7 +14467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 23
@@ -15243,7 +15266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 23
@@ -15437,7 +15460,7 @@ MonoBehaviour:
   description: '+10 dias de cura
 
 '
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1073670516}
   - {fileID: 506391029}
@@ -15611,7 +15634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valoe Shiny
   description: Los shiny dan +3 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 23
@@ -15919,7 +15942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 2500 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1714903570}
   - {fileID: 1387940920}
@@ -16951,7 +16974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 50000 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1241499372}
   requiredParentNodes: []
@@ -17250,12 +17273,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infectionParticles: {fileID: 7197056637472312061, guid: c481fbc601207be4f9314d86f8e6b386, type: 3}
+  infection1Particles: {fileID: 0}
+  basicImpactParticles: {fileID: 0}
   audioSource: {fileID: 0}
   infectionSounds:
   - {fileID: 8300000, guid: e46bc00b61aab8b40bc8eee286035672, type: 3}
   - {fileID: 8300000, guid: e85f56a62653aa14ab9862f26c643eff, type: 3}
   - {fileID: 8300000, guid: 9f34862150028894da81f102830bbc31, type: 3}
   - {fileID: 8300000, guid: d1ece1009b6684143ba8947c866359c0, type: 3}
+  phaseChangeSounds: []
+  bolaBlancaSounds: []
+  basicWallImpactSounds: []
+  basicImpactSounds: []
   cameraTransform: {fileID: 519420032}
   shakeDuration: 0.1
   shakeMagnitude: 0.075
@@ -17294,7 +17323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 48
@@ -17602,7 +17631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 48
@@ -18204,7 +18233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +25% de personas que pueden aparecer por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2124784838}
   requiredParentNodes: []
@@ -18357,7 +18386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 22
@@ -18715,7 +18744,6 @@ MonoBehaviour:
   statusText: {fileID: 2061791599}
   nameText: {fileID: 158290329}
   benefitText: {fileID: 0}
-  stockText: {fileID: 0}
   luzColor: {r: 1, g: 1, b: 1, a: 1}
   apagadoColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
 --- !u!114 &1015892228
@@ -18862,7 +18890,7 @@ MonoBehaviour:
   scaleMultiplier: 1
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  sortingLayerName: 
+  shadowOrder: -1
 --- !u!114 &1016804598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18987,7 +19015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +500%
-  shinyCost: 4
+  CoinCost: 1
   nextNodes:
   - {fileID: 1861535015}
   - {fileID: 1387940920}
@@ -19171,14 +19199,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5704e846dbfa44941127409f4861a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationManager
-  personPrefab: {fileID: 721460322803742226, guid: 3675eacfc16703444a65af482e9b7e05, type: 3}
+  personPrefabs: []
   spawnInterval: 3
   maxPopulation: 15
   baseMaxPopulation: 15
   initialPopulation: 10
-  spawnAreaMin: {x: -17.7, y: -10}
-  spawnAreaMax: {x: 17.7, y: 10}
+  margenSeguridad: 0.5
   growDuration: 0.4
+  fuerzaImpulsoClon: 2
 --- !u!4 &1039353547
 Transform:
   m_ObjectHideFlags: 0
@@ -19991,7 +20019,7 @@ MonoBehaviour:
   description: '+10 dias de cura
 
 '
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2054705334}
   requiredParentNodes: []
@@ -20850,7 +20878,7 @@ MonoBehaviour:
   scaleMultiplier: 1
   alpha: 0.9
   shadowColor: {r: 0, g: 0, b: 0, a: 1}
-  sortingLayerName: 
+  shadowOrder: -1
 --- !u!114 &1104475593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21859,36 +21887,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda9800ac0163904fb921843b4836511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  modeSelectionPanel: {fileID: 0}
+  continueButton: {fileID: 0}
+  continueInfoText: {fileID: 0}
+  jugadorVirus: {fileID: 0}
   mapList:
   - {fileID: 0}
   - {fileID: 1493158146}
   - {fileID: 553569673}
   virusPlayer: {fileID: 1129471492}
   virusMovementScript: {fileID: 1129471498}
+  prefabTextoPuntos: {fileID: 0}
+  marcadorDestinoUI: {fileID: 0}
+  canvasPrincipal: {fileID: 0}
   menuPanel: {fileID: 1989049608}
   gameUI: {fileID: 2049758465}
   dayOverPanel: {fileID: 1935879841}
   gameOverPanel: {fileID: 767001066}
   shinyPanel: {fileID: 858966969}
   zonePanel: {fileID: 1870291121}
+  pausePanel: {fileID: 0}
   timerTexts:
   - {fileID: 1370056813}
   sessionScoreTexts:
   - {fileID: 1529213483}
   contagionCoinsTexts:
   - {fileID: 1412331081}
-  daysRemainingTexts:
-  - {fileID: 1865967369}
-  - {fileID: 1977485507}
   shinyStoreTexts:
   - {fileID: 615964517}
   - {fileID: 1896450789}
   gameDuration: 5
   maxInfectionsPerRound: 5
-  baseDaysUntilCure: 4
-  totalDaysUntilCure: 0
-  shinyChance: 0.75
-  shiniesBasePorMapa: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+  monedasGanadasSesion: 0
+  faseInicialPorMapa: 
   isGameActive: 0
   currentSessionInfected: 0
   contagionCoins: 0
@@ -21920,15 +21951,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1870291121}
-  infectedText: {fileID: 1781249324}
-  multiplierText: {fileID: 1363616359}
-  zoneText: {fileID: 448847524}
-  finalCoinsText: {fileID: 1523834433}
-  shinyFoundText: {fileID: 1245551834}
-  shinyMultiplierText: {fileID: 1865556698}
-  shinyFinalText: {fileID: 1090820248}
+  zonaEvolutionText: {fileID: 0}
+  choqueEvolutionText: {fileID: 0}
+  carambolaEvolutionText: {fileID: 0}
   continueButton: {fileID: 1079508792}
   buttonText: {fileID: 0}
+  monedasPartidaText: {fileID: 0}
+  monedasTotalesText: {fileID: 0}
   letterSpeed: 0.03
   stepDelay: 0.6
 --- !u!1 &1162469537
@@ -21998,7 +22027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shiny Probabildad
   description: "Chance de spawn del shiny 75% \u2192 100%"
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1979154201}
   - {fileID: 1202006085}
@@ -22443,7 +22472,7 @@ MonoBehaviour:
   description: 'Velocidad de inicio
 
     +25%'
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1753573910}
   - {fileID: 1251688831}
@@ -22684,6 +22713,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211032531}
   m_CullTransparentMesh: 1
+--- !u!1 &1214256787 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2398836297707933480, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+  m_PrefabInstance: {fileID: 1058993693637634801}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1220417566
 GameObject:
   m_ObjectHideFlags: 0
@@ -22739,7 +22773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +400%
-  shinyCost: 3
+  CoinCost: 1
   nextNodes:
   - {fileID: 1030531660}
   - {fileID: 523954232}
@@ -23049,7 +23083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 23
@@ -23505,7 +23539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shiny Probabildad
   description: Velocidad de inicio +50%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1979154201}
   requiredParentNodes: []
@@ -23918,7 +23952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shinys Por Zonas
   description: "Cada localizaci\xF3n da 1 punto al d\xEDa"
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 422005125}
   requiredParentNodes: []
@@ -24247,7 +24281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +40% de persona por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 431946793}
   - {fileID: 955935810}
@@ -24945,7 +24979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: VELOCIDAD CONTAGIO
   description: Velocidad de contagio +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 42
@@ -25163,7 +25197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1711126838}
   requiredParentNodes:
@@ -25631,7 +25665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Multi de Shiny
   description: Monedas del shiny x5
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 2027238784}
   - {fileID: 495964462}
@@ -26983,7 +27017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 100 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 731029848}
   - {fileID: 2076359407}
@@ -28026,7 +28060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 48
@@ -29042,7 +29076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Aumento Radio
   description: Area de captura de mas de radio x1.5
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 728924626}
   requiredParentNodes: []
@@ -30051,7 +30085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: 
   description: 
-  shinyCost: 3
+  CoinCost: 1
   nextNodes:
   - {fileID: 0}
   - {fileID: 0}
@@ -30329,7 +30363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1297017362}
   requiredParentNodes:
@@ -30525,7 +30559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 25000 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 884001763}
   - {fileID: 1711126838}
@@ -30699,7 +30733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: ReseT Monedas
   description: Empezar reset con 50 monedas
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1548959973}
   - {fileID: 639775619}
@@ -31021,7 +31055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Aumento Radio
   description: x1.5 Velocidad de captura de shiny
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1434096226}
   - {fileID: 1911083135}
@@ -31129,6 +31163,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753573907}
   m_CullTransparentMesh: 1
+--- !u!1 &1768152847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7684277226450148763, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+  m_PrefabInstance: {fileID: 114604313291047708}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1779841430
 GameObject:
   m_ObjectHideFlags: 0
@@ -31571,7 +31610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Reset Contagio
   description: "Las mejoras se\r\nmantienen con \r\nel reset"
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1616195503}
   requiredParentNodes: []
@@ -32149,7 +32188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +600%
-  shinyCost: 4
+  CoinCost: 1
   nextNodes:
   - {fileID: 736940140}
   - {fileID: 1711126838}
@@ -33346,7 +33385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: VELOCIDAD CONTAGIO
   description: Velocidad de contagio +50%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1370627808}
   - {fileID: 614251702}
@@ -34128,7 +34167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Aumento Radio
   description: Area de captura de mas de radio x1.25
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 1634890635}
   requiredParentNodes: []
@@ -34319,7 +34358,6 @@ MonoBehaviour:
   statusText: {fileID: 1300750323}
   nameText: {fileID: 304414310}
   benefitText: {fileID: 0}
-  stockText: {fileID: 0}
   luzColor: {r: 1, g: 1, b: 1, a: 1}
   apagadoColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
 --- !u!114 &1979284833
@@ -34786,7 +34824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Multi de Shiny
   description: Monedas del shiny x7
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 362586634}
   - {fileID: 912880732}
@@ -35523,7 +35561,7 @@ MonoBehaviour:
   description: '+10 dias de cura
 
 '
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 810881214}
   requiredParentNodes: []
@@ -35965,7 +36003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 523954232}
   requiredParentNodes:
@@ -36277,7 +36315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Mejora Inicial Aleatoria
   description: (1 de las mejoras de la tienda empieza comprada).
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 131081811}
   - {fileID: 535093188}
@@ -36565,15 +36603,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radioLevelText: {fileID: 1748175740}
-  radioCostText: {fileID: 1894034033}
   capacityLevelText: {fileID: 1356277133}
-  capacityCostText: {fileID: 1039676636}
   speedLevelText: {fileID: 567398005}
-  speedCostText: {fileID: 831176933}
   timeLevelText: {fileID: 538306171}
-  timeCostText: {fileID: 613988326}
   infectLevelText: {fileID: 160968605}
-  infectCostText: {fileID: 343426920}
+  capacityValues: 0a000000140000001e000000320000004b00000064000000
 --- !u!4 &2100339708
 Transform:
   m_ObjectHideFlags: 0
@@ -36646,7 +36680,7 @@ MonoBehaviour:
   description: '+5 dias de cura
 
 '
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 805961571}
   requiredParentNodes: []
@@ -37073,7 +37107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Valor Shiny
   description: Los shiny dan +3 punto
-  shinyCost: 1
+  CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
   effectType: 23
@@ -37265,7 +37299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Personas Por Segundo
   description: +50% de personas que pueden aparecer por nivel
-  shinyCost: 1
+  CoinCost: 1
   nextNodes:
   - {fileID: 119678599}
   requiredParentNodes: []
@@ -37383,6 +37417,120 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1001 &114604313291047708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1015.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -552.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.734369
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215936296120602293, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684277226450148763, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+      propertyPath: m_Name
+      value: GameObject
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8681ccbb1c1c44e4db6710f921d40f21, type: 3}
+--- !u!1001 &1058993693637634801
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2398836297707933480, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_Name
+      value: GameObject (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1022.6281
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -552.7692
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.368738
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167833308828824049, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: de0fe28242e71f74b9ac60e4e94c83c1, type: 3}
 --- !u!1001 &8963910716313603751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37454,3 +37602,5 @@ SceneRoots:
   - {fileID: 190756179}
   - {fileID: 360132466}
   - {fileID: 1939121404}
+  - {fileID: 114604313291047708}
+  - {fileID: 1058993693637634801}
