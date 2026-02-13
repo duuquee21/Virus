@@ -135,6 +135,12 @@ public class Movement : MonoBehaviour
         rb.AddTorque(direccionGiro * torque, ForceMode2D.Impulse);
     }
 
+    public bool EstaEmpujado()
+    {
+        return estaEmpujado;
+    }
+
+
     private void OnTriggerEnter2D(Collider2D otro)
     {
         if (otro.CompareTag("Pared"))

@@ -89,8 +89,7 @@ public class LevelManager : MonoBehaviour
     public void CloseShinyShop() { 
         if (shinyPanel != null) 
         shinyPanel.SetActive(false); 
-        dayOverPanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejorass
-
+        zonePanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejoras
 
     }
 
@@ -275,7 +274,7 @@ public class LevelManager : MonoBehaviour
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToGameMusic();
 
-      //  CleanUpScene();
+        CleanUpScene();
 
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         ActivateMap(savedMap);
