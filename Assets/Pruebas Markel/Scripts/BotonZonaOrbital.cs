@@ -4,10 +4,11 @@ using TMPro;
 
 public class BotonConfirmarZonaOrbital : MonoBehaviour
 {
-    [Header("Referencias")]
+    [Header("Referencias UI")]
     public OrbitaSistemaUI orbitaSistema;
     public Button confirmarButton;
     public TextMeshProUGUI textoBoton;
+    public GameObject zonePanel; // El panel que queremos cerrar
 
     void Update()
     {
@@ -30,14 +31,12 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
             return;
         }
 
-        // Si la zona no está desbloqueada, el botón sirve para COMPRAR
         if (!zone.IsUnlocked())
         {
             bool puedeComprar = zone.CanAfford();
             textoBoton.text = "COMPRAR";
             confirmarButton.interactable = puedeComprar;
         }
-        // Si ya está desbloqueada, el botón sirve para JUGAR
         else
         {
             textoBoton.text = "JUGAR";
@@ -57,16 +56,21 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
 
         if (!zone.IsUnlocked())
         {
-            // Llama a la compra en ZoneItem (que ya limpiamos de Shinies)
             zone.OnClickButton();
             ActualizarEstado();
         }
         else
         {
-            // Activa el mapa seleccionado
+            // 1. Activa el mapa seleccionado
             LevelManager.instance.ActivateMap(zone.mapIndex);
 
-            // Inicia la sesión de juego normal
+            // 2. CERRAMOS EL PANEL (Antes de iniciar la sesión)
+            if (zonePanel != null)
+            {
+                zonePanel.SetActive(false);
+            }
+
+            // 3. Inicia la sesión de juego normal
             LevelManager.instance.StartSession();
         }
     }

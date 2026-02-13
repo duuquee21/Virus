@@ -139,7 +139,7 @@ public class EndDayResultsPanel : MonoBehaviour
         continueButton.gameObject.SetActive(true);
 
         if (buttonText != null)
-            buttonText.text = "Omitir";
+            buttonText.text = "Omitir (F2)";
 
         StartCoroutine(AnimateResults());
     }
@@ -149,19 +149,20 @@ public class EndDayResultsPanel : MonoBehaviour
         isAnimating = true;
         ClearTexts();
 
-        yield return StartCoroutine(TypeText(zonaEvolutionText, fullZonaEvolution));
-        yield return new WaitForSecondsRealtime(stepDelay);
+        // Mostramos cada bloque de golpe con un suspiro de retraso entre ellos
+        zonaEvolutionText.text = fullZonaEvolution;
+        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(choqueEvolutionText, fullChoqueEvolution));
-        yield return new WaitForSecondsRealtime(stepDelay);
+        choqueEvolutionText.text = fullChoqueEvolution;
+        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(carambolaEvolutionText, fullCarambolaEvolution));
-        yield return new WaitForSecondsRealtime(stepDelay);
+        carambolaEvolutionText.text = fullCarambolaEvolution;
+        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(monedasPartidaText, fullMonedasPartida));
-        yield return new WaitForSecondsRealtime(stepDelay);
+        monedasPartidaText.text = fullMonedasPartida;
+        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
 
-        yield return StartCoroutine(TypeText(monedasTotalesText, fullMonedasTotales));
+        monedasTotalesText.text = fullMonedasTotales;
 
         FinishAnimation();
     }
@@ -196,7 +197,7 @@ public class EndDayResultsPanel : MonoBehaviour
         isAnimating = false;
 
         if (buttonText != null)
-            buttonText.text = "Continuar";
+            buttonText.text = "Continuar (F2)";
 
         zonaEvolutionText.text = fullZonaEvolution;
         choqueEvolutionText.text = fullChoqueEvolution;
