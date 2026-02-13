@@ -22072,7 +22072,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Continue
+  m_text: 'Continue (F2)
 
 '
   m_isRightToLeft: 0
@@ -25235,6 +25235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoEsperaCoral: 0.2
 --- !u!58 &907435511
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25884,7 +25885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Arbol
+  m_text: Arbol (F3)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27063,6 +27064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoEsperaCoral: 0.2
 --- !u!58 &965844463
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30548,6 +30550,7 @@ GameObject:
   - component: {fileID: 1079508794}
   - component: {fileID: 1079508793}
   - component: {fileID: 1079508792}
+  - component: {fileID: 1079508795}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -30619,9 +30622,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1157957839}
-        m_TargetAssemblyTypeName: EndDayResultsPanel, Assembly-CSharp
-        m_MethodName: OnClickContinue
+      - m_Target: {fileID: 1460091733}
+        m_TargetAssemblyTypeName: BotonConfirmarZonaOrbital, Assembly-CSharp
+        m_MethodName: OnClickConfirmar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30669,6 +30672,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079508790}
   m_CullTransparentMesh: 1
+--- !u!114 &1079508795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079508790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 283
 --- !u!1 &1079543111
 GameObject:
   m_ObjectHideFlags: 0
@@ -31617,7 +31633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Back
+  m_text: 'Back (F1)
 
 '
   m_isRightToLeft: 0
@@ -31896,6 +31912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoEsperaCoral: 0.2
 --- !u!58 &1133816361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -36164,6 +36181,7 @@ GameObject:
   - component: {fileID: 1328331938}
   - component: {fileID: 1328331937}
   - component: {fileID: 1328331936}
+  - component: {fileID: 1328331939}
   m_Layer: 5
   m_Name: BotonArbolHabilidades
   m_TagString: Untagged
@@ -36285,6 +36303,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328331934}
   m_CullTransparentMesh: 1
+--- !u!114 &1328331939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328331934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 284
 --- !u!1 &1335014572
 GameObject:
   m_ObjectHideFlags: 0
@@ -38491,7 +38522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Reset
+  m_text: 'Reset (F4)
 
 '
   m_isRightToLeft: 0
@@ -38627,6 +38658,7 @@ MonoBehaviour:
   orbitaSistema: {fileID: 2047488722}
   confirmarButton: {fileID: 1460091734}
   textoBoton: {fileID: 1244618338}
+  zonePanel: {fileID: 1870291121}
 --- !u!114 &1460091734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40283,6 +40315,7 @@ MonoBehaviour:
   intensidadImpacto: 3
   velocidadRetorno: 10
   manualSetCycler: {fileID: 606670111}
+  friccionDuranteAnimacion: 15
 --- !u!1 &1539943550
 GameObject:
   m_ObjectHideFlags: 0
@@ -40295,6 +40328,7 @@ GameObject:
   - component: {fileID: 1539943554}
   - component: {fileID: 1539943553}
   - component: {fileID: 1539943552}
+  - component: {fileID: 1539943555}
   m_Layer: 5
   m_Name: BotonReset
   m_TagString: Untagged
@@ -40416,6 +40450,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539943550}
   m_CullTransparentMesh: 1
+--- !u!114 &1539943555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539943550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 285
 --- !u!1 &1548959971
 GameObject:
   m_ObjectHideFlags: 0
@@ -41448,6 +41495,7 @@ GameObject:
   - component: {fileID: 1605157236}
   - component: {fileID: 1605157235}
   - component: {fileID: 1605157234}
+  - component: {fileID: 1605157237}
   m_Layer: 5
   m_Name: BotonVolverMenu
   m_TagString: Untagged
@@ -41569,6 +41617,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605157232}
   m_CullTransparentMesh: 1
+--- !u!114 &1605157237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605157232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 282
 --- !u!1 &1611679154
 GameObject:
   m_ObjectHideFlags: 0
@@ -47354,6 +47415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoEsperaCoral: 0.2
 --- !u!58 &1826409555
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -48918,7 +48980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1870291122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50605,7 +50667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1935879842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55958,6 +56020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoEsperaCoral: 0.2
 --- !u!58 &2140237710
 CircleCollider2D:
   m_ObjectHideFlags: 0
