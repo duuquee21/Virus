@@ -318,11 +318,32 @@ public class PersonaInfeccion : MonoBehaviour
             isInsideZone = true;
             transformInfector = other.transform;
         }
-       
-        
+
+        // 🔴 NUEVA CONDICIÓN
+        if (other.CompareTag("Coral"))
+        {
+            Movement mov = GetComponent<Movement>();
+
+            if (mov != null && mov.EstaEmpujado())
+            {
+                Desaparecer();
+            }
+        }
     }
 
-    
+    void Desaparecer()
+    {
+        // Opcional: efecto visual antes
+        if (InfectionFeedback.instance != null)
+        {
+            InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.red, true);
+        }
+
+        Destroy(gameObject);
+    }
+
+
+
 
     void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
 

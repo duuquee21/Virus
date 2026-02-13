@@ -96,7 +96,7 @@ public class PopulationManager : MonoBehaviour
         ApplySpawnBonus();
 
         GameObject[] antiguos = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (var p in antiguos) //Destroy(p);
+        foreach (var p in antiguos)Destroy(p);
 
         for (int i = 0; i < initialPopulation; i++)
         {
@@ -135,7 +135,7 @@ public class PopulationManager : MonoBehaviour
         {
             if (!currentSpawnCollider.OverlapPoint(p.transform.position))
             {
-                //Destroy(p);
+                Destroy(p);
             }
         }
     }
