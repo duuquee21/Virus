@@ -87,6 +87,18 @@ public class PersonaInfeccion : MonoBehaviour
             managerAnimacion = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
         }
     }
+
+    void OnEnable()
+    {
+        // Nos suscribimos al evento de destrucción
+        LevelTransitioner.OnTransitionStart += Desaparecer;
+    }
+
+    void OnDisable()
+    {
+        // Muy importante desuscribirse para evitar errores de memoria
+        LevelTransitioner.OnTransitionStart -= Desaparecer;
+    }
     public enum TipoChoque
     {
         Wall,
@@ -340,13 +352,9 @@ public class PersonaInfeccion : MonoBehaviour
 
     void Desaparecer()
     {
-        // Opcional: efecto visual antes
-        if (InfectionFeedback.instance != null)
-        {
-            InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.red, true);
-        }
+     InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.white,false);
 
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 

@@ -48,7 +48,12 @@ public class VirusMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        movementInput = new Vector2(moveX, moveY);
+        if(LevelManager.instance.isGameActive)
+        {
+            movementInput = new Vector2(moveX, moveY);
+        }
+
+      
     }
 
     void FixedUpdate()

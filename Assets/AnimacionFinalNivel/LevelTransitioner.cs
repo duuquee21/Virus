@@ -33,6 +33,8 @@ public class LevelTransitioner : MonoBehaviour
     // 2. Crea el Evento Estático
     public static event Action<float> OnImpactShake;
 
+    public static event Action OnTransitionStart;
+
 
 
 
@@ -75,6 +77,7 @@ public class LevelTransitioner : MonoBehaviour
 
         // --- FASE 1: ACELERAR Y ENCOGER ---
         // Al empezar este bucle, el mapa empieza a girar y la escala ya ha sido activada arriba
+        OnTransitionStart?.Invoke();
         Vector3 escalaObjetivoMin = escalaOriginal * escalaMinima;
         while (velocidadActual < velocidadMaxima)
         {
@@ -131,6 +134,9 @@ public class LevelTransitioner : MonoBehaviour
         // --- IMPACTO FINAL ---
         mapaVisual.transform.localRotation = Quaternion.identity;
         mapaVisual.transform.localScale = escalaOriginal;
+
+        PopulationManager popManager = FindFirstObjectByType<PopulationManager>();
+        if (popManager != null) popManager.ConfigureRound(0);
 
         // Al invocar esto, el Cycler (que estaba esperando en su WaitForSeconds) 
         // empezará a encogerse justo en este frame, coincidiendo con el Shake.

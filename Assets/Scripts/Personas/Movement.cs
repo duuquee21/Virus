@@ -47,14 +47,7 @@ public class Movement : MonoBehaviour
             EjecutarEfectoAbsorcion();
             return; // Bloquea el resto del movimiento
         }
-            
-        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
-        {
-            // Aplicamos fricción constante hacia el cero
-            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, friccionDuranteAnimacion * Time.fixedDeltaTime);
-            rb.angularVelocity = Mathf.MoveTowards(rb.angularVelocity, 0, friccionDuranteAnimacion * 5f * Time.fixedDeltaTime);
-            return; // Bloquea el resto del movimiento
-        }
+     
 
         ManejarMovimientoNormal();
     }

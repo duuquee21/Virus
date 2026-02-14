@@ -119,7 +119,7 @@ public class PopulationManager : MonoBehaviour
 
         if (LevelManager.instance != null && LevelManager.instance.isGameActive)
         {
-            //  CheckForOutsiders();
+              CheckForOutsiders();
         }
 
         int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
