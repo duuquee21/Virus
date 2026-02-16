@@ -124,12 +124,28 @@ public class PlanetCrontrollator : MonoBehaviour
     public void ResetHealthToInitial()
     {
         currentHealth = maxHealth;
-        lastImpactTimes.Clear(); // limpiamos el sistema de seguridad
-        this.enabled = true;     // por si se había desactivado al morir
+        lastImpactTimes.Clear();
+        isInvulnerable = false;
+
+        this.enabled = true;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        transform.position = posOriginal;
+
         ActualizarUI();
 
-        Debug.Log("<color=green>Planeta reseteado a vida máxima</color>");
+        Debug.Log("<color=green>Planeta reseteado completamente</color>");
     }
+
 
     void Die()
     {

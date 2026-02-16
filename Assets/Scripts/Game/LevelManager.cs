@@ -305,8 +305,38 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void ResumeSession()
+    {
+        if (dayOverPanel) dayOverPanel.SetActive(false);
+        if (menuPanel) menuPanel.SetActive(false);
+
+        Time.timeScale = 1f;
+
+        isGameActive = true;
+        currentSessionInfected = 0;
+        monedasGanadasSesion = 0;
+        currentTimer = gameDuration;
+
+        PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
+        if (pm != null)
+        {
+            pm.ClearAllPersonas();
+            pm.ConfigureRound(0);
+        }
+
+        gameUI.SetActive(true);
+        virusPlayer.SetActive(true);
+        if (virusMovementScript != null)
+            virusMovementScript.enabled = true;
+
+        UpdateUI();
+    }
+
+
     void EndSessionDay()
     {
+        int totalAntes = contagionCoins - monedasGanadasSesion;
+        int totalFinal = totalAntes + monedasGanadasSesion;
         isGameActive = false;
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -320,10 +350,10 @@ public class LevelManager : MonoBehaviour
 
         if (EndDayResultsPanel.instance != null)
         {
+
             EndDayResultsPanel.instance.ShowResults(
                 monedasGanadasSesion,
-                contagionCoins
-            );
+                totalFinal);
         }
 
 
@@ -336,13 +366,16 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        contagionCoins += earnings;
-
         virusPlayer.SetActive(false);
-        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+
+        if (AudioManager.instance != null)
+            AudioManager.instance.SwitchToMenuMusic();
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        if (Guardado.instance) Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
+
+        if (Guardado.instance)
+            Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
+
         dayOverPanel.SetActive(true);
 
         UpdateUI();
@@ -401,13 +434,26 @@ public class LevelManager : MonoBehaviour
         // 5️⃣ Limpiar escena
         CleanUpScene();
 
-        // 6️⃣ Volver a pantalla de inicio de día
+        // 6️⃣ UI
         if (gameUI) gameUI.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
-        if (dayOverPanel) dayOverPanel.SetActive(true);
+        if (dayOverPanel) dayOverPanel.SetActive(false);
+
+        // 7️⃣ Limpiar personas
+        PopulationManager.instance.ClearAllPersonas();
 
         UpdateUI();
+
+        // 8️⃣ Reiniciar en el siguiente frame
+        StartCoroutine(RestartNextFrame());
+    }
+
+
+    IEnumerator RestartNextFrame()
+    {
+        yield return null; // Espera 1 frame completo
+        StartSession();
     }
 
 
@@ -515,6 +561,55 @@ public class LevelManager : MonoBehaviour
 
         Time.timeScale = 1f; // aseguramos que no esté pausado
     }
+
+    public void ContinueCurrentMap()
+    {
+        Time.timeScale = 1f;
+
+        isGameActive = true;
+        currentTimer = gameDuration;
+        currentSessionInfected = 0;
+
+        PopulationManager.instance.ClearAllPersonas();
+        PopulationManager.instance.ConfigureRound(0);
+
+        if (virusPlayer != null)
+            virusPlayer.SetActive(true);
+
+        if (virusMovementScript != null)
+            virusMovementScript.enabled = true;
+
+        if (gameUI != null)
+            gameUI.SetActive(true);
+
+        UpdateUI();
+    }
+
+
+    IEnumerator ContinueNextFrame()
+    {
+        yield return null;
+
+        isGameActive = true;
+
+        PopulationManager.instance.ConfigureRound(0);
+
+        UpdateUI();
+    }
+
+
+    public void StartSessionWithoutResettingPlanet()
+    {
+        isGameActive = true;
+
+        currentTimer = gameDuration;
+
+
+        PopulationManager.instance.ConfigureRound(0);
+
+        UpdateUI();
+    }
+
 
 
 

@@ -8,7 +8,8 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
     public OrbitaSistemaUI orbitaSistema;
     public Button confirmarButton;
     public TextMeshProUGUI textoBoton;
-    public GameObject zonePanel; // El panel que queremos cerrar
+    public GameObject zonePanel;
+    public GameObject dayOverPanel;// El panel que queremos cerrar
 
     void Update()
     {
@@ -58,20 +59,26 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
         {
             zone.OnClickButton();
             ActualizarEstado();
+            return;
+        }
+
+        bool isSameMap = zone.mapIndex == PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+        if (isSameMap)
+        {
+            LevelManager.instance.ResumeSession();
         }
         else
         {
-            // 1. Activa el mapa seleccionado
             LevelManager.instance.ActivateMap(zone.mapIndex);
-
-            // 2. CERRAMOS EL PANEL (Antes de iniciar la sesión)
-            if (zonePanel != null)
-            {
-                zonePanel.SetActive(false);
-            }
-
-            // 3. Inicia la sesión de juego normal
             LevelManager.instance.StartSession();
         }
+
+        if (zonePanel != null)
+            zonePanel.SetActive(false);
+
+        if (dayOverPanel != null)
+            dayOverPanel.SetActive(false);
     }
+
 }

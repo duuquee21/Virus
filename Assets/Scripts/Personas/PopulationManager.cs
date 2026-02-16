@@ -14,6 +14,8 @@ public class PopulationManager : MonoBehaviour
     private float baseSpawnInterval;
     public float baseMaxPopulation = 15f;
     public int initialPopulation = 10;
+    public static PopulationManager instance;
+
 
 
     [Header("Spawn Area Logic")]
@@ -30,8 +32,12 @@ public class PopulationManager : MonoBehaviour
 
     void Awake()
     {
-        if (personPrefabs.Length > 0) currentPrefab = personPrefabs[0];
+        instance = this;
+
+        if (personPrefabs.Length > 0)
+            currentPrefab = personPrefabs[0];
     }
+
 
     // --- NUEVA FUNCIÓN: INSTANCIAR COPIA (Habilidad Duplicación) ---
     // En PopulationManager.cs, actualiza la función InstanciarCopia:
@@ -92,23 +98,19 @@ public class PopulationManager : MonoBehaviour
     public void ConfigureRound(int ignored)
     {
         RefreshSpawnArea();
-        timer = 0;
+
+        timer = 0f;
+
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
-        // ❌ ELIMINA O COMENTA ESTO: No queremos borrar a nadie al cambiar de nivel
-        /*
-        GameObject[] antiguos = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (var p in antiguos) Destroy(p);
-        */
-
-        // Opcional: Solo spawnear la diferencia si hay poca gente
-        int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
-        for (int i = 0; i < (initialPopulation - currentCount); i++)
+        // Spawn fijo inicial
+        for (int i = 0; i < initialPopulation; i++)
         {
             SpawnPerson();
         }
     }
+
 
     void Update()
     {
@@ -119,7 +121,7 @@ public class PopulationManager : MonoBehaviour
 
         if (LevelManager.instance != null && LevelManager.instance.isGameActive)
         {
-              CheckForOutsiders();
+            CheckForOutsiders();
         }
 
         int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
@@ -202,6 +204,14 @@ public class PopulationManager : MonoBehaviour
         float bonus = Guardado.instance.spawnSpeedBonus;
         spawnInterval = baseSpawnInterval * (1f - bonus);
         if (spawnInterval < 0.3f) spawnInterval = 0.3f;
+    }
+    public void ClearAllPersonas()
+    {
+        GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");
+        foreach (var p in personas)
+            Destroy(p);
+
+        timer = 0;
     }
 
     IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
