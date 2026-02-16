@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d4137c5229a4f3f43a7f94b17f8586e6
+guid: de8afe22d84f1624485a2e6a20998db8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6315336195868297758
-    second: HexagonoSombraExterior_0
+      213: -2122402775830702005
+    second: Exagono3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HexagonoSombraExterior_0
+      name: Exagono3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2075
-        height: 4312
+        width: 5034
+        height: 4604
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2e57a10a03b6b58a0800000000000000
-      internalID: -6315336195868297758
+      spriteID: b48de4c9be5bb82e0800000000000000
+      internalID: -2122402775830702005
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HexagonoSombraExterior_0: -6315336195868297758
+      Exagono3_0: -2122402775830702005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: de8afe22d84f1624485a2e6a20998db8
+guid: 34e1a1b4d22a66d41ad5513210ce124c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2122402775830702005
-    second: Exagono3_0
+      213: 2543108870316928622
+    second: Exagono2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Exagono3_0
+      name: Exagono2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 5034
-        height: 4604
+        width: 4944
+        height: 4502
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b48de4c9be5bb82e0800000000000000
-      internalID: -2122402775830702005
+      spriteID: e6ea2682b00fa4320800000000000000
+      internalID: 2543108870316928622
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Exagono3_0: -2122402775830702005
+      Exagono2_0: 2543108870316928622
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
