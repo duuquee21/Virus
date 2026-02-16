@@ -22,12 +22,12 @@ public class LevelManager : MonoBehaviour
     [Header("Referencias")]
     public GameObject virusPlayer;
     public VirusMovement virusMovementScript;
-    
-    [Header("Feedback Visual Puntos")]
-    public GameObject prefabTextoPuntos; 
-    public RectTransform marcadorDestinoUI;
-    public Canvas canvasPrincipal; 
 
+    [Header("Feedback Visual Puntos")]
+    public GameObject prefabTextoPuntos;
+    public RectTransform marcadorDestinoUI;
+    public Canvas canvasPrincipal;
+    public int contagionCoins;
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
@@ -55,13 +55,12 @@ public class LevelManager : MonoBehaviour
 
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
-    [HideInInspector] public int contagionCoins;
 
     float currentTimer;
 
     void Awake()
     {
-        
+
         if (instance == null)
         {
             instance = this;
@@ -86,9 +85,10 @@ public class LevelManager : MonoBehaviour
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
     public void OpenShinyShop() { if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
-    public void CloseShinyShop() { 
-        if (shinyPanel != null) 
-        shinyPanel.SetActive(false); 
+    public void CloseShinyShop()
+    {
+        if (shinyPanel != null)
+            shinyPanel.SetActive(false);
         zonePanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejoras
 
     }
@@ -489,10 +489,10 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Faltan referencias en LevelManager para el texto volador");
             return;
         }
-        
+
         GameObject nuevoTexto = Instantiate(prefabTextoPuntos, canvasPrincipal.transform);
         FloatingScoreUI scriptVuelo = nuevoTexto.GetComponent<FloatingScoreUI>();
-        
+
         if (scriptVuelo != null)
         {
             scriptVuelo.IniciarViaje(puntosGanados, posicionPersona, marcadorDestinoUI, canvasPrincipal);

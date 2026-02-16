@@ -469,6 +469,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &18366702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +682,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &27041101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1129,6 +1131,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &39131896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,6 +1430,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &55039539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,6 +1826,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &72936560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2479,6 +2484,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &119678600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2727,6 +2733,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &131081812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2911,6 +2918,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &135870696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3173,10 +3181,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117.484985, y: -27.929932}
-  m_SizeDelta: {x: 234.97, y: 55.85997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141406160
 MonoBehaviour:
@@ -3629,6 +3637,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &151827303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6217,6 +6226,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &252481899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6624,6 +6634,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &271172722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9065,10 +9076,10 @@ RectTransform:
   - {fileID: 171250021}
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75.77, y: -99.139946}
-  m_SizeDelta: {x: 151.54, y: 86.55995}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356647270
 MonoBehaviour:
@@ -9236,6 +9247,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &362586635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9420,6 +9432,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &369046041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10771,6 +10784,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &412912440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11105,6 +11119,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &419528350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11246,6 +11261,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &422005126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11680,6 +11696,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &431946794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12213,6 +12230,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &439070112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12385,6 +12403,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &439285349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12682,6 +12701,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &445640194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12866,6 +12886,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &448254071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13142,6 +13163,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &458302547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13838,6 +13860,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &474215733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13961,7 +13984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b47ab5c5231b2047a7c68f5726ca82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleKey: 282
+  toggleKey: 32
 --- !u!4 &477016457
 Transform:
   m_ObjectHideFlags: 0
@@ -14302,6 +14325,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &495964463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14884,6 +14908,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &506391030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15068,6 +15093,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &506559606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15404,6 +15430,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &520813267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15560,6 +15587,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &523954233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16055,6 +16083,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &535093189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17853,6 +17882,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &614251703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18778,6 +18808,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &639775620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19341,6 +19372,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &661437728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20258,6 +20290,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &709442408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20567,6 +20600,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &728924627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21003,6 +21037,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &731029849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21155,6 +21190,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &736940141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22182,6 +22218,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &797128904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22442,6 +22479,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &802097013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22718,6 +22756,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &802792256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22914,6 +22953,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &805961572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23086,6 +23126,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &810881215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23483,6 +23524,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &827093181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23939,6 +23981,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &840361354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24358,7 +24401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24964,6 +25007,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &884001764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25181,6 +25225,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &912880733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25576,6 +25621,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &920061792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26080,6 +26126,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &932488386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26826,6 +26873,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &954987306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27032,6 +27080,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &955935811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27266,6 +27315,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &980715997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27937,6 +27987,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1030370901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28099,6 +28150,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1030531661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28988,6 +29040,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1042780755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29630,6 +29683,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1050803136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30272,6 +30326,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1073670517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32083,6 +32138,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1135025868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32388,6 +32444,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1140019406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32693,6 +32750,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1151359670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32909,6 +32967,7 @@ MonoBehaviour:
   prefabTextoPuntos: {fileID: 0}
   marcadorDestinoUI: {fileID: 0}
   canvasPrincipal: {fileID: 0}
+  contagionCoins: 0
   menuPanel: {fileID: 1989049608}
   gameUI: {fileID: 2049758465}
   dayOverPanel: {fileID: 1935879841}
@@ -32921,7 +32980,7 @@ MonoBehaviour:
   sessionScoreTexts:
   - {fileID: 490030344}
   contagionCoinsTexts:
-  - {fileID: 490030344}
+  - {fileID: 1896450789}
   shinyStoreTexts: []
   gameDuration: 5
   maxInfectionsPerRound: 10000
@@ -32929,7 +32988,6 @@ MonoBehaviour:
   faseInicialPorMapa: 030000000000000000000000
   isGameActive: 0
   currentSessionInfected: 0
-  contagionCoins: 0
 --- !u!4 &1157957838
 Transform:
   m_ObjectHideFlags: 0
@@ -33047,6 +33105,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1162469541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33256,6 +33315,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1162838972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33838,6 +33898,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1202006086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34269,6 +34330,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1220417569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34950,6 +35012,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1241499373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35407,6 +35470,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1251688832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35994,6 +36058,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1297017363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36609,6 +36674,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1336181682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37392,6 +37458,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1370627809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37624,6 +37691,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1387940921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37828,6 +37896,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1396887380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38264,6 +38333,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1434096227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38448,6 +38518,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1440678676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39671,6 +39742,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1512327036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40678,6 +40750,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1548959974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41854,6 +41927,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1611679158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42026,6 +42100,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1614307350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42304,6 +42379,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1616195504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43321,6 +43397,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1634890636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44162,6 +44239,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1677021420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45171,6 +45249,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1708672067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45465,6 +45544,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1711126839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45659,6 +45739,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1714903571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45869,6 +45950,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1732599724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46192,6 +46274,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1753573911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46364,6 +46447,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1768602299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46805,6 +46889,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1783878503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47084,6 +47169,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1800229052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47780,6 +47866,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1839252226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48677,6 +48764,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1861535016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49181,7 +49269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1870291122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50633,6 +50721,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1911083136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50955,7 +51044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1935879842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51173,6 +51262,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1951653951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51827,6 +51917,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &1979154202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52746,6 +52837,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2027238785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53289,6 +53381,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2038430809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53424,7 +53517,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 550, y: -329}
-  m_SizeDelta: {x: -4164.663, y: -3502.2227}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041343777
 MonoBehaviour:
@@ -53741,6 +53834,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2054705335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54493,6 +54587,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2073210158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54657,6 +54752,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2076359408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54841,6 +54937,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2078922383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55234,6 +55331,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2096388057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55628,6 +55726,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2100670668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56054,6 +56153,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2118875023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56247,6 +56347,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  maxRepeatLevel: 5
 --- !u!114 &2124784839
 MonoBehaviour:
   m_ObjectHideFlags: 0
