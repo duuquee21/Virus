@@ -332,16 +332,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
 
         // 🔴 NUEVA CONDICIÓN
-        if (other.CompareTag("Coral"))
-        {
-            Movement mov = GetComponent<Movement>();
-
-            if (mov != null && mov.EstaEmpujado())
-            {
-                Desaparecer();
-            }
-        }
-        
+      
         {
             Debug.Log($"[TRIGGER] {gameObject.name} tocó {other.name} | Tag: {other.tag} | alreadyInfected: {alreadyInfected}");
 
