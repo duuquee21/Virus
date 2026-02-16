@@ -41,8 +41,31 @@ public class LevelTransitioner : MonoBehaviour
     void Awake()
     {
         mainCam = Camera.main;
-        zoomOriginal = mainCam.orthographicSize; // <--- Añade esto
+        if (mainCam != null)
+        {
+            zoomOriginal = mainCam.orthographicSize;
+        }
+
+        // --- RESETEO DE ROTACIÓN DE PLANETAS AL INICIAR ---
+        PlanetCrontrollator planeta = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planeta != null)
+        {
+            planeta.transform.rotation = Quaternion.identity;
+            // Esto establece la rotación a (0, 0, 0)
+        }
     }
+
+    private void Start()
+    {
+        // --- RESETEO DE ROTACIÓN DE PLANETAS AL INICIAR ---
+        PlanetCrontrollator planeta = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planeta != null)
+        {
+            planeta.transform.rotation = Quaternion.identity;
+            // Esto establece la rotación a (0, 0, 0)
+        }
+    }
+
 
     public void StartLevelTransition()
     {

@@ -180,12 +180,24 @@ public class PersonaInfeccion : MonoBehaviour
 
             if (i == faseActual)
             {
+                // ACTIVAMOS el objeto de la lista (El Padre/Outline)
                 fillingBarImages[i].gameObject.SetActive(true);
-                fillingBarImages[i].fillAmount = inverseProgress;
-                fillingBarImages[i].color = Color.Lerp(colorCargaFinal, colorCargaInicial, inverseProgress);
+
+                // Buscamos al HIJO para vaciarlo
+                if (fillingBarImages[i].transform.childCount > 0)
+                {
+                    Image barraInterna = fillingBarImages[i].transform.GetChild(0).GetComponent<Image>();
+                    if (barraInterna != null)
+                    {
+                        // Solo el HIJO se vacía y cambia de color
+                        barraInterna.fillAmount = inverseProgress;
+                        barraInterna.color = Color.Lerp(colorCargaFinal, colorCargaInicial, inverseProgress);
+                    }
+                }
             }
             else
             {
+                // DESACTIVAMOS el objeto de la lista completo
                 fillingBarImages[i].gameObject.SetActive(false);
             }
         }
@@ -285,7 +297,22 @@ public class PersonaInfeccion : MonoBehaviour
             for (int i = 0; i < fillingBarImages.Length; i++)
             {
                 if (fillingBarImages[i] != null && i < contornosFases.Length)
-                    fillingBarImages[i].sprite = contornosFases[i];
+                {
+                    // IMPORTANTE: Aquí decidimos a quién le damos el sprite de la fase
+                    // Si quieres que el relleno (hijo) sea el que cambie de forma:
+                    if (fillingBarImages[i].transform.childCount > 0)
+                    {
+                        Image barraInterna = fillingBarImages[i].transform.GetChild(0).GetComponent<Image>();
+                        if (barraInterna != null)
+                        {
+                            // El hijo recibe el sprite de la forma (Triángulo, Círculo, etc.)
+                            barraInterna.sprite = contornosFases[i];
+                        }
+                    }
+
+                    // Nota: El Padre NO cambia de sprite aquí para mantener su fondo/outline original
+                    // que configuraste manualmente en el Inspector.
+                }
             }
         }
     }
