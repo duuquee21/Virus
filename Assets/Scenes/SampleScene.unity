@@ -8225,8 +8225,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1534932859}
     - target: {fileID: 9035783997723924741, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
-      propertyPath: scaleMultiplier
+      propertyPath: shadowOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035783997723924741, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
+      propertyPath: scaleMultiplier
+      value: 1.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -56317,6 +56321,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1409676298889451217, guid: 6b3ff245718eda14284c01ecfa481566, type: 3}
+    - target: {fileID: 3554782737487286966, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4266941439878544479, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -56693,6 +56701,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -5096543596761167745, guid: e715ca44e380d40468bcad761a50f4db, type: 3}
+    - target: {fileID: 4801910626349178895, guid: c537c1286b7f3b740a68d632c6f1c21e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5895433808728476871, guid: c537c1286b7f3b740a68d632c6f1c21e, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -64034,6 +64046,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -5046818790066285001, guid: d5e568704731b9c45a2bf4f12d7bd1cf, type: 3}
+    - target: {fileID: 8031837365138882826, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8196277457837810747, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: maxHealth
       value: 1
