@@ -26,8 +26,8 @@ public class LevelManager : MonoBehaviour
     [Header("Feedback Visual Puntos")]
     public GameObject prefabTextoPuntos; 
     public RectTransform marcadorDestinoUI;
-    public Canvas canvasPrincipal; 
-
+    public Canvas canvasPrincipal;
+    public int contagionCoins;
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
@@ -55,7 +55,6 @@ public class LevelManager : MonoBehaviour
 
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
-    [HideInInspector] public int contagionCoins;
 
     float currentTimer;
 

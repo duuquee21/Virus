@@ -67,6 +67,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public AudioClip unlockSound;
 
     private bool unlocked = false;
+
+    // Para habilidades repetibles
+    private int repeatLevel = 0;
+    public int maxRepeatLevel = 5; // puedes ajustarlo
+
     public bool IsUnlocked => unlocked;
 
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
@@ -74,10 +79,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CheckIfShouldShow()
     {
-        if (unlocked)
+        // HABILIDAD NORMAL YA DESBLOQUEADA
+        if (!IsDamageSkill() && unlocked)
         {
             SetAppearance(true, 1f, false);
             SetState(false, Color.gray, false);
+            return;
+        }
+
+        // HABILIDAD DE DAÑO REPETIBLE
+        if (IsDamageSkill() && repeatLevel > 0)
+        {
+            SetAppearance(true, 1f, true);
+
+            if (repeatLevel >= maxRepeatLevel)
+                SetState(false, Color.gray, false);
+            else
+                SetState(true, Color.white, false);
+
             return;
         }
 
@@ -93,17 +112,29 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         foreach (var parent in requiredParentNodes)
         {
-            if (parent != null && parent.IsUnlocked) atLeastOneParentUnlocked = true;
-            else allParentsUnlocked = false;
+            if (parent != null && parent.IsUnlocked)
+                atLeastOneParentUnlocked = true;
+            else
+                allParentsUnlocked = false;
         }
 
-        if (allParentsUnlocked) { SetAppearance(true, 1f, true); SetState(true, Color.white, false); }
-        else if (atLeastOneParentUnlocked) { SetAppearance(true, 0.15f, false); SetState(false, Color.black, true); }
-        else { SetAppearance(false, 0f, false); }
+        if (allParentsUnlocked)
+        {
+            SetAppearance(true, 1f, true);
+            SetState(true, Color.white, false);
+        }
+        else if (atLeastOneParentUnlocked)
+        {
+            SetAppearance(true, 0.15f, false);
+            SetState(false, Color.black, true);
+        }
+        else
+        {
+            SetAppearance(false, 0f, false);
+        }
 
         UpdateLinesVisuals();
     }
-
     void SetAppearance(bool isActive, float alpha, bool canClick)
     {
         gameObject.SetActive(isActive);
@@ -140,7 +171,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
-        if (unlocked) return;
+        if (!IsDamageSkill() && unlocked) return;
+
+        if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
+            return;
 
         if (LevelManager.instance.contagionCoins < CoinCost)
         {
@@ -152,18 +186,30 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (audioSource != null && unlockSound != null) audioSource.PlayOneShot(unlockSound);
 
         LevelManager.instance.contagionCoins -= CoinCost;
-        unlocked = true;
 
-        SetState(false, Color.gray, false);
+        if (IsDamageSkill())
+            repeatLevel++;
+        else
+            unlocked = true;
+
         ApplyEffect();
 
-        if (nextNodes != null)
+        if (!IsDamageSkill())
         {
-            foreach (var child in nextNodes) if (child != null) child.CheckIfShouldShow();
+            if (nextNodes != null)
+            {
+                foreach (var child in nextNodes)
+                    if (child != null)
+                        child.CheckIfShouldShow();
+            }
         }
 
         LevelManager.instance.UpdateUI();
+        CheckIfShouldShow();
+
+
     }
+
 
     void ApplyEffect()
     {
@@ -288,32 +334,32 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---
             // --- DAÑO POR FORMA (CORREGIDO: Fase 0 = Hexágono) ---
             case SkillEffectType.DmgHexagono:
-                Guardado.instance.dañoExtraHexagono = 1;
+                Guardado.instance.dañoExtraHexagono += 1;
                 // Si tienes un array llamado 'dañoPorFase' en Guardado, podrías usar: Guardado.instance.dañoPorFase[0] += 1;
                 Debug.Log("<color=magenta>Dmg Extra:</color> Hexágono activado -> Corresponde a <b>FASE 0</b> (Elemento 0 del Array)");
                 Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.DmgPentagono:
-                Guardado.instance.dañoExtraPentagono = 1;
+                Guardado.instance.dañoExtraPentagono += 1;
                 Debug.Log("<color=orange>Dmg Extra:</color> Pentágono activado -> Corresponde a <b>FASE 1</b> (Elemento 1 del Array)");
                 Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.DmgCuadrado:
-                Guardado.instance.dañoExtraCuadrado = 1;
+                Guardado.instance.dañoExtraCuadrado += 1;
                 Debug.Log("<color=yellow>Dmg Extra:</color> Cuadrado activado -> Corresponde a <b>FASE 2</b> (Elemento 2 del Array)");
                 Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.DmgTriangulo:
-                Guardado.instance.dañoExtraTriangulo = 1;
+                Guardado.instance.dañoExtraTriangulo += 1;
                 Debug.Log("<color=green>Dmg Extra:</color> Triángulo activado -> Corresponde a <b>FASE 3</b> (Elemento 3 del Array)");
                 Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.DmgCirculo:
-                Guardado.instance.dañoExtraCirculo = 1;
+                Guardado.instance.dañoExtraCirculo += 1;
                 Debug.Log("<color=cyan>Dmg Extra:</color> Círculo activado -> Corresponde a <b>FASE 4</b> (Elemento 4 del Array)");
                 Guardado.instance.SaveData();
                 break;
@@ -326,6 +372,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
         }
+    }
+    bool IsDamageSkill()
+    {
+        return effectType == SkillEffectType.DmgHexagono ||
+               effectType == SkillEffectType.DmgPentagono ||
+               effectType == SkillEffectType.DmgCuadrado ||
+               effectType == SkillEffectType.DmgTriangulo ||
+               effectType == SkillEffectType.DmgCirculo;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
