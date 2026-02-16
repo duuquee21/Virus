@@ -60,6 +60,10 @@ public class PopulationManager : MonoBehaviour
             // Esto hará que el prefab limpio se transforme visualmente 
             // a la fase en la que chocaste (Triángulo, Cuadrado, etc.)
             script.EstablecerFaseDirecta(faseDestino);
+            if (LevelManager.instance != null)
+            {
+                script.AplicarColor(LevelManager.instance.GetCurrentLevelColor());
+            }
         }
 
         // 3. Reset físico y pequeño impulso para que no se encimen
@@ -171,6 +175,9 @@ public class PopulationManager : MonoBehaviour
             {
                 script.EstablecerFaseDirecta(LevelManager.instance.faseInicialPorMapa[currentMap]);
             }
+
+            Color colorNivel = LevelManager.instance.GetCurrentLevelColor();
+            script.AplicarColor(colorNivel);
         }
 
         Vector3 targetScale = newPerson.transform.localScale;

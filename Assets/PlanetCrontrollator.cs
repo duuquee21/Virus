@@ -101,8 +101,10 @@ public class PlanetCrontrollator : MonoBehaviour
     // Limpieza opcional: Para evitar que el diccionario crezca infinitamente
     private void Update()
     {
-        // Cada cierto tiempo podrías limpiar IDs antiguos, 
-        // aunque para un juego pequeño no es crítico.
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Die();
+        }
     }
     public void TakeDamage(float amount)
     {

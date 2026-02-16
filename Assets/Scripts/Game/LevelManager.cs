@@ -52,6 +52,9 @@ public class LevelManager : MonoBehaviour
     [Header("Configuración Inicial por Zona")]
     public int[] faseInicialPorMapa;
 
+    [Header("Configuración Visual por Zona")]
+    public Color[] coloresPorMapa; // Define aquí el color de cada nivel (Zona 0, Zona 1, etc.)
+
 
     [HideInInspector] public bool isGameActive;
     [HideInInspector] public int currentSessionInfected;
@@ -110,6 +113,21 @@ public class LevelManager : MonoBehaviour
         currentSessionInfected++;
         UpdateUI();
         if (currentSessionInfected >= maxInfectionsPerRound) EndSessionDay();
+    }
+
+    public Color GetCurrentLevelColor()
+    {
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        Color colorFinal = Color.white;
+
+        if (coloresPorMapa != null && currentMap < coloresPorMapa.Length)
+        {
+            colorFinal = coloresPorMapa[currentMap];
+        }
+
+        // Forzamos el Alfa a 1 para que no sea transparente
+        colorFinal.a = 1f;
+        return colorFinal;
     }
 
     void ShowMainMenu()

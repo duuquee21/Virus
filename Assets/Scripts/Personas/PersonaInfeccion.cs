@@ -211,6 +211,17 @@ public class PersonaInfeccion : MonoBehaviour
         ActualizarProgresoBarras(0f);
     }
 
+    public void AplicarColor(Color nuevoColor)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            // Aseguramos que el alfa sea 1 antes de aplicar
+            nuevoColor.a = 1f;
+            sr.color = nuevoColor;
+        }
+    }
+
     void IntentarAvanzarFase()
     {
         // 1. SEGURIDAD: Si ya está infectado o ya pasó el límite, ignoramos cualquier llamada extra

@@ -10254,7 +10254,7 @@ Transform:
   m_GameObject: {fileID: 393566775}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.617526, y: -0.30633247, z: -3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10304,7 +10304,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: -1056894992806519688, guid: c9bad94cbdcc06e4db7908c711460b07, type: 3}
+  m_Sprite: {fileID: 5781260966292230247, guid: ec2aa920ea8318d47bfaff1d48fe77b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14198,8 +14198,8 @@ Transform:
   m_GameObject: {fileID: 490370447}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.799, y: 0.5327, z: 0}
-  m_LocalScale: {x: 0.8967329, y: 0.9578493, z: 1}
+  m_LocalPosition: {x: -4.8543, y: -0.0203, z: 0}
+  m_LocalScale: {x: 2.703127, y: 2.3095925, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1373597136}
@@ -23259,8 +23259,8 @@ Transform:
   m_GameObject: {fileID: 816580755}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.65, z: 1}
+  m_LocalPosition: {x: 0.2848, y: -0, z: 0}
+  m_LocalScale: {x: 3.1492388, y: 2.5614448, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 985609154}
@@ -25514,7 +25514,7 @@ Transform:
   m_GameObject: {fileID: 918980461}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.617526, y: -0.30633247, z: -3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25564,7 +25564,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 5781260966292230247, guid: ec2aa920ea8318d47bfaff1d48fe77b1, type: 3}
+  m_Sprite: {fileID: -7542033077663665035, guid: 89b3c648b4837094cb83731a18028369, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -32959,8 +32959,6 @@ MonoBehaviour:
   - {fileID: 160247083}
   - {fileID: 8391078657284482198}
   - {fileID: 1373597135}
-  - {fileID: 1562793253}
-  - {fileID: 5809081172215269369}
   - {fileID: 985609153}
   virusPlayer: {fileID: 1129471492}
   virusMovementScript: {fileID: 1129471498}
@@ -32985,7 +32983,13 @@ MonoBehaviour:
   gameDuration: 5
   maxInfectionsPerRound: 10000
   monedasGanadasSesion: 0
-  faseInicialPorMapa: 030000000000000000000000
+  faseInicialPorMapa: 000000000000000000000000
+  coloresPorMapa:
+  - {r: 0.6627451, g: 0.31764707, b: 0.3372549, a: 0}
+  - {r: 0.627451, g: 0.68235296, b: 0.5176471, a: 0}
+  - {r: 0.39607847, g: 0.56078434, b: 0.5058824, a: 0}
+  - {r: 0.8235295, g: 0.45882356, b: 0.27058825, a: 0}
+  - {r: 0.53333336, g: 0.5176471, b: 0.8235295, a: 0}
   isGameActive: 0
   currentSessionInfected: 0
 --- !u!4 &1157957838
@@ -34634,7 +34638,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 6324477565499142840, guid: a26679cca3a829945ba427ca0bc5d8b8, type: 3}
+  m_Sprite: {fileID: -2322500363861847672, guid: e3640e8225165d14ab6a46b0313996c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -34654,7 +34658,7 @@ Transform:
   m_GameObject: {fileID: 1228740073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.617526, y: -0.30633247, z: -3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36807,7 +36811,7 @@ Transform:
   m_GameObject: {fileID: 1352536676}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.617526, y: -0.30633247, z: -3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36857,7 +36861,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -7542033077663665035, guid: 89b3c648b4837094cb83731a18028369, type: 3}
+  m_Sprite: {fileID: 6324477565499142840, guid: a26679cca3a829945ba427ca0bc5d8b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -40987,11 +40991,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1562793253 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 177934122919536385, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
-  m_PrefabInstance: {fileID: 7078994464328464079}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1562793254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5883677203468953227, guid: acdb528afab51504ea82fe8c8477c436, type: 3}
@@ -47459,7 +47458,7 @@ Transform:
   m_GameObject: {fileID: 1817271788}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.617526, y: -0.30633247, z: -3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47509,7 +47508,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -4
-  m_Sprite: {fileID: -2322500363861847672, guid: e3640e8225165d14ab6a46b0313996c5, type: 3}
+  m_Sprite: {fileID: -1056894992806519688, guid: c9bad94cbdcc06e4db7908c711460b07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -56480,7 +56479,7 @@ Transform:
   m_GameObject: {fileID: 2135159334}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.617526, y: 0.30633247, z: 3.62862}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56630,6 +56629,10 @@ PrefabInstance:
     - target: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_Name
       value: VirusPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5635448799679940233, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_SortingOrder
