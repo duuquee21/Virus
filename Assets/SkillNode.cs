@@ -43,6 +43,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         DestroyCoralOnInfectedImpact
     }
 
+    [Header("Hover Panel")]
+    public GameObject infoPanel;
+    public TextMeshProUGUI infoTitle;
+    public TextMeshProUGUI infoDescription;
+    public TextMeshProUGUI infoCost;
+
     [Header("Datos")]
     public string skillName;
     [TextArea] public string description;
@@ -75,7 +81,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public bool IsUnlocked => unlocked;
 
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
-    void Start() { CheckIfShouldShow(); }
+    void Start()
+    {
+        CheckIfShouldShow();
+
+        if (infoPanel != null)
+            infoPanel.SetActive(false);
+    }
+
 
     public void CheckIfShouldShow()
     {
@@ -204,8 +217,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
 
+
         LevelManager.instance.UpdateUI();
         CheckIfShouldShow();
+
+
+        SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
+        if (fx != null)
+            fx.PlayClickFeedback();
+
 
 
     }
@@ -381,15 +401,23 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.DmgTriangulo ||
                effectType == SkillEffectType.DmgCirculo;
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (canvasGroup != null && canvasGroup.alpha > 0.5f && SkillTooltip.instance)
+        if (SkillTooltip.instance != null)
         {
-            RectTransform myRect = GetComponent<RectTransform>();
-            SkillTooltip.instance.Show(skillName, description, CoinCost, myRect);
+            SkillTooltip.instance.Show(
+                skillName,
+                description,
+                CoinCost,
+                GetComponent<RectTransform>()   // ← AQUÍ está la solución
+            );
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) { if (SkillTooltip.instance) SkillTooltip.instance.Hide(); }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (SkillTooltip.instance != null)
+            SkillTooltip.instance.Hide();
+    }
+
 }

@@ -5,12 +5,18 @@ public class SkillTooltip : MonoBehaviour
 {
     public static SkillTooltip instance;
 
-    public RectTransform tooltipRect;   // ← NUEVO
-    public Vector2 offset = new Vector2(0, 100f); // Altura sobre el botón
+    public RectTransform rect;
+    public Vector2 offset = new Vector2(0, 120f);
 
+    [Header("Text References")]
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI costText;
+
+    [Header("Font Sizes")]
+    public float titleFontSize = 28f;
+    public float descriptionFontSize = 22f;
+    public float costFontSize = 24f;
 
     void Awake()
     {
@@ -18,14 +24,10 @@ public class SkillTooltip : MonoBehaviour
 
         CanvasGroup cg = GetComponent<CanvasGroup>();
         if (cg != null)
-        {
             cg.blocksRaycasts = false;
-            cg.interactable = false;
-        }
 
         Hide();
     }
-
 
     public void Show(string title, string description, int cost, RectTransform target)
     {
@@ -33,21 +35,19 @@ public class SkillTooltip : MonoBehaviour
         descriptionText.text = description;
         costText.text = "Coste: " + cost + " ADN Shiny";
 
-        PositionAbove(target);
+        // Aplicar tamaños
+        titleText.fontSize = titleFontSize;
+        descriptionText.fontSize = descriptionFontSize;
+        costText.fontSize = costFontSize;
 
-        if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
-    }
+        rect.position = target.position;
+        rect.anchoredPosition += offset;
 
-    void PositionAbove(RectTransform target)
-    {
-        tooltipRect.position = target.position;
-        tooltipRect.anchoredPosition += offset;
+        gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        if (gameObject.activeSelf)
-            gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

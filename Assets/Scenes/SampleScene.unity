@@ -456,6 +456,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Hexagono)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -669,6 +673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Capacidad
   description: Mejora al nivel 4 la capacidad de contagios
   CoinCost: 1
@@ -1118,6 +1126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -1415,6 +1427,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +200%
   CoinCost: 1
@@ -1813,6 +1829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Capacidad
   description: Mejora al nivel 5 la capacidad de contagios
   CoinCost: 1
@@ -2471,6 +2491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
   CoinCost: 1
@@ -2719,6 +2743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +20% de persona por nivel
   CoinCost: 1
@@ -2905,6 +2933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Movimiento
   description: Mejora al nivel 3 la velocidad de movimiento
   CoinCost: 1
@@ -3176,15 +3208,15 @@ RectTransform:
   m_GameObject: {fileID: 141406158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.82001, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -21, y: -84}
+  m_SizeDelta: {x: 234.97, y: 55.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141406160
 MonoBehaviour:
@@ -3624,6 +3656,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Radio
   description: Mejora al nivel 5 el radio.
   CoinCost: 1
@@ -4507,12 +4543,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 356647269}
+  m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 664, y: 1}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 614, y: -67}
+  m_SizeDelta: {x: 246.9, y: 40.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &171250022
 MonoBehaviour:
@@ -4599,7 +4635,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -318.37018, y: 0, z: 95.36193, w: -86.812805}
+  m_margin: {x: -318.37018, y: 0, z: 462.4243, w: -86.812805}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5405,6 +5441,7 @@ RectTransform:
   - {fileID: 1935879842}
   - {fileID: 767001067}
   - {fileID: 858966970}
+  - {fileID: 2041343776}
   - {fileID: 1870291122}
   - {fileID: 433295870}
   - {fileID: 949125762}
@@ -6213,6 +6250,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
   CoinCost: 1
@@ -6621,6 +6662,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -9072,14 +9117,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 171250021}
+  m_Children: []
   m_Father: {fileID: 2041343776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123.45001, y: -139.36}
+  m_SizeDelta: {x: 151.54, y: 86.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356647270
 MonoBehaviour:
@@ -9233,6 +9277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Multi de Shiny
   description: Monedas del shiny x10
   CoinCost: 1
@@ -9419,6 +9467,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -10174,7 +10226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 154249163}
   speed: 1
-  zoomSpeed: 1.5
+  zoomSpeed: 0
   minZoom: 0.5
   maxZoom: 2
 --- !u!114 &385007779
@@ -10770,6 +10822,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +100% de persona por nivel
   CoinCost: 1
@@ -11106,6 +11162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -11247,6 +11307,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Zonas Reset
   description: Las zonas compradas se mantienen entre resetos
   CoinCost: 1
@@ -11682,6 +11746,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +60% de persona por nivel
   CoinCost: 1
@@ -12217,6 +12285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Velocidad de Contagio
   description: Mejora al nivel 2 la velocidad de contagio
   CoinCost: 1
@@ -12390,6 +12462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -12687,6 +12763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +80% de persona por nivel
   CoinCost: 1
@@ -12873,6 +12953,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Velocidad de Contagio
   description: Mejora al nivel 6 la velocidad de contagio
   CoinCost: 1
@@ -13150,6 +13234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
   CoinCost: 1
@@ -13847,6 +13935,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Movimiento
   description: Mejora al nivel 4  la velocidad de movimiento
   CoinCost: 1
@@ -14312,6 +14404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
   CoinCost: 1
@@ -14895,6 +14991,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Descuento Zonas
   description: -50% decuento en la tienda de zonas
   CoinCost: 1
@@ -15080,6 +15180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Pentagono)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -15414,6 +15518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Total de Dias
   description: '+5 dias de cura
 
@@ -15570,6 +15678,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -16068,6 +16180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -17867,6 +17983,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Velcoidad de captura
   description: x2 Velocidad de captura de shiny
   CoinCost: 1
@@ -18792,6 +18912,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -19359,6 +19483,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Tiempo
   description: Mejora al nivel 4 el tiempo de partida
   CoinCost: 1
@@ -20277,6 +20405,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Tiempo
   description: Mejora al nivel 5 el tiempo de partida
   CoinCost: 1
@@ -20586,6 +20718,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Aumento Radio
   description: Area de captura de mas de radio x2
   CoinCost: 1
@@ -21022,6 +21158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 500 monedas
   CoinCost: 1
@@ -21177,6 +21317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
   CoinCost: 1
@@ -22205,6 +22349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Tiempo
   description: Mejora al nivel 6 el tiempo de partida
   CoinCost: 1
@@ -22465,6 +22613,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Habilidad Carambola Pro
   description: 'la inercia que llevaba la primera figura se transmite a la segunda
     figura, mientra la primera se quedara parada. '
@@ -22743,6 +22895,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
   CoinCost: 1
@@ -22936,6 +23092,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Total de Dias
   description: '+10 dias de cura
 
@@ -23113,6 +23273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valoe Shiny
   description: Los shiny dan +3 punto
   CoinCost: 1
@@ -23509,6 +23673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 2500 monedas
   CoinCost: 1
@@ -23968,6 +24136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Capacidad
   description: Mejora al nivel 3 la capacidad de contagio
   CoinCost: 1
@@ -24419,7 +24591,6 @@ RectTransform:
   - {fileID: 1605157233}
   - {fileID: 145525712}
   - {fileID: 1896450788}
-  - {fileID: 2041343776}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -24993,6 +25164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 50000 monedas
   CoinCost: 1
@@ -25212,6 +25387,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
   CoinCost: 1
@@ -25608,6 +25787,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
   CoinCost: 1
@@ -26112,6 +26295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Habilidad Carambola
   description: Cuando Contagias Si golpeas a otro enemigo tambien se contagiara y
     bajara de fase
@@ -26809,6 +26996,8 @@ GameObject:
   - component: {fileID: 954987306}
   - component: {fileID: 954987305}
   - component: {fileID: 954987304}
+  - component: {fileID: 954987310}
+  - component: {fileID: 954987309}
   m_Layer: 5
   m_Name: Skill_Radio (4)
   m_TagString: Untagged
@@ -26860,6 +27049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Radio
   description: Mejora al nivel 6 el radio.
   CoinCost: 1
@@ -26968,6 +27161,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954987302}
   m_CullTransparentMesh: 1
+--- !u!114 &954987309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954987302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b60f61d7a59224d9e3f537c781eabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillNode: {fileID: 954987305}
+  button: {fileID: 954987306}
+  nodeImage: {fileID: 954987307}
+  costText: {fileID: 0}
+  normalSprite: {fileID: -8332440027787905155, guid: 53cf35dcc6ffc9e49aa6a8329e675586, type: 3}
+  notEnoughMoneySprite: {fileID: -5750353039905602045, guid: f52ac43ba8e940246a8e5a1904e9baeb, type: 3}
+  disabledSprite: {fileID: -8388979318032194922, guid: 1d40d5b394b8abb4386d20c728f7f89a, type: 3}
+--- !u!114 &954987310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954987302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdefecf89ade8645a7bc2f1e41cce48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 954987303}
+  infoPanel: {fileID: 2041343776}
+  hoverScale: 1.1
+  speed: 8
+  hoverOffsetX: 10
 --- !u!1 &955108355
 GameObject:
   m_ObjectHideFlags: 0
@@ -27066,6 +27295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +25% de personas que pueden aparecer por nivel
   CoinCost: 1
@@ -27302,6 +27535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +1 punto
   CoinCost: 1
@@ -27974,6 +28211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Velocidad de Contagio
   description: Mejora al nivel 3 la velocidad de contagio
   CoinCost: 1
@@ -28135,6 +28376,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +500%
   CoinCost: 1
@@ -29027,6 +29272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Habilidad Coral Rebote
   description: Los Corales Rebotan
   CoinCost: 1
@@ -29304,7 +29553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0054026577, y: -0.011362806}
+  m_AnchoredPosition: {x: 430, y: -0.011362806}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1045895808
@@ -29669,6 +29918,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Habilidad Carambola
   description: Cuando Contagias Si golpeas a otro enemigo tambien se contagiara y
     bajara de fase
@@ -30310,6 +30563,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Total de Dias
   description: '+10 dias de cura
 
@@ -32130,6 +32387,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Cuadrado)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -32436,6 +32697,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -32742,6 +33007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Movimiento
   description: Mejora al nivel 2 la velocidad de movimiento
   CoinCost: 1
@@ -33099,6 +33368,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Probabildad
   description: "Chance de spawn del shiny 75% \u2192 100%"
   CoinCost: 1
@@ -33310,6 +33583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Habilidad Carambola Mega Pro
   description: 'la primera rebotara en la direccion opuesta, manteniendo la velocidad
     pero en la direccion contraria. '
@@ -33889,6 +34166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Probabildad
   description: 'Velocidad de inicio
 
@@ -34324,6 +34605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +400%
   CoinCost: 1
@@ -35008,6 +35293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: Los shiny dan +3 punto
   CoinCost: 1
@@ -35465,6 +35754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Probabildad
   description: Velocidad de inicio +50%
   CoinCost: 1
@@ -36053,6 +36346,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shinys Por Zonas
   description: "Cada localizaci\xF3n da 1 punto al d\xEDa"
   CoinCost: 1
@@ -36668,6 +36965,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +40% de persona por nivel
   CoinCost: 1
@@ -37454,6 +37755,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: VELOCIDAD CONTAGIO
   description: Velocidad de contagio +100%
   CoinCost: 1
@@ -37683,6 +37988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -37892,6 +38201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Radio
   description: Mejora al nivel 4 el radio.
   CoinCost: 1
@@ -38325,6 +38638,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Multi de Shiny
   description: Monedas del shiny x5
   CoinCost: 1
@@ -38514,6 +38831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Velocidad de Contagio
   description: Mejora al nivel 5 la velocidad de contagio
   CoinCost: 1
@@ -39739,6 +40060,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Capacidad
   description: Mejora al nivel 6 la capacidad de contagios
   CoinCost: 1
@@ -40744,6 +41069,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 100 monedas
   CoinCost: 1
@@ -41919,6 +42248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Tiempo
   description: Mejora al nivel 3 el tiempo de partida
   CoinCost: 1
@@ -42092,6 +42425,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Movimiento
   description: Mejora al nivel 5 la velocidad de movimiento
   CoinCost: 1
@@ -42371,6 +42708,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Shiny Extra
   description: ' +1 Shiny por ronda'
   CoinCost: 1
@@ -43388,6 +43729,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Aumento Radio
   description: Area de captura de mas de radio x1.5
   CoinCost: 1
@@ -44231,6 +44576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Velocidad de Contagio
   description: Mejora al nivel 4 la velocidad de contagio
   CoinCost: 1
@@ -45239,6 +45588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: 
   description: 
   CoinCost: 1
@@ -45532,6 +45885,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -45729,6 +46086,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 25000 monedas
   CoinCost: 1
@@ -45940,6 +46301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: ReseT Monedas
   description: Empezar reset con 50 monedas
   CoinCost: 1
@@ -46263,6 +46628,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Aumento Radio
   description: x1.5 Velocidad de captura de shiny
   CoinCost: 1
@@ -46439,6 +46808,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Probabilidad de Duplicado
   description: '20% de propabilidad de copiar el enemigo en su fase impactada '
   CoinCost: 1
@@ -46881,6 +47254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Radio
   description: Mejora al nivel 2 el radio.
   CoinCost: 1
@@ -47160,6 +47537,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Reset Contagio
   description: "Las mejoras se\r\nmantienen con \r\nel reset"
   CoinCost: 1
@@ -47858,6 +48239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Capacidad
   description: Mejora al nivel 2 la capacidad de contagio
   CoinCost: 1
@@ -48754,6 +49139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +600%
   CoinCost: 1
@@ -50711,6 +51100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: VELOCIDAD CONTAGIO
   description: Velocidad de contagio +50%
   CoinCost: 1
@@ -51254,6 +51647,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Radio
   description: Mejora al nivel 3 el radio.
   CoinCost: 1
@@ -51908,6 +52305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Aumento Radio
   description: Area de captura de mas de radio x1.25
   CoinCost: 1
@@ -52827,6 +53228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Multi de Shiny
   description: Monedas del shiny x7
   CoinCost: 1
@@ -53373,6 +53778,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -53512,17 +53921,18 @@ RectTransform:
   m_GameObject: {fileID: 2041343775}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.69, y: 0.59007, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 141406159}
+  - {fileID: 171250021}
   - {fileID: 356647269}
-  m_Father: {fileID: 858966970}
+  m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 550, y: -329}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 142, y: 176}
+  m_SizeDelta: {x: -1673.1, y: -897.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041343777
 MonoBehaviour:
@@ -53574,11 +53984,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d99c8512a25e34baf3a242f8e94a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipRect: {fileID: 2041343776}
-  offset: {x: 0.5, y: 1}
+  rect: {fileID: 2041343776}
+  offset: {x: 50, y: 150}
   titleText: {fileID: 141406160}
   descriptionText: {fileID: 356647270}
   costText: {fileID: 171250022}
+  titleFontSize: 28
+  descriptionFontSize: 22
+  costFontSize: 24
 --- !u!114 &2041343780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53586,7 +53999,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041343775}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -53596,7 +54009,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -53612,7 +54025,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041343775}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -53629,7 +54042,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &2047488720
 GameObject:
@@ -53825,6 +54238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Total de Dias
   description: '+10 dias de cura
 
@@ -54581,6 +54998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Upgrade Tiempo
   description: Mejora al nivel 2 el tiempo de partida
   CoinCost: 1
@@ -54742,6 +55163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor de Moneda
   description: Aumenta el valor de la moneda por persona +100%
   CoinCost: 1
@@ -54931,6 +55356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: +1 Valor de Golpe (Circulo)
   description: Suma +1 de Golpe
   CoinCost: 1
@@ -55282,6 +55711,7 @@ GameObject:
   - component: {fileID: 2096388056}
   - component: {fileID: 2096388060}
   - component: {fileID: 2096388061}
+  - component: {fileID: 2096388062}
   m_Layer: 5
   m_Name: Skill_Root
   m_TagString: Untagged
@@ -55321,6 +55751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 2041343775}
+  infoTitle: {fileID: 141406160}
+  infoDescription: {fileID: 356647270}
+  infoCost: {fileID: 171250022}
   skillName: Mejora Inicial Aleatoria
   description: (1 de las mejoras de la tienda empieza comprada).
   CoinCost: 1
@@ -55416,7 +55850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 4436746946413337742, guid: 84290543b14e70c45929bece66bd3d2e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -55462,9 +55896,26 @@ MonoBehaviour:
   button: {fileID: 2096388057}
   nodeImage: {fileID: 2096388058}
   costText: {fileID: 0}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  notEnoughMoneyColor: {r: 1, g: 0.4, b: 0.4, a: 1}
-  disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  normalSprite: {fileID: -5750353039905602045, guid: f52ac43ba8e940246a8e5a1904e9baeb, type: 3}
+  notEnoughMoneySprite: {fileID: 8360375546692593284, guid: f5f3cfaab510d624f80178e43edd3ab3, type: 3}
+  disabledSprite: {fileID: 1056779427979464144, guid: a5951b777a75b2f4eaac1dec8fd18d6c, type: 3}
+--- !u!114 &2096388062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096388054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdefecf89ade8645a7bc2f1e41cce48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 2096388055}
+  infoPanel: {fileID: 2041343776}
+  hoverScale: 1.1
+  speed: 8
+  hoverOffsetX: 10
 --- !u!1 &2097954241
 GameObject:
   m_ObjectHideFlags: 0
@@ -55737,6 +56188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Total de Dias
   description: '+5 dias de cura
 
@@ -56167,6 +56622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Valor Shiny
   description: Los shiny dan +3 punto
   CoinCost: 1
@@ -56360,6 +56819,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
   skillName: Personas Por Segundo
   description: +50% de personas que pueden aparecer por nivel
   CoinCost: 1

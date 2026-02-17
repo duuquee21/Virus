@@ -9,10 +9,10 @@ public class SkillNodeStateController : MonoBehaviour
     public Image nodeImage;
     public TextMeshProUGUI costText;
 
-    [Header("Colores")]
-    public Color normalColor = Color.white;
-    public Color notEnoughMoneyColor = new Color(1f, 0.4f, 0.4f);
-    public Color disabledColor = Color.gray;
+    [Header("Sprites de Estado")]
+    public Sprite normalSprite;
+    public Sprite notEnoughMoneySprite;
+    public Sprite disabledSprite;
 
     void Update()
     {
@@ -24,31 +24,28 @@ public class SkillNodeStateController : MonoBehaviour
 
     void UpdateState()
     {
-        // Si ya está desbloqueado (y no es repetible)
         if (skillNode.IsUnlocked)
         {
-            SetVisual(disabledColor, false);
+            SetVisual(disabledSprite);
             return;
         }
 
-        // Si no tiene monedas suficientes → FASE 1
         if (LevelManager.instance.contagionCoins < skillNode.CoinCost)
         {
-            SetVisual(notEnoughMoneyColor, false);
+            SetVisual(notEnoughMoneySprite);
             return;
         }
 
-        // Si puede comprar
-        SetVisual(normalColor, true);
+        SetVisual(normalSprite);
     }
 
-    void SetVisual(Color color, bool interactable)
+    void SetVisual(Sprite sprite)
     {
-        if (nodeImage != null)
-            nodeImage.color = color;
+        if (nodeImage != null && sprite != null)
+            nodeImage.sprite = sprite;
 
         if (button != null)
-            button.interactable = interactable;
+            button.interactable = true;
 
         if (costText != null)
             costText.text = skillNode.CoinCost.ToString();
