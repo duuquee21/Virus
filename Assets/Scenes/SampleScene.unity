@@ -56505,7 +56505,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2292383645031499234, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2292383645031499234, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: delayMuerte
@@ -56976,7 +56976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: delayMuerte
@@ -63952,7 +63952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: delayMuerte
@@ -64262,7 +64262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8196277457837810747, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8196277457837810747, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: delayMuerte

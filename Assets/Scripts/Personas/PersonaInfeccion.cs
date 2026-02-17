@@ -439,6 +439,9 @@ public class PersonaInfeccion : MonoBehaviour
                 int monedasADar = valorPorFase[faseAnterior];
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
             }
+            if (InfectionFeedback.instance != null)
+                InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
+
 
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
