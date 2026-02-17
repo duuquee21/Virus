@@ -32024,6 +32024,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 426624705}
   alphaMin: 0.3
   alphaMax: 0.6
+--- !u!212 &1129471503 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5635448799679940233, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+  m_PrefabInstance: {fileID: 3540121387535371295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1133120312
 GameObject:
   m_ObjectHideFlags: 0
@@ -56633,6 +56638,18 @@ PrefabInstance:
     - target: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: maxDeform
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 1129471503}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: jellySensitivity
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5635448799679940233, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_SortingOrder
