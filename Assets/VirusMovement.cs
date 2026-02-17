@@ -18,6 +18,14 @@ public class VirusMovement : MonoBehaviour
 
     private ManagerAnimacionJugador managerAnimacionJugador;
 
+    [Header("Efecto Gelatina")]
+    public SpriteRenderer spriteRenderer;
+    public float jellySensitivity = 0.05f; // Qué tanto se deforma
+    public float jellyLerpSpeed = 10f;    // Suavizado del retorno a la forma original
+    public float maxDeform = 0.3f;
+    private Material jellyMat;
+    private Vector2 currentJellyVector;
+
     void Awake()
     {
         instance = this;
@@ -32,7 +40,11 @@ public class VirusMovement : MonoBehaviour
         rb.linearDamping = linearDrag;
 
         ApplySpeedMultiplier();
+
+        if (spriteRenderer != null)
+            jellyMat = spriteRenderer.material; // Acceder a .material crea una copia local automática
     }
+
 
     void Update()
     {
@@ -53,7 +65,20 @@ public class VirusMovement : MonoBehaviour
             movementInput = new Vector2(moveX, moveY);
         }
 
-      
+        if (jellyMat != null)
+        {
+            // 1. Calculamos la deformación deseada
+            Vector2 targetJelly = rb.linearVelocity * jellySensitivity;
+
+            // 2. ¡NUEVO!: Limitamos la deformación máxima (ejemplo: 0.3f)
+            // Cambia el 0.3f por un valor mayor si quieres que se deforme más
+            targetJelly = Vector2.ClampMagnitude(targetJelly, maxDeform);
+
+            // 3. Suavizamos y enviamos al shader
+            currentJellyVector = Vector2.Lerp(currentJellyVector, targetJelly, Time.deltaTime * jellyLerpSpeed);
+            jellyMat.SetVector("_VelocityDir", currentJellyVector);
+        }
+
     }
 
     void FixedUpdate()

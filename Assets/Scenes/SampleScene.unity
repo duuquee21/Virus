@@ -32024,6 +32024,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 426624705}
   alphaMin: 0.3
   alphaMax: 0.6
+--- !u!212 &1129471503 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5635448799679940233, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+  m_PrefabInstance: {fileID: 3540121387535371295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1133120312
 GameObject:
   m_ObjectHideFlags: 0
@@ -56522,7 +56527,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2292383645031499234, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2292383645031499234, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: delayMuerte
@@ -56655,6 +56660,18 @@ PrefabInstance:
     - target: {fileID: 3289425447875474050, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: maxDeform
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 1129471503}
+    - target: {fileID: 3392505838481782320, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
+      propertyPath: jellySensitivity
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5635448799679940233, guid: 63c2dcdcbf8848643a8216df49d89fc3, type: 3}
       propertyPath: m_SortingOrder
@@ -56981,7 +56998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: delayMuerte
@@ -63957,7 +63974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5800247761704183687, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: delayMuerte
@@ -64267,7 +64284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8196277457837810747, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8196277457837810747, guid: d8c2b00bfc17d1541b4874bc5b9ff26d, type: 3}
       propertyPath: delayMuerte
