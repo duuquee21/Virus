@@ -385,7 +385,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (canvasGroup != null && canvasGroup.alpha > 0.5f && SkillTooltip.instance)
-            SkillTooltip.instance.Show(skillName, description, CoinCost);
+        {
+            RectTransform myRect = GetComponent<RectTransform>();
+            SkillTooltip.instance.Show(skillName, description, CoinCost, myRect);
+        }
     }
+
     public void OnPointerExit(PointerEventData eventData) { if (SkillTooltip.instance) SkillTooltip.instance.Hide(); }
 }
