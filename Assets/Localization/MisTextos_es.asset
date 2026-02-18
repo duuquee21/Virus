@@ -138,6 +138,14 @@ MonoBehaviour:
     m_Localized: Empiezas la partida con 50 monedas extra.
     m_Metadata:
       m_Items: []
+  - m_Id: 1775801788583936
+    m_Localized: Mejora Inicial Aleatoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1775801830526976
+    m_Localized: 1 de las mejoras empieza comprada
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

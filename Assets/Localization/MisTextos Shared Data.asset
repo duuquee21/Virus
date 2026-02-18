@@ -135,6 +135,14 @@ MonoBehaviour:
     m_Key: skill_start50_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1775801788583936
+    m_Key: skill_root_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1775801830526976
+    m_Key: skill_root_desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

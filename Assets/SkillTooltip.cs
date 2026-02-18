@@ -19,6 +19,9 @@ public class SkillTooltip : MonoBehaviour
     public float descriptionFontSize = 22f;
     public float costFontSize = 24f;
 
+    // Nombre de tu tabla en Unity
+    private string nombreTabla = "MisTextos";
+
     void Awake()
     {
         instance = this;
@@ -30,20 +33,39 @@ public class SkillTooltip : MonoBehaviour
         Hide();
     }
 
-    public void Show(string title, string description, int cost, RectTransform target)
+    // --- FUNCIÓN AUXILIAR PARA TRADUCIR ---
+    // (Esta función estaba mezclada dentro de Show, la sacamos fuera para que funcione bien)
+    string GetTexto(string clave)
     {
         var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
-        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave para que veas el error
+        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave
         return op;
     }
 
-        // Aplicar tamaños
+    // --- FUNCIÓN SHOW CORREGIDA ---
+    // Acepta las Keys y el RectTransform del botón
+    public void Show(string titleKey, string descriptionKey, int cost, RectTransform target)
+    {
+        // 1. TRADUCCIÓN (Usamos la función auxiliar)
+        titleText.text = GetTexto(titleKey);
+        descriptionText.text = GetTexto(descriptionKey);
+
+        // Traducimos el coste (Asegúrate de tener "txt_coste" y "txt_adn" en el Excel)
+        string textoCoste = GetTexto("txt_coste");
+        string textoAdn = GetTexto("txt_adn");
+        costText.text = $"{textoCoste}: {cost} {textoAdn}";
+
+        // 2. APLICAR TAMAÑOS (Tu código original)
         titleText.fontSize = titleFontSize;
         descriptionText.fontSize = descriptionFontSize;
         costText.fontSize = costFontSize;
 
-        rect.position = target.position;
-        rect.anchoredPosition += offset;
+        // 3. POSICIONAMIENTO (Tu código original)
+        if (rect != null && target != null)
+        {
+            rect.position = target.position;
+            rect.anchoredPosition += offset;
+        }
 
         gameObject.SetActive(true);
     }

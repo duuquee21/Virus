@@ -460,8 +460,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Hexagono)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -677,8 +677,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Capacidad
-  description: Mejora al nivel 4 la capacidad de contagios
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -1130,8 +1130,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -1431,8 +1431,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +200%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1220417568}
@@ -1833,8 +1833,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Capacidad
-  description: Mejora al nivel 5 la capacidad de contagios
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -2495,8 +2495,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +1 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -2747,8 +2747,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +20% de persona por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1336181681}
@@ -2937,8 +2937,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Movimiento
-  description: Mejora al nivel 3 la velocidad de movimiento
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -3660,8 +3660,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Radio
-  description: Mejora al nivel 5 el radio.
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -6179,8 +6179,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +1 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -6591,8 +6591,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -9131,8 +9131,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Multi de Shiny
-  description: Monedas del shiny x10
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 802792255}
@@ -9321,8 +9321,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -10676,8 +10676,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +100% de persona por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 252481898}
@@ -11057,8 +11057,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -11202,8 +11202,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Zonas Reset
-  description: Las zonas compradas se mantienen entre resetos
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2118875022}
@@ -11641,8 +11641,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +60% de persona por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 445640193}
@@ -11797,7 +11797,6 @@ RectTransform:
   - {fileID: 1875246082}
   - {fileID: 427849548}
   - {fileID: 1625512641}
-  - {fileID: 1853946025}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12181,8 +12180,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Velocidad de Contagio
-  description: Mejora al nivel 2 la velocidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -12358,8 +12357,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -12659,8 +12658,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +80% de persona por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 412912439}
@@ -12849,8 +12848,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Velocidad de Contagio
-  description: Mejora al nivel 6 la velocidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -13130,8 +13129,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +1 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -13831,8 +13830,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Movimiento
-  description: Mejora al nivel 4  la velocidad de movimiento
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -14300,8 +14299,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +1 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -14887,8 +14886,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Descuento Zonas
-  description: -50% decuento en la tienda de zonas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -15076,8 +15075,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Pentagono)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -15414,10 +15413,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Total de Dias
-  description: '+5 dias de cura
-
-'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2100670667}
@@ -15574,8 +15571,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1387940920}
@@ -16076,8 +16073,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 55039538}
@@ -17879,8 +17876,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Velcoidad de captura
-  description: x2 Velocidad de captura de shiny
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 458302546}
@@ -18808,8 +18805,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2076359407}
@@ -19379,8 +19376,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Tiempo
-  description: Mejora al nivel 4 el tiempo de partida
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -20301,8 +20298,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Tiempo
-  description: Mejora al nivel 5 el tiempo de partida
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -20614,8 +20611,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Aumento Radio
-  description: Area de captura de mas de radio x2
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 980715996}
@@ -21054,8 +21051,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 500 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 827093180}
@@ -21213,8 +21210,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +3 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -22285,8 +22282,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Tiempo
-  description: Mejora al nivel 6 el tiempo de partida
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -22549,9 +22546,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Habilidad Carambola Pro
-  description: 'la inercia que llevaba la primera figura se transmite a la segunda
-    figura, mientra la primera se quedara parada. '
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -22831,8 +22827,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +3 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -23028,10 +23024,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Total de Dias
-  description: '+10 dias de cura
-
-'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1073670516}
@@ -23209,8 +23203,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valoe Shiny
-  description: Los shiny dan +3 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -23609,8 +23603,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 2500 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1714903570}
@@ -24072,8 +24066,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Capacidad
-  description: Mejora al nivel 3 la capacidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -24966,9 +24960,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 426679245}
-  m_Father: {fileID: 1807593576}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -25136,8 +25129,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 50000 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1241499372}
@@ -25359,8 +25352,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Extra
-  description: ' +1 Shiny por ronda'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -25759,8 +25752,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Extra
-  description: ' +1 Shiny por ronda'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -26267,9 +26260,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Habilidad Carambola
-  description: Cuando Contagias Si golpeas a otro enemigo tambien se contagiara y
-    bajara de fase
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -27021,8 +27013,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Radio
-  description: Mejora al nivel 6 el radio.
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -27267,8 +27259,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +25% de personas que pueden aparecer por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2124784838}
@@ -27507,8 +27499,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +1 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -28183,8 +28175,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Velocidad de Contagio
-  description: Mejora al nivel 3 la velocidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -28348,8 +28340,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +500%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1861535015}
@@ -29244,8 +29236,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Habilidad Coral Rebote
-  description: Los Corales Rebotan
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -29890,9 +29882,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Habilidad Carambola
-  description: Cuando Contagias Si golpeas a otro enemigo tambien se contagiara y
-    bajara de fase
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -30535,10 +30526,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Total de Dias
-  description: '+10 dias de cura
-
-'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2054705334}
@@ -32359,8 +32348,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Cuadrado)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -32669,8 +32658,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -32979,8 +32968,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Movimiento
-  description: Mejora al nivel 2 la velocidad de movimiento
+  skillNameKey: skill_speed_tit
+  descriptionKey: skill_speed_desc
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -33340,8 +33329,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Probabildad
-  description: "Chance de spawn del shiny 75% \u2192 100%"
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1979154201}
@@ -33555,9 +33544,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Habilidad Carambola Mega Pro
-  description: 'la primera rebotara en la direccion opuesta, manteniendo la velocidad
-    pero en la direccion contraria. '
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -34138,10 +34126,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Probabildad
-  description: 'Velocidad de inicio
-
-    +25%'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1753573910}
@@ -34577,8 +34563,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +400%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1030531660}
@@ -35306,8 +35292,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: Los shiny dan +3 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -35767,8 +35753,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Probabildad
-  description: Velocidad de inicio +50%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1979154201}
@@ -36359,8 +36345,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shinys Por Zonas
-  description: "Cada localizaci\xF3n da 1 punto al d\xEDa"
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 422005125}
@@ -36978,8 +36964,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +40% de persona por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 431946793}
@@ -37768,8 +37754,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: VELOCIDAD CONTAGIO
-  description: Velocidad de contagio +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -38001,8 +37987,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1711126838}
@@ -38214,8 +38200,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Radio
-  description: Mejora al nivel 4 el radio.
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -38651,8 +38637,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Multi de Shiny
-  description: Monedas del shiny x5
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 2027238784}
@@ -38844,8 +38830,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Velocidad de Contagio
-  description: Mejora al nivel 5 la velocidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -40073,8 +40059,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Capacidad
-  description: Mejora al nivel 6 la capacidad de contagios
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -40211,7 +40197,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 426679245}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -41157,8 +41143,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 100 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 731029848}
@@ -42336,8 +42322,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Tiempo
-  description: Mejora al nivel 3 el tiempo de partida
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -42513,8 +42499,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Movimiento
-  description: Mejora al nivel 5 la velocidad de movimiento
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -42796,8 +42782,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Shiny Extra
-  description: ' +1 Shiny por ronda'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -43817,8 +43803,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Aumento Radio
-  description: Area de captura de mas de radio x1.5
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 728924626}
@@ -44664,8 +44650,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Velocidad de Contagio
-  description: Mejora al nivel 4 la velocidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -45676,8 +45662,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: 
-  description: 
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 0}
@@ -46014,8 +46000,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1297017362}
@@ -46215,8 +46201,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 25000 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 884001763}
@@ -46430,8 +46416,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: ReseT Monedas
-  description: Empezar reset con 50 monedas
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1548959973}
@@ -46757,8 +46743,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Aumento Radio
-  description: x1.5 Velocidad de captura de shiny
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1434096226}
@@ -46937,8 +46923,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Probabilidad de Duplicado
-  description: '20% de propabilidad de copiar el enemigo en su fase impactada '
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -47383,8 +47369,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Radio
-  description: Mejora al nivel 2 el radio.
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -47666,8 +47652,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Reset Contagio
-  description: "Las mejoras se\r\nmantienen con \r\nel reset"
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1616195503}
@@ -48368,8 +48354,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Capacidad
-  description: Mejora al nivel 2 la capacidad de contagio
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -49268,8 +49254,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +600%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 736940140}
@@ -51270,8 +51256,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: VELOCIDAD CONTAGIO
-  description: Velocidad de contagio +50%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1370627808}
@@ -51817,8 +51803,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Radio
-  description: Mejora al nivel 3 el radio.
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -51952,9 +51938,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 665028651}
-  m_Father: {fileID: 340454175}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -52511,8 +52496,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Aumento Radio
-  description: Area de captura de mas de radio x1.25
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 1634890635}
@@ -53434,8 +53419,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Multi de Shiny
-  description: Monedas del shiny x7
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 362586634}
@@ -53984,8 +53969,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -54444,10 +54429,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Total de Dias
-  description: '+10 dias de cura
-
-'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 810881214}
@@ -55204,8 +55187,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Upgrade Tiempo
-  description: Mejora al nivel 2 el tiempo de partida
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -55369,8 +55352,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor de Moneda
-  description: Aumenta el valor de la moneda por persona +100%
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 523954232}
@@ -55562,8 +55545,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: +1 Valor de Golpe (Circulo)
-  description: Suma +1 de Golpe
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -55957,8 +55940,8 @@ MonoBehaviour:
   infoTitle: {fileID: 141406160}
   infoDescription: {fileID: 356647270}
   infoCost: {fileID: 171250022}
-  skillName: Mejora Inicial Aleatoria
-  description: (1 de las mejoras de la tienda empieza comprada).
+  skillNameKey: skill_root_tit
+  descriptionKey: skill_root_desc
   CoinCost: 1
   nextNodes:
   - {fileID: 131081811}
@@ -56394,10 +56377,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Total de Dias
-  description: '+5 dias de cura
-
-'
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 805961571}
@@ -56828,8 +56809,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Valor Shiny
-  description: Los shiny dan +3 punto
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -57025,8 +57006,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillName: Personas Por Segundo
-  description: +50% de personas que pueden aparecer por nivel
+  skillNameKey: 
+  descriptionKey: 
   CoinCost: 1
   nextNodes:
   - {fileID: 119678599}
@@ -64989,3 +64970,6 @@ SceneRoots:
   - {fileID: 190756179}
   - {fileID: 1939121404}
   - {fileID: 1976773730}
+  - {fileID: 880777037}
+  - {fileID: 1514113423}
+  - {fileID: 1953980391}
