@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
+using UnityEngine.Localization.Settings; // <--- NECESARIO
 
 public class SkillTooltip : MonoBehaviour
 {
@@ -31,9 +32,10 @@ public class SkillTooltip : MonoBehaviour
 
     public void Show(string title, string description, int cost, RectTransform target)
     {
-        titleText.text = title;
-        descriptionText.text = description;
-        costText.text = "Coste: " + cost + " ADN Shiny";
+        var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
+        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave para que veas el error
+        return op;
+    }
 
         // Aplicar tamaños
         titleText.fontSize = titleFontSize;

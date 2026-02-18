@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MisTextos_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 3203a65ac863d8d44ab19f89cd9794ac, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 34078957568
+    m_Localized: HOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17979836440576
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17999117656064
+    m_Localized: AJUSTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18007174914048
+    m_Localized: SALIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18016201056256
+    m_Localized: "Hex\xE1gono"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644328923136
+    m_Localized: "Pent\xE1gono"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644358283264
+    m_Localized: Cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644358283265
+    m_Localized: "Tri\xE1ngulo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477568
+    m_Localized: "C\xEDrculo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477569
+    m_Localized: Bola Blanca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477570
+    m_Localized: Monedas ganadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477571
+    m_Localized: Monedas totales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477572
+    m_Localized: Evoluciones por Zona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477573
+    m_Localized: Evoluciones por Pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477574
+    m_Localized: Evoluciones por Carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477575
+    m_Localized: TOTAL ZONA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477576
+    m_Localized: TOTAL PARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477577
+    m_Localized: TOTAL CARAMBOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477578
+    m_Localized: Omitir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477579
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387644362477580
+    m_Localized: monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836342812672
+    m_Localized: Columna B (Spanish)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172800
+    m_Localized: Coste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172801
+    m_Localized: ADN Shiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172802
+    m_Localized: Monedas x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172803
+    m_Localized: Multiplica todas las monedas ganadas por 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172804
+    m_Localized: Velocidad Inicial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172805
+    m_Localized: Aumenta la velocidad de movimiento un 20%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172806
+    m_Localized: Inicio Rico
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172807
+    m_Localized: Empiezas la partida con 50 monedas extra.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

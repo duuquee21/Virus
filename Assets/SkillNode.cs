@@ -236,7 +236,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (Guardado.instance == null) return;
 
         // Debug general para saber qué nodo se acaba de activar
-        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillName}");
+        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillNameKey}");
 
         switch (effectType)
         {
