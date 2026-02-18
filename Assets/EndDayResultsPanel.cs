@@ -1,7 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings; // <--- IMPORTANTE: Necesario para traducir por código
 
 public class EndDayResultsPanel : MonoBehaviour
 {
@@ -39,25 +40,24 @@ public class EndDayResultsPanel : MonoBehaviour
     private string fullMonedasTotales;
 
 
-    // Nombres reales de tus fases (orden correcto según tu sistema)
-    private readonly string[] nombresFases =
+    // AHORA ESTO SON LAS CLAVES DE LA TABLA, NO LOS TEXTOS DIRECTOS
+    private readonly string[] clavesFases =
     {
-    "Hexágono",
-    "Pentágono",
-    "Cuadrado",
-    "Triángulo",
-    "Círculo",
-    "Bola Blanca"
-};
+        "fase_hex",
+        "fase_pent",
+        "fase_cuad",
+        "fase_tri",
+        "fase_circ",
+        "fase_bola"
+    };
 
     private readonly int[] valorZonaPorFase =
-{
-    1, // Hexágono → Pentágono
-    2, // Pentágono → Cuadrado
-    3, // Cuadrado → Triángulo
-    4, // Triángulo → Círculo
-    5  // Círculo → Bola Blanca
-};
+    {
+        1, 2, 3, 4, 5
+    };
+
+    // Nombre de tu tabla en Unity (asegúrate de que coincida con el nombre del archivo de la tabla)
+    private string nombreTablaLocalization = "MisTextos";
 
     void Awake()
     {
@@ -65,20 +65,30 @@ public class EndDayResultsPanel : MonoBehaviour
         panel.SetActive(false);
     }
 
+    // --- FUNCIÓN HELPER PARA TRADUCIR ---
+    string GetTexto(string clave)
+    {
+        // Esto busca en la tabla el texto según el idioma actual
+        return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+    }
+
     public void ShowResults(int monedasGanadas, int monedasTotales)
     {
         Time.timeScale = 0f;
 
-
         int totalZonaGeneral = 0;
         int totalParedGeneral = 0;
         int totalCarambolaGeneral = 0;
+
+        // Recuperamos la palabra "monedas" traducida para usarla luego
+        string txtMonedas = GetTexto("monedas");
+
         // ---- MONEDAS ----
-        fullMonedasPartida = "<b>Monedas ganadas:</b> " + monedasGanadas;
-        fullMonedasTotales = "<b>Monedas totales:</b> " + monedasTotales;
+        fullMonedasPartida = $"<b>{GetTexto("titulo_monedas_ganadas")}:</b> {monedasGanadas}";
+        fullMonedasTotales = $"<b>{GetTexto("titulo_monedas_totales")}:</b> {monedasTotales}";
 
         // ---------------- ZONA ----------------
-        fullZonaEvolution = "<b>Evoluciones por Zona</b>\n\n";
+        fullZonaEvolution = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
@@ -87,14 +97,17 @@ public class EndDayResultsPanel : MonoBehaviour
             int total = cantidad * valorBase;
             totalZonaGeneral += total;
 
+            // Traducimos los nombres de las fases al vuelo
+            string nombreFaseActual = GetTexto(clavesFases[i]);
+            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
+
             fullZonaEvolution +=
-                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                cantidad + "  (" + valorBase + " × " + cantidad + " = " + total + ")\n";
+                $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
         }
-        fullZonaEvolution += "\n<b>TOTAL ZONA: " + totalZonaGeneral + " monedas</b>\n";
+        fullZonaEvolution += $"\n<b>{GetTexto("txt_total_zona")}: {totalZonaGeneral} {txtMonedas}</b>\n";
 
         // ---------------- PARED ----------------
-        fullChoqueEvolution = "\n<b>Evoluciones por Pared</b>\n\n";
+        fullChoqueEvolution = $"\n<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
@@ -103,18 +116,16 @@ public class EndDayResultsPanel : MonoBehaviour
             int total = cantidad * valorBase;
             totalParedGeneral += total;
 
-            fullChoqueEvolution +=
-                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                cantidad + "  (" +
-                valorBase + " × " +
-                cantidad + " = " +
-                total + ")\n";
-        }
+            string nombreFaseActual = GetTexto(clavesFases[i]);
+            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
 
-        fullChoqueEvolution += "\n<b>TOTAL PARED: " + totalParedGeneral + " monedas</b>\n";
+            fullChoqueEvolution +=
+                $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
+        }
+        fullChoqueEvolution += $"\n<b>{GetTexto("txt_total_pared")}: {totalParedGeneral} {txtMonedas}</b>\n";
 
         // ---------------- CARAMBOLA ----------------
-        fullCarambolaEvolution = "\n<b>Evoluciones por Carambola</b>\n\n";
+        fullCarambolaEvolution = $"\n<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
@@ -123,14 +134,13 @@ public class EndDayResultsPanel : MonoBehaviour
             int total = cantidad * valorBase;
             totalCarambolaGeneral += total;
 
+            string nombreFaseActual = GetTexto(clavesFases[i]);
+            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
+
             fullCarambolaEvolution +=
-                nombresFases[i] + " → " + nombresFases[i + 1] + ": " +
-                cantidad + "  (" +
-                valorBase + " × " +
-                cantidad + " = " +
-                total + ")\n";
+                 $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
         }
-        fullCarambolaEvolution += "\n<b>TOTAL CARAMBOLA: " + totalCarambolaGeneral + " monedas</b>\n";
+        fullCarambolaEvolution += $"\n<b>{GetTexto("txt_total_carambola")}: {totalCarambolaGeneral} {txtMonedas}</b>\n";
 
 
         panel.SetActive(true);
@@ -138,6 +148,7 @@ public class EndDayResultsPanel : MonoBehaviour
         skipRequested = false;
         continueButton.gameObject.SetActive(true);
 
+        // Botón Omitir traducido
         if (buttonText != null)
             buttonText.text = "Omitir (F2)";
 
@@ -196,6 +207,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         isAnimating = false;
 
+        // Botón Continuar traducido
         if (buttonText != null)
             buttonText.text = "Continuar (F2)";
 
@@ -206,6 +218,7 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTotalesText.text = fullMonedasTotales;
 
     }
+
     public void OnClickContinue()
     {
         if (isAnimating)
@@ -215,7 +228,7 @@ public class EndDayResultsPanel : MonoBehaviour
         else
         {
             panel.SetActive(false);
-            Time.timeScale = 1f; // Reanuda el juego
+            Time.timeScale = 1f;
             LevelManager.instance.OnEndDayResultsFinished(0, 0);
         }
     }
@@ -228,6 +241,4 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasPartidaText.text = "";
         monedasTotalesText.text = "";
     }
-
-
 }

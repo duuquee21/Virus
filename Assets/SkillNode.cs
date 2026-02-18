@@ -43,9 +43,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         DestroyCoralOnInfectedImpact
     }
 
-    [Header("Datos")]
-    public string skillName;
-    [TextArea] public string description;
+    [Header("Hover Panel")]
+    public GameObject infoPanel;
+    public TextMeshProUGUI infoTitle;
+    public TextMeshProUGUI infoDescription;
+    public TextMeshProUGUI infoCost;
+
+    [Header("Datos de Traducción (KEYS)")]
+    // CAMBIO 1: Ahora son Keys, no el texto final
+    public string skillNameKey;
+    [TextArea] public string descriptionKey;
+
     public int CoinCost = 1;
 
     [Header("Ramas")]
@@ -75,7 +83,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public bool IsUnlocked => unlocked;
 
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
-    void Start() { CheckIfShouldShow(); }
+    void Start()
+    {
+        CheckIfShouldShow();
+
+        if (infoPanel != null)
+            infoPanel.SetActive(false);
+    }
+
 
     public void CheckIfShouldShow()
     {
@@ -204,9 +219,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
 
+
         LevelManager.instance.UpdateUI();
         CheckIfShouldShow();
 
+
+        SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
+        if (fx != null)
+            fx.PlayClickFeedback();
 
     }
 
@@ -215,8 +235,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Guardado.instance == null) return;
 
-        // Debug general para saber qué nodo se acaba de activar
-        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillName}");
+        // Debug general para saber qué nodo se acaba de activar (Usamos skillNameKey)
+        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillNameKey}");
 
         switch (effectType)
         {
@@ -331,11 +351,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.ReboteConCoral();
                 break;
 
-            // --- DEBUGS DE DAÑO POR FORMA (Relacionado con tu imagen de 'Daño Por Fase') ---
-            // --- DAÑO POR FORMA (CORREGIDO: Fase 0 = Hexágono) ---
+            // --- DEBUGS DE DAÑO POR FORMA ---
             case SkillEffectType.DmgHexagono:
                 Guardado.instance.dañoExtraHexagono += 1;
-                // Si tienes un array llamado 'dañoPorFase' en Guardado, podrías usar: Guardado.instance.dañoPorFase[0] += 1;
                 Debug.Log("<color=magenta>Dmg Extra:</color> Hexágono activado -> Corresponde a <b>FASE 0</b> (Elemento 0 del Array)");
                 Guardado.instance.SaveData();
                 break;
@@ -382,14 +400,27 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.DmgCirculo;
     }
 
+    // --------------------------------------------------------------
+    // CAMBIO IMPORTANTE: AQUÍ CONECTAMOS CON LA TRADUCCIÓN
+    // --------------------------------------------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (canvasGroup != null && canvasGroup.alpha > 0.5f && SkillTooltip.instance)
+        if (SkillTooltip.instance != null)
         {
-            RectTransform myRect = GetComponent<RectTransform>();
-            SkillTooltip.instance.Show(skillName, description, CoinCost, myRect);
+            // CAMBIO 3: Pasamos las KEYS (skillNameKey y descriptionKey) y el RectTransform
+            SkillTooltip.instance.Show(
+                skillNameKey,
+                descriptionKey,
+                CoinCost,
+                GetComponent<RectTransform>()
+            );
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) { if (SkillTooltip.instance) SkillTooltip.instance.Hide(); }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (SkillTooltip.instance != null)
+            SkillTooltip.instance.Hide();
+    }
+
 }
