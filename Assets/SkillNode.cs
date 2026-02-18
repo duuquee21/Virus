@@ -42,9 +42,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Nivel5, // + Círculos (Rompe todo)
     }
 
-    [Header("Datos")]
-    public string skillName;
-    [TextArea] public string description;
+    [Header("Datos de Traducción (USAR CLAVES DEL EXCEL)")]
+    // ANTES: public string skillName;
+    public string skillNameKey;     // <--- CAMBIO 1
+
+    // ANTES: public string description;
+    [TextArea] public string descriptionKey; // <--- CAMBIO 2
     public int CoinCost = 1;
 
     [Header("Ramas")]
@@ -169,7 +172,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (Guardado.instance == null) return;
 
         // Debug general para saber qué nodo se acaba de activar
-        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillName}");
+        Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillNameKey}");
 
         switch (effectType)
         {
@@ -325,7 +328,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (canvasGroup != null && canvasGroup.alpha > 0.5f && SkillTooltip.instance)
-            SkillTooltip.instance.Show(skillName, description, CoinCost);
+        {
+            // CAMBIO 3: Pasamos las KEYS al Tooltip, no el texto directo.
+            // El Tooltip se encargará de buscar qué significan.
+            SkillTooltip.instance.Show(skillNameKey, descriptionKey, CoinCost);
+        }
     }
-    public void OnPointerExit(PointerEventData eventData) { if (SkillTooltip.instance) SkillTooltip.instance.Hide(); }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (SkillTooltip.instance) SkillTooltip.instance.Hide();
+    }
 }

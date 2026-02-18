@@ -102,6 +102,42 @@ MonoBehaviour:
     m_Localized: coins
     m_Metadata:
       m_Items: []
+  - m_Id: 1764836342812672
+    m_Localized: Columna C (English)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172800
+    m_Localized: Cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172801
+    m_Localized: Shiny DNA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172802
+    m_Localized: Coins x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172803
+    m_Localized: Multiplies all earned coins by 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172804
+    m_Localized: Initial Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172805
+    m_Localized: Increases movement speed by 20%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172806
+    m_Localized: Rich Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172807
+    m_Localized: Start the game with 50 extra coins.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

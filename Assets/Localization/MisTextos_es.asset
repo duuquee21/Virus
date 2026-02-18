@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 34078957568
-    m_Localized: NUEVA PARTIDA
+    m_Localized: HOLA
     m_Metadata:
       m_Items: []
   - m_Id: 17979836440576
@@ -100,6 +100,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1387644362477580
     m_Localized: monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836342812672
+    m_Localized: Columna B (Spanish)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172800
+    m_Localized: Coste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172801
+    m_Localized: ADN Shiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172802
+    m_Localized: Monedas x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172803
+    m_Localized: Multiplica todas las monedas ganadas por 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172804
+    m_Localized: Velocidad Inicial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172805
+    m_Localized: Aumenta la velocidad de movimiento un 20%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172806
+    m_Localized: Inicio Rico
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172807
+    m_Localized: Empiezas la partida con 50 monedas extra.
     m_Metadata:
       m_Items: []
   references:

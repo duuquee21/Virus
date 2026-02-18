@@ -99,6 +99,42 @@ MonoBehaviour:
     m_Key: monedas
     m_Metadata:
       m_Items: []
+  - m_Id: 1764836342812672
+    m_Key: Columna A (Key)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172800
+    m_Key: txt_coste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172801
+    m_Key: txt_adn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172802
+    m_Key: skill_coinsx2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172803
+    m_Key: skill_coinsx2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172804
+    m_Key: skill_speed_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172805
+    m_Key: skill_speed_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172806
+    m_Key: skill_start50_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1764836372172807
+    m_Key: skill_start50_desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

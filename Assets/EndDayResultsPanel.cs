@@ -57,7 +57,7 @@ public class EndDayResultsPanel : MonoBehaviour
     };
 
     // Nombre de tu tabla en Unity (asegúrate de que coincida con el nombre del archivo de la tabla)
-    private string nombreTablaLocalization = "TextosUI";
+    private string nombreTablaLocalization = "MisTextos";
 
     void Awake()
     {
