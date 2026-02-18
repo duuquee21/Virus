@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class SkillNodeStateController : MonoBehaviour
+
+public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+
 {
+   
+
     public SkillNode skillNode;
     public Button button;
     public Image nodeImage;
     public TextMeshProUGUI costText;
 
     [Header("Sprites de Estado")]
+    public Sprite hoverSprite;
+    private bool isHovered = false;
     public Sprite normalSprite;
     public Sprite notEnoughMoneySprite;
     public Sprite disabledSprite;
@@ -21,9 +28,24 @@ public class SkillNodeStateController : MonoBehaviour
 
         UpdateState();
     }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isHovered = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isHovered = false;
+    }
 
     void UpdateState()
     {
+        if (isHovered && hoverSprite != null)
+        {
+            SetVisual(hoverSprite);
+            return;
+        }
+
         if (skillNode.IsUnlocked)
         {
             SetVisual(disabledSprite);

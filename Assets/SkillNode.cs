@@ -97,7 +97,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // HABILIDAD NORMAL YA DESBLOQUEADA
         if (!IsDamageSkill() && unlocked)
         {
-            SetAppearance(true, 1f, false);
+            SetAppearance(true, 1f, true);
             SetState(false, Color.gray, false);
             return;
         }
@@ -227,6 +227,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null)
             fx.PlayClickFeedback();
+            fx.SetPurchasedState(true);
 
     }
 

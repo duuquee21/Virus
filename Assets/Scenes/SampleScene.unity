@@ -3215,7 +3215,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -21, y: -84}
+  m_AnchoredPosition: {x: 151, y: -202}
   m_SizeDelta: {x: 234.97, y: 55.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141406160
@@ -4547,7 +4547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 614, y: -67}
+  m_AnchoredPosition: {x: 773, y: -161}
   m_SizeDelta: {x: 246.9, y: 40.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &171250022
@@ -8972,7 +8972,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.45001, y: -139.36}
+  m_AnchoredPosition: {x: 284, y: -216}
   m_SizeDelta: {x: 151.54, y: 86.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356647270
@@ -9060,7 +9060,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -153.97017, y: 46.339417, z: -178.68579, w: -170.31248}
+  m_margin: {x: -153.97017, y: 46.339417, z: -75.33151, w: -125.550476}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -27137,6 +27137,7 @@ MonoBehaviour:
   button: {fileID: 954987306}
   nodeImage: {fileID: 954987307}
   costText: {fileID: 0}
+  hoverSprite: {fileID: 0}
   normalSprite: {fileID: -8332440027787905155, guid: 53cf35dcc6ffc9e49aa6a8329e675586, type: 3}
   notEnoughMoneySprite: {fileID: -5750353039905602045, guid: f52ac43ba8e940246a8e5a1904e9baeb, type: 3}
   disabledSprite: {fileID: -8388979318032194922, guid: 1d40d5b394b8abb4386d20c728f7f89a, type: 3}
@@ -27154,6 +27155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 954987303}
   infoPanel: {fileID: 2041343776}
+  purchasedScale: 0.95
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -54118,8 +54120,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 142, y: 176}
-  m_SizeDelta: {x: -1673.1, y: -897.36}
+  m_AnchoredPosition: {x: 140.50903, y: 314.27}
+  m_SizeDelta: {x: -1476.0751, y: -775.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041343777
 MonoBehaviour:
@@ -54172,7 +54174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rect: {fileID: 2041343776}
-  offset: {x: 50, y: 150}
+  offset: {x: 0, y: 250}
   titleText: {fileID: 141406160}
   descriptionText: {fileID: 356647270}
   costText: {fileID: 171250022}
@@ -56081,6 +56083,7 @@ MonoBehaviour:
   button: {fileID: 2096388057}
   nodeImage: {fileID: 2096388058}
   costText: {fileID: 0}
+  hoverSprite: {fileID: 6462995527196720855, guid: 1d40d5b394b8abb4386d20c728f7f89a, type: 3}
   normalSprite: {fileID: -1189062960662210706, guid: 2a79f4c9d94eb82498f1a7687bb6e012, type: 3}
   notEnoughMoneySprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
   disabledSprite: {fileID: 3712365997439661212, guid: ce6e27c1291831f47bc0d352535a3b0a, type: 3}
@@ -56098,6 +56101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2096388055}
   infoPanel: {fileID: 2041343776}
+  purchasedScale: 0.95
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10

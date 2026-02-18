@@ -6,6 +6,12 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public RectTransform rect;
     public RectTransform infoPanel; // opcional si quieres que se mueva también
 
+
+    [Header("Estado Comprado")]
+    public float purchasedScale = 0.95f;
+
+    private bool isPurchased = false;
+
     [Header("Escala")]
     public float hoverScale = 1.1f;
     public float speed = 8f;
@@ -44,13 +50,27 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         targetScale = originalScale * hoverScale;
-        targetPos = originalPos + new Vector2(hoverOffsetX, 0);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         targetScale = originalScale;
-        targetPos = originalPos;
+    }
+
+    public void SetPurchasedState(bool purchased)
+    {
+        isPurchased = purchased;
+
+        if (purchased)
+        {
+            originalScale = Vector3.one * purchasedScale;
+        }
+        else
+        {
+            originalScale = Vector3.one;
+        }
+
+        targetScale = originalScale;
     }
 
     // Animación al comprar
