@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CircleTransition
+  m_Name: HexagonTransition
   m_Shader: {fileID: 4800000, guid: 96fe8805e63d14562979f88d14fb0fc8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -29,9 +29,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Aspect: 1.7785467
     - _CenterX: 0.5
     - _CenterY: 0.5
-    - _Radius: 1
+    - _Radius: 1.5
+    - _Shape: 1
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

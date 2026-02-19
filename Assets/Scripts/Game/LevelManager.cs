@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
 
 
     [Header("Transición")]
-    public Collections.Shaders.CircleTransition.CircleTransition transitionScript;
+    public Collections.Shaders.ShapeTransition.ShapeTransition transitionScript;
 
     void Awake()
     {
@@ -198,13 +198,19 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();
 
         // CAMBIO: Ahora usamos la transición para ir del menú al panel de zona
-        StartCoroutine(TransitionRoutine(menuPanel, gameUI));
+     
+            if (transitionScript != null) transitionScript.SetShape(1);
+
+            StartCoroutine(TransitionRoutine(menuPanel, gameUI));
+        
     }
 
     public void NewGameFromMainMenu()
     {
         ResetRunData();
-        // En lugar de llamar a StartSession aparte, deja que la transición lo maneje
+        // Inyectamos el Hexágono (1)
+        if (transitionScript != null) transitionScript.SetShape(1);
+
         StartCoroutine(TransitionRoutine(menuPanel, null, true));
     }
     void ForceHardReset()
