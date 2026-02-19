@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
-    public GameObject dayOverPanel;
+   
     public GameObject gameOverPanel;
     public GameObject shinyPanel; // Panel de la Tienda de ADN/Mejoras
     public GameObject zonePanel;  // Panel de Selección de Mapas
@@ -60,6 +60,10 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public int currentSessionInfected;
 
     float currentTimer;
+
+
+    [Header("Transición")]
+    public Collections.Shaders.CircleTransition.CircleTransition transitionScript;
 
     void Awake()
     {
@@ -135,7 +139,7 @@ public class LevelManager : MonoBehaviour
         menuPanel.SetActive(true);
         gameUI.SetActive(false);
         gameOverPanel.SetActive(false);
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+        
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
         if (shinyPanel) shinyPanel.SetActive(false);
@@ -190,26 +194,20 @@ public class LevelManager : MonoBehaviour
             contagionCoins
         );
 
-
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
-        menuPanel.SetActive(false);
-        gameUI.SetActive(false);
-        zonePanel.SetActive(true);
-        UpdateUI();
+        // CAMBIO: Ahora usamos la transición para ir del menú al panel de zona
+        StartCoroutine(TransitionRoutine(menuPanel, gameUI));
     }
 
     public void NewGameFromMainMenu()
     {
         ResetRunData();
-        menuPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        gameUI.SetActive(false);
-        dayOverPanel.SetActive(true);
-        UpdateUI();
+        // En lugar de solo cambiar paneles, iniciamos la sesión completa
+        StartCoroutine(TransitionRoutine(menuPanel, null)); // Pasamos null porque StartSession activará el GameUI
+        StartSession();
     }
-
     void ForceHardReset()
     {
         if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
@@ -244,7 +242,7 @@ public class LevelManager : MonoBehaviour
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
         gameOverPanel.SetActive(false);
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+   
         if (pausePanel != null) pausePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
 
@@ -286,7 +284,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+   
         if (menuPanel) menuPanel.SetActive(false);
 
         Time.timeScale = 1f;
@@ -330,10 +328,30 @@ public class LevelManager : MonoBehaviour
         if (virusMovementScript != null) virusMovementScript.enabled = true;
         UpdateUI();
     }
+    public void StartSessionWithTransition()
+    {
+        StartCoroutine(TransitionToSession());
+    }
 
+    private IEnumerator TransitionToSession()
+    {
+        if (transitionScript != null)
+        {
+            transitionScript.CloseBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        // Llamamos a la lógica normal de inicio de sesión
+        StartSession();
+
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
+    }
     public void ResumeSession()
     {
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+      
         if (menuPanel) menuPanel.SetActive(false);
 
         Time.timeScale = 1f;
@@ -401,14 +419,14 @@ public class LevelManager : MonoBehaviour
 
         if (Guardado.instance)
 
-        dayOverPanel.SetActive(true);
+      
 
         UpdateUI();
     }
 
     public void GameOver()
     {
-        dayOverPanel.SetActive(false);
+   
         gameOverPanel.SetActive(true);
         if (Guardado.instance) Guardado.instance.ClearRunState();
     }
@@ -462,7 +480,7 @@ public class LevelManager : MonoBehaviour
         if (gameUI) gameUI.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+     
 
         // 7️⃣ Limpiar personas
         PopulationManager.instance.ClearAllPersonas();
@@ -575,7 +593,7 @@ public class LevelManager : MonoBehaviour
         // Cerrar todos los paneles primero
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(false);
-        if (dayOverPanel) dayOverPanel.SetActive(false);
+     
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (shinyPanel) zonePanel.SetActive(false);
@@ -647,7 +665,31 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
+    // Método genérico para cambiar entre paneles con transición
+    public void ChangePanelWithTransition(GameObject panelToClose, GameObject panelToOpen)
+    {
+        StartCoroutine(TransitionRoutine(panelToClose, panelToOpen));
+    }
 
+    private IEnumerator TransitionRoutine(GameObject panelToClose, GameObject panelToOpen)
+    {
+        if (transitionScript != null)
+        {
+            transitionScript.CloseBlackScreen();
+            // Espera exactamente lo que tarda el círculo en cerrarse
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        if (panelToClose != null) panelToClose.SetActive(false);
+        if (panelToOpen != null) panelToOpen.SetActive(true);
+
+        yield return new WaitForEndOfFrame();
+
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
+    }
 
 
 }
