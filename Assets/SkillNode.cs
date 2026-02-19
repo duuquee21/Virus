@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Collections;
+
 
 [RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -42,6 +44,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Nivel5,
         DestroyCoralOnInfectedImpact
     }
+    [Header("Save ID")]
+    public string saveID;
 
     [Header("Hover Panel")]
     public GameObject infoPanel;
@@ -85,11 +89,26 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
     void Start()
     {
-        CheckIfShouldShow();
+        LoadNodeState();
+
+        CheckIfShouldShow();   // ← esto es obligatorio
 
         if (infoPanel != null)
             infoPanel.SetActive(false);
+
     }
+
+
+
+
+    public void LoadNodeState()
+    {
+        if (string.IsNullOrEmpty(saveID)) return;
+
+        unlocked = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", 0) == 1;
+        repeatLevel = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
+    }
+
 
 
     public void CheckIfShouldShow()
@@ -122,7 +141,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        bool allParentsUnlocked = true;
+        bool allParentsUnlocked = requiredParentNodes != null && requiredParentNodes.Length > 0;
         bool atLeastOneParentUnlocked = false;
 
         foreach (var parent in requiredParentNodes)
@@ -193,12 +212,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (LevelManager.instance.contagionCoins < CoinCost)
         {
-            if (AudioManager.instance != null) AudioManager.instance.PlayError();
+            if (AudioManager.instance != null)
+                AudioManager.instance.PlayError();
             return;
         }
 
-        if (AudioManager.instance != null) AudioManager.instance.PlayBuyUpgrade();
-        if (audioSource != null && unlockSound != null) audioSource.PlayOneShot(unlockSound);
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayBuyUpgrade();
+
+        if (audioSource != null && unlockSound != null)
+            audioSource.PlayOneShot(unlockSound);
 
         LevelManager.instance.contagionCoins -= CoinCost;
 
@@ -214,8 +237,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             if (nextNodes != null)
             {
                 foreach (var child in nextNodes)
+                {
                     if (child != null)
                         child.CheckIfShouldShow();
+                }
             }
         }
 
@@ -223,13 +248,25 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         LevelManager.instance.UpdateUI();
         CheckIfShouldShow();
 
-
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null)
+        {
             fx.PlayClickFeedback();
             fx.SetPurchasedState(true);
+        }
 
+        SaveNodeState(); // ← siempre al final
     }
+
+    void SaveNodeState()
+    {
+        if (string.IsNullOrEmpty(saveID)) return;
+
+        PlayerPrefs.SetInt("Skill_" + saveID + "_Unlocked", unlocked ? 1 : 0);
+        PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
+        PlayerPrefs.Save();
+    }
+
 
 
     void ApplyEffect()
@@ -423,5 +460,25 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (SkillTooltip.instance != null)
             SkillTooltip.instance.Hide();
     }
+    IEnumerator RebuildTree()
+    {
+        yield return null;
+
+        var nodes = FindObjectsOfType<SkillNode>(true);
+
+        // 1️⃣ Cargar estados
+        foreach (var node in nodes)
+            node.LoadNodeState();
+
+        // 2️⃣ Apagar todos
+        foreach (var node in nodes)
+            node.gameObject.SetActive(false);
+
+        // 3️⃣ Evaluar TODOS los nodos
+        foreach (var node in nodes)
+            node.CheckIfShouldShow();
+    }
+
+
 
 }

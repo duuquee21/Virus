@@ -583,8 +583,34 @@ public class LevelManager : MonoBehaviour
         // Abrir panel de habilidades
         if (zonePanel) shinyPanel.SetActive(true);
 
+        RebuildSkillTree();
+
         Time.timeScale = 1f; // aseguramos que no esté pausado
+        foreach (var node in FindObjectsOfType<SkillNode>())
+        {
+            node.CheckIfShouldShow();
+        }
+
+
     }
+
+    public void RebuildSkillTree()
+    {
+        var nodes = FindObjectsOfType<SkillNode>();
+
+        // 1️⃣ Cargar estado de todos
+        foreach (var node in nodes)
+            node.LoadNodeState();
+
+        // 2️⃣ Forzar activación base (mostrar todos inicialmente)
+        foreach (var node in nodes)
+            node.gameObject.SetActive(true);
+
+        // 3️⃣ Ahora evaluar jerarquía correctamente
+        foreach (var node in nodes)
+            node.CheckIfShouldShow();
+    }
+
 
     public void ContinueCurrentMap()
     {
