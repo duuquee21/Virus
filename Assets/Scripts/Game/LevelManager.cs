@@ -431,7 +431,6 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Soft Restart ejecutado");
 
         // 1️⃣ Monedas a 0
-        contagionCoins = 0;
         monedasGanadasSesion = 0;
 
         // 2️⃣ Volver a zona 0
