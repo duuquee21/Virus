@@ -182,12 +182,21 @@ public class LevelManager : MonoBehaviour
         contagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
 
+        Guardado.instance.LoadEvolutionData();
+        int monedasGanadas = PlayerPrefs.GetInt("Run_MonedasGanadas", 0);
+
+        EndDayResultsPanel.instance.ShowResults(
+            monedasGanadas,
+            contagionCoins
+        );
+
+
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
         menuPanel.SetActive(false);
         gameUI.SetActive(false);
-        dayOverPanel.SetActive(true);
+        zonePanel.SetActive(true);
         UpdateUI();
     }
 
@@ -230,7 +239,6 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance)
         {
             int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-            Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
         }
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
@@ -392,7 +400,6 @@ public class LevelManager : MonoBehaviour
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
         if (Guardado.instance)
-            Guardado.instance.SaveRunState(0, contagionCoins, currentMap);
 
         dayOverPanel.SetActive(true);
 
@@ -613,7 +620,20 @@ public class LevelManager : MonoBehaviour
 
         UpdateUI();
     }
+    public void SaveCurrentRun()
+    {
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
+        Guardado.instance.SaveRunState(
+            0,
+            contagionCoins,
+            currentMap
+        );
+
+        Guardado.instance.SaveEvolutionData();
+
+        Debug.Log("PARTIDA GUARDADA COMPLETA");
+    }
 
     public void StartSessionWithoutResettingPlanet()
     {

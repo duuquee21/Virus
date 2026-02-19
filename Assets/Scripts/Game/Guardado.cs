@@ -238,6 +238,35 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void SaveEvolutionData()
+    {
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        {
+            PlayerPrefs.SetInt("Run_Zona_" + i, PersonaInfeccion.evolucionesEntreFases[i]);
+            PlayerPrefs.SetInt("Run_Choque_" + i, PersonaInfeccion.evolucionesPorChoque[i]);
+            PlayerPrefs.SetInt("Run_Carambola_" + i, PersonaInfeccion.evolucionesCarambola[i]);
+        }
+
+        PlayerPrefs.Save();
+    }
+
+    public void LoadEvolutionData()
+    {
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        {
+            PersonaInfeccion.evolucionesEntreFases[i] =
+                PlayerPrefs.GetInt("Run_Zona_" + i, 0);
+
+            PersonaInfeccion.evolucionesPorChoque[i] =
+                PlayerPrefs.GetInt("Run_Choque_" + i, 0);
+
+            PersonaInfeccion.evolucionesCarambola[i] =
+                PlayerPrefs.GetInt("Run_Carambola_" + i, 0);
+        }
+    }
+
+
+
     public bool HasSavedGame() => PlayerPrefs.GetInt("Run_InProgress", 0) == 1;
     public void ResetAllProgress() { PlayerPrefs.DeleteAll(); HardResetVariables(); }
 }
