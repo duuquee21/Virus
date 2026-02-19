@@ -204,9 +204,8 @@ public class LevelManager : MonoBehaviour
     public void NewGameFromMainMenu()
     {
         ResetRunData();
-        // En lugar de solo cambiar paneles, iniciamos la sesión completa
-        StartCoroutine(TransitionRoutine(menuPanel, null)); // Pasamos null porque StartSession activará el GameUI
-        StartSession();
+        // En lugar de llamar a StartSession aparte, deja que la transición lo maneje
+        StartCoroutine(TransitionRoutine(menuPanel, null, true));
     }
     void ForceHardReset()
     {
@@ -697,22 +696,30 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(TransitionRoutine(panelToClose, panelToOpen));
     }
 
-    private IEnumerator TransitionRoutine(GameObject panelToClose, GameObject panelToOpen)
+    private IEnumerator TransitionRoutine(GameObject panelToClose, GameObject panelToOpen, bool isStartingSession = false)
     {
         if (transitionScript != null)
         {
+            // 1. Cerramos el círculo (Pantalla a negro)
             transitionScript.CloseBlackScreen();
-            // Espera exactamente lo que tarda el círculo en cerrarse
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
+        // 2. CAMBIO DE PANELES
         if (panelToClose != null) panelToClose.SetActive(false);
         if (panelToOpen != null) panelToOpen.SetActive(true);
+
+        // 3. SI ES UN NUEVO JUEGO, LANZAMOS LA SESIÓN AQUÍ (En el momento de oscuridad total)
+        if (isStartingSession)
+        {
+            StartSession();
+        }
 
         yield return new WaitForEndOfFrame();
 
         if (transitionScript != null)
         {
+            // 4. Abrimos el círculo (Vuelve la imagen)
             transitionScript.OpenBlackScreen();
         }
     }
