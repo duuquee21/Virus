@@ -55924,7 +55924,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 87, y: 95.666664}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096388056
 MonoBehaviour:
@@ -55986,7 +55986,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -56083,7 +56083,7 @@ MonoBehaviour:
   button: {fileID: 2096388057}
   nodeImage: {fileID: 2096388058}
   costText: {fileID: 0}
-  hoverSprite: {fileID: 6462995527196720855, guid: 1d40d5b394b8abb4386d20c728f7f89a, type: 3}
+  hoverSprite: {fileID: 8834879831451349387, guid: 8c377198c2835cb498e951cd2274bed5, type: 3}
   normalSprite: {fileID: -1189062960662210706, guid: 2a79f4c9d94eb82498f1a7687bb6e012, type: 3}
   notEnoughMoneySprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
   disabledSprite: {fileID: 3712365997439661212, guid: ce6e27c1291831f47bc0d352535a3b0a, type: 3}
@@ -56101,7 +56101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2096388055}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -56546,7 +56546,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107384727}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
