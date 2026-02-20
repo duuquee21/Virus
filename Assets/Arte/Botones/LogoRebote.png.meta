@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 3a4617ce8b0f193499878422f875d7fb
+guid: 9688800dd4e3abc4ebaa91146607452a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -681255620359901667
-    second: MejoraFase1_0
+      213: 8863347008671629619
+    second: LogoRebote_0
+  - first:
+      213: -1114819557374603290
+    second: LogoRebote_1
+  - first:
+      213: 8714968061107146693
+    second: LogoRebote_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -96,17 +102,56 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MejoraFase1_0
+      name: LogoRebote_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 261
-        height: 287
+        width: 15
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +160,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1ea53b6f91bb86f0800000000000000
-      internalID: -681255620359901667
+      spriteID: 331c4e4f42fe00b70800000000000000
+      internalID: 8863347008671629619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoRebote_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 15
+        width: 68
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ef4706e48d5780f0800000000000000
+      internalID: -1114819557374603290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoRebote_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 100
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cf8a271749c1f870800000000000000
+      internalID: 8714968061107146693
       vertices: []
       indices: 
       edges: []
@@ -125,7 +214,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +224,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MejoraFase1_0: -681255620359901667
+      LogoRebote_0: 8863347008671629619
+      LogoRebote_1: -1114819557374603290
+      LogoRebote_2: 8714968061107146693
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
