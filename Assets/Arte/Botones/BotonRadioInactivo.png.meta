@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8c377198c2835cb498e951cd2274bed5
+guid: 48b52509218ba064ea4021f4655c53d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8834879831451349387
-    second: MejoraFase3_0
+      213: 1430264708010668406
+    second: BotonRadioInactivo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,16 +96,55 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MejoraFase3_0
+      name: BotonRadioInactivo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 262
+        width: 261
         height: 287
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b81bbe2c56ccb9a70800000000000000
-      internalID: 8834879831451349387
+      spriteID: 671f0cf8c2259d310800000000000000
+      internalID: 1430264708010668406
       vertices: []
       indices: 
       edges: []
@@ -135,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MejoraFase3_0: 8834879831451349387
+      BotonRadioInactivo_0: 1430264708010668406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

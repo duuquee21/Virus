@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Localization.Settings; // <--- IMPORTANTE: Necesario para traducir por código
+using UnityEngine.Localization.Settings;
 
 public class EndDayResultsPanel : MonoBehaviour
 {
@@ -11,52 +11,26 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("UI")]
     public GameObject panel;
 
-    [Header("Evoluciones")]
+    [Header("Cálculos de Evolución (Lista)")]
     public TextMeshProUGUI zonaEvolutionText;
     public TextMeshProUGUI choqueEvolutionText;
     public TextMeshProUGUI carambolaEvolutionText;
+
+    [Header("Monedas por Habilidad (Totales)")]
+    public TextMeshProUGUI zonaMonedasText;
+    public TextMeshProUGUI choqueMonedasText;
+    public TextMeshProUGUI carambolaMonedasText;
+
+    [Header("Resumen General")]
+    public TextMeshProUGUI monedasPartidaText;
+    public TextMeshProUGUI monedasTotalesText;
 
     [Header("Button Config")]
     public Button continueButton;
     public TextMeshProUGUI buttonText;
 
-    [Header("Monedas")]
-    public TextMeshProUGUI monedasPartidaText;
-    public TextMeshProUGUI monedasTotalesText;
-
-
-    [Header("Timing")]
-    public float letterSpeed = 0.03f;
-    public float stepDelay = 0.5f;
-
-    private bool isAnimating = false;
-    private bool skipRequested = false;
-
-    private string fullZonaEvolution;
-    private string fullChoqueEvolution;
-    private string fullCarambolaEvolution;
-
-    private string fullMonedasPartida;
-    private string fullMonedasTotales;
-
-
-    // AHORA ESTO SON LAS CLAVES DE LA TABLA, NO LOS TEXTOS DIRECTOS
-    private readonly string[] clavesFases =
-    {
-        "fase_hex",
-        "fase_pent",
-        "fase_cuad",
-        "fase_tri",
-        "fase_circ",
-        "fase_bola"
-    };
-
-    private readonly int[] valorZonaPorFase =
-    {
-        1, 2, 3, 4, 5
-    };
-
-    // Nombre de tu tabla en Unity (asegúrate de que coincida con el nombre del archivo de la tabla)
+    private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
+    private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
     private string nombreTablaLocalization = "MisTextos";
 
     void Awake()
@@ -65,180 +39,66 @@ public class EndDayResultsPanel : MonoBehaviour
         panel.SetActive(false);
     }
 
-    // --- FUNCIÓN HELPER PARA TRADUCIR ---
-    string GetTexto(string clave)
-    {
-        // Esto busca en la tabla el texto según el idioma actual
-        return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
-    }
+    string GetTexto(string clave) => LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
 
     public void ShowResults(int monedasGanadas, int monedasTotales)
     {
+        // Pausar el juego
         Time.timeScale = 0f;
-
-        int totalZonaGeneral = 0;
-        int totalParedGeneral = 0;
-        int totalCarambolaGeneral = 0;
-
-        // Recuperamos la palabra "monedas" traducida para usarla luego
         string txtMonedas = GetTexto("monedas");
 
-        // ---- MONEDAS ----
-        fullMonedasPartida = $"<b>{GetTexto("titulo_monedas_ganadas")}:</b> {monedasGanadas}";
-        fullMonedasTotales = $"<b>{GetTexto("titulo_monedas_totales")}:</b> {monedasTotales}";
-
-        // ---------------- ZONA ----------------
-        fullZonaEvolution = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
-
+        // 1. PROCESAR ZONA
+        int totalZ = 0;
+        string evZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
-            int cantidad = PersonaInfeccion.evolucionesEntreFases[i];
-            int valorBase = valorZonaPorFase[i];
-            int total = cantidad * valorBase;
-            totalZonaGeneral += total;
-
-            // Traducimos los nombres de las fases al vuelo
-            string nombreFaseActual = GetTexto(clavesFases[i]);
-            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
-
-            fullZonaEvolution +=
-                $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
+            int cant = PersonaInfeccion.evolucionesEntreFases[i];
+            int val = valorZonaPorFase[i];
+            totalZ += (cant * val);
+            evZona += $"{GetTexto(clavesFases[i])} → {GetTexto(clavesFases[i + 1])}: {cant} ({val}×{cant}={cant * val})\n";
         }
-        fullZonaEvolution += $"\n<b>{GetTexto("txt_total_zona")}: {totalZonaGeneral} {txtMonedas}</b>\n";
+        zonaEvolutionText.text = evZona;
+        zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")}: {totalZ} {txtMonedas}</b>";
 
-        // ---------------- PARED ----------------
-        fullChoqueEvolution = $"\n<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
-
+        // 2. PROCESAR PARED/CHOQUE
+        int totalP = 0;
+        string evChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
         for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
-            int cantidad = PersonaInfeccion.evolucionesPorChoque[i];
-            int valorBase = valorZonaPorFase[i];
-            int total = cantidad * valorBase;
-            totalParedGeneral += total;
-
-            string nombreFaseActual = GetTexto(clavesFases[i]);
-            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
-
-            fullChoqueEvolution +=
-                $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
+            int cant = PersonaInfeccion.evolucionesPorChoque[i];
+            int val = valorZonaPorFase[i];
+            totalP += (cant * val);
+            evChoque += $"{GetTexto(clavesFases[i])} → {GetTexto(clavesFases[i + 1])}: {cant} ({val}×{cant}={cant * val})\n";
         }
-        fullChoqueEvolution += $"\n<b>{GetTexto("txt_total_pared")}: {totalParedGeneral} {txtMonedas}</b>\n";
+        choqueEvolutionText.text = evChoque;
+        choqueMonedasText.text = $"<b>{GetTexto("")}: {totalP} {txtMonedas}</b>";
 
-        // ---------------- CARAMBOLA ----------------
-        fullCarambolaEvolution = $"\n<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
-
+        // 3. PROCESAR CARAMBOLA
+        int totalC = 0;
+        string evCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
         for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
-            int cantidad = PersonaInfeccion.evolucionesCarambola[i];
-            int valorBase = valorZonaPorFase[i];
-            int total = cantidad * valorBase;
-            totalCarambolaGeneral += total;
-
-            string nombreFaseActual = GetTexto(clavesFases[i]);
-            string nombreFaseSiguiente = GetTexto(clavesFases[i + 1]);
-
-            fullCarambolaEvolution +=
-                 $"{nombreFaseActual} → {nombreFaseSiguiente}: {cantidad}  ({valorBase} × {cantidad} = {total})\n";
+            int cant = PersonaInfeccion.evolucionesCarambola[i];
+            int val = valorZonaPorFase[i];
+            totalC += (cant * val);
+            evCarambola += $"{GetTexto(clavesFases[i])} → {GetTexto(clavesFases[i + 1])}: {cant} ({val}×{cant}={cant * val})\n";
         }
-        fullCarambolaEvolution += $"\n<b>{GetTexto("txt_total_carambola")}: {totalCarambolaGeneral} {txtMonedas}</b>\n";
+        carambolaEvolutionText.text = evCarambola;
+        carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")}: {totalC} {txtMonedas}</b>";
 
+        // 4. TOTALES GENERALES
+        monedasPartidaText.text = $"<b>{GetTexto("titulo_monedas_ganadas")}:</b> {monedasGanadas}";
+        monedasTotalesText.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b> {monedasTotales}";
 
+        // Mostrar Panel y configurar botón
         panel.SetActive(true);
-
-        skipRequested = false;
-        continueButton.gameObject.SetActive(true);
-
-        // Botón Omitir traducido
-        if (buttonText != null)
-            buttonText.text = "Omitir (F2)";
-
-        StartCoroutine(AnimateResults());
-    }
-
-    IEnumerator AnimateResults()
-    {
-        isAnimating = true;
-        ClearTexts();
-
-        // Mostramos cada bloque de golpe con un suspiro de retraso entre ellos
-        zonaEvolutionText.text = fullZonaEvolution;
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        choqueEvolutionText.text = fullChoqueEvolution;
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        carambolaEvolutionText.text = fullCarambolaEvolution;
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        monedasPartidaText.text = fullMonedasPartida;
-        if (!skipRequested) yield return new WaitForSecondsRealtime(stepDelay);
-
-        monedasTotalesText.text = fullMonedasTotales;
-
-        FinishAnimation();
-    }
-
-
-    IEnumerator TypeText(TextMeshProUGUI textComponent, string fullText)
-    {
-        textComponent.text = "";
-
-        if (skipRequested)
-        {
-            textComponent.text = fullText;
-            yield break;
-        }
-
-        foreach (char c in fullText)
-        {
-            textComponent.text += c;
-
-            if (skipRequested)
-            {
-                textComponent.text = fullText;
-                yield break;
-            }
-
-            yield return new WaitForSecondsRealtime(letterSpeed);
-        }
-    }
-
-    void FinishAnimation()
-    {
-        isAnimating = false;
-
-        // Botón Continuar traducido
-        if (buttonText != null)
-            buttonText.text = "Continuar (F2)";
-
-        zonaEvolutionText.text = fullZonaEvolution;
-        choqueEvolutionText.text = fullChoqueEvolution;
-        carambolaEvolutionText.text = fullCarambolaEvolution;
-        monedasPartidaText.text = fullMonedasPartida;
-        monedasTotalesText.text = fullMonedasTotales;
-
+        if (buttonText != null) buttonText.text = "Continuar (F2)";
     }
 
     public void OnClickContinue()
     {
-        if (isAnimating)
-        {
-            skipRequested = true;
-        }
-        else
-        {
-            panel.SetActive(false);
-            Time.timeScale = 1f;
-            LevelManager.instance.OnEndDayResultsFinished(0, 0);
-        }
-    }
-
-    void ClearTexts()
-    {
-        zonaEvolutionText.text = "";
-        choqueEvolutionText.text = "";
-        carambolaEvolutionText.text = "";
-        monedasPartidaText.text = "";
-        monedasTotalesText.text = "";
+        panel.SetActive(false);
+        Time.timeScale = 1f;
+        LevelManager.instance.OnEndDayResultsFinished(0, 0);
     }
 }
