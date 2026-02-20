@@ -71,7 +71,7 @@ public class EndDayResultsPanel : MonoBehaviour
             evChoque += $"{GetTexto(clavesFases[i])} → {GetTexto(clavesFases[i + 1])}: {cant} ({val}×{cant}={cant * val})\n";
         }
         choqueEvolutionText.text = evChoque;
-        choqueMonedasText.text = $"<b>{GetTexto("")}: {totalP} {txtMonedas}</b>";
+        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")}: {totalP} {txtMonedas}</b>";
 
         // 3. PROCESAR CARAMBOLA
         int totalC = 0;
