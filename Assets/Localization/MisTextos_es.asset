@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477571
-    m_Localized: Monedas totales
+    m_Localized: ' Monedas Totales'
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477572
@@ -79,15 +79,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477575
-    m_Localized: TOTAL ZONA
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477576
-    m_Localized: TOTAL PARED
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477577
-    m_Localized: TOTAL CARAMBOLA
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477578

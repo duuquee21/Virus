@@ -65,6 +65,8 @@ public class LevelManager : MonoBehaviour
     [Header("Transición")]
     public Collections.Shaders.ShapeTransition.ShapeTransition transitionScript;
 
+    // Añade esto en EndDayResultsPanel
+
     void Awake()
     {
 
@@ -458,6 +460,27 @@ public class LevelManager : MonoBehaviour
     }
     public void SoftRestartRun()
     {
+        // 1. Si el panel está abierto y aún hay monedas por contar...
+        if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
+        {
+            // Solo inicia la animación, no hace nada más.
+            EndDayResultsPanel.instance.StartCoinTransfer(() => {
+                Debug.Log("Animación terminada. Pulsa otra vez para reiniciar.");
+            });
+            return; // Salimos aquí para que el jugador tenga que pulsar de nuevo
+        }
+
+        // 2. Si el panel está abierto pero ya NO hay monedas (conteo terminado)...
+        if (EndDayResultsPanel.instance.panel.activeSelf)
+        {
+            EndDayResultsPanel.instance.panel.SetActive(false);
+        }
+
+        // Ejecuta la lógica final
+        EjecutarSoftRestartLogica();
+    }
+    private void EjecutarSoftRestartLogica()
+    {
         Debug.Log("Soft Restart ejecutado");
 
         // 1️⃣ Monedas a 0
@@ -485,7 +508,7 @@ public class LevelManager : MonoBehaviour
         if (gameUI) gameUI.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
-     
+
 
         // 7️⃣ Limpiar personas
         PopulationManager.instance.ClearAllPersonas();
@@ -495,7 +518,6 @@ public class LevelManager : MonoBehaviour
         // 8️⃣ Reiniciar en el siguiente frame
         StartCoroutine(RestartNextFrame());
     }
-
 
     IEnumerator RestartNextFrame()
     {
@@ -594,11 +616,31 @@ public class LevelManager : MonoBehaviour
 
     public void OpenSkillTreePanel()
     {
+        // 1. Si el panel está abierto y hay monedas...
+        if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
+        {
+            EndDayResultsPanel.instance.StartCoinTransfer(() => {
+                Debug.Log("Animación terminada. Pulsa otra vez para ir al Skill Tree.");
+            });
+            return; // Obliga a una segunda pulsación
+        }
+
+        // 2. Si ya se contaron las monedas...
+        if (EndDayResultsPanel.instance.panel.activeSelf)
+        {
+            EndDayResultsPanel.instance.panel.SetActive(false);
+        }
+
+        EjecutarAbrirSkillTree();
+    }
+
+    private void EjecutarAbrirSkillTree()
+    {
         Debug.Log("BOTON PULSADO - Abriendo Skill Tree");
         // Cerrar todos los paneles primero
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(false);
-     
+
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (shinyPanel) zonePanel.SetActive(false);
@@ -616,6 +658,8 @@ public class LevelManager : MonoBehaviour
 
 
     }
+
+
 
     public void RebuildSkillTree()
     {

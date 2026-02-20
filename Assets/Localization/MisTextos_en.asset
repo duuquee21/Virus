@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477571
-    m_Localized: Total coins
+    m_Localized: ' Total Coins'
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477572
@@ -79,15 +79,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477575
-    m_Localized: ZONE TOTAL
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477576
-    m_Localized: WALL TOTAL
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477577
-    m_Localized: BOUNCE TOTAL
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 1387644362477578
