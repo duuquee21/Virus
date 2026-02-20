@@ -42,7 +42,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Nivel3, // + Cuadrados
         ParedInfectiva_Nivel4, // + Triángulos
         ParedInfectiva_Nivel5,
-        DestroyCoralOnInfectedImpact
+        DestroyCoralOnInfectedImpact,
+        AddTime2Seconds,
     }
     [Header("Save ID")]
     public string saveID;
@@ -83,6 +84,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // Para habilidades repetibles
     private int repeatLevel = 0;
     public int maxRepeatLevel = 5; // puedes ajustarlo
+    [Header("Límite especial tiempo extra")]
+    public int maxTimeRepeatLevel = 10;
 
     public bool IsUnlocked => unlocked;
 
@@ -113,20 +116,21 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CheckIfShouldShow()
     {
-        // HABILIDAD NORMAL YA DESBLOQUEADA
-        if (!IsDamageSkill() && unlocked)
-        {
-            SetAppearance(true, 1f, true);
+        if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
             SetState(false, Color.gray, false);
-            return;
-        }
+        else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
+            SetState(false, Color.gray, false);
+        else
+            SetState(true, Color.white, false);
 
         // HABILIDAD DE DAÑO REPETIBLE
-        if (IsDamageSkill() && repeatLevel > 0)
+        if ((IsDamageSkill() || IsTimeSkill()) && repeatLevel > 0)
         {
             SetAppearance(true, 1f, true);
 
-            if (repeatLevel >= maxRepeatLevel)
+            if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
+                SetState(false, Color.gray, false);
+            else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
                 SetState(false, Color.gray, false);
             else
                 SetState(true, Color.white, false);
@@ -210,6 +214,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
             return;
 
+        if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
+            return;
         if (LevelManager.instance.contagionCoins < CoinCost)
         {
             if (AudioManager.instance != null)
@@ -225,7 +231,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         LevelManager.instance.contagionCoins -= CoinCost;
 
-        if (IsDamageSkill())
+        if (IsDamageSkill() || IsTimeSkill())
             repeatLevel++;
         else
             unlocked = true;
@@ -423,7 +429,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.destroyCoralOnInfectedImpact = true;
                 Guardado.instance.SaveData();
                 break;
-
+            case SkillEffectType.AddTime2Seconds:
+                Debug.Log("ENTRA EN LA HABILIDAD TIEMPO");
+                LevelManager.instance.AddBaseTime(2f);
+                break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -437,6 +446,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.DmgTriangulo ||
                effectType == SkillEffectType.DmgCirculo;
     }
+    bool IsTimeSkill()
+    {
+        return effectType == SkillEffectType.AddTime2Seconds;
+    }
+
 
     // --------------------------------------------------------------
     // CAMBIO IMPORTANTE: AQUÍ CONECTAMOS CON LA TRADUCCIÓN
