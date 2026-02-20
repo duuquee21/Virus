@@ -216,7 +216,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
             return;
-        if (LevelManager.instance.contagionCoins < CoinCost)
+        if (LevelManager.instance.ContagionCoins < CoinCost)
         {
             if (AudioManager.instance != null)
                 AudioManager.instance.PlayError();
@@ -229,7 +229,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (audioSource != null && unlockSound != null)
             audioSource.PlayOneShot(unlockSound);
 
-        LevelManager.instance.contagionCoins -= CoinCost;
+        LevelManager.instance.ContagionCoins -= CoinCost;
 
         if (IsDamageSkill() || IsTimeSkill())
             repeatLevel++;
@@ -431,7 +431,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
             case SkillEffectType.AddTime2Seconds:
                 Debug.Log("ENTRA EN LA HABILIDAD TIEMPO");
-                LevelManager.instance.AddBaseTime(2f);
+                Guardado.instance.AddExtraBaseTime(2f);
                 break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");

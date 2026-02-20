@@ -42,6 +42,8 @@ public class Guardado : MonoBehaviour
     public int dañoExtraHabilidad = 0;
 
 
+    [Header("Mejoras Permanentes")]
+    public float extraBaseTime = 0f;
 
     [Header("Multiplicadores de Virus")]
     public float radiusMultiplier = 1.0f;
@@ -92,6 +94,7 @@ public class Guardado : MonoBehaviour
         dañoExtraPentagono = 0;
         dañoExtraHexagono = 0;
         dañoExtraHabilidad = 0;
+        extraBaseTime = 0f;
 
         ClearRunState();
         SaveData();
@@ -123,6 +126,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("DmgPentagono", dañoExtraPentagono);
         PlayerPrefs.SetInt("DmgHexagono", dañoExtraHexagono);
         PlayerPrefs.SetInt("DmgHabilidadGeneral", dañoExtraHabilidad);
+        PlayerPrefs.SetFloat("ExtraBaseTime", extraBaseTime);
         PlayerPrefs.Save();
     }
 
@@ -152,6 +156,7 @@ public class Guardado : MonoBehaviour
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
+        extraBaseTime = PlayerPrefs.GetFloat("ExtraBaseTime", 0f);
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -190,7 +195,11 @@ public class Guardado : MonoBehaviour
     public void SetInfectionSpeedBonus(float amount) { infectSpeedMultiplier = amount; SaveData(); }
 
     // --- SOLUCIÓN A LOS ERRORES DE REFERENCIA ---
-
+    public void AddExtraBaseTime(float seconds)
+    {
+        extraBaseTime += seconds;
+        SaveData();
+    }
     // Este método aplica físicamente la mejora gratuita al empezar una partida
     public void ApplyPermanentInitialUpgrade()
     {

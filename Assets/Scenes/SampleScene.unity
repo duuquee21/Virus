@@ -1111,6 +1111,7 @@ MonoBehaviour:
   "da\xF1oExtraPentagono": 0
   "da\xF1oExtraHexagono": 0
   "da\xF1oExtraHabilidad": 0
+  extraBaseTime: 0
   radiusMultiplier: 1
   speedMultiplier: 1
   infectSpeedMultiplier: 1
@@ -16226,9 +16227,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1989049612}
-        m_TargetAssemblyTypeName: MainMenuPanel, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1157957837}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: Button_Continue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -50872,6 +50873,11 @@ RectTransform:
   - {fileID: 2126669836}
   - {fileID: 185290858}
   - {fileID: 1742410684}
+  - {fileID: 1843092422}
+  - {fileID: 1282445543}
+  - {fileID: 564078319}
+  - {fileID: 1070624214}
+  - {fileID: 1846141030}
   - {fileID: 1865556697}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57616,7 +57622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveID: 
+  saveID: LKLKL
   infoPanel: {fileID: 0}
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}

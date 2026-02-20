@@ -36,6 +36,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
+
     private string nombreTablaLocalization = "MisTextos";
 
 
@@ -64,18 +65,50 @@ public class EndDayResultsPanel : MonoBehaviour
 
     }
 
-    string GetTexto(string clave) => LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+    string GetTexto(string clave)
+    {
+        return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+    }
 
+    // ======================================================
+    // MÉTODO PRINCIPAL (SE LLAMA AL TERMINAR EL DÍA)
+    // ======================================================
     public void ShowResults(int monedasGanadas, int monedasTotales)
     {
-        // Pausar el juego
         Time.timeScale = 0f;
+        panel.SetActive(true);
+
+        UpdateAllTexts(monedasGanadas, monedasTotales);
+
+        if (buttonText != null)
+            buttonText.text = "Continuar (F2)";
+    }
+
+    // ======================================================
+    // MÉTODO PARA ACTUALIZAR EN VIVO
+    // ======================================================
+    public void RefreshResults()
+    {
+        if (!panel.activeSelf) return;
+
+        int monedasTotales = LevelManager.instance.ContagionCoins;
+        int monedasGanadas = LevelManager.instance.monedasGanadasSesion;
+
+        UpdateAllTexts(monedasGanadas, monedasTotales);
+    }
+
+    // ======================================================
+    // LÓGICA CENTRALIZADA DE ACTUALIZACIÓN
+    // ======================================================
+    private void UpdateAllTexts(int monedasGanadas, int monedasTotales)
+    {
         string txtMonedas = GetTexto("monedas");
 
        
         // 1. PROCESAR ZONA
         int totalZ = 0;
         string evZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
+
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesEntreFases[i];
@@ -83,12 +116,14 @@ public class EndDayResultsPanel : MonoBehaviour
             totalZ += (cant * val);
             evZona += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
         }
+
         zonaEvolutionText.text = evZona;
         zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
 
-        // 2. PROCESAR PARED/CHOQUE
+        // ===== CHOQUE =====
         int totalP = 0;
         string evChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
+
         for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesPorChoque[i];
@@ -96,12 +131,14 @@ public class EndDayResultsPanel : MonoBehaviour
             totalP += (cant * val);
             evChoque += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
         }
+
         choqueEvolutionText.text = evChoque;
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
 
-        // 3. PROCESAR CARAMBOLA
+        // ===== CARAMBOLA =====
         int totalC = 0;
         string evCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
+
         for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesCarambola[i];
@@ -109,6 +146,7 @@ public class EndDayResultsPanel : MonoBehaviour
             totalC += (cant * val);
             evCarambola += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
         }
+
         carambolaEvolutionText.text = evCarambola;
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
 
@@ -131,6 +169,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         panel.SetActive(false);
         Time.timeScale = 1f;
+
         LevelManager.instance.OnEndDayResultsFinished(0, 0);
     }
 

@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
     public GameObject prefabTextoPuntos;
     public RectTransform marcadorDestinoUI;
     public Canvas canvasPrincipal;
-    public int contagionCoins;
+    [SerializeField] public int contagionCoins;
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
@@ -107,9 +107,25 @@ public class LevelManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        contagionCoins += amount;        // Total acumulado
+        ContagionCoins += amount;        // Total acumulado
         monedasGanadasSesion += amount;  // Solo esta partida
         UpdateUI();
+    }
+    public int ContagionCoins
+    {
+        get => contagionCoins;
+        set
+        {
+            contagionCoins = value;
+            UpdateCoinsUI();
+        }
+    }
+
+    private void UpdateCoinsUI()
+    {
+        foreach (var t in contagionCoinsTexts)
+            if (t != null)
+                t.text = "Monedas: " + contagionCoins;
     }
 
 
@@ -185,7 +201,7 @@ public class LevelManager : MonoBehaviour
 
     void LoadRunAndStart()
     {
-        contagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
+        ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
 
         Guardado.instance.LoadEvolutionData();
@@ -285,7 +301,7 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset) ForceHardReset();
         if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
 
-        contagionCoins = Guardado.instance != null ? Guardado.instance.startingCoins : 0;
+        ContagionCoins = Guardado.instance != null ? Guardado.instance.startingCoins : 0;
         UpdateUI();
     }
 
@@ -324,8 +340,13 @@ public class LevelManager : MonoBehaviour
         {
             PersonaInfeccion.evolucionesPorChoque[i] = 0;
         }
+        float tiempoTotal = gameDuration;
 
-        currentTimer = gameDuration;
+        if (Guardado.instance != null)
+            tiempoTotal += Guardado.instance.extraBaseTime;
+
+        currentTimer = tiempoTotal;
+
 
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
         if (pm != null) pm.ConfigureRound(0);
@@ -774,20 +795,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void AddExtraTime(float seconds)
-    {
-        if (!isGameActive) return;
 
-        currentTimer += seconds;
-
-        // Opcional: evitar que supere un límite absurdo
-        // currentTimer = Mathf.Min(currentTimer, gameDuration + 60f);
-
-        UpdateUI();
-    }
-    public void AddBaseTime(float seconds)
-    {
-        gameDuration += seconds;
-    }
 
 }
