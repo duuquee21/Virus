@@ -109,7 +109,7 @@ public class EndDayResultsPanel : MonoBehaviour
         }
 
         choqueEvolutionText.text = evChoque;
-        choqueMonedasText.text = $"<b>{GetTexto("txt_total_choque")}: {totalP} {txtMonedas}</b>";
+        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")}: {totalP} {txtMonedas}</b>";
 
         // ===== CARAMBOLA =====
         int totalC = 0;
