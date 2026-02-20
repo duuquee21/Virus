@@ -730,5 +730,20 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void AddExtraTime(float seconds)
+    {
+        if (!isGameActive) return;
+
+        currentTimer += seconds;
+
+        // Opcional: evitar que supere un límite absurdo
+        // currentTimer = Mathf.Min(currentTimer, gameDuration + 60f);
+
+        UpdateUI();
+    }
+    public void AddBaseTime(float seconds)
+    {
+        gameDuration += seconds;
+    }
 
 }
