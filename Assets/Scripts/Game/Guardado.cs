@@ -53,7 +53,7 @@ public class Guardado : MonoBehaviour
     [Header("Habilidad: bonus tiempo al subir fase por zona")]
     public float addTimeOnPhaseChance = 0f; // 0..1 (0.10 = 10%)
     public float doubleUpgradeChance = 0f; // 0..1
-
+    public float randomSpawnPhaseChance = 0f; // 0..1 (0.05 = 5%)
 
     void Awake()
     {
@@ -102,6 +102,7 @@ public class Guardado : MonoBehaviour
         extraBaseTime = 0f;
         addTimeOnPhaseChance = 0f;
         doubleUpgradeChance = 0f;
+        randomSpawnPhaseChance = 0f;
         ClearRunState();
         SaveData();
     }
@@ -135,6 +136,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("ExtraBaseTime", extraBaseTime);
         PlayerPrefs.SetFloat("AddTimeOnPhaseChance", addTimeOnPhaseChance);
         PlayerPrefs.SetFloat("DoubleUpgradeChance", doubleUpgradeChance);
+        PlayerPrefs.SetFloat("RandomSpawnPhaseChance", randomSpawnPhaseChance);
 
         PlayerPrefs.Save();
     }
@@ -168,6 +170,7 @@ public class Guardado : MonoBehaviour
         extraBaseTime = PlayerPrefs.GetFloat("ExtraBaseTime", 0f);
         addTimeOnPhaseChance = PlayerPrefs.GetFloat("AddTimeOnPhaseChance", 0f);
         doubleUpgradeChance = PlayerPrefs.GetFloat("DoubleUpgradeChance", 0f);
+        randomSpawnPhaseChance = PlayerPrefs.GetFloat("RandomSpawnPhaseChance", 0f);
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -208,7 +211,11 @@ public class Guardado : MonoBehaviour
     public void ActivarCarambolaPro() { carambolaProActiva = true; SaveData(); }
     public void ActivarCarambolaSuprema() { carambolaSupremaActiva = true; SaveData(); }
     public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
-
+    public void SetRandomSpawnPhaseChance(float chance)
+    {
+        randomSpawnPhaseChance = Mathf.Clamp01(chance);
+        SaveData();
+    }
     // --- REPARACIÓN DE ERRORES ESPECÍFICOS ---
     public void SetNivelParedInfectiva(int nivel) { nivelParedInfectiva = nivel; SaveData(); }
     public void SetDuplicateProbability(float amount) { probabilidadDuplicarChoque = amount; SaveData(); }

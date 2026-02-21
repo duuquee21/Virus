@@ -321,7 +321,11 @@ public class PersonaInfeccion : MonoBehaviour
 
         IniciarCambioColor(InfectionColorSequence());
     }
-
+    public int GetMaxFaseIndex()
+    {
+        if (fasesSprites == null || fasesSprites.Length == 0) return 0;
+        return fasesSprites.Length - 1;
+    }
     void ActualizarVisualFase()
     {
         if (faseActual < fasesSprites.Length)

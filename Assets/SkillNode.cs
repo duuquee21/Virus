@@ -54,6 +54,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         DoubleUpgradeChance15,
         DoubleUpgradeChance20,
         DoubleUpgradeChance25,
+        RandomSpawnAnyPhase5,
+        RandomSpawnAnyPhase10,
+        RandomSpawnAnyPhase15,
+        RandomSpawnAnyPhase20,
+        RandomSpawnAnyPhase25,
     }
     [Header("Save ID")]
     public string saveID;
@@ -466,6 +471,21 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.SetDoubleUpgradeChance(0.15f); break;
             case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.SetDoubleUpgradeChance(0.20f); break;
             case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.SetDoubleUpgradeChance(0.25f); break;
+            case SkillEffectType.RandomSpawnAnyPhase5:
+                Guardado.instance.SetRandomSpawnPhaseChance(0.05f);
+                break;
+            case SkillEffectType.RandomSpawnAnyPhase10:
+                Guardado.instance.SetRandomSpawnPhaseChance(0.1f);
+                break;
+            case SkillEffectType.RandomSpawnAnyPhase15:
+                Guardado.instance.SetRandomSpawnPhaseChance(0.15f);
+                break;
+            case SkillEffectType.RandomSpawnAnyPhase20:
+                Guardado.instance.SetRandomSpawnPhaseChance(0.20f);
+                break;
+            case SkillEffectType.RandomSpawnAnyPhase25:
+            Guardado.instance.SetRandomSpawnPhaseChance(0.25f);
+                break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;

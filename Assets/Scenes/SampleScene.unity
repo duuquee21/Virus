@@ -1117,6 +1117,7 @@ MonoBehaviour:
   infectSpeedMultiplier: 1
   addTimeOnPhaseChance: 0
   doubleUpgradeChance: 0
+  randomSpawnPhaseChance: 0
 --- !u!4 &38468938
 Transform:
   m_ObjectHideFlags: 0
@@ -57342,7 +57343,7 @@ MonoBehaviour:
   - {fileID: 520813266}
   - {fileID: 1162469540}
   requiredParentNodes: []
-  effectType: 99
+  effectType: 104
   button: {fileID: 2096388057}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}

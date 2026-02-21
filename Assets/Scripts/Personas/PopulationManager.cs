@@ -108,10 +108,9 @@ public class PopulationManager : MonoBehaviour
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
-        // Spawn fijo inicial
         for (int i = 0; i < initialPopulation; i++)
         {
-            SpawnPerson();
+            SpawnPerson(false); // iniciales: SIEMPRE base del mapa
         }
     }
 
@@ -132,7 +131,7 @@ public class PopulationManager : MonoBehaviour
 
         if (timer >= spawnInterval && currentCount < maxPopulation)
         {
-            SpawnPerson();
+            SpawnPerson(true);
             timer = 0;
         }
 
@@ -156,7 +155,7 @@ public class PopulationManager : MonoBehaviour
             }
         }
     }
-    void SpawnPerson()
+    void SpawnPerson(bool allowRandomPhase)
     {
         if (currentPrefab == null || currentSpawnCollider == null) return;
 
@@ -165,16 +164,30 @@ public class PopulationManager : MonoBehaviour
 
         GameObject newPerson = Instantiate(currentPrefab, spawnPos, Quaternion.identity);
 
-        // 🔥 NUEVO: aplicar fase según mapa
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
         PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
         if (script != null && LevelManager.instance != null)
         {
+            int baseFase = 0;
+
             if (currentMap < LevelManager.instance.faseInicialPorMapa.Length)
+                baseFase = LevelManager.instance.faseInicialPorMapa[currentMap];
+
+            int faseFinal = baseFase;
+
+            // Habilidad: SOLO si allowRandomPhase == true
+            if (allowRandomPhase && Guardado.instance != null)
             {
-                script.EstablecerFaseDirecta(LevelManager.instance.faseInicialPorMapa[currentMap]);
+                float chance = Guardado.instance.randomSpawnPhaseChance; // 0..1 (0.05 = 5%)
+                if (chance > 0f && Random.value < chance)
+                {
+                    int maxFase = script.GetMaxFaseIndex(); // fasesSprites.Length - 1
+                    faseFinal = Random.Range(0, maxFase + 1);
+                }
             }
+
+            script.EstablecerFaseDirecta(faseFinal);
 
             Color colorNivel = LevelManager.instance.GetCurrentLevelColor();
             script.AplicarColor(colorNivel);
@@ -184,7 +197,6 @@ public class PopulationManager : MonoBehaviour
         newPerson.transform.localScale = Vector3.zero;
         StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
     }
-
     Vector3 GetRandomPointInCollider(Collider2D collider)
     {
         Bounds bounds = collider.bounds;
