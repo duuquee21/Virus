@@ -238,6 +238,17 @@ public class PersonaInfeccion : MonoBehaviour
             LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
         }
 
+        // 2.5 HABILIDAD: probabilidad variable de sumar +1s al tiempo al subir fase por zona
+        if (Guardado.instance != null)
+        {
+            float chance = Guardado.instance.addTimeOnPhaseChance; // 0..1 (0.10f, 0.15f, 0.20f, 0.25f)
+
+            if (chance > 0f && Random.value < chance)
+            {
+                if (LevelManager.instance != null)
+                    LevelManager.instance.AddTimeToCurrentTimer(1f);
+            }
+        }
 
         // 3. ESTADÍSTICAS
         if (faseAnterior < evolucionesEntreFases.Length)

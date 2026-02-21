@@ -50,6 +50,9 @@ public class Guardado : MonoBehaviour
     public float speedMultiplier = 1.0f;
     public float infectSpeedMultiplier = 1.0f;
 
+    [Header("Habilidad: bonus tiempo al subir fase por zona")]
+    public float addTimeOnPhaseChance = 0f; // 0..1 (0.10 = 10%)
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -95,7 +98,7 @@ public class Guardado : MonoBehaviour
         dañoExtraHexagono = 0;
         dañoExtraHabilidad = 0;
         extraBaseTime = 0f;
-
+        addTimeOnPhaseChance = 0f;
         ClearRunState();
         SaveData();
     }
@@ -127,6 +130,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("DmgHexagono", dañoExtraHexagono);
         PlayerPrefs.SetInt("DmgHabilidadGeneral", dañoExtraHabilidad);
         PlayerPrefs.SetFloat("ExtraBaseTime", extraBaseTime);
+        PlayerPrefs.SetFloat("AddTimeOnPhaseChance", addTimeOnPhaseChance);
         PlayerPrefs.Save();
     }
 
@@ -157,6 +161,7 @@ public class Guardado : MonoBehaviour
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
         extraBaseTime = PlayerPrefs.GetFloat("ExtraBaseTime", 0f);
+        addTimeOnPhaseChance = PlayerPrefs.GetFloat("AddTimeOnPhaseChance", 0f);
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -172,6 +177,12 @@ public class Guardado : MonoBehaviour
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
     public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
+
+    public void SetAddTimeOnPhaseChance(float chance)
+    {
+        addTimeOnPhaseChance = Mathf.Clamp01(chance);
+        SaveData();
+    }
 
     // Métodos de Daño
     public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
