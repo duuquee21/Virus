@@ -229,9 +229,23 @@ public class PersonaInfeccion : MonoBehaviour
 
         int faseAnterior = faseActual;
         currentInfectionTime = 0f; // Reset inmediato del progreso para evitar re-entrada
-        faseActual++;
 
-        // 2. SISTEMA DE RECOMPENSAS (Unificado aquí)
+        // 1.5 HABILIDAD: probabilidad de subir 2 fases en vez de 1
+        int steps = 1;
+        if (Guardado.instance != null)
+        {
+            float chanceDouble = Guardado.instance.doubleUpgradeChance; // 0..1 (0.05, 0.10, 0.15, 0.20, 0.25)
+            if (chanceDouble > 0f && Random.value < chanceDouble)
+                steps = 2;
+        }
+
+        faseActual += steps;
+
+        // Seguridad: no sobrepasar el final (el final válido es fasesSprites.Length)
+        if (faseActual > fasesSprites.Length)
+            faseActual = fasesSprites.Length;
+
+        // 2. SISTEMA DE RECOMPENSAS (Unificado aquí) - usa faseAnterior (correcto)
         if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
         {
             int monedasADar = valorPorFase[faseAnterior];
@@ -241,9 +255,8 @@ public class PersonaInfeccion : MonoBehaviour
         // 2.5 HABILIDAD: probabilidad variable de sumar +1s al tiempo al subir fase por zona
         if (Guardado.instance != null)
         {
-            float chance = Guardado.instance.addTimeOnPhaseChance; // 0..1 (0.10f, 0.15f, 0.20f, 0.25f)
-
-            if (chance > 0f && Random.value < chance)
+            float chanceTime = Guardado.instance.addTimeOnPhaseChance; // 0..1 (0.10f, 0.15f, 0.20f, 0.25f)
+            if (chanceTime > 0f && Random.value < chanceTime)
             {
                 if (LevelManager.instance != null)
                     LevelManager.instance.AddTimeToCurrentTimer(1f);
