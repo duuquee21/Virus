@@ -25,6 +25,8 @@ public class InfectionFeedback : MonoBehaviour
     public float shakeDuration = 0.2f;
     public float shakeMagnitude = 0.1f;
 
+    public string zonaTag = "Zona";
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -63,11 +65,7 @@ public class InfectionFeedback : MonoBehaviour
             audioSource.PlayOneShot(clip);
         }
 
-        // 3. SHAKE DE CÁMARA
-        if (cameraTransform != null)
-        {
-            StartCoroutine(Shake(2));
-        }
+     
     }
 
     public void PlayPhaseChangeEffect(Vector3 position, Color particleColor)
@@ -144,10 +142,10 @@ public class InfectionFeedback : MonoBehaviour
 
         PlayBasicImpactSoundAgainstWall();
 
-        // 3. SHAKE DE CÁMARA
-        if (cameraTransform != null)
+        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
+        foreach (GameObject zona in zonas)
         {
-            StartCoroutine(Shake(1));
+            StartCoroutine(ShakeObject(zona.transform, 2)); // Cambia el 2 por el multiplicador que quieras
         }
     }
 
@@ -187,25 +185,21 @@ public class InfectionFeedback : MonoBehaviour
     }
 
 
-    private IEnumerator Shake(int ShakeAmountMultiplier)
+    private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
-        Vector3 originalPos = cameraTransform.localPosition;
+        Vector3 originalPos = objTransform.localPosition;
         float elapsed = 0.0f;
 
         while (elapsed < shakeDuration)
         {
-            // Genera un punto aleatorio dentro de una esfera multiplicado por la intensidad
-            float x = Random.Range(-1f, 1f) * shakeMagnitude * ShakeAmountMultiplier;
-            float y = Random.Range(-1f, 1f) * shakeMagnitude * ShakeAmountMultiplier;
+            float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
+            float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
 
-            cameraTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-
+            objTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
             elapsed += Time.deltaTime;
-
-            yield return null; // Espera al siguiente frame
+            yield return null;
         }
-
-        cameraTransform.localPosition = originalPos; // Vuelve a la normalidad
+        objTransform.localPosition = originalPos;
     }
 
     public void PlayUltraEffect(Vector3 position, Color particleColor)
@@ -237,10 +231,10 @@ public class InfectionFeedback : MonoBehaviour
             audioSource.PlayOneShot(clip);
         }
 
-        // 3. SHAKE DE CÁMARA
-        if (cameraTransform != null)
+        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
+        foreach (GameObject zona in zonas)
         {
-            StartCoroutine(Shake(3));
+            StartCoroutine(ShakeObject(zona.transform, 2)); // Cambia el 2 por el multiplicador que quieras
         }
     }
 

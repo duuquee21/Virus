@@ -30,9 +30,6 @@ public class EndDayResultsPanel : MonoBehaviour
     public TextMeshProUGUI monedasTotalesEtiqueta;  // El texto "Total Monedas:"
                                                     // Nota: monedasPartidaText y monedasTotalesText ahora serán SOLO para los números.
 
-    [Header("Button Config")]
-    public Button continueButton;
-    public TextMeshProUGUI buttonText;
 
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
@@ -46,22 +43,25 @@ public class EndDayResultsPanel : MonoBehaviour
     private int monedasTempTotales;
 
     public bool TieneMonedasPendientes => monedasTempPartida > 0;
+    [Header("Feedback de Audio")]
+    public AudioSource audioSource;
+    public AudioClip tickSound;
+    [Range(0f, 1f)] public float soundVolume = 0.5f;
 
-    public Image flashImage; // Una imagen blanca (Sprite: Square o Glow) detrás del texto
+    [Header("Feedback Visual")]
+    public float maxScale = 1.3f;
+    public Color colorNormal = Color.white;
+    public Color colorPremio = Color.yellow; // Color cuando va rápido
 
-    public Color flashColor = Color.white; // Esto aparecerá en el Inspector para que elijas el color
-    private Color colorOriginal; // Variable para recordar cómo era la imagen antes de empezar
-
+    [Header("Feedback de Partículas")]
+    public ParticleSystem coinParticles;
+    public int maxParticlesPerFlash = 20;
     void Awake()
     {
         instance = this;
         panel.SetActive(false);
 
-        if (flashImage != null)
-        {
-            // Guardamos el color exacto que configuraste en el editor (RGB y Alfa)
-            colorOriginal = flashImage.color;
-        }
+    
 
     }
 
@@ -80,8 +80,6 @@ public class EndDayResultsPanel : MonoBehaviour
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
 
-        if (buttonText != null)
-            buttonText.text = "Continuar (F2)";
     }
 
     // ======================================================
@@ -162,7 +160,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         ActualizarTextosMonedas();
         panel.SetActive(true);
-        if (buttonText != null) buttonText.text = "Continuar (F2)";
+      
     }
 
     public void OnClickContinue()
@@ -188,44 +186,73 @@ public class EndDayResultsPanel : MonoBehaviour
     private IEnumerator TransferRoutine(System.Action onComplete)
     {
         isTransferring = true;
+        Vector3 escalaOriginal = monedasTotalesText.transform.localScale;
 
-        while (monedasTempPartida > 0)
+        int totalAMover = monedasTempPartida;
+        int inicialPartida = monedasTempPartida;
+        int inicialTotales = monedasTempTotales;
+
+        float elapsed = 0f;
+        float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
+        float lastSoundTime = 0f;
+        float factorRiqueza = Mathf.Clamp01(totalAMover / 10000f);
+
+        while (elapsed < duration)
         {
-            // ... (Lógica de steps y monedas igual)
-            int step = 1;
-            if (monedasTempPartida > 500) step = 13;
-            else if (monedasTempPartida > 100) step = 5;
-            if (step > monedasTempPartida) step = monedasTempPartida;
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / duration;
+            float curvedT = t * t * t * (t * (6f * t - 15f) + 10f);
 
-            monedasTempPartida -= step;
-            monedasTempTotales += step;
+            int movido = Mathf.RoundToInt(curvedT * totalAMover);
+            movido = Mathf.Min(movido, totalAMover);
+
+            monedasTempPartida = inicialPartida - movido;
+            monedasTempTotales = inicialTotales + movido;
             ActualizarTextosMonedas();
 
-            // --- EFECTO FLASH ---
-            if (flashImage != null)
+            // --- FEEDBACK VISUAL ---
+            float intensity = Mathf.Sin(t * Mathf.PI);
+            float pulse = intensity * (maxScale - 1.0f) * (0.5f + factorRiqueza * 0.5f);
+            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
+            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
+
+            // --- FEEDBACK DE AUDIO Y PARTÍCULAS ---
+            float minInterval = Mathf.Lerp(0.2f, 0.05f, factorRiqueza);
+            float maxInterval = Mathf.Lerp(0.4f, 0.15f, factorRiqueza);
+            float currentTickSpeed = Mathf.Lerp(maxInterval, minInterval, intensity);
+
+            if (elapsed - lastSoundTime > currentTickSpeed)
             {
-                // 1. FLASH: Subimos el alfa al máximo (o al valor de flashColor)
-                // Manteniendo los colores RGB originales
-                flashImage.color = new Color(colorOriginal.r, colorOriginal.g, colorOriginal.b, flashColor.a);
+                if (audioSource != null && tickSound != null)
+                {
+                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (intensity * (0.4f + factorRiqueza * 0.4f));
+                    audioSource.PlayOneShot(tickSound, soundVolume);
+                }
+
+                // LANZAR PARTÍCULAS
+                // Solo lanzamos partículas si hay una cantidad mínima de ganancia (factorRiqueza)
+                if (coinParticles != null && factorRiqueza > 0.1f)
+                {
+                    // Emitimos una cantidad de partículas proporcional a la intensidad y riqueza
+                    int count = Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza);
+                    if (count > 0) coinParticles.Emit(count);
+                }
+
+                lastSoundTime = elapsed;
             }
 
-            float delay = Mathf.Lerp(0.08f, 0.01f, (float)monedasTempPartida / 100f);
-
-            // El pico del destello
-            yield return new WaitForSecondsRealtime(0.02f);
-
-            if (flashImage != null)
-            {
-                // 2. RETORNO: Volvemos EXACTAMENTE al color y alfa que tenía en el inspector
-                flashImage.color = colorOriginal;
-            }
-
-            yield return new WaitForSecondsRealtime(Mathf.Max(0, delay - 0.02f));
+            yield return null;
         }
+
+        // Reset final...
+        monedasTempPartida = 0;
+        monedasTempTotales = inicialTotales + totalAMover;
+        ActualizarTextosMonedas();
+        monedasTotalesText.transform.localScale = escalaOriginal;
+        monedasTotalesText.color = colorNormal;
 
         isTransferring = false;
         onComplete?.Invoke();
     }
-
 
 }

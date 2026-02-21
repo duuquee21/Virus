@@ -10,6 +10,7 @@ TagManager:
   - Pared
   - Coral
   - SpawnArea
+  - Zona
   layers:
   - Default
   - TransparentFX
