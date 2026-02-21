@@ -44,6 +44,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Nivel5,
         DestroyCoralOnInfectedImpact,
         AddTime2Seconds,
+        AddTimeOnPhaseChance5,
+        AddTimeOnPhaseChance10,
+        AddTimeOnPhaseChance15,
+        AddTimeOnPhaseChance20,
+        AddTimeOnPhaseChance25,
     }
     [Header("Save ID")]
     public string saveID;
@@ -432,6 +437,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.AddTime2Seconds:
                 Debug.Log("ENTRA EN LA HABILIDAD TIEMPO");
                 Guardado.instance.AddExtraBaseTime(2f);
+                break;
+            case SkillEffectType.AddTimeOnPhaseChance5:
+            Guardado.instance.SetAddTimeOnPhaseChance(0.05f);
+                break;
+            case SkillEffectType.AddTimeOnPhaseChance10:
+                Guardado.instance.SetAddTimeOnPhaseChance(0.10f);
+                break;
+
+            case SkillEffectType.AddTimeOnPhaseChance15:
+                Guardado.instance.SetAddTimeOnPhaseChance(0.15f);
+                break;
+
+            case SkillEffectType.AddTimeOnPhaseChance20:
+                Guardado.instance.SetAddTimeOnPhaseChance(0.20f);
+                break;
+
+            case SkillEffectType.AddTimeOnPhaseChance25:
+                Guardado.instance.SetAddTimeOnPhaseChance(0.25f);
                 break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");

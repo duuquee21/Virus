@@ -194,6 +194,14 @@ public class LevelManager : MonoBehaviour
         NewGameFromMainMenu();
     }
 
+    public void AddTimeToCurrentTimer(float seconds)
+    {
+        if (!isGameActive) return;
+
+        currentTimer += seconds;
+        UpdateUI(); // para que el texto del timer refleje el cambio si lo muestras
+    }
+
     public void Button_Continue()
     {
         LoadRunAndStart();
