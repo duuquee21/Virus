@@ -35,6 +35,9 @@ public class PlanetCrontrollator : MonoBehaviour
         Carambola
     }
 
+ [Header("Efectos de Daño")]
+public GameObject damageTextPrefab;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -65,6 +68,7 @@ public class PlanetCrontrollator : MonoBehaviour
             TakeDamage(dañoCalculado);
             RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
 
+            TakeDamage(dañoCalculado, posicion); // <--- Pasar posición aquí
             Destroy(obj);
             return;
         }
@@ -78,6 +82,7 @@ public class PlanetCrontrollator : MonoBehaviour
             {
                 TakeDamage(dañoCalculado);
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
+                TakeDamage(dañoCalculado, posicion); // <--- Y aquí
 
                 if (Guardado.instance != null)
                 {
@@ -110,6 +115,8 @@ public class PlanetCrontrollator : MonoBehaviour
                 PersonaInfeccion.dañoTotalCarambola += daño;
                 PersonaInfeccion.dañoCarambolaPorFase[idx] += daño;
                 break;
+            // En Trigger no hay "puntos de contacto" reales, usamos la posición del objeto
+            ProcesarImpacto(collision.gameObject, collision.transform.position);
         }
 
         if (EndDayResultsPanel.instance != null)
@@ -159,6 +166,7 @@ public class PlanetCrontrollator : MonoBehaviour
     }
 
     public void TakeDamage(float amount)
+    public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
 
@@ -168,7 +176,22 @@ public class PlanetCrontrollator : MonoBehaviour
 
         Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
 
+
+        // --- INSTANCIAR EL NÚMERO ---
+        if (damageTextPrefab != null)
+        {
+            GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity);
+            textObj.GetComponent<FloatingText>().SetText("-" + amount.ToString("F0")); // "F0" quita decimales
+        }
+        // ----------------------------
+
         if (currentHealth <= 0) Die();
+    }
+
+    // Sobrecarga por si quieres llamar a TakeDamage sin posición (por seguridad)
+    public void TakeDamage(float amount)
+    {
+        TakeDamage(amount, transform.position);
     }
 
     void ActualizarUI()
@@ -212,6 +235,8 @@ public class PlanetCrontrollator : MonoBehaviour
             StartCoroutine(VibrarYPasarNivel());
         }
     }
+
+
 
     IEnumerator VibrarYPasarNivel()
     {

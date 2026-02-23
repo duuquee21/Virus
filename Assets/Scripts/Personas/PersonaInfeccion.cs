@@ -78,6 +78,9 @@ public class PersonaInfeccion : MonoBehaviour
 
     public ParticleSystem particulasDeFuego;
 
+
+    public GameObject floatingTextPrefab;
+
     void Start()
     {
         movementScript = GetComponent<Movement>();
@@ -274,6 +277,7 @@ public class PersonaInfeccion : MonoBehaviour
         {
             int monedasADar = valorPorFase[faseAnterior];
             LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+            SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
         }
 
         // 2.5 HABILIDAD: probabilidad variable de sumar +1s al tiempo al subir fase por zona
@@ -341,6 +345,8 @@ public class PersonaInfeccion : MonoBehaviour
             // Aplicamos la misma fuerza que usas en el cambio de fase
             movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
         }
+
+        transform.localScale =transform.localScale * 1.125f; // Aumentamos el tamaño para destacar la infección
         // --------------------------------------------
 
         IniciarCambioColor(InfectionColorSequence());
@@ -490,6 +496,7 @@ public class PersonaInfeccion : MonoBehaviour
             {
                 int monedasADar = valorPorFase[faseAnterior];
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+                SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
             }
             if (InfectionFeedback.instance != null)
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
@@ -542,7 +549,20 @@ public class PersonaInfeccion : MonoBehaviour
         if (colorCoroutine != null) StopCoroutine(colorCoroutine);
         colorCoroutine = StartCoroutine(nuevaCorrutina);
     }
+    private void SpawnFloatingMoney(int cantidad)
+    {
+        if (floatingTextPrefab != null)
+        {
+            GameObject textObj = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
 
+            // Accedemos al componente de texto para cambiar el color a negro
+            TMPro.TextMeshPro tm = textObj.GetComponent<TMPro.TextMeshPro>();
+            if (tm != null) tm.color = Color.black;
+
+            FloatingText ft = textObj.GetComponent<FloatingText>();
+            if (ft != null) ft.SetText("+" + cantidad.ToString());
+        }
+    }
 
     public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
 }

@@ -2847,9 +2847,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1404261066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 82.115, y: -34.95605}
   m_SizeDelta: {x: 164.23, y: 68.3699}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &114730810
@@ -8013,9 +8013,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1110968532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 82.115, y: -34.95605}
   m_SizeDelta: {x: 164.23, y: 68.3699}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &288936669
@@ -25895,7 +25895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33030,9 +33030,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1956988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 127.82655, y: -39.4802}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1101693751
@@ -34596,7 +34596,7 @@ MonoBehaviour:
   gameDuration: 5
   maxInfectionsPerRound: 10000
   monedasGanadasSesion: 0
-  faseInicialPorMapa: 000000000000000000000000
+  faseInicialPorMapa: 04000000
   coloresPorMapa:
   - {r: 0.6627451, g: 0.31764707, b: 0.3372549, a: 0}
   - {r: 0.627451, g: 0.68235296, b: 0.5176471, a: 0}
@@ -49099,9 +49099,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1635791051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 257.47656, y: -39.4802}
   m_SizeDelta: {x: 3.6469, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1800229050
@@ -50086,9 +50086,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1635791051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 127.82655, y: -39.4802}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1841904652
@@ -51461,7 +51461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1870291122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55769,7 +55769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2041343776
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56861,8 +56861,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: 
-  descriptionKey: 
+  skillNameKey: skill_speed_tit
+  descriptionKey: skill_speed_desc
   CoinCost: 1
   nextNodes: []
   requiredParentNodes: []
@@ -59693,6 +59693,10 @@ PrefabInstance:
       propertyPath: delayMuerte
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: damageTextPrefab
+      value: 
+      objectReference: {fileID: 7455663746959264046, guid: 208b04a8589de64439d4218bb9fe91c9, type: 3}
     - target: {fileID: 1475283828534509066, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -66625,6 +66629,7 @@ MonoBehaviour:
   isInvulnerable: 0
   delayMuerte: 1.5
   fuerzaVibracion: 0.1
+  damageTextPrefab: {fileID: 0}
 --- !u!1001 &6822848866263450557
 PrefabInstance:
   m_ObjectHideFlags: 0
