@@ -195,7 +195,8 @@ public class EndDayResultsPanel : MonoBehaviour
         float elapsed = 0f;
         float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
         float lastSoundTime = 0f;
-        float factorRiqueza = Mathf.Clamp01(totalAMover / 10000f);
+        // Cambia 10000f por algo más bajo, o hazlo dinámico
+        float factorRiqueza = Mathf.Clamp01(totalAMover / 500f);
 
         while (elapsed < duration)
         {
@@ -231,11 +232,13 @@ public class EndDayResultsPanel : MonoBehaviour
 
                 // LANZAR PARTÍCULAS
                 // Solo lanzamos partículas si hay una cantidad mínima de ganancia (factorRiqueza)
-                if (coinParticles != null && factorRiqueza > 0.1f)
+                if (coinParticles != null)
                 {
-                    // Emitimos una cantidad de partículas proporcional a la intensidad y riqueza
-                    int count = Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza);
-                    if (count > 0) coinParticles.Emit(count);
+                    // Aseguramos al menos 1 partícula si hay monedas ganadas
+                    int count = Mathf.Max(1, Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza));
+
+                    // Si quieres que siempre salgan con pocas monedas, quita el "factorRiqueza > 0.1f"
+                    coinParticles.Emit(count);
                 }
 
                 lastSoundTime = elapsed;
