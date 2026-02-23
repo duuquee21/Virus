@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
-    [HideInInspector] public int monedasGanadasSesion;
+     public int monedasGanadasSesion;
 
 
     [Header("Configuración Inicial por Zona")]
