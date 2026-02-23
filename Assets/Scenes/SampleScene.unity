@@ -34323,7 +34323,7 @@ MonoBehaviour:
   gameDuration: 5
   maxInfectionsPerRound: 10000
   monedasGanadasSesion: 0
-  faseInicialPorMapa: 000000000000000000000000
+  faseInicialPorMapa: 04000000
   coloresPorMapa:
   - {r: 0.6627451, g: 0.31764707, b: 0.3372549, a: 0}
   - {r: 0.627451, g: 0.68235296, b: 0.5176471, a: 0}
@@ -59279,6 +59279,10 @@ PrefabInstance:
       propertyPath: delayMuerte
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 480767184721294201, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
+      propertyPath: damageTextPrefab
+      value: 
+      objectReference: {fileID: 7455663746959264046, guid: 208b04a8589de64439d4218bb9fe91c9, type: 3}
     - target: {fileID: 1475283828534509066, guid: 9d204056fdc8cd74d8100464df7b1b45, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -66211,6 +66215,7 @@ MonoBehaviour:
   isInvulnerable: 0
   delayMuerte: 1.5
   fuerzaVibracion: 0.1
+  damageTextPrefab: {fileID: 0}
 --- !u!1001 &6822848866263450557
 PrefabInstance:
   m_ObjectHideFlags: 0
