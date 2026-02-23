@@ -74,7 +74,21 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
     }
+    private int GetCoinBonusForPhase(int fase)
+    {
+        if (Guardado.instance == null) return 0;
 
+        // Tu orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
+        switch (fase)
+        {
+            case 0: return Guardado.instance.coinsExtraHexagono;
+            case 1: return Guardado.instance.coinsExtraPentagono;
+            case 2: return Guardado.instance.coinsExtraCuadrado;
+            case 3: return Guardado.instance.coinsExtraTriangulo;
+            case 4: return Guardado.instance.coinsExtraCirculo;
+            default: return 0;
+        }
+    }
     // ======================================================
     // MÉTODO PRINCIPAL (SE LLAMA AL TERMINAR EL DÍA)
     // ======================================================
@@ -114,14 +128,18 @@ public class EndDayResultsPanel : MonoBehaviour
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesEntreFases[i];
-            int val = valorZonaPorFase[i];
-            totalZ += (cant * val);
+            int valBase = valorZonaPorFase[i];
+            int bonus = GetCoinBonusForPhase(i);
+            int valFinal = valBase + bonus;
 
-            float dmg = (i < PersonaInfeccion.dañoZonaPorFase.Length)
-                ? PersonaInfeccion.dañoZonaPorFase[i]
-                : 0f;
+            totalZ += cant * valFinal;
 
-            evZona += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})  |  Daño: {dmg:F0}\n";
+            float dmg = (i < PersonaInfeccion.dañoZonaPorFase.Length) ? PersonaInfeccion.dañoZonaPorFase[i] : 0f;
+
+            if (bonus != 0)
+                evZona += $"{GetTexto(clavesFases[i])}: {cant} (({valBase}+{bonus})×{cant}={cant * valFinal})  |  Daño: {dmg:F0}\n";
+            else
+                evZona += $"{GetTexto(clavesFases[i])}: {cant} ({valBase}×{cant}={cant * valFinal})  |  Daño: {dmg:F0}\n"; ;
         }
 
         zonaEvolutionText.text = evZona;

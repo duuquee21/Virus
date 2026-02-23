@@ -1111,6 +1111,11 @@ MonoBehaviour:
   "da\xF1oExtraPentagono": 0
   "da\xF1oExtraHexagono": 0
   "da\xF1oExtraHabilidad": 0
+  coinsExtraCirculo: 0
+  coinsExtraTriangulo: 0
+  coinsExtraCuadrado: 0
+  coinsExtraPentagono: 0
+  coinsExtraHexagono: 0
   extraBaseTime: 0
   radiusMultiplier: 1
   speedMultiplier: 1
@@ -34733,7 +34738,7 @@ MonoBehaviour:
   - {fileID: 1202006085}
   requiredParentNodes:
   - {fileID: 2096388056}
-  effectType: 38
+  effectType: 109
   button: {fileID: 1162469541}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}

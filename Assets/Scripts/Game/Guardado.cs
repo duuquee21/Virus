@@ -41,7 +41,11 @@ public class Guardado : MonoBehaviour
     public int dañoExtraHexagono = 0;
     public int dañoExtraHabilidad = 0;
 
-
+    public int coinsExtraCirculo;
+    public int coinsExtraTriangulo;
+    public int coinsExtraCuadrado;
+    public int coinsExtraPentagono;
+    public int coinsExtraHexagono;
     [Header("Mejoras Permanentes")]
     public float extraBaseTime = 0f;
 
@@ -103,6 +107,11 @@ public class Guardado : MonoBehaviour
         addTimeOnPhaseChance = 0f;
         doubleUpgradeChance = 0f;
         randomSpawnPhaseChance = 0f;
+        coinsExtraHexagono = 0;
+        coinsExtraPentagono = 0;
+        coinsExtraCuadrado = 0;
+        coinsExtraTriangulo = 0;
+        coinsExtraCirculo = 0;
         ClearRunState();
         SaveData();
     }
@@ -137,7 +146,11 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("AddTimeOnPhaseChance", addTimeOnPhaseChance);
         PlayerPrefs.SetFloat("DoubleUpgradeChance", doubleUpgradeChance);
         PlayerPrefs.SetFloat("RandomSpawnPhaseChance", randomSpawnPhaseChance);
-
+        PlayerPrefs.SetInt("CoinsHexagono", coinsExtraHexagono);
+        PlayerPrefs.SetInt("CoinsPentagono", coinsExtraPentagono);
+        PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
+        PlayerPrefs.SetInt("CoinsTriangulo", coinsExtraTriangulo);
+        PlayerPrefs.SetInt("CoinsCirculo", coinsExtraCirculo);
         PlayerPrefs.Save();
     }
 
@@ -171,6 +184,11 @@ public class Guardado : MonoBehaviour
         addTimeOnPhaseChance = PlayerPrefs.GetFloat("AddTimeOnPhaseChance", 0f);
         doubleUpgradeChance = PlayerPrefs.GetFloat("DoubleUpgradeChance", 0f);
         randomSpawnPhaseChance = PlayerPrefs.GetFloat("RandomSpawnPhaseChance", 0f);
+        coinsExtraHexagono = PlayerPrefs.GetInt("CoinsHexagono", 0);
+        coinsExtraPentagono = PlayerPrefs.GetInt("CoinsPentagono", 0);
+        coinsExtraCuadrado = PlayerPrefs.GetInt("CoinsCuadrado", 0);
+        coinsExtraTriangulo = PlayerPrefs.GetInt("CoinsTriangulo", 0);
+        coinsExtraCirculo = PlayerPrefs.GetInt("CoinsCirculo", 0);
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
