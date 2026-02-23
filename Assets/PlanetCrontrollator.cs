@@ -65,7 +65,7 @@ public GameObject damageTextPrefab;
         {
             InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
 
-            TakeDamage(dañoCalculado);
+           
             RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
 
             TakeDamage(dañoCalculado, posicion); // <--- Pasar posición aquí
@@ -80,7 +80,7 @@ public GameObject damageTextPrefab;
             float fuerzaImpacto = rb.linearVelocity.magnitude;
             if (fuerzaImpacto > 6.5f)
             {
-                TakeDamage(dañoCalculado);
+                
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
                 TakeDamage(dañoCalculado, posicion); // <--- Y aquí
 
