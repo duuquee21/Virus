@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Aspect: 1.7782805
+    - _Aspect: 1.7786459
     - _CenterX: 0.5
     - _CenterY: 0.5
     - _Radius: 1.5

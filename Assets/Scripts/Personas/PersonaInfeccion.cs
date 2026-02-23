@@ -18,6 +18,15 @@ public class PersonaInfeccion : MonoBehaviour
     [Header("Dificultad por Fase")]
     [Tooltip("Multiplicador de tiempo: 1 = 2s, 1.5 = 3s, etc.")]
     public float[] resistenciaPorFase = { 1f, 1.2f, 1.5f, 1.8f, 2.2f };
+    public static float dañoTotalZona = 0f;
+    public static float dañoTotalChoque = 0f;
+    public static float dañoTotalCarambola = 0f;
+
+    // Daño por fase (0..4) separado por tipo
+    public static float[] dañoZonaPorFase = new float[5];
+    public static float[] dañoChoquePorFase = new float[5];
+    public static float[] dañoCarambolaPorFase = new float[5];
+
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
@@ -200,6 +209,21 @@ public class PersonaInfeccion : MonoBehaviour
                 // DESACTIVAMOS el objeto de la lista completo
                 fillingBarImages[i].gameObject.SetActive(false);
             }
+        }
+    }
+
+
+    public static void ResetDaños()
+    {
+        dañoTotalZona = 0f;
+        dañoTotalChoque = 0f;
+        dañoTotalCarambola = 0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            dañoZonaPorFase[i] = 0f;
+            dañoChoquePorFase[i] = 0f;
+            dañoCarambolaPorFase[i] = 0f;
         }
     }
 

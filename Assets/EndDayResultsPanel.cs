@@ -30,6 +30,11 @@ public class EndDayResultsPanel : MonoBehaviour
     public TextMeshProUGUI monedasTotalesEtiqueta;  // El texto "Total Monedas:"
                                                     // Nota: monedasPartidaText y monedasTotalesText ahora serán SOLO para los números.
 
+    [Header("Daño Total")]
+    public TextMeshProUGUI zonaDamageText;
+    public TextMeshProUGUI choqueDamageText;
+    public TextMeshProUGUI carambolaDamageText;
+
 
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
@@ -102,8 +107,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         string txtMonedas = GetTexto("monedas");
 
-       
-        // 1. PROCESAR ZONA
+        // ===================== ZONA =====================
         int totalZ = 0;
         string evZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
 
@@ -112,13 +116,20 @@ public class EndDayResultsPanel : MonoBehaviour
             int cant = PersonaInfeccion.evolucionesEntreFases[i];
             int val = valorZonaPorFase[i];
             totalZ += (cant * val);
-            evZona += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            float dmg = (i < PersonaInfeccion.dañoZonaPorFase.Length)
+                ? PersonaInfeccion.dañoZonaPorFase[i]
+                : 0f;
+
+            evZona += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})  |  Daño: {dmg:F0}\n";
         }
 
         zonaEvolutionText.text = evZona;
         zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
+        zonaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalZona:F0}";
 
-        // ===== CHOQUE =====
+
+        // ===================== CHOQUE =====================
         int totalP = 0;
         string evChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
 
@@ -127,13 +138,20 @@ public class EndDayResultsPanel : MonoBehaviour
             int cant = PersonaInfeccion.evolucionesPorChoque[i];
             int val = valorZonaPorFase[i];
             totalP += (cant * val);
-            evChoque += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            float dmg = (i < PersonaInfeccion.dañoChoquePorFase.Length)
+                ? PersonaInfeccion.dañoChoquePorFase[i]
+                : 0f;
+
+            evChoque += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})  |  Daño: {dmg:F0}\n";
         }
 
         choqueEvolutionText.text = evChoque;
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
+        choqueDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalChoque:F0}";
 
-        // ===== CARAMBOLA =====
+
+        // ===================== CARAMBOLA =====================
         int totalC = 0;
         string evCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
 
@@ -142,25 +160,27 @@ public class EndDayResultsPanel : MonoBehaviour
             int cant = PersonaInfeccion.evolucionesCarambola[i];
             int val = valorZonaPorFase[i];
             totalC += (cant * val);
-            evCarambola += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            float dmg = (i < PersonaInfeccion.dañoCarambolaPorFase.Length)
+                ? PersonaInfeccion.dañoCarambolaPorFase[i]
+                : 0f;
+
+            evCarambola += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})  |  Daño: {dmg:F0}\n";
         }
 
         carambolaEvolutionText.text = evCarambola;
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
+        carambolaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalCarambola:F0}";
 
+
+        // ===================== RESUMEN GENERAL =====================
         monedasTempPartida = monedasGanadas;
         monedasTempTotales = monedasTotales - monedasGanadas;
 
-        // 4. TOTALES GENERALES
         monedasPartidaEtiqueta.text = $"<b>{GetTexto("titulo_monedas_ganadas")}:</b>";
         monedasTotalesEtiqueta.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b>";
 
-        monedasTempPartida = monedasGanadas;
-        monedasTempTotales = monedasTotales - monedasGanadas;
-
         ActualizarTextosMonedas();
-        panel.SetActive(true);
-      
     }
 
     public void OnClickContinue()
