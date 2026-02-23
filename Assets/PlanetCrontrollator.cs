@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic; // Necesario para el Dictionary
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlanetCrontrollator : MonoBehaviour
 {
+
     [Header("Estadísticas")]
     public float maxHealth = 100f;
     private float currentHealth;
@@ -13,22 +14,26 @@ public class PlanetCrontrollator : MonoBehaviour
     public Image healthBar;
     public bool nivelFinal = false;
 
-    // SISTEMA DE SEGURIDAD: Guarda el tiempo del último impacto por cada objeto
-    private Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
+    [Header("Anti-Spam Impactos")]
+    private readonly Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
 
     private AnimacionFinalPlaneta animacionFinalPlaneta;
 
-
-
     [Header("Estado")]
-    public bool isInvulnerable = false; // Nueva variable
-
+    public bool isInvulnerable = false;
 
     [Header("Ajustes de Muerte")]
     public float delayMuerte = 1.5f;
     public float fuerzaVibracion = 0.1f;
     private Vector3 posOriginal;
+
+    public enum TipoImpacto
+    {
+        Zona,
+        Choque,
+        Carambola
+    }
 
  [Header("Efectos de Daño")]
 public GameObject damageTextPrefab;
@@ -40,9 +45,7 @@ public GameObject damageTextPrefab;
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
         posOriginal = transform.position;
     }
-
-    // Método centralizado para procesar el impacto y evitar repetición
-    private void ProcesarImpacto(GameObject obj, Vector3 posicion)
+    private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
         int id = obj.GetInstanceID();
 
@@ -55,11 +58,16 @@ public GameObject damageTextPrefab;
         if (scriptInfeccion == null) return;
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
+        int fase = scriptInfeccion.faseActual;
 
-        // CASO 1: YA ESTÁ INFECTADO (Explosión)
+        // CASO 1: YA ESTÁ INFECTADO (Explosión) => Carambola
         if (scriptInfeccion.alreadyInfected)
         {
             InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
+
+            TakeDamage(dañoCalculado);
+            RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
+
             TakeDamage(dañoCalculado, posicion); // <--- Pasar posición aquí
             Destroy(obj);
             return;
@@ -72,6 +80,8 @@ public GameObject damageTextPrefab;
             float fuerzaImpacto = rb.linearVelocity.magnitude;
             if (fuerzaImpacto > 6.5f)
             {
+                TakeDamage(dañoCalculado);
+                RegistrarDaño(dañoCalculado, fase, tipoImpacto);
                 TakeDamage(dañoCalculado, posicion); // <--- Y aquí
 
                 if (Guardado.instance != null)
@@ -85,31 +95,77 @@ public GameObject damageTextPrefab;
         }
     }
 
+    private void RegistrarDaño(float daño, int fase, TipoImpacto tipoImpacto)
+    {
+        int idx = Mathf.Clamp(fase, 0, 4);
+
+        switch (tipoImpacto)
+        {
+            case TipoImpacto.Zona:
+                PersonaInfeccion.dañoTotalZona += daño;
+                PersonaInfeccion.dañoZonaPorFase[idx] += daño;
+                break;
+
+            case TipoImpacto.Choque:
+                PersonaInfeccion.dañoTotalChoque += daño;
+                PersonaInfeccion.dañoChoquePorFase[idx] += daño;
+                break;
+
+            case TipoImpacto.Carambola:
+                PersonaInfeccion.dañoTotalCarambola += daño;
+                PersonaInfeccion.dañoCarambolaPorFase[idx] += daño;
+                break;
+            // En Trigger no hay "puntos de contacto" reales, usamos la posición del objeto
+
+        }
+
+        if (EndDayResultsPanel.instance != null)
+            EndDayResultsPanel.instance.RefreshResults();
+    }
+
+    private void ApplyDamageAndRegister(float daño, TipoImpacto tipoImpacto)
+    {
+        TakeDamage(daño);
+
+        switch (tipoImpacto)
+        {
+            case TipoImpacto.Zona:
+                PersonaInfeccion.dañoTotalZona += daño;
+                break;
+
+            case TipoImpacto.Choque:
+                PersonaInfeccion.dañoTotalChoque += daño;
+                break;
+
+            case TipoImpacto.Carambola:
+                PersonaInfeccion.dañoTotalCarambola += daño;
+                break;
+        }
+
+        if (EndDayResultsPanel.instance != null)
+            EndDayResultsPanel.instance.RefreshResults();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Persona"))
-        {
-            // En Trigger no hay "puntos de contacto" reales, usamos la posición del objeto
-            ProcesarImpacto(collision.gameObject, collision.transform.position);
-        }
+            ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Zona);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Persona"))
-        {
-            ProcesarImpacto(collision.gameObject, collision.transform.position);
-        }
+            ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Choque);
     }
-
-    // Limpieza opcional: Para evitar que el diccionario crezca infinitamente
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             Die();
         }
     }
+
+
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
@@ -117,6 +173,9 @@ public GameObject damageTextPrefab;
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         ActualizarUI();
+
+        Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
+
 
         // --- INSTANCIAR EL NÚMERO ---
         if (damageTextPrefab != null)
@@ -146,7 +205,7 @@ public GameObject damageTextPrefab;
         lastImpactTimes.Clear();
         isInvulnerable = false;
 
-        this.enabled = true;
+        enabled = true;
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = true;
@@ -165,7 +224,6 @@ public GameObject damageTextPrefab;
         Debug.Log("<color=green>Planeta reseteado completamente</color>");
     }
 
-
     void Die()
     {
         if (nivelFinal)
@@ -174,7 +232,6 @@ public GameObject damageTextPrefab;
         }
         else
         {
-            // Iniciamos la vibración y el retraso
             StartCoroutine(VibrarYPasarNivel());
         }
     }
@@ -183,16 +240,16 @@ public GameObject damageTextPrefab;
 
     IEnumerator VibrarYPasarNivel()
     {
-        float tiempo = 0;
+        float tiempo = 0f;
+
         while (tiempo < delayMuerte)
         {
-            // Crea el movimiento aleatorio
             transform.position = posOriginal + (Vector3)Random.insideUnitCircle * fuerzaVibracion;
             tiempo += Time.deltaTime;
-            yield return null; // Espera al siguiente frame
+            yield return null;
         }
 
-        transform.position = posOriginal; // Reset de posición
-        LevelManager.instance.NextMapTransition(); // Cambio de mapa
+        transform.position = posOriginal;
+        LevelManager.instance.NextMapTransition();
     }
 }
