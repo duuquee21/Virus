@@ -23,8 +23,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("Detalle Daño por Fase (NUEVO)")]
     public TextMeshProUGUI zonaDamageDetailText;
-    public TextMeshProUGUI choqueDamageDetailText;
-    public TextMeshProUGUI carambolaDamageDetailText;
+
 
     [Header("Monedas por Habilidad (Totales)")]
     public TextMeshProUGUI zonaMonedasText;
@@ -41,8 +40,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("Daño Total")]
     public TextMeshProUGUI zonaDamageText;
-    public TextMeshProUGUI choqueDamageText;
-    public TextMeshProUGUI carambolaDamageText;
+
 
     // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
@@ -249,11 +247,10 @@ public class EndDayResultsPanel : MonoBehaviour
 
         choqueEvolutionText.text = tituloChoque;
         if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
-        if (choqueDamageDetailText != null) choqueDamageDetailText.text = choqueDamageLines;
+    
 
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
-        choqueDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalChoque:F0}";
-
+     
 
         // ===================== CARAMBOLA =====================
         int totalC = 0;
@@ -292,10 +289,9 @@ public class EndDayResultsPanel : MonoBehaviour
 
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
-        if (carambolaDamageDetailText != null) carambolaDamageDetailText.text = carambolaDamageLines;
-
+    
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
-        carambolaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalCarambola:F0}";
+    
 
 
         // ===================== RESUMEN GENERAL =====================
