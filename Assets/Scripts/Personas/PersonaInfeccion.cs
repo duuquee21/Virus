@@ -396,11 +396,11 @@ public class PersonaInfeccion : MonoBehaviour
         {
             switch (faseActual)
             {
-                case 0: bonoHabilidad = Guardado.instance.dañoExtraCirculo; break;
-                case 1: bonoHabilidad = Guardado.instance.dañoExtraTriangulo; break;
-                case 2: bonoHabilidad = Guardado.instance.dañoExtraCuadrado; break;
-                case 3: bonoHabilidad = Guardado.instance.dañoExtraPentagono; break;
-                case 4: bonoHabilidad = Guardado.instance.dañoExtraHexagono; break;
+                case 0: bonoHabilidad = Guardado.instance.dañoExtraHexagono; break;  // HEX
+                case 1: bonoHabilidad = Guardado.instance.dañoExtraPentagono; break; // PENT
+                case 2: bonoHabilidad = Guardado.instance.dañoExtraCuadrado; break;  // CUAD
+                case 3: bonoHabilidad = Guardado.instance.dañoExtraTriangulo; break; // TRI
+                case 4: bonoHabilidad = Guardado.instance.dañoExtraCirculo; break;   // CIRC
             }
         }
 
@@ -494,7 +494,7 @@ public class PersonaInfeccion : MonoBehaviour
             // -------- RECOMPENSA UNIFICADA --------
             if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
             {
-                int monedasADar = valorPorFase[faseAnterior];
+                int monedasADar = GetCoinsForPhase(faseAnterior);
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
                 SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
             }
