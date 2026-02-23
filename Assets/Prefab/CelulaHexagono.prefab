@@ -151,6 +151,7 @@ MonoBehaviour:
   faseActual: 0
   shakeIntensity: 0.05
   particulasDeFuego: {fileID: 5683650011450178379}
+  floatingTextPrefab: {fileID: 7455663746959264046, guid: 208b04a8589de64439d4218bb9fe91c9, type: 3}
 --- !u!58 &1022134751278509905
 CircleCollider2D:
   m_ObjectHideFlags: 0

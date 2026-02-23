@@ -11,10 +11,19 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("UI")]
     public GameObject panel;
 
-    [Header("Cálculos de Evolución (Lista)")]
+    [Header("Cálculos de Evolución (Título / Lista principal)")]
     public TextMeshProUGUI zonaEvolutionText;
     public TextMeshProUGUI choqueEvolutionText;
     public TextMeshProUGUI carambolaEvolutionText;
+
+    [Header("Detalle Monedas por Fase (NUEVO)")]
+    public TextMeshProUGUI zonaCoinsDetailText;
+    public TextMeshProUGUI choqueCoinsDetailText;
+    public TextMeshProUGUI carambolaCoinsDetailText;
+
+    [Header("Detalle Daño por Fase (NUEVO)")]
+    public TextMeshProUGUI zonaDamageDetailText;
+
 
     [Header("Monedas por Habilidad (Totales)")]
     public TextMeshProUGUI zonaMonedasText;
@@ -26,23 +35,27 @@ public class EndDayResultsPanel : MonoBehaviour
     public TextMeshProUGUI monedasTotalesText;
 
     [Header("Resumen General (Nuevas Referencias)")]
-    public TextMeshProUGUI monedasPartidaEtiqueta; // El texto "Monedas Ganadas:"
-    public TextMeshProUGUI monedasTotalesEtiqueta;  // El texto "Total Monedas:"
-                                                    // Nota: monedasPartidaText y monedasTotalesText ahora serán SOLO para los números.
+    public TextMeshProUGUI monedasPartidaEtiqueta;
+    public TextMeshProUGUI monedasTotalesEtiqueta;
+
+    [Header("Daño Total")]
+    public TextMeshProUGUI zonaDamageText;
 
 
+    // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
+
+    // Monedas base por fase que usa el panel (si tu juego usa otra tabla, cámbiala aquí)
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
 
     private string nombreTablaLocalization = "MisTextos";
-
 
     [Header("Animación")]
     private bool isTransferring = false;
     private int monedasTempPartida;
     private int monedasTempTotales;
-
     public bool TieneMonedasPendientes => monedasTempPartida > 0;
+
     [Header("Feedback de Audio")]
     public AudioSource audioSource;
     public AudioClip tickSound;
@@ -51,23 +64,77 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Feedback Visual")]
     public float maxScale = 1.3f;
     public Color colorNormal = Color.white;
-    public Color colorPremio = Color.yellow; // Color cuando va rápido
+    public Color colorPremio = Color.yellow;
 
     [Header("Feedback de Partículas")]
     public ParticleSystem coinParticles;
     public int maxParticlesPerFlash = 20;
+
     void Awake()
     {
         instance = this;
         panel.SetActive(false);
-
-    
-
     }
 
     string GetTexto(string clave)
     {
         return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+    }
+
+    // -------------------------
+    // BONUS MONEDAS POR FASE
+    // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
+    // -------------------------
+    private int GetCoinBonusForPhase(int fase)
+    {
+        if (Guardado.instance == null) return 0;
+
+        switch (fase)
+        {
+            case 0: return Guardado.instance.coinsExtraHexagono;
+            case 1: return Guardado.instance.coinsExtraPentagono;
+            case 2: return Guardado.instance.coinsExtraCuadrado;
+            case 3: return Guardado.instance.coinsExtraTriangulo;
+            case 4: return Guardado.instance.coinsExtraCirculo;
+            default: return 0;
+        }
+    }
+
+    // -------------------------
+    // DAÑO POR HIT (BASE + BONUS) POR FASE
+    // Base igual que PersonaInfeccion.dañoPorFasePredeterminado = {1,2,3,4,5}
+    // -------------------------
+    private float GetBaseDamageForPhase(int fase)
+    {
+        switch (fase)
+        {
+            case 0: return 1f; // HEX
+            case 1: return 2f; // PENT
+            case 2: return 3f; // CUAD
+            case 3: return 4f; // TRI
+            case 4: return 5f; // CIRC
+            default: return 0f;
+        }
+    }
+
+    private int GetDamageBonusForPhase(int fase)
+    {
+        if (Guardado.instance == null) return 0;
+
+        switch (fase)
+        {
+            case 0: return Guardado.instance.dañoExtraHexagono;
+            case 1: return Guardado.instance.dañoExtraPentagono;
+            case 2: return Guardado.instance.dañoExtraCuadrado;
+            case 3: return Guardado.instance.dañoExtraTriangulo;
+            case 4: return Guardado.instance.dañoExtraCirculo;
+            default: return 0;
+        }
+    }
+
+    private float GetDamagePerHitForPhase(int fase)
+    {
+        return GetBaseDamageForPhase(fase) + GetDamageBonusForPhase(fase);
     }
 
     // ======================================================
@@ -77,9 +144,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         Time.timeScale = 0f;
         panel.SetActive(true);
-
         UpdateAllTexts(monedasGanadas, monedasTotales);
-
     }
 
     // ======================================================
@@ -102,72 +167,147 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         string txtMonedas = GetTexto("monedas");
 
-       
-        // 1. PROCESAR ZONA
+        // ===================== ZONA =====================
         int totalZ = 0;
-        string evZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
+        string tituloZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
+        string zonaCoinsLines = "";
+        string zonaDamageLines = "";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesEntreFases[i];
-            int val = valorZonaPorFase[i];
-            totalZ += (cant * val);
-            evZona += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            int valBase = valorZonaPorFase[i];
+            int coinBonus = GetCoinBonusForPhase(i);
+            int valFinal = valBase + coinBonus;
+
+            totalZ += cant * valFinal;
+
+            string coinTxt = (coinBonus != 0)
+                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
+                : $"({valBase}×{cant}={cant * valFinal})";
+
+            zonaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+
+            float totalDmg = (i < PersonaInfeccion.dañoZonaPorFase.Length) ? PersonaInfeccion.dañoZonaPorFase[i] : 0f;
+
+            float hitBase = GetBaseDamageForPhase(i);
+            int hitBonus = GetDamageBonusForPhase(i);
+            float hitFinal = GetDamagePerHitForPhase(i);
+
+            string hitTxt = (hitBonus != 0)
+                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
+                : $"Hit: {hitFinal:F0}";
+
+            zonaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
 
-        zonaEvolutionText.text = evZona;
-        zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
+        zonaEvolutionText.text = tituloZona;
+        if (zonaCoinsDetailText != null) zonaCoinsDetailText.text = zonaCoinsLines;
+        if (zonaDamageDetailText != null) zonaDamageDetailText.text = zonaDamageLines;
 
-        // ===== CHOQUE =====
+        zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
+        zonaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalZona:F0}";
+
+
+        // ===================== CHOQUE =====================
         int totalP = 0;
-        string evChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
+        string tituloChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
+        string choqueCoinsLines = "";
+        string choqueDamageLines = "";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesPorChoque[i];
-            int val = valorZonaPorFase[i];
-            totalP += (cant * val);
-            evChoque += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            int valBase = valorZonaPorFase[i];
+            int coinBonus = GetCoinBonusForPhase(i);
+            int valFinal = valBase + coinBonus;
+
+            totalP += cant * valFinal;
+
+            string coinTxt = (coinBonus != 0)
+                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
+                : $"({valBase}×{cant}={cant * valFinal})";
+
+            choqueCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+
+            float totalDmg = (i < PersonaInfeccion.dañoChoquePorFase.Length) ? PersonaInfeccion.dañoChoquePorFase[i] : 0f;
+
+            float hitBase = GetBaseDamageForPhase(i);
+            int hitBonus = GetDamageBonusForPhase(i);
+            float hitFinal = GetDamagePerHitForPhase(i);
+
+            string hitTxt = (hitBonus != 0)
+                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
+                : $"Hit: {hitFinal:F0}";
+
+            choqueDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
 
-        choqueEvolutionText.text = evChoque;
-        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
+        choqueEvolutionText.text = tituloChoque;
+        if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
+    
 
-        // ===== CARAMBOLA =====
+        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
+     
+
+        // ===================== CARAMBOLA =====================
         int totalC = 0;
-        string evCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
+        string tituloCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
+        string carambolaCoinsLines = "";
+        string carambolaDamageLines = "";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesCarambola[i];
-            int val = valorZonaPorFase[i];
-            totalC += (cant * val);
-            evCarambola += $"{GetTexto(clavesFases[i])}: {cant} ({val}×{cant}={cant * val})\n";
+
+            int valBase = valorZonaPorFase[i];
+            int coinBonus = GetCoinBonusForPhase(i);
+            int valFinal = valBase + coinBonus;
+
+            totalC += cant * valFinal;
+
+            string coinTxt = (coinBonus != 0)
+                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
+                : $"({valBase}×{cant}={cant * valFinal})";
+
+            carambolaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+
+            float totalDmg = (i < PersonaInfeccion.dañoCarambolaPorFase.Length) ? PersonaInfeccion.dañoCarambolaPorFase[i] : 0f;
+
+            float hitBase = GetBaseDamageForPhase(i);
+            int hitBonus = GetDamageBonusForPhase(i);
+            float hitFinal = GetDamagePerHitForPhase(i);
+
+            string hitTxt = (hitBonus != 0)
+                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
+                : $"Hit: {hitFinal:F0}";
+
+            carambolaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
 
-        carambolaEvolutionText.text = evCarambola;
+        carambolaEvolutionText.text = tituloCarambola;
+        if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
+    
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
+    
 
+
+        // ===================== RESUMEN GENERAL =====================
         monedasTempPartida = monedasGanadas;
         monedasTempTotales = monedasTotales - monedasGanadas;
 
-        // 4. TOTALES GENERALES
         monedasPartidaEtiqueta.text = $"<b>{GetTexto("titulo_monedas_ganadas")}:</b>";
         monedasTotalesEtiqueta.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b>";
 
-        monedasTempPartida = monedasGanadas;
-        monedasTempTotales = monedasTotales - monedasGanadas;
-
         ActualizarTextosMonedas();
-        panel.SetActive(true);
-      
     }
 
     public void OnClickContinue()
     {
         panel.SetActive(false);
         Time.timeScale = 1f;
-
         LevelManager.instance.OnEndDayResultsFinished(0, 0);
     }
 
@@ -195,7 +335,7 @@ public class EndDayResultsPanel : MonoBehaviour
         float elapsed = 0f;
         float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
         float lastSoundTime = 0f;
-        // Cambia 10000f por algo más bajo, o hazlo dinámico
+
         float factorRiqueza = Mathf.Clamp01(totalAMover / 500f);
 
         while (elapsed < duration)
@@ -211,13 +351,11 @@ public class EndDayResultsPanel : MonoBehaviour
             monedasTempTotales = inicialTotales + movido;
             ActualizarTextosMonedas();
 
-            // --- FEEDBACK VISUAL ---
             float intensity = Mathf.Sin(t * Mathf.PI);
             float pulse = intensity * (maxScale - 1.0f) * (0.5f + factorRiqueza * 0.5f);
             monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
             monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
 
-            // --- FEEDBACK DE AUDIO Y PARTÍCULAS ---
             float minInterval = Mathf.Lerp(0.2f, 0.05f, factorRiqueza);
             float maxInterval = Mathf.Lerp(0.4f, 0.15f, factorRiqueza);
             float currentTickSpeed = Mathf.Lerp(maxInterval, minInterval, intensity);
@@ -230,14 +368,9 @@ public class EndDayResultsPanel : MonoBehaviour
                     audioSource.PlayOneShot(tickSound, soundVolume);
                 }
 
-                // LANZAR PARTÍCULAS
-                // Solo lanzamos partículas si hay una cantidad mínima de ganancia (factorRiqueza)
                 if (coinParticles != null)
                 {
-                    // Aseguramos al menos 1 partícula si hay monedas ganadas
                     int count = Mathf.Max(1, Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza));
-
-                    // Si quieres que siempre salgan con pocas monedas, quita el "factorRiqueza > 0.1f"
                     coinParticles.Emit(count);
                 }
 
@@ -247,7 +380,6 @@ public class EndDayResultsPanel : MonoBehaviour
             yield return null;
         }
 
-        // Reset final...
         monedasTempPartida = 0;
         monedasTempTotales = inicialTotales + totalAMover;
         ActualizarTextosMonedas();
@@ -257,5 +389,4 @@ public class EndDayResultsPanel : MonoBehaviour
         isTransferring = false;
         onComplete?.Invoke();
     }
-
 }

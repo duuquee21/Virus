@@ -59,6 +59,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         RandomSpawnAnyPhase15,
         RandomSpawnAnyPhase20,
         RandomSpawnAnyPhase25,
+        CoinsHexagonoPlus1,
+        CoinsPentagonoPlus1,
+        CoinsCuadradoPlus1,
+        CoinsTrianguloPlus1,
+        CoinsCirculoPlus1
     }
     [Header("Save ID")]
     public string saveID;
@@ -131,7 +136,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CheckIfShouldShow()
     {
-        if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
+        if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
             SetState(false, Color.gray, false);
         else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
             SetState(false, Color.gray, false);
@@ -139,7 +144,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             SetState(true, Color.white, false);
 
         // HABILIDAD DE DAÑO REPETIBLE
-        if ((IsDamageSkill() || IsTimeSkill()) && repeatLevel > 0)
+        if ((IsDamageSkill() || IsTimeSkill() || IsCoinSkill()) && repeatLevel > 0)
         {
             SetAppearance(true, 1f, true);
 
@@ -224,9 +229,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
-        if (!IsDamageSkill() && unlocked) return;
+        if (!IsDamageSkill() && !IsCoinSkill() && unlocked) return;
 
-        if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
+        if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
             return;
 
         if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
@@ -245,8 +250,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             audioSource.PlayOneShot(unlockSound);
 
         LevelManager.instance.ContagionCoins -= CoinCost;
-
-        if (IsDamageSkill() || IsTimeSkill())
+        if (IsDamageSkill() || IsTimeSkill() || IsCoinSkill())
             repeatLevel++;
         else
             unlocked = true;
@@ -486,6 +490,30 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.RandomSpawnAnyPhase25:
             Guardado.instance.SetRandomSpawnPhaseChance(0.25f);
                 break;
+            case SkillEffectType.CoinsCirculoPlus1:
+                Guardado.instance.coinsExtraCirculo += 1;
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.CoinsTrianguloPlus1:
+                Guardado.instance.coinsExtraTriangulo += 1;
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.CoinsCuadradoPlus1:
+                Guardado.instance.coinsExtraCuadrado += 1;
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.CoinsPentagonoPlus1:
+                Guardado.instance.coinsExtraPentagono += 1;
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.CoinsHexagonoPlus1:
+                Guardado.instance.coinsExtraHexagono += 1;
+                Guardado.instance.SaveData();
+                break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -502,6 +530,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     bool IsTimeSkill()
     {
         return effectType == SkillEffectType.AddTime2Seconds;
+    }
+
+    bool IsCoinSkill()
+    {
+        return effectType == SkillEffectType.CoinsHexagonoPlus1 ||
+               effectType == SkillEffectType.CoinsPentagonoPlus1 ||
+               effectType == SkillEffectType.CoinsCuadradoPlus1 ||
+               effectType == SkillEffectType.CoinsTrianguloPlus1 ||
+               effectType == SkillEffectType.CoinsCirculoPlus1;
     }
 
 

@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
     [Header("Gameplay")]
     public float gameDuration = 20f;
     public int maxInfectionsPerRound = 5;
-    [HideInInspector] public int monedasGanadasSesion;
+     public int monedasGanadasSesion;
 
 
     [Header("Configuración Inicial por Zona")]
@@ -348,6 +348,8 @@ public class LevelManager : MonoBehaviour
         {
             PersonaInfeccion.evolucionesPorChoque[i] = 0;
         }
+
+
         float tiempoTotal = gameDuration;
 
         if (Guardado.instance != null)
@@ -514,6 +516,29 @@ public class LevelManager : MonoBehaviour
 
         // 1️⃣ Monedas a 0
         monedasGanadasSesion = 0;
+
+        // 1.5️⃣ Reset estadísticas (evoluciones + daño)
+        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+            PersonaInfeccion.evolucionesEntreFases[i] = 0;
+
+        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
+            PersonaInfeccion.evolucionesPorChoque[i] = 0;
+
+        for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
+            PersonaInfeccion.evolucionesCarambola[i] = 0;
+
+        // Daño total
+        PersonaInfeccion.dañoTotalZona = 0f;
+        PersonaInfeccion.dañoTotalChoque = 0f;
+        PersonaInfeccion.dañoTotalCarambola = 0f;
+
+        // Daño por fase (arrays)
+        for (int i = 0; i < PersonaInfeccion.dañoZonaPorFase.Length; i++)
+        {
+            PersonaInfeccion.dañoZonaPorFase[i] = 0f;
+            PersonaInfeccion.dañoChoquePorFase[i] = 0f;
+            PersonaInfeccion.dañoCarambolaPorFase[i] = 0f;
+        }
 
         // 2️⃣ Volver a zona 0
         PlayerPrefs.SetInt("CurrentMapIndex", 0);

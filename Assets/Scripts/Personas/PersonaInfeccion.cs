@@ -18,6 +18,15 @@ public class PersonaInfeccion : MonoBehaviour
     [Header("Dificultad por Fase")]
     [Tooltip("Multiplicador de tiempo: 1 = 2s, 1.5 = 3s, etc.")]
     public float[] resistenciaPorFase = { 1f, 1.2f, 1.5f, 1.8f, 2.2f };
+    public static float dañoTotalZona = 0f;
+    public static float dañoTotalChoque = 0f;
+    public static float dañoTotalCarambola = 0f;
+
+    // Daño por fase (0..4) separado por tipo
+    public static float[] dañoZonaPorFase = new float[5];
+    public static float[] dañoChoquePorFase = new float[5];
+    public static float[] dañoCarambolaPorFase = new float[5];
+
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
@@ -68,6 +77,9 @@ public class PersonaInfeccion : MonoBehaviour
     private Rigidbody2D rb;
 
     public ParticleSystem particulasDeFuego;
+
+
+    public GameObject floatingTextPrefab;
 
     void Start()
     {
@@ -203,6 +215,21 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
+
+    public static void ResetDaños()
+    {
+        dañoTotalZona = 0f;
+        dañoTotalChoque = 0f;
+        dañoTotalCarambola = 0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            dañoZonaPorFase[i] = 0f;
+            dañoChoquePorFase[i] = 0f;
+            dañoCarambolaPorFase[i] = 0f;
+        }
+    }
+
     public void EstablecerFaseDirecta(int fase)
     {
         faseActual = fase;
@@ -248,8 +275,9 @@ public class PersonaInfeccion : MonoBehaviour
         // 2. SISTEMA DE RECOMPENSAS (Unificado aquí) - usa faseAnterior (correcto)
         if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
         {
-            int monedasADar = valorPorFase[faseAnterior];
+            int monedasADar = GetCoinsForPhase(faseAnterior);
             LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+            SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
         }
 
         // 2.5 HABILIDAD: probabilidad variable de sumar +1s al tiempo al subir fase por zona
@@ -317,6 +345,8 @@ public class PersonaInfeccion : MonoBehaviour
             // Aplicamos la misma fuerza que usas en el cambio de fase
             movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
         }
+
+        transform.localScale =transform.localScale * 1.125f; // Aumentamos el tamaño para destacar la infección
         // --------------------------------------------
 
         IniciarCambioColor(InfectionColorSequence());
@@ -366,11 +396,11 @@ public class PersonaInfeccion : MonoBehaviour
         {
             switch (faseActual)
             {
-                case 0: bonoHabilidad = Guardado.instance.dañoExtraCirculo; break;
-                case 1: bonoHabilidad = Guardado.instance.dañoExtraTriangulo; break;
-                case 2: bonoHabilidad = Guardado.instance.dañoExtraCuadrado; break;
-                case 3: bonoHabilidad = Guardado.instance.dañoExtraPentagono; break;
-                case 4: bonoHabilidad = Guardado.instance.dañoExtraHexagono; break;
+                case 0: bonoHabilidad = Guardado.instance.dañoExtraHexagono; break;  // HEX
+                case 1: bonoHabilidad = Guardado.instance.dañoExtraPentagono; break; // PENT
+                case 2: bonoHabilidad = Guardado.instance.dañoExtraCuadrado; break;  // CUAD
+                case 3: bonoHabilidad = Guardado.instance.dañoExtraTriangulo; break; // TRI
+                case 4: bonoHabilidad = Guardado.instance.dañoExtraCirculo; break;   // CIRC
             }
         }
 
@@ -464,8 +494,9 @@ public class PersonaInfeccion : MonoBehaviour
             // -------- RECOMPENSA UNIFICADA --------
             if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
             {
-                int monedasADar = valorPorFase[faseAnterior];
+                int monedasADar = GetCoinsForPhase(faseAnterior);
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+                SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
             }
             if (InfectionFeedback.instance != null)
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
@@ -518,7 +549,38 @@ public class PersonaInfeccion : MonoBehaviour
         if (colorCoroutine != null) StopCoroutine(colorCoroutine);
         colorCoroutine = StartCoroutine(nuevaCorrutina);
     }
+    private void SpawnFloatingMoney(int cantidad)
+    {
+        if (floatingTextPrefab != null)
+        {
+            GameObject textObj = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
 
+            // Accedemos al componente de texto para cambiar el color a negro
+            TMPro.TextMeshPro tm = textObj.GetComponent<TMPro.TextMeshPro>();
+            if (tm != null) tm.color = Color.black;
 
+            FloatingText ft = textObj.GetComponent<FloatingText>();
+            if (ft != null) ft.SetText("+" + cantidad.ToString());
+        }
+    }
+    private int GetCoinsForPhase(int fase)
+    {
+        int baseCoins = (fase < valorPorFase.Length) ? valorPorFase[fase] : 0;
+
+        int extra = 0;
+        if (Guardado.instance != null)
+        {
+            switch (fase)
+            {
+                case 0: extra = Guardado.instance.coinsExtraHexagono; break;
+                case 1: extra = Guardado.instance.coinsExtraPentagono; break;
+                case 2: extra = Guardado.instance.coinsExtraCuadrado; break;
+                case 3: extra = Guardado.instance.coinsExtraTriangulo; break;
+                case 4: extra = Guardado.instance.coinsExtraCirculo; break;
+            }
+        }
+
+        return Mathf.Max(0, baseCoins + extra);
+    }
     public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
 }
