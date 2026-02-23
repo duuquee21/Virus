@@ -116,7 +116,7 @@ public GameObject damageTextPrefab;
                 PersonaInfeccion.dañoCarambolaPorFase[idx] += daño;
                 break;
             // En Trigger no hay "puntos de contacto" reales, usamos la posición del objeto
-            ProcesarImpacto(collision.gameObject, collision.transform.position);
+
         }
 
         if (EndDayResultsPanel.instance != null)
@@ -165,7 +165,7 @@ public GameObject damageTextPrefab;
         }
     }
 
-    public void TakeDamage(float amount)
+
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
