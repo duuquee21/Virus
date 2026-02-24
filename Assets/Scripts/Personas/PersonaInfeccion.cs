@@ -26,6 +26,7 @@ public class PersonaInfeccion : MonoBehaviour
     public static float[] dañoZonaPorFase = new float[5];
     public static float[] dañoChoquePorFase = new float[5];
     public static float[] dañoCarambolaPorFase = new float[5];
+    public static int[] golpesAlPlanetaPorFase = new int[5];
 
 
     [Header("Recompensa Económica (Coins)")]
@@ -54,6 +55,7 @@ public class PersonaInfeccion : MonoBehaviour
     public float fuerzaRotacion = 5f;
 
     private float currentInfectionTime;
+
     private bool isInsideZone = false;
     public bool alreadyInfected = false;
     private Color originalColor;

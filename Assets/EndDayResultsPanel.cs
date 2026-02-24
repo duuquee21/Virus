@@ -175,7 +175,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
-            int cant = PersonaInfeccion.evolucionesEntreFases[i];
+            int cant = PersonaInfeccion.golpesAlPlanetaPorFase[i];
 
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);

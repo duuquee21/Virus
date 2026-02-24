@@ -99,6 +99,9 @@ public GameObject damageTextPrefab;
     {
         int idx = Mathf.Clamp(fase, 0, 4);
 
+        // 👇 AÑADIR ESTA LÍNEA
+        PersonaInfeccion.golpesAlPlanetaPorFase[idx]++;
+
         switch (tipoImpacto)
         {
             case TipoImpacto.Zona:
@@ -115,14 +118,11 @@ public GameObject damageTextPrefab;
                 PersonaInfeccion.dañoTotalCarambola += daño;
                 PersonaInfeccion.dañoCarambolaPorFase[idx] += daño;
                 break;
-            // En Trigger no hay "puntos de contacto" reales, usamos la posición del objeto
-
         }
 
         if (EndDayResultsPanel.instance != null)
             EndDayResultsPanel.instance.RefreshResults();
     }
-
     private void ApplyDamageAndRegister(float daño, TipoImpacto tipoImpacto)
     {
         TakeDamage(daño);
