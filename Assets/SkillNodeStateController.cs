@@ -38,7 +38,7 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     void UpdateState()
     {
         // 1. Si ya está desbloqueado (prioridad máxima)
-        if (skillNode.IsUnlocked)
+        if (IsAtLimit())
         {
             // Pasamos 'false' para que el botón no sea interactuable
             SetVisual(disabledSprite, false);
@@ -77,5 +77,33 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
         if (costText != null)
             costText.text = skillNode.CoinCost.ToString();
+    }
+
+    bool IsAtLimit()
+    {
+        if (skillNode == null) return false;
+
+        if (skillNode.IsUnlocked)
+            return true;
+
+        // Habilidades repetibles
+        if (skillNode.effectType == SkillNode.SkillEffectType.AddTime2Seconds &&
+            skillNode.repeatLevel >= skillNode.maxTimeRepeatLevel)
+            return true;
+
+        if ((skillNode.effectType == SkillNode.SkillEffectType.DmgHexagono ||
+             skillNode.effectType == SkillNode.SkillEffectType.DmgPentagono ||
+             skillNode.effectType == SkillNode.SkillEffectType.DmgCuadrado ||
+             skillNode.effectType == SkillNode.SkillEffectType.DmgTriangulo ||
+             skillNode.effectType == SkillNode.SkillEffectType.DmgCirculo ||
+             skillNode.effectType == SkillNode.SkillEffectType.CoinsHexagonoPlus1 ||
+             skillNode.effectType == SkillNode.SkillEffectType.CoinsPentagonoPlus1 ||
+             skillNode.effectType == SkillNode.SkillEffectType.CoinsCuadradoPlus1 ||
+             skillNode.effectType == SkillNode.SkillEffectType.CoinsTrianguloPlus1 ||
+             skillNode.effectType == SkillNode.SkillEffectType.CoinsCirculoPlus1)
+            && skillNode.repeatLevel >= skillNode.maxRepeatLevel)
+            return true;
+
+        return false;
     }
 }

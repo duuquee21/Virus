@@ -102,7 +102,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private bool unlocked = false;
 
     // Para habilidades repetibles
-    private int repeatLevel = 0;
+    public int repeatLevel = 0;
     public int maxRepeatLevel = 5; // puedes ajustarlo
     [Header("Límite especial tiempo extra")]
     public int maxTimeRepeatLevel = 10;
