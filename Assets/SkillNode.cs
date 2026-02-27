@@ -98,6 +98,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip unlockSound;
+    [Header("Configuración Inicial")]
+    public bool isStartingNode = false;
 
     private bool unlocked = false;
 
@@ -128,7 +130,34 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (string.IsNullOrEmpty(saveID)) return;
 
-        unlocked = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", 0) == 1;
+        // -1 significa: "No existe dato guardado", es la primera vez que jugamos
+        int estadoGuardado = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", -1);
+
+        if (estadoGuardado == 1)
+        {
+            // Si el guardado dice 1, es que YA lo compramos antes. Se queda comprado.
+            unlocked = true;
+        }
+        else if (estadoGuardado == 0)
+        {
+            // Si el guardado dice 0, es que jugamos y NO lo compramos. Se queda bloqueado.
+            unlocked = false;
+        }
+        else // estadoGuardado == -1 (Es una partida virgen)
+        {
+            // Aquí es donde manda el checkbox del Inspector
+            if (isStartingNode)
+            {
+                unlocked = true;
+                // Opcional: Guardamos ya que es nuestro para siempre
+                // SaveNodeState(); 
+            }
+            else
+            {
+                unlocked = false;
+            }
+        }
+
         repeatLevel = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
     }
 
