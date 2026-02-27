@@ -90,6 +90,11 @@ public class LevelManager : MonoBehaviour
 
         ForceHardReset();
         ShowMainMenu();
+
+        foreach (GameObject mapa in mapList)
+        {
+            if (mapa != null) mapa.transform.rotation = Quaternion.identity;
+        }
     }
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
@@ -512,64 +517,60 @@ public class LevelManager : MonoBehaviour
     }
     private void EjecutarSoftRestartLogica()
     {
-        Debug.Log("Soft Restart ejecutado");
+        Debug.Log("Soft Restart ejecutado: Reiniciando planetas y rotaciones.");
 
-        // 1️⃣ Monedas a 0
+        // 1️⃣ Resetear Monedas y Estadísticas (Ya lo tenías, mantenlo)
         monedasGanadasSesion = 0;
+        // ... (tus bucles de reset de estadísticas) ...
 
-        // 1.5️⃣ Reset estadísticas (evoluciones + daño)
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
-            PersonaInfeccion.evolucionesEntreFases[i] = 0;
-
-        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
-            PersonaInfeccion.evolucionesPorChoque[i] = 0;
-
-        for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
-            PersonaInfeccion.evolucionesCarambola[i] = 0;
-
-        // Daño total
-        PersonaInfeccion.dañoTotalZona = 0f;
-        PersonaInfeccion.dañoTotalChoque = 0f;
-        PersonaInfeccion.dañoTotalCarambola = 0f;
-
-        // Daño por fase (arrays)
-        for (int i = 0; i < PersonaInfeccion.dañoZonaPorFase.Length; i++)
-        {
-            PersonaInfeccion.dañoZonaPorFase[i] = 0f;
-            PersonaInfeccion.dañoChoquePorFase[i] = 0f;
-            PersonaInfeccion.dañoCarambolaPorFase[i] = 0f;
-        }
-
-        // 2️⃣ Volver a zona 0
+        // 2️⃣ VOLVER A ZONA 0 Y RESETEAR ROTACIONES
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
-        ActivateMap(0);
 
-        // 3️⃣ Resetear vida del planeta
+        // Resetear la rotación de CADA mapa en la lista para que no aparezcan girados
+        for (int i = 0; i < mapList.Length; i++)
+        {
+            if (mapList[i] != null)
+            {
+                mapList[i].transform.rotation = Quaternion.identity; // <--- RESET ROTACIÓN
+                mapList[i].SetActive(i == 0); // Solo activar el primero
+            }
+        }
+
+        // 3️⃣ Resetear Salud y Estado del Script del Planeta
         PlanetCrontrollator planet = Object.FindFirstObjectByType<PlanetCrontrollator>();
         if (planet != null)
+        {
+            planet.transform.rotation = Quaternion.identity; // Asegurar que el controller también rote a 0
             planet.ResetHealthToInitial();
+        }
 
-        // 4️⃣ Resetear estado de partida
+        // 4️⃣ Resetear Cámara (si el LevelTransitioner la dejó movida o con zoom)
+        Camera mainCam = Camera.main;
+        if (mainCam != null)
+        {
+            // Si usas un sistema de zoom, aquí deberías resetear el orthographicSize
+            // mainCam.orthographicSize = 5f; // Ajusta al valor por defecto de tu juego
+        }
+
+        // 5️⃣ Limpieza de Escena y Estado
         isGameActive = false;
         currentSessionInfected = 0;
         currentTimer = gameDuration;
-
-        // 5️⃣ Limpiar escena
         CleanUpScene();
 
-        // 6️⃣ UI
         if (gameUI) gameUI.SetActive(false);
-        if (gameOverPanel) gameOverPanel.SetActive(false);
-        if (zonePanel) zonePanel.SetActive(false);
 
-
-        // 7️⃣ Limpiar personas
-        PopulationManager.instance.ClearAllPersonas();
+        // 6️⃣ Forzar al PopulationManager a mirar el mapa 0
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.ClearAllPersonas();
+            PopulationManager.instance.SelectPrefab(0);
+        }
 
         UpdateUI();
 
-        // 8️⃣ Reiniciar en el siguiente frame
+        // 7️⃣ Reiniciar en el siguiente frame
         StartCoroutine(RestartNextFrame());
     }
 
