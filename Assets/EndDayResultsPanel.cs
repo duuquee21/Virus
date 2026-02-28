@@ -332,54 +332,69 @@ public class EndDayResultsPanel : MonoBehaviour
         int inicialPartida = monedasTempPartida;
         int inicialTotales = monedasTempTotales;
 
-        float elapsed = 0f;
-        float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
-        float lastSoundTime = 0f;
+        // Si no hay nada que mover, terminamos rápido
+        if (totalAMover <= 0)
+        {
+            isTransferring = false;
+            onComplete?.Invoke();
+            yield break;
+        }
 
+        float elapsed = 0f;
+        // Ajustamos duración: si es poco dinero, que sea más rápido
+        float duration = Mathf.Clamp(totalAMover * 0.1f, 0.5f, 2.0f);
+        if (totalAMover > 100) duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
+
+        int ultimoMovido = 0;
         float factorRiqueza = Mathf.Clamp01(totalAMover / 500f);
 
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
-            float curvedT = t * t * t * (t * (6f * t - 15f) + 10f);
+            float curvedT = t * t * (3f - 2f * t); // Curva SmoothStep más sencilla
 
             int movido = Mathf.RoundToInt(curvedT * totalAMover);
             movido = Mathf.Min(movido, totalAMover);
 
-            monedasTempPartida = inicialPartida - movido;
-            monedasTempTotales = inicialTotales + movido;
-            ActualizarTextosMonedas();
-
-            float intensity = Mathf.Sin(t * Mathf.PI);
-            float pulse = intensity * (maxScale - 1.0f) * (0.5f + factorRiqueza * 0.5f);
-            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
-            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
-
-            float minInterval = Mathf.Lerp(0.2f, 0.05f, factorRiqueza);
-            float maxInterval = Mathf.Lerp(0.4f, 0.15f, factorRiqueza);
-            float currentTickSpeed = Mathf.Lerp(maxInterval, minInterval, intensity);
-
-            if (elapsed - lastSoundTime > currentTickSpeed)
+            // --- LA CLAVE: Solo actuar si el número cambió ---
+            if (movido > ultimoMovido)
             {
+                int diferenciaReal = movido - ultimoMovido;
+                ultimoMovido = movido;
+
+                monedasTempPartida = inicialPartida - movido;
+                monedasTempTotales = inicialTotales + movido;
+                ActualizarTextosMonedas();
+
+                // Feedback de Audio
                 if (audioSource != null && tickSound != null)
                 {
-                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (intensity * (0.4f + factorRiqueza * 0.4f));
+                    // Si es solo 1 moneda, pitch normal. Si son muchas, sube con la intensidad.
+                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (t * 0.4f);
                     audioSource.PlayOneShot(tickSound, soundVolume);
                 }
 
+                // Feedback de Partículas
                 if (coinParticles != null)
                 {
-                    int count = Mathf.Max(1, Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza));
+                    // Emitir partículas proporcional a cuántas monedas saltaron en este frame
+                    // Si solo es 1 moneda, emitirá 1 partícula.
+                    int count = Mathf.Clamp(diferenciaReal, 1, maxParticlesPerFlash);
                     coinParticles.Emit(count);
                 }
-
-                lastSoundTime = elapsed;
             }
+
+            // Animación visual de escala (solo si hay movimiento o es mucho dinero)
+            float intensity = Mathf.Sin(t * Mathf.PI);
+            float pulse = intensity * (maxScale - 1.0f) * (0.2f + factorRiqueza * 0.8f);
+            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
+            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
 
             yield return null;
         }
 
+        // Asegurar valores finales
         monedasTempPartida = 0;
         monedasTempTotales = inicialTotales + totalAMover;
         ActualizarTextosMonedas();
