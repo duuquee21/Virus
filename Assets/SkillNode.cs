@@ -256,15 +256,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (lockIcon != null) lockIcon.SetActive(showLock);
     }
 
+    // ---------------------------------------------------------
+    //  TRY UNLOCK (COMPLETO Y CORREGIDO)
+    // ---------------------------------------------------------
     public void TryUnlock()
     {
-        if (!IsDamageSkill() && !IsCoinSkill() && unlocked) return;
+        // 1. COMPROBACIONES DE SEGURIDAD
+        // Si ya está desbloqueada y no es repetible, no hacemos nada
+        if (!IsDamageSkill() && !IsCoinSkill() && !IsTimeSkill() && unlocked) return;
 
+        // Si es repetible de Daño/Monedas y llegó al máximo, fuera
         if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
             return;
 
+        // Si es repetible de Tiempo y llegó al máximo, fuera
         if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
             return;
+
+        // 2. COMPROBACIÓN DE DINERO
         if (LevelManager.instance.ContagionCoins < CoinCost)
         {
             if (AudioManager.instance != null)
@@ -272,6 +281,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
+        // 3. ÉXITO: SONIDOS Y PAGO
         if (AudioManager.instance != null)
             AudioManager.instance.PlayBuyUpgrade();
 
@@ -279,29 +289,21 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             audioSource.PlayOneShot(unlockSound);
 
         LevelManager.instance.ContagionCoins -= CoinCost;
+
+        // 4. ACTUALIZAR ESTADO (COMPRADO)
         if (IsDamageSkill() || IsTimeSkill() || IsCoinSkill())
             repeatLevel++;
         else
             unlocked = true;
 
+        // 5. GUARDAR Y APLICAR EFECTO
         ApplyEffect();
+        SaveNodeState(); // Guardamos inmediatamente para no perder datos
 
-        if (!IsDamageSkill())
-        {
-            if (nextNodes != null)
-            {
-                foreach (var child in nextNodes)
-                {
-                    if (child != null)
-                        child.CheckIfShouldShow();
-                }
-            }
-        }
-
-
+        // 6. ACTUALIZAR UI GLOBAL (Monedas)
         LevelManager.instance.UpdateUI();
-        CheckIfShouldShow();
 
+        // 7. EFECTOS VISUALES DEL BOTÓN
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null)
         {
@@ -309,7 +311,26 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             fx.SetPurchasedState(true);
         }
 
-        SaveNodeState(); // ← siempre al final
+        // ---------------------------------------------------------
+        // 8. EL PASO CLAVE: REFRESCAR TODO EL ÁRBOL
+        // Esto hace que los hijos se den cuenta de que el padre ya está comprado
+        RefreshAllNodes();
+        // ---------------------------------------------------------
+    }
+
+    // ---------------------------------------------------------
+    //  FUNCIÓN AUXILIAR PARA DESPERTAR A LOS HIJOS
+    // ---------------------------------------------------------
+    void RefreshAllNodes()
+    {
+        // Busca TODOS los nodos de la escena, incluso los que están apagados (true)
+        SkillNode[] allNodes = FindObjectsOfType<SkillNode>(true);
+
+        foreach (var node in allNodes)
+        {
+            // Obliga a cada nodo a revisar si sus padres ya están comprados
+            node.CheckIfShouldShow();
+        }
     }
 
     void SaveNodeState()
@@ -611,6 +632,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         foreach (var node in nodes)
             node.CheckIfShouldShow();
     }
+
+     
 
 
 
