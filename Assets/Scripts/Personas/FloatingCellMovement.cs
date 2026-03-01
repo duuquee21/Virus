@@ -38,11 +38,18 @@ public class FloatingCellMovement : MonoBehaviour
     [Range(0f, 1f)]
     public float amortiguacionSuave = 0.92f; // Cuanto más bajo, más frena (0.90 a 0.98 es ideal)
 
+    // Antes: public AudioSource audioSource;
+    private AudioSource sfxSource;
+
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
+        rb = GetComponent<Rigidbody2D>();
+
+        // CAMBIO AQUÍ:
+        sfxSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -228,9 +235,9 @@ public class FloatingCellMovement : MonoBehaviour
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
-                if (audioSource != null && reboteVirusClip != null)
+                if (sfxSource != null && reboteVirusClip != null)
                 {
-                    audioSource.PlayOneShot(reboteVirusClip);
+                    sfxSource.PlayOneShot(reboteVirusClip);
                 }
             }
         }

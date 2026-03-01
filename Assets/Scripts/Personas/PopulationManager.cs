@@ -28,6 +28,10 @@ public class PopulationManager : MonoBehaviour
     [Header("Duplication Settings")]
     public float fuerzaImpulsoClon = 2f; // Fuerza para que el clon no se encime
 
+    public GameObject buggedPersonPrefab; // Arrastra aquí el prefab bugeado
+    [Range(0f, 100f)]
+    public float buggedSpawnChance = 5f;  // Probabilidad de 0 a 100
+
     private float timer;
 
     void Awake()
@@ -162,7 +166,15 @@ public class PopulationManager : MonoBehaviour
         Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
         if (!currentSpawnCollider.OverlapPoint(spawnPos)) return;
 
-        GameObject newPerson = Instantiate(currentPrefab, spawnPos, Quaternion.identity);
+        // Decidir qué prefab usar
+        GameObject prefabToSpawn = currentPrefab;
+        if (buggedPersonPrefab != null && Random.Range(0f, 100f) < buggedSpawnChance)
+        {
+            prefabToSpawn = buggedPersonPrefab;
+        }
+
+        // Instanciar el elegido
+        GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
