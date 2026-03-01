@@ -61,31 +61,32 @@ public class FloatingCellMovement : MonoBehaviour
         // Inicializar el bloque de propiedades
         ActualizarShader();
     }
-    void OnEnable()
+    private void OnEnable()
     {
-        LevelTransitioner.OnTransitionStart += StartAttraction;
-        LevelTransitioner.OnImpactShake += StopAttraction;
+        // Nos suscribimos al evento global de inicio de transición
+        LevelTransitioner.OnTransitionStart += Desaparecer;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        LevelTransitioner.OnTransitionStart -= StartAttraction;
-        LevelTransitioner.OnImpactShake -= StopAttraction;
+        // Desuscripción para evitar errores de memoria
+        LevelTransitioner.OnTransitionStart -= Desaparecer;
     }
 
-    private void StartAttraction() => isAttractingToCenter = true;
-    private void StopAttraction(float intensity)
+    void Desaparecer()
     {
-        isAttractingToCenter = false;
-
-        // --- LA CLAVE AQUÍ ---
-        // Si la célula se estaba moviendo hacia el centro, actualizamos su 
-        // variable 'direccion' para que al salir de la succión siga esa trayectoria.
-        if (rb.linearVelocity.magnitude > 0.1f)
+        // 1. Ejecutamos el feedback visual (el mismo que usan las personas)
+        if (InfectionFeedback.instance != null)
         {
-            direccion = rb.linearVelocity.normalized;
+            // Usamos el efecto de impacto básico en blanco, similar a PersonaInfeccion
+            InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.white, false);
         }
+
+        // 2. Destruimos el objeto coral
+        Destroy(gameObject);
     }
+
+   
     private void ActualizarShader()
     {
         // Esta es la clave: le pasamos los datos al bloque, y el bloque al renderer
@@ -97,84 +98,21 @@ public class FloatingCellMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isAttractingToCenter)
+        // Movimiento normal de patrulla
+        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
         {
-            // Lógica única de atracción y frenado suave
-            MoverHaciaCentroConInercia();
+            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, aceleracionInercia * Time.fixedDeltaTime);
+            return;
         }
-        else
-        {
-            // Movimiento normal de patrulla
-            if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
-            {
-                rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, aceleracionInercia * Time.fixedDeltaTime);
-                return;
-            }
 
-            Vector2 velocidadDeseada = direccion * velocidadBase;
-            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, velocidadDeseada, aceleracionInercia * Time.fixedDeltaTime);
-        }
+        Vector2 velocidadDeseada = direccion * velocidadBase;
+        rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, velocidadDeseada, aceleracionInercia * Time.fixedDeltaTime);
 
         // Limpieza de rotación
         if (rb.angularVelocity != 0)
             rb.angularVelocity = Mathf.MoveTowards(rb.angularVelocity, 0, 10f * Time.fixedDeltaTime);
     }
-    private void MoverHaciaCentroConInercia()
-    {
-        Vector2 centroMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-        Vector2 vectorHaciaCentro = (centroMundo - rb.position);
-        float distancia = vectorHaciaCentro.magnitude;
-
-        // 1. Definimos la velocidad deseada proporcional a la distancia
-        // A más distancia, más rápido corre al centro.
-        Vector2 velocidadDeseada = vectorHaciaCentro.normalized * (distancia * fuerzaAtraccionTransicion);
-
-        // 2. Aplicamos el frenado suave basado en el radio
-        if (distancia < radioFrenadoCentro)
-        {
-            // Calculamos un multiplicador que va de 1 (en el borde del radio) a 0 (en el centro)
-            float t = distancia / radioFrenadoCentro;
-
-            // Usamos SmoothStep para que la curva de frenado sea de seda (no lineal)
-            float multiplicadorSuave = Mathf.SmoothStep(0f, 1f, t);
-
-            velocidadDeseada *= multiplicadorSuave;
-
-            // Aplicamos una fricción extra a la velocidad actual para "matar" el rebote
-            rb.linearVelocity *= amortiguacionSuave;
-        }
-
-        // 3. Aplicamos el movimiento final
-        // Usamos una aceleración más alta durante la transición para que responda rápido pero suave
-        rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, velocidadDeseada, (aceleracionInercia * 1.5f) * Time.fixedDeltaTime);
-
-        // 4. Corte de seguridad: si está muy muy cerca, pararlo del todo
-        if (distancia < 0.02f)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.position = centroMundo; // Ajuste fino final
-        }
-    }
-    private void MoverHaciaCentro()
-    {
-        Vector2 currentPos = rb.position;
-        Vector2 directionToCenter = ((Vector2)centerPoint - currentPos);
-        float distancia = directionToCenter.magnitude;
-
-        // Si ya está muy cerca, dejamos de aplicar fuerza para evitar que "orbite" frenéticamente
-        if (distancia < 0.1f)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-
-        // Fuerza proporcional: Cuanto más lejos, más fuerte tira.
-        // Usamos AddForce para que el movimiento sea fluido y no un "teletransporte"
-        rb.AddForce(directionToCenter.normalized * distancia * fuerzaAtraccionCentro);
-
-        // Aplicamos un poco de drag artificial para que no salga disparada al pasar por el centro
-        rb.linearVelocity *= 0.95f;
-    }
+    
     private void OnTriggerEnter2D(Collider2D otro)
     {
         if (otro.CompareTag("InfectionZone")) return;
@@ -291,4 +229,6 @@ public class FloatingCellMovement : MonoBehaviour
         ActualizarShader();
         slotOcupado[slot] = false;
     }
+
+
 }

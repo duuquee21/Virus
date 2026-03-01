@@ -121,7 +121,6 @@ public class PopulationManager : MonoBehaviour
 
     void Update()
     {
-        // Mantenemos esto para que el spawn sea constante
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
 
         timer += Time.deltaTime;
@@ -131,7 +130,8 @@ public class PopulationManager : MonoBehaviour
             CheckForOutsiders();
         }
 
-        int currentCount = GameObject.FindGameObjectsWithTag("Persona").Length;
+        // --- CAMBIO AQUÍ: Contar ambos tags ---
+        int currentCount = GetTotalPopulationCount();
 
         if (timer >= spawnInterval && currentCount < maxPopulation)
         {
@@ -146,16 +146,31 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
+    // --- NUEVA FUNCIÓN AUXILIAR PARA CONTAR ---
+    private int GetTotalPopulationCount()
+    {
+        int personas = GameObject.FindGameObjectsWithTag("Persona").Length;
+        int corales = GameObject.FindGameObjectsWithTag("Coral").Length;
+        return personas + corales;
+    }
+
     void CheckForOutsiders()
     {
         if (currentSpawnCollider == null) return;
 
-        GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (GameObject p in personas)
+        // --- CAMBIO AQUÍ: Buscar y limpiar ambos ---
+        LimpiarSiEstaFuera("Persona");
+        LimpiarSiEstaFuera("Coral");
+    }
+
+    void LimpiarSiEstaFuera(string tag)
+    {
+        GameObject[] objetos = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objetos)
         {
-            if (!currentSpawnCollider.OverlapPoint(p.transform.position))
+            if (!currentSpawnCollider.OverlapPoint(obj.transform.position))
             {
-                Destroy(p);
+                Destroy(obj);
             }
         }
     }
@@ -238,9 +253,12 @@ public class PopulationManager : MonoBehaviour
     }
     public void ClearAllPersonas()
     {
+        // --- CAMBIO AQUÍ: Borrar ambos tags ---
         GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (var p in personas)
-            Destroy(p);
+        foreach (var p in personas) Destroy(p);
+
+        GameObject[] corales = GameObject.FindGameObjectsWithTag("Coral");
+        foreach (var c in corales) Destroy(c);
 
         timer = 0;
     }
