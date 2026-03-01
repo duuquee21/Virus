@@ -151,4 +151,12 @@ public class ManualSetCycler : MonoBehaviour
         
         target.transform.localScale = endSize;
     }
+
+    public void ResetCycler()
+    {
+        StopAllCoroutines(); // Detiene cualquier animación a medias
+        isBusy = false;
+        currentSetIndex = 0; // Volvemos al primer set
+        InitializeSets();    // Re-configura las escalas y estados iniciales
+    }
 }

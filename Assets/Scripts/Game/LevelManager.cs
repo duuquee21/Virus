@@ -528,6 +528,12 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
+        ManualSetCycler cycler = Object.FindFirstObjectByType<ManualSetCycler>();
+        if (cycler != null)
+        {
+            cycler.ResetCycler();
+        }
+
         // 3. Resetear Mapas y Rotaciones
         for (int i = 0; i < mapList.Length; i++)
         {
