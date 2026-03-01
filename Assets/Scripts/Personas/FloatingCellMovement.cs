@@ -23,44 +23,25 @@ public class FloatingCellMovement : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip reboteVirusClip;
 
-    [Header("Transición")]
-    public float fuerzaAtraccionCentro = 15f;
 
-    private Vector3 centerPoint;
-
-    [Header("Inercia y Atracción")]
-    public float aceleracionInercia = 50f;
-    public float fuerzaAtraccionTransicion = 20f; // Fuerza de succión durante el giro
-    private bool isAttractingToCenter = false;
-
-    [Header("Ajustes de Suavizado")]
-    public float radioFrenadoCentro = 2f; // Distancia a la que empieza a frenar
-    [Range(0f, 1f)]
-    public float amortiguacionSuave = 0.92f; // Cuanto más bajo, más frena (0.90 a 0.98 es ideal)
-
-    // Antes: public AudioSource audioSource;
-    private AudioSource sfxSource;
 
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
-        rb = GetComponent<Rigidbody2D>();
-
-        // CAMBIO AQUÍ:
-        sfxSource = GetComponent<AudioSource>();
     }
 
     void Start()
     {
         direccion = new Vector2(1, 1).normalized;
         rb = GetComponent<Rigidbody2D>();
-     
+
         mat = GetComponent<SpriteRenderer>().material;
         // Inicializar el bloque de propiedades
         ActualizarShader();
     }
+
     private void OnEnable()
     {
         // Nos suscribimos al evento global de inicio de transición
@@ -86,7 +67,7 @@ public class FloatingCellMovement : MonoBehaviour
         Destroy(gameObject);
     }
 
-   
+
     private void ActualizarShader()
     {
         // Esta es la clave: le pasamos los datos al bloque, y el bloque al renderer
@@ -95,24 +76,11 @@ public class FloatingCellMovement : MonoBehaviour
         sr.SetPropertyBlock(propBlock);
     }
 
-
     void FixedUpdate()
     {
-        // Movimiento normal de patrulla
-        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
-        {
-            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, aceleracionInercia * Time.fixedDeltaTime);
-            return;
-        }
-
-        Vector2 velocidadDeseada = direccion * velocidadBase;
-        rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, velocidadDeseada, aceleracionInercia * Time.fixedDeltaTime);
-
-        // Limpieza de rotación
-        if (rb.angularVelocity != 0)
-            rb.angularVelocity = Mathf.MoveTowards(rb.angularVelocity, 0, 10f * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + direccion * velocidadBase * Time.fixedDeltaTime);
     }
-    
+
     private void OnTriggerEnter2D(Collider2D otro)
     {
         if (otro.CompareTag("InfectionZone")) return;
@@ -138,10 +106,10 @@ public class FloatingCellMovement : MonoBehaviour
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
             }
-                if (audioSource != null && reboteVirusClip != null)
-                {
-                    audioSource.PlayOneShot(reboteVirusClip);
-                }
+            if (audioSource != null && reboteVirusClip != null)
+            {
+                audioSource.PlayOneShot(reboteVirusClip);
+            }
         }
         else if (otro.CompareTag("Pared"))
         {
@@ -149,7 +117,7 @@ public class FloatingCellMovement : MonoBehaviour
             Vector2 normal = ((Vector2)transform.position - puntoGlobal).normalized;
             direccion = Vector2.Reflect(direccion, normal).normalized;
         }
-        else if (otro.CompareTag("Coral") ) // Añade el tag que use tu StaticBumper
+        else if (otro.CompareTag("Coral")) // Añade el tag que use tu StaticBumper
         {
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, 1));
 
@@ -168,14 +136,14 @@ public class FloatingCellMovement : MonoBehaviour
             // Si es un choque con una pared, la vibración es negativa
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
-            
+
             if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f && Guardado.instance.virusReboteActiva)
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);
-                if (sfxSource != null && reboteVirusClip != null)
+                if (audioSource != null && reboteVirusClip != null)
                 {
-                    sfxSource.PlayOneShot(reboteVirusClip);
+                    audioSource.PlayOneShot(reboteVirusClip);
                 }
             }
         }
@@ -209,7 +177,7 @@ public class FloatingCellMovement : MonoBehaviour
             t += Time.deltaTime / duracion;
             float decaimiento = Mathf.Exp(-t * 4.0f);
 
-            if(signo < 0)
+            if (signo < 0)
             {
                 float deformacion = -Mathf.Sin(t * Mathf.PI * 10.0f) * decaimiento * 0.6f;
                 impacts[slot].z = deformacion;
@@ -229,6 +197,5 @@ public class FloatingCellMovement : MonoBehaviour
         ActualizarShader();
         slotOcupado[slot] = false;
     }
-
-
 }
+

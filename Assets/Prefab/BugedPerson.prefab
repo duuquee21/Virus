@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1847048691137103396
 Transform:
   m_ObjectHideFlags: 0
@@ -161,6 +161,22 @@ PrefabInstance:
     - target: {fileID: 5085931060279580306, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039548722471955951, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299796421260517504, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
+      propertyPath: aceleracionInercia
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299796421260517504, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
+      propertyPath: amortiguacionSuave
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299796421260517504, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
+      propertyPath: radioFrenadoCentro
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7299796421260517504, guid: 32fcfe08fd5171f4f8c828c4c102fccb, type: 3}
       propertyPath: fuerzaAtraccionTransicion
