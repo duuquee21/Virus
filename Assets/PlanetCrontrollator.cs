@@ -38,12 +38,12 @@ public class PlanetCrontrollator : MonoBehaviour
  [Header("Efectos de Daño")]
 public GameObject damageTextPrefab;
 
-    void Start()
+    void Awake() // Cambiado de Start a Awake
     {
         currentHealth = maxHealth;
-        ActualizarUI();
-        animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
         posOriginal = transform.position;
+        // Buscamos la animación en Awake para tenerla lista
+        animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
     }
     private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
@@ -201,29 +201,20 @@ public GameObject damageTextPrefab;
 
     public void ResetHealthToInitial()
     {
+        // Resetear valores básicos
         currentHealth = maxHealth;
-        lastImpactTimes.Clear();
         isInvulnerable = false;
+        lastImpactTimes.Clear();
 
-        enabled = true;
-
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = true;
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-        }
-
+        // Resetear posición y rotación a como estaban al inicio
         transform.position = posOriginal;
+        transform.rotation = Quaternion.identity;
 
+        // Actualizar la barra de vida visualmente
         ActualizarUI();
 
-        Debug.Log("<color=green>Planeta reseteado completamente</color>");
+        Debug.Log($"Planeta {gameObject.name} reseteado a {maxHealth} HP.");
     }
-
     void Die()
     {
         if (nivelFinal)

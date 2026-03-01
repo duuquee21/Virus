@@ -519,49 +519,43 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Soft Restart ejecutado: Reiniciando planetas y rotaciones.");
 
-        // 1️⃣ Resetear Monedas y Estadísticas (Ya lo tenías, mantenlo)
+        // 1. Resetear Datos de Sesión
         monedasGanadasSesion = 0;
-        // ... (tus bucles de reset de estadísticas) ...
+        currentSessionInfected = 0;
+        currentTimer = gameDuration;
 
-        // 2️⃣ VOLVER A ZONA 0 Y RESETEAR ROTACIONES
+        // 2. Volver al Mapa 0
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
-        // Resetear la rotación de CADA mapa en la lista para que no aparezcan girados
+        // 3. Resetear Mapas y Rotaciones
         for (int i = 0; i < mapList.Length; i++)
         {
             if (mapList[i] != null)
             {
-                mapList[i].transform.rotation = Quaternion.identity; // <--- RESET ROTACIÓN
-                mapList[i].SetActive(i == 0); // Solo activar el primero
+                mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].SetActive(i == 0);
             }
         }
 
-        // 3️⃣ Resetear Salud y Estado del Script del Planeta
-        PlanetCrontrollator planet = Object.FindFirstObjectByType<PlanetCrontrollator>();
-        if (planet != null)
+        // Buscamos TODOS los scripts de planetas, incluso los que están desactivados
+        PlanetCrontrollator[] todosLosPlanetas = Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (PlanetCrontrollator planet in todosLosPlanetas)
         {
-            planet.transform.rotation = Quaternion.identity; // Asegurar que el controller también rote a 0
-            planet.ResetHealthToInitial();
+            if (planet != null)
+            {
+                planet.ResetHealthToInitial();
+                // Opcional: Si el planeta está en un mapa que no es el inicial, 
+                // asegúrate de que su objeto padre esté desactivado si es necesario
+            }
         }
 
-        // 4️⃣ Resetear Cámara (si el LevelTransitioner la dejó movida o con zoom)
-        Camera mainCam = Camera.main;
-        if (mainCam != null)
-        {
-            // Si usas un sistema de zoom, aquí deberías resetear el orthographicSize
-            // mainCam.orthographicSize = 5f; // Ajusta al valor por defecto de tu juego
-        }
-
-        // 5️⃣ Limpieza de Escena y Estado
+        // 5. Limpieza y UI
         isGameActive = false;
-        currentSessionInfected = 0;
-        currentTimer = gameDuration;
         CleanUpScene();
-
         if (gameUI) gameUI.SetActive(false);
 
-        // 6️⃣ Forzar al PopulationManager a mirar el mapa 0
         if (PopulationManager.instance != null)
         {
             PopulationManager.instance.ClearAllPersonas();
@@ -569,8 +563,6 @@ public class LevelManager : MonoBehaviour
         }
 
         UpdateUI();
-
-        // 7️⃣ Reiniciar en el siguiente frame
         StartCoroutine(RestartNextFrame());
     }
 
