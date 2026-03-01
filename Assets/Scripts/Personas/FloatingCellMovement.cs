@@ -60,7 +60,11 @@ public class FloatingCellMovement : MonoBehaviour
         if (InfectionFeedback.instance != null)
         {
             // Usamos el efecto de impacto básico en blanco, similar a PersonaInfeccion
-            InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.white, false);
+            Color miColor;
+            if (ColorUtility.TryParseHtmlString("#FD4C52", out miColor))
+            {
+                InfectionFeedback.instance.PlayEffect(transform.position, miColor,true);
+            }
         }
 
         // 2. Destruimos el objeto coral

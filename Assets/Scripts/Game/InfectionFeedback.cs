@@ -36,7 +36,7 @@ public class InfectionFeedback : MonoBehaviour
             cameraTransform = Camera.main.transform;
     }
 
-    public void PlayEffect(Vector3 position, Color particleColor)
+    public void PlayEffect(Vector3 position, Color particleColor, bool mute)
     {
         // 1. VISUAL
         if (infection1Particles != null)
@@ -47,14 +47,14 @@ public class InfectionFeedback : MonoBehaviour
             if (ps != null)
             {
                 var main = ps.main;
-                main.startColor = Color.white * 1.3f;
+                main.startColor = particleColor;
             }
 
             Destroy(vfx, 2f);
         }
 
         // 2. SONIDO
-        if (audioSource != null && infectionSounds.Length > 0)
+        if (audioSource != null && infectionSounds.Length > 0 && !mute)
         {
 
             AudioClip clip = infectionSounds[Random.Range(0, infectionSounds.Length)];

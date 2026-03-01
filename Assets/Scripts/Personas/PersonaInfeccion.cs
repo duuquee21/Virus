@@ -330,7 +330,7 @@ public class PersonaInfeccion : MonoBehaviour
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
         if (InfectionFeedback.instance != null)
-            InfectionFeedback.instance.PlayEffect(transform.position, originalColor);
+            InfectionFeedback.instance.PlayEffect(transform.position, Color.white,false);
 
         particulasDeFuego?.Play();
 

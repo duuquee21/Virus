@@ -16,53 +16,39 @@ public class PopulationManager : MonoBehaviour
     public int initialPopulation = 10;
     public static PopulationManager instance;
 
-
-
-    [Header("Spawn Area Logic")]
-    private Collider2D currentSpawnCollider;
+    [Header("Spawn & Playable Areas")]
+    private Collider2D currentSpawnCollider; // Donde NACEN
+    private Collider2D playableAreaCollider; // Donde se PERMITE que estén
     public float margenSeguridad = 0.5f;
 
     [Header("Spawn Animation")]
     public float growDuration = 0.4f;
 
     [Header("Duplication Settings")]
-    public float fuerzaImpulsoClon = 2f; // Fuerza para que el clon no se encime
+    public float fuerzaImpulsoClon = 2f;
 
-    public GameObject buggedPersonPrefab; // Arrastra aquí el prefab bugeado
+    public GameObject buggedPersonPrefab;
     [Range(0f, 100f)]
-    public float buggedSpawnChance = 5f;  // Probabilidad de 0 a 100
+    public float buggedSpawnChance = 5f;
 
     private float timer;
 
     void Awake()
     {
         instance = this;
-
         if (personPrefabs.Length > 0)
             currentPrefab = personPrefabs[0];
     }
 
-
-    // --- NUEVA FUNCIÓN: INSTANCIAR COPIA (Habilidad Duplicación) ---
-    // En PopulationManager.cs, actualiza la función InstanciarCopia:
-
-    // --- MODIFICA ESTA FUNCIÓN DENTRO DE TU PopulationManager.cs ---
-
     public void InstanciarCopia(Vector3 posicion, int faseDestino, GameObject objetoQueChoco)
     {
-        // CAMBIO CLAVE: En lugar de instanciar 'objetoQueChoco' (el duplicado con fallos),
-        // instanciamos 'currentPrefab', que es la copia limpia del disco.
         if (currentPrefab == null) return;
 
-        // 1. Instancia el prefab "virgen" del mapa actual
         GameObject nuevaCopia = Instantiate(currentPrefab, posicion, Quaternion.identity);
-
-        // 2. Configuramos su fase inicial inmediatamente
         PersonaInfeccion script = nuevaCopia.GetComponent<PersonaInfeccion>();
+
         if (script != null)
         {
-            // Esto hará que el prefab limpio se transforme visualmente 
-            // a la fase en la que chocaste (Triángulo, Cuadrado, etc.)
             script.EstablecerFaseDirecta(faseDestino);
             if (LevelManager.instance != null)
             {
@@ -70,7 +56,6 @@ public class PopulationManager : MonoBehaviour
             }
         }
 
-        // 3. Reset físico y pequeño impulso para que no se encimen
         Rigidbody2D rb = nuevaCopia.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -79,19 +64,26 @@ public class PopulationManager : MonoBehaviour
             rb.AddForce(Random.insideUnitCircle.normalized * fuerzaImpulsoClon, ForceMode2D.Impulse);
         }
 
-        // 4. Animación de crecimiento para que la aparición sea suave
         Vector3 targetScale = nuevaCopia.transform.localScale;
         nuevaCopia.transform.localScale = Vector3.zero;
         StartCoroutine(GrowFromZero(nuevaCopia.transform, targetScale));
-
-        Debug.Log("<color=green>Instanciado nuevo prefab limpio en fase: </color>" + faseDestino);
     }
+
+    // --- CAMBIO: Buscamos ambos colliders por sus respectivos Tags ---
     public void RefreshSpawnArea()
     {
+        // 1. Área de NACIMIENTO
         GameObject areaObj = GameObject.FindWithTag("SpawnArea");
         if (areaObj != null)
         {
             currentSpawnCollider = areaObj.GetComponent<Collider2D>();
+        }
+
+        // 2. Área JUGABLE (Para destruir si salen)
+        GameObject playableObj = GameObject.FindWithTag("PlayableArea");
+        if (playableObj != null)
+        {
+            playableAreaCollider = playableObj.GetComponent<Collider2D>();
         }
     }
 
@@ -106,18 +98,15 @@ public class PopulationManager : MonoBehaviour
     public void ConfigureRound(int ignored)
     {
         RefreshSpawnArea();
-
         timer = 0f;
-
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
         for (int i = 0; i < initialPopulation; i++)
         {
-            SpawnPerson(false); // iniciales: SIEMPRE base del mapa
+            SpawnPerson(false);
         }
     }
-
 
     void Update()
     {
@@ -130,7 +119,6 @@ public class PopulationManager : MonoBehaviour
             CheckForOutsiders();
         }
 
-        // --- CAMBIO AQUÍ: Contar ambos tags ---
         int currentCount = GetTotalPopulationCount();
 
         if (timer >= spawnInterval && currentCount < maxPopulation)
@@ -146,7 +134,6 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    // --- NUEVA FUNCIÓN AUXILIAR PARA CONTAR ---
     private int GetTotalPopulationCount()
     {
         int personas = GameObject.FindGameObjectsWithTag("Persona").Length;
@@ -156,66 +143,66 @@ public class PopulationManager : MonoBehaviour
 
     void CheckForOutsiders()
     {
-        if (currentSpawnCollider == null) return;
+        // --- CAMBIO: Si no hay PlayableArea definida, usamos SpawnArea como respaldo ---
+        Collider2D areaDeChequeo = (playableAreaCollider != null) ? playableAreaCollider : currentSpawnCollider;
 
-        // --- CAMBIO AQUÍ: Buscar y limpiar ambos ---
-        LimpiarSiEstaFuera("Persona");
-        LimpiarSiEstaFuera("Coral");
+        if (areaDeChequeo == null) return;
+
+        LimpiarSiEstaFuera("Persona", areaDeChequeo);
+        LimpiarSiEstaFuera("Coral", areaDeChequeo);
     }
 
-    void LimpiarSiEstaFuera(string tag)
+    // --- CAMBIO: Ahora recibe el collider contra el cual comparar ---
+    void LimpiarSiEstaFuera(string tag, Collider2D areaReferencia)
     {
         GameObject[] objetos = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject obj in objetos)
         {
-            if (!currentSpawnCollider.OverlapPoint(obj.transform.position))
+            // Si NO está dentro del área de juego, se destruye
+            if (!areaReferencia.OverlapPoint(obj.transform.position))
             {
                 Destroy(obj);
             }
         }
     }
+
     void SpawnPerson(bool allowRandomPhase)
     {
+        // --- AQUÍ SE SIGUE USANDO currentSpawnCollider PARA NACER ---
         if (currentPrefab == null || currentSpawnCollider == null) return;
 
         Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
-        if (!currentSpawnCollider.OverlapPoint(spawnPos)) return;
 
-        // Decidir qué prefab usar
         GameObject prefabToSpawn = currentPrefab;
         if (buggedPersonPrefab != null && Random.Range(0f, 100f) < buggedSpawnChance)
         {
             prefabToSpawn = buggedPersonPrefab;
         }
 
-        // Instanciar el elegido
         GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-
         PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
+
         if (script != null && LevelManager.instance != null)
         {
             int baseFase = 0;
-
             if (currentMap < LevelManager.instance.faseInicialPorMapa.Length)
                 baseFase = LevelManager.instance.faseInicialPorMapa[currentMap];
 
             int faseFinal = baseFase;
 
-            // Habilidad: SOLO si allowRandomPhase == true
             if (allowRandomPhase && Guardado.instance != null)
             {
-                float chance = Guardado.instance.randomSpawnPhaseChance; // 0..1 (0.05 = 5%)
+                float chance = Guardado.instance.randomSpawnPhaseChance;
                 if (chance > 0f && Random.value < chance)
                 {
-                    int maxFase = script.GetMaxFaseIndex(); // fasesSprites.Length - 1
+                    int maxFase = script.GetMaxFaseIndex();
                     faseFinal = Random.Range(0, maxFase + 1);
                 }
             }
 
             script.EstablecerFaseDirecta(faseFinal);
-
             Color colorNivel = LevelManager.instance.GetCurrentLevelColor();
             script.AplicarColor(colorNivel);
         }
@@ -224,6 +211,7 @@ public class PopulationManager : MonoBehaviour
         newPerson.transform.localScale = Vector3.zero;
         StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
     }
+
     Vector3 GetRandomPointInCollider(Collider2D collider)
     {
         Bounds bounds = collider.bounds;
@@ -251,9 +239,9 @@ public class PopulationManager : MonoBehaviour
         spawnInterval = baseSpawnInterval * (1f - bonus);
         if (spawnInterval < 0.3f) spawnInterval = 0.3f;
     }
+
     public void ClearAllPersonas()
     {
-        // --- CAMBIO AQUÍ: Borrar ambos tags ---
         GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");
         foreach (var p in personas) Destroy(p);
 
