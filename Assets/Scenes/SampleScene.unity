@@ -11048,6 +11048,7 @@ GameObject:
   - component: {fileID: 258005869}
   - component: {fileID: 258005872}
   - component: {fileID: 258005873}
+  - component: {fileID: 258005874}
   m_Layer: 5
   m_Name: Pentagono2
   m_TagString: Untagged
@@ -11214,6 +11215,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &258005874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258005867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 98
 --- !u!1 &261586938
 GameObject:
   m_ObjectHideFlags: 0
@@ -13705,6 +13719,7 @@ GameObject:
   - component: {fileID: 305308155}
   - component: {fileID: 305308158}
   - component: {fileID: 305308159}
+  - component: {fileID: 305308160}
   m_Layer: 5
   m_Name: Hexagono2
   m_TagString: Untagged
@@ -13871,6 +13886,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &305308160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305308153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 97
 --- !u!1 &309711537
 GameObject:
   m_ObjectHideFlags: 0
@@ -47132,7 +47160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -88908,6 +88936,7 @@ GameObject:
   - component: {fileID: 1625512644}
   - component: {fileID: 1625512643}
   - component: {fileID: 1625512642}
+  - component: {fileID: 1625512645}
   m_Layer: 5
   m_Name: Boton_Atras
   m_TagString: Untagged
@@ -89029,6 +89058,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625512640}
   m_CullTransparentMesh: 1
+--- !u!114 &1625512645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625512640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2fe242628a314488d303fe2e2149f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teclaAtajo: 98
 --- !u!1 &1631952946
 GameObject:
   m_ObjectHideFlags: 0
@@ -103520,7 +103562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1989049609
 RectTransform:
   m_ObjectHideFlags: 0
