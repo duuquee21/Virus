@@ -233,6 +233,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1672344943}
+  - {fileID: 571741530}
   - {fileID: 1196716987}
   effectType: 79
   button: {fileID: 2072066}
@@ -680,6 +682,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1278883309}
+  - {fileID: 709442407}
   effectType: 18
   button: {fileID: 8811018}
   lockIcon: {fileID: 0}
@@ -2216,6 +2219,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1951653950}
+  - {fileID: 1030370900}
+  - {fileID: 1162838971}
   effectType: 94
   button: {fileID: 47867157}
   lockIcon: {fileID: 0}
@@ -4262,6 +4267,7 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 1337796256}
   - {fileID: 1042484498}
+  - {fileID: 747885747}
   effectType: 28
   button: {fileID: 110284103}
   lockIcon: {fileID: 0}
@@ -4540,7 +4546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105.935, y: -19.1395}
+  m_AnchoredPosition: {x: 105.935, y: -18.0625}
   m_SizeDelta: {x: 211.87, y: 68.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &114730810
@@ -4757,8 +4763,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 592913816}
+  - {fileID: 278584130}
   - {fileID: 304200323}
+  - {fileID: 592913816}
   effectType: 18
   button: {fileID: 116029489}
   lockIcon: {fileID: 0}
@@ -5055,6 +5062,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 592913816}
+  - {fileID: 1914251209}
+  - {fileID: 1582465759}
   effectType: 84
   button: {fileID: 125608819}
   lockIcon: {fileID: 0}
@@ -5376,6 +5385,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1656491176}
+  - {fileID: 572815142}
   effectType: 18
   button: {fileID: 135870696}
   lockIcon: {fileID: 0}
@@ -6095,6 +6105,9 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 2073210157}
+  - {fileID: 448254070}
+  - {fileID: 1439613808}
+  - {fileID: 407586760}
   effectType: 38
   button: {fileID: 151827303}
   lockIcon: {fileID: 0}
@@ -9798,6 +9811,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1162838971}
+  - {fileID: 918096569}
   effectType: 18
   button: {fileID: 234298103}
   lockIcon: {fileID: 0}
@@ -10893,6 +10907,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 571741530}
+  - {fileID: 1196716987}
   - {fileID: 1783878502}
   effectType: 18
   button: {fileID: 257028505}
@@ -11898,6 +11914,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1951653950}
   - {fileID: 798516218}
   effectType: 18
   button: {fileID: 277072737}
@@ -12485,7 +12502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105.83, y: -19.1375}
+  m_AnchoredPosition: {x: 105.83, y: -18.061}
   m_SizeDelta: {x: 211.66, y: 68.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &288936669
@@ -13419,6 +13436,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1474536760}
+  - {fileID: 116029488}
+  - {fileID: 739443374}
   - {fileID: 1055916627}
   effectType: 18
   button: {fileID: 304200324}
@@ -15133,7 +15153,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1656491176}
   - {fileID: 1162838971}
+  - {fileID: 918096569}
   effectType: 60
   button: {fileID: 354231641}
   lockIcon: {fileID: 0}
@@ -15491,6 +15513,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1656491176}
+  - {fileID: 618984214}
   effectType: 91
   button: {fileID: 360982153}
   lockIcon: {fileID: 0}
@@ -16756,6 +16779,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1715326697}
+  - {fileID: 743180949}
   effectType: 18
   button: {fileID: 374966605}
   lockIcon: {fileID: 0}
@@ -17112,7 +17136,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 474215732}
   - {fileID: 1474536760}
+  - {fileID: 739443374}
   effectType: 18
   button: {fileID: 378396975}
   lockIcon: {fileID: 0}
@@ -17334,6 +17360,7 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 448254070}
   - {fileID: 407586760}
+  - {fileID: 797128903}
   effectType: 16
   button: {fileID: 382369588}
   lockIcon: {fileID: 0}
@@ -17802,6 +17829,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 2096388056}
+  - {fileID: 1486743223}
   effectType: 13
   button: {fileID: 392572922}
   lockIcon: {fileID: 0}
@@ -18110,6 +18138,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 886933773}
+  - {fileID: 886933773}
+  - {fileID: 718359989}
   effectType: 18
   button: {fileID: 397164382}
   lockIcon: {fileID: 0}
@@ -20234,8 +20264,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 278584130}
   - {fileID: 1396887379}
+  - {fileID: 278584130}
   effectType: 18
   button: {fileID: 439070112}
   lockIcon: {fileID: 0}
@@ -21591,6 +21621,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1396887379}
   - {fileID: 378396974}
   effectType: 18
   button: {fileID: 474215733}
@@ -21896,6 +21927,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 954987305}
+  - {fileID: 537888121}
   effectType: 60
   button: {fileID: 479754169}
   lockIcon: {fileID: 0}
@@ -22808,6 +22840,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1923589102}
   - {fileID: 531154061}
   effectType: 18
   button: {fileID: 503870942}
@@ -23099,6 +23132,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1130491015}
+  - {fileID: 1715326697}
   - {fileID: 618984214}
   effectType: 18
   button: {fileID: 504294418}
@@ -29533,6 +29568,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 686109906}
+  - {fileID: 503870941}
+  - {fileID: 1041634075}
   - {fileID: 795418842}
   effectType: 18
   button: {fileID: 531154062}
@@ -30423,6 +30461,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1228263475}
+  - {fileID: 1272409848}
+  - {fileID: 1076894833}
   effectType: 18
   button: {fileID: 544632741}
   lockIcon: {fileID: 0}
@@ -30942,6 +30982,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 2072065}
   - {fileID: 257028504}
   effectType: 18
   button: {fileID: 571741531}
@@ -31164,6 +31205,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 135870695}
+  - {fileID: 886933773}
   effectType: 18
   button: {fileID: 572815143}
   lockIcon: {fileID: 0}
@@ -31471,8 +31513,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1976074436}
+  - {fileID: 116029488}
   - {fileID: 1055916627}
+  - {fileID: 125608818}
   effectType: 18
   button: {fileID: 592913817}
   lockIcon: {fileID: 0}
@@ -32431,6 +32474,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 504294417}
+  - {fileID: 1667371938}
   - {fileID: 360982152}
   effectType: 18
   button: {fileID: 618984215}
@@ -33176,6 +33221,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1708901996}
+  - {fileID: 754935172}
+  - {fileID: 1265474764}
   effectType: 18
   button: {fileID: 647879360}
   lockIcon: {fileID: 0}
@@ -33415,6 +33462,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 2096388056}
+  - {fileID: 1867518897}
   effectType: 18
   button: {fileID: 661437728}
   lockIcon: {fileID: 0}
@@ -34202,10 +34250,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1196716987}
+  - {fileID: 1783878502}
   - {fileID: 156995976}
   - {fileID: 754507407}
-  - {fileID: 1783878502}
-  - {fileID: 1196716987}
   effectType: 18
   button: {fileID: 678052123}
   lockIcon: {fileID: 0}
@@ -34426,6 +34474,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 739443374}
   - {fileID: 1055916627}
   effectType: 18
   button: {fileID: 678139297}
@@ -34647,7 +34696,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1926160753}
   - {fileID: 531154061}
+  - {fileID: 1923589102}
   effectType: 18
   button: {fileID: 686109907}
   lockIcon: {fileID: 0}
@@ -34869,6 +34920,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 886933773}
+  - {fileID: 886933773}
+  - {fileID: 718359989}
   effectType: 18
   button: {fileID: 692801605}
   lockIcon: {fileID: 0}
@@ -35272,6 +35325,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 8811017}
+  - {fileID: 823844519}
+  - {fileID: 987115519}
   effectType: 66
   button: {fileID: 709442408}
   lockIcon: {fileID: 0}
@@ -35618,8 +35673,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 692801604}
   - {fileID: 397164381}
+  - {fileID: 692801604}
+  - {fileID: 1972385819}
+  - {fileID: 748039276}
   effectType: 18
   button: {fileID: 718359990}
   lockIcon: {fileID: 0}
@@ -36254,8 +36311,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1654223963}
+  - {fileID: 1582465759}
   - {fileID: 1976074436}
+  - {fileID: 1654223963}
   effectType: 18
   button: {fileID: 737618074}
   lockIcon: {fileID: 0}
@@ -36478,7 +36536,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 378396974}
   - {fileID: 304200323}
+  - {fileID: 678139296}
   effectType: 18
   button: {fileID: 739443375}
   lockIcon: {fileID: 0}
@@ -36699,6 +36759,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 782223950}
   - {fileID: 374966604}
   effectType: 81
   button: {fileID: 743180950}
@@ -36921,6 +36982,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 110284102}
+  - {fileID: 1708901996}
   effectType: 18
   button: {fileID: 747885748}
   lockIcon: {fileID: 0}
@@ -37142,6 +37204,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 718359989}
+  - {fileID: 927052174}
   effectType: 18
   button: {fileID: 748039277}
   lockIcon: {fileID: 0}
@@ -37362,6 +37425,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1041634075}
+  - {fileID: 2087679057}
   - {fileID: 795418842}
   effectType: 18
   button: {fileID: 750283633}
@@ -37584,6 +37649,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1430353861}
+  - {fileID: 798516218}
+  - {fileID: 1608665274}
   effectType: 18
   button: {fileID: 750702840}
   lockIcon: {fileID: 0}
@@ -38028,7 +38095,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 647879359}
   - {fileID: 1233362050}
+  - {fileID: 1050803135}
   effectType: 96
   button: {fileID: 754935173}
   lockIcon: {fileID: 0}
@@ -43242,7 +43311,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1486743223}
   - {fileID: 1715326697}
+  - {fileID: 1130491015}
+  - {fileID: 743180949}
   effectType: 18
   button: {fileID: 782223951}
   lockIcon: {fileID: 0}
@@ -43599,8 +43671,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1233362050}
   - {fileID: 1272409848}
+  - {fileID: 1233362050}
+  - {fileID: 1050803135}
   effectType: 18
   button: {fileID: 791837823}
   lockIcon: {fileID: 0}
@@ -43821,6 +43894,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 531154061}
+  - {fileID: 750283632}
   - {fileID: 1261396719}
   effectType: 18
   button: {fileID: 795418843}
@@ -44264,7 +44339,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 277072736}
+  - {fileID: 1181489237}
   - {fileID: 750702839}
+  - {fileID: 833982574}
   effectType: 18
   button: {fileID: 798516219}
   lockIcon: {fileID: 0}
@@ -46287,6 +46365,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1430353861}
   - {fileID: 1804425297}
   effectType: 18
   button: {fileID: 831262136}
@@ -46508,6 +46587,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 798516218}
   - {fileID: 1608665274}
   effectType: 18
   button: {fileID: 833982575}
@@ -46957,6 +47037,93 @@ RectTransform:
   m_AnchoredPosition: {x: -150.23079, y: -545.1999}
   m_SizeDelta: {x: 75, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &852358555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852358556}
+  - component: {fileID: 852358557}
+  m_Layer: 0
+  m_Name: DayResultPanelFondo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852358556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852358555}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00022881033, y: 0.000116501535, z: -2761.7144}
+  m_LocalScale: {x: 11.20632, y: 11.411665, z: 38.57143}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1870291122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &852358557
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852358555}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10000
+  m_Sprite: {fileID: 21300000, guid: 6ab6e76f5325a874faf06161cdb00970, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 41.5, y: 37.609375}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &858966969
 GameObject:
   m_ObjectHideFlags: 0
@@ -47792,6 +47959,7 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 1439613808}
   - {fileID: 407586760}
+  - {fileID: 1614307349}
   effectType: 13
   button: {fileID: 876571098}
   lockIcon: {fileID: 0}
@@ -48925,6 +49093,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 572815142}
+  - {fileID: 692801604}
+  - {fileID: 397164381}
   effectType: 18
   button: {fileID: 886933774}
   lockIcon: {fileID: 0}
@@ -49679,6 +49849,7 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 354231640}
   - {fileID: 234298102}
+  - {fileID: 1501028768}
   effectType: 18
   button: {fileID: 918096570}
   lockIcon: {fileID: 0}
@@ -50470,8 +50641,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 748039276}
   - {fileID: 1972385819}
+  - {fileID: 748039276}
+  - {fileID: 2069304523}
+  - {fileID: 237977260}
   effectType: 18
   button: {fileID: 927052175}
   lockIcon: {fileID: 0}
@@ -53381,6 +53554,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 47867156}
+  - {fileID: 1327912796}
   - {fileID: 1464204527}
   effectType: 18
   button: {fileID: 1030370901}
@@ -54097,6 +54272,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 531154061}
   - {fileID: 750283632}
   effectType: 18
   button: {fileID: 1041634076}
@@ -54321,6 +54497,9 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1611679157}
+  - {fileID: 110284102}
+  - {fileID: 1097085094}
+  - {fileID: 1708901996}
   effectType: 18
   button: {fileID: 1042484499}
   lockIcon: {fileID: 0}
@@ -55107,6 +55286,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 791837822}
+  - {fileID: 754935172}
   effectType: 79
   button: {fileID: 1050803136}
   lockIcon: {fileID: 0}
@@ -55365,7 +55545,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 304200323}
   - {fileID: 592913816}
+  - {fileID: 678139296}
+  - {fileID: 1914251209}
   effectType: 18
   button: {fileID: 1055916628}
   lockIcon: {fileID: 0}
@@ -56294,9 +56477,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 823844519}
   - {fileID: 932488385}
   - {fileID: 2002969990}
+  - {fileID: 823844519}
   effectType: 13
   button: {fileID: 1079378719}
   lockIcon: {fileID: 0}
@@ -56817,6 +57000,8 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 1228263475}
   - {fileID: 1042484498}
+  - {fileID: 1233362050}
+  - {fileID: 1272409848}
   effectType: 18
   button: {fileID: 1097085095}
   lockIcon: {fileID: 0}
@@ -57194,7 +57379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 127.82655, y: -29.386}
+  m_AnchoredPosition: {x: 127.82655, y: -27.845}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1102835020
@@ -58644,6 +58829,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 782223950}
   - {fileID: 504294417}
   effectType: 18
   button: {fileID: 1130491016}
@@ -60211,7 +60397,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 354231640}
+  - {fileID: 1327912796}
   - {fileID: 47867156}
+  - {fileID: 234298102}
   effectType: 18
   button: {fileID: 1162838972}
   lockIcon: {fileID: 0}
@@ -60745,6 +60934,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1951653950}
+  - {fileID: 1339528003}
+  - {fileID: 798516218}
   - {fileID: 1430353861}
   effectType: 18
   button: {fileID: 1181489238}
@@ -61706,6 +61898,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 2072065}
+  - {fileID: 257028504}
   - {fileID: 678052122}
   effectType: 18
   button: {fileID: 1196716988}
@@ -62751,6 +62945,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1611679157}
+  - {fileID: 1097085094}
+  - {fileID: 544632740}
   effectType: 18
   button: {fileID: 1228263476}
   lockIcon: {fileID: 0}
@@ -63196,8 +63392,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1708901996}
   - {fileID: 1097085094}
+  - {fileID: 1708901996}
+  - {fileID: 791837822}
+  - {fileID: 754935172}
   effectType: 18
   button: {fileID: 1233362051}
   lockIcon: {fileID: 0}
@@ -63964,6 +64162,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 795418842}
   - {fileID: 439070111}
   effectType: 18
   button: {fileID: 1261396720}
@@ -64188,6 +64387,7 @@ MonoBehaviour:
   - {fileID: 1439130290}
   - {fileID: 10865806}
   - {fileID: 1135501627}
+  - {fileID: 647879359}
   effectType: 18
   button: {fileID: 1265474765}
   lockIcon: {fileID: 0}
@@ -64408,8 +64608,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 544632740}
   - {fileID: 1097085094}
+  - {fileID: 544632740}
+  - {fileID: 791837822}
   effectType: 13
   button: {fileID: 1272409849}
   lockIcon: {fileID: 0}
@@ -64769,6 +64970,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1811658619}
+  - {fileID: 8811017}
   effectType: 98
   button: {fileID: 1278883310}
   lockIcon: {fileID: 0}
@@ -66195,6 +66397,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1030370900}
+  - {fileID: 1162838971}
   effectType: 18
   button: {fileID: 1327912797}
   lockIcon: {fileID: 0}
@@ -66778,6 +66981,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1611679157}
+  - {fileID: 110284102}
   effectType: 18
   button: {fileID: 1337796257}
   lockIcon: {fileID: 0}
@@ -66998,6 +67202,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1464204527}
+  - {fileID: 1181489237}
   - {fileID: 1858259019}
   effectType: 18
   button: {fileID: 1339528004}
@@ -68739,8 +68945,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 439070111}
-  - {fileID: 474215732}
   - {fileID: 1474536760}
+  - {fileID: 474215732}
   effectType: 37
   button: {fileID: 1396887380}
   lockIcon: {fileID: 0}
@@ -80223,6 +80429,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1858259019}
+  - {fileID: 1181489237}
+  - {fileID: 750702839}
   - {fileID: 831262135}
   effectType: 18
   button: {fileID: 1430353862}
@@ -82136,6 +82345,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1030370900}
+  - {fileID: 1951653950}
   - {fileID: 1339528003}
   effectType: 18
   button: {fileID: 1464204528}
@@ -82494,6 +82705,9 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 304200323}
+  - {fileID: 278584130}
+  - {fileID: 1396887379}
+  - {fileID: 378396974}
   effectType: 18
   button: {fileID: 1474536761}
   lockIcon: {fileID: 0}
@@ -82852,6 +83066,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1486743223}
   - {fileID: 782223950}
   effectType: 18
   button: {fileID: 1486743224}
@@ -83226,7 +83441,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 750702839}
+  - {fileID: 918096569}
   effectType: 18
   button: {fileID: 1501028769}
   lockIcon: {fileID: 0}
@@ -85277,6 +85492,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 125608818}
+  - {fileID: 255776139}
   - {fileID: 737618073}
   effectType: 18
   button: {fileID: 1582465760}
@@ -86596,6 +86813,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 750702839}
+  - {fileID: 833982574}
   effectType: 18
   button: {fileID: 1608665275}
   lockIcon: {fileID: 0}
@@ -86779,6 +86997,9 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 2096388056}
+  - {fileID: 1337796256}
+  - {fileID: 1042484498}
+  - {fileID: 1228263475}
   effectType: 50
   button: {fileID: 1611679158}
   lockIcon: {fileID: 0}
@@ -87000,6 +87221,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 876571097}
+  - {fileID: 1811658619}
   effectType: 43
   button: {fileID: 1614307350}
   lockIcon: {fileID: 0}
@@ -89111,6 +89333,8 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 354231640}
+  - {fileID: 360982152}
+  - {fileID: 135870695}
   effectType: 18
   button: {fileID: 1656491177}
   lockIcon: {fileID: 0}
@@ -89622,6 +89846,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 618984214}
+  - {fileID: 1715326697}
   effectType: 18
   button: {fileID: 1667371939}
   lockIcon: {fileID: 0}
@@ -90116,6 +90341,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1804425297}
   - {fileID: 2072065}
   effectType: 18
   button: {fileID: 1672344944}
@@ -91476,8 +91702,10 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1042484498}
   - {fileID: 747885747}
+  - {fileID: 1042484498}
+  - {fileID: 1233362050}
+  - {fileID: 647879359}
   effectType: 18
   button: {fileID: 1708901997}
   lockIcon: {fileID: 0}
@@ -91836,6 +92064,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 374966604}
+  - {fileID: 782223950}
+  - {fileID: 504294417}
   - {fileID: 1667371938}
   effectType: 18
   button: {fileID: 1715326698}
@@ -94201,7 +94432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.47656, y: -29.15}
+  m_AnchoredPosition: {x: 257.47656, y: -27.845}
   m_SizeDelta: {x: 3.6469, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1797673838
@@ -94454,6 +94685,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 831262135}
   - {fileID: 1672344943}
   effectType: 18
   button: {fileID: 1804425298}
@@ -94814,6 +95046,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1614307349}
+  - {fileID: 1278883309}
   effectType: 68
   button: {fileID: 1811658620}
   lockIcon: {fileID: 0}
@@ -95772,7 +96005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 127.82655, y: -29.15}
+  m_AnchoredPosition: {x: 127.82655, y: -27.845}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1841904652
@@ -96458,6 +96691,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1339528003}
   - {fileID: 1430353861}
   effectType: 18
   button: {fileID: 1858259020}
@@ -97234,6 +97468,8 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 2002969990}
   - {fileID: 661437727}
+  - {fileID: 1654223963}
+  - {fileID: 1650745933}
   effectType: 18
   button: {fileID: 1867518898}
   lockIcon: {fileID: 0}
@@ -97521,6 +97757,7 @@ RectTransform:
   - {fileID: 1990845519}
   - {fileID: 710480834}
   - {fileID: 1633016418}
+  - {fileID: 852358556}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -98980,6 +99217,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 503870941}
+  - {fileID: 686109906}
   effectType: 18
   button: {fileID: 1923589103}
   lockIcon: {fileID: 0}
@@ -100248,6 +100486,9 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 47867156}
+  - {fileID: 1464204527}
+  - {fileID: 277072736}
   - {fileID: 1181489237}
   effectType: 18
   button: {fileID: 1951653951}
@@ -101275,6 +101516,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 718359989}
+  - {fileID: 927052174}
   effectType: 16
   button: {fileID: 1972385820}
   lockIcon: {fileID: 0}
@@ -101631,8 +101873,8 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
-  - {fileID: 1334769234}
   - {fileID: 737618073}
+  - {fileID: 1334769234}
   - {fileID: 2038673408}
   effectType: 66
   button: {fileID: 1976074437}
@@ -102805,6 +103047,7 @@ MonoBehaviour:
   descriptionKey: 
   CoinCost: 1
   requiredParentNodes:
+  - {fileID: 1867518897}
   - {fileID: 1079378718}
   effectType: 13
   button: {fileID: 2002969991}
@@ -105488,6 +105731,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 927052174}
+  - {fileID: 1407134975}
   effectType: 18
   button: {fileID: 2069304524}
   lockIcon: {fileID: 0}
@@ -105809,6 +106053,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 2096388056}
+  - {fileID: 151827302}
   effectType: 49
   button: {fileID: 2073210158}
   lockIcon: {fileID: 0}
@@ -108121,6 +108366,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 905467058}
+  - {fileID: 1971930457}
   effectType: 18
   button: {fileID: 2128782335}
   lockIcon: {fileID: 0}
