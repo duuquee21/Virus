@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2072061}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 7136874}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 8811013}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 10865802}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -1382,7 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 30808108}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -2186,7 +2186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 47867152}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -2777,7 +2777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 51879059}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -4235,7 +4235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 110284098}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -4715,7 +4715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 116029484}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 125608814}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -5516,7 +5516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 0}
   infoPanel: {fileID: 0}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -5597,7 +5597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 140815416}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6260,7 +6260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 151827300}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6606,7 +6606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 155905780}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6810,7 +6810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 156995972}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -9940,7 +9940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 234298109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -10062,7 +10062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 237977256}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -10655,7 +10655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 255776135}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -10868,7 +10868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 257028500}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -11862,7 +11862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 277072732}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -12105,7 +12105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 278584126}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -12688,7 +12688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 290278389}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -13388,7 +13388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 304200319}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -14871,7 +14871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 350984039}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -15093,7 +15093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 354231636}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -15473,7 +15473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 360982148}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -16720,7 +16720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 374966600}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17079,7 +17079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 378396970}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17301,7 +17301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 382369583}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17772,7 +17772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 392572917}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -18081,7 +18081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 397164377}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -19058,7 +19058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 407586756}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20410,7 +20410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 439070109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20633,7 +20633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 448254068}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20832,7 +20832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 449661204}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -21751,7 +21751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 474215730}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -21877,7 +21877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 479754164}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -22963,7 +22963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 503870948}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -23084,7 +23084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 504294413}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -28771,7 +28771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 525428704}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29543,7 +29543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 531154057}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29749,7 +29749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 534153782}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29973,7 +29973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 537888117}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -30418,7 +30418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 544632736}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -30961,7 +30961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 571741526}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -31164,7 +31164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 572815138}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -31474,7 +31474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 592913812}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -32436,7 +32436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 618984210}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -33183,7 +33183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 647879355}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -33625,7 +33625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 661437725}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34215,7 +34215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 678052118}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34460,7 +34460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 678139292}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34663,7 +34663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 686109902}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34886,7 +34886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 692801600}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -35492,7 +35492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 709442405}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -35641,7 +35641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 718359985}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36300,7 +36300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 737618069}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36506,7 +36506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 739443370}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36728,7 +36728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 743180945}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36951,7 +36951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 747885743}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37174,7 +37174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 748039272}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37417,7 +37417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 750283628}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37621,7 +37621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 750702835}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37845,7 +37845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 754507403}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -38090,7 +38090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 754935168}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43285,7 +43285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 782223946}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43646,7 +43646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 791837818}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43890,7 +43890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 795418838}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44255,7 +44255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 797128901}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44317,7 +44317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 798516214}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44790,7 +44790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 802097010}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -45438,7 +45438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 823844515}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -46344,7 +46344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 831262131}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -46567,7 +46567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 833982570}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -47851,7 +47851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 876571093}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -48489,7 +48489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 879777740}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -48991,7 +48991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 886933769}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -49419,7 +49419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 905467054}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -49920,7 +49920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 918096576}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -50562,7 +50562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 927052170}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -51004,7 +51004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 932488383}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -51806,7 +51806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 954987303}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -52345,7 +52345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 987115515}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -53659,7 +53659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1030370898}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -54177,7 +54177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1041634071}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -54402,7 +54402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1042484494}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -56512,7 +56512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1050803133}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -56573,7 +56573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1055916623}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -57285,7 +57285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1076894829}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -57507,7 +57507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1079378714}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -58028,7 +58028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1097085090}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -59860,7 +59860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1130491011}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -60277,7 +60277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1135501623}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -61186,7 +61186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1151359667}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -61632,7 +61632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1162838969}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -61968,7 +61968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1181489233}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -62933,7 +62933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1196716983}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -63980,7 +63980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1228263471}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -64428,7 +64428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1233362046}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -65219,7 +65219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1261396715}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -65422,7 +65422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1265474760}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -65646,7 +65646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1272409844}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -66028,7 +66028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1278883305}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -66698,7 +66698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1296002565}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -67438,7 +67438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1327912792}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -67661,7 +67661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1334769230}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -68023,7 +68023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1337796252}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -68246,7 +68246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1339527999}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -70190,7 +70190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1396887377}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -70445,7 +70445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1407134971}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -81476,7 +81476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1430353857}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -81995,7 +81995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1439130286}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -82198,7 +82198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1439613804}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -83416,7 +83416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1464204523}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -83756,7 +83756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1474536756}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -84119,7 +84119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1486743219}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -84667,7 +84667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1501028775}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -86548,7 +86548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1582465755}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -87868,7 +87868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1608665270}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -88255,7 +88255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1611679155}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -88478,7 +88478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1614307347}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -89794,7 +89794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1650745929}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -90017,7 +90017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1654223959}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -90399,7 +90399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1656491172}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -90893,7 +90893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1667371934}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -91390,7 +91390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1672344939}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -92752,7 +92752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1708901992}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -93115,7 +93115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1715326693}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -95128,7 +95128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1783878500}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -95757,7 +95757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1804425293}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -96118,7 +96118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1811658615}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -97523,7 +97523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1857615617}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -97748,7 +97748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1858259015}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -98524,7 +98524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1867518893}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -98871,6 +98871,8 @@ RectTransform:
   - {fileID: 214494203}
   - {fileID: 1865556697}
   - {fileID: 1990845519}
+  - {fileID: 710480834}
+  - {fileID: 1633016418}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -99984,7 +99986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1914251205}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -100464,7 +100466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1923589109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -100565,7 +100567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1926160749}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -101066,7 +101068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1933578424}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -101748,7 +101750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1951653948}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -102354,7 +102356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1971930453}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -102577,7 +102579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1972385815}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -102956,7 +102958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1976074432}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -103666,7 +103668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1989663727}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -104115,7 +104117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2002969986}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -105440,7 +105442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2038673404}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -106819,7 +106821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2069304519}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -107322,7 +107324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2073210155}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -107383,7 +107385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2074735394}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -108053,7 +108055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2087679053}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -108578,7 +108580,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
+  m_Sprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -108624,10 +108626,10 @@ MonoBehaviour:
   button: {fileID: 2096388057}
   nodeImage: {fileID: 2096388058}
   costText: {fileID: 0}
-  hoverSprite: {fileID: 8834879831451349387, guid: 8c377198c2835cb498e951cd2274bed5, type: 3}
-  normalSprite: {fileID: -1189062960662210706, guid: 2a79f4c9d94eb82498f1a7687bb6e012, type: 3}
-  notEnoughMoneySprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
-  disabledSprite: {fileID: -189560765679015571, guid: 317deb57e8459744db15e4161dd5233e, type: 3}
+  hoverSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  normalSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  notEnoughMoneySprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  disabledSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
 --- !u!114 &2096388062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109444,7 +109446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2128782330}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
