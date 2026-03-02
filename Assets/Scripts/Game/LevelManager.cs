@@ -309,8 +309,6 @@ public class LevelManager : MonoBehaviour
 
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
-        ActivateMap(0);
-
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset) ForceHardReset();
         if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
 
