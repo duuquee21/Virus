@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f4e7506b828749f469062d6b441a5a40
+guid: 0478f752a6783e043bb237887a195237
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8220834601631516662
-    second: DayResultBoton5_0
+      213: 213019101126207510
+    second: DayResultPanelBarraProgreso_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DayResultBoton5_0
+      name: DayResultPanelBarraProgreso_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 819
-        height: 764
+        width: 3066
+        height: 174
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a0873845c7ab9ed80800000000000000
-      internalID: -8220834601631516662
+      spriteID: 618200d6ebbc4f200800000000000000
+      internalID: 213019101126207510
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DayResultBoton5_0: -8220834601631516662
+      DayResultPanelBarraProgreso_0: 213019101126207510
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1ea0969325f5a904a96a2a060e47cdeb
+guid: 43025b99e981b2b4499c5a7ba73c1f5a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5753747956239341672
-    second: DayResultBoton4_0
+      213: -5130558894233647175
+    second: Fondo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DayResultBoton4_0
+      name: Fondo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2723
-        height: 490
+        width: 8000
+        height: 5119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 897693de7b49620b0800000000000000
-      internalID: -5753747956239341672
+      spriteID: 9b78bf95ed79cc8b0800000000000000
+      internalID: -5130558894233647175
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DayResultBoton4_0: -5753747956239341672
+      Fondo_0: -5130558894233647175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
