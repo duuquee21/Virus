@@ -232,8 +232,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1672344943}
   requiredParentNodes:
   - {fileID: 1196716987}
   effectType: 79
@@ -456,9 +454,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 140815420}
-  - {fileID: 802097012}
   requiredParentNodes:
   - {fileID: 1971930457}
   - {fileID: 905467058}
@@ -681,8 +676,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 709442407}
   requiredParentNodes:
   - {fileID: 1278883309}
   effectType: 18
@@ -904,10 +897,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1933578428}
-  - {fileID: 905467058}
-  - {fileID: 140815420}
   requiredParentNodes:
   - {fileID: 1265474764}
   effectType: 18
@@ -1438,8 +1427,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2038673408}
   requiredParentNodes:
   - {fileID: 1334769234}
   - {fileID: 2038673408}
@@ -2222,9 +2209,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1162838971}
-  - {fileID: 1030370900}
   requiredParentNodes:
   - {fileID: 1951653950}
   effectType: 94
@@ -2833,9 +2817,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 534153786}
-  - {fileID: 140815420}
   requiredParentNodes:
   - {fileID: 1933578428}
   effectType: 18
@@ -4271,9 +4252,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1042484498}
-  - {fileID: 747885747}
   requiredParentNodes:
   - {fileID: 1337796256}
   - {fileID: 1042484498}
@@ -4771,9 +4749,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 278584130}
-  - {fileID: 304200323}
   requiredParentNodes:
   - {fileID: 592913816}
   effectType: 18
@@ -5070,7 +5045,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 592913816}
   effectType: 84
@@ -5392,8 +5366,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 572815142}
   requiredParentNodes:
   - {fileID: 1656491176}
   effectType: 18
@@ -5653,9 +5625,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
-  - {fileID: 754507407}
   requiredParentNodes:
   - {fileID: 10865806}
   - {fileID: 51879063}
@@ -6114,10 +6083,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 448254070}
-  - {fileID: 1439613808}
-  - {fileID: 407586760}
   requiredParentNodes:
   - {fileID: 2073210157}
   effectType: 38
@@ -6642,8 +6607,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 525428708}
   requiredParentNodes:
   - {fileID: 1857615621}
   - {fileID: 449661208}
@@ -6866,8 +6829,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 678052122}
   requiredParentNodes:
   - {fileID: 534153786}
   effectType: 13
@@ -9824,8 +9785,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 918096569}
   requiredParentNodes:
   - {fileID: 1162838971}
   effectType: 18
@@ -10118,7 +10077,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 927052174}
   effectType: 60
@@ -10691,7 +10649,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1582465759}
   effectType: 18
@@ -10924,9 +10881,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1196716987}
-  - {fileID: 571741530}
   requiredParentNodes:
   - {fileID: 1783878502}
   effectType: 18
@@ -11932,8 +11886,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
   requiredParentNodes:
   - {fileID: 798516218}
   effectType: 18
@@ -12155,8 +12107,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 439070111}
   requiredParentNodes:
   - {fileID: 116029488}
   - {fileID: 1474536760}
@@ -12738,8 +12688,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1989663731}
   requiredParentNodes:
   - {fileID: 879777744}
   effectType: 18
@@ -13458,10 +13406,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 739443374}
-  - {fileID: 1474536760}
-  - {fileID: 116029488}
   requiredParentNodes:
   - {fileID: 1055916627}
   effectType: 18
@@ -14955,7 +14899,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1989663731}
   effectType: 18
@@ -15177,9 +15120,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1656491176}
-  - {fileID: 918096569}
   requiredParentNodes:
   - {fileID: 1162838971}
   effectType: 60
@@ -15537,8 +15477,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 618984214}
   requiredParentNodes:
   - {fileID: 1656491176}
   effectType: 91
@@ -16804,8 +16742,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 743180949}
   requiredParentNodes:
   - {fileID: 1715326697}
   effectType: 18
@@ -17163,8 +17099,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 474215732}
   requiredParentNodes:
   - {fileID: 1474536760}
   effectType: 18
@@ -17385,11 +17319,9 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 407586760}
-  - {fileID: 797128903}
   requiredParentNodes:
   - {fileID: 448254070}
+  - {fileID: 407586760}
   effectType: 16
   button: {fileID: 382369588}
   lockIcon: {fileID: 0}
@@ -17856,7 +17788,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 2096388056}
   effectType: 13
@@ -18165,8 +18096,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 718359989}
   requiredParentNodes:
   - {fileID: 886933773}
   effectType: 18
@@ -19142,12 +19071,11 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 876571097}
-  - {fileID: 382369587}
   requiredParentNodes:
   - {fileID: 151827302}
-  effectType: 110
+  - {fileID: 382369587}
+  - {fileID: 876571097}
+  effectType: 109
   button: {fileID: 407586761}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -20293,9 +20221,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1396887379}
-  - {fileID: 1261396719}
   requiredParentNodes:
   - {fileID: 278584130}
   effectType: 18
@@ -20517,10 +20442,9 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 382369587}
   requiredParentNodes:
   - {fileID: 151827302}
+  - {fileID: 382369587}
   effectType: 58
   button: {fileID: 448254071}
   lockIcon: {fileID: 0}
@@ -20916,8 +20840,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 155905784}
   requiredParentNodes:
   - {fileID: 879777744}
   effectType: 18
@@ -21655,8 +21577,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1396887379}
   requiredParentNodes:
   - {fileID: 378396974}
   effectType: 18
@@ -21961,7 +21881,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 954987305}
   effectType: 60
@@ -22875,8 +22794,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1923589102}
   requiredParentNodes:
   - {fileID: 531154061}
   effectType: 18
@@ -23168,9 +23085,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1715326697}
-  - {fileID: 1130491015}
   requiredParentNodes:
   - {fileID: 618984214}
   effectType: 18
@@ -28855,8 +28769,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 155905784}
   effectType: 13
@@ -29607,10 +29519,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1041634075}
-  - {fileID: 686109906}
-  - {fileID: 503870941}
   requiredParentNodes:
   - {fileID: 795418842}
   effectType: 18
@@ -29833,9 +29741,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754507407}
-  - {fileID: 156995976}
   requiredParentNodes:
   - {fileID: 51879063}
   effectType: 18
@@ -30057,7 +29962,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 479754168}
   effectType: 60
@@ -30502,9 +30406,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1076894833}
-  - {fileID: 1272409848}
   requiredParentNodes:
   - {fileID: 1228263475}
   effectType: 18
@@ -31025,8 +30926,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2072065}
   requiredParentNodes:
   - {fileID: 257028504}
   effectType: 18
@@ -31248,8 +31147,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 886933773}
   requiredParentNodes:
   - {fileID: 135870695}
   effectType: 18
@@ -31558,9 +31455,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 116029488}
-  - {fileID: 1055916627}
   requiredParentNodes:
   - {fileID: 1976074436}
   effectType: 18
@@ -32520,9 +32414,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1667371938}
-  - {fileID: 504294417}
   requiredParentNodes:
   - {fileID: 360982152}
   effectType: 18
@@ -33267,9 +33158,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754935172}
-  - {fileID: 1265474764}
   requiredParentNodes:
   - {fileID: 1708901996}
   effectType: 18
@@ -33509,8 +33397,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1867518897}
   requiredParentNodes:
   - {fileID: 2096388056}
   effectType: 18
@@ -34299,9 +34185,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1196716987}
-  - {fileID: 1783878502}
   requiredParentNodes:
   - {fileID: 156995976}
   - {fileID: 754507407}
@@ -34524,8 +34407,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 739443374}
   requiredParentNodes:
   - {fileID: 1055916627}
   effectType: 18
@@ -34747,8 +34628,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1926160753}
   requiredParentNodes:
   - {fileID: 531154061}
   effectType: 18
@@ -34970,8 +34849,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 718359989}
   requiredParentNodes:
   - {fileID: 886933773}
   effectType: 18
@@ -35375,9 +35252,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 987115519}
-  - {fileID: 823844519}
   requiredParentNodes:
   - {fileID: 8811017}
   effectType: 66
@@ -35725,9 +35599,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 748039276}
-  - {fileID: 1972385819}
   requiredParentNodes:
   - {fileID: 692801604}
   - {fileID: 397164381}
@@ -36364,9 +36235,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1582465759}
-  - {fileID: 1976074436}
   requiredParentNodes:
   - {fileID: 1654223963}
   effectType: 18
@@ -36590,7 +36458,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 304200323}
   effectType: 18
@@ -36812,8 +36679,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 374966604}
   effectType: 81
@@ -37035,8 +36900,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1708901996}
   requiredParentNodes:
   - {fileID: 110284102}
   effectType: 18
@@ -37258,8 +37121,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 927052174}
   requiredParentNodes:
   - {fileID: 718359989}
   effectType: 18
@@ -37481,9 +37342,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1041634075}
-  - {fileID: 2087679057}
   requiredParentNodes:
   - {fileID: 795418842}
   effectType: 18
@@ -37705,9 +37563,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1608665274}
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1430353861}
   effectType: 18
@@ -37929,9 +37784,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 802097012}
-  - {fileID: 678052122}
   requiredParentNodes:
   - {fileID: 140815420}
   - {fileID: 534153786}
@@ -38154,7 +38006,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1233362050}
   effectType: 96
@@ -43369,10 +43220,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 743180949}
-  - {fileID: 1130491015}
-  - {fileID: 1486743223}
   requiredParentNodes:
   - {fileID: 1715326697}
   effectType: 18
@@ -43730,8 +43577,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1050803135}
   requiredParentNodes:
   - {fileID: 1233362050}
   - {fileID: 1272409848}
@@ -43954,9 +43799,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 750283632}
-  - {fileID: 531154061}
   requiredParentNodes:
   - {fileID: 1261396719}
   effectType: 18
@@ -44140,7 +43982,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 382369587}
   effectType: 53
@@ -44401,9 +44242,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 277072736}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 750702839}
   effectType: 18
@@ -44674,8 +44512,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1783878502}
   requiredParentNodes:
   - {fileID: 7136878}
   effectType: 18
@@ -45522,9 +45358,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 954987305}
-  - {fileID: 1079378718}
   requiredParentNodes:
   - {fileID: 709442407}
   effectType: 13
@@ -46428,8 +46261,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1430353861}
   requiredParentNodes:
   - {fileID: 1804425297}
   effectType: 18
@@ -46651,8 +46482,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1608665274}
   effectType: 18
@@ -47160,7 +46989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -47935,11 +47764,9 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 407586760}
-  - {fileID: 1614307349}
   requiredParentNodes:
   - {fileID: 1439613808}
+  - {fileID: 407586760}
   effectType: 13
   button: {fileID: 876571098}
   lockIcon: {fileID: 0}
@@ -48573,10 +48400,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 290278393}
-  - {fileID: 449661208}
-  - {fileID: 1857615621}
   requiredParentNodes:
   - {fileID: 1926160753}
   effectType: 18
@@ -49075,9 +48898,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 397164381}
-  - {fileID: 692801604}
   requiredParentNodes:
   - {fileID: 572815142}
   effectType: 18
@@ -49503,9 +49323,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
-  - {fileID: 2128782334}
   requiredParentNodes:
   - {fileID: 1135501627}
   effectType: 18
@@ -49831,8 +49648,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1501028768}
   requiredParentNodes:
   - {fileID: 354231640}
   - {fileID: 234298102}
@@ -50626,9 +50441,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 237977260}
-  - {fileID: 2069304523}
   requiredParentNodes:
   - {fileID: 748039276}
   - {fileID: 1972385819}
@@ -50889,7 +50701,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 954987305}
   effectType: 18
@@ -51689,9 +51500,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 479754168}
-  - {fileID: 932488385}
   requiredParentNodes:
   - {fileID: 823844519}
   effectType: 39
@@ -52429,9 +52237,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 0}
-  - {fileID: 954987305}
   requiredParentNodes:
   - {fileID: 709442407}
   effectType: 18
@@ -53542,9 +53347,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 47867156}
-  - {fileID: 1327912796}
   requiredParentNodes:
   - {fileID: 1464204527}
   effectType: 18
@@ -54261,8 +54063,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 531154061}
   requiredParentNodes:
   - {fileID: 750283632}
   effectType: 18
@@ -54486,10 +54286,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 110284102}
-  - {fileID: 1097085094}
-  - {fileID: 1708901996}
   requiredParentNodes:
   - {fileID: 1611679157}
   effectType: 18
@@ -55063,1127 +54859,6 @@ MonoBehaviour:
   globalOffsetSalida: 30
   globalOffsetLlegada: 43
   globalOffsetPosicion: {x: 10, y: 7.5}
-  connections:
-  - from: {fileID: 2096388055}
-    to: {fileID: 2073210155}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2096388055}
-    to: {fileID: 661437725}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2096388055}
-    to: {fileID: 1611679155}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2096388055}
-    to: {fileID: 392572917}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2073210155}
-    to: {fileID: 151827300}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 151827300}
-    to: {fileID: 1439613804}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 151827300}
-    to: {fileID: 448254068}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 151827300}
-    to: {fileID: 407586756}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1439613804}
-    to: {fileID: 876571093}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 407586756}
-    to: {fileID: 876571093}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 407586756}
-    to: {fileID: 382369583}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 876571093}
-    to: {fileID: 407586756}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 382369583}
-    to: {fileID: 407586756}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 448254068}
-    to: {fileID: 382369583}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 382369583}
-    to: {fileID: 407586756}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 382369583}
-    to: {fileID: 797128901}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1614307347}
-    to: {fileID: 1811658615}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1811658615}
-    to: {fileID: 1278883305}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1278883305}
-    to: {fileID: 8811013}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 709442405}
-    to: {fileID: 987115515}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 709442405}
-    to: {fileID: 823844515}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 8811013}
-    to: {fileID: 709442405}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 876571093}
-    to: {fileID: 1614307347}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 987115515}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 987115515}
-    to: {fileID: 954987303}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 479754164}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 479754164}
-    to: {fileID: 954987303}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 954987303}
-    to: {fileID: 479754164}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 954987303}
-    to: {fileID: 932488383}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 932488383}
-    to: {fileID: 1079378714}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1079378714}
-    to: {fileID: 932488383}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1079378714}
-    to: {fileID: 2002969986}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 823844515}
-    to: {fileID: 1079378714}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1079378714}
-    to: {fileID: 823844515}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2002969986}
-    to: {fileID: 1867518893}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1867518893}
-    to: {fileID: 1654223959}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 479754164}
-    to: {fileID: 537888117}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1867518893}
-    to: {fileID: 1650745929}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1654223959}
-    to: {fileID: 737618069}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1654223959}
-    to: {fileID: 1334769230}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1650745929}
-    to: {fileID: 1334769230}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1334769230}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1334769230}
-    to: {fileID: 30808108}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 737618069}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 737618069}
-    to: {fileID: 1582465755}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1582465755}
-    to: {fileID: 255776135}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1582465755}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 116029484}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1334769230}
-    to: {fileID: 1976074432}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1976074432}
-    to: {fileID: 592913812}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1976074432}
-    to: {fileID: 2038673404}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 592913812}
-    to: {fileID: 125608814}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 592913812}
-    to: {fileID: 1055916623}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 592913812}
-    to: {fileID: 116029484}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 592913812}
-    to: {fileID: 678139292}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 116029484}
-    to: {fileID: 278584126}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 116029484}
-    to: {fileID: 304200319}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 278584126}
-    to: {fileID: 439070109}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 278584126}
-    to: {fileID: 1474536756}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1474536756}
-    to: {fileID: 378396970}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1474536756}
-    to: {fileID: 1396887377}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 304200319}
-    to: {fileID: 739443370}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 739443370}
-    to: {fileID: 378396970}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 378396970}
-    to: {fileID: 474215730}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 439070109}
-    to: {fileID: 1261396715}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 439070109}
-    to: {fileID: 795418838}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1261396715}
-    to: {fileID: 795418838}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 795418838}
-    to: {fileID: 750283628}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 795418838}
-    to: {fileID: 531154057}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 531154057}
-    to: {fileID: 686109902}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 686109902}
-    to: {fileID: 1926160749}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1926160749}
-    to: {fileID: 879777740}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 879777740}
-    to: {fileID: 290278389}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 879777740}
-    to: {fileID: 449661204}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 0}
-    to: {fileID: 0}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 290278389}
-    to: {fileID: 1989663727}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1989663727}
-    to: {fileID: 350984039}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1989663727}
-    to: {fileID: 1857615617}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 879777740}
-    to: {fileID: 1857615617}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1857615617}
-    to: {fileID: 155905780}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1857615617}
-    to: {fileID: 1296002565}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1989663727}
-    to: {fileID: 2074735394}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2074735394}
-    to: {fileID: 1296002565}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 155905780}
-    to: {fileID: 525428704}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 449661204}
-    to: {fileID: 155905780}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1296002565}
-    to: {fileID: 1439130286}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 525428704}
-    to: {fileID: 1296002565}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1611679155}
-    to: {fileID: 1228263471}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1611679155}
-    to: {fileID: 1337796252}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1611679155}
-    to: {fileID: 1042484494}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1337796252}
-    to: {fileID: 110284098}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 110284098}
-    to: {fileID: 747885743}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 110284098}
-    to: {fileID: 1042484494}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 747885743}
-    to: {fileID: 1708901992}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1042484494}
-    to: {fileID: 110284098}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1042484494}
-    to: {fileID: 1097085090}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1042484494}
-    to: {fileID: 1708901992}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 647879355}
-    to: {fileID: 1708901992}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1097085090}
-    to: {fileID: 1272409844}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1097085090}
-    to: {fileID: 1233362046}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1228263471}
-    to: {fileID: 544632736}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1228263471}
-    to: {fileID: 1097085090}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1228263471}
-    to: {fileID: 1097085090}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 544632736}
-    to: {fileID: 1272409844}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 544632736}
-    to: {fileID: 1076894829}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1097085090}
-    to: {fileID: 1233362046}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1233362046}
-    to: {fileID: 754935168}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1233362046}
-    to: {fileID: 791837818}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1708901992}
-    to: {fileID: 1233362046}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 791837818}
-    to: {fileID: 1050803133}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1272409844}
-    to: {fileID: 791837818}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1265474760}
-    to: {fileID: 1135501623}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1265474760}
-    to: {fileID: 10865802}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 647879355}
-    to: {fileID: 1265474760}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1135501623}
-    to: {fileID: 905467054}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 10865802}
-    to: {fileID: 140815416}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 10865802}
-    to: {fileID: 905467054}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 10865802}
-    to: {fileID: 1933578424}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1933578424}
-    to: {fileID: 51879059}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 905467054}
-    to: {fileID: 2128782330}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 905467054}
-    to: {fileID: 7136874}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2128782330}
-    to: {fileID: 1971930453}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1971930453}
-    to: {fileID: 7136874}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 7136874}
-    to: {fileID: 140815416}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 7136874}
-    to: {fileID: 802097010}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 140815416}
-    to: {fileID: 7136874}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 140815416}
-    to: {fileID: 754507403}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 51879059}
-    to: {fileID: 140815416}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 51879059}
-    to: {fileID: 534153782}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 534153782}
-    to: {fileID: 156995972}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 534153782}
-    to: {fileID: 754507403}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 754507403}
-    to: {fileID: 802097010}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 754507403}
-    to: {fileID: 678052118}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 156995972}
-    to: {fileID: 678052118}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 678052118}
-    to: {fileID: 1783878500}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 678052118}
-    to: {fileID: 1196716983}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 802097010}
-    to: {fileID: 1783878500}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1783878500}
-    to: {fileID: 1151359667}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 257028500}
-    to: {fileID: 1196716983}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 257028500}
-    to: {fileID: 571741526}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1196716983}
-    to: {fileID: 2072061}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1196716983}
-    to: {fileID: 257028500}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 571741526}
-    to: {fileID: 2072061}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2072061}
-    to: {fileID: 1672344939}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1783878500}
-    to: {fileID: 257028500}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1672344939}
-    to: {fileID: 1804425293}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1804425293}
-    to: {fileID: 831262131}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 831262131}
-    to: {fileID: 1430353857}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1430353857}
-    to: {fileID: 750702835}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1430353857}
-    to: {fileID: 1858259015}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1430353857}
-    to: {fileID: 1181489233}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1858259015}
-    to: {fileID: 1339527999}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 750702835}
-    to: {fileID: 798516214}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 750702835}
-    to: {fileID: 1608665270}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1608665270}
-    to: {fileID: 833982570}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 833982570}
-    to: {fileID: 798516214}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 798516214}
-    to: {fileID: 277072732}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 798516214}
-    to: {fileID: 1181489233}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1181489233}
-    to: {fileID: 798516214}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1181489233}
-    to: {fileID: 1339527999}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1181489233}
-    to: {fileID: 1951653948}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1339527999}
-    to: {fileID: 1181489233}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1339527999}
-    to: {fileID: 1464204523}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1464204523}
-    to: {fileID: 1951653948}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1464204523}
-    to: {fileID: 1030370898}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1951653948}
-    to: {fileID: 277072732}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1951653948}
-    to: {fileID: 1464204523}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1951653948}
-    to: {fileID: 47867152}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 277072732}
-    to: {fileID: 1951653948}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1030370898}
-    to: {fileID: 1327912792}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1030370898}
-    to: {fileID: 47867152}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 47867152}
-    to: {fileID: 1030370898}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 47867152}
-    to: {fileID: 1162838969}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1162838969}
-    to: {fileID: 354231636}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 354231636}
-    to: {fileID: 1656491172}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1327912792}
-    to: {fileID: 1162838969}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1656491172}
-    to: {fileID: 135870693}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1656491172}
-    to: {fileID: 360982148}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 135870693}
-    to: {fileID: 572815138}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 572815138}
-    to: {fileID: 886933769}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 886933769}
-    to: {fileID: 692801600}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 886933769}
-    to: {fileID: 397164377}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 397164377}
-    to: {fileID: 718359985}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 718359985}
-    to: {fileID: 748039272}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 718359985}
-    to: {fileID: 1972385815}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 748039272}
-    to: {fileID: 927052170}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1972385815}
-    to: {fileID: 927052170}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 927052170}
-    to: {fileID: 237977256}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 927052170}
-    to: {fileID: 2069304519}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 2069304519}
-    to: {fileID: 1407134971}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 692801600}
-    to: {fileID: 718359985}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 360982148}
-    to: {fileID: 618984210}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 618984210}
-    to: {fileID: 504294413}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 618984210}
-    to: {fileID: 1667371934}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1667371934}
-    to: {fileID: 1715326693}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1667371934}
-    to: {fileID: 1715326693}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1715326693}
-    to: {fileID: 374966600}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1715326693}
-    to: {fileID: 504294413}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1715326693}
-    to: {fileID: 782223946}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 374966600}
-    to: {fileID: 743180945}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 504294413}
-    to: {fileID: 1715326693}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 504294413}
-    to: {fileID: 1130491011}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 743180945}
-    to: {fileID: 782223946}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1130491011}
-    to: {fileID: 782223946}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 782223946}
-    to: {fileID: 1130491011}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 782223946}
-    to: {fileID: 743180945}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 782223946}
-    to: {fileID: 1486743219}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1486743219}
-    to: {fileID: 392572917}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1439130286}
-    to: {fileID: 1265474760}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 737618069}
-    to: {fileID: 1976074432}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 30808108}
-    to: {fileID: 2038673404}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 474215730}
-    to: {fileID: 1396887377}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1396887377}
-    to: {fileID: 474215730}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1396887377}
-    to: {fileID: 439070109}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1055916623}
-    to: {fileID: 1914251205}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1055916623}
-    to: {fileID: 304200319}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 661437725}
-    to: {fileID: 1867518893}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 750283628}
-    to: {fileID: 2087679053}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 750283628}
-    to: {fileID: 1041634071}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
-  - from: {fileID: 1041634071}
-    to: {fileID: 531154057}
-    lineBackground: {fileID: 0}
-    lineForeground: {fileID: 0}
-    state: 0
 --- !u!1 &1050321237
 GameObject:
   m_ObjectHideFlags: 0
@@ -56397,7 +55072,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 791837822}
   effectType: 79
@@ -56657,10 +55331,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1914251209}
-  - {fileID: 678139296}
-  - {fileID: 304200323}
   requiredParentNodes:
   - {fileID: 592913816}
   effectType: 18
@@ -57369,7 +56039,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 544632740}
   effectType: 18
@@ -57591,8 +56260,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2002969990}
   requiredParentNodes:
   - {fileID: 823844519}
   effectType: 13
@@ -58112,9 +56779,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1272409848}
-  - {fileID: 1233362050}
   requiredParentNodes:
   - {fileID: 1228263475}
   - {fileID: 1042484498}
@@ -59944,8 +58608,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 504294417}
   effectType: 18
@@ -60341,8 +59003,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 905467058}
   requiredParentNodes:
   - {fileID: 1265474764}
   effectType: 18
@@ -61071,7 +59731,6 @@ MonoBehaviour:
   skillNameKey: skill_speed_tit
   descriptionKey: skill_speed_desc
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1783878502}
   effectType: 18
@@ -61515,9 +60174,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 354231640}
-  - {fileID: 234298102}
   requiredParentNodes:
   - {fileID: 47867156}
   effectType: 18
@@ -62052,10 +60708,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
-  - {fileID: 1339528003}
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1430353861}
   effectType: 18
@@ -63017,9 +61669,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 257028504}
-  - {fileID: 2072065}
   requiredParentNodes:
   - {fileID: 678052122}
   effectType: 18
@@ -64064,8 +62713,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 544632740}
   requiredParentNodes:
   - {fileID: 1611679157}
   effectType: 18
@@ -64512,9 +63159,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754935172}
-  - {fileID: 754935172}
   requiredParentNodes:
   - {fileID: 1708901996}
   - {fileID: 1097085094}
@@ -65283,8 +63927,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 795418842}
   requiredParentNodes:
   - {fileID: 439070111}
   effectType: 18
@@ -65506,9 +64148,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1135501627}
-  - {fileID: 10865806}
   requiredParentNodes:
   - {fileID: 647879359}
   effectType: 18
@@ -65730,8 +64369,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 791837822}
   requiredParentNodes:
   - {fileID: 544632740}
   - {fileID: 1097085094}
@@ -66092,8 +64729,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 8811017}
   requiredParentNodes:
   - {fileID: 1811658619}
   effectType: 98
@@ -66782,8 +65417,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1439130290}
   requiredParentNodes:
   - {fileID: 1857615621}
   - {fileID: 2074735398}
@@ -67522,8 +66155,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1162838971}
   requiredParentNodes:
   - {fileID: 1030370900}
   effectType: 18
@@ -67745,9 +66376,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 30808112}
-  - {fileID: 1976074436}
   requiredParentNodes:
   - {fileID: 1654223963}
   effectType: 13
@@ -67890,8 +66518,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -173.6, y: 1110.9}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -187.71, y: 1090.97}
+  m_SizeDelta: {x: -28.21, y: -39.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1335848659
 MonoBehaviour:
@@ -68107,8 +66735,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 110284102}
   requiredParentNodes:
   - {fileID: 1611679157}
   effectType: 18
@@ -68330,9 +66956,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1464204527}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 1858259019}
   effectType: 18
@@ -70073,9 +68696,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 474215732}
-  - {fileID: 439070111}
   requiredParentNodes:
   - {fileID: 1474536760}
   effectType: 37
@@ -70509,7 +69129,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 2069304523}
   effectType: 18
@@ -81560,10 +80179,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 750702839}
-  - {fileID: 1181489237}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 831262135}
   effectType: 18
@@ -82059,8 +80674,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1265474764}
   requiredParentNodes:
   - {fileID: 1296002569}
   effectType: 18
@@ -82282,10 +80895,9 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 876571097}
   requiredParentNodes:
   - {fileID: 151827302}
+  - {fileID: 876571097}
   effectType: 13
   button: {fileID: 1439613809}
   lockIcon: {fileID: 0}
@@ -83480,9 +82092,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
-  - {fileID: 1030370900}
   requiredParentNodes:
   - {fileID: 1339528003}
   effectType: 18
@@ -83840,10 +82449,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 278584130}
-  - {fileID: 378396974}
-  - {fileID: 1396887379}
   requiredParentNodes:
   - {fileID: 304200323}
   effectType: 18
@@ -84203,8 +82808,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 392572921}
   requiredParentNodes:
   - {fileID: 782223950}
   effectType: 18
@@ -84579,8 +83182,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 833982574}
   requiredParentNodes:
   - {fileID: 750702839}
   effectType: 18
@@ -86632,8 +85233,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 255776139}
   requiredParentNodes:
   - {fileID: 737618073}
   effectType: 18
@@ -87952,8 +86551,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 833982574}
   requiredParentNodes:
   - {fileID: 750702839}
   effectType: 18
@@ -88137,10 +86734,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1337796256}
-  - {fileID: 1228263475}
-  - {fileID: 1042484498}
   requiredParentNodes:
   - {fileID: 2096388056}
   effectType: 50
@@ -88362,8 +86955,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1811658619}
   requiredParentNodes:
   - {fileID: 876571097}
   effectType: 43
@@ -89892,8 +88483,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1334769234}
   requiredParentNodes:
   - {fileID: 1867518897}
   effectType: 110
@@ -90115,9 +88704,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 737618073}
-  - {fileID: 1334769234}
   requiredParentNodes:
   - {fileID: 1867518897}
   effectType: 13
@@ -90477,9 +89063,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 135870695}
-  - {fileID: 360982152}
   requiredParentNodes:
   - {fileID: 354231640}
   effectType: 18
@@ -90991,8 +89574,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1715326697}
   requiredParentNodes:
   - {fileID: 618984214}
   effectType: 18
@@ -91488,8 +90069,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1804425297}
   requiredParentNodes:
   - {fileID: 2072065}
   effectType: 18
@@ -92850,9 +91429,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 647879359}
-  - {fileID: 1233362050}
   requiredParentNodes:
   - {fileID: 1042484498}
   - {fileID: 747885747}
@@ -93213,10 +91789,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 374966604}
-  - {fileID: 504294417}
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 1667371938}
   effectType: 18
@@ -95025,9 +93597,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1151359669}
-  - {fileID: 257028504}
   requiredParentNodes:
   - {fileID: 802097012}
   effectType: 18
@@ -95835,8 +94404,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 831262135}
   requiredParentNodes:
   - {fileID: 1672344943}
   effectType: 18
@@ -96196,8 +94763,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1278883309}
   requiredParentNodes:
   - {fileID: 1614307349}
   effectType: 68
@@ -97621,9 +96186,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 155905784}
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 1989663731}
   - {fileID: 879777744}
@@ -97846,8 +96408,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1339528003}
   requiredParentNodes:
   - {fileID: 1430353861}
   effectType: 18
@@ -98622,9 +97182,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1654223963}
-  - {fileID: 1650745933}
   requiredParentNodes:
   - {fileID: 2002969990}
   - {fileID: 661437727}
@@ -100084,7 +98641,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1055916627}
   effectType: 18
@@ -100372,8 +98928,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 686109906}
   requiredParentNodes:
   - {fileID: 503870941}
   effectType: 18
@@ -100665,8 +99219,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 879777744}
   requiredParentNodes:
   - {fileID: 686109906}
   effectType: 18
@@ -101166,8 +99718,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 51879063}
   requiredParentNodes:
   - {fileID: 10865806}
   effectType: 18
@@ -101646,10 +100196,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 277072736}
-  - {fileID: 1464204527}
-  - {fileID: 47867156}
   requiredParentNodes:
   - {fileID: 1181489237}
   effectType: 18
@@ -102454,8 +101000,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
   requiredParentNodes:
   - {fileID: 2128782334}
   effectType: 18
@@ -102677,8 +101221,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 927052174}
   requiredParentNodes:
   - {fileID: 718359989}
   effectType: 16
@@ -103036,9 +101578,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 592913816}
-  - {fileID: 2038673408}
   requiredParentNodes:
   - {fileID: 1334769234}
   effectType: 66
@@ -103766,10 +102305,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 350984043}
-  - {fileID: 1857615621}
-  - {fileID: 2074735398}
   requiredParentNodes:
   - {fileID: 290278393}
   effectType: 18
@@ -104215,8 +102750,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1867518897}
   requiredParentNodes:
   - {fileID: 1079378718}
   effectType: 13
@@ -105540,7 +104073,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1976074436}
   effectType: 18
@@ -106899,8 +105431,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1407134975}
   requiredParentNodes:
   - {fileID: 927052174}
   effectType: 18
@@ -107222,8 +105752,6 @@ MonoBehaviour:
   skillNameKey: skill_speed_tit
   descriptionKey: skill_speed_desc
   CoinCost: 1
-  nextNodes:
-  - {fileID: 151827302}
   requiredParentNodes:
   - {fileID: 2096388056}
   effectType: 49
@@ -107483,8 +106011,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 1989663731}
   effectType: 18
@@ -108133,7 +106659,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 750283632}
   effectType: 26
@@ -108528,11 +107053,6 @@ MonoBehaviour:
   skillNameKey: skill_root_tit
   descriptionKey: skill_root_desc
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2073210157}
-  - {fileID: 661437727}
-  - {fileID: 1611679157}
-  - {fileID: 392572921}
   requiredParentNodes: []
   effectType: 104
   button: {fileID: 2096388057}
@@ -109544,8 +108064,6 @@ MonoBehaviour:
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1971930457}
   requiredParentNodes:
   - {fileID: 905467058}
   effectType: 18
