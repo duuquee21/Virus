@@ -115,16 +115,30 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void Start()
     {
         LoadNodeState();
+        CheckIfShouldShow();
 
-        CheckIfShouldShow();   // ← esto es obligatorio
+        // NUEVO: Si el nodo ya está desbloqueado al empezar, avisamos a las líneas
+        if (unlocked)
+        {
+            SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
+            if (lines != null) lines.ShowFrom(GetComponent<RectTransform>());
+        }
 
-        if (infoPanel != null)
-            infoPanel.SetActive(false);
+        if (infoPanel != null) infoPanel.SetActive(false);
 
+
+        // Diagnóstico rápido:
+        if (requiredParentNodes != null)
+        {
+            foreach (var p in requiredParentNodes)
+            {
+                if (p == null)
+                    Debug.LogError($"<color=red>¡ERROR!</color> El nodo <b>{gameObject.name}</b> tiene un espacio vacío en sus padres.");
+                else if (!p.gameObject.scene.IsValid())
+                    Debug.LogWarning($"<color=orange>AVISO:</color> El nodo <b>{gameObject.name}</b> referencia a un PADRE que es un PREFAB, no un objeto de la escena.");
+            }
+        }
     }
-
-
-
 
     public void LoadNodeState()
     {
@@ -251,28 +265,26 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     void SetAppearance(bool isActive, float alpha, bool canClick)
     {
-        gameObject.SetActive(isActive);
+        // En lugar de desactivar el GameObject, lo mantenemos activo pero invisible
+        // Esto permite que las líneas de SkillTreeLinesUI encuentren su posición
         if (canvasGroup != null)
         {
             canvasGroup.alpha = alpha;
             canvasGroup.blocksRaycasts = canClick;
+            canvasGroup.interactable = canClick;
         }
-        if (isActive && alpha > 0)
-        {
-            foreach (Transform child in transform) child.gameObject.SetActive(true);
-            if (skillNameText != null) skillNameText.enabled = true;
-        }
+
+        // Solo usamos SetActive(false) si realmente queremos que el nodo NO exista 
+        // (por ejemplo, si ni siquiera debería estar en el árbol aún)
+        // Pero para nodos "bloqueados" que deben recibir una línea, isActive debe ser true.
     }
 
     void UpdateLinesVisuals()
     {
         SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
-        if (lines != null && requiredParentNodes != null)
+        if (lines != null && unlocked) // Solo si está desbloqueado
         {
-            foreach (var parent in requiredParentNodes)
-            {
-                if (parent != null && parent.IsUnlocked) lines.ShowFrom(parent.GetComponent<RectTransform>());
-            }
+            lines.ShowFrom(GetComponent<RectTransform>());
         }
     }
 
@@ -322,6 +334,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             repeatLevel++;
         else
             unlocked = true;
+
+
 
         // 5. GUARDAR Y APLICAR EFECTO
         ApplyEffect();
@@ -659,9 +673,4 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         foreach (var node in nodes)
             node.CheckIfShouldShow();
     }
-
-     
-
-
-
 }

@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class EndDayResultsPanel : MonoBehaviour
 {
@@ -43,6 +44,12 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("Vida de Todos los Planetas")]
     public TextMeshProUGUI planetasVidaListText;
+
+    [Header("Barras de Vida")]
+    public Transform barrasContainer;
+    public GameObject barraVidaPrefab;
+
+    private List<GameObject> barrasGeneradas = new List<GameObject>();
 
 
 
@@ -149,6 +156,7 @@ public class EndDayResultsPanel : MonoBehaviour
         Time.timeScale = 0f;
         panel.SetActive(true);
         UpdateAllTexts(monedasGanadas, monedasTotales);
+        GenerarBarraPlanetaActual();
     }
 
     // ======================================================
@@ -163,7 +171,27 @@ public class EndDayResultsPanel : MonoBehaviour
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
     }
+    private void GenerarBarraPlanetaActual()
+    {
+        // Limpia barras anteriores
+        foreach (Transform child in barrasContainer)
+            Destroy(child.gameObject);
 
+        if (MapSequenceManager.instance == null) return;
+
+        var maps = MapSequenceManager.instance.maps;
+        int current = MapSequenceManager.instance.GetCurrentMapIndex();
+
+        if (current >= maps.Count) return;
+
+        GameObject nuevaBarra = Instantiate(barraVidaPrefab, barrasContainer);
+
+        var barraScript = nuevaBarra.GetComponent<PlanetHealthBarUI>();
+
+        float porcentaje = maps[current].currentHealth / maps[current].maxHealth;
+
+        barraScript.Setup(maps[current].mapName, porcentaje);
+    }
     // ======================================================
     // LÓGICA CENTRALIZADA DE ACTUALIZACIÓN
     // ======================================================
