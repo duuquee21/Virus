@@ -109,7 +109,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [Header("Límite especial tiempo extra")]
     public int maxTimeRepeatLevel = 10;
 
-    public bool IsUnlocked => unlocked;
+    public bool IsUnlocked =>
+        unlocked ||
+        ((IsDamageSkill() || IsCoinSkill() || IsTimeSkill()) && repeatLevel > 0);
 
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
     void Start()
