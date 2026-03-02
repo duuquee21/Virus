@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 868918f47327bf346a74e6d898b2f05d
+guid: 4d38d68334f8fc547bb81e10266f9296
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4378148109767311511
-    second: DayResultBase_0
+      213: -802543778633252420
+    second: DayResultPanel_0
   - first:
-      213: -3142312313233105631
-    second: DayResultBase_1
+      213: 4881626897653791465
+    second: DayResultPanel_1
   - first:
-      213: -782519327695155498
-    second: DayResultBase_2
+      213: 140104673168781841
+    second: DayResultPanel_2
   - first:
-      213: -6305666955589435804
-    second: DayResultBase_3
+      213: -383339848495411254
+    second: DayResultPanel_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,11 +105,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DayResultBase_0
+      name: DayResultPanel_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7908ab8628e42cc30800000000000000
-      internalID: 4378148109767311511
+      spriteID: cb18dd57faaccd4f0800000000000000
+      internalID: -802543778633252420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DayResultBase_1
+      name: DayResultPanel_1
       rect:
         serializedVersion: 2
         x: 2261
@@ -146,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12d976c89934464d0800000000000000
-      internalID: -3142312313233105631
+      spriteID: 9ea75a8acc50fb340800000000000000
+      internalID: 4881626897653791465
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DayResultBase_2
+      name: DayResultPanel_2
       rect:
         serializedVersion: 2
         x: 2255
@@ -168,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6de4ad241dee325f0800000000000000
-      internalID: -782519327695155498
+      spriteID: 112f89b3570c1f100800000000000000
+      internalID: 140104673168781841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DayResultBase_3
+      name: DayResultPanel_3
       rect:
         serializedVersion: 2
         x: 700
@@ -190,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 46e3c201055cd78a0800000000000000
-      internalID: -6305666955589435804
+      spriteID: acfcd26507a1eaaf0800000000000000
+      internalID: -383339848495411254
       vertices: []
       indices: 
       edges: []
@@ -210,10 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DayResultBase_0: 4378148109767311511
-      DayResultBase_1: -3142312313233105631
-      DayResultBase_2: -782519327695155498
-      DayResultBase_3: -6305666955589435804
+      DayResultPanel_0: -802543778633252420
+      DayResultPanel_1: 4881626897653791465
+      DayResultPanel_2: 140104673168781841
+      DayResultPanel_3: -383339848495411254
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

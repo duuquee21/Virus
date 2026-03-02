@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 4d38d68334f8fc547bb81e10266f9296
+guid: 43025b99e981b2b4499c5a7ba73c1f5a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -802543778633252420
-    second: DayResultPanel_0
-  - first:
-      213: 4881626897653791465
-    second: DayResultPanel_1
-  - first:
-      213: 140104673168781841
-    second: DayResultPanel_2
-  - first:
-      213: -383339848495411254
-    second: DayResultPanel_3
+      213: -5130558894233647175
+    second: Fondo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -105,83 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DayResultPanel_0
+      name: Fondo_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 558
-        width: 2118
-        height: 3338
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb18dd57faaccd4f0800000000000000
-      internalID: -802543778633252420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DayResultPanel_1
-      rect:
-        serializedVersion: 2
-        x: 2261
-        y: 3237
-        width: 2963
-        height: 659
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9ea75a8acc50fb340800000000000000
-      internalID: 4881626897653791465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DayResultPanel_2
-      rect:
-        serializedVersion: 2
-        x: 2255
-        y: 558
-        width: 2965
-        height: 2538
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 112f89b3570c1f100800000000000000
-      internalID: 140104673168781841
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DayResultPanel_3
-      rect:
-        serializedVersion: 2
-        x: 700
         y: 0
-        width: 3824
-        height: 451
+        width: 8000
+        height: 5119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: acfcd26507a1eaaf0800000000000000
-      internalID: -383339848495411254
+      spriteID: 9b78bf95ed79cc8b0800000000000000
+      internalID: -5130558894233647175
       vertices: []
       indices: 
       edges: []
@@ -200,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DayResultPanel_0: -802543778633252420
-      DayResultPanel_1: 4881626897653791465
-      DayResultPanel_2: 140104673168781841
-      DayResultPanel_3: -383339848495411254
+      Fondo_0: -5130558894233647175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

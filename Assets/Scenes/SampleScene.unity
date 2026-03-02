@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2072061}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 7136874}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -620,7 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 8811013}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 10865802}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 30808108}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -2173,7 +2173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 47867152}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -2761,7 +2761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 51879059}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -2925,6 +2925,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51879058}
   m_CullTransparentMesh: 1
+--- !u!1 &56684059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56684060}
+  - component: {fileID: 56684061}
+  m_Layer: 0
+  m_Name: "DayResultPanelFondoPeque\xF1o_0"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &56684060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56684059}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.304, y: -0.168, z: -2761.7144}
+  m_LocalScale: {x: 11.194626, y: 11.419027, z: 38.57143}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 214494203}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &56684061
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56684059}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 6223125426627435265, guid: d884612a9d8a99b4fab6bc6eb6b58be0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 14.15, y: 12.85}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &56745121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4129,7 +4216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 110284098}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -4606,7 +4693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 116029484}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -4902,7 +4989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 125608814}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -5401,7 +5488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 0}
   infoPanel: {fileID: 0}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -5482,7 +5569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 140815416}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6138,7 +6225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 151827300}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6484,7 +6571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 155905780}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -6686,7 +6773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 156995972}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -8505,8 +8592,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -128.14, y: 165.48}
-  m_SizeDelta: {x: 102, y: 102}
+  m_AnchoredPosition: {x: 113.32, y: 85.408}
+  m_SizeDelta: {x: 215.38, y: 55.321}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &185290859
 MonoBehaviour:
@@ -8528,7 +8615,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6761189456544674102, guid: d4dd41a95642207499f95337aa99c6ce, type: 3}
+  m_Sprite: {fileID: 1583332930313576627, guid: d321e39c367752d41b2a2f36f20d1a62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8618,7 +8705,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3795892, y: 1.4736143, z: 1}
+  m_LocalScale: {x: 0.76251966, y: 0.65371305, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1538493144}
@@ -8667,7 +8754,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -11
-  m_Sprite: {fileID: 7108864863378563841, guid: faaf5940323cce349b06a349eb4aa956, type: 3}
+  m_Sprite: {fileID: -5130558894233647175, guid: 43025b99e981b2b4499c5a7ba73c1f5a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9193,12 +9280,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 378135223}
+  - {fileID: 56684060}
   m_Father: {fileID: 1870291122}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 136.10309, y: 21.436}
-  m_SizeDelta: {x: 326.509, y: 197.87}
+  m_AnchoredPosition: {x: 321.907, y: 53.054}
+  m_SizeDelta: {x: 136.804, y: 120.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &214494204
 MonoBehaviour:
@@ -9246,7 +9334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8220834601631516662, guid: f4e7506b828749f469062d6b441a5a40, type: 3}
+  m_Sprite: {fileID: 2964596506208112563, guid: f4c5e4d8e8ca29d4296b3e46be0d4b21, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9811,7 +9899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 234298109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -9933,7 +10021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 237977256}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -10525,7 +10613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 255776135}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -10737,7 +10825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 257028500}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -11171,7 +11259,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: 7252305434604967250, guid: f55ac6ce9864dcc4e93226bdb847d718, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -11742,7 +11830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 277072732}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -11983,7 +12071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 278584126}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -12341,7 +12429,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: 924293392964961426, guid: cb77c5bafcec8264d951e7daf4d4d632, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -12564,7 +12652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 290278389}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -13262,7 +13350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 304200319}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -14352,8 +14440,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 136.1, y: -122.86}
-  m_SizeDelta: {x: 326.51, y: 58.77}
+  m_AnchoredPosition: {x: 113.32, y: 20.7}
+  m_SizeDelta: {x: 215.38, y: 55.322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &335997696
 MonoBehaviour:
@@ -14420,7 +14508,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5753747956239341672, guid: 1ea0969325f5a904a96a2a060e47cdeb, type: 3}
+  m_Sprite: {fileID: 1583332930313576627, guid: d321e39c367752d41b2a2f36f20d1a62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14755,7 +14843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 350984039}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -14976,7 +15064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 354231636}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -15353,7 +15441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 360982148}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -16598,7 +16686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 374966600}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -16895,8 +16983,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170.7545, y: -33.856148}
-  m_SizeDelta: {x: 311.509, y: 41.7123}
+  m_AnchoredPosition: {x: 75.902, y: -33.856148}
+  m_SizeDelta: {x: 121.804, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &378396969
 GameObject:
@@ -16955,7 +17043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 378396970}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17175,7 +17263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 382369583}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17644,7 +17732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 392572917}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -17952,7 +18040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 397164377}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -18828,8 +18916,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000019784, y: 16.7}
-  m_SizeDelta: {x: 129.591, y: 129.594}
+  m_AnchoredPosition: {x: -78.4, y: 0.00000083447}
+  m_SizeDelta: {x: 88, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &407524868
 MonoBehaviour:
@@ -18927,7 +19015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 407586756}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20275,7 +20363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 439070109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20497,7 +20585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 448254068}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -20696,7 +20784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 449661204}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -21611,7 +21699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 474215730}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -21737,7 +21825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 479754164}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -22178,7 +22266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &490370448
 Transform:
   m_ObjectHideFlags: 0
@@ -22820,7 +22908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 503870948}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -22941,7 +23029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 504294413}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -28625,7 +28713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 525428704}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29395,7 +29483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 531154057}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29597,7 +29685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 534153782}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -29818,7 +29906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 537888117}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -30262,7 +30350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 544632736}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -30802,7 +30890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 571741526}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -31003,7 +31091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 572815138}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -31311,7 +31399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 592913812}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -32270,7 +32358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 618984210}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -33014,7 +33102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 647879355}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -33451,7 +33539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 661437725}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34041,7 +34129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 678052118}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34283,7 +34371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 678139292}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34484,7 +34572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 686109902}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -34705,7 +34793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 692801600}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -35306,10 +35394,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 709442405}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
+--- !u!1 &710480833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710480834}
+  - component: {fileID: 710480835}
+  m_Layer: 0
+  m_Name: DayResultPanel_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &710480834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710480833}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00022881033, y: 0.000116501535, z: -2761.7144}
+  m_LocalScale: {x: 11.20632, y: 11.411665, z: 23.914288}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1870291122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &710480835
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710480833}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -802543778633252420, guid: 0c98888b6dc03c84d8b7b34bc5e8772f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 80.25179, y: 45.22}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &718359984
 GameObject:
   m_ObjectHideFlags: 0
@@ -35368,7 +35543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 718359985}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36024,7 +36199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 737618069}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36227,7 +36402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 739443370}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36448,7 +36623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 743180945}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36669,7 +36844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 747885743}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -36890,7 +37065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 748039272}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37131,7 +37306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 750283628}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37332,7 +37507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 750702835}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37553,7 +37728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 754507403}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -37795,7 +37970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 754935168}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -42989,7 +43164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 782223946}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43346,7 +43521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 791837818}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43588,7 +43763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 795418838}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -43949,7 +44124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 797128901}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44011,7 +44186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 798516214}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44479,7 +44654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 802097010}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -44999,7 +45174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &816580756
 Transform:
   m_ObjectHideFlags: 0
@@ -45127,7 +45302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 823844515}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -46032,7 +46207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 831262131}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -46253,7 +46428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 833982570}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -47535,7 +47710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 876571093}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -48171,7 +48346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 879777740}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -48669,7 +48844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 886933769}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -49094,7 +49269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 905467054}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -49590,7 +49765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 918096576}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -50232,7 +50407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 927052170}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -50671,7 +50846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 932488383}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -51472,7 +51647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 954987303}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -52011,7 +52186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 987115515}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -53320,7 +53495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1030370898}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -53838,7 +54013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1041634071}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -54061,7 +54236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1042484494}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -55045,7 +55220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1050803133}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -55106,7 +55281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1055916623}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -55814,7 +55989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1076894829}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -56035,7 +56210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1079378714}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -56555,7 +56730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1097085090}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -57028,8 +57203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000038147, y: 21}
-  m_SizeDelta: {x: 110.081, y: 110.08}
+  m_AnchoredPosition: {x: -78.1, y: -0.0000038147}
+  m_SizeDelta: {x: 88, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102835022
 MonoBehaviour:
@@ -57245,8 +57420,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 111.88005, y: -207.38}
-  m_SizeDelta: {x: 211.661, y: 38.275}
+  m_AnchoredPosition: {x: 104.622, y: -189.51114}
+  m_SizeDelta: {x: 197.989, y: 36.122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1110968533
 MonoBehaviour:
@@ -57283,8 +57458,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+    m_PressedColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -57363,7 +57538,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5817227642721373127, guid: 450006630f522c043bfd9ab2d67977d5, type: 3}
+  m_Sprite: {fileID: -4201954068421433917, guid: 95bcbe373d72c2b4f9f6acf7088e645e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -58384,7 +58559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1130491011}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -58799,7 +58974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1135501623}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -59705,7 +59880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1151359667}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -60148,7 +60323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1162838969}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -60484,7 +60659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1181489233}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -61071,8 +61246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -78, y: -0.000002861}
+  m_SizeDelta: {x: 88, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1190644585
 MonoBehaviour:
@@ -61445,7 +61620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1196716983}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -62489,7 +62664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1228263471}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -62935,7 +63110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1233362046}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -63723,7 +63898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1261396715}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -63924,7 +64099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1265474760}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -64145,7 +64320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1272409844}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -64525,7 +64700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1278883305}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -65193,7 +65368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1296002565}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -65931,7 +66106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1327912792}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -66152,7 +66327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1334769230}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -66511,7 +66686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1337796252}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -66732,7 +66907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1339527999}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -67936,7 +68111,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: 1781296725258827340, guid: 163626b7b63a7974ab5f8016063544e0, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -68670,7 +68845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1396887377}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -68712,8 +68887,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -113.575, y: -207.377}
-  m_SizeDelta: {x: 211.871, y: 38.279}
+  m_AnchoredPosition: {x: -105.8, y: -189.51}
+  m_SizeDelta: {x: 197.99, y: 36.125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404261067
 MonoBehaviour:
@@ -68750,8 +68925,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
+    m_PressedColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -68830,7 +69005,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5817227642721373127, guid: 450006630f522c043bfd9ab2d67977d5, type: 3}
+  m_Sprite: {fileID: -4201954068421433917, guid: 95bcbe373d72c2b4f9f6acf7088e645e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -68925,7 +69100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1407134971}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -69377,8 +69552,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000005722, y: 21.213}
-  m_SizeDelta: {x: 106.063, y: 106.06}
+  m_AnchoredPosition: {x: -76.9, y: 0}
+  m_SizeDelta: {x: 88, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1412992108
 MonoBehaviour:
@@ -79955,7 +80130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1430353857}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -80470,7 +80645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1439130286}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -80671,7 +80846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1439613804}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -81888,7 +82063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1464204523}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -82104,7 +82279,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -82135,7 +82310,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.72359467, z: 0, w: -0.7236309}
+  m_margin: {x: 0, y: 0.72359467, z: -0.00001143136, w: -0.7236309}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -82165,8 +82340,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000040561, y: -25.9}
-  m_SizeDelta: {x: 102.44, y: 36.867}
+  m_AnchoredPosition: {x: 24.638, y: 0}
+  m_SizeDelta: {x: 144.117, y: 36.867}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1474536755
 GameObject:
@@ -82225,7 +82400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1474536756}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -82584,7 +82759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1486743219}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -82907,7 +83082,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -82968,8 +83143,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000076293945, y: -27.5}
-  m_SizeDelta: {x: 102, y: 33.737}
+  m_AnchoredPosition: {x: 26.203, y: -0.0000019073}
+  m_SizeDelta: {x: 150.41, y: 33.737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1501028767
 GameObject:
@@ -83128,7 +83303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1501028775}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -85009,7 +85184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1582465755}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -86327,7 +86502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1608665270}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -86708,7 +86883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1611679155}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -86929,7 +87104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1614307347}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -87632,6 +87807,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631952946}
   m_CullTransparentMesh: 1
+--- !u!1 &1633016417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633016418}
+  - component: {fileID: 1633016419}
+  m_Layer: 0
+  m_Name: DayResultPanelExtraInfo_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1633016418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633016417}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.892, y: -8.912, z: -2761.7144}
+  m_LocalScale: {x: 96.32012, y: 60.20573, z: 38.57143}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1870291122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1633016419
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633016417}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 9995
+  m_Sprite: {fileID: 2964596506208112563, guid: f4c5e4d8e8ca29d4296b3e46be0d4b21, type: 3}
+  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 0.627451}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 12.24, y: 10.58}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1634908474
 GameObject:
   m_ObjectHideFlags: 0
@@ -87808,8 +88070,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -186.72885, y: -48.35}
-  m_SizeDelta: {x: 219.17, y: 58.3}
+  m_AnchoredPosition: {x: -0.078, y: -43.889}
+  m_SizeDelta: {x: 442.177, y: 55.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635791052
 MonoBehaviour:
@@ -87831,7 +88093,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3435194133711387152, guid: 2f84a0a4640096f4d8ef627e764125e4, type: 3}
+  m_Sprite: {fileID: -3587292356676852901, guid: 04518b14110860943855e518a9068b69, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88172,7 +88434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1650745929}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -88393,7 +88655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1654223959}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -88772,7 +89034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1656491172}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -89263,7 +89525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1667371934}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -89758,7 +90020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1672344939}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -90202,8 +90464,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 65.83, y: -0.0000024879}
-  m_SizeDelta: {x: 194.85, y: 78.96}
+  m_AnchoredPosition: {x: 25.069, y: -0.0000038147}
+  m_SizeDelta: {x: 145.988, y: 36.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1689582425
 GameObject:
@@ -91118,7 +91380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1708901992}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -91478,7 +91740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1715326693}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -92122,7 +92384,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: -1553521684265354843, guid: 87a974b5dd5739d4085d44cc66ab3c06, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92443,8 +92705,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -245.31, y: 47.5}
-  m_SizeDelta: {x: 102, y: 102}
+  m_AnchoredPosition: {x: -113.99, y: 20.702}
+  m_SizeDelta: {x: 214.36, y: 55.325}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1742410685
 MonoBehaviour:
@@ -92466,7 +92728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6761189456544674102, guid: d4dd41a95642207499f95337aa99c6ce, type: 3}
+  m_Sprite: {fileID: 1583332930313576627, guid: d321e39c367752d41b2a2f36f20d1a62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -93484,7 +93746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1783878500}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -94113,7 +94375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1804425293}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -94472,7 +94734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1811658615}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -95875,7 +96137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1857615617}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -96097,7 +96359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1858259015}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -96871,7 +97133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1867518893}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -97215,6 +97477,8 @@ RectTransform:
   - {fileID: 214494203}
   - {fileID: 1865556697}
   - {fileID: 1990845519}
+  - {fileID: 710480834}
+  - {fileID: 1633016418}
   m_Father: {fileID: 190756179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -98328,7 +98592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1914251205}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -98805,7 +99069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1923589109}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -98906,7 +99170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1926160749}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -99405,7 +99669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1933578424}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -100081,7 +100345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1951653948}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -100432,8 +100696,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -186.73, y: -122.862}
-  m_SizeDelta: {x: 219.17, y: 58.772}
+  m_AnchoredPosition: {x: -0.078607, y: -108.7}
+  m_SizeDelta: {x: 442.18, y: 55.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1956988865
 MonoBehaviour:
@@ -100455,7 +100719,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3435194133711387152, guid: 2f84a0a4640096f4d8ef627e764125e4, type: 3}
+  m_Sprite: {fileID: -3587292356676852901, guid: 04518b14110860943855e518a9068b69, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -100687,7 +100951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1971930453}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -100908,7 +101172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1972385815}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -101285,7 +101549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1976074432}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -101992,7 +102256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1989663727}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -102172,7 +102436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1990845519
 Transform:
   m_ObjectHideFlags: 0
@@ -102437,7 +102701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2002969986}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -102791,7 +103055,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -102852,8 +103116,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000067474, y: -27.5}
-  m_SizeDelta: {x: 102, y: 28.171}
+  m_AnchoredPosition: {x: 24.982, y: 0.00000071526}
+  m_SizeDelta: {x: 145.964, y: 28.171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2020882504
 GameObject:
@@ -103760,7 +104024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2038673404}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -105138,7 +105402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2069304519}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -105637,7 +105901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2073210155}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -105698,7 +105962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2074735394}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -105996,7 +106260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 255.6531, y: -29.386}
+  m_AnchoredPosition: {x: 255.6531, y: -27.845}
   m_SizeDelta: {x: 0.000045776, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2077379447
@@ -106366,7 +106630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2087679053}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
@@ -106885,7 +107149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
+  m_Sprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -106931,10 +107195,10 @@ MonoBehaviour:
   button: {fileID: 2096388057}
   nodeImage: {fileID: 2096388058}
   costText: {fileID: 0}
-  hoverSprite: {fileID: 8834879831451349387, guid: 8c377198c2835cb498e951cd2274bed5, type: 3}
-  normalSprite: {fileID: -1189062960662210706, guid: 2a79f4c9d94eb82498f1a7687bb6e012, type: 3}
-  notEnoughMoneySprite: {fileID: -681255620359901667, guid: 3a4617ce8b0f193499878422f875d7fb, type: 3}
-  disabledSprite: {fileID: -189560765679015571, guid: 317deb57e8459744db15e4161dd5233e, type: 3}
+  hoverSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  normalSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  notEnoughMoneySprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
+  disabledSprite: {fileID: 1471877291299765086, guid: a2754788b4667124eabc37b890203daa, type: 3}
 --- !u!114 &2096388062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107560,7 +107824,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: 2294157789903187349, guid: c1a9d91e8c79dbd4099d0daa8540f69b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107608,8 +107872,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -245.32, y: 165.48}
-  m_SizeDelta: {x: 102, y: 102}
+  m_AnchoredPosition: {x: -113.99, y: 85.408}
+  m_SizeDelta: {x: 214.36, y: 55.321}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2126669837
 MonoBehaviour:
@@ -107631,7 +107895,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6761189456544674102, guid: d4dd41a95642207499f95337aa99c6ce, type: 3}
+  m_Sprite: {fileID: 1583332930313576627, guid: d321e39c367752d41b2a2f36f20d1a62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -107751,7 +108015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 2128782330}
   infoPanel: {fileID: 2041343776}
-  purchasedScale: 0.95
+  purchasedScale: 0.8
   hoverScale: 1.1
   speed: 8
   hoverOffsetX: 10
