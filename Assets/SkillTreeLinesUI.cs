@@ -16,6 +16,7 @@ public class SkillTreeLinesUI : MonoBehaviour
         [HideInInspector] public Image lineBackground;
         [HideInInspector] public Image lineForeground;
         [HideInInspector] public LineState state = LineState.Hidden;
+        [HideInInspector] public Coroutine activeCoroutine; // Para evitar solapamiento de animaciones
     }
 
     [Header("Configuración de Líneas")]
@@ -24,21 +25,20 @@ public class SkillTreeLinesUI : MonoBehaviour
     public float lineThickness = 6f;
 
     [Header("Animación")]
-    public float discoveryDuration = 0.5f;
-    public float unlockDuration = 0.8f;
+    public float discoveryDuration = 0.4f;
+    public float unlockDuration = 0.6f;
 
     [Header("Configuración de Color")]
-    public Color lockedColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+    public Color lockedColor = new Color(0.2f, 0.2f, 0.2f, 0.8f);
     public Color unlockedColor = Color.white;
 
-    [Header("Offsets Globales")]
-    public float globalOffsetSalida = 20f;
-    public float globalOffsetLlegada = 20f;
+    [Header("Offsets")]
+    public float globalOffsetSalida = 25f;
+    public float globalOffsetLlegada = 25f;
     public Vector2 globalOffsetPosicion;
 
     public Connection[] connections;
     private Dictionary<RectTransform, List<Connection>> connectionsByFrom = new Dictionary<RectTransform, List<Connection>>();
-    private Dictionary<RectTransform, List<Connection>> connectionsByTo = new Dictionary<RectTransform, List<Connection>>();
 
     void Start()
     {
@@ -46,39 +46,40 @@ public class SkillTreeLinesUI : MonoBehaviour
         {
             if (c.from == null || c.to == null) continue;
 
+            // Crear visuales
             c.lineBackground = CreateLineImage($"BG_{c.from.name}_{c.to.name}", lockedColor);
             c.lineForeground = CreateLineImage($"FG_{c.from.name}_{c.to.name}", unlockedColor);
 
+            // Orden de dibujado (detrás de los botones)
             c.lineBackground.transform.SetAsFirstSibling();
             c.lineForeground.transform.SetSiblingIndex(c.lineBackground.transform.GetSiblingIndex() + 1);
 
+            // Indexar
             if (!connectionsByFrom.ContainsKey(c.from)) connectionsByFrom[c.from] = new List<Connection>();
             connectionsByFrom[c.from].Add(c);
 
-            if (!connectionsByTo.ContainsKey(c.to)) connectionsByTo[c.to] = new List<Connection>();
-            connectionsByTo[c.to].Add(c);
-
-            // IMPORTANTE: Si el nodo de origen ya está desbloqueado por el guardado, 
-            // mostramos la línea gris inmediatamente sin esperar.
+            // ESTADO INICIAL según carga de partida
             SkillNode fromNode = c.from.GetComponent<SkillNode>();
+            SkillNode toNode = c.to.GetComponent<SkillNode>();
+
             if (fromNode != null && fromNode.IsUnlocked)
             {
-                // Si el de destino también está desbloqueado, la línea nace blanca.
-                SkillNode toNode = c.to.GetComponent<SkillNode>();
                 if (toNode != null && toNode.IsUnlocked)
                 {
+                    // Ambos comprados: Línea blanca completa
+                    c.state = LineState.Unlocked;
                     c.lineBackground.gameObject.SetActive(true);
                     c.lineBackground.fillAmount = 1;
                     c.lineForeground.gameObject.SetActive(true);
                     c.lineForeground.fillAmount = 1;
-                    c.state = LineState.Unlocked;
                 }
                 else
                 {
-                    // Si solo el origen está desbloqueado, la línea nace gris.
+                    // Solo origen comprado: Línea gris completa
+                    c.state = LineState.Locked;
                     c.lineBackground.gameObject.SetActive(true);
                     c.lineBackground.fillAmount = 1;
-                    c.state = LineState.Locked;
+                    c.lineForeground.gameObject.SetActive(false);
                 }
             }
         }
@@ -92,99 +93,76 @@ public class SkillTreeLinesUI : MonoBehaviour
         img.fillAmount = 0;
         img.gameObject.SetActive(false);
         img.rectTransform.pivot = new Vector2(0, 0.5f);
+        // Asegúrate de que el Sprite de la imagen sea una barra blanca simple y el Type sea 'Filled'
+        img.type = Image.Type.Filled;
+        img.fillMethod = Image.FillMethod.Horizontal;
         return img;
     }
 
     void LateUpdate()
     {
+        // Actualizamos posiciones y detectamos cambios de estado cada frame por si los nodos se mueven (Scroll)
         foreach (var c in connections)
         {
-            if (c == null || c.lineBackground == null) continue;
+            if (c == null || c.from == null || c.to == null) continue;
 
-            // CAMBIO CRÍTICO: Una línea debe ser visible si su origen está activo 
-            // Y si no está en estado Hidden.
-            bool shouldBeVisible = c.from.gameObject.activeInHierarchy && c.state != LineState.Hidden;
+            SkillNode fromNode = c.from.GetComponent<SkillNode>();
+            SkillNode toNode = c.to.GetComponent<SkillNode>();
 
-            if (shouldBeVisible)
+            // 1. Lógica de mostrar Gris (Discovery)
+            if (fromNode.IsUnlocked && c.state == LineState.Hidden)
             {
-                c.lineBackground.gameObject.SetActive(true);
+                if (c.activeCoroutine == null)
+                    c.activeCoroutine = StartCoroutine(AnimateDiscovery(c));
+            }
 
-                // El foreground solo si está en proceso de desbloqueo o ya desbloqueado
-                bool showForeground = (c.state == LineState.Unlocking || c.state == LineState.Unlocked);
-                c.lineForeground.gameObject.SetActive(showForeground);
+            // 2. Lógica de mostrar Blanco (Unlock)
+            if (toNode.IsUnlocked && c.state == LineState.Locked)
+            {
+                if (c.activeCoroutine == null)
+                    c.activeCoroutine = StartCoroutine(AnimateUnlock(c));
+            }
 
-                // Actualizar posición siempre que sea visible
+            // 3. Mantener posiciones actualizadas
+            if (c.lineBackground.gameObject.activeInHierarchy)
+            {
                 PositionLine(c.lineBackground.rectTransform, c.from, c.to);
                 PositionLine(c.lineForeground.rectTransform, c.from, c.to);
             }
-            else
-            {
-                c.lineBackground.gameObject.SetActive(false);
-                c.lineForeground.gameObject.SetActive(false);
-            }
-
-            // Lógica de disparo de desbloqueo
-            SkillNode targetNode = c.to.GetComponent<SkillNode>();
-            if (targetNode != null && targetNode.IsUnlocked && c.state == LineState.Locked)
-            {
-                StartCoroutine(AnimateUnlock(c));
-            }
-        }
-    }
-    public void ShowFrom(RectTransform fromNode)
-    {
-        if (connectionsByFrom.TryGetValue(fromNode, out List<Connection> outgoingLines))
-        {
-            foreach (var line in outgoingLines)
-            {
-                if (line.state == LineState.Hidden)
-                {
-                    StartCoroutine(WaitAndDiscover(line));
-                }
-            }
         }
     }
 
-    private IEnumerator WaitAndDiscover(Connection currentLine)
+    // Invocado por SkillNode cuando se compra o al iniciar
+    public void ShowFrom(RectTransform nodeRT)
     {
-        currentLine.state = LineState.Discovering;
+        // El LateUpdate ya se encarga de detectar el cambio en IsUnlocked
+        // pero podemos forzar un refresco si es necesario.
+    }
 
-        if (connectionsByTo.TryGetValue(currentLine.from, out List<Connection> parentLines))
-        {
-            bool waiting = true;
-            while (waiting)
-            {
-                waiting = false;
-                foreach (var pL in parentLines)
-                {
-                    // Solo esperamos si la línea padre está en proceso de llenarse.
-                    // Si ya está Unlocked, pasamos.
-                    if (pL.state != LineState.Unlocked)
-                    {
-                        waiting = true;
-                        break;
-                    }
-                }
-                if (waiting) yield return null;
-            }
-        }
+    private IEnumerator AnimateDiscovery(Connection c)
+    {
+        c.state = LineState.Discovering;
+        c.lineBackground.gameObject.SetActive(true);
+        c.lineBackground.fillAmount = 0;
 
-        currentLine.lineBackground.gameObject.SetActive(true);
         float elapsed = 0f;
         while (elapsed < discoveryDuration)
         {
             elapsed += Time.deltaTime;
-            currentLine.lineBackground.fillAmount = Mathf.Lerp(0, 1, elapsed / discoveryDuration);
+            c.lineBackground.fillAmount = Mathf.Lerp(0, 1, elapsed / discoveryDuration);
             yield return null;
         }
-        currentLine.lineBackground.fillAmount = 1;
-        currentLine.state = LineState.Locked;
+
+        c.lineBackground.fillAmount = 1;
+        c.state = LineState.Locked;
+        c.activeCoroutine = null;
     }
 
     private IEnumerator AnimateUnlock(Connection c)
     {
         c.state = LineState.Unlocking;
         c.lineForeground.gameObject.SetActive(true);
+        c.lineForeground.fillAmount = 0;
 
         float elapsed = 0f;
         while (elapsed < unlockDuration)
@@ -196,9 +174,7 @@ public class SkillTreeLinesUI : MonoBehaviour
 
         c.lineForeground.fillAmount = 1;
         c.state = LineState.Unlocked;
-
-        // Al terminar, avisamos a los hijos de que esta línea ya terminó
-        ShowFrom(c.to);
+        c.activeCoroutine = null;
     }
 
     void PositionLine(RectTransform lineRT, RectTransform a, RectTransform b)
@@ -207,7 +183,11 @@ public class SkillTreeLinesUI : MonoBehaviour
         Vector2 B = WorldToUI(b.position);
         Vector2 dir = B - A;
         float dist = dir.magnitude;
+
+        // Calculamos el inicio con el offset
         Vector2 startPos = A + (dir.normalized * globalOffsetSalida) + globalOffsetPosicion;
+
+        // La distancia total restando ambos offsets de los círculos/nodos
         float width = Mathf.Max(0, dist - globalOffsetSalida - globalOffsetLlegada);
 
         lineRT.anchoredPosition = startPos;

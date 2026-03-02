@@ -225,22 +225,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1672344943}
   requiredParentNodes:
   - {fileID: 1196716987}
+  requiresAllParents: 0
   effectType: 79
   button: {fileID: 2072066}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -449,24 +443,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 140815420}
-  - {fileID: 802097012}
   requiredParentNodes:
   - {fileID: 1971930457}
   - {fileID: 905467058}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 7136879}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -674,22 +661,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 709442407}
   requiredParentNodes:
   - {fileID: 1278883309}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 8811018}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -897,24 +878,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1933578428}
-  - {fileID: 905467058}
-  - {fileID: 140815420}
   requiredParentNodes:
   - {fileID: 1265474764}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 10865807}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -1431,21 +1404,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2038673408}
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 30808113}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -2077,23 +2044,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1162838971}
-  - {fileID: 1030370900}
   requiredParentNodes:
   - {fileID: 1951653950}
+  requiresAllParents: 0
   effectType: 94
   button: {fileID: 47867157}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -2688,23 +2648,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 534153786}
-  - {fileID: 140815420}
   requiredParentNodes:
   - {fileID: 1933578428}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 51879064}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -4039,24 +3992,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1042484498}
-  - {fileID: 747885747}
   requiredParentNodes:
   - {fileID: 1337796256}
   - {fileID: 1042484498}
+  requiresAllParents: 0
   effectType: 28
   button: {fileID: 110284103}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -4328,9 +4274,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1404261066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 105.935, y: -19.1395}
   m_SizeDelta: {x: 211.87, y: 68.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &114730810
@@ -4539,23 +4485,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 278584130}
-  - {fileID: 304200323}
   requiredParentNodes:
   - {fileID: 592913816}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 116029489}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -4838,21 +4777,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 592913816}
+  requiresAllParents: 0
   effectType: 84
   button: {fileID: 125608819}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -5160,22 +5094,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 572815142}
   requiredParentNodes:
   - {fileID: 1656491176}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 135870696}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -5421,24 +5349,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
-  - {fileID: 754507407}
   requiredParentNodes:
   - {fileID: 10865806}
   - {fileID: 51879063}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 140815421}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -5882,24 +5803,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 448254070}
-  - {fileID: 1439613808}
-  - {fileID: 407586760}
   requiredParentNodes:
   - {fileID: 2073210157}
+  requiresAllParents: 0
   effectType: 38
   button: {fileID: 151827303}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -6405,23 +6318,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 525428708}
   requiredParentNodes:
   - {fileID: 1857615621}
   - {fileID: 449661208}
+  requiresAllParents: 0
   effectType: 79
   button: {fileID: 155905785}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -6629,22 +6536,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 678052122}
   requiredParentNodes:
   - {fileID: 534153786}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 156995977}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -9656,20 +9557,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 60
   button: {fileID: 237977261}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -10228,20 +10124,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 66
   button: {fileID: 255776140}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -10460,23 +10351,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1196716987}
-  - {fileID: 571741530}
   requiredParentNodes:
   - {fileID: 1783878502}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 257028505}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -11454,22 +11338,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
   requiredParentNodes:
   - {fileID: 798516218}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 277072737}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -11677,20 +11555,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 97
   button: {fileID: 278584131}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -12047,9 +11920,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1110968532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 105.83, y: -19.1375}
   m_SizeDelta: {x: 211.66, y: 68.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &288936669
@@ -12257,22 +12130,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1989663731}
   requiredParentNodes:
   - {fileID: 879777744}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 290278394}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -12977,24 +12844,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 739443374}
-  - {fileID: 1474536760}
-  - {fileID: 116029488}
   requiredParentNodes:
   - {fileID: 1055916627}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 304200324}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -14460,21 +14319,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1989663731}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 350984044}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -14682,22 +14536,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1656491176}
   requiredParentNodes:
   - {fileID: 1162838971}
+  requiresAllParents: 0
   effectType: 60
   button: {fileID: 354231641}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -15041,22 +14889,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 618984214}
   requiredParentNodes:
   - {fileID: 1656491176}
+  requiresAllParents: 0
   effectType: 91
   button: {fileID: 360982153}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -16308,22 +16150,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 743180949}
   requiredParentNodes:
   - {fileID: 1715326697}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 374966605}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -16667,22 +16503,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 474215732}
   requiredParentNodes:
   - {fileID: 1474536760}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 378396975}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -16889,23 +16719,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 407586760}
-  - {fileID: 797128903}
   requiredParentNodes:
   - {fileID: 448254070}
+  - {fileID: 407586760}
+  requiresAllParents: 0
   effectType: 16
   button: {fileID: 382369588}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -17360,21 +17184,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 2096388056}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 392572922}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -17669,22 +17488,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 718359989}
   requiredParentNodes:
   - {fileID: 886933773}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 397164382}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -18646,23 +18459,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 876571097}
-  - {fileID: 382369587}
   requiredParentNodes:
   - {fileID: 151827302}
+  - {fileID: 382369587}
+  - {fileID: 876571097}
+  requiresAllParents: 0
   effectType: 110
   button: {fileID: 407586761}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -19797,23 +19605,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1396887379}
-  - {fileID: 1261396719}
   requiredParentNodes:
   - {fileID: 278584130}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 439070112}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -20021,22 +19822,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 382369587}
   requiredParentNodes:
   - {fileID: 151827302}
+  requiresAllParents: 0
   effectType: 58
   button: {fileID: 448254071}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -20420,22 +20215,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 155905784}
   requiredParentNodes:
   - {fileID: 879777744}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 449661209}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -21159,22 +20948,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1396887379}
   requiredParentNodes:
   - {fileID: 378396974}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 474215733}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -21465,21 +21248,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 954987305}
+  requiresAllParents: 0
   effectType: 60
   button: {fileID: 479754169}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -22449,23 +22227,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1715326697}
-  - {fileID: 1130491015}
   requiredParentNodes:
   - {fileID: 618984214}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 504294418}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -28136,22 +27907,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 155905784}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 525428709}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -28888,23 +28653,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1041634075}
-  - {fileID: 686109906}
   requiredParentNodes:
   - {fileID: 795418842}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 531154062}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -29113,23 +28871,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754507407}
-  - {fileID: 156995976}
   requiredParentNodes:
   - {fileID: 51879063}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 534153787}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -29337,21 +29088,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 479754168}
+  requiresAllParents: 0
   effectType: 60
   button: {fileID: 537888122}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -29782,23 +29528,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1076894833}
-  - {fileID: 1272409848}
   requiredParentNodes:
   - {fileID: 1228263475}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 544632741}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -30305,22 +30044,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2072065}
   requiredParentNodes:
   - {fileID: 257028504}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 571741531}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -30528,22 +30261,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 886933773}
   requiredParentNodes:
   - {fileID: 135870695}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 572815143}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -30838,23 +30565,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 116029488}
-  - {fileID: 1055916627}
   requiredParentNodes:
   - {fileID: 1976074436}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 592913817}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -31800,23 +31520,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1667371938}
-  - {fileID: 504294417}
   requiredParentNodes:
   - {fileID: 360982152}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 618984215}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -32547,23 +32260,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754935172}
-  - {fileID: 1265474764}
   requiredParentNodes:
   - {fileID: 1708901996}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 647879360}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -32789,22 +32495,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1867518897}
   requiredParentNodes:
   - {fileID: 2096388056}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 661437728}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -33579,24 +33279,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1196716987}
-  - {fileID: 1783878502}
   requiredParentNodes:
   - {fileID: 156995976}
   - {fileID: 754507407}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 678052123}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -33804,22 +33497,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 739443374}
   requiredParentNodes:
   - {fileID: 1055916627}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 678139297}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -34027,22 +33714,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1926160753}
   requiredParentNodes:
   - {fileID: 531154061}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 686109907}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -34250,22 +33931,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 718359989}
   requiredParentNodes:
   - {fileID: 886933773}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 692801605}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -34655,23 +34330,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 987115519}
-  - {fileID: 823844519}
   requiredParentNodes:
   - {fileID: 8811017}
+  requiresAllParents: 0
   effectType: 66
   button: {fileID: 709442408}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -34918,24 +34586,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 748039276}
-  - {fileID: 1972385819}
   requiredParentNodes:
   - {fileID: 692801604}
   - {fileID: 397164381}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 718359990}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -35557,23 +35218,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1582465759}
-  - {fileID: 1976074436}
   requiredParentNodes:
   - {fileID: 1654223963}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 737618074}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -35783,21 +35437,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 304200323}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 739443375}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -36005,22 +35654,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 374966604}
+  requiresAllParents: 0
   effectType: 81
   button: {fileID: 743180950}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -36228,22 +35871,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1708901996}
   requiredParentNodes:
   - {fileID: 110284102}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 747885748}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -36451,22 +36088,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 927052174}
   requiredParentNodes:
   - {fileID: 718359989}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 748039277}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -36674,23 +36305,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1041634075}
-  - {fileID: 2087679057}
   requiredParentNodes:
   - {fileID: 795418842}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 750283633}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -36898,23 +36522,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1608665274}
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1430353861}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 750702840}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -37122,24 +36739,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 802097012}
-  - {fileID: 678052122}
   requiredParentNodes:
   - {fileID: 140815420}
   - {fileID: 534153786}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 754507408}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -37347,21 +36957,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1233362050}
+  requiresAllParents: 0
   effectType: 96
   button: {fileID: 754935173}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -42562,24 +42167,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 743180949}
-  - {fileID: 1130491015}
-  - {fileID: 1486743223}
   requiredParentNodes:
   - {fileID: 1715326697}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 782223951}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -42923,23 +42520,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1050803135}
   requiredParentNodes:
   - {fileID: 1233362050}
   - {fileID: 1272409848}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 791837823}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -43147,23 +42738,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 750283632}
-  - {fileID: 531154061}
   requiredParentNodes:
   - {fileID: 1261396719}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 795418843}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -43333,21 +42917,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 382369587}
+  requiresAllParents: 0
   effectType: 53
   button: {fileID: 797128904}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -43594,23 +43173,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 277072736}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 750702839}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 798516219}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -43867,22 +43439,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1783878502}
   requiredParentNodes:
   - {fileID: 7136878}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 802097013}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -44715,23 +44281,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 954987305}
-  - {fileID: 1079378718}
   requiredParentNodes:
   - {fileID: 709442407}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 823844520}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -45621,22 +45180,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1430353861}
   requiredParentNodes:
   - {fileID: 1804425297}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 831262136}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -45844,22 +45397,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1608665274}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 833982575}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -46322,7 +45869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47128,23 +46675,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 407586760}
-  - {fileID: 1614307349}
   requiredParentNodes:
   - {fileID: 1439613808}
+  - {fileID: 407586760}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 876571098}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -47766,24 +47307,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 290278393}
-  - {fileID: 449661208}
-  - {fileID: 1857615621}
   requiredParentNodes:
   - {fileID: 1926160753}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 879777745}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -48268,23 +47801,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 397164381}
-  - {fileID: 692801604}
   requiredParentNodes:
   - {fileID: 572815142}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 886933774}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -48696,23 +48222,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
-  - {fileID: 2128782334}
   requiredParentNodes:
   - {fileID: 1135501627}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 905467059}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -49595,24 +49114,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 237977260}
-  - {fileID: 2069304523}
   requiredParentNodes:
   - {fileID: 748039276}
   - {fileID: 1972385819}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 927052175}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -49858,20 +49370,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 87
   button: {fileID: 932488386}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -50519,23 +50026,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 479754168}
-  - {fileID: 932488385}
   requiredParentNodes:
   - {fileID: 823844519}
+  requiresAllParents: 0
   effectType: 39
   button: {fileID: 954987306}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -51259,23 +50759,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 0}
-  - {fileID: 954987305}
   requiredParentNodes:
   - {fileID: 709442407}
+  requiresAllParents: 0
   effectType: 109
   button: {fileID: 987115520}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -52372,23 +51865,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 47867156}
-  - {fileID: 1327912796}
   requiredParentNodes:
   - {fileID: 1464204527}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1030370901}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -53091,22 +52577,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 531154061}
   requiredParentNodes:
   - {fileID: 750283632}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1041634076}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -53316,24 +52796,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 110284102}
-  - {fileID: 1097085094}
-  - {fileID: 1708901996}
   requiredParentNodes:
   - {fileID: 1611679157}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1042484499}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -53893,9 +53365,9 @@ MonoBehaviour:
   fixedCanvas: {fileID: 154249163}
   linePrefab: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
   lineThickness: 6
-  discoveryDuration: 0.4
-  unlockDuration: 0.33
-  lockedColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  discoveryDuration: 0.5
+  unlockDuration: 0.8
+  lockedColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   unlockedColor: {r: 1, g: 1, b: 1, a: 1}
   globalOffsetSalida: 30
   globalOffsetLlegada: 43
@@ -55232,21 +54704,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 791837822}
+  requiresAllParents: 0
   effectType: 79
   button: {fileID: 1050803136}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -55492,24 +54959,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1914251209}
-  - {fileID: 678139296}
-  - {fileID: 304200323}
   requiredParentNodes:
   - {fileID: 592913816}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1055916628}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -56204,21 +55663,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 544632740}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1076894834}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -56426,22 +55880,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2002969990}
   requiredParentNodes:
   - {fileID: 823844519}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 1079378719}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -56947,24 +56395,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1272409848}
-  - {fileID: 1233362050}
   requiredParentNodes:
   - {fileID: 1228263475}
   - {fileID: 1042484498}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1097085095}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -57335,9 +56776,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1956988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 127.82655, y: -29.386}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1102835020
@@ -58779,22 +58220,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 504294417}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1130491016}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -59176,22 +58611,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 905467058}
   requiredParentNodes:
   - {fileID: 1265474764}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1135501628}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -59906,21 +59335,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: skill_speed_tit
   descriptionKey: skill_speed_desc
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1783878502}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1151359670}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -60348,22 +59772,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 354231640}
   requiredParentNodes:
   - {fileID: 47867156}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1162838972}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -60884,24 +60302,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
-  - {fileID: 1339528003}
-  - {fileID: 798516218}
   requiredParentNodes:
   - {fileID: 1430353861}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1181489238}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -61849,23 +61259,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 257028504}
-  - {fileID: 2072065}
   requiredParentNodes:
   - {fileID: 678052122}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1196716988}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -62758,22 +62161,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 544632740}
   requiredParentNodes:
   - {fileID: 1611679157}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1228263476}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -63206,24 +62603,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 754935172}
-  - {fileID: 754935172}
   requiredParentNodes:
   - {fileID: 1708901996}
   - {fileID: 1097085094}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1233362051}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -63977,22 +63367,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 795418842}
   requiredParentNodes:
   - {fileID: 439070111}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1261396720}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -64200,23 +63584,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1135501627}
-  - {fileID: 10865806}
   requiredParentNodes:
   - {fileID: 647879359}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1265474765}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -64424,23 +63801,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 791837822}
   requiredParentNodes:
   - {fileID: 544632740}
   - {fileID: 1097085094}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 1272409849}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -64786,22 +64157,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 8811017}
   requiredParentNodes:
   - {fileID: 1811658619}
+  requiresAllParents: 0
   effectType: 98
   button: {fileID: 1278883310}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -65476,24 +64841,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1439130290}
   requiredParentNodes:
   - {fileID: 1857615621}
   - {fileID: 2074735398}
   - {fileID: 525428708}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1296002570}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -66216,22 +65575,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1162838971}
   requiredParentNodes:
   - {fileID: 1030370900}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1327912797}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -66439,23 +65792,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 30808112}
-  - {fileID: 1976074436}
   requiredParentNodes:
   - {fileID: 1654223963}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 1334769235}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -66591,8 +65937,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -173.6, y: 1110.9}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -192.31, y: 1093.21}
+  m_SizeDelta: {x: -37.42, y: -35.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1335848659
 MonoBehaviour:
@@ -66801,22 +66147,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 110284102}
   requiredParentNodes:
   - {fileID: 1611679157}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1337796257}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -67024,23 +66364,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1464204527}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 1858259019}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1339528004}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -68629,23 +67962,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 474215732}
-  - {fileID: 439070111}
   requiredParentNodes:
   - {fileID: 1474536760}
+  requiresAllParents: 0
   effectType: 37
   button: {fileID: 1396887380}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -69065,21 +68391,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 2069304523}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1407134976}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -80116,24 +79437,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 750702839}
-  - {fileID: 1181489237}
-  - {fileID: 1181489237}
   requiredParentNodes:
   - {fileID: 831262135}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1430353862}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -80615,22 +79928,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1265474764}
   requiredParentNodes:
   - {fileID: 1296002569}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1439130291}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -80838,22 +80145,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 876571097}
   requiredParentNodes:
   - {fileID: 151827302}
+  - {fileID: 876571097}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 1439613809}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -82036,23 +81338,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1951653950}
-  - {fileID: 1030370900}
   requiredParentNodes:
   - {fileID: 1339528003}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1464204528}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -82396,24 +81691,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 278584130}
-  - {fileID: 378396974}
-  - {fileID: 1396887379}
   requiredParentNodes:
   - {fileID: 304200323}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1474536761}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -82759,22 +82046,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 392572921}
   requiredParentNodes:
   - {fileID: 782223950}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1486743224}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -84930,22 +84211,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 255776139}
   requiredParentNodes:
   - {fileID: 737618073}
+  requiresAllParents: 0
   effectType: 84
   button: {fileID: 1582465760}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -86337,22 +85612,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 833982574}
   requiredParentNodes:
   - {fileID: 750702839}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1608665275}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -86522,24 +85791,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1337796256}
-  - {fileID: 1228263475}
-  - {fileID: 1042484498}
   requiredParentNodes:
   - {fileID: 2096388056}
+  requiresAllParents: 0
   effectType: 50
   button: {fileID: 1611679158}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -86747,22 +86008,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1811658619}
   requiredParentNodes:
   - {fileID: 876571097}
+  requiresAllParents: 0
   effectType: 43
   button: {fileID: 1614307350}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -88176,22 +87431,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1334769234}
   requiredParentNodes:
   - {fileID: 1867518897}
+  requiresAllParents: 0
   effectType: 110
   button: {fileID: 1650745934}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -88399,23 +87648,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 737618073}
-  - {fileID: 1334769234}
   requiredParentNodes:
   - {fileID: 1867518897}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 1654223964}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -88761,23 +88003,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 135870695}
-  - {fileID: 360982152}
   requiredParentNodes:
   - {fileID: 354231640}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1656491177}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -89275,22 +88510,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1715326697}
   requiredParentNodes:
   - {fileID: 618984214}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1667371939}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -89634,22 +88863,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1804425297}
   requiredParentNodes:
   - {fileID: 2072065}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1672344944}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -90996,24 +90219,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 647879359}
-  - {fileID: 1233362050}
   requiredParentNodes:
   - {fileID: 1042484498}
   - {fileID: 747885747}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1708901997}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -91359,24 +90575,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 374966604}
-  - {fileID: 504294417}
-  - {fileID: 782223950}
   requiredParentNodes:
   - {fileID: 1667371938}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1715326698}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -93171,23 +92379,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1151359669}
-  - {fileID: 257028504}
   requiredParentNodes:
   - {fileID: 802097012}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1783878503}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -93734,9 +92935,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1635791051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 257.47656, y: -29.15}
   m_SizeDelta: {x: 3.6469, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1797673838
@@ -93981,22 +93182,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 831262135}
   requiredParentNodes:
   - {fileID: 1672344943}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1804425298}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -94342,22 +93537,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1278883309}
   requiredParentNodes:
   - {fileID: 1614307349}
+  requiresAllParents: 0
   effectType: 68
   button: {fileID: 1811658620}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -95309,9 +94498,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1635791051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 127.82655, y: -29.15}
   m_SizeDelta: {x: 255.6531, y: 41.7123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1841904652
@@ -95767,24 +94956,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 155905784}
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 1989663731}
   - {fileID: 879777744}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1857615622}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -95992,22 +95174,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1339528003}
   requiredParentNodes:
   - {fileID: 1430353861}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1858259020}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -96768,24 +95944,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1654223963}
-  - {fileID: 1650745933}
   requiredParentNodes:
   - {fileID: 2002969990}
   - {fileID: 661437727}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1867518898}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -97040,7 +96209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1870291122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -98229,21 +97398,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1055916627}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1914251210}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -98587,22 +97751,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 879777744}
   requiredParentNodes:
   - {fileID: 686109906}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1926160754}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -99088,22 +98246,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 51879063}
   requiredParentNodes:
   - {fileID: 10865806}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1933578429}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -99568,24 +98720,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 277072736}
-  - {fileID: 1464204527}
-  - {fileID: 47867156}
   requiredParentNodes:
   - {fileID: 1181489237}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1951653951}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -100376,22 +99520,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 7136878}
   requiredParentNodes:
   - {fileID: 2128782334}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1971930458}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -100599,22 +99737,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 927052174}
   requiredParentNodes:
   - {fileID: 718359989}
+  requiresAllParents: 0
   effectType: 16
   button: {fileID: 1972385820}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -100958,23 +100090,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 592913816}
-  - {fileID: 2038673408}
   requiredParentNodes:
   - {fileID: 1334769234}
+  requiresAllParents: 0
   effectType: 66
   button: {fileID: 1976074437}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -101688,24 +100813,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 350984043}
-  - {fileID: 1857615621}
-  - {fileID: 2074735398}
   requiredParentNodes:
   - {fileID: 290278393}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 1989663732}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -102136,22 +101253,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1867518897}
   requiredParentNodes:
   - {fileID: 1079378718}
+  requiresAllParents: 0
   effectType: 13
   button: {fileID: 2002969991}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -103461,21 +102572,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 1976074436}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 2038673409}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -104820,22 +103926,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1407134975}
   requiredParentNodes:
   - {fileID: 927052174}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 2069304524}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -105143,22 +104243,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: skill_speed_tit
   descriptionKey: skill_speed_desc
   CoinCost: 1
-  nextNodes:
-  - {fileID: 151827302}
   requiredParentNodes:
   - {fileID: 2096388056}
+  requiresAllParents: 0
   effectType: 49
   button: {fileID: 2073210158}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -105404,22 +104498,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1296002569}
   requiredParentNodes:
   - {fileID: 1989663731}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 2074735399}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -105916,21 +105004,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes: []
   requiredParentNodes:
   - {fileID: 750283632}
+  requiresAllParents: 0
   effectType: 26
   button: {fileID: 2087679058}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -106311,24 +105394,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: MejoraAleatoria
-  infoPanel: {fileID: 2041343775}
-  infoTitle: {fileID: 141406160}
-  infoDescription: {fileID: 356647270}
-  infoCost: {fileID: 171250022}
   skillNameKey: skill_root_tit
   descriptionKey: skill_root_desc
   CoinCost: 1
-  nextNodes:
-  - {fileID: 2073210157}
-  - {fileID: 661437727}
-  - {fileID: 1611679157}
-  - {fileID: 392572921}
   requiredParentNodes: []
+  requiresAllParents: 0
   effectType: 104
   button: {fileID: 2096388057}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
@@ -107327,22 +106401,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveID: 
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
   skillNameKey: 
   descriptionKey: 
   CoinCost: 1
-  nextNodes:
-  - {fileID: 1971930457}
   requiredParentNodes:
   - {fileID: 905467058}
+  requiresAllParents: 0
   effectType: 18
   button: {fileID: 2128782335}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
   canvasGroup: {fileID: 0}
   audioSource: {fileID: 858966973}
   unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
