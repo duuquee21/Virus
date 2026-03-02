@@ -163,8 +163,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 
 
+    // SUSTITUYE TU FUNCIÓN CheckIfShouldShow POR ESTA:
     public void CheckIfShouldShow()
     {
+        // Debug para saber quién soy
+        string myName = gameObject.name;
+
+        // 1. Gestión de si está maximizada
         if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
             SetState(false, Color.gray, false);
         else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
@@ -172,21 +177,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         else
             SetState(true, Color.white, false);
 
-        // HABILIDAD DE DAÑO REPETIBLE
+        // 2. Si ya está comprada
         if ((IsDamageSkill() || IsTimeSkill() || IsCoinSkill()) && repeatLevel > 0)
         {
             SetAppearance(true, 1f, true);
-
-            if (IsDamageSkill() && repeatLevel >= maxRepeatLevel)
-                SetState(false, Color.gray, false);
-            else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
-                SetState(false, Color.gray, false);
-            else
-                SetState(true, Color.white, false);
-
+            if (IsDamageSkill() && repeatLevel >= maxRepeatLevel) SetState(false, Color.gray, false);
+            else if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel) SetState(false, Color.gray, false);
+            else SetState(true, Color.white, false);
             return;
         }
 
+        if (!IsDamageSkill() && !IsCoinSkill() && !IsTimeSkill() && unlocked)
+        {
+            SetAppearance(true, 1f, false);
+            SetState(false, Color.gray, false);
+            return;
+        }
+
+        // 3. COMPROBACIÓN DE PADRES (AQUÍ ESTÁ EL CHIVATO)
         if (requiredParentNodes == null || requiredParentNodes.Length == 0)
         {
             SetAppearance(true, 1f, true);
@@ -194,12 +202,28 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        bool allParentsUnlocked = requiredParentNodes != null && requiredParentNodes.Length > 0;
+        bool allParentsUnlocked = true;
         bool atLeastOneParentUnlocked = false;
 
         foreach (var parent in requiredParentNodes)
         {
-            if (parent != null && parent.IsUnlocked)
+            if (parent == null)
+            {
+                Debug.LogError($"🚨 [ERROR CRÍTICO en {myName}] -> Tienes un hueco vacío en la lista 'Required Parent Nodes'. ¡Quítalo o asigna algo!");
+                allParentsUnlocked = false;
+                continue;
+            }
+
+            // --- EL CHIVATO ---
+            // Esto te dirá si estás mirando al objeto correcto o al prefab fantasma
+            if (!parent.gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning($"⚠️ [OJO en {myName}] -> El padre '{parent.name}' existe pero está DESACTIVADO en la jerarquía. ¿Seguro que no es un Prefab?");
+            }
+
+            Debug.Log($"🔍 [{myName}] revisando a Padre: '{parent.name}'. ¿Está desbloqueado?: {parent.IsUnlocked}");
+
+            if (parent.IsUnlocked)
                 atLeastOneParentUnlocked = true;
             else
                 allParentsUnlocked = false;
@@ -207,16 +231,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (allParentsUnlocked)
         {
+            Debug.Log($"✅ [{myName}] -> Todos los padres OK. Me muestro.");
             SetAppearance(true, 1f, true);
             SetState(true, Color.white, false);
         }
         else if (atLeastOneParentUnlocked)
         {
+            Debug.Log($"🔒 [{myName}] -> Veo al padre, pero faltan otros. Me muestro bloqueado.");
             SetAppearance(true, 0.15f, false);
             SetState(false, Color.black, true);
         }
         else
         {
+            Debug.Log($"❌ [{myName}] -> Padre bloqueado. ME OCULTO.");
             SetAppearance(false, 0f, false);
         }
 
