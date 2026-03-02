@@ -130,18 +130,19 @@ public class SkillTreeLinesUI : MonoBehaviour
 
     void LateUpdate()
     {
+        Canvas.ForceUpdateCanvases();
         foreach (var c in connections)
         {
             if (c.state == LineState.Hidden) continue;
 
-            PositionLine(c.lineBackground.rectTransform, c.from, c.to);
-            PositionLine(c.lineForeground.rectTransform, c.from, c.to);
+            PositionLine(c.lineBackground, c.from, c.to);
+            PositionLine(c.lineForeground, c.from, c.to);
 
             SkillNode fromNode = c.from.GetComponent<SkillNode>();
             SkillNode toNode = c.to.GetComponent<SkillNode>();
-
-            // Solo disparamos el RECOLOR si el nodo destino está desbloqueado y la línea está en espera (Locked)
-            if (toNode != null && toNode.IsUnlocked && fromNode != null && fromNode.IsUnlocked && c.state == LineState.Locked)
+            if (toNode != null && toNode.IsUnlocked
+                && fromNode != null && fromNode.IsUnlocked
+                && c.state == LineState.Locked)
             {
                 StartCoroutine(AnimateUnlock(c));
             }
@@ -196,7 +197,6 @@ public class SkillTreeLinesUI : MonoBehaviour
         }
 
         c.lineForeground.fillAmount = 1;
-        c.state = LineState.Unlocked;
 
         // --- ÚNICO PUNTO DE ACTIVACIÓN ---
         // Ahora que la línea blanca ha terminado de "tocar" el nodo destino,
@@ -204,19 +204,50 @@ public class SkillTreeLinesUI : MonoBehaviour
         ShowFrom(c.to);
     }
 
-    void PositionLine(RectTransform lineRT, RectTransform a, RectTransform b)
+    void PositionLine(Image lineImg, RectTransform a, RectTransform b)
     {
+        RectTransform lineRT = lineImg.rectTransform;
+
         Vector2 A = WorldToUI(a.position);
         Vector2 B = WorldToUI(b.position);
+
         Vector2 dir = B - A;
         float dist = dir.magnitude;
+        if (dist < 0.01f) return;
 
-        Vector2 startPos = A + (dir.normalized * globalOffsetSalida) + globalOffsetPosicion;
-        float width = Mathf.Max(0, dist - globalOffsetSalida - globalOffsetLlegada);
+        Vector2 n = dir / dist;
 
-        lineRT.anchoredPosition = startPos;
-        lineRT.sizeDelta = new Vector2(width, lineThickness);
-        lineRT.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        // Anchura recortada por offsets
+        float width = Mathf.Max(0f, dist - globalOffsetSalida - globalOffsetLlegada);
+
+        // Si el destino está "a la izquierda" del origen en UI, invertimos el origen del fill
+        bool flip = (dir.x < 0f);
+
+        if (!flip)
+        {
+            // Relleno de izquierda a derecha (origen en A)
+            lineImg.fillOrigin = 0;                 // Left
+            lineRT.pivot = new Vector2(0f, 0.5f);
+
+            Vector2 startPos = A + (n * globalOffsetSalida) + globalOffsetPosicion;
+
+            lineRT.anchoredPosition = startPos;
+            lineRT.sizeDelta = new Vector2(width, lineThickness);
+            lineRT.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        }
+        else
+        {
+            // Relleno de derecha a izquierda local, pero visualmente va de A -> B
+            // (porque anclamos en el extremo cercano a B)
+            lineImg.fillOrigin = 1;                 // Right
+            lineRT.pivot = new Vector2(1f, 0.5f);
+
+            Vector2 endPos = B - (n * globalOffsetLlegada) + globalOffsetPosicion;
+
+            lineRT.anchoredPosition = endPos;
+            lineRT.sizeDelta = new Vector2(width, lineThickness);
+            lineRT.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        }
     }
 
     Vector2 WorldToUI(Vector3 worldPos)
