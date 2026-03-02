@@ -41,6 +41,10 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Daño Total")]
     public TextMeshProUGUI zonaDamageText;
 
+    [Header("Vida de Todos los Planetas")]
+    public TextMeshProUGUI planetasVidaListText;
+
+
 
     // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
@@ -286,7 +290,23 @@ public class EndDayResultsPanel : MonoBehaviour
 
             carambolaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
+        // ===================== VIDA DE TODOS LOS PLANETAS =====================
+        if (MapSequenceManager.instance != null && planetasVidaListText != null)
+        {
+            var maps = MapSequenceManager.instance.maps;
 
+            string texto = "<b>VIDA ACTUAL DE LOS PLANETAS</b>\n\n";
+            int current = MapSequenceManager.instance.GetCurrentMapIndex();
+
+            for (int i = 0; i < maps.Count; i++)
+            {
+                string marca = (i == current) ? "  <color=yellow>(ACTUAL)</color>" : "";
+
+                texto += $"Planeta {i + 1}  →  {maps[i].currentHealth:F0} / {maps[i].maxHealth:F0}{marca}\n";
+            }
+
+            planetasVidaListText.text = texto;
+        }
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
     
