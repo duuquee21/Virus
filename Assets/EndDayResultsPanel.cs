@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class EndDayResultsPanel : MonoBehaviour
 {
@@ -40,6 +41,16 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("Daño Total")]
     public TextMeshProUGUI zonaDamageText;
+
+    [Header("Vida de Todos los Planetas")]
+    public TextMeshProUGUI planetasVidaListText;
+
+    [Header("Barras de Vida")]
+    public Transform barrasContainer;
+    public GameObject barraVidaPrefab;
+
+    private List<GameObject> barrasGeneradas = new List<GameObject>();
+
 
 
     // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
@@ -145,6 +156,7 @@ public class EndDayResultsPanel : MonoBehaviour
         Time.timeScale = 0f;
         panel.SetActive(true);
         UpdateAllTexts(monedasGanadas, monedasTotales);
+        GenerarBarraPlanetaActual();
     }
 
     // ======================================================
@@ -159,7 +171,27 @@ public class EndDayResultsPanel : MonoBehaviour
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
     }
+    private void GenerarBarraPlanetaActual()
+    {
+        // Limpia barras anteriores
+        foreach (Transform child in barrasContainer)
+            Destroy(child.gameObject);
 
+        if (MapSequenceManager.instance == null) return;
+
+        var maps = MapSequenceManager.instance.maps;
+        int current = MapSequenceManager.instance.GetCurrentMapIndex();
+
+        if (current >= maps.Count) return;
+
+        GameObject nuevaBarra = Instantiate(barraVidaPrefab, barrasContainer);
+
+        var barraScript = nuevaBarra.GetComponent<PlanetHealthBarUI>();
+
+        float porcentaje = maps[current].currentHealth / maps[current].maxHealth;
+
+        barraScript.Setup(maps[current].mapName, porcentaje);
+    }
     // ======================================================
     // LÓGICA CENTRALIZADA DE ACTUALIZACIÓN
     // ======================================================
@@ -286,7 +318,23 @@ public class EndDayResultsPanel : MonoBehaviour
 
             carambolaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
+        // ===================== VIDA DE TODOS LOS PLANETAS =====================
+        if (MapSequenceManager.instance != null && planetasVidaListText != null)
+        {
+            var maps = MapSequenceManager.instance.maps;
 
+            string texto = "<b>VIDA ACTUAL DE LOS PLANETAS</b>\n\n";
+            int current = MapSequenceManager.instance.GetCurrentMapIndex();
+
+            for (int i = 0; i < maps.Count; i++)
+            {
+                string marca = (i == current) ? "  <color=yellow>(ACTUAL)</color>" : "";
+
+                texto += $"Planeta {i + 1}  →  {maps[i].currentHealth:F0} / {maps[i].maxHealth:F0}{marca}\n";
+            }
+
+            planetasVidaListText.text = texto;
+        }
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
     
