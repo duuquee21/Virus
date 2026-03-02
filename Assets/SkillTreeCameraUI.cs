@@ -7,6 +7,8 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler
 
     [Header("Movimiento")]
     public float speed = 1f;
+    [Tooltip("Controla cómo crece la velocidad con el zoom. 1 = lineal, >1 = más agresivo, <1 = más suave")]
+    public float speedExponent = 1.0f;
 
     [Header("Zoom")]
     public float zoomSpeed = 0.1f;
@@ -15,8 +17,9 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Dividimos por la escala actual para que el movimiento sea consistente al hacer zoom
-        content.anchoredPosition += eventData.delta * speed / content.localScale.x;
+        float scale = content.localScale.x;
+        float speedFactor = Mathf.Pow(scale, speedExponent);
+        content.anchoredPosition += eventData.delta * speed * speedFactor;
     }
 
     void Update()
@@ -30,10 +33,8 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler
 
     void ApplyZoom(float delta)
     {
-        // Calculamos la nueva escala
         Vector3 newScale = content.localScale + Vector3.one * delta * zoomSpeed;
 
-        // Limitamos el zoom para que no sea infinito ni negativo
         newScale.x = Mathf.Clamp(newScale.x, minZoom, maxZoom);
         newScale.y = Mathf.Clamp(newScale.y, minZoom, maxZoom);
         newScale.z = 1f;
