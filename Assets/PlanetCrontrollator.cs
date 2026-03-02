@@ -5,11 +5,6 @@ using UnityEngine.UI;
 
 public class PlanetCrontrollator : MonoBehaviour
 {
-
-    [Header("Estadísticas")]
-    public float maxHealth = 100f;
-    private float currentHealth;
-
     [Header("UI")]
     public Image healthBar;
     public bool nivelFinal = false;
@@ -28,6 +23,12 @@ public class PlanetCrontrollator : MonoBehaviour
     public float fuerzaVibracion = 0.1f;
     private Vector3 posOriginal;
 
+    [Header("Efectos de Daño")]
+    public GameObject damageTextPrefab;
+
+    private float maxHealth;
+    private float currentHealth;
+
     public enum TipoImpacto
     {
         Zona,
@@ -35,16 +36,19 @@ public class PlanetCrontrollator : MonoBehaviour
         Carambola
     }
 
- [Header("Efectos de Daño")]
-public GameObject damageTextPrefab;
-
-    void Awake() // Cambiado de Start a Awake
+    void Start()
     {
-        currentHealth = maxHealth;
-        posOriginal = transform.position;
-        // Buscamos la animación en Awake para tenerla lista
+        MapData map = MapSequenceManager.instance.GetCurrentMap();
+
+        maxHealth = map.maxHealth;
+        currentHealth = map.currentHealth;
+
+        ActualizarUI();
+
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
+        posOriginal = transform.position;
     }
+
     private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
         int id = obj.GetInstanceID();
@@ -60,29 +64,24 @@ public GameObject damageTextPrefab;
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
         int fase = scriptInfeccion.faseActual;
 
-        // CASO 1: YA ESTÁ INFECTADO (Explosión) => Carambola
         if (scriptInfeccion.alreadyInfected)
         {
             InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
-
-           
             RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
-
-            TakeDamage(dañoCalculado, posicion); // <--- Pasar posición aquí
+            TakeDamage(dañoCalculado, posicion);
             Destroy(obj);
             return;
         }
 
-        // CASO 2: IMPACTO FÍSICO
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             float fuerzaImpacto = rb.linearVelocity.magnitude;
+
             if (fuerzaImpacto > 6.5f)
             {
-                
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
-                TakeDamage(dañoCalculado, posicion); // <--- Y aquí
+                TakeDamage(dañoCalculado, posicion);
 
                 if (Guardado.instance != null)
                 {
@@ -99,7 +98,6 @@ public GameObject damageTextPrefab;
     {
         int idx = Mathf.Clamp(fase, 0, 4);
 
-        // 👇 AÑADIR ESTA LÍNEA
         PersonaInfeccion.golpesAlPlanetaPorFase[idx]++;
 
         switch (tipoImpacto)
@@ -123,28 +121,6 @@ public GameObject damageTextPrefab;
         if (EndDayResultsPanel.instance != null)
             EndDayResultsPanel.instance.RefreshResults();
     }
-    private void ApplyDamageAndRegister(float daño, TipoImpacto tipoImpacto)
-    {
-        TakeDamage(daño);
-
-        switch (tipoImpacto)
-        {
-            case TipoImpacto.Zona:
-                PersonaInfeccion.dañoTotalZona += daño;
-                break;
-
-            case TipoImpacto.Choque:
-                PersonaInfeccion.dañoTotalChoque += daño;
-                break;
-
-            case TipoImpacto.Carambola:
-                PersonaInfeccion.dañoTotalCarambola += daño;
-                break;
-        }
-
-        if (EndDayResultsPanel.instance != null)
-            EndDayResultsPanel.instance.RefreshResults();
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -157,38 +133,31 @@ public GameObject damageTextPrefab;
         if (collision.gameObject.CompareTag("Persona"))
             ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Choque);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Die();
-        }
-    }
-
 
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
 
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        MapData map = MapSequenceManager.instance.GetCurrentMap();
+
+        map.currentHealth -= amount;
+        map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
+
+        currentHealth = map.currentHealth;
+        maxHealth = map.maxHealth;
+
         ActualizarUI();
 
-        Debug.Log($"<color=red>Daño recibido: {amount}. Vida restante: {currentHealth}</color>");
-
-
-        // --- INSTANCIAR EL NÚMERO ---
         if (damageTextPrefab != null)
         {
             GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity);
-            textObj.GetComponent<FloatingText>().SetText("-" + amount.ToString("F0")); // "F0" quita decimales
+            textObj.GetComponent<FloatingText>().SetText("-" + amount.ToString("F0"));
         }
-        // ----------------------------
 
-        if (currentHealth <= 0) Die();
+        if (currentHealth <= 0)
+            Die();
     }
 
-    // Sobrecarga por si quieres llamar a TakeDamage sin posición (por seguridad)
     public void TakeDamage(float amount)
     {
         TakeDamage(amount, transform.position);
@@ -196,25 +165,37 @@ public GameObject damageTextPrefab;
 
     void ActualizarUI()
     {
-        if (healthBar != null) healthBar.fillAmount = currentHealth / maxHealth;
+        if (healthBar != null)
+            healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     public void ResetHealthToInitial()
     {
-        // Resetear valores básicos
-        currentHealth = maxHealth;
-        isInvulnerable = false;
+        MapData map = MapSequenceManager.instance.GetCurrentMap();
+
+        map.currentHealth = map.maxHealth;
+
+        currentHealth = map.currentHealth;
+        maxHealth = map.maxHealth;
+
         lastImpactTimes.Clear();
+        isInvulnerable = false;
 
-        // Resetear posición y rotación a como estaban al inicio
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
         transform.position = posOriginal;
-        transform.rotation = Quaternion.identity;
 
-        // Actualizar la barra de vida visualmente
         ActualizarUI();
-
-        Debug.Log($"Planeta {gameObject.name} reseteado a {maxHealth} HP.");
     }
+
     void Die()
     {
         if (nivelFinal)
@@ -223,24 +204,7 @@ public GameObject damageTextPrefab;
         }
         else
         {
-            StartCoroutine(VibrarYPasarNivel());
+            MapSequenceManager.instance.NextMap();
         }
-    }
-
-
-
-    IEnumerator VibrarYPasarNivel()
-    {
-        float tiempo = 0f;
-
-        while (tiempo < delayMuerte)
-        {
-            transform.position = posOriginal + (Vector3)Random.insideUnitCircle * fuerzaVibracion;
-            tiempo += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = posOriginal;
-        LevelManager.instance.NextMapTransition();
     }
 }
