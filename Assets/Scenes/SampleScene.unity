@@ -5934,7 +5934,6 @@ RectTransform:
   m_Children:
   - {fileID: 2096388055}
   - {fileID: 1045895807}
-  - {fileID: 561672336}
   - {fileID: 1783878500}
   - {fileID: 2087679053}
   - {fileID: 1261396715}
@@ -29728,54 +29727,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556528779}
   m_CullTransparentMesh: 1
---- !u!1 &561672335
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 561672336}
-  - component: {fileID: 561672337}
-  m_Layer: 5
-  m_Name: LinesController (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!224 &561672336
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561672335}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8120839, y: 0.7822194, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 154249163}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3847.6997, y: 1396.9884}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &561672337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561672335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17959328b8e21e04f8a088e9224dac54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &567398003
 GameObject:
   m_ObjectHideFlags: 0
@@ -53603,911 +53554,1142 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c086350e1d41b42bd26411e192bdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixedCanvas: {fileID: 858966970}
+  fixedCanvas: {fileID: 154249163}
   linePrefab: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-  lockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  unlockedColor: {r: 0, g: 1, b: 0, a: 1}
+  lineThickness: 6
+  discoveryDuration: 0.4
+  unlockDuration: 0.33
+  lockedColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  unlockedColor: {r: 1, g: 1, b: 1, a: 1}
+  globalOffsetSalida: 30
+  globalOffsetLlegada: 43
+  globalOffsetPosicion: {x: 10, y: 7.5}
   connections:
   - from: {fileID: 2096388055}
     to: {fileID: 2073210155}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2096388055}
     to: {fileID: 661437725}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2096388055}
     to: {fileID: 1611679155}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2096388055}
     to: {fileID: 392572917}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2073210155}
     to: {fileID: 151827300}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 151827300}
     to: {fileID: 1439613804}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 151827300}
     to: {fileID: 448254068}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 151827300}
     to: {fileID: 407586756}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1439613804}
     to: {fileID: 876571093}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 407586756}
     to: {fileID: 876571093}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 407586756}
     to: {fileID: 382369583}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 876571093}
     to: {fileID: 407586756}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 382369583}
     to: {fileID: 407586756}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 448254068}
     to: {fileID: 382369583}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 382369583}
     to: {fileID: 407586756}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 382369583}
     to: {fileID: 797128901}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1614307347}
     to: {fileID: 1811658615}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1811658615}
     to: {fileID: 1278883305}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1278883305}
     to: {fileID: 8811013}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 709442405}
     to: {fileID: 987115515}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 709442405}
     to: {fileID: 823844515}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 8811013}
     to: {fileID: 709442405}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 876571093}
     to: {fileID: 1614307347}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 987115515}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 987115515}
     to: {fileID: 954987303}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 479754164}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 479754164}
     to: {fileID: 954987303}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 954987303}
     to: {fileID: 479754164}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 954987303}
     to: {fileID: 932488383}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 932488383}
     to: {fileID: 1079378714}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1079378714}
     to: {fileID: 932488383}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1079378714}
     to: {fileID: 2002969986}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 823844515}
     to: {fileID: 1079378714}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1079378714}
     to: {fileID: 823844515}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2002969986}
     to: {fileID: 1867518893}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1867518893}
     to: {fileID: 1654223959}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 479754164}
     to: {fileID: 537888117}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1867518893}
     to: {fileID: 1650745929}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1654223959}
     to: {fileID: 737618069}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1654223959}
     to: {fileID: 1334769230}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1650745929}
     to: {fileID: 1334769230}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1334769230}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1334769230}
     to: {fileID: 30808108}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 737618069}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 737618069}
     to: {fileID: 1582465755}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1582465755}
     to: {fileID: 255776135}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1582465755}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 116029484}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1334769230}
     to: {fileID: 1976074432}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1976074432}
     to: {fileID: 592913812}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1976074432}
     to: {fileID: 2038673404}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 592913812}
     to: {fileID: 125608814}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 592913812}
     to: {fileID: 1055916623}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 592913812}
     to: {fileID: 116029484}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 592913812}
     to: {fileID: 678139292}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 116029484}
     to: {fileID: 278584126}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 116029484}
     to: {fileID: 304200319}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 278584126}
     to: {fileID: 439070109}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 278584126}
     to: {fileID: 1474536756}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1474536756}
     to: {fileID: 378396970}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1474536756}
     to: {fileID: 1396887377}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 304200319}
     to: {fileID: 739443370}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 739443370}
     to: {fileID: 378396970}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 378396970}
     to: {fileID: 474215730}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 439070109}
     to: {fileID: 1261396715}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 439070109}
     to: {fileID: 795418838}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1261396715}
     to: {fileID: 795418838}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 795418838}
     to: {fileID: 750283628}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 795418838}
     to: {fileID: 531154057}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 531154057}
     to: {fileID: 686109902}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 686109902}
     to: {fileID: 1926160749}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1926160749}
     to: {fileID: 879777740}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 879777740}
     to: {fileID: 290278389}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 879777740}
     to: {fileID: 449661204}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 0}
     to: {fileID: 0}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 290278389}
     to: {fileID: 1989663727}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1989663727}
     to: {fileID: 350984039}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1989663727}
     to: {fileID: 1857615617}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 879777740}
     to: {fileID: 1857615617}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1857615617}
     to: {fileID: 155905780}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1857615617}
     to: {fileID: 1296002565}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1989663727}
     to: {fileID: 2074735394}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2074735394}
     to: {fileID: 1296002565}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 155905780}
     to: {fileID: 525428704}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 449661204}
     to: {fileID: 155905780}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1296002565}
     to: {fileID: 1439130286}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 525428704}
     to: {fileID: 1296002565}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1611679155}
     to: {fileID: 1228263471}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1611679155}
     to: {fileID: 1337796252}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1611679155}
     to: {fileID: 1042484494}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1337796252}
     to: {fileID: 110284098}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 110284098}
     to: {fileID: 747885743}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 110284098}
     to: {fileID: 1042484494}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 747885743}
     to: {fileID: 1708901992}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1042484494}
     to: {fileID: 110284098}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1042484494}
     to: {fileID: 1097085090}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1042484494}
     to: {fileID: 1708901992}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 647879355}
     to: {fileID: 1708901992}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1097085090}
     to: {fileID: 1272409844}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1097085090}
     to: {fileID: 1233362046}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1228263471}
     to: {fileID: 544632736}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1228263471}
     to: {fileID: 1097085090}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1228263471}
     to: {fileID: 1097085090}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 544632736}
     to: {fileID: 1272409844}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 544632736}
     to: {fileID: 1076894829}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1097085090}
     to: {fileID: 1233362046}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1233362046}
     to: {fileID: 754935168}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1233362046}
     to: {fileID: 791837818}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1708901992}
     to: {fileID: 1233362046}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 791837818}
     to: {fileID: 1050803133}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1272409844}
     to: {fileID: 791837818}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1265474760}
     to: {fileID: 1135501623}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1265474760}
     to: {fileID: 10865802}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 647879355}
     to: {fileID: 1265474760}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1135501623}
     to: {fileID: 905467054}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 10865802}
     to: {fileID: 140815416}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 10865802}
     to: {fileID: 905467054}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 10865802}
     to: {fileID: 1933578424}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1933578424}
     to: {fileID: 51879059}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 905467054}
     to: {fileID: 2128782330}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 905467054}
     to: {fileID: 7136874}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2128782330}
     to: {fileID: 1971930453}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1971930453}
     to: {fileID: 7136874}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 7136874}
     to: {fileID: 140815416}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 7136874}
     to: {fileID: 802097010}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 140815416}
     to: {fileID: 7136874}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 140815416}
     to: {fileID: 754507403}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 51879059}
     to: {fileID: 140815416}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 51879059}
     to: {fileID: 534153782}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 534153782}
     to: {fileID: 156995972}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 534153782}
     to: {fileID: 754507403}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 754507403}
     to: {fileID: 802097010}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 754507403}
     to: {fileID: 678052118}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 156995972}
     to: {fileID: 678052118}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 678052118}
     to: {fileID: 1783878500}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 678052118}
     to: {fileID: 1196716983}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 802097010}
     to: {fileID: 1783878500}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1783878500}
     to: {fileID: 1151359667}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 257028500}
     to: {fileID: 1196716983}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 257028500}
     to: {fileID: 571741526}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1196716983}
     to: {fileID: 2072061}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1196716983}
     to: {fileID: 257028500}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 571741526}
     to: {fileID: 2072061}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2072061}
     to: {fileID: 1672344939}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1783878500}
     to: {fileID: 257028500}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1672344939}
     to: {fileID: 1804425293}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1804425293}
     to: {fileID: 831262131}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 831262131}
     to: {fileID: 1430353857}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1430353857}
     to: {fileID: 750702835}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1430353857}
     to: {fileID: 1858259015}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1430353857}
     to: {fileID: 1181489233}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1858259015}
     to: {fileID: 1339527999}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 750702835}
     to: {fileID: 798516214}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 750702835}
     to: {fileID: 1608665270}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1608665270}
     to: {fileID: 833982570}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 833982570}
     to: {fileID: 798516214}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 798516214}
     to: {fileID: 277072732}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 798516214}
     to: {fileID: 1181489233}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1181489233}
     to: {fileID: 798516214}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1181489233}
     to: {fileID: 1339527999}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1181489233}
     to: {fileID: 1951653948}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1339527999}
     to: {fileID: 1181489233}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1339527999}
     to: {fileID: 1464204523}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1464204523}
     to: {fileID: 1951653948}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1464204523}
     to: {fileID: 1030370898}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1951653948}
     to: {fileID: 277072732}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1951653948}
     to: {fileID: 1464204523}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1951653948}
     to: {fileID: 47867152}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 277072732}
     to: {fileID: 1951653948}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1030370898}
     to: {fileID: 1327912792}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1030370898}
     to: {fileID: 47867152}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 47867152}
     to: {fileID: 1030370898}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 47867152}
     to: {fileID: 1162838969}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1162838969}
     to: {fileID: 354231636}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 354231636}
     to: {fileID: 1656491172}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1327912792}
     to: {fileID: 1162838969}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1656491172}
     to: {fileID: 135870693}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1656491172}
     to: {fileID: 360982148}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 135870693}
     to: {fileID: 572815138}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 572815138}
     to: {fileID: 886933769}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 886933769}
     to: {fileID: 692801600}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 886933769}
     to: {fileID: 397164377}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 397164377}
     to: {fileID: 718359985}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 718359985}
     to: {fileID: 748039272}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 718359985}
     to: {fileID: 1972385815}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 748039272}
     to: {fileID: 927052170}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1972385815}
     to: {fileID: 927052170}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 927052170}
     to: {fileID: 237977256}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 927052170}
     to: {fileID: 2069304519}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 2069304519}
     to: {fileID: 1407134971}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 692801600}
     to: {fileID: 718359985}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 360982148}
     to: {fileID: 618984210}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 618984210}
     to: {fileID: 504294413}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 618984210}
     to: {fileID: 1667371934}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1667371934}
     to: {fileID: 1715326693}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1667371934}
     to: {fileID: 1715326693}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1715326693}
     to: {fileID: 374966600}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1715326693}
     to: {fileID: 504294413}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1715326693}
     to: {fileID: 782223946}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 374966600}
     to: {fileID: 743180945}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 504294413}
     to: {fileID: 1715326693}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 504294413}
     to: {fileID: 1130491011}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 743180945}
     to: {fileID: 782223946}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1130491011}
     to: {fileID: 782223946}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 782223946}
     to: {fileID: 1130491011}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 782223946}
     to: {fileID: 743180945}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 782223946}
     to: {fileID: 1486743219}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1486743219}
     to: {fileID: 392572917}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1439130286}
     to: {fileID: 1265474760}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 661437725}
     to: {fileID: 1265474760}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 737618069}
     to: {fileID: 1976074432}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 30808108}
     to: {fileID: 2038673404}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 474215730}
     to: {fileID: 1396887377}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1396887377}
     to: {fileID: 474215730}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1396887377}
     to: {fileID: 439070109}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1055916623}
     to: {fileID: 1914251205}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1055916623}
     to: {fileID: 304200319}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 661437725}
     to: {fileID: 1867518893}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 750283628}
     to: {fileID: 2087679053}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 750283628}
     to: {fileID: 1041634071}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
   - from: {fileID: 1041634071}
     to: {fileID: 531154057}
-    line: {fileID: 8861554542286743431, guid: 0ceab60c835ea7a4b9ca66843765959e, type: 3}
-    unlocked: 0
+    lineBackground: {fileID: 0}
+    lineForeground: {fileID: 0}
+    state: 0
 --- !u!1 &1050321237
 GameObject:
   m_ObjectHideFlags: 0
