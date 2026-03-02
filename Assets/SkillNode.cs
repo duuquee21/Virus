@@ -169,7 +169,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
         if (lines != null && IsUnlocked) 
         {
-            lines.ShowFrom(GetComponent<RectTransform>());
         }
     }
 
