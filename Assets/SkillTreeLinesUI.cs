@@ -10,11 +10,24 @@ public class SkillTreeLinesUI : MonoBehaviour
     [System.Serializable]
     public class Connection
     {
-        public RectTransform from;
-        public RectTransform to;
+        public RectTransform nodeA;
+        public RectTransform nodeB;
+        public RectTransform activeFrom;
+        public RectTransform activeTo;
         public Image lineBackground;
         public Image lineForeground;
         public LineState state = LineState.Hidden;
+
+        [Header("Offsets Individuales (Opcional)")]
+        public bool overrideGlobalOffsets = false;
+        public float offsetSalida;
+        public float offsetLlegada;
+        public Vector2 offsetPosicion;
+
+        public bool IsBetween(RectTransform a, RectTransform b)
+        {
+            return (nodeA == a && nodeB == b) || (nodeA == b && nodeB == a);
+        }
     }
 
     [Header("Configuración de Líneas")]
@@ -30,31 +43,22 @@ public class SkillTreeLinesUI : MonoBehaviour
     public Color lockedColor = new Color(0.3f, 0.3f, 0.3f, 1f);
     public Color unlockedColor = Color.white;
 
-    [Header("Offsets Globales")]
+    [Header("Offsets Globales (Por defecto)")]
     public float globalOffsetSalida = 20f;
     public float globalOffsetLlegada = 20f;
     public Vector2 globalOffsetPosicion;
 
     private List<Connection> connections = new List<Connection>();
-    private Dictionary<RectTransform, List<Connection>> connectionsByFrom = new Dictionary<RectTransform, List<Connection>>();
-    private Dictionary<RectTransform, List<Connection>> connectionsByTo = new Dictionary<RectTransform, List<Connection>>();
 
     void Awake()
     {
         GenerateConnections();
-    }
-
-    void Start()
-    {
         InitializeConnectionsVisuals();
     }
 
     void GenerateConnections()
     {
         connections.Clear();
-        connectionsByFrom.Clear();
-        connectionsByTo.Clear();
-
         SkillNode[] allNodes = FindObjectsOfType<SkillNode>(true);
 
         foreach (SkillNode childNode in allNodes)
@@ -65,19 +69,23 @@ public class SkillTreeLinesUI : MonoBehaviour
             {
                 if (parentNode == null) continue;
 
-                Connection newConn = new Connection();
-                newConn.from = parentNode.GetComponent<RectTransform>();
-                newConn.to = childNode.GetComponent<RectTransform>();
+                RectTransform rA = parentNode.GetComponent<RectTransform>();
+                RectTransform rB = childNode.GetComponent<RectTransform>();
 
+                if (connections.Exists(c => c.IsBetween(rA, rB))) continue;
+
+                Connection newConn = new Connection
+                {
+                    nodeA = rA,
+                    nodeB = rB,
+                    activeFrom = rA,
+                    activeTo = rB,
+                    // Inicializamos con los valores globales por si acaso
+                    offsetSalida = globalOffsetSalida,
+                    offsetLlegada = globalOffsetLlegada,
+                    offsetPosicion = globalOffsetPosicion
+                };
                 connections.Add(newConn);
-
-                if (!connectionsByFrom.ContainsKey(newConn.from))
-                    connectionsByFrom[newConn.from] = new List<Connection>();
-                connectionsByFrom[newConn.from].Add(newConn);
-
-                if (!connectionsByTo.ContainsKey(newConn.to))
-                    connectionsByTo[newConn.to] = new List<Connection>();
-                connectionsByTo[newConn.to].Add(newConn);
             }
         }
     }
@@ -86,21 +94,18 @@ public class SkillTreeLinesUI : MonoBehaviour
     {
         foreach (var c in connections)
         {
-            c.lineBackground = CreateLineImage($"BG_{c.from.name}_{c.to.name}", lockedColor);
-            c.lineForeground = CreateLineImage($"FG_{c.from.name}_{c.to.name}", unlockedColor);
+            c.lineBackground = CreateLineImage($"BG_{c.nodeA.name}_{c.nodeB.name}", lockedColor);
+            c.lineForeground = CreateLineImage($"FG_{c.nodeA.name}_{c.nodeB.name}", unlockedColor);
 
-            c.lineBackground.transform.SetAsFirstSibling();
-            c.lineForeground.transform.SetSiblingIndex(c.lineBackground.transform.GetSiblingIndex() + 1);
+            SkillNode sA = c.nodeA.GetComponent<SkillNode>();
+            SkillNode sB = c.nodeB.GetComponent<SkillNode>();
 
-            SkillNode fromNode = c.from.GetComponent<SkillNode>();
-            SkillNode toNode = c.to.GetComponent<SkillNode>();
-
-            if (fromNode != null && fromNode.IsUnlocked && toNode != null && toNode.IsUnlocked)
-            {
+            if (sA.IsUnlocked && sB.IsUnlocked)
                 SetLineInstant(c, 1, 1, LineState.Unlocked);
-            }
-            else if (fromNode != null && fromNode.IsUnlocked)
+            else if (sA.IsUnlocked || sB.IsUnlocked)
             {
+                c.activeFrom = sA.IsUnlocked ? c.nodeA : c.nodeB;
+                c.activeTo = sA.IsUnlocked ? c.nodeB : c.nodeA;
                 SetLineInstant(c, 1, 0, LineState.Locked);
             }
         }
@@ -115,6 +120,65 @@ public class SkillTreeLinesUI : MonoBehaviour
         c.state = state;
     }
 
+    void LateUpdate()
+    {
+        foreach (var c in connections)
+        {
+            if (c.state == LineState.Hidden)
+            {
+                if (c.nodeA.GetComponent<SkillNode>().IsUnlocked || c.nodeB.GetComponent<SkillNode>().IsUnlocked)
+                {
+                    c.activeFrom = c.nodeA.GetComponent<SkillNode>().IsUnlocked ? c.nodeA : c.nodeB;
+                    c.activeTo = (c.activeFrom == c.nodeA) ? c.nodeB : c.nodeA;
+                    StartCoroutine(WaitAndDiscover(c));
+                }
+                continue;
+            }
+
+            // Aplicamos el posicionamiento usando los offsets específicos de la conexión
+            PositionLine(c, c.lineBackground);
+            PositionLine(c, c.lineForeground);
+
+            if (c.state == LineState.Locked)
+            {
+                if (c.nodeA.GetComponent<SkillNode>().IsUnlocked && c.nodeB.GetComponent<SkillNode>().IsUnlocked)
+                {
+                    StartCoroutine(AnimateUnlock(c));
+                }
+            }
+        }
+    }
+
+    private IEnumerator WaitAndDiscover(Connection c)
+    {
+        c.state = LineState.Discovering;
+        c.lineBackground.gameObject.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < discoveryDuration)
+        {
+            elapsed += Time.deltaTime;
+            c.lineBackground.fillAmount = Mathf.Lerp(0, 1, elapsed / discoveryDuration);
+            yield return null;
+        }
+        c.lineBackground.fillAmount = 1;
+        c.state = LineState.Locked;
+    }
+
+    private IEnumerator AnimateUnlock(Connection c)
+    {
+        c.state = LineState.Unlocking;
+        c.lineForeground.gameObject.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < unlockDuration)
+        {
+            elapsed += Time.deltaTime;
+            c.lineForeground.fillAmount = Mathf.Lerp(0, 1, elapsed / unlockDuration);
+            yield return null;
+        }
+        c.lineForeground.fillAmount = 1;
+        c.state = LineState.Unlocked;
+    }
+
     Image CreateLineImage(string name, Color color)
     {
         Image img = Instantiate(linePrefab, fixedCanvas);
@@ -123,137 +187,42 @@ public class SkillTreeLinesUI : MonoBehaviour
         img.fillAmount = 0;
         img.type = Image.Type.Filled;
         img.fillMethod = Image.FillMethod.Horizontal;
+        img.fillOrigin = (int)Image.OriginHorizontal.Left;
+        img.rectTransform.pivot = new Vector2(0f, 0.5f);
         img.gameObject.SetActive(false);
-        img.rectTransform.pivot = new Vector2(0, 0.5f);
         return img;
     }
 
-    void LateUpdate()
+    // MÉTODO ACTUALIZADO: Ahora recibe la conexión entera para leer sus offsets
+    void PositionLine(Connection c, Image lineImg)
     {
-        Canvas.ForceUpdateCanvases();
-        foreach (var c in connections)
-        {
-            if (c.state == LineState.Hidden) continue;
-
-            PositionLine(c.lineBackground, c.from, c.to);
-            PositionLine(c.lineForeground, c.from, c.to);
-
-            SkillNode fromNode = c.from.GetComponent<SkillNode>();
-            SkillNode toNode = c.to.GetComponent<SkillNode>();
-            if (toNode != null && toNode.IsUnlocked
-                && fromNode != null && fromNode.IsUnlocked
-                && c.state == LineState.Locked)
-            {
-                StartCoroutine(AnimateUnlock(c));
-            }
-        }
-    }
-
-    // DISPONIBILIDAD DE LÍNEAS GRISES
-    public void ShowFrom(RectTransform fromNode)
-    {
-        if (connectionsByFrom.TryGetValue(fromNode, out List<Connection> outgoingLines))
-        {
-            foreach (var line in outgoingLines)
-            {
-                // Solo si la línea no ha empezado nada, iniciamos el dibujo de la gris
-                if (line.state == LineState.Hidden)
-                {
-                    StartCoroutine(WaitAndDiscover(line));
-                }
-            }
-        }
-    }
-
-    private IEnumerator WaitAndDiscover(Connection currentLine)
-    {
-        currentLine.state = LineState.Discovering;
-        currentLine.lineBackground.gameObject.SetActive(true);
-
-        float elapsed = 0f;
-        while (elapsed < discoveryDuration)
-        {
-            elapsed += Time.deltaTime;
-            currentLine.lineBackground.fillAmount = Mathf.Lerp(0, 1, elapsed / discoveryDuration);
-            yield return null;
-        }
-
-        currentLine.lineBackground.fillAmount = 1;
-        currentLine.state = LineState.Locked;
-    }
-
-    // RECOLOR BLANCO (ENERGÍA)
-    private IEnumerator AnimateUnlock(Connection c)
-    {
-        c.state = LineState.Unlocking; // Cambiamos el estado INMEDIATAMENTE para que LateUpdate no lance más corrutinas
-        c.lineForeground.gameObject.SetActive(true);
-
-        float elapsed = 0f;
-        while (elapsed < unlockDuration)
-        {
-            elapsed += Time.deltaTime;
-            c.lineForeground.fillAmount = Mathf.Lerp(0, 1, elapsed / unlockDuration);
-            yield return null;
-        }
-
-        c.lineForeground.fillAmount = 1;
-
-        // --- ÚNICO PUNTO DE ACTIVACIÓN ---
-        // Ahora que la línea blanca ha terminado de "tocar" el nodo destino,
-        // este nodo lanza sus propias líneas grises hacia sus hijos.
-        ShowFrom(c.to);
-    }
-
-    void PositionLine(Image lineImg, RectTransform a, RectTransform b)
-    {
-        RectTransform lineRT = lineImg.rectTransform;
-
-        Vector2 A = WorldToUI(a.position);
-        Vector2 B = WorldToUI(b.position);
-
+        Vector2 A = WorldToUI(c.activeFrom.position);
+        Vector2 B = WorldToUI(c.activeTo.position);
         Vector2 dir = B - A;
         float dist = dir.magnitude;
-        if (dist < 0.01f) return;
 
-        Vector2 n = dir / dist;
+        if (dist < 0.1f) return;
 
-        // Anchura recortada por offsets
-        float width = Mathf.Max(0f, dist - globalOffsetSalida - globalOffsetLlegada);
+        // Determinar qué valores usar: los de la conexión o los globales
+        float offSalida = c.overrideGlobalOffsets ? c.offsetSalida : globalOffsetSalida;
+        float offLlegada = c.overrideGlobalOffsets ? c.offsetLlegada : globalOffsetLlegada;
+        Vector2 offPos = c.overrideGlobalOffsets ? c.offsetPosicion : globalOffsetPosicion;
 
-        // Si el destino está "a la izquierda" del origen en UI, invertimos el origen del fill
-        bool flip = (dir.x < 0f);
+        RectTransform rt = lineImg.rectTransform;
 
-        if (!flip)
-        {
-            // Relleno de izquierda a derecha (origen en A)
-            lineImg.fillOrigin = 0;                 // Left
-            lineRT.pivot = new Vector2(0f, 0.5f);
+        // Posicionamiento con offset
+        rt.anchoredPosition = A + (dir.normalized * offSalida) + offPos;
 
-            Vector2 startPos = A + (n * globalOffsetSalida) + globalOffsetPosicion;
+        // El largo se calcula restando ambos offsets para que no atraviese los iconos
+        float finalLength = dist - offSalida - offLlegada;
+        rt.sizeDelta = new Vector2(Mathf.Max(0, finalLength), lineThickness);
 
-            lineRT.anchoredPosition = startPos;
-            lineRT.sizeDelta = new Vector2(width, lineThickness);
-            lineRT.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
-        }
-        else
-        {
-            // Relleno de derecha a izquierda local, pero visualmente va de A -> B
-            // (porque anclamos en el extremo cercano a B)
-            lineImg.fillOrigin = 1;                 // Right
-            lineRT.pivot = new Vector2(1f, 0.5f);
-
-            Vector2 endPos = B - (n * globalOffsetLlegada) + globalOffsetPosicion;
-
-            lineRT.anchoredPosition = endPos;
-            lineRT.sizeDelta = new Vector2(width, lineThickness);
-            lineRT.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
-        }
+        rt.localRotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
 
     Vector2 WorldToUI(Vector3 worldPos)
     {
-        Vector2 screen = RectTransformUtility.WorldToScreenPoint(null, worldPos);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(fixedCanvas, screen, null, out Vector2 localPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(fixedCanvas, RectTransformUtility.WorldToScreenPoint(null, worldPos), null, out Vector2 localPos);
         return localPos;
     }
 }

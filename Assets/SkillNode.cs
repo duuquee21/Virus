@@ -79,11 +79,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         LoadNodeState();
         CheckIfShouldShow();
 
-        if (unlocked)
-        {
-            SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
-            if (lines != null) lines.ShowFrom(GetComponent<RectTransform>());
-        }
+        // Hemos eliminado la llamada a lines.ShowFrom() 
+        // porque el nuevo SkillTreeLinesUI detecta el cambio automáticamente
 
         if (infoPanel != null) infoPanel.SetActive(false);
     }

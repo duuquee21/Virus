@@ -47279,7 +47279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55292,9 +55292,9 @@ MonoBehaviour:
   unlockDuration: 0.33
   lockedColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   unlockedColor: {r: 1, g: 1, b: 1, a: 1}
-  globalOffsetSalida: 30
-  globalOffsetLlegada: 43
-  globalOffsetPosicion: {x: 10, y: 7.5}
+  globalOffsetSalida: 47
+  globalOffsetLlegada: 50.9
+  globalOffsetPosicion: {x: 8.42, y: 7.5}
 --- !u!1 &1050321237
 GameObject:
   m_ObjectHideFlags: 0
@@ -81152,6 +81152,7 @@ MonoBehaviour:
   CoinCost: 1
   requiredParentNodes:
   - {fileID: 1296002569}
+  - {fileID: 1265474764}
   effectType: 18
   button: {fileID: 1439130291}
   lockIcon: {fileID: 0}
