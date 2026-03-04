@@ -1,9 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 public class EndDayResultsPanel : MonoBehaviour
 {
@@ -25,7 +24,6 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Detalle Daño por Fase (NUEVO)")]
     public TextMeshProUGUI zonaDamageDetailText;
 
-
     [Header("Monedas por Habilidad (Totales)")]
     public TextMeshProUGUI zonaMonedasText;
     public TextMeshProUGUI choqueMonedasText;
@@ -41,16 +39,6 @@ public class EndDayResultsPanel : MonoBehaviour
 
     [Header("Daño Total")]
     public TextMeshProUGUI zonaDamageText;
-
-    [Header("Vida de Todos los Planetas")]
-    public TextMeshProUGUI planetasVidaListText;
-
-    [Header("Barras de Vida")]
-    public Transform barrasContainer;
-    public GameObject barraVidaPrefab;
-
-    private List<GameObject> barrasGeneradas = new List<GameObject>();
-
 
 
     // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
@@ -156,7 +144,6 @@ public class EndDayResultsPanel : MonoBehaviour
         Time.timeScale = 0f;
         panel.SetActive(true);
         UpdateAllTexts(monedasGanadas, monedasTotales);
-        GenerarBarraPlanetaActual();
     }
 
     // ======================================================
@@ -171,27 +158,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
     }
-    private void GenerarBarraPlanetaActual()
-    {
-        // Limpia barras anteriores
-        foreach (Transform child in barrasContainer)
-            Destroy(child.gameObject);
 
-        if (MapSequenceManager.instance == null) return;
-
-        var maps = MapSequenceManager.instance.maps;
-        int current = MapSequenceManager.instance.GetCurrentMapIndex();
-
-        if (current >= maps.Count) return;
-
-        GameObject nuevaBarra = Instantiate(barraVidaPrefab, barrasContainer);
-
-        var barraScript = nuevaBarra.GetComponent<PlanetHealthBarUI>();
-
-        float porcentaje = maps[current].currentHealth / maps[current].maxHealth;
-
-        barraScript.Setup(maps[current].mapName, porcentaje);
-    }
     // ======================================================
     // LÓGICA CENTRALIZADA DE ACTUALIZACIÓN
     // ======================================================
@@ -207,7 +174,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
-            int cant = PersonaInfeccion.golpesAlPlanetaPorFase[i];
+            int cant = PersonaInfeccion.evolucionesEntreFases[i];
 
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);
@@ -279,10 +246,9 @@ public class EndDayResultsPanel : MonoBehaviour
 
         choqueEvolutionText.text = tituloChoque;
         if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
-    
-
+       
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
-     
+      
 
         // ===================== CARAMBOLA =====================
         int totalC = 0;
@@ -318,28 +284,13 @@ public class EndDayResultsPanel : MonoBehaviour
 
             carambolaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
-        // ===================== VIDA DE TODOS LOS PLANETAS =====================
-        if (MapSequenceManager.instance != null && planetasVidaListText != null)
-        {
-            var maps = MapSequenceManager.instance.maps;
 
-            string texto = "<b>VIDA ACTUAL DE LOS PLANETAS</b>\n\n";
-            int current = MapSequenceManager.instance.GetCurrentMapIndex();
-
-            for (int i = 0; i < maps.Count; i++)
-            {
-                string marca = (i == current) ? "  <color=yellow>(ACTUAL)</color>" : "";
-
-                texto += $"Planeta {i + 1}  →  {maps[i].currentHealth:F0} / {maps[i].maxHealth:F0}{marca}\n";
-            }
-
-            planetasVidaListText.text = texto;
-        }
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
-    
+       
+
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
-    
+ 
 
 
         // ===================== RESUMEN GENERAL =====================
@@ -380,69 +331,54 @@ public class EndDayResultsPanel : MonoBehaviour
         int inicialPartida = monedasTempPartida;
         int inicialTotales = monedasTempTotales;
 
-        // Si no hay nada que mover, terminamos rápido
-        if (totalAMover <= 0)
-        {
-            isTransferring = false;
-            onComplete?.Invoke();
-            yield break;
-        }
-
         float elapsed = 0f;
-        // Ajustamos duración: si es poco dinero, que sea más rápido
-        float duration = Mathf.Clamp(totalAMover * 0.1f, 0.5f, 2.0f);
-        if (totalAMover > 100) duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
+        float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
+        float lastSoundTime = 0f;
 
-        int ultimoMovido = 0;
         float factorRiqueza = Mathf.Clamp01(totalAMover / 500f);
 
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
-            float curvedT = t * t * (3f - 2f * t); // Curva SmoothStep más sencilla
+            float curvedT = t * t * t * (t * (6f * t - 15f) + 10f);
 
             int movido = Mathf.RoundToInt(curvedT * totalAMover);
             movido = Mathf.Min(movido, totalAMover);
 
-            // --- LA CLAVE: Solo actuar si el número cambió ---
-            if (movido > ultimoMovido)
+            monedasTempPartida = inicialPartida - movido;
+            monedasTempTotales = inicialTotales + movido;
+            ActualizarTextosMonedas();
+
+            float intensity = Mathf.Sin(t * Mathf.PI);
+            float pulse = intensity * (maxScale - 1.0f) * (0.5f + factorRiqueza * 0.5f);
+            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
+            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
+
+            float minInterval = Mathf.Lerp(0.2f, 0.05f, factorRiqueza);
+            float maxInterval = Mathf.Lerp(0.4f, 0.15f, factorRiqueza);
+            float currentTickSpeed = Mathf.Lerp(maxInterval, minInterval, intensity);
+
+            if (elapsed - lastSoundTime > currentTickSpeed)
             {
-                int diferenciaReal = movido - ultimoMovido;
-                ultimoMovido = movido;
-
-                monedasTempPartida = inicialPartida - movido;
-                monedasTempTotales = inicialTotales + movido;
-                ActualizarTextosMonedas();
-
-                // Feedback de Audio
                 if (audioSource != null && tickSound != null)
                 {
-                    // Si es solo 1 moneda, pitch normal. Si son muchas, sube con la intensidad.
-                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (t * 0.4f);
+                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (intensity * (0.4f + factorRiqueza * 0.4f));
                     audioSource.PlayOneShot(tickSound, soundVolume);
                 }
 
-                // Feedback de Partículas
                 if (coinParticles != null)
                 {
-                    // Emitir partículas proporcional a cuántas monedas saltaron en este frame
-                    // Si solo es 1 moneda, emitirá 1 partícula.
-                    int count = Mathf.Clamp(diferenciaReal, 1, maxParticlesPerFlash);
+                    int count = Mathf.Max(1, Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza));
                     coinParticles.Emit(count);
                 }
-            }
 
-            // Animación visual de escala (solo si hay movimiento o es mucho dinero)
-            float intensity = Mathf.Sin(t * Mathf.PI);
-            float pulse = intensity * (maxScale - 1.0f) * (0.2f + factorRiqueza * 0.8f);
-            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
-            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
+                lastSoundTime = elapsed;
+            }
 
             yield return null;
         }
 
-        // Asegurar valores finales
         monedasTempPartida = 0;
         monedasTempTotales = inicialTotales + totalAMover;
         ActualizarTextosMonedas();
