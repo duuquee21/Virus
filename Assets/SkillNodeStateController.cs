@@ -15,16 +15,16 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     public Sprite normalSprite;
     public Sprite notEnoughMoneySprite;
     public Sprite disabledSprite;
+    public Sprite lockedNextLevelSprite; // <-- NUEVO: Sprite para el segundo nivel (candado)
 
     [Header("Efectos")]
     private ParticleSystem disabledParticles;
-    private bool hasPlayedDisabledEffect = false; // Control para que solo salte una vez
+    private bool hasPlayedDisabledEffect = false;
 
     private bool isHovered = false;
 
     void Awake()
     {
-        // Buscamos el sistema de partículas en los hijos automáticamente al iniciar
         disabledParticles = GetComponentInChildren<ParticleSystem>();
     }
 
@@ -41,12 +41,10 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
     void UpdateState()
     {
-        // 1. Si ya está desbloqueado / Al límite
+        // 1. Si ya está desbloqueado / Al límite (Máximo nivel)
         if (IsAtLimit())
         {
             SetVisual(disabledSprite, false);
-
-            // Lógica de partículas: Solo si no han saltado ya
             if (!hasPlayedDisabledEffect && disabledParticles != null)
             {
                 disabledParticles.Play();
@@ -55,24 +53,30 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             return;
         }
 
-        // Reset del efecto si por alguna razón el nodo volviera a estar activo (opcional)
-        // hasPlayedDisabledEffect = false; 
+        // 2. LÓGICA PARA EL SEGUNDO NIVEL (Nietos)
+        // Si el nodo es visible pero NO es comprable todavía porque sus padres están bloqueados
+        if (!IsParentUnlocked())
+        {
+            SetVisual(lockedNextLevelSprite, false);
+            if (costText != null) costText.text = "???"; // Opcional: ocultar costo
+            return;
+        }
 
-        // 2. Si no hay suficiente dinero
-        if (LevelManager.instance.contagionCoins < skillNode.CoinCost)
+        // 3. Si no hay suficiente dinero
+        if (LevelManager.instance.ContagionCoins < skillNode.CoinCost)
         {
             SetVisual(notEnoughMoneySprite, false);
             return;
         }
 
-        // 3. Estado Hover (Comprable)
+        // 4. Estado Hover (Comprable)
         if (isHovered && hoverSprite != null)
         {
             SetVisual(hoverSprite, true);
             return;
         }
 
-        // 4. Estado Normal
+        // 5. Estado Normal (Disponible para comprar)
         SetVisual(normalSprite, true);
     }
 
@@ -84,8 +88,21 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         if (button != null)
             button.interactable = isInteractable;
 
-        if (costText != null)
+        if (costText != null && sprite != lockedNextLevelSprite)
             costText.text = skillNode.CoinCost.ToString();
+    }
+
+    // Función auxiliar para saber si el nodo es comprable ahora mismo
+    bool IsParentUnlocked()
+    {
+        if (skillNode.isStartingNode || skillNode.requiredParentNodes == null || skillNode.requiredParentNodes.Length == 0)
+            return true;
+
+        foreach (var parent in skillNode.requiredParentNodes)
+        {
+            if (parent != null && parent.IsUnlocked) return true;
+        }
+        return false;
     }
 
     bool IsAtLimit()
@@ -93,12 +110,11 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         if (skillNode == null) return false;
         if (skillNode.IsUnlocked) return true;
 
-        if (skillNode.effectType == SkillNode.SkillEffectType.AddTime2Seconds &&
-            skillNode.repeatLevel >= skillNode.maxTimeRepeatLevel)
-            return true;
+        // Comprobación de repetibles
+        bool isTime = skillNode.effectType == SkillNode.SkillEffectType.AddTime2Seconds;
+        if (isTime && skillNode.repeatLevel >= skillNode.maxTimeRepeatLevel) return true;
 
-        // Simplificado para lectura
-        bool isRepeatableType = (
+        bool isRepeatable = (
             skillNode.effectType == SkillNode.SkillEffectType.DmgHexagono ||
             skillNode.effectType == SkillNode.SkillEffectType.DmgPentagono ||
             skillNode.effectType == SkillNode.SkillEffectType.DmgCuadrado ||
@@ -111,8 +127,7 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             skillNode.effectType == SkillNode.SkillEffectType.CoinsCirculoPlus1
         );
 
-        if (isRepeatableType && skillNode.repeatLevel >= skillNode.maxRepeatLevel)
-            return true;
+        if (isRepeatable && skillNode.repeatLevel >= skillNode.maxRepeatLevel) return true;
 
         return false;
     }

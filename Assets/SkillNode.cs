@@ -108,45 +108,60 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 2. Si ya está comprado (repetible o normal)
-        if (IsUnlocked)
-        {
-            SetAppearance(true, 1f, true);
-            SetState(true, Color.white, false);
-            UpdateLinesVisuals();
-            return;
-        }
-
-        // 3. Nodos iniciales siempre se muestran
-        if (requiredParentNodes == null || requiredParentNodes.Length == 0)
+        // 2. Si ya está comprado o es inicial, siempre visible y totalmente opaco
+        if (IsUnlocked || isStartingNode || requiredParentNodes == null || requiredParentNodes.Length == 0)
         {
             SetAppearance(true, 1f, true);
             SetState(true, Color.white, false);
             return;
         }
 
-        // 4. Lógica Multipadre (Si UNO está desbloqueado, este nodo es visible y comprable)
-        bool atLeastOneParentUnlocked = false;
+        // 3. Lógica de Visibilidad de 2 niveles (Hijos y Nietos)
+        bool isDirectChildOfUnlocked = false;
+        bool isGrandchildOfUnlocked = false;
 
         foreach (var parent in requiredParentNodes)
         {
-            if (parent != null && parent.IsUnlocked)
+            if (parent == null) continue;
+
+            // ¿El padre está desbloqueado? (Este nodo es un HIJO directo)
+            if (parent.IsUnlocked)
             {
-                atLeastOneParentUnlocked = true;
-                break; // Con uno basta
+                isDirectChildOfUnlocked = true;
+                break;
+            }
+
+            // Si el padre NO está desbloqueado, ¿alguno de los abuelos sí lo está? (Este nodo es un NIETO)
+            if (parent.requiredParentNodes != null)
+            {
+                foreach (var grandParent in parent.requiredParentNodes)
+                {
+                    if (grandParent != null && grandParent.IsUnlocked)
+                    {
+                        isGrandchildOfUnlocked = true;
+                        // No hacemos break total aquí porque quizás otro padre sí esté desbloqueado
+                    }
+                }
             }
         }
 
-        if (atLeastOneParentUnlocked)
+        if (isDirectChildOfUnlocked)
         {
-            // El nodo es visible y se puede comprar
+            // HIJO DIRECTO: Totalmente visible y comprable
             SetAppearance(true, 1f, true);
-            SetState(true, Color.white, false); 
+            SetState(true, Color.white, false);
             if (lockIcon != null) lockIcon.SetActive(false);
+        }
+        else if (isGrandchildOfUnlocked)
+        {
+            // NIETO: Visible pero bloqueado (puedes ponerlo semi-transparente si quieres)
+            // Aquí lo ponemos con alpha 0.5f para dar la pista de que es "lo que viene después"
+            SetAppearance(true, 0.5f, false);
+            SetState(false, Color.gray, true); // No interactuable
         }
         else
         {
-            // El nodo permanece oculto hasta que un padre se desbloquee
+            // Muy lejos en el árbol: Oculto
             SetAppearance(false, 0f, false);
         }
     }

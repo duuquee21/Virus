@@ -4,12 +4,15 @@ using UnityEngine.EventSystems;
 public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public RectTransform rect;
-    public RectTransform infoPanel; // opcional si quieres que se mueva también
+    public RectTransform infoPanel;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip hoverSound;
+    [Range(0f, 1f)] public float volume = 0.5f;
 
     [Header("Estado Comprado")]
     public float purchasedScale = 0.95f;
-
     private bool isPurchased = false;
 
     [Header("Escala")]
@@ -28,6 +31,10 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (rect == null)
             rect = GetComponent<RectTransform>();
+
+        // Si no asignaste un AudioSource, intentamos buscar uno en el objeto
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         originalScale = rect.localScale;
         originalPos = rect.anchoredPosition;
@@ -50,6 +57,12 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         targetScale = originalScale * hoverScale;
+
+        // --- EFECTO DE SONIDO ---
+        if (audioSource != null && hoverSound != null)
+        {
+            audioSource.PlayOneShot(hoverSound, volume);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -60,20 +73,10 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void SetPurchasedState(bool purchased)
     {
         isPurchased = purchased;
-
-        if (purchased)
-        {
-            originalScale = Vector3.one * purchasedScale;
-        }
-        else
-        {
-            originalScale = Vector3.one;
-        }
-
+        originalScale = purchased ? Vector3.one * purchasedScale : Vector3.one;
         targetScale = originalScale;
     }
 
-    // Animación al comprar
     public void PlayClickFeedback()
     {
         StartCoroutine(ClickPunch());

@@ -1,11 +1,12 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.Localization.Settings; // <--- NECESARIO
+using UnityEngine.Localization.Settings;
 
 public class SkillTooltip : MonoBehaviour
 {
     public static SkillTooltip instance;
 
+    [Header("References")]
     public RectTransform rect;
     public Vector2 offset = new Vector2(0, 120f);
 
@@ -14,64 +15,88 @@ public class SkillTooltip : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI costText;
 
-    [Header("Font Sizes")]
-    public float titleFontSize = 28f;
-    public float descriptionFontSize = 22f;
-    public float costFontSize = 24f;
+    [Header("Swing Animation (Juice)")]
+    public float initialAmplitude = 15f; // Fuerza del balanceo inicial (más "gordo")
+    public float swingFrequency = 10f;  // Velocidad de la oscilación
+    public float dampingSpeed = 4f;     // Qué tan rápido se detiene (más alto = se para antes)
 
-    // Nombre de tu tabla en Unity
+    private float currentAmplitude = 0f;
+    private float timer = 0f;
+    private bool isAnimating = false;
+
     private string nombreTabla = "MisTextos";
 
     void Awake()
     {
         instance = this;
-
-        CanvasGroup cg = GetComponent<CanvasGroup>();
-        if (cg != null)
-            cg.blocksRaycasts = false;
-
+        if (rect != null)
+        {
+            rect.localScale = Vector3.one;
+            rect.rotation = Quaternion.identity;
+        }
         Hide();
     }
 
-    // --- FUNCIÓN AUXILIAR PARA TRADUCIR ---
-    // (Esta función estaba mezclada dentro de Show, la sacamos fuera para que funcione bien)
-    string GetTexto(string clave)
-    {
-        var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
-        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave
-        return op;
-    }
+    // ... (Tu método GetTexto se mantiene igual) ...
 
-    // --- FUNCIÓN SHOW CORREGIDA ---
-    // Acepta las Keys y el RectTransform del botón
     public void Show(string titleKey, string descriptionKey, int cost, RectTransform target)
     {
-        // 1. TRADUCCIÓN (Usamos la función auxiliar)
+        // --- CONFIGURACIÓN DE TEXTO ---
         titleText.text = GetTexto(titleKey);
         descriptionText.text = GetTexto(descriptionKey);
+        costText.text = $"{GetTexto("txt_coste")}: {cost} {GetTexto("txt_adn")}";
 
-        // Traducimos el coste (Asegúrate de tener "txt_coste" y "txt_adn" en el Excel)
-        string textoCoste = GetTexto("txt_coste");
-        string textoAdn = GetTexto("txt_adn");
-        costText.text = $"{textoCoste}: {cost} {textoAdn}";
-
-        // 2. APLICAR TAMAÑOS (Tu código original)
-        titleText.fontSize = titleFontSize;
-        descriptionText.fontSize = descriptionFontSize;
-        costText.fontSize = costFontSize;
-
-        // 3. POSICIONAMIENTO (Tu código original)
+        // --- POSICIONAMIENTO ---
         if (rect != null && target != null)
         {
             rect.position = target.position;
             rect.anchoredPosition += offset;
         }
 
+        // --- DISPARAR ANIMACIÓN ---
         gameObject.SetActive(true);
+        StartSwingAnimation();
+    }
+
+    private void StartSwingAnimation()
+    {
+        timer = 0f;
+        currentAmplitude = initialAmplitude;
+        isAnimating = true;
+        if (rect != null) rect.rotation = Quaternion.identity;
+    }
+
+    void Update()
+    {
+        if (!isAnimating || rect == null) return;
+
+        timer += Time.unscaledDeltaTime;
+
+        // 1. Reducimos la amplitud con el tiempo (Damping)
+        currentAmplitude = Mathf.Lerp(currentAmplitude, 0f, Time.unscaledDeltaTime * dampingSpeed);
+
+        // 2. Calculamos el ángulo usando Seno
+        float angle = Mathf.Sin(timer * swingFrequency) * currentAmplitude;
+        rect.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        // 3. Si el movimiento es ya imperceptible, lo paramos del todo
+        if (currentAmplitude < 0.1f)
+        {
+            rect.rotation = Quaternion.identity;
+            isAnimating = false;
+        }
     }
 
     public void Hide()
     {
+        isAnimating = false;
+        if (rect != null) rect.rotation = Quaternion.identity;
         gameObject.SetActive(false);
+    }
+
+    string GetTexto(string clave)
+    {
+        var texto = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
+        return string.IsNullOrEmpty(texto) ? clave : texto;
     }
 }
