@@ -63,10 +63,46 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         CoinsPentagonoPlus1,
         CoinsCuadradoPlus1,
         CoinsTrianguloPlus1,
-        CoinsCirculoPlus1
+        CoinsCirculoPlus1,
+        InfectSpeedPhase0_10,
+        InfectSpeedPhase0_20,
+        InfectSpeedPhase0_30,
+        InfectSpeedPhase0_40,
+        InfectSpeedPhase0_50,
+
+        InfectSpeedPhase1_10,
+        InfectSpeedPhase1_20,
+        InfectSpeedPhase1_30,
+        InfectSpeedPhase1_40,
+        InfectSpeedPhase1_50,
+
+        InfectSpeedPhase2_10,
+        InfectSpeedPhase2_20,
+        InfectSpeedPhase2_30,
+        InfectSpeedPhase2_40,
+        InfectSpeedPhase2_50,
+
+        InfectSpeedPhase3_10,
+        InfectSpeedPhase3_20,
+        InfectSpeedPhase3_30,
+        InfectSpeedPhase3_40,
+        InfectSpeedPhase3_50,
+
+        InfectSpeedPhase4_10,
+        InfectSpeedPhase4_20,
+        InfectSpeedPhase4_30,
+        InfectSpeedPhase4_40,
+        InfectSpeedPhase4_50
     }
     [Header("Save ID")]
     public string saveID;
+
+
+    [Header("Balance Override (Pruebas)")]
+    public bool useOverride = false;
+    public int overrideInt = 0;
+    public float overrideFloat = 0f;
+    public int overrideIndex = 0;
 
     [Header("Hover Panel")]
     public GameObject infoPanel;
@@ -378,222 +414,264 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Guardado.instance == null) return;
 
-        // Debug general para saber qué nodo se acaba de activar (Usamos skillNameKey)
         Debug.Log($"<color=green>[SkillTree]</color> Aplicando efecto: <b>{effectType}</b> del nodo: {skillNameKey}");
+
+        int GetInt(int defaultValue) => useOverride ? overrideInt : defaultValue;
+        float GetFloat(float defaultValue) => useOverride ? overrideFloat : defaultValue;
+
+        void SetInfectSpeedPerPhase(int defaultIndex, float defaultValue)
+        {
+            int idx = useOverride ? overrideIndex : defaultIndex;
+            float val = useOverride ? overrideFloat : defaultValue;
+
+            var arr = Guardado.instance.infectSpeedPerPhase;
+            if (arr == null) return;
+            if (idx < 0 || idx >= arr.Length) return;
+
+            arr[idx] = val;
+        }
 
         switch (effectType)
         {
-            case SkillEffectType.RandomInitialUpgrade: Guardado.instance.AssignRandomInitialUpgrade(); break;
-            case SkillEffectType.CoinsX2: Guardado.instance.SetCoinMultiplier(2); break;
-            case SkillEffectType.CoinsX3: Guardado.instance.SetCoinMultiplier(3); break;
-            case SkillEffectType.CoinsX4: Guardado.instance.SetCoinMultiplier(4); break;
-            case SkillEffectType.CoinsX5: Guardado.instance.SetCoinMultiplier(5); break;
-            case SkillEffectType.CoinsX6: Guardado.instance.SetCoinMultiplier(6); break;
-            case SkillEffectType.StartWith50Coins: Guardado.instance.SetStartingCoins(50); break;
-            case SkillEffectType.StartWith100Coins: Guardado.instance.SetStartingCoins(100); break;
-            case SkillEffectType.StartWith500Coins: Guardado.instance.SetStartingCoins(500); break;
-            case SkillEffectType.StartWith2500Coins: Guardado.instance.SetStartingCoins(2500); break;
-            case SkillEffectType.StartWith25000Coins: Guardado.instance.SetStartingCoins(25000); break;
-            case SkillEffectType.StartWith50000Coins: Guardado.instance.SetStartingCoins(50000); break;
-            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.20f); break;
-            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
-            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); break;
-            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
-            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); break;
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(0.25f); break;
-            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
-            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
-            case SkillEffectType.ZoneIncome100: Guardado.instance.SetZonePassiveIncome(100); break;
-            case SkillEffectType.ZoneIncome250: Guardado.instance.SetZonePassiveIncome(250); break;
-            case SkillEffectType.ZoneIncome500: Guardado.instance.SetZonePassiveIncome(500); break;
-            case SkillEffectType.ZoneIncome1000: Guardado.instance.SetZonePassiveIncome(1000); break;
-            case SkillEffectType.ZoneIncome5000: Guardado.instance.SetZonePassiveIncome(5000); break;
+            case SkillEffectType.RandomInitialUpgrade:
+                Guardado.instance.AssignRandomInitialUpgrade();
+                break;
 
-            case SkillEffectType.MultiplyRadius125: Guardado.instance.SetRadiusMultiplier(1.25f); break;
-            case SkillEffectType.MultiplyRadius150: Guardado.instance.SetRadiusMultiplier(1.50f); break;
-            case SkillEffectType.MultiplyRadius200: Guardado.instance.SetRadiusMultiplier(2.00f); break;
+            // Multiplicadores de monedas
+            case SkillEffectType.CoinsX2: Guardado.instance.SetCoinMultiplier(GetInt(2)); break;
+            case SkillEffectType.CoinsX3: Guardado.instance.SetCoinMultiplier(GetInt(3)); break;
+            case SkillEffectType.CoinsX4: Guardado.instance.SetCoinMultiplier(GetInt(4)); break;
+            case SkillEffectType.CoinsX5: Guardado.instance.SetCoinMultiplier(GetInt(5)); break;
+            case SkillEffectType.CoinsX6: Guardado.instance.SetCoinMultiplier(GetInt(6)); break;
 
-            // --- DEBUGS DE NIVELES (Para los controladores de mejoras) ---
-            case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(2); Debug.Log("Mejora: Radius -> Nivel 2"); break;
-            case SkillEffectType.RadiusLevel3: VirusRadiusController.instance.SetLevel(3); Debug.Log("Mejora: Radius -> Nivel 3"); break;
-            case SkillEffectType.RadiusLevel4: VirusRadiusController.instance.SetLevel(4); Debug.Log("Mejora: Radius -> Nivel 4"); break;
-            case SkillEffectType.RadiusLevel5: VirusRadiusController.instance.SetLevel(5); Debug.Log("Mejora: Radius -> Nivel 5"); break;
-            case SkillEffectType.RadiusLevel6: VirusRadiusController.instance.SetLevel(6); Debug.Log("Mejora: Radius -> Nivel 6"); break;
+            // Monedas iniciales
+            case SkillEffectType.StartWith50Coins: Guardado.instance.SetStartingCoins(GetInt(50)); break;
+            case SkillEffectType.StartWith100Coins: Guardado.instance.SetStartingCoins(GetInt(100)); break;
+            case SkillEffectType.StartWith500Coins: Guardado.instance.SetStartingCoins(GetInt(500)); break;
+            case SkillEffectType.StartWith2500Coins: Guardado.instance.SetStartingCoins(GetInt(2500)); break;
+            case SkillEffectType.StartWith25000Coins: Guardado.instance.SetStartingCoins(GetInt(25000)); break;
+            case SkillEffectType.StartWith50000Coins: Guardado.instance.SetStartingCoins(GetInt(50000)); break;
 
-            case SkillEffectType.SpeedLevel2: SpeedUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Speed -> Nivel 2"); break;
-            case SkillEffectType.SpeedLevel3: SpeedUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Speed -> Nivel 3"); break;
-            case SkillEffectType.SpeedLevel4: SpeedUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Speed -> Nivel 4"); break;
-            case SkillEffectType.SpeedLevel5: SpeedUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Speed -> Nivel 5"); break;
+            // Spawn interval bonus (ojo: tu método se llama AddSpawnSpeedBonus, mantengo tu lógica)
+            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.20f)); break;
+            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.40f)); break;
+            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.60f)); break;
+            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.80f)); break;
+            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(GetFloat(1.00f)); break;
 
-            case SkillEffectType.CapacityLevel2: CapacityUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Capacity -> Nivel 2"); break;
-            case SkillEffectType.CapacityLevel3: CapacityUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Capacity -> Nivel 3"); break;
-            case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Capacity -> Nivel 4"); break;
-            case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Capacity -> Nivel 5"); break;
-            case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Capacity -> Nivel 6"); break;
+            // Población
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(GetFloat(0.25f)); break;
+            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(GetFloat(0.50f)); break;
 
-            case SkillEffectType.TimeLevel2: TimeUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Time -> Nivel 2"); break;
-            case SkillEffectType.TimeLevel3: TimeUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Time -> Nivel 3"); break;
-            case SkillEffectType.TimeLevel4: TimeUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Time -> Nivel 4"); break;
-            case SkillEffectType.TimeLevel5: TimeUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Time -> Nivel 5"); break;
+            // Costes zonas (bool)
+            case SkillEffectType.HalveZoneCosts:
+                Guardado.instance.ActivateZoneDiscount();
+                break;
 
-            case SkillEffectType.TimeLevel6: TimeUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Time -> Nivel 6"); break;
-            case SkillEffectType.InfectionSpeedLevel2: InfectionSpeedUpgradeController.instance.SetLevel(2); Debug.Log("Mejora: Infection Speed -> Nivel 2"); break;
-            case SkillEffectType.InfectionSpeedLevel3: InfectionSpeedUpgradeController.instance.SetLevel(3); Debug.Log("Mejora: Infection Speed -> Nivel 3"); break;
-            case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(4); Debug.Log("Mejora: Infection Speed -> Nivel 4"); break;
-            case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(5); Debug.Log("Mejora: Infection Speed -> Nivel 5"); break;
-            case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(6); Debug.Log("Mejora: Infection Speed -> Nivel 6"); break;
+            // Income pasivo zonas
+            case SkillEffectType.ZoneIncome100: Guardado.instance.SetZonePassiveIncome(GetInt(100)); break;
+            case SkillEffectType.ZoneIncome250: Guardado.instance.SetZonePassiveIncome(GetInt(250)); break;
+            case SkillEffectType.ZoneIncome500: Guardado.instance.SetZonePassiveIncome(GetInt(500)); break;
+            case SkillEffectType.ZoneIncome1000: Guardado.instance.SetZonePassiveIncome(GetInt(1000)); break;
+            case SkillEffectType.ZoneIncome5000: Guardado.instance.SetZonePassiveIncome(GetInt(5000)); break;
 
-            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(1.25f); break;
-            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(1.50f); break;
+            // Multiplicadores de radio
+            case SkillEffectType.MultiplyRadius125: Guardado.instance.SetRadiusMultiplier(GetFloat(1.25f)); break;
+            case SkillEffectType.MultiplyRadius150: Guardado.instance.SetRadiusMultiplier(GetFloat(1.50f)); break;
+            case SkillEffectType.MultiplyRadius200: Guardado.instance.SetRadiusMultiplier(GetFloat(2.00f)); break;
 
-            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(0.50f); break;
-            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(1.00f); break;
-            case SkillEffectType.KeepUpgradesOnResetEffect: Guardado.instance.keepUpgradesOnReset = true; break;
-            // Reparación de Zonas (Usando el método que ya existe en Guardado)
+            // Niveles (controladores)
+            case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(GetInt(2)); break;
+            case SkillEffectType.RadiusLevel3: VirusRadiusController.instance.SetLevel(GetInt(3)); break;
+            case SkillEffectType.RadiusLevel4: VirusRadiusController.instance.SetLevel(GetInt(4)); break;
+            case SkillEffectType.RadiusLevel5: VirusRadiusController.instance.SetLevel(GetInt(5)); break;
+            case SkillEffectType.RadiusLevel6: VirusRadiusController.instance.SetLevel(GetInt(6)); break;
+
+            case SkillEffectType.SpeedLevel2: SpeedUpgradeController.instance.SetLevel(GetInt(2)); break;
+            case SkillEffectType.SpeedLevel3: SpeedUpgradeController.instance.SetLevel(GetInt(3)); break;
+            case SkillEffectType.SpeedLevel4: SpeedUpgradeController.instance.SetLevel(GetInt(4)); break;
+            case SkillEffectType.SpeedLevel5: SpeedUpgradeController.instance.SetLevel(GetInt(5)); break;
+
+            case SkillEffectType.CapacityLevel2: CapacityUpgradeController.instance.SetLevel(GetInt(2)); break;
+            case SkillEffectType.CapacityLevel3: CapacityUpgradeController.instance.SetLevel(GetInt(3)); break;
+            case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(GetInt(4)); break;
+            case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(GetInt(5)); break;
+            case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(GetInt(6)); break;
+
+            case SkillEffectType.TimeLevel2: TimeUpgradeController.instance.SetLevel(GetInt(2)); break;
+            case SkillEffectType.TimeLevel3: TimeUpgradeController.instance.SetLevel(GetInt(3)); break;
+            case SkillEffectType.TimeLevel4: TimeUpgradeController.instance.SetLevel(GetInt(4)); break;
+            case SkillEffectType.TimeLevel5: TimeUpgradeController.instance.SetLevel(GetInt(5)); break;
+            case SkillEffectType.TimeLevel6: TimeUpgradeController.instance.SetLevel(GetInt(6)); break;
+
+            case SkillEffectType.InfectionSpeedLevel2: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(2)); break;
+            case SkillEffectType.InfectionSpeedLevel3: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(3)); break;
+            case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(4)); break;
+            case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(5)); break;
+            case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(6)); break;
+
+            // Multiplicadores de velocidad
+            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break;
+            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); break;
+
+            // Bonus velocidad infección global
+            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); break;
+            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); break;
+
+            // Bools / toggles
+            case SkillEffectType.KeepUpgradesOnResetEffect:
+                Guardado.instance.keepUpgradesOnReset = true;
+                break;
+
             case SkillEffectType.KeepZonesOnReset:
                 Guardado.instance.ActivateKeepZones();
                 break;
 
-            // Reparación de Duplicación (Cambiado de 'SetDuplicateOnHitChance' a 'SetDuplicateProbability')
-            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(0.20f); break;
-            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(0.40f); break;
-            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(0.60f); break;
-            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(0.80f); break;
-            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(1.00f); break;
+            // Probabilidad duplicar
+            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); break;
+            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); break;
+            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); break;
+            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break;
+            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break;
 
-
+            // Carambolas (sin valores)
             case SkillEffectType.CarambolaNormal: Guardado.instance.ActivarCarambolaNormal(); break;
             case SkillEffectType.CarambolaPro: Guardado.instance.ActivarCarambolaPro(); break;
             case SkillEffectType.CarambolaSuprema: Guardado.instance.ActivarCarambolaSuprema(); break;
+
+            // Pared infectiva (niveles)
             case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(1);
+                Guardado.instance.SetNivelParedInfectiva(GetInt(1));
                 break;
-
             case SkillEffectType.ParedInfectiva_Nivel2:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(2);
+                Guardado.instance.SetNivelParedInfectiva(GetInt(2));
                 break;
-
             case SkillEffectType.ParedInfectiva_Nivel3:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(3);
+                Guardado.instance.SetNivelParedInfectiva(GetInt(3));
                 break;
-
             case SkillEffectType.ParedInfectiva_Nivel4:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(4);
+                Guardado.instance.SetNivelParedInfectiva(GetInt(4));
                 break;
-
             case SkillEffectType.ParedInfectiva_Nivel5:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(5);
+                Guardado.instance.SetNivelParedInfectiva(GetInt(5));
                 break;
 
             case SkillEffectType.ReboteConCoral:
                 Guardado.instance.ReboteConCoral();
                 break;
 
-            // --- DEBUGS DE DAÑO POR FORMA ---
+            // Daños extra (solo +1 en tu código; ahora editable con overrideInt)
             case SkillEffectType.DmgHexagono:
-                Guardado.instance.dañoExtraHexagono += 1;
-                Debug.Log("<color=magenta>Dmg Extra:</color> Hexágono activado -> Corresponde a <b>FASE 0</b> (Elemento 0 del Array)");
+                Guardado.instance.dañoExtraHexagono += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.DmgPentagono:
-                Guardado.instance.dañoExtraPentagono += 1;
-                Debug.Log("<color=orange>Dmg Extra:</color> Pentágono activado -> Corresponde a <b>FASE 1</b> (Elemento 1 del Array)");
+                Guardado.instance.dañoExtraPentagono += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.DmgCuadrado:
-                Guardado.instance.dañoExtraCuadrado += 1;
-                Debug.Log("<color=yellow>Dmg Extra:</color> Cuadrado activado -> Corresponde a <b>FASE 2</b> (Elemento 2 del Array)");
+                Guardado.instance.dañoExtraCuadrado += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.DmgTriangulo:
-                Guardado.instance.dañoExtraTriangulo += 1;
-                Debug.Log("<color=green>Dmg Extra:</color> Triángulo activado -> Corresponde a <b>FASE 3</b> (Elemento 3 del Array)");
+                Guardado.instance.dañoExtraTriangulo += GetInt(1);
+                Guardado.instance.SaveData();
+                break;
+            case SkillEffectType.DmgCirculo:
+                Guardado.instance.dañoExtraCirculo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.DmgCirculo:
-                Guardado.instance.dañoExtraCirculo += 1;
-                Debug.Log("<color=cyan>Dmg Extra:</color> Círculo activado -> Corresponde a <b>FASE 4</b> (Elemento 4 del Array)");
-                Guardado.instance.SaveData();
-                break;
+            // Flags
             case SkillEffectType.DestroyCoralOnInfectedImpact:
                 Guardado.instance.destroyCoralOnInfectedImpact = true;
                 Guardado.instance.SaveData();
                 break;
+
+            // Tiempo extra base
             case SkillEffectType.AddTime2Seconds:
-                Debug.Log("ENTRA EN LA HABILIDAD TIEMPO");
-                Guardado.instance.AddExtraBaseTime(2f);
-                break;
-            case SkillEffectType.AddTimeOnPhaseChance5:
-                Guardado.instance.SetAddTimeOnPhaseChance(0.05f);
-                break;
-            case SkillEffectType.AddTimeOnPhaseChance10:
-                Guardado.instance.SetAddTimeOnPhaseChance(0.10f);
+                Guardado.instance.AddExtraBaseTime(GetFloat(2f));
                 break;
 
-            case SkillEffectType.AddTimeOnPhaseChance15:
-                Guardado.instance.SetAddTimeOnPhaseChance(0.15f);
-                break;
+            // Prob de añadir tiempo al subir fase
+            case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.05f)); break;
+            case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.10f)); break;
+            case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.15f)); break;
+            case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.20f)); break;
+            case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.25f)); break;
 
-            case SkillEffectType.AddTimeOnPhaseChance20:
-                Guardado.instance.SetAddTimeOnPhaseChance(0.20f);
-                break;
+            // Prob doble upgrade
+            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.05f)); break;
+            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.10f)); break;
+            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.15f)); break;
+            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.20f)); break;
+            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.25f)); break;
 
-            case SkillEffectType.AddTimeOnPhaseChance25:
-                Guardado.instance.SetAddTimeOnPhaseChance(0.25f);
-                break;
-            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.SetDoubleUpgradeChance(0.05f); break;
-            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.SetDoubleUpgradeChance(0.10f); break;
-            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.SetDoubleUpgradeChance(0.15f); break;
-            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.SetDoubleUpgradeChance(0.20f); break;
-            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.SetDoubleUpgradeChance(0.25f); break;
-            case SkillEffectType.RandomSpawnAnyPhase5:
-                Guardado.instance.SetRandomSpawnPhaseChance(0.05f);
-                break;
-            case SkillEffectType.RandomSpawnAnyPhase10:
-                Guardado.instance.SetRandomSpawnPhaseChance(0.1f);
-                break;
-            case SkillEffectType.RandomSpawnAnyPhase15:
-                Guardado.instance.SetRandomSpawnPhaseChance(0.15f);
-                break;
-            case SkillEffectType.RandomSpawnAnyPhase20:
-                Guardado.instance.SetRandomSpawnPhaseChance(0.20f);
-                break;
-            case SkillEffectType.RandomSpawnAnyPhase25:
-                Guardado.instance.SetRandomSpawnPhaseChance(0.25f);
-                break;
+            // Prob spawn random fase
+            case SkillEffectType.RandomSpawnAnyPhase5: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.05f)); break;
+            case SkillEffectType.RandomSpawnAnyPhase10: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.10f)); break;
+            case SkillEffectType.RandomSpawnAnyPhase15: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.15f)); break;
+            case SkillEffectType.RandomSpawnAnyPhase20: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.20f)); break;
+            case SkillEffectType.RandomSpawnAnyPhase25: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.25f)); break;
+
+            // Monedas extra por forma (+1 editable con overrideInt)
             case SkillEffectType.CoinsCirculoPlus1:
-                Guardado.instance.coinsExtraCirculo += 1;
+                Guardado.instance.coinsExtraCirculo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.CoinsTrianguloPlus1:
-                Guardado.instance.coinsExtraTriangulo += 1;
+                Guardado.instance.coinsExtraTriangulo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.CoinsCuadradoPlus1:
-                Guardado.instance.coinsExtraCuadrado += 1;
+                Guardado.instance.coinsExtraCuadrado += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
-
             case SkillEffectType.CoinsPentagonoPlus1:
-                Guardado.instance.coinsExtraPentagono += 1;
+                Guardado.instance.coinsExtraPentagono += GetInt(1);
+                Guardado.instance.SaveData();
+                break;
+            case SkillEffectType.CoinsHexagonoPlus1:
+                Guardado.instance.coinsExtraHexagono += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.CoinsHexagonoPlus1:
-                Guardado.instance.coinsExtraHexagono += 1;
-                Guardado.instance.SaveData();
-                break;
+            // Infect speed per phase (por defecto mantiene tu lógica exacta, pero puedes overrideIndex y overrideFloat)
+            case SkillEffectType.InfectSpeedPhase0_10: SetInfectSpeedPerPhase(0, 1.1f); break;
+            case SkillEffectType.InfectSpeedPhase0_20: SetInfectSpeedPerPhase(0, 1.2f); break;
+            case SkillEffectType.InfectSpeedPhase0_30: SetInfectSpeedPerPhase(0, 1.3f); break;
+            case SkillEffectType.InfectSpeedPhase0_40: SetInfectSpeedPerPhase(0, 1.4f); break;
+            case SkillEffectType.InfectSpeedPhase0_50: SetInfectSpeedPerPhase(0, 1.5f); break;
+
+            case SkillEffectType.InfectSpeedPhase1_10: SetInfectSpeedPerPhase(1, 1.1f); break;
+            case SkillEffectType.InfectSpeedPhase1_20: SetInfectSpeedPerPhase(1, 1.2f); break;
+            case SkillEffectType.InfectSpeedPhase1_30: SetInfectSpeedPerPhase(1, 1.3f); break;
+            case SkillEffectType.InfectSpeedPhase1_40: SetInfectSpeedPerPhase(1, 1.4f); break;
+            case SkillEffectType.InfectSpeedPhase1_50: SetInfectSpeedPerPhase(1, 1.5f); break;
+
+            case SkillEffectType.InfectSpeedPhase2_10: SetInfectSpeedPerPhase(2, 1.1f); break;
+            case SkillEffectType.InfectSpeedPhase2_20: SetInfectSpeedPerPhase(2, 1.2f); break;
+            case SkillEffectType.InfectSpeedPhase2_30: SetInfectSpeedPerPhase(2, 1.3f); break;
+            case SkillEffectType.InfectSpeedPhase2_40: SetInfectSpeedPerPhase(2, 1.4f); break;
+            case SkillEffectType.InfectSpeedPhase2_50: SetInfectSpeedPerPhase(2, 1.5f); break;
+
+            case SkillEffectType.InfectSpeedPhase3_10: SetInfectSpeedPerPhase(3, 1.1f); break;
+            case SkillEffectType.InfectSpeedPhase3_20: SetInfectSpeedPerPhase(3, 1.2f); break;
+            case SkillEffectType.InfectSpeedPhase3_30: SetInfectSpeedPerPhase(3, 1.3f); break;
+            case SkillEffectType.InfectSpeedPhase3_40: SetInfectSpeedPerPhase(3, 1.4f); break;
+            case SkillEffectType.InfectSpeedPhase3_50: SetInfectSpeedPerPhase(3, 1.5f); break;
+
+            case SkillEffectType.InfectSpeedPhase4_10: SetInfectSpeedPerPhase(4, 1.1f); break;
+            case SkillEffectType.InfectSpeedPhase4_20: SetInfectSpeedPerPhase(4, 1.2f); break;
+            case SkillEffectType.InfectSpeedPhase4_30: SetInfectSpeedPerPhase(4, 1.3f); break;
+            case SkillEffectType.InfectSpeedPhase4_40: SetInfectSpeedPerPhase(4, 1.4f); break;
+            case SkillEffectType.InfectSpeedPhase4_50: SetInfectSpeedPerPhase(4, 1.5f); break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;

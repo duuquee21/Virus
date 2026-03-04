@@ -134,7 +134,20 @@ public class PersonaInfeccion : MonoBehaviour
                 if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
 
                 float multiplier = 1f;
-                if (Guardado.instance != null) multiplier = Guardado.instance.infectSpeedMultiplier;
+
+                if (Guardado.instance != null)
+                {
+                    // Multiplicador global (lo que ya tenías)
+                    multiplier = Guardado.instance.infectSpeedMultiplier;
+
+                    // Multiplicador por fase (nuevo)
+                    if (Guardado.instance.infectSpeedPerPhase != null &&
+                        faseActual < Guardado.instance.infectSpeedPerPhase.Length)
+                    {
+                        multiplier *= Guardado.instance.infectSpeedPerPhase[faseActual];
+                    }
+                }
+
                 currentInfectionTime += Time.deltaTime * multiplier;
             }
             // CASO B: Jugador NO Jugable (Atracción al centro)
