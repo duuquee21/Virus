@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
     public GameObject menuPanel;
     public GameObject gameUI;
    
-    public GameObject gameOverPanel;
+    
     public GameObject shinyPanel; // Panel de la Tienda de ADN/Mejoras
     public GameObject zonePanel;  // Panel de Selección de Mapas
     public GameObject pausePanel;
@@ -161,7 +161,7 @@ public class LevelManager : MonoBehaviour
     {
         menuPanel.SetActive(true);
         gameUI.SetActive(false);
-        gameOverPanel.SetActive(false);
+     
         
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
@@ -277,7 +277,7 @@ public class LevelManager : MonoBehaviour
 
         if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
 
-        gameOverPanel.SetActive(false);
+     
    
         if (pausePanel != null) pausePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
@@ -468,7 +468,7 @@ public class LevelManager : MonoBehaviour
     public void GameOver()
     {
    
-        gameOverPanel.SetActive(true);
+       
         if (Guardado.instance) Guardado.instance.ClearRunState();
     }
 
@@ -494,6 +494,8 @@ public class LevelManager : MonoBehaviour
     }
     public void SoftRestartRun()
     {
+       
+        shinyPanel.gameObject.SetActive(false);
         // 1. Si el panel está abierto y aún hay monedas por contar...
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
@@ -692,7 +694,7 @@ public class LevelManager : MonoBehaviour
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(false);
 
-        if (gameOverPanel) gameOverPanel.SetActive(false);
+       
         if (pausePanel) pausePanel.SetActive(false);
         if (shinyPanel) zonePanel.SetActive(false);
 
