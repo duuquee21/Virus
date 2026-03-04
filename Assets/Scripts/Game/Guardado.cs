@@ -59,10 +59,17 @@ public class Guardado : MonoBehaviour
     public float doubleUpgradeChance = 0f; // 0..1
     public float randomSpawnPhaseChance = 0f; // 0..1 (0.05 = 5%)
 
+    public float[] infectSpeedPerPhase = new float[5];
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
+
+        for (int i = 0; i < infectSpeedPerPhase.Length; i++)
+        {
+            infectSpeedPerPhase[i] = 1f;
+        }
         DontDestroyOnLoad(gameObject);
 
         if (resetOnPlay)
@@ -112,6 +119,10 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = 0;
         coinsExtraTriangulo = 0;
         coinsExtraCirculo = 0;
+        for (int i = 0; i < infectSpeedPerPhase.Length; i++)
+        {
+            infectSpeedPerPhase[i] = 1f;
+        }
         ClearRunState();
         SaveData();
     }
@@ -151,6 +162,10 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
         PlayerPrefs.SetInt("CoinsTriangulo", coinsExtraTriangulo);
         PlayerPrefs.SetInt("CoinsCirculo", coinsExtraCirculo);
+        for (int i = 0; i < infectSpeedPerPhase.Length; i++)
+        {
+            PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
+        }
         PlayerPrefs.Save();
     }
 
@@ -189,6 +204,10 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = PlayerPrefs.GetInt("CoinsCuadrado", 0);
         coinsExtraTriangulo = PlayerPrefs.GetInt("CoinsTriangulo", 0);
         coinsExtraCirculo = PlayerPrefs.GetInt("CoinsCirculo", 0);
+        for (int i = 0; i < infectSpeedPerPhase.Length; i++)
+        {
+            infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
+        }
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---

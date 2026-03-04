@@ -63,7 +63,36 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         CoinsPentagonoPlus1,
         CoinsCuadradoPlus1,
         CoinsTrianguloPlus1,
-        CoinsCirculoPlus1
+        CoinsCirculoPlus1,
+        InfectSpeedPhase0_10,
+        InfectSpeedPhase0_20,
+        InfectSpeedPhase0_30,
+        InfectSpeedPhase0_40,
+        InfectSpeedPhase0_50,
+
+        InfectSpeedPhase1_10,
+        InfectSpeedPhase1_20,
+        InfectSpeedPhase1_30,
+        InfectSpeedPhase1_40,
+        InfectSpeedPhase1_50,
+
+        InfectSpeedPhase2_10,
+        InfectSpeedPhase2_20,
+        InfectSpeedPhase2_30,
+        InfectSpeedPhase2_40,
+        InfectSpeedPhase2_50,
+
+        InfectSpeedPhase3_10,
+        InfectSpeedPhase3_20,
+        InfectSpeedPhase3_30,
+        InfectSpeedPhase3_40,
+        InfectSpeedPhase3_50,
+
+        InfectSpeedPhase4_10,
+        InfectSpeedPhase4_20,
+        InfectSpeedPhase4_30,
+        InfectSpeedPhase4_40,
+        InfectSpeedPhase4_50
     }
     [Header("Save ID")]
     public string saveID;
@@ -593,6 +622,109 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.CoinsHexagonoPlus1:
                 Guardado.instance.coinsExtraHexagono += 1;
                 Guardado.instance.SaveData();
+                break;
+            case SkillEffectType.InfectSpeedPhase0_10:
+                Guardado.instance.infectSpeedPerPhase[0] = 1.1f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase0_20:
+                Guardado.instance.infectSpeedPerPhase[0] = 1.2f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase0_30:
+                Guardado.instance.infectSpeedPerPhase[0] = 1.3f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase0_40:
+                Guardado.instance.infectSpeedPerPhase[0] = 1.4f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase0_50:
+                Guardado.instance.infectSpeedPerPhase[0] = 1.5f;
+                break;
+
+
+            case SkillEffectType.InfectSpeedPhase1_10:
+                Guardado.instance.infectSpeedPerPhase[1] = 1.1f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase1_20:
+                Guardado.instance.infectSpeedPerPhase[1] = 1.2f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase1_30:
+                Guardado.instance.infectSpeedPerPhase[1] = 1.3f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase1_40:
+                Guardado.instance.infectSpeedPerPhase[1] = 1.4f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase1_50:
+                Guardado.instance.infectSpeedPerPhase[1] = 1.5f;
+                break;
+
+
+            case SkillEffectType.InfectSpeedPhase2_10:
+                Guardado.instance.infectSpeedPerPhase[2] = 1.1f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase2_20:
+                Guardado.instance.infectSpeedPerPhase[2] = 1.2f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase2_30:
+                Guardado.instance.infectSpeedPerPhase[2] = 1.3f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase2_40:
+                Guardado.instance.infectSpeedPerPhase[2] = 1.4f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase2_50:
+                Guardado.instance.infectSpeedPerPhase[2] = 1.5f;
+                break;
+
+
+            case SkillEffectType.InfectSpeedPhase3_10:
+                Guardado.instance.infectSpeedPerPhase[3] = 1.1f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase3_20:
+                Guardado.instance.infectSpeedPerPhase[3] = 1.2f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase3_30:
+                Guardado.instance.infectSpeedPerPhase[3] = 1.3f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase3_40:
+                Guardado.instance.infectSpeedPerPhase[3] = 1.4f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase3_50:
+                Guardado.instance.infectSpeedPerPhase[3] = 1.5f;
+                break;
+
+
+            case SkillEffectType.InfectSpeedPhase4_10:
+                Guardado.instance.infectSpeedPerPhase[4] = 1.1f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase4_20:
+                Guardado.instance.infectSpeedPerPhase[4] = 1.2f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase4_30:
+                Guardado.instance.infectSpeedPerPhase[4] = 1.3f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase4_40:
+                Guardado.instance.infectSpeedPerPhase[4] = 1.4f;
+                break;
+
+            case SkillEffectType.InfectSpeedPhase4_50:
+                Guardado.instance.infectSpeedPerPhase[4] = 1.5f;
                 break;
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
