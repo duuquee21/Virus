@@ -48,6 +48,7 @@ public class VirusMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("Velocidad actual en Update: " + currentFinalSpeed);
         // 1. Verificamos si existe el manager y si NO es jugable
         if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
         {
@@ -110,9 +111,20 @@ public class VirusMovement : MonoBehaviour
     }
 
 
+    // Cambia este método en tu script VirusMovement.cs
     public void SetSpeed(float newSpeed)
     {
         baseMoveSpeed = newSpeed;
-        ApplySpeedMultiplier();
+
+        float skillMultiplier = 1f;
+        if (Guardado.instance != null)
+        {
+            skillMultiplier = Guardado.instance.speedMultiplier;
+        }
+
+        // Actualizamos la velocidad final que usa el FixedUpdate
+        currentFinalSpeed = baseMoveSpeed * skillMultiplier;
+
+        Debug.Log("Velocidad actualizada en el motor físico: " + currentFinalSpeed);
     }
 }

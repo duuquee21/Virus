@@ -4,11 +4,10 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 {
     public static InfectionSpeedUpgradeController instance;
 
-    [Header("Tiempo base de contagio (nivel 1)")]
+    [Header("Configuración de Infección")]
     public float baseInfectTime = 2f;
-
-    [Header("Reducción por nivel")]
     public float reductionStep = 0.4f;
+    [SerializeField] float minInfectTime = 0.2f; // Límite para que no sea instantáneo o negativo
 
     private int currentLevel = 1;
 
@@ -22,6 +21,7 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
         ApplySpeed();
     }
 
+    // Cada vez que se llama, el contagio es 0.4s más rápido
     public void UpgradeInfectionSpeed()
     {
         currentLevel++;
@@ -36,19 +36,19 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 
     void ApplySpeed()
     {
-        // Si el nivel es 1, (1-1)*0.4 = 0. El tiempo será baseInfectTime.
+        // Fórmula: Tiempo Base - (Niveles extra * reducción)
         float newTime = baseInfectTime - (currentLevel - 1) * reductionStep;
-        if (newTime < 0.2f) newTime = 0.2f;
+
+        // Aplicamos el límite mínimo de seguridad
+        newTime = Mathf.Max(newTime, minInfectTime);
 
         PersonaInfeccion.globalInfectTime = newTime;
+
+        Debug.Log($"Velocidad de Infección: {newTime}s (Nivel {currentLevel})");
     }
 
-    public int GetCurrentLevel()
-    {
-        return currentLevel;
-    }
+    public int GetCurrentLevel() => currentLevel;
 
-    // --- ASEGÚRATE DE TENER ESTO ---
     public void ResetUpgrade()
     {
         currentLevel = 1;

@@ -4,7 +4,9 @@ public class TimeUpgradeController : MonoBehaviour
 {
     public static TimeUpgradeController instance;
 
-    float[] timeValues = { 10f, 12.5f, 15f, 17.5f, 20f, 22.5f };
+    [Header("Configuración de Tiempo")]
+    [SerializeField] float baseTime = 10f;      // El valor inicial en el nivel 1
+    [SerializeField] float timeIncrement = 2.5f; // Lo que se suma por nivel
 
     int currentLevel = 1;
 
@@ -20,18 +22,18 @@ public class TimeUpgradeController : MonoBehaviour
 
     public void UpgradeTime()
     {
-        if (currentLevel >= timeValues.Length) return;
-
-        currentLevel++;
-        ApplyTime();
+        currentLevel++; // Sube 1 nivel
+        ApplyTime();    // Esto calculará: (Nuevo Nivel - 1) * 2.5
     }
 
     void ApplyTime()
     {
         if (LevelManager.instance == null) return;
 
-        int index = Mathf.Clamp(currentLevel - 1, 0, timeValues.Length - 1);
-        LevelManager.instance.gameDuration = timeValues[index];
+        // Fórmula lineal: El tiempo base + 2.5 por cada nivel extra ganado
+        float calculatedTime = baseTime + ((currentLevel - 1) * 2.5f);
+
+        LevelManager.instance.gameDuration = calculatedTime;
     }
 
     public int GetCurrentLevel()
@@ -45,10 +47,10 @@ public class TimeUpgradeController : MonoBehaviour
         ApplyTime();
     }
 
-    // 🔥 usado por bonus permanente
     public void SetLevel(int level)
     {
-        currentLevel = Mathf.Clamp(level, 1, timeValues.Length);
+        // Eliminamos el límite del array, pero aseguramos que el nivel no sea menor a 1
+        currentLevel = Mathf.Max(1, level);
         ApplyTime();
     }
 }

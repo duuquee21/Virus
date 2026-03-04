@@ -215,9 +215,13 @@ public class Guardado : MonoBehaviour
     public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
     public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
     public void SetCoinMultiplier(int val) { coinMultiplier = val; SaveData(); }
+    public void AddCoinMultiplier(int extra){coinMultiplier += extra; SaveData();}
+    public void AddStartingCoins(int extra){startingCoins += extra;SaveData();}
     public void SetStartingCoins(int val) { startingCoins = val; SaveData(); }
-    public void AddSpawnSpeedBonus(float val) { spawnSpeedBonus += val; SaveData(); }
-    public void AddPopulationBonus(float val) { populationBonus += val; SaveData(); }
+    public void AddSpawnSpeedBonus(float val) {spawnSpeedBonus += val;SaveData();}
+    public void AddPopulationBonus(float val){ populationBonus += val;SaveData();}
+    public void AddZonePassiveIncome(int extra){coinsPerZoneDaily += extra;SaveData();}
+    public void AddRadiusMultiplier(float extra){radiusMultiplier += extra;SaveData();}
     public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
     public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }

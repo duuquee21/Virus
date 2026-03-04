@@ -437,78 +437,80 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AssignRandomInitialUpgrade();
                 break;
 
-            // Multiplicadores de monedas
-            case SkillEffectType.CoinsX2: Guardado.instance.SetCoinMultiplier(GetInt(2)); break;
-            case SkillEffectType.CoinsX3: Guardado.instance.SetCoinMultiplier(GetInt(3)); break;
-            case SkillEffectType.CoinsX4: Guardado.instance.SetCoinMultiplier(GetInt(4)); break;
-            case SkillEffectType.CoinsX5: Guardado.instance.SetCoinMultiplier(GetInt(5)); break;
-            case SkillEffectType.CoinsX6: Guardado.instance.SetCoinMultiplier(GetInt(6)); break;
-
-            // Monedas iniciales
-            case SkillEffectType.StartWith50Coins: Guardado.instance.SetStartingCoins(GetInt(50)); break;
-            case SkillEffectType.StartWith100Coins: Guardado.instance.SetStartingCoins(GetInt(100)); break;
-            case SkillEffectType.StartWith500Coins: Guardado.instance.SetStartingCoins(GetInt(500)); break;
-            case SkillEffectType.StartWith2500Coins: Guardado.instance.SetStartingCoins(GetInt(2500)); break;
-            case SkillEffectType.StartWith25000Coins: Guardado.instance.SetStartingCoins(GetInt(25000)); break;
-            case SkillEffectType.StartWith50000Coins: Guardado.instance.SetStartingCoins(GetInt(50000)); break;
-
-            // Spawn interval bonus (ojo: tu método se llama AddSpawnSpeedBonus, mantengo tu lógica)
-            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.20f)); break;
-            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.40f)); break;
-            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.60f)); break;
-            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(GetFloat(0.80f)); break;
-            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(GetFloat(1.00f)); break;
-
-            // Población
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(GetFloat(0.25f)); break;
-            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(GetFloat(0.50f)); break;
-
-            // Costes zonas (bool)
-            case SkillEffectType.HalveZoneCosts:
-                Guardado.instance.ActivateZoneDiscount();
+            // --- MULTIPLICADORES DE MONEDAS (Cada uno suma +1 al mult) ---
+            case SkillEffectType.CoinsX2:
+            case SkillEffectType.CoinsX3:
+            case SkillEffectType.CoinsX4:
+            case SkillEffectType.CoinsX5:
+            case SkillEffectType.CoinsX6:
+                Guardado.instance.AddCoinMultiplier(1);
                 break;
 
-            // Income pasivo zonas
-            case SkillEffectType.ZoneIncome100: Guardado.instance.SetZonePassiveIncome(GetInt(100)); break;
-            case SkillEffectType.ZoneIncome250: Guardado.instance.SetZonePassiveIncome(GetInt(250)); break;
-            case SkillEffectType.ZoneIncome500: Guardado.instance.SetZonePassiveIncome(GetInt(500)); break;
-            case SkillEffectType.ZoneIncome1000: Guardado.instance.SetZonePassiveIncome(GetInt(1000)); break;
-            case SkillEffectType.ZoneIncome5000: Guardado.instance.SetZonePassiveIncome(GetInt(5000)); break;
+            // --- MONEDAS INICIALES (Cada uno suma su valor respectivo) ---
+            case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); break;
+            case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); break;
+            case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); break;
+            case SkillEffectType.StartWith2500Coins: Guardado.instance.AddStartingCoins(2500); break;
+            case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break;
+            case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break;
 
-            // Multiplicadores de radio
-            case SkillEffectType.MultiplyRadius125: Guardado.instance.SetRadiusMultiplier(GetFloat(1.25f)); break;
-            case SkillEffectType.MultiplyRadius150: Guardado.instance.SetRadiusMultiplier(GetFloat(1.50f)); break;
-            case SkillEffectType.MultiplyRadius200: Guardado.instance.SetRadiusMultiplier(GetFloat(2.00f)); break;
+            // --- SPAWN INTERVAL (Suman porcentajes) ---
+            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.20f); break;
+            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
+            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); break;
+            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
+            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); break;
+
+            // --- INCOME PASIVO ZONAS (Suma a la cantidad diaria) ---
+            case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); break;
+            case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); break;
+            case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); break;
+            case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); break;
+            case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); break;
+
+            // --- MULTIPLICADORES DE RADIO (Suman al multiplicador base de 1.0) ---
+            case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); break;
+            case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break;
+            case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break;
+
+            // --- POBLACIÓN Y OTROS (Siguen igual pero acumulando) ---
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(0.25f); break;
+            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
+            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
 
             // Niveles (controladores)
-            case SkillEffectType.RadiusLevel2: VirusRadiusController.instance.SetLevel(GetInt(2)); break;
-            case SkillEffectType.RadiusLevel3: VirusRadiusController.instance.SetLevel(GetInt(3)); break;
-            case SkillEffectType.RadiusLevel4: VirusRadiusController.instance.SetLevel(GetInt(4)); break;
-            case SkillEffectType.RadiusLevel5: VirusRadiusController.instance.SetLevel(GetInt(5)); break;
-            case SkillEffectType.RadiusLevel6: VirusRadiusController.instance.SetLevel(GetInt(6)); break;
+            case SkillEffectType.RadiusLevel2:
+            case SkillEffectType.RadiusLevel3:
+            case SkillEffectType.RadiusLevel4:
+            case SkillEffectType.RadiusLevel5:
+            case SkillEffectType.RadiusLevel6:
+                VirusRadiusController.instance.UpgradeRadius();
+                break;
 
-            case SkillEffectType.SpeedLevel2: SpeedUpgradeController.instance.SetLevel(GetInt(2)); break;
-            case SkillEffectType.SpeedLevel3: SpeedUpgradeController.instance.SetLevel(GetInt(3)); break;
-            case SkillEffectType.SpeedLevel4: SpeedUpgradeController.instance.SetLevel(GetInt(4)); break;
-            case SkillEffectType.SpeedLevel5: SpeedUpgradeController.instance.SetLevel(GetInt(5)); break;
+            case SkillEffectType.SpeedLevel2:
+            case SkillEffectType.SpeedLevel3:
+            case SkillEffectType.SpeedLevel4:
+            case SkillEffectType.SpeedLevel5:
+                SpeedUpgradeController.instance.UpgradeSpeed();
+                break;
 
-            case SkillEffectType.CapacityLevel2: CapacityUpgradeController.instance.SetLevel(GetInt(2)); break;
-            case SkillEffectType.CapacityLevel3: CapacityUpgradeController.instance.SetLevel(GetInt(3)); break;
-            case SkillEffectType.CapacityLevel4: CapacityUpgradeController.instance.SetLevel(GetInt(4)); break;
-            case SkillEffectType.CapacityLevel5: CapacityUpgradeController.instance.SetLevel(GetInt(5)); break;
-            case SkillEffectType.CapacityLevel6: CapacityUpgradeController.instance.SetLevel(GetInt(6)); break;
 
-            case SkillEffectType.TimeLevel2: TimeUpgradeController.instance.SetLevel(GetInt(2)); break;
-            case SkillEffectType.TimeLevel3: TimeUpgradeController.instance.SetLevel(GetInt(3)); break;
-            case SkillEffectType.TimeLevel4: TimeUpgradeController.instance.SetLevel(GetInt(4)); break;
-            case SkillEffectType.TimeLevel5: TimeUpgradeController.instance.SetLevel(GetInt(5)); break;
-            case SkillEffectType.TimeLevel6: TimeUpgradeController.instance.SetLevel(GetInt(6)); break;
 
-            case SkillEffectType.InfectionSpeedLevel2: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(2)); break;
-            case SkillEffectType.InfectionSpeedLevel3: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(3)); break;
-            case SkillEffectType.InfectionSpeedLevel4: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(4)); break;
-            case SkillEffectType.InfectionSpeedLevel5: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(5)); break;
-            case SkillEffectType.InfectionSpeedLevel6: InfectionSpeedUpgradeController.instance.SetLevel(GetInt(6)); break;
+            case SkillEffectType.TimeLevel2:
+            case SkillEffectType.TimeLevel3:
+            case SkillEffectType.TimeLevel4:
+            case SkillEffectType.TimeLevel5:
+            case SkillEffectType.TimeLevel6:
+                TimeUpgradeController.instance.UpgradeTime();
+                break;
+
+            case SkillEffectType.InfectionSpeedLevel2:
+            case SkillEffectType.InfectionSpeedLevel3:
+            case SkillEffectType.InfectionSpeedLevel4:
+            case SkillEffectType.InfectionSpeedLevel5:
+            case SkillEffectType.InfectionSpeedLevel6:
+                InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed();
+                break;
 
             // Multiplicadores de velocidad
             case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break;

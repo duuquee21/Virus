@@ -4,21 +4,19 @@ public class SpeedUpgradeController : MonoBehaviour
 {
     public static SpeedUpgradeController instance;
 
-    // Usamos currentLevel (empezando en 1) como tienes en el resto del script
-    int currentLevel = 1;
+    [Header("Configuración de Velocidad")]
+    [SerializeField] float baseSpeed = 5f;      // Velocidad inicial nivel 1
+    [SerializeField] float speedIncrement = 0.5f; // Lo que se suma por cada upgrade
 
-    // VALORES SEGÚN TU TABLA (80 = 100%)
-    float[] speedValues =
-    {
-        80f,   // Nivel 1 (base)
-        96f,   // 120%
-        112f,  // 140%
-        136f,  // 170%
-        160f   // 200%
-    };
+    private int currentLevel = 1;
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
     }
 
@@ -27,51 +25,37 @@ public class SpeedUpgradeController : MonoBehaviour
         ApplySpeed();
     }
 
+    // Método para sumar un nivel (+0.5f a la velocidad)
     public void UpgradeSpeed()
     {
-        if (currentLevel < speedValues.Length)
-        {
-            currentLevel++;
-            ApplySpeed();
-        }
-    }
-
-    void ApplySpeed()
-    {
-        if (VirusMovement.instance == null) return;
-
-        // Pasamos la velocidad de la tabla al VirusMovement
-        // VirusMovement se encargará de multiplicar esto por el bono del árbol
-        int index = Mathf.Clamp(currentLevel - 1, 0, speedValues.Length - 1);
-        VirusMovement.instance.SetSpeed(speedValues[index]);
-    }
-
-    public int GetCurrentLevel()
-    {
-        return currentLevel;
-    }
-
-    public void ResetUpgrade()
-    {
-        currentLevel = 1;
+        currentLevel++;
         ApplySpeed();
     }
 
     public void SetLevel(int level)
     {
-        currentLevel = Mathf.Clamp(level, 1, speedValues.Length);
+        currentLevel = Mathf.Max(1, level);
         ApplySpeed();
     }
 
-    // --- FUNCIÓN CORREGIDA ---
-    public float GetFinalSpeed()
+    void ApplySpeed()
     {
-        // Corregido: Usamos currentLevel - 1 para el índice
-        int index = Mathf.Clamp(currentLevel - 1, 0, speedValues.Length - 1);
-        float speedFromLevel = speedValues[index];
+        // 1. Calculamos la velocidad base del nivel actual
+        // Si baseSpeed es 20 y nivel 1: 20 + (0 * 0.5) = 20
+        float calculatedSpeed = baseSpeed + ((currentLevel - 1) * speedIncrement);
 
-        float multiplier = (Guardado.instance != null) ? Guardado.instance.speedMultiplier : 1f;
+        // 2. Le enviamos esa nueva velocidad al script de movimiento
+        if (VirusMovement.instance != null)
+        {
+            VirusMovement.instance.SetSpeed(calculatedSpeed);
+        }
+    }
 
-        return speedFromLevel * multiplier;
+    public int GetCurrentLevel() => currentLevel;
+
+    public void ResetUpgrade()
+    {
+        currentLevel = 1;
+        ApplySpeed();
     }
 }
