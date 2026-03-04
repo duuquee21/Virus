@@ -161,8 +161,8 @@ public class LevelManager : MonoBehaviour
     {
         menuPanel.SetActive(true);
         gameUI.SetActive(false);
-     
-        
+        SetMapsActive(false); // <--- AÑADIR ESTA LÍNEA
+
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
         if (shinyPanel) shinyPanel.SetActive(false);
@@ -335,7 +335,7 @@ public class LevelManager : MonoBehaviour
         CleanUpScene();
 
         int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        ActivateMap(savedMap);
+        SetMapsActive(true);
 
         isGameActive = true;
         currentSessionInfected = 0;
@@ -423,6 +423,7 @@ public class LevelManager : MonoBehaviour
         int totalAntes = contagionCoins - monedasGanadasSesion;
         int totalFinal = totalAntes + monedasGanadasSesion;
         isGameActive = false;
+        SetMapsActive(false); // <--- AÑADIR ESTA LÍNEA
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
@@ -824,6 +825,42 @@ public class LevelManager : MonoBehaviour
         {
             // 4. Abrimos el círculo (Vuelve la imagen)
             transitionScript.OpenBlackScreen();
+        }
+    }
+
+    private void SetMapsActive(bool state)
+    {
+        // 1. Control de Mapas
+        if (mapList != null)
+        {
+            for (int i = 0; i < mapList.Length; i++)
+            {
+                if (mapList[i] != null)
+                {
+                    if (state)
+                    {
+                        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+                        mapList[i].SetActive(i == currentMap);
+                    }
+                    else
+                    {
+                        mapList[i].SetActive(false);
+                    }
+                }
+            }
+        }
+
+        // 2. Control del Jugador
+        if (virusPlayer != null) virusPlayer.SetActive(state);
+        if (virusMovementScript != null) virusMovementScript.enabled = state;
+
+        // 3. NUEVO: Limpieza de Personas y Corales si estamos desactivando el juego
+        if (state == false) // Si state es false, significa que salimos al menú o terminó el día
+        {
+            if (PopulationManager.instance != null)
+            {
+                PopulationManager.instance.ClearAllPersonas();
+            }
         }
     }
 
