@@ -496,25 +496,88 @@ public class LevelManager : MonoBehaviour
     public void SoftRestartRun()
     {
        
-        shinyPanel.gameObject.SetActive(false);
-        // 1. Si el panel está abierto y aún hay monedas por contar...
+
+        // 1. Si el panel de resultados tiene monedas pendientes, procesar animación de monedas
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
-            // Solo inicia la animación, no hace nada más.
             EndDayResultsPanel.instance.StartCoinTransfer(() => {
-                Debug.Log("Animación terminada. Pulsa otra vez para reiniciar.");
+                Debug.Log("Animación de monedas terminada.");
             });
-            return; // Salimos aquí para que el jugador tenga que pulsar de nuevo
+            return;
         }
 
-        // 2. Si el panel está abierto pero ya NO hay monedas (conteo terminado)...
+        // 2. Si ya no hay monedas o el panel no estaba, ejecutar el reinicio con transición
+        StartCoroutine(SoftRestartTransitionRoutine());
+    }
+
+    private IEnumerator SoftRestartTransitionRoutine()
+    {
+        // A. Inicio de la transición (Pantalla a negro)
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // Usar Hexágono o la forma que prefieras
+            transitionScript.CloseBlackScreen();
+          
+            yield return new WaitForSecondsRealtime(0.5f);
+           
+        }
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+        // B. Limpieza de UI
         if (EndDayResultsPanel.instance.panel.activeSelf)
         {
             EndDayResultsPanel.instance.panel.SetActive(false);
         }
+        if (gameUI) gameUI.SetActive(false);
 
-        // Ejecuta la lógica final
-        EjecutarSoftRestartLogica();
+        // C. Lógica de Reinicio (Extraída de EjecutarSoftRestartLogica)
+        Debug.Log("Soft Restart ejecutado bajo transición.");
+        monedasGanadasSesion = 0;
+        currentSessionInfected = 0;
+        currentTimer = gameDuration;
+
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
+        PlayerPrefs.Save();
+
+        ManualSetCycler cycler = Object.FindFirstObjectByType<ManualSetCycler>();
+        if (cycler != null) cycler.ResetCycler();
+
+        // Resetear Mapas
+        for (int i = 0; i < mapList.Length; i++)
+        {
+            if (mapList[i] != null)
+            {
+                mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].SetActive(i == 0);
+            }
+        }
+
+        // Resetear Salud de Planetas
+        PlanetCrontrollator[] todosLosPlanetas = Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (PlanetCrontrollator planet in todosLosPlanetas)
+        {
+            if (planet != null) planet.ResetHealthToInitial();
+        }
+
+        isGameActive = false;
+        CleanUpScene();
+
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.ClearAllPersonas();
+            PopulationManager.instance.SelectPrefab(0);
+        }
+
+        UpdateUI();
+
+        // D. Iniciar la nueva sesión (Aún en negro)
+        yield return new WaitForSecondsRealtime(0.1f);
+        StartSession();
+
+        // E. Fin de la transición (Volver a mostrar el juego)
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
     private void EjecutarSoftRestartLogica()
     {
