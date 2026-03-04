@@ -250,10 +250,7 @@ public class Movement : MonoBehaviour
                 {
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
                 }
-                else if (!hayImpactoFuerte)
-                {
-                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, false);
-                }
+               
 
                 if (Guardado.instance.carambolaSupremaActiva)
                 {

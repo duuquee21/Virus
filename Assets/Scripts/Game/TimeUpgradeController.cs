@@ -4,7 +4,7 @@ public class TimeUpgradeController : MonoBehaviour
 {
     public static TimeUpgradeController instance;
 
-    int[] timeValues = { 30, 40, 50, 60, 75, 90 };
+    float[] timeValues = { 10f, 12.5f, 15f, 17.5f, 20f, 22.5f };
 
     int currentLevel = 1;
 
