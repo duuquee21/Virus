@@ -29,7 +29,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+<<<<<<< HEAD
     - _Aspect: 1.776908
+=======
+    - _Aspect: 1.7777778
+>>>>>>> origin/arbolskills
     - _CenterX: 0.5
     - _CenterY: 0.5
     - _Radius: 1.5
