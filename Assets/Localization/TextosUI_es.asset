@@ -102,24 +102,12 @@ MonoBehaviour:
     m_Localized: SALIR
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294595
-    m_Localized: Columna B (Spanish)
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294596
     m_Localized: Coste
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294597
     m_Localized: ADN Shiny
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294599
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294600
@@ -294,10 +282,6 @@ MonoBehaviour:
     m_Localized: Rebote maximo entre figuras
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488930
-    m_Localized: hugui
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488931
     m_Localized: as
     m_Metadata:
@@ -398,10 +382,6 @@ MonoBehaviour:
     m_Localized: Capturar el pentagono un 30% mas rapido.
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488963
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488964
     m_Localized: Mejora captura del hexagono 10%
     m_Metadata:
@@ -470,20 +450,12 @@ MonoBehaviour:
     m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 75%"
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488981
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488982
     m_Localized: Aumento poblacion 15%
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488983
     m_Localized: Aumenta el maximo de poblacion simultanea en un 15%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488984
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488985
@@ -794,10 +766,6 @@ MonoBehaviour:
     m_Localized: Probabilidad de duplicar la figura al colisionar en 50%
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761489062
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489063
     m_Localized: "Da\xF1o emitido Hexagono 120%"
     m_Metadata:
@@ -838,10 +806,6 @@ MonoBehaviour:
     m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 200%"
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683209
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683210
     m_Localized: "Da\xF1o emitido Pentagono120%"
     m_Metadata:
@@ -880,10 +844,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289765683219
     m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 200%"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683220
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683221
@@ -1268,6 +1228,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289765683322
     m_Localized: wewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730165624832
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596352
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596353
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596354
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596355
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596356
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596357
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790656
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683283
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790657
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790658
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790659
+    m_Localized: 
     m_Metadata:
       m_Items: []
   references:

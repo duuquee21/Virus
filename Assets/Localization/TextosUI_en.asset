@@ -102,24 +102,12 @@ MonoBehaviour:
     m_Localized: EXIT
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294595
-    m_Localized: Columna C (English)
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294596
     m_Localized: Cost
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294597
     m_Localized: Shiny DNA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294599
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294600
@@ -270,10 +258,6 @@ MonoBehaviour:
     m_Localized: ','
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488920
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488921
     m_Localized: ' Basic Rebound Upgrade'
     m_Metadata:
@@ -296,10 +280,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289761488928
     m_Localized: Maximum rebounds between figures
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488930
-    m_Localized: iguhguyf
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488931
@@ -402,10 +382,6 @@ MonoBehaviour:
     m_Localized: Upgrades pentagon hunting by 30%
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488963
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488964
     m_Localized: Upgrades hexagon hunting by 10%
     m_Metadata:
@@ -474,20 +450,12 @@ MonoBehaviour:
     m_Localized: Reduces the time between people appearing by 75%
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488981
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488982
     m_Localized: Maximun population upgrade 15%
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488983
     m_Localized: Increase the maximum simultaneous population by 15%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488984
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488985
@@ -798,10 +766,6 @@ MonoBehaviour:
     m_Localized: 'Probability of doubling the figure upon collision: 50%'
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761489062
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489063
     m_Localized: Damage dealt Hexagon 120%
     m_Metadata:
@@ -842,10 +806,6 @@ MonoBehaviour:
     m_Localized: The damage caused by the hexagon to the area increases to 200%.
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683209
-    m_Localized: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683210
     m_Localized: Damage dealt Pentagon 120%
     m_Metadata:
@@ -884,10 +844,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289765683219
     m_Localized: The damage caused by the pentagon to the area increases to 200%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683220
-    m_Localized: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683221
@@ -1272,6 +1228,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289765683322
     m_Localized: ewrw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730165624832
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596352
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596353
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596354
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596355
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596356
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730186596357
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790656
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683283
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790657
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790658
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790659
+    m_Localized: 
     m_Metadata:
       m_Items: []
   references:

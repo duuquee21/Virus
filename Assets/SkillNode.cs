@@ -1,11 +1,9 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
-
+using UnityEngine.Localization.Settings; // <-- ESTA ES LA BUENA (No la de UnityEditor)
 
 [RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -29,20 +27,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         CapacityLevel2, CapacityLevel3, CapacityLevel4, CapacityLevel5, CapacityLevel6,
         TimeLevel2, TimeLevel3, TimeLevel4, TimeLevel5, TimeLevel6,
         InfectionSpeedLevel2, InfectionSpeedLevel3, InfectionSpeedLevel4, InfectionSpeedLevel5, InfectionSpeedLevel6,
-        // Habilidades de Duplicación por Choque
         DuplicateOnHit20, DuplicateOnHit40, DuplicateOnHit60, DuplicateOnHit80, DuplicateOnHit100,
-        // Referencias obsoletas
         AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7,
         MultiplyShinyX10, AddExtraShiny, ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50,
         ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, CarambolaNormal, CarambolaPro, CarambolaSuprema, DmgCirculo,
         DmgTriangulo,
         DmgCuadrado,
         DmgPentagono,
-        DmgHexagono, ReboteConCoral, // Sustituye ParedInfectiva por estos niveles
-        ParedInfectiva_Nivel1, // Solo Hexágonos
-        ParedInfectiva_Nivel2, // Hexágonos + Pentágonos
-        ParedInfectiva_Nivel3, // + Cuadrados
-        ParedInfectiva_Nivel4, // + Triángulos
+        DmgHexagono, ReboteConCoral,
+        ParedInfectiva_Nivel1,
+        ParedInfectiva_Nivel2,
+        ParedInfectiva_Nivel3,
+        ParedInfectiva_Nivel4,
         ParedInfectiva_Nivel5,
         DestroyCoralOnInfectedImpact,
         AddTime2Seconds,
@@ -66,39 +62,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         CoinsCuadradoPlus1,
         CoinsTrianguloPlus1,
         CoinsCirculoPlus1,
-        InfectSpeedPhase0_10,
-        InfectSpeedPhase0_20,
-        InfectSpeedPhase0_30,
-        InfectSpeedPhase0_40,
-        InfectSpeedPhase0_50,
-
-        InfectSpeedPhase1_10,
-        InfectSpeedPhase1_20,
-        InfectSpeedPhase1_30,
-        InfectSpeedPhase1_40,
-        InfectSpeedPhase1_50,
-
-        InfectSpeedPhase2_10,
-        InfectSpeedPhase2_20,
-        InfectSpeedPhase2_30,
-        InfectSpeedPhase2_40,
-        InfectSpeedPhase2_50,
-
-        InfectSpeedPhase3_10,
-        InfectSpeedPhase3_20,
-        InfectSpeedPhase3_30,
-        InfectSpeedPhase3_40,
-        InfectSpeedPhase3_50,
-
-        InfectSpeedPhase4_10,
-        InfectSpeedPhase4_20,
-        InfectSpeedPhase4_30,
-        InfectSpeedPhase4_40,
-        InfectSpeedPhase4_50
+        InfectSpeedPhase0_10, InfectSpeedPhase0_20, InfectSpeedPhase0_30, InfectSpeedPhase0_40, InfectSpeedPhase0_50,
+        InfectSpeedPhase1_10, InfectSpeedPhase1_20, InfectSpeedPhase1_30, InfectSpeedPhase1_40, InfectSpeedPhase1_50,
+        InfectSpeedPhase2_10, InfectSpeedPhase2_20, InfectSpeedPhase2_30, InfectSpeedPhase2_40, InfectSpeedPhase2_50,
+        InfectSpeedPhase3_10, InfectSpeedPhase3_20, InfectSpeedPhase3_30, InfectSpeedPhase3_40, InfectSpeedPhase3_50,
+        InfectSpeedPhase4_10, InfectSpeedPhase4_20, InfectSpeedPhase4_30, InfectSpeedPhase4_40, InfectSpeedPhase4_50
     }
+
     [Header("Save ID")]
     public string saveID;
-
 
     [Header("Balance Override (Pruebas)")]
     public bool useOverride = false;
@@ -113,7 +85,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public TextMeshProUGUI infoCost;
 
     [Header("Datos de Traducción (KEYS)")]
-    // CAMBIO 1: Ahora son Keys, no el texto final
     public string skillNameKey;
     [TextArea] public string descriptionKey;
 
@@ -136,14 +107,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip unlockSound;
+
     [Header("Configuración Inicial")]
     public bool isStartingNode = false;
 
     private bool unlocked = false;
 
-    // Para habilidades repetibles
     public int repeatLevel = 0;
-    public int maxRepeatLevel = 5; // puedes ajustarlo
+    public int maxRepeatLevel = 5;
     [Header("Límite especial tiempo extra")]
     public int maxTimeRepeatLevel = 10;
 
@@ -152,17 +123,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ((IsDamageSkill() || IsCoinSkill() || IsTimeSkill()) && repeatLevel > 0);
 
     void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
+
     void Start()
     {
         LoadNodeState();
         CheckIfShouldShow();
 
-        // NUEVO: Si el nodo ya está desbloqueado al empezar, avisamos a las líneas
-      
         if (infoPanel != null) infoPanel.SetActive(false);
 
-
-        // Diagnóstico rápido:
         if (requiredParentNodes != null)
         {
             foreach (var p in requiredParentNodes)
@@ -179,43 +147,29 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (string.IsNullOrEmpty(saveID)) return;
 
-        // -1 significa: "No existe dato guardado", es la primera vez que jugamos
         int estadoGuardado = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", -1);
 
         if (estadoGuardado == 1)
         {
-            // Si el guardado dice 1, es que YA lo compramos antes. Se queda comprado.
             unlocked = true;
         }
         else if (estadoGuardado == 0)
         {
-            // Si el guardado dice 0, es que jugamos y NO lo compramos. Se queda bloqueado.
             unlocked = false;
         }
-        else // estadoGuardado == -1 (Es una partida virgen)
+        else
         {
-            // Aquí es donde manda el checkbox del Inspector
             if (isStartingNode)
-            {
                 unlocked = true;
-                // Opcional: Guardamos ya que es nuestro para siempre
-                // SaveNodeState(); 
-            }
             else
-            {
                 unlocked = false;
-            }
         }
 
         repeatLevel = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
     }
 
-
-
-    // SUSTITUYE TU FUNCIÓN CheckIfShouldShow POR ESTA:
     public void CheckIfShouldShow()
     {
-        // 1️⃣ Si es repetible y está al máximo → visible pero gris
         if (((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel) ||
             (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel))
         {
@@ -224,7 +178,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 2️⃣ Si ya está desbloqueado → siempre visible
         if (IsUnlocked)
         {
             SetAppearance(true, 1f, true);
@@ -232,7 +185,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 3️⃣ Si es nodo inicial → siempre visible
         if (isStartingNode)
         {
             SetAppearance(true, 1f, true);
@@ -240,17 +192,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 4️⃣ Si no tiene padres → visible
         if (requiredParentNodes == null || requiredParentNodes.Length == 0)
         {
             SetAppearance(true, 1f, true);
             SetState(true, Color.white, false);
             return;
         }
-
-        // ----------------------------------------------------
-        // NUEVA LÓGICA: HIJO / NIETO
-        // ----------------------------------------------------
 
         bool isDirectChild = false;
         bool isGrandChild = false;
@@ -259,14 +206,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             if (parent == null) continue;
 
-            // 🔓 Padre desbloqueado → soy HIJO
             if (parent.IsUnlocked)
             {
                 isDirectChild = true;
                 break;
             }
 
-            // 👀 Padre bloqueado pero abuelo desbloqueado → soy NIETO
             if (parent.requiredParentNodes != null)
             {
                 foreach (var grandParent in parent.requiredParentNodes)
@@ -281,39 +226,29 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (isDirectChild)
         {
-            // HIJO → Visible y comprable
             SetAppearance(true, 1f, true);
             SetState(true, Color.white, false);
         }
         else if (isGrandChild)
         {
-            // NIETO → Visible pero bloqueado
             SetAppearance(true, 0.5f, false);
             SetState(false, Color.gray, true);
         }
         else
         {
-            // Muy profundo → oculto
             SetAppearance(false, 0f, false);
         }
     }
+
     void SetAppearance(bool isActive, float alpha, bool canClick)
     {
-        // En lugar de desactivar el GameObject, lo mantenemos activo pero invisible
-        // Esto permite que las líneas de SkillTreeLinesUI encuentren su posición
         if (canvasGroup != null)
         {
             canvasGroup.alpha = alpha;
             canvasGroup.blocksRaycasts = canClick;
             canvasGroup.interactable = canClick;
         }
-
-        // Solo usamos SetActive(false) si realmente queremos que el nodo NO exista 
-        // (por ejemplo, si ni siquiera debería estar en el árbol aún)
-        // Pero para nodos "bloqueados" que deben recibir una línea, isActive debe ser true.
     }
-
-   
 
     void SetState(bool isInteractable, Color color, bool showLock)
     {
@@ -322,24 +257,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (lockIcon != null) lockIcon.SetActive(showLock);
     }
 
-    // ---------------------------------------------------------
-    //  TRY UNLOCK (COMPLETO Y CORREGIDO)
-    // ---------------------------------------------------------
     public void TryUnlock()
     {
-        // 1. COMPROBACIONES DE SEGURIDAD
-        // Si ya está desbloqueada y no es repetible, no hacemos nada
         if (!IsDamageSkill() && !IsCoinSkill() && !IsTimeSkill() && unlocked) return;
 
-        // Si es repetible de Daño/Monedas y llegó al máximo, fuera
         if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
             return;
 
-        // Si es repetible de Tiempo y llegó al máximo, fuera
         if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
             return;
 
-        // 2. COMPROBACIÓN DE DINERO
         if (LevelManager.instance.ContagionCoins < CoinCost)
         {
             if (AudioManager.instance != null)
@@ -347,7 +274,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 3. ÉXITO: SONIDOS Y PAGO
         if (AudioManager.instance != null)
             AudioManager.instance.PlayBuyUpgrade();
 
@@ -356,22 +282,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         LevelManager.instance.ContagionCoins -= CoinCost;
 
-        // 4. ACTUALIZAR ESTADO (COMPRADO)
         if (IsDamageSkill() || IsTimeSkill() || IsCoinSkill())
             repeatLevel++;
         else
             unlocked = true;
 
-
-
-        // 5. GUARDAR Y APLICAR EFECTO
         ApplyEffect();
-        SaveNodeState(); // Guardamos inmediatamente para no perder datos
+        SaveNodeState();
 
-        // 6. ACTUALIZAR UI GLOBAL (Monedas)
         LevelManager.instance.UpdateUI();
 
-        // 7. EFECTOS VISUALES DEL BOTÓN
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null)
         {
@@ -379,24 +299,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             fx.SetPurchasedState(true);
         }
 
-        // ---------------------------------------------------------
-        // 8. EL PASO CLAVE: REFRESCAR TODO EL ÁRBOL
-        // Esto hace que los hijos se den cuenta de que el padre ya está comprado
         RefreshAllNodes();
-        // ---------------------------------------------------------
     }
 
-    // ---------------------------------------------------------
-    //  FUNCIÓN AUXILIAR PARA DESPERTAR A LOS HIJOS
-    // ---------------------------------------------------------
     void RefreshAllNodes()
     {
-        // Busca TODOS los nodos de la escena, incluso los que están apagados (true)
         SkillNode[] allNodes = FindObjectsOfType<SkillNode>(true);
 
         foreach (var node in allNodes)
         {
-            // Obliga a cada nodo a revisar si sus padres ya están comprados
             node.CheckIfShouldShow();
         }
     }
@@ -409,8 +320,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
         PlayerPrefs.Save();
     }
-
-
 
     void ApplyEffect()
     {
@@ -439,7 +348,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AssignRandomInitialUpgrade();
                 break;
 
-            // --- MULTIPLICADORES DE MONEDAS (Cada uno suma +1 al mult) ---
             case SkillEffectType.CoinsX2:
             case SkillEffectType.CoinsX3:
             case SkillEffectType.CoinsX4:
@@ -448,7 +356,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AddCoinMultiplier(1);
                 break;
 
-            // --- MONEDAS INICIALES (Cada uno suma su valor respectivo) ---
             case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); break;
             case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); break;
             case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); break;
@@ -456,31 +363,26 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break;
             case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break;
 
-            // --- SPAWN INTERVAL (Suman porcentajes) ---
             case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.20f); break;
             case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
             case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); break;
             case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
             case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); break;
 
-            // --- INCOME PASIVO ZONAS (Suma a la cantidad diaria) ---
             case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); break;
             case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); break;
             case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); break;
             case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); break;
             case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); break;
 
-            // --- MULTIPLICADORES DE RADIO (Suman al multiplicador base de 1.0) ---
             case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); break;
             case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break;
             case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break;
 
-            // --- POBLACIÓN Y OTROS (Siguen igual pero acumulando) ---
             case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(0.25f); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
 
-            // Niveles (controladores)
             case SkillEffectType.RadiusLevel2:
             case SkillEffectType.RadiusLevel3:
             case SkillEffectType.RadiusLevel4:
@@ -495,8 +397,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.SpeedLevel5:
                 SpeedUpgradeController.instance.UpgradeSpeed();
                 break;
-
-
 
             case SkillEffectType.TimeLevel2:
             case SkillEffectType.TimeLevel3:
@@ -514,15 +414,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed();
                 break;
 
-            // Multiplicadores de velocidad
             case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break;
             case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); break;
 
-            // Bonus velocidad infección global
             case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); break;
             case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); break;
 
-            // Bools / toggles
             case SkillEffectType.KeepUpgradesOnResetEffect:
                 Guardado.instance.keepUpgradesOnReset = true;
                 break;
@@ -531,19 +428,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.ActivateKeepZones();
                 break;
 
-            // Probabilidad duplicar
             case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); break;
             case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); break;
             case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); break;
             case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break;
             case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break;
 
-            // Carambolas (sin valores)
             case SkillEffectType.CarambolaNormal: Guardado.instance.ActivarCarambolaNormal(); break;
             case SkillEffectType.CarambolaPro: Guardado.instance.ActivarCarambolaPro(); break;
             case SkillEffectType.CarambolaSuprema: Guardado.instance.ActivarCarambolaSuprema(); break;
 
-            // Pared infectiva (niveles)
             case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
                 Guardado.instance.SetNivelParedInfectiva(GetInt(1));
@@ -569,7 +463,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.ReboteConCoral();
                 break;
 
-            // Daños extra (solo +1 en tu código; ahora editable con overrideInt)
             case SkillEffectType.DmgHexagono:
                 Guardado.instance.dañoExtraHexagono += GetInt(1);
                 Guardado.instance.SaveData();
@@ -591,39 +484,33 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
-            // Flags
             case SkillEffectType.DestroyCoralOnInfectedImpact:
                 Guardado.instance.destroyCoralOnInfectedImpact = true;
                 Guardado.instance.SaveData();
                 break;
 
-            // Tiempo extra base
             case SkillEffectType.AddTime2Seconds:
                 Guardado.instance.AddExtraBaseTime(GetFloat(2f));
                 break;
 
-         
             case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
             case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
             case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
             case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
             case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
 
-            // --- Probabilidad doble upgrade ---
             case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
             case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
             case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
             case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
             case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
 
-            // Prob spawn random fase
             case SkillEffectType.RandomSpawnAnyPhase5: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.05f)); break;
             case SkillEffectType.RandomSpawnAnyPhase10: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.10f)); break;
             case SkillEffectType.RandomSpawnAnyPhase15: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.15f)); break;
             case SkillEffectType.RandomSpawnAnyPhase20: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.20f)); break;
             case SkillEffectType.RandomSpawnAnyPhase25: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.25f)); break;
 
-            // Monedas extra por forma (+1 editable con overrideInt)
             case SkillEffectType.CoinsCirculoPlus1:
                 Guardado.instance.coinsExtraCirculo += GetInt(1);
                 Guardado.instance.SaveData();
@@ -645,29 +532,23 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
-            // Infect speed per phase (por defecto mantiene tu lógica exacta, pero puedes overrideIndex y overrideFloat)
-            // --- Fase 0 ---
             case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
 
-            // --- Fase 1 ---
             case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
 
-            // --- Fase 2 ---
             case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
-
-            // ... Repetir el mismo patrón para Fase 3 y 4
 
             case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
@@ -686,6 +567,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
         }
     }
+
     bool IsDamageSkill()
     {
         return effectType == SkillEffectType.DmgHexagono ||
@@ -694,6 +576,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.DmgTriangulo ||
                effectType == SkillEffectType.DmgCirculo;
     }
+
     bool IsTimeSkill()
     {
         return effectType == SkillEffectType.AddTime2Seconds;
@@ -708,18 +591,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.CoinsCirculoPlus1;
     }
 
-
     // --------------------------------------------------------------
-    // CAMBIO IMPORTANTE: AQUÍ CONECTAMOS CON LA TRADUCCIÓN
+    // MAGIA DE LA TRADUCCIÓN NATIVA (¡AHORA SÍ ESTÁ BIEN!)
     // --------------------------------------------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (SkillTooltip.instance != null)
         {
-            // CAMBIO 3: Pasamos las KEYS (skillNameKey y descriptionKey) y el RectTransform
+            // Busca la traducción en tu tabla TextosUI
+            string localizedName = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", skillNameKey);
+            string localizedDesc = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", descriptionKey);
+
+            // Si por algún motivo falta la traducción, mandamos la Key para no dejarlo en blanco
+            if (string.IsNullOrEmpty(localizedName)) localizedName = skillNameKey;
+            if (string.IsNullOrEmpty(localizedDesc)) localizedDesc = descriptionKey;
+
             SkillTooltip.instance.Show(
-                skillNameKey,
-                descriptionKey,
+                localizedName,
+                localizedDesc,
                 CoinCost,
                 GetComponent<RectTransform>()
             );
@@ -731,21 +620,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (SkillTooltip.instance != null)
             SkillTooltip.instance.Hide();
     }
+
     IEnumerator RebuildTree()
     {
         yield return null;
 
         var nodes = FindObjectsOfType<SkillNode>(true);
 
-        // 1️⃣ Cargar estados
         foreach (var node in nodes)
             node.LoadNodeState();
 
-        // 2️⃣ Apagar todos
         foreach (var node in nodes)
             node.gameObject.SetActive(false);
 
-        // 3️⃣ Evaluar TODOS los nodos
         foreach (var node in nodes)
             node.CheckIfShouldShow();
     }

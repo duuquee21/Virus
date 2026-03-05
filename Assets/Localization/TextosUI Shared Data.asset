@@ -99,24 +99,12 @@ MonoBehaviour:
     m_Key: monedas
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294595
-    m_Key: Columna A (Key)
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294596
     m_Key: txt_coste
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294597
     m_Key: txt_adn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294599
-    m_Key: MULTI MONEDAS
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294600
@@ -127,20 +115,12 @@ MonoBehaviour:
     m_Key: skill_coinsx2_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294602
     m_Key: skill_coinsx3_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294603
     m_Key: skill_coinsx3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294604
-    m_Key: New Entry
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294605
@@ -151,10 +131,6 @@ MonoBehaviour:
     m_Key: skill_coinsx4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294607
-    m_Key: New Entry 1
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294608
     m_Key: skill_coinsx5_tit
     m_Metadata:
@@ -163,20 +139,12 @@ MonoBehaviour:
     m_Key: skill_coinsx5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294610
-    m_Key: New Entry 2
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289757294611
     m_Key: skill_coinsx6_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294612
     m_Key: skill_coinsx6_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294613
-    m_Key: New Entry 3
     m_Metadata:
       m_Items: []
   - m_Id: 7126289757294614
@@ -191,20 +159,12 @@ MonoBehaviour:
     m_Key: skill_speed_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488896
     m_Key: skill_speed_tit2
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488897
     m_Key: skill_speed_desc2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488898
@@ -219,20 +179,12 @@ MonoBehaviour:
     m_Key: skill_time_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488901
     m_Key: skill_time2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488902
     m_Key: skill_time2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488903
@@ -243,20 +195,12 @@ MonoBehaviour:
     m_Key: skill_time3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488905
     m_Key: skill_time4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488906
     m_Key: skill_time4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488907
@@ -267,20 +211,12 @@ MonoBehaviour:
     m_Key: skill_time5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488909
     m_Key: skill_time6_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488910
     m_Key: skill_time6_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488911
@@ -291,10 +227,6 @@ MonoBehaviour:
     m_Key: skill_time7_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488913
     m_Key: skill_time8_tit
     m_Metadata:
@@ -303,20 +235,12 @@ MonoBehaviour:
     m_Key: skill_time8_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488913
     m_Key: skill_time8_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488914
     m_Key: skill_time8_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488915
@@ -327,10 +251,6 @@ MonoBehaviour:
     m_Key: skill_time9_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488917
     m_Key: skill_time10_tit
     m_Metadata:
@@ -339,16 +259,8 @@ MonoBehaviour:
     m_Key: skill_time10_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488919
     m_Key: MEJORA CARAMBOLA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488920
-    m_Key: New Entry 4
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488921
@@ -359,20 +271,12 @@ MonoBehaviour:
     m_Key: skill_rebound_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488923
-    m_Key: New Entry 5
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488924
     m_Key: skill_rebound2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488925
     m_Key: skill_rebound2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488926
-    m_Key: New Entry 6
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488927
@@ -383,12 +287,8 @@ MonoBehaviour:
     m_Key: skill_rebound3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488929
-    m_Key: New Entry 7
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488930
-    m_Key: "DA\xD1O AL TRIANGULO"
+  - m_Id: 7206730165624832
+    m_Key: DANO AL TRIANGULO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488931
@@ -403,20 +303,12 @@ MonoBehaviour:
     m_Key: skill_triangle_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488934
-    m_Key: New Entry 8
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488935
     m_Key: skill_triangle2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488936
     m_Key: skill_triangle2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488937
-    m_Key: New Entry 9
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488938
@@ -427,28 +319,12 @@ MonoBehaviour:
     m_Key: skill_triangle3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488940
-    m_Key: New Entry 10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488941
-    m_Key: New Entry 11
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488942
     m_Key: skill_square_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488943
     m_Key: skill_square_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488944
@@ -459,10 +335,6 @@ MonoBehaviour:
     m_Key: skill_square2_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488946
     m_Key: skill_square3_tit
     m_Metadata:
@@ -471,16 +343,8 @@ MonoBehaviour:
     m_Key: skill_square3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488948
-    m_Key: "DA\xD1O AL HEXAGONO"
+  - m_Id: 7206730186596352
+    m_Key: DANO AL HEXAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488949
@@ -491,20 +355,12 @@ MonoBehaviour:
     m_Key: skill_hexagon_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488951
     m_Key: skill_hexagon2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488952
     m_Key: skill_hexagon2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488953
-    m_Key: New Entry 12
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488954
@@ -515,16 +371,8 @@ MonoBehaviour:
     m_Key: skill_hexagon3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488956
-    m_Key: "DA\xD1O AL PENTAGONO"
+  - m_Id: 7206730186596353
+    m_Key: DANO AL PENTAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488957
@@ -535,20 +383,12 @@ MonoBehaviour:
     m_Key: skill_pentagon_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488959
     m_Key: skill_pentagon2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488960
     m_Key: skill_pentagon2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488961
@@ -559,12 +399,8 @@ MonoBehaviour:
     m_Key: skill_pentagon3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488963
-    m_Key: "DA\xD1O AL CIRCULO"
+  - m_Id: 7206730186596354
+    m_Key: DANO AL CIRCULO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488964
@@ -575,10 +411,6 @@ MonoBehaviour:
     m_Key: skill_circle_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488966
     m_Key: skill_circle2_tit
     m_Metadata:
@@ -587,20 +419,12 @@ MonoBehaviour:
     m_Key: skill_circle2_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488968
     m_Key: skill_circle3_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488969
     m_Key: skill_circle3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488970
@@ -615,20 +439,12 @@ MonoBehaviour:
     m_Key: skill_spawn_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488973
     m_Key: skill_spawn2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488974
     m_Key: skill_spawn2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488975
@@ -639,20 +455,12 @@ MonoBehaviour:
     m_Key: skill_spawn3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488977
     m_Key: skill_spawn4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488978
     m_Key: skill_spawn4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488979
@@ -663,12 +471,8 @@ MonoBehaviour:
     m_Key: skill_spawn5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488981
-    m_Key: "AUMENTO POBLACI\xD3N"
+  - m_Id: 7206730186596355
+    m_Key: AUMENTO POBLACION
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488982
@@ -679,10 +483,6 @@ MonoBehaviour:
     m_Key: skill_population_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488984
-    m_Key: ',,'
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488985
     m_Key: skill_population2_tit
     m_Metadata:
@@ -691,20 +491,12 @@ MonoBehaviour:
     m_Key: skill_population2_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488987
     m_Key: skill_population3_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488988
     m_Key: skill_population3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488989
@@ -719,20 +511,12 @@ MonoBehaviour:
     m_Key: skill_radius_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488992
     m_Key: skill_radius2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488993
     m_Key: skill_radius2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488994
@@ -743,20 +527,12 @@ MonoBehaviour:
     m_Key: skill_radius3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761488996
     m_Key: skill_radius4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488997
     m_Key: skill_radius4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488998
@@ -771,24 +547,12 @@ MonoBehaviour:
     m_Key: skill_infectionSpeed_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489001
     m_Key: skill_infectionSpeedMulti2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489002
     m_Key: skill_infectionSpeed2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489003
@@ -803,20 +567,12 @@ MonoBehaviour:
     m_Key: skill_radioControl_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489006
     m_Key: skill_radioControl2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489007
     m_Key: skill_radioControl2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489008
@@ -827,10 +583,6 @@ MonoBehaviour:
     m_Key: skill_radioControl3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489010
     m_Key: skill_radioControl4_tit
     m_Metadata:
@@ -839,20 +591,12 @@ MonoBehaviour:
     m_Key: skill_radioControl4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489012
     m_Key: skill_radioControl5_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489013
     m_Key: skill_radioControl5_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489014
@@ -867,20 +611,12 @@ MonoBehaviour:
     m_Key: skill_speedLevel_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489017
     m_Key: skill_speedLevel2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489018
     m_Key: skill_speedLevel2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489019
@@ -891,24 +627,12 @@ MonoBehaviour:
     m_Key: skill_speedLevel3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489021
     m_Key: skill_speedLevel4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489022
     m_Key: skill_speedLevel4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489023
@@ -923,20 +647,12 @@ MonoBehaviour:
     m_Key: skill_timeProbability_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489026
     m_Key: skill_timeProbability2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489027
     m_Key: skill_timeProbability2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489028
@@ -947,20 +663,12 @@ MonoBehaviour:
     m_Key: skill_timeProbability3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489030
     m_Key: skill_timeProbability4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489031
     m_Key: skill_timeProbability4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489032
@@ -971,20 +679,8 @@ MonoBehaviour:
     m_Key: skill_timeProbability5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489034
     m_Key: MEJORA VELOCIDAD DE INFECCION
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489035
@@ -993,10 +689,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7126289761489000
     m_Key: skill_infectionSpeed_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489036
@@ -1007,20 +699,12 @@ MonoBehaviour:
     m_Key: skill_infectionSpeed2_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489037
     m_Key: skill_infectionSpeed3_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489038
     m_Key: skill_infectionSpeed3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761488984
-    m_Key: ',,'
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489039
@@ -1031,10 +715,6 @@ MonoBehaviour:
     m_Key: skill_infectionSpeed4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489035
     m_Key: skill_infectionSpeed_tit
     m_Metadata:
@@ -1043,16 +723,8 @@ MonoBehaviour:
     m_Key: skill_infectionSpeed_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489041
     m_Key: MEJORA DUPLICAR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489042
@@ -1063,20 +735,12 @@ MonoBehaviour:
     m_Key: skill_hitduplication_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489044
     m_Key: skill_hitduplication2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489045
     m_Key: skill_hitduplication2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489046
@@ -1087,20 +751,12 @@ MonoBehaviour:
     m_Key: skill_hitduplication3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489048
     m_Key: skill_hitduplication4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489049
     m_Key: skill_hitduplication4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489050
@@ -1111,20 +767,12 @@ MonoBehaviour:
     m_Key: skill_hitduplication5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489052
     m_Key: skill_hitduplication6_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489053
     m_Key: skill_hitduplication6_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489054
@@ -1135,20 +783,12 @@ MonoBehaviour:
     m_Key: skill_hitduplication7_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489056
     m_Key: skill_hitduplication8_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489057
     m_Key: skill_hitduplication8_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489058
@@ -1159,10 +799,6 @@ MonoBehaviour:
     m_Key: skill_hitduplication9_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289761489060
     m_Key: skill_hitduplication10_tit
     m_Metadata:
@@ -1171,16 +807,8 @@ MonoBehaviour:
     m_Key: skill_hitduplication10_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761489062
-    m_Key: "DA\xD1O EMITIDO HEXAGONO"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
+  - m_Id: 7206730186596356
+    m_Key: DANO EMITIDO HEXAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761489063
@@ -1191,20 +819,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageHex_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683201
     m_Key: skill_zoneDamageHex2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683202
     m_Key: skill_zoneDamageHex2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683203
@@ -1215,20 +835,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageHex3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683205
     m_Key: skill_zoneDamageHex4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683206
     m_Key: skill_zoneDamageHex4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683207
@@ -1239,16 +851,8 @@ MonoBehaviour:
     m_Key: skill_zoneDamageHex5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683209
-    m_Key: "DA\xD1O EMITIDO PENTAGONO"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
+  - m_Id: 7206730186596357
+    m_Key: DANO EMITIDO PENTAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683210
@@ -1259,20 +863,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamagePen_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683212
     m_Key: skill_zoneDamagePen2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683213
     m_Key: skill_zoneDamagePen2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683214
@@ -1283,20 +879,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamagePen3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683216
     m_Key: skill_zoneDamagePen4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683217
     m_Key: skill_zoneDamagePen4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683218
@@ -1307,20 +895,8 @@ MonoBehaviour:
     m_Key: skill_zoneDamagePen5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683220
-    m_Key: "DA\xD1O EMITIDO CUADRADO"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
+  - m_Id: 7206730190790656
+    m_Key: DANO EMITIDO CUADRADO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683221
@@ -1331,20 +907,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageSqr_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683223
     m_Key: skill_zoneDamageSqr2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683224
     m_Key: skill_zoneDamageSqr2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683225
@@ -1355,20 +923,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageSqr3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683227
     m_Key: skill_zoneDamageSqr4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683228
     m_Key: skill_zoneDamageSqr4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683229
@@ -1379,20 +939,8 @@ MonoBehaviour:
     m_Key: skill_zoneDamageSqr5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761489062
-    m_Key: "DA\xD1O EMITIDO HEXAGONO"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
+  - m_Id: 7206730186596356
+    m_Key: DANO EMITIDO HEXAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683231
@@ -1403,20 +951,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageTri_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683233
     m_Key: skill_zoneDamageTri2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683234
     m_Key: skill_zoneDamageTri2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683235
@@ -1427,20 +967,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageTri3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683237
     m_Key: skill_zoneDamageTri4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683238
     m_Key: skill_zoneDamageTri4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683239
@@ -1451,16 +983,8 @@ MonoBehaviour:
     m_Key: skill_zoneDamageTri5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289761489062
-    m_Key: "DA\xD1O EMITIDO HEXAGONO"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
+  - m_Id: 7206730186596356
+    m_Key: DANO EMITIDO HEXAGONO
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683241
@@ -1471,20 +995,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageCir_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683243
     m_Key: skill_zoneDamageCir2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683244
     m_Key: skill_zoneDamageCir2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683245
@@ -1495,10 +1011,6 @@ MonoBehaviour:
     m_Key: skill_zoneDamageCir3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683247
     m_Key: skill_zoneDamageCir4_tit
     m_Metadata:
@@ -1507,20 +1019,12 @@ MonoBehaviour:
     m_Key: skill_zoneDamageCir4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683249
     m_Key: skill_zoneDamageCir5_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683250
     m_Key: skill_zoneDamageCir5_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683251
@@ -1535,10 +1039,6 @@ MonoBehaviour:
     m_Key: skill_coralRebound_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683254
     m_Key: MEJORA SALTA FASES
     m_Metadata:
@@ -1551,20 +1051,12 @@ MonoBehaviour:
     m_Key: skill_skipStages_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683257
     m_Key: skill_skipStages2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683258
     m_Key: skill_skipStages2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683259
@@ -1575,10 +1067,6 @@ MonoBehaviour:
     m_Key: skill_skipStages3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683261
     m_Key: skill_skipStages4_tit
     m_Metadata:
@@ -1587,16 +1075,8 @@ MonoBehaviour:
     m_Key: skill_skipStages4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683263
     m_Key: MEJORA CAPTURA EXTRA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683264
@@ -1607,20 +1087,12 @@ MonoBehaviour:
     m_Key: skill_extraCapture_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683266
     m_Key: skill_extraCapture2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683267
     m_Key: skill_extraCapture2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683268
@@ -1631,10 +1103,6 @@ MonoBehaviour:
     m_Key: skill_extraCapture3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683270
     m_Key: skill_extraCapture4_tit
     m_Metadata:
@@ -1643,16 +1111,8 @@ MonoBehaviour:
     m_Key: skill_extraCapture4_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683272
     m_Key: MEJORA FIGURA DORADA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683273
@@ -1663,20 +1123,12 @@ MonoBehaviour:
     m_Key: skill_goldFigure_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683275
     m_Key: skill_goldFigure2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683276
     m_Key: skill_goldFigure2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683277
@@ -1687,20 +1139,12 @@ MonoBehaviour:
     m_Key: skill_goldFigure3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683279
     m_Key: skill_goldFigure4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683280
     m_Key: skill_goldFigure4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683281
@@ -1711,16 +1155,8 @@ MonoBehaviour:
     m_Key: skill_goldFigure5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683283
     m_Key: MULTIPLICADOR DORADA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683284
@@ -1731,20 +1167,12 @@ MonoBehaviour:
     m_Key: skill_multiGold_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683286
     m_Key: skill_multiGold2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683287
     m_Key: skill_multiGold2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683288
@@ -1755,20 +1183,12 @@ MonoBehaviour:
     m_Key: skill_multiGold3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683290
     m_Key: skill_multiGold4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683291
     m_Key: skill_multiGold4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683292
-    m_Key: New Entry 13
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683293
@@ -1779,16 +1199,8 @@ MonoBehaviour:
     m_Key: skill_multiGold5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289761488984
-    m_Key: ',,'
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683295
     m_Key: FIGURAS INICIAL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683296
@@ -1799,20 +1211,12 @@ MonoBehaviour:
     m_Key: skill_initialFigures_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683298
     m_Key: skill_initialFigures2_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683299
     m_Key: skill_initialFigures2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683300
@@ -1823,20 +1227,12 @@ MonoBehaviour:
     m_Key: skill_initialFigures3_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683302
     m_Key: skill_initialFigures4_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683303
     m_Key: skill_initialFigures4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683304
@@ -1847,20 +1243,12 @@ MonoBehaviour:
     m_Key: skill_initialFigures5_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683306
     m_Key: skill_initialFigures6_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683307
     m_Key: skill_initialFigures6_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683308
@@ -1871,20 +1259,12 @@ MonoBehaviour:
     m_Key: skill_initialFigures7_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289757294598
-    m_Key: ','
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683310
     m_Key: skill_initialFigures8_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683311
     m_Key: skill_initialFigures8_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683312
-    m_Key: New Entry 14
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683313
@@ -1895,20 +1275,12 @@ MonoBehaviour:
     m_Key: skill_initialFigures9_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683315
-    m_Key: New Entry 15
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683316
     m_Key: skill_initialFigures10_tit
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683317
     m_Key: skill_initialFigures10_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7126289765683318
-    m_Key: New Entry 16
     m_Metadata:
       m_Items: []
   - m_Id: 7126289765683319
@@ -1919,12 +1291,20 @@ MonoBehaviour:
     m_Key: skill_root_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683321
-    m_Key: New Entry 17
-    m_Metadata:
-      m_Items: []
   - m_Id: 7126289765683322
     m_Key: skill_jsbfsb_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790657
+    m_Key: MONEDASHEXAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790658
+    m_Key: skill_HexCoins_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206730190790659
+    m_Key: skill_HexCoins_desc
     m_Metadata:
       m_Items: []
   m_Metadata:
