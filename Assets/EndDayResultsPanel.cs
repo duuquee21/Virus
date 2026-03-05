@@ -47,7 +47,8 @@ public class EndDayResultsPanel : MonoBehaviour
     // Monedas base por fase que usa el panel (si tu juego usa otra tabla, cámbiala aquí)
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
 
-    private string nombreTablaLocalization = "MisTextos";
+    // CAMBIO 1: Apuntamos a la nueva tabla
+    private string nombreTablaLocalization = "TextosUI";
 
     [Header("Animación")]
     private bool isTransferring = false;
@@ -75,9 +76,12 @@ public class EndDayResultsPanel : MonoBehaviour
         panel.SetActive(false);
     }
 
+    // CAMBIO 2: Mejoramos la función para que no falle si falta una clave
     string GetTexto(string clave)
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+        var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
+        if (string.IsNullOrEmpty(op)) return clave; // Si no encuentra la traducción, muestra la clave
+        return op;
     }
 
     // -------------------------
@@ -246,9 +250,9 @@ public class EndDayResultsPanel : MonoBehaviour
 
         choqueEvolutionText.text = tituloChoque;
         if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
-       
+
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
-      
+
 
         // ===================== CARAMBOLA =====================
         int totalC = 0;
@@ -287,10 +291,10 @@ public class EndDayResultsPanel : MonoBehaviour
 
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
-       
+
 
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
- 
+
 
 
         // ===================== RESUMEN GENERAL =====================
