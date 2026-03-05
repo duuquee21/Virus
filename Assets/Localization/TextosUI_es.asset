@@ -86,6 +86,1190 @@ MonoBehaviour:
     m_Localized: monedas
     m_Metadata:
       m_Items: []
+  - m_Id: 7126289748905984
+    m_Localized: HOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294592
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294593
+    m_Localized: AJUSTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294594
+    m_Localized: SALIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294595
+    m_Localized: Columna B (Spanish)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294596
+    m_Localized: Coste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294597
+    m_Localized: ADN Shiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294598
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294599
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294600
+    m_Localized: Monedas x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294601
+    m_Localized: Multiplica todas las monedas ganadas por 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294602
+    m_Localized: Monedas x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294603
+    m_Localized: Multiplica todas las monedas ganadas por 3.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294605
+    m_Localized: Monedas x4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294606
+    m_Localized: Multiplica todas las monedas ganadas por 4.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294608
+    m_Localized: Monedas x5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294609
+    m_Localized: Multiplica todas las monedas ganadas por 5.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294611
+    m_Localized: skill_coinsx6_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294612
+    m_Localized: skill_coinsx6_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294614
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294615
+    m_Localized: Velocidad Inicial x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289757294616
+    m_Localized: Aumenta la velocidad de movimiento un 25%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488896
+    m_Localized: Velocidad Inicial x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488897
+    m_Localized: Aumenta la velocidad de movimiento un 50%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488898
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488899
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488900
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488901
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488902
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488903
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488904
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488905
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488906
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488907
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488908
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488909
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488910
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488911
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488912
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488913
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488914
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488915
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488916
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488917
+    m_Localized: Tiempo +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488918
+    m_Localized: Aumenta el tiempo en +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488919
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488921
+    m_Localized: Mejora Basica Carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488922
+    m_Localized: Rebote basico entre figuras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488924
+    m_Localized: Mejora Avanzada Carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488925
+    m_Localized: Rebote avanzado entre figuras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488927
+    m_Localized: Mejora Maxima Carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488928
+    m_Localized: Rebote maximo entre figuras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488930
+    m_Localized: hugui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488931
+    m_Localized: as
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488932
+    m_Localized: Mejora captura de triangulo 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488933
+    m_Localized: Capturar el triangulo un 10% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488935
+    m_Localized: Mejora captura de triangulo 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488936
+    m_Localized: Capturar el triangulo un 20% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488938
+    m_Localized: Mejora captura de triangulo 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488939
+    m_Localized: Capturar el triangulo un 30% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488942
+    m_Localized: Mejora captura del cuadrado 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488943
+    m_Localized: Capturar el cuadrado un 10% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488944
+    m_Localized: Mejora captura del cuadrado 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488945
+    m_Localized: Capturar el cuadrado un 20% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488946
+    m_Localized: Mejora captura de triangulo 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488947
+    m_Localized: Capturar el triangulo un 30% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488949
+    m_Localized: Mejora captura del hexagono 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488950
+    m_Localized: Capturar el hexagono un 10% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488951
+    m_Localized: Mejora captura del hexagono 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488952
+    m_Localized: Capturar el hexagono un 20% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488954
+    m_Localized: Mejora captura del hexagono 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488955
+    m_Localized: Capturar el hexagono un 30% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488957
+    m_Localized: Mejora captura del pentagono 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488958
+    m_Localized: Capturar el pentagono un 10% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488959
+    m_Localized: Mejora captura del pentagono 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488960
+    m_Localized: Capturar el pentagono un 20% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488961
+    m_Localized: Mejora captura del pentagono 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488962
+    m_Localized: Capturar el pentagono un 30% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488963
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488964
+    m_Localized: Mejora captura del hexagono 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488965
+    m_Localized: Capturar el hexagono un 10% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488966
+    m_Localized: Mejora captura del hexagono 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488967
+    m_Localized: Capturar el hexagono un 20% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488968
+    m_Localized: Mejora captura del circulo 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488969
+    m_Localized: Capturar el circulo un 30% mas rapido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488970
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488971
+    m_Localized: Mejora intervalo de spawn 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488972
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488973
+    m_Localized: Mejora intervalo de spawn 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488974
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488975
+    m_Localized: Mejora intervalo de spawn 45%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488976
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 45%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488977
+    m_Localized: Mejora intervalo de spawn 60%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488978
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 60%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488979
+    m_Localized: Mejora intervalo de spawn 75%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488980
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 75%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488981
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488982
+    m_Localized: Aumento poblacion 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488983
+    m_Localized: Aumenta el maximo de poblacion simultanea en un 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488984
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488985
+    m_Localized: Aumento poblacion 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488986
+    m_Localized: Aumenta el maximo de poblacion simultanea en un 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488987
+    m_Localized: Aumento poblacion 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488988
+    m_Localized: Aumenta el maximo de poblacion simultanea en un 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488989
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488990
+    m_Localized: Mejora radio x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488991
+    m_Localized: Multiplica el radio de ataque x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488992
+    m_Localized: Mejora radio x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488993
+    m_Localized: Multiplica el radio de ataque x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488994
+    m_Localized: Mejora radio x1.75
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488995
+    m_Localized: Multiplica el radio de ataque x1.75
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488996
+    m_Localized: Mejora radio x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488997
+    m_Localized: Multiplica el radio de ataque x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488998
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761488999
+    m_Localized: Mejora velocidad de infeccion x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489000
+    m_Localized: Mejora el nivel de infeccion al 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489001
+    m_Localized: Mejora velocidad de infeccion x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489002
+    m_Localized: Mejora el nivel de infeccion al 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489003
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489004
+    m_Localized: Nivel radio 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489005
+    m_Localized: Mejora el nivel de controlador de radio un 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489006
+    m_Localized: Nivel radio 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489007
+    m_Localized: Mejora el nivel de controlador de radio un 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489008
+    m_Localized: Nivel radio 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489009
+    m_Localized: Mejora el nivel de controlador de radio un 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489010
+    m_Localized: Nivel radio 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489011
+    m_Localized: Mejora el nivel de controlador de radio un 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489012
+    m_Localized: Nivel radio 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489013
+    m_Localized: Mejora el nivel de controlador de radio un 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489014
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489015
+    m_Localized: Nivel velocidad 125%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489016
+    m_Localized: Estabalece el nivel de la velocidad en 125%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489017
+    m_Localized: Nivel velocidad 150%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489018
+    m_Localized: Estabalece el nivel de la velocidad en 150%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489019
+    m_Localized: Nivel velocidad 175%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489020
+    m_Localized: Estabalece el nivel de la velocidad en 175%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489021
+    m_Localized: Nivel velocidad 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489022
+    m_Localized: Estabalece el nivel de la velocidad en 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489023
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489024
+    m_Localized: Probabilidad tiempo 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489025
+    m_Localized: Probabilidad de aumentar el tiempo 1s del 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489026
+    m_Localized: Probabilidad tiempo 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489027
+    m_Localized: Probabilidad de aumentar el tiempo 1s del 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489028
+    m_Localized: Probabilidad tiempo 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489029
+    m_Localized: Probabilidad de aumentar el tiempo 1s del 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489030
+    m_Localized: Probabilidad tiempo 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489031
+    m_Localized: Probabilidad de aumentar el tiempo 1s del 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489032
+    m_Localized: Probabilidad tiempo 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489033
+    m_Localized: Probabilidad de aumentar el tiempo 1s del 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489034
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489035
+    m_Localized: Nivel velocidad de infeccion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489036
+    m_Localized: Nivel velocidad de infeccion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489037
+    m_Localized: Nivel velocidad de infeccion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489038
+    m_Localized: Mejora el nivel de infeccion al 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489039
+    m_Localized: Nivel velocidad de infeccion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489040
+    m_Localized: Mejora el nivel de infeccion al 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489041
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489042
+    m_Localized: Duplicar en hit 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489043
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489044
+    m_Localized: Duplicar en hit 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489045
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489046
+    m_Localized: Duplicar en hit 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489047
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489048
+    m_Localized: Duplicar en hit 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489049
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489050
+    m_Localized: Duplicar en hit 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489051
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489052
+    m_Localized: Duplicar en hit 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489053
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489054
+    m_Localized: Duplicar en hit 35%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489055
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 35%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489056
+    m_Localized: Duplicar en hit 40 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489057
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 40%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489058
+    m_Localized: Duplicar en hit 45%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489059
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 45%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489060
+    m_Localized: Duplicar en hit 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489061
+    m_Localized: Probabilidad de duplicar la figura al colisionar en 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489062
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289761489063
+    m_Localized: "Da\xF1o emitido Hexagono 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683200
+    m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683201
+    m_Localized: "Da\xF1o emitido Hexagono 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683202
+    m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683203
+    m_Localized: "Da\xF1o emitido Hexagono 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683204
+    m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683205
+    m_Localized: "Da\xF1o emitido Hexagono 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683206
+    m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683207
+    m_Localized: "Da\xF1o emitido Hexagono 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683208
+    m_Localized: "El da\xF1o que hace el hexagono a la zona aumaenta al 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683209
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683210
+    m_Localized: "Da\xF1o emitido Pentagono120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683211
+    m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683212
+    m_Localized: "Da\xF1o emitido Pentagono 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683213
+    m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683214
+    m_Localized: "Da\xF1o emitido Pentagono 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683215
+    m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683216
+    m_Localized: "Da\xF1o emitido Pentagono 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683217
+    m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683218
+    m_Localized: "Da\xF1o emitido Pentagono 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683219
+    m_Localized: "El da\xF1o que hace el pentagono a la zona aumaenta al 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683220
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683221
+    m_Localized: "Da\xF1o emitido Cuadrado 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683222
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683223
+    m_Localized: "Da\xF1o emitido Cuadrado 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683224
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683225
+    m_Localized: "Da\xF1o emitido cuadrado 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683226
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683227
+    m_Localized: "Da\xF1o emitido cuadrado 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683228
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683229
+    m_Localized: "Da\xF1o emitido cuadrado 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683230
+    m_Localized: "El da\xF1o que hace el cuadradoa la zona aumaenta al 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683231
+    m_Localized: "Da\xF1o emitido Triangulo 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683232
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683233
+    m_Localized: "Da\xF1o emitido Triangulo 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683234
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683235
+    m_Localized: "Da\xF1o emitido Triangulo 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683236
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683237
+    m_Localized: "Da\xF1o emitido Triangulo 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683238
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683239
+    m_Localized: "Da\xF1o emitido Triangulo 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683240
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683241
+    m_Localized: "Da\xF1o emitido Circulo 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683242
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 120%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683243
+    m_Localized: "Da\xF1o emitido Circulo 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683244
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 140%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683245
+    m_Localized: "Da\xF1o emitido Circulo 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683246
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 160%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683247
+    m_Localized: "Da\xF1o emitido Circulo 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683248
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 180%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683249
+    m_Localized: "Da\xF1o emitido Circulo 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683250
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 200%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683251
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683252
+    m_Localized: Rebote con Coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683253
+    m_Localized: Activa rebote especial al impactar con superficie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683254
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683255
+    m_Localized: Salta Fases 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683256
+    m_Localized: Probabilidad de saltarse una fase en 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683257
+    m_Localized: Salta Fases 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683258
+    m_Localized: Probabilidad de saltarse una fase en 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683259
+    m_Localized: Salta Fases 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683260
+    m_Localized: Probabilidad de saltarse una fase en 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683261
+    m_Localized: Salta Fases 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683262
+    m_Localized: Probabilidad de saltarse una fase en 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683263
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683264
+    m_Localized: Captura Extra 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683265
+    m_Localized: Probabilidad de capturar una figura extra en 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683266
+    m_Localized: Captura Extra 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683267
+    m_Localized: Probabilidad de capturar una figura extra en 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683268
+    m_Localized: Captura Extra 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683269
+    m_Localized: Probabilidad de capturar una figura extra en 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683270
+    m_Localized: Captura Extra 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683271
+    m_Localized: Probabilidad de capturar una figura extra en 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683272
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683273
+    m_Localized: Figura Dorada 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683274
+    m_Localized: Probabilidad de generar una figura dorada en 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683275
+    m_Localized: Figura Dorada 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683276
+    m_Localized: Probabilidad de generar una figura dorada en 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683277
+    m_Localized: Figura Dorada 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683278
+    m_Localized: Probabilidad de generar una figura dorada en 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683279
+    m_Localized: Figura Dorada 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683280
+    m_Localized: Probabilidad de generar una figura dorada en 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683281
+    m_Localized: Figura Dorada 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683282
+    m_Localized: Probabilidad de generar una figura dorada en 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683284
+    m_Localized: Multi Dorada x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683285
+    m_Localized: Multiplica la cantidad que da la figura dorada en x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683286
+    m_Localized: Multi Dorada x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683287
+    m_Localized: Multiplica la cantidad que da la figura dorada en x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683288
+    m_Localized: Multi Dorada x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683289
+    m_Localized: Multiplica la cantidad que da la figura dorada en x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683290
+    m_Localized: Multi Dorada x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683291
+    m_Localized: Multiplica la cantidad que da la figura dorada en x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683293
+    m_Localized: Multi Dorada x4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683294
+    m_Localized: Multiplica la cantidad que da la figura dorada en x
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683295
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683296
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683297
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683298
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683299
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683300
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683301
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683302
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683303
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683304
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683305
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683306
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683307
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683308
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683309
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683310
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683311
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683313
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683314
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683316
+    m_Localized: 'Numero Figuras Inicial +10 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683317
+    m_Localized: Numero de figuras al inicio de la run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683319
+    m_Localized: Mejora Aleatoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683320
+    m_Localized: Te otorga una mejora aleatoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7126289765683322
+    m_Localized: wewer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

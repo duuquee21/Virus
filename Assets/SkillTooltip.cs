@@ -20,11 +20,8 @@ public class SkillTooltip : MonoBehaviour
     public float swingFrequency = 10f;  // Velocidad de la oscilación
     public float dampingSpeed = 4f;     // Qué tan rápido se detiene (más alto = se para antes)
 
-    private float currentAmplitude = 0f;
-    private float timer = 0f;
-    private bool isAnimating = false;
-
-    private string nombreTabla = "MisTextos";
+    // 1. ¡Actualizado al nombre de tu nueva tabla!
+    private string nombreTabla = "TextosUI";
 
     void Awake()
     {
@@ -37,16 +34,32 @@ public class SkillTooltip : MonoBehaviour
         Hide();
     }
 
-    // ... (Tu método GetTexto se mantiene igual) ...
-
-    public void Show(string titleKey, string descriptionKey, int cost, RectTransform target)
+    // Función auxiliar para traducir solo el Coste y el ADN
+    string GetTexto(string clave)
     {
-        // --- CONFIGURACIÓN DE TEXTO ---
-        titleText.text = GetTexto(titleKey);
-        descriptionText.text = GetTexto(descriptionKey);
-        costText.text = $"{GetTexto("txt_coste")}: {cost} {GetTexto("txt_adn")}";
+        var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
+        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave para que veas el error
+        return op;
+    }
 
-        // --- POSICIONAMIENTO ---
+    // 2. Modificado para recibir los textos ya traducidos desde SkillNode
+    public void Show(string translatedTitle, string translatedDescription, int cost, RectTransform target)
+    {
+        // Como el título y descripción ya vienen en el idioma correcto, los ponemos directamente
+        titleText.text = translatedTitle;
+        descriptionText.text = translatedDescription;
+
+        // Traducimos solo las palabras de la parte inferior (Coste, ADN) usando tu Excel
+        string textoCoste = GetTexto("txt_coste");
+        string textoAdn = GetTexto("txt_adn");
+        costText.text = $"{textoCoste}: {cost} {textoAdn}";
+
+        // Aplicamos tamaños
+        titleText.fontSize = titleFontSize;
+        descriptionText.fontSize = descriptionFontSize;
+        costText.fontSize = costFontSize;
+
+        // Posicionamiento
         if (rect != null && target != null)
         {
             rect.position = target.position;
