@@ -1226,10 +1226,6 @@ MonoBehaviour:
     m_Localized: Te otorga una mejora aleatoria
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683322
-    m_Localized: wewer
-    m_Metadata:
-      m_Items: []
   - m_Id: 7206730165624832
     m_Localized: 
     m_Metadata:
@@ -1266,15 +1262,75 @@ MonoBehaviour:
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790657
+  - m_Id: 7276220891582481
+    m_Localized: "Las figuras al rebotar en la pared pueden saltar \nuna fase"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582480
+    m_Localized: Pared Infectiva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229696
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790658
+  - m_Id: 7276220891582478
+    m_Localized: Hace que sea mas facil capturar el circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582477
+    m_Localized: Dano Circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229697
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790659
+  - m_Id: 7276220891582475
+    m_Localized: Hace que sea mas facil capturar el triangulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582474
+    m_Localized: Dano Triangulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229698
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582472
+    m_Localized: Hace que sea mas facil capturar el cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582471
+    m_Localized: Dano Cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229699
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582469
+    m_Localized: Hace que sea mas facil capturar el pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582468
+    m_Localized: Dano Pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229700
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582466
+    m_Localized: Hace que sea mas facil capturar el hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582465
+    m_Localized: Dano Hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229701
     m_Localized: 
     m_Metadata:
       m_Items: []

@@ -1291,20 +1291,76 @@ MonoBehaviour:
     m_Key: skill_root_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683322
-    m_Key: skill_jsbfsb_desc
+  - m_Id: 7279650083229696
+    m_Key: MONEDAS HEXAGONO
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790657
-    m_Key: MONEDASHEXAGONO
+  - m_Id: 7276220891582465
+    m_Key: skill_monedasHexagon_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790658
-    m_Key: skill_HexCoins_tit
+  - m_Id: 7276220891582466
+    m_Key: skill_monedasHexagon_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790659
-    m_Key: skill_HexCoins_desc
+  - m_Id: 7279650083229697
+    m_Key: MONEDAS PENTAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582468
+    m_Key: skill_monedasPentagon_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582469
+    m_Key: skill_monedasPentagon_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229698
+    m_Key: MONEDAS CUADRADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582471
+    m_Key: skill_monedasSquare_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582472
+    m_Key: skill_monedasSquare_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229699
+    m_Key: MONEDAS TRIANGULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582474
+    m_Key: skill_monedasTriangle_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582475
+    m_Key: skill_monedasTriangle_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229700
+    m_Key: MONEDAS CIRCULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582477
+    m_Key: skill_monedasCirculo_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582478
+    m_Key: skill_monedasCirculo_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229701
+    m_Key: PARED INFECTICA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582480
+    m_Key: skill_paredInfec_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582481
+    m_Key: skill_paredInfec_desc
     m_Metadata:
       m_Items: []
   m_Metadata:
