@@ -21,8 +21,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-es
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bbda8066544bda74e888b0ce3bf9342d
-    m_Address: MisTextos_es
+  - m_GUID: e4f7d11782a064a49b25f5bb00b4732d
+    m_Address: TablaExc_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f23ff1b767c37a14db00ea32c5b345c2
+    m_Address: TableExc_es
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es
