@@ -7,6 +7,7 @@ public class PlanetCrontrollator : MonoBehaviour
 {
     [Header("UI")]
     public Image healthBar;
+    public Image healthBarOutLine;
     public bool nivelFinal = false;
 
     [Header("Anti-Spam Impactos")]
@@ -167,6 +168,7 @@ public class PlanetCrontrollator : MonoBehaviour
     {
         if (healthBar != null)
             healthBar.fillAmount = currentHealth / maxHealth;
+            healthBarOutLine.fillAmount = (currentHealth / maxHealth) + 0.0012f;
     }
 
     public void ResetHealthToInitial()
