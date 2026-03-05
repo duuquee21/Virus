@@ -42,7 +42,10 @@ public class PlanetCrontrollator : MonoBehaviour
         MapData map = MapSequenceManager.instance.GetCurrentMap();
 
         maxHealth = map.maxHealth;
-        currentHealth = map.currentHealth;
+
+        // Asegurar salud al máximo SIEMPRE
+        currentHealth = maxHealth;
+        map.currentHealth = maxHealth;
 
         ActualizarUI();
 
@@ -167,8 +170,13 @@ public class PlanetCrontrollator : MonoBehaviour
     void ActualizarUI()
     {
         if (healthBar != null)
-            healthBar.fillAmount = currentHealth / maxHealth;
-            healthBarOutLine.fillAmount = (currentHealth / maxHealth) + 0.0012f;
+        {
+            float fill = currentHealth / maxHealth;
+            healthBar.fillAmount = fill;
+
+            if (healthBarOutLine != null)
+                healthBarOutLine.fillAmount = fill + 0.0012f;
+        }
     }
 
     public void ResetHealthToInitial()
