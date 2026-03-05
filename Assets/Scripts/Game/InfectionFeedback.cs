@@ -187,8 +187,8 @@ public class InfectionFeedback : MonoBehaviour
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
-        if (!GameSettings.instance.shakeEnabled)
-            yield break;
+       // if (!GameSettings.instance.shakeEnabled)
+          //  yield break;
 
         Vector3 originalPos = objTransform.localPosition;
         float elapsed = 0.0f;
