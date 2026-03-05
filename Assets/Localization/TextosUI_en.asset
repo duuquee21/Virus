@@ -1226,10 +1226,6 @@ MonoBehaviour:
     m_Localized: Get a Random Upgrade
     m_Metadata:
       m_Items: []
-  - m_Id: 7126289765683322
-    m_Localized: ewrw
-    m_Metadata:
-      m_Items: []
   - m_Id: 7206730165624832
     m_Localized: 
     m_Metadata:
@@ -1266,15 +1262,75 @@ MonoBehaviour:
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790657
+  - m_Id: 7276220891582481
+    m_Localized: The figures can skip a level by bouncing off the wall.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582480
+    m_Localized: Infectious Wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229696
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790658
+  - m_Id: 7276220891582478
+    m_Localized: It makes it easier to capture the circule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582477
+    m_Localized: Damage Circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229697
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 7206730190790659
+  - m_Id: 7276220891582475
+    m_Localized: It makes it easier to capture the triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582474
+    m_Localized: Damage Triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229698
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582472
+    m_Localized: It makes it easier to capture the square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582471
+    m_Localized: Damage Square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229699
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582469
+    m_Localized: It makes it easier to capture the pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582468
+    m_Localized: Damage Pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229700
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582466
+    m_Localized: It makes it easier to capture the hexagon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7276220891582465
+    m_Localized: Damage Hexagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7279650083229701
     m_Localized: 
     m_Metadata:
       m_Items: []
