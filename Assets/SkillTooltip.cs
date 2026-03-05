@@ -19,6 +19,12 @@ public class SkillTooltip : MonoBehaviour
     public float initialAmplitude = 15f; // Fuerza del balanceo inicial (más "gordo")
     public float swingFrequency = 10f;  // Velocidad de la oscilación
     public float dampingSpeed = 4f;     // Qué tan rápido se detiene (más alto = se para antes)
+    private float currentAmplitude = 0f;
+    private float timer = 0f;
+    private bool isAnimating = false;
+
+
+
 
     // 1. ¡Actualizado al nombre de tu nueva tabla!
     private string nombreTabla = "TextosUI";
@@ -54,10 +60,6 @@ public class SkillTooltip : MonoBehaviour
         string textoAdn = GetTexto("txt_adn");
         costText.text = $"{textoCoste}: {cost} {textoAdn}";
 
-        // Aplicamos tamaños
-        titleText.fontSize = titleFontSize;
-        descriptionText.fontSize = descriptionFontSize;
-        costText.fontSize = costFontSize;
 
         // Posicionamiento
         if (rect != null && target != null)
@@ -107,9 +109,5 @@ public class SkillTooltip : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    string GetTexto(string clave)
-    {
-        var texto = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
-        return string.IsNullOrEmpty(texto) ? clave : texto;
-    }
+ 
 }
