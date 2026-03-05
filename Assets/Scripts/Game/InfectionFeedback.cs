@@ -187,6 +187,9 @@ public class InfectionFeedback : MonoBehaviour
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
+        if (!GameSettings.instance.shakeEnabled)
+            yield break;
+
         Vector3 originalPos = objTransform.localPosition;
         float elapsed = 0.0f;
 
@@ -196,9 +199,11 @@ public class InfectionFeedback : MonoBehaviour
             float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
 
             objTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+
             elapsed += Time.deltaTime;
             yield return null;
         }
+
         objTransform.localPosition = originalPos;
     }
 
