@@ -15,14 +15,20 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: fdcab648c825e71468a6c08654f2ac93
   m_SerializeEntries:
+  - m_GUID: 2834ebbbe98fe3648adcbe877f6e3731
+    m_Address: TableExc_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2c9c22779c693c940a9f24d10a8fb64f
     m_Address: TextosUI_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2a5b05819ade9e45a8a781ed4526286
-    m_Address: MisTextos_en
+  - m_GUID: 5f947d933ae490a46a5fd8854f838806
+    m_Address: TablaExc_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

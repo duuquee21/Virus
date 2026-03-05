@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.Localization.Settings; // <--- NECESARIO
+using UnityEngine.Localization.Settings;
 
 public class SkillTooltip : MonoBehaviour
 {
@@ -19,8 +19,8 @@ public class SkillTooltip : MonoBehaviour
     public float descriptionFontSize = 22f;
     public float costFontSize = 24f;
 
-    // Nombre de tu tabla en Unity
-    private string nombreTabla = "MisTextos";
+    // 1. ¡Actualizado al nombre de tu nueva tabla!
+    private string nombreTabla = "TextosUI";
 
     void Awake()
     {
@@ -33,34 +33,32 @@ public class SkillTooltip : MonoBehaviour
         Hide();
     }
 
-    // --- FUNCIÓN AUXILIAR PARA TRADUCIR ---
-    // (Esta función estaba mezclada dentro de Show, la sacamos fuera para que funcione bien)
+    // Función auxiliar para traducir solo el Coste y el ADN
     string GetTexto(string clave)
     {
         var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
-        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave
+        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave para que veas el error
         return op;
     }
 
-    // --- FUNCIÓN SHOW CORREGIDA ---
-    // Acepta las Keys y el RectTransform del botón
-    public void Show(string titleKey, string descriptionKey, int cost, RectTransform target)
+    // 2. Modificado para recibir los textos ya traducidos desde SkillNode
+    public void Show(string translatedTitle, string translatedDescription, int cost, RectTransform target)
     {
-        // 1. TRADUCCIÓN (Usamos la función auxiliar)
-        titleText.text = GetTexto(titleKey);
-        descriptionText.text = GetTexto(descriptionKey);
+        // Como el título y descripción ya vienen en el idioma correcto, los ponemos directamente
+        titleText.text = translatedTitle;
+        descriptionText.text = translatedDescription;
 
-        // Traducimos el coste (Asegúrate de tener "txt_coste" y "txt_adn" en el Excel)
+        // Traducimos solo las palabras de la parte inferior (Coste, ADN) usando tu Excel
         string textoCoste = GetTexto("txt_coste");
         string textoAdn = GetTexto("txt_adn");
         costText.text = $"{textoCoste}: {cost} {textoAdn}";
 
-        // 2. APLICAR TAMAÑOS (Tu código original)
+        // Aplicamos tamaños
         titleText.fontSize = titleFontSize;
         descriptionText.fontSize = descriptionFontSize;
         costText.fontSize = costFontSize;
 
-        // 3. POSICIONAMIENTO (Tu código original)
+        // Posicionamiento
         if (rect != null && target != null)
         {
             rect.position = target.position;

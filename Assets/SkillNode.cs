@@ -3,12 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
+using UnityEngine.Localization.Settings; // Librería oficial de Localización
 
 [RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public enum SkillEffectType {
-        // ... (Mantén tu enum actual igual)
+    public enum SkillEffectType
+    {
         None, RandomInitialUpgrade, CoinsX2, CoinsX3, CoinsX4, CoinsX5, CoinsX6,
         StartWith50Coins, StartWith100Coins, StartWith500Coins, StartWith2500Coins, StartWith25000Coins, StartWith50000Coins,
         ReduceSpawnInterval20, ReduceSpawnInterval40, ReduceSpawnInterval60, ReduceSpawnInterval80, ReduceSpawnInterval100,
@@ -16,10 +17,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         MultiplyRadius125, MultiplyRadius150, MultiplyRadius200, MultiplySpeed125, MultiplySpeed150, InfectSpeed50, InfectSpeed100,
         KeepUpgradesOnResetEffect, KeepZonesOnReset, RadiusLevel2, RadiusLevel3, RadiusLevel4, RadiusLevel5, RadiusLevel6,
         SpeedLevel2, SpeedLevel3, SpeedLevel4, SpeedLevel5, CapacityLevel2, CapacityLevel3, CapacityLevel4, CapacityLevel5, CapacityLevel6,
-        TimeLevel2, TimeLevel3, TimeLevel4, TimeLevel5, TimeLevel6, InfectionSpeedLevel2, InfectionSpeedLevel3, InfectionSpeedLevel4, 
+        TimeLevel2, TimeLevel3, TimeLevel4, TimeLevel5, TimeLevel6, InfectionSpeedLevel2, InfectionSpeedLevel3, InfectionSpeedLevel4,
         InfectionSpeedLevel5, InfectionSpeedLevel6, DuplicateOnHit20, DuplicateOnHit40, DuplicateOnHit60, DuplicateOnHit80, DuplicateOnHit100,
-        AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7, MultiplyShinyX10, AddExtraShiny, 
-        ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50, ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny, 
+        AddDays5, AddDays10, IncreaseShinyValue1, IncreaseShinyValue3, MultiplyShinyX5, MultiplyShinyX7, MultiplyShinyX10, AddExtraShiny,
+        ShinyPassivePerZone, GuaranteedShinyEffect, ShinyCaptureSpeed50, ShinyCaptureSpeed100, DoubleShinyEffect, ExtraShiny,
         CarambolaNormal, CarambolaPro, CarambolaSuprema, DmgCirculo, DmgTriangulo, DmgCuadrado, DmgPentagono, DmgHexagono, ReboteConCoral,
         ParedInfectiva_Nivel1, ParedInfectiva_Nivel2, ParedInfectiva_Nivel3, ParedInfectiva_Nivel4, ParedInfectiva_Nivel5,
         DestroyCoralOnInfectedImpact, AddTime2Seconds, AddTimeOnPhaseChance5, AddTimeOnPhaseChance10, AddTimeOnPhaseChance15,
@@ -45,7 +46,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public int CoinCost = 1;
 
     [Header("Ramas (Padres)")]
-    // He eliminado nextNodes. Ahora solo nos importan los padres.
     public SkillNode[] requiredParentNodes;
 
     [Header("Efecto")]
@@ -78,10 +78,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         LoadNodeState();
         CheckIfShouldShow();
-
-        // Hemos eliminado la llamada a lines.ShowFrom() 
-        // porque el nuevo SkillTreeLinesUI detecta el cambio automáticamente
-
         if (infoPanel != null) infoPanel.SetActive(false);
     }
 
@@ -99,7 +95,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CheckIfShouldShow()
     {
-        // 1. Si ya está al máximo nivel (repetibles)
         if (((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel) ||
             (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel))
         {
@@ -108,7 +103,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 2. Si ya está comprado (repetible o normal)
         if (IsUnlocked)
         {
             SetAppearance(true, 1f, true);
@@ -117,7 +111,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 3. Nodos iniciales siempre se muestran
         if (requiredParentNodes == null || requiredParentNodes.Length == 0)
         {
             SetAppearance(true, 1f, true);
@@ -125,28 +118,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // 4. Lógica Multipadre (Si UNO está desbloqueado, este nodo es visible y comprable)
         bool atLeastOneParentUnlocked = false;
-
         foreach (var parent in requiredParentNodes)
         {
             if (parent != null && parent.IsUnlocked)
             {
                 atLeastOneParentUnlocked = true;
-                break; // Con uno basta
+                break;
             }
         }
 
         if (atLeastOneParentUnlocked)
         {
-            // El nodo es visible y se puede comprar
             SetAppearance(true, 1f, true);
-            SetState(true, Color.white, false); 
+            SetState(true, Color.white, false);
             if (lockIcon != null) lockIcon.SetActive(false);
         }
         else
         {
-            // El nodo permanece oculto hasta que un padre se desbloquee
             SetAppearance(false, 0f, false);
         }
     }
@@ -164,8 +153,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void UpdateLinesVisuals()
     {
         SkillTreeLinesUI lines = Object.FindFirstObjectByType<SkillTreeLinesUI>();
-        if (lines != null && IsUnlocked) 
+        if (lines != null && IsUnlocked)
         {
+            // Código visual de líneas
         }
     }
 
@@ -188,7 +178,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        // Éxito
         if (AudioManager.instance != null) AudioManager.instance.PlayBuyUpgrade();
         if (audioSource != null && unlockSound != null) audioSource.PlayOneShot(unlockSound);
 
@@ -204,7 +193,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null) { fx.PlayClickFeedback(); fx.SetPurchasedState(true); }
 
-        // Actualizamos todo el árbol para que los hijos detecten el cambio
         RefreshAllNodes();
     }
 
@@ -225,22 +213,31 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         PlayerPrefs.Save();
     }
 
-    // ... (Mantén toda tu función ApplyEffect, IsDamageSkill, IsCoinSkill, etc. igual que antes)
-    // He omitido el cuerpo de ApplyEffect para acortar la respuesta, pero no lo borres de tu script.
-
-    void ApplyEffect() 
+    void ApplyEffect()
     {
-        // Pega aquí tu switch(effectType) original...
+        // Tu lógica de efectos (switch) iría aquí
     }
 
     bool IsDamageSkill() => effectType == SkillEffectType.DmgHexagono || effectType == SkillEffectType.DmgPentagono || effectType == SkillEffectType.DmgCuadrado || effectType == SkillEffectType.DmgTriangulo || effectType == SkillEffectType.DmgCirculo;
     bool IsTimeSkill() => effectType == SkillEffectType.AddTime2Seconds;
     bool IsCoinSkill() => effectType == SkillEffectType.CoinsHexagonoPlus1 || effectType == SkillEffectType.CoinsPentagonoPlus1 || effectType == SkillEffectType.CoinsCuadradoPlus1 || effectType == SkillEffectType.CoinsTrianguloPlus1 || effectType == SkillEffectType.CoinsCirculoPlus1;
 
+    // --- MAGIA DE LA TRADUCCIÓN NATIVA ---
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (SkillTooltip.instance != null)
-            SkillTooltip.instance.Show(skillNameKey, descriptionKey, CoinCost, GetComponent<RectTransform>());
+        {
+            // Busca la traducción en tu tabla TextosUI
+            string localizedName = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", skillNameKey);
+            string localizedDesc = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", descriptionKey);
+
+            // Evita que el tooltip se quede vacío si te falta alguna key en la tabla
+            if (string.IsNullOrEmpty(localizedName)) localizedName = skillNameKey;
+            if (string.IsNullOrEmpty(localizedDesc)) localizedDesc = descriptionKey;
+
+            // Envía los textos ya traducidos al Tooltip
+            SkillTooltip.instance.Show(localizedName, localizedDesc, CoinCost, GetComponent<RectTransform>());
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
