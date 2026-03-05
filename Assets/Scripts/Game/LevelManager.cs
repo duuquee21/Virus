@@ -82,6 +82,9 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = PlayerPrefs.GetInt("FPSLimit", 120);
+
         float volumenGuardado = PlayerPrefs.GetFloat("VolumenGlobal", 1f);
         AudioListener.volume = volumenGuardado;
 
@@ -90,11 +93,6 @@ public class LevelManager : MonoBehaviour
 
         ForceHardReset();
         ShowMainMenu();
-
-        foreach (GameObject mapa in mapList)
-        {
-            if (mapa != null) mapa.transform.rotation = Quaternion.identity;
-        }
     }
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
