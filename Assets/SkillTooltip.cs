@@ -32,11 +32,7 @@ public class SkillTooltip : MonoBehaviour
     void Awake()
     {
         instance = this;
-        if (rect != null)
-        {
-            rect.localScale = Vector3.one;
-            rect.rotation = Quaternion.identity;
-        }
+       
         Hide();
     }
 
@@ -51,24 +47,24 @@ public class SkillTooltip : MonoBehaviour
     // 2. Modificado para recibir los textos ya traducidos desde SkillNode
     public void Show(string translatedTitle, string translatedDescription, int cost, RectTransform target)
     {
-        // Como el título y descripción ya vienen en el idioma correcto, los ponemos directamente
+        gameObject.SetActive(true); // Activar antes de configurar
+    transform.SetAsLastSibling();
+    
+   
+
         titleText.text = translatedTitle;
         descriptionText.text = translatedDescription;
 
-        // Traducimos solo las palabras de la parte inferior (Coste, ADN) usando tu Excel
         string textoCoste = GetTexto("txt_coste");
         string textoAdn = GetTexto("txt_adn");
         costText.text = $"{textoCoste}: {cost} {textoAdn}";
 
-
-        // Posicionamiento
         if (rect != null && target != null)
         {
             rect.position = target.position;
             rect.anchoredPosition += offset;
         }
 
-        // --- DISPARAR ANIMACIÓN ---
         gameObject.SetActive(true);
         StartSwingAnimation();
     }
