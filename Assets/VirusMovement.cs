@@ -48,7 +48,7 @@ public class VirusMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Velocidad actual en Update: " + currentFinalSpeed);
+      
         // 1. Verificamos si existe el manager y si NO es jugable
         if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
         {

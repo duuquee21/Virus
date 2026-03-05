@@ -331,52 +331,74 @@ public class EndDayResultsPanel : MonoBehaviour
         int inicialPartida = monedasTempPartida;
         int inicialTotales = monedasTempTotales;
 
+        // Duración basada en la cantidad, pero con límites sanos
+        float duration = Mathf.Clamp(totalAMover * 0.01f, 0.8f, 3.5f);
         float elapsed = 0f;
-        float duration = Mathf.Clamp(totalAMover * 0.00005f + 1.0f, 1.2f, 5.0f);
-        float lastSoundTime = 0f;
 
-        float factorRiqueza = Mathf.Clamp01(totalAMover / 500f);
+        // CONTROL MUSICAL
+        float soundInterval = 0.08f; // Tiempo mínimo entre sonidos (ritmo)
+        float lastSoundTime = -1f;
+        int notasTocadas = 0;
 
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
-            float curvedT = t * t * t * (t * (6f * t - 15f) + 10f);
 
-            int movido = Mathf.RoundToInt(curvedT * totalAMover);
-            movido = Mathf.Min(movido, totalAMover);
+            // Curva de progresión
+            float curvedT = t * (2 - t);
+            int actualMovido = Mathf.RoundToInt(curvedT * totalAMover);
 
-            monedasTempPartida = inicialPartida - movido;
-            monedasTempTotales = inicialTotales + movido;
-            ActualizarTextosMonedas();
-
-            float intensity = Mathf.Sin(t * Mathf.PI);
-            float pulse = intensity * (maxScale - 1.0f) * (0.5f + factorRiqueza * 0.5f);
-            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
-            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, intensity * factorRiqueza);
-
-            float minInterval = Mathf.Lerp(0.2f, 0.05f, factorRiqueza);
-            float maxInterval = Mathf.Lerp(0.4f, 0.15f, factorRiqueza);
-            float currentTickSpeed = Mathf.Lerp(maxInterval, minInterval, intensity);
-
-            if (elapsed - lastSoundTime > currentTickSpeed)
+            // --- LÓGICA DE SATISFACCIÓN MUSICAL ---
+            // Solo suena si ha pasado el intervalo y si realmente hay monedas nuevas que mostrar
+            if (elapsed - lastSoundTime >= soundInterval && actualMovido > (inicialPartida - monedasTempPartida))
             {
                 if (audioSource != null && tickSound != null)
                 {
-                    audioSource.pitch = 0.8f + (factorRiqueza * 0.4f) + (intensity * (0.4f + factorRiqueza * 0.4f));
-                    audioSource.PlayOneShot(tickSound, soundVolume);
+                    // Pitch musical: Sube en semitonos (1.059 es la raíz doceava de 2)
+                    // Esto hace que suene como una escala musical real en lugar de un motor acelerando
+                    float step = notasTocadas % 12; // Reinicia la octava cada 12 notas
+                    audioSource.pitch = Mathf.Pow(1.059f, step) * 0.9f;
+
+                    // Un pequeño toque de variación de volumen según el progreso
+                    float dynamicVolume = soundVolume * (0.8f + (t * 0.2f));
+                    audioSource.PlayOneShot(tickSound, dynamicVolume);
+
+                    lastSoundTime = elapsed;
+                    notasTocadas++;
+
+                    // Aceleramos el ritmo sutilmente a medida que avanza
+                    soundInterval = Mathf.Max(0.04f, soundInterval * 0.98f);
                 }
 
+                // Partículas sincronizadas con el pulso musical
                 if (coinParticles != null)
                 {
-                    int count = Mathf.Max(1, Mathf.RoundToInt(maxParticlesPerFlash * intensity * factorRiqueza));
-                    coinParticles.Emit(count);
+                    // Emitimos un "chorro" dependiendo de la cantidad total
+                    int burst = totalAMover > 50 ? 3 : 1;
+                    coinParticles.Emit(burst);
                 }
-
-                lastSoundTime = elapsed;
             }
 
+            // Actualización visual de textos
+            monedasTempPartida = inicialPartida - actualMovido;
+            monedasTempTotales = inicialTotales + actualMovido;
+            ActualizarTextosMonedas();
+
+            // Feedback visual en el texto (pulso rítmico)
+            float pulse = Mathf.Sin(t * Mathf.PI) * (maxScale - 1.0f);
+            monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
+            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, t);
+
             yield return null;
+        }
+
+        // --- CIERRE FINAL ---
+        // Sonido final de confirmación (un poco más grave y fuerte)
+        if (audioSource != null && tickSound != null)
+        {
+            audioSource.pitch = 1.2f;
+            audioSource.PlayOneShot(tickSound, soundVolume * 1.2f);
         }
 
         monedasTempPartida = 0;

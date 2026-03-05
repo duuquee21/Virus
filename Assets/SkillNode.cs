@@ -1,8 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
 using System.Collections;
+using TMPro;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(CanvasGroup))]
@@ -600,19 +602,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AddExtraBaseTime(GetFloat(2f));
                 break;
 
-            // Prob de añadir tiempo al subir fase
-            case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.05f)); break;
-            case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.10f)); break;
-            case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.15f)); break;
-            case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.20f)); break;
-            case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.SetAddTimeOnPhaseChance(GetFloat(0.25f)); break;
+         
+            case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
+            case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
+            case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
+            case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
+            case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
 
-            // Prob doble upgrade
-            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.05f)); break;
-            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.10f)); break;
-            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.15f)); break;
-            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.20f)); break;
-            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.SetDoubleUpgradeChance(GetFloat(0.25f)); break;
+            // --- Probabilidad doble upgrade ---
+            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
+            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
+            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
+            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
+            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
 
             // Prob spawn random fase
             case SkillEffectType.RandomSpawnAnyPhase5: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.05f)); break;
@@ -644,35 +646,40 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
 
             // Infect speed per phase (por defecto mantiene tu lógica exacta, pero puedes overrideIndex y overrideFloat)
-            case SkillEffectType.InfectSpeedPhase0_10: SetInfectSpeedPerPhase(0, 1.1f); break;
-            case SkillEffectType.InfectSpeedPhase0_20: SetInfectSpeedPerPhase(0, 1.2f); break;
-            case SkillEffectType.InfectSpeedPhase0_30: SetInfectSpeedPerPhase(0, 1.3f); break;
-            case SkillEffectType.InfectSpeedPhase0_40: SetInfectSpeedPerPhase(0, 1.4f); break;
-            case SkillEffectType.InfectSpeedPhase0_50: SetInfectSpeedPerPhase(0, 1.5f); break;
+            // --- Fase 0 ---
+            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase1_10: SetInfectSpeedPerPhase(1, 1.1f); break;
-            case SkillEffectType.InfectSpeedPhase1_20: SetInfectSpeedPerPhase(1, 1.2f); break;
-            case SkillEffectType.InfectSpeedPhase1_30: SetInfectSpeedPerPhase(1, 1.3f); break;
-            case SkillEffectType.InfectSpeedPhase1_40: SetInfectSpeedPerPhase(1, 1.4f); break;
-            case SkillEffectType.InfectSpeedPhase1_50: SetInfectSpeedPerPhase(1, 1.5f); break;
+            // --- Fase 1 ---
+            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase2_10: SetInfectSpeedPerPhase(2, 1.1f); break;
-            case SkillEffectType.InfectSpeedPhase2_20: SetInfectSpeedPerPhase(2, 1.2f); break;
-            case SkillEffectType.InfectSpeedPhase2_30: SetInfectSpeedPerPhase(2, 1.3f); break;
-            case SkillEffectType.InfectSpeedPhase2_40: SetInfectSpeedPerPhase(2, 1.4f); break;
-            case SkillEffectType.InfectSpeedPhase2_50: SetInfectSpeedPerPhase(2, 1.5f); break;
+            // --- Fase 2 ---
+            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase3_10: SetInfectSpeedPerPhase(3, 1.1f); break;
-            case SkillEffectType.InfectSpeedPhase3_20: SetInfectSpeedPerPhase(3, 1.2f); break;
-            case SkillEffectType.InfectSpeedPhase3_30: SetInfectSpeedPerPhase(3, 1.3f); break;
-            case SkillEffectType.InfectSpeedPhase3_40: SetInfectSpeedPerPhase(3, 1.4f); break;
-            case SkillEffectType.InfectSpeedPhase3_50: SetInfectSpeedPerPhase(3, 1.5f); break;
+            // ... Repetir el mismo patrón para Fase 3 y 4
 
-            case SkillEffectType.InfectSpeedPhase4_10: SetInfectSpeedPerPhase(4, 1.1f); break;
-            case SkillEffectType.InfectSpeedPhase4_20: SetInfectSpeedPerPhase(4, 1.2f); break;
-            case SkillEffectType.InfectSpeedPhase4_30: SetInfectSpeedPerPhase(4, 1.3f); break;
-            case SkillEffectType.InfectSpeedPhase4_40: SetInfectSpeedPerPhase(4, 1.4f); break;
-            case SkillEffectType.InfectSpeedPhase4_50: SetInfectSpeedPerPhase(4, 1.5f); break;
+            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+
+            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
 
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");

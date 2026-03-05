@@ -252,6 +252,38 @@ public class Guardado : MonoBehaviour
     public void ActivarCarambolaPro() { carambolaProActiva = true; SaveData(); }
     public void ActivarCarambolaSuprema() { carambolaSupremaActiva = true; SaveData(); }
     public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
+
+    // Añade esto a Guardado.cs
+    public void AddInfectSpeedPerPhase(int phaseIndex, float extraMultiplier)
+    {
+        if (phaseIndex >= 0 && phaseIndex < infectSpeedPerPhase.Length)
+        {
+            // Sumamos el extra al multiplicador actual de esa fase
+            // Ejemplo: 1.0f + 0.1f = 1.1f
+            infectSpeedPerPhase[phaseIndex] += extraMultiplier;
+            SaveData();
+            Debug.Log($"Fase {phaseIndex} actualizada. Nuevo Multiplicador: {infectSpeedPerPhase[phaseIndex]}");
+        }
+    }
+    // --- NUEVOS MÉTODOS ACUMULATIVOS ---
+
+    public void AddAddTimeOnPhaseChance(float extra)
+    {
+        addTimeOnPhaseChance = Mathf.Clamp01(addTimeOnPhaseChance + extra);
+        SaveData();
+    }
+
+    public void AddDoubleUpgradeChance(float extra)
+    {
+        doubleUpgradeChance = Mathf.Clamp01(doubleUpgradeChance + extra);
+        SaveData();
+    }
+
+    public void AddRandomSpawnPhaseChance(float extra)
+    {
+        randomSpawnPhaseChance = Mathf.Clamp01(randomSpawnPhaseChance + extra);
+        SaveData();
+    }
     public void SetRandomSpawnPhaseChance(float chance)
     {
         randomSpawnPhaseChance = Mathf.Clamp01(chance);
