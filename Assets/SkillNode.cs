@@ -578,6 +578,202 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                effectType == SkillEffectType.CoinsCirculoPlus1;
     }
 
+    string GetPreviewValues()
+    {
+        if (Guardado.instance == null) return "";
+
+        Guardado g = Guardado.instance;
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        float baseTime = 10f + g.extraBaseTime;
+
+        switch (effectType)
+        {
+            // ========================
+            // TIEMPO
+            // ========================
+
+            case SkillEffectType.AddTime2Seconds:
+                sb.AppendLine($"Tiempo: {baseTime:F0}s → {baseTime + 2:F0}s");
+                break;
+
+            // ========================
+            // DAÑO (base + bonus)
+            // ========================
+
+            case SkillEffectType.DmgHexagono:
+                {
+                    float baseDmg = 1f;
+                    int bonus = g.dañoExtraHexagono;
+
+                    sb.AppendLine($"Daño Hexágono: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.DmgPentagono:
+                {
+                    float baseDmg = 2f;
+                    int bonus = g.dañoExtraPentagono;
+
+                    sb.AppendLine($"Daño Pentágono: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.DmgCuadrado:
+                {
+                    float baseDmg = 3f;
+                    int bonus = g.dañoExtraCuadrado;
+
+                    sb.AppendLine($"Daño Cuadrado: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.DmgTriangulo:
+                {
+                    float baseDmg = 4f;
+                    int bonus = g.dañoExtraTriangulo;
+
+                    sb.AppendLine($"Daño Triángulo: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.DmgCirculo:
+                {
+                    float baseDmg = 5f;
+                    int bonus = g.dañoExtraCirculo;
+
+                    sb.AppendLine($"Daño Círculo: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    break;
+                }
+
+            // ========================
+            // MONEDAS (base + bonus)
+            // ========================
+
+            case SkillEffectType.CoinsHexagonoPlus1:
+                {
+                    int baseCoins = 1;
+                    int bonus = g.coinsExtraHexagono;
+
+                    sb.AppendLine($"Monedas Hexágono: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.CoinsPentagonoPlus1:
+                {
+                    int baseCoins = 2;
+                    int bonus = g.coinsExtraPentagono;
+
+                    sb.AppendLine($"Monedas Pentágono: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.CoinsCuadradoPlus1:
+                {
+                    int baseCoins = 3;
+                    int bonus = g.coinsExtraCuadrado;
+
+                    sb.AppendLine($"Monedas Cuadrado: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.CoinsTrianguloPlus1:
+                {
+                    int baseCoins = 4;
+                    int bonus = g.coinsExtraTriangulo;
+
+                    sb.AppendLine($"Monedas Triángulo: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    break;
+                }
+
+            case SkillEffectType.CoinsCirculoPlus1:
+                {
+                    int baseCoins = 5;
+                    int bonus = g.coinsExtraCirculo;
+
+                    sb.AppendLine($"Monedas Círculo: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    break;
+                }
+
+            // ========================
+            // MULTIPLICADORES
+            // ========================
+
+            case SkillEffectType.MultiplyRadius125:
+                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 0.25f:F2}");
+                break;
+
+            case SkillEffectType.MultiplyRadius150:
+                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 0.50f:F2}");
+                break;
+
+            case SkillEffectType.MultiplyRadius200:
+                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 1f:F2}");
+                break;
+
+            case SkillEffectType.MultiplySpeed125:
+                sb.AppendLine($"Velocidad Virus: {g.speedMultiplier:F2} → {g.speedMultiplier + 0.25f:F2}");
+                break;
+
+            case SkillEffectType.MultiplySpeed150:
+                sb.AppendLine($"Velocidad Virus: {g.speedMultiplier:F2} → {g.speedMultiplier + 0.50f:F2}");
+                break;
+
+            case SkillEffectType.InfectSpeed50:
+                sb.AppendLine($"Velocidad infección: {g.infectSpeedMultiplier:F2} → {g.infectSpeedMultiplier + 0.50f:F2}");
+                break;
+
+            case SkillEffectType.InfectSpeed100:
+                sb.AppendLine($"Velocidad infección: {g.infectSpeedMultiplier:F2} → {g.infectSpeedMultiplier + 1.00f:F2}");
+                break;
+
+            // ========================
+            // PROBABILIDADES
+            // ========================
+
+            case SkillEffectType.AddTimeOnPhaseChance5:
+            case SkillEffectType.AddTimeOnPhaseChance10:
+            case SkillEffectType.AddTimeOnPhaseChance15:
+            case SkillEffectType.AddTimeOnPhaseChance20:
+            case SkillEffectType.AddTimeOnPhaseChance25:
+                {
+                    float actual = g.addTimeOnPhaseChance * 100f;
+                    float despues = (g.addTimeOnPhaseChance + 0.05f) * 100f;
+
+                    sb.AppendLine($"Bonus tiempo fase: {actual:F0}% → {despues:F0}%");
+                    break;
+                }
+
+            case SkillEffectType.DoubleUpgradeChance05:
+            case SkillEffectType.DoubleUpgradeChance10:
+            case SkillEffectType.DoubleUpgradeChance15:
+            case SkillEffectType.DoubleUpgradeChance20:
+            case SkillEffectType.DoubleUpgradeChance25:
+                {
+                    float actual = g.doubleUpgradeChance * 100f;
+                    float despues = (g.doubleUpgradeChance + 0.05f) * 100f;
+
+                    sb.AppendLine($"Upgrade doble: {actual:F0}% → {despues:F0}%");
+                    break;
+                }
+
+            case SkillEffectType.RandomSpawnAnyPhase5:
+            case SkillEffectType.RandomSpawnAnyPhase10:
+            case SkillEffectType.RandomSpawnAnyPhase15:
+            case SkillEffectType.RandomSpawnAnyPhase20:
+            case SkillEffectType.RandomSpawnAnyPhase25:
+                {
+                    float actual = g.randomSpawnPhaseChance * 100f;
+                    float despues = (g.randomSpawnPhaseChance + 0.05f) * 100f;
+
+                    sb.AppendLine($"Spawn aleatorio: {actual:F0}% → {despues:F0}%");
+                    break;
+                }
+        }
+
+        return sb.ToString();
+    }
+
     // --------------------------------------------------------------
     // MAGIA DE LA TRADUCCIÓN NATIVA (¡AHORA SÍ ESTÁ BIEN!)
     // --------------------------------------------------------------
@@ -592,6 +788,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // Si por algún motivo falta la traducción, mandamos la Key para no dejarlo en blanco
             if (string.IsNullOrEmpty(localizedName)) localizedName = skillNameKey;
             if (string.IsNullOrEmpty(localizedDesc)) localizedDesc = descriptionKey;
+
+            string preview = GetPreviewValues();
+
+            if (!string.IsNullOrEmpty(preview))
+            {
+                localizedDesc += "\n\n" + preview;
+            }
 
             SkillTooltip.instance.Show(
                 localizedName,
