@@ -303,7 +303,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787840
-    m_Localized: Dano Hexagono
+    m_Localized: "Da\xF1o Hexagono"
     m_Metadata:
       m_Items: []
   - m_Id: 826970787841
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787851
-    m_Localized: Dano Pentagono
+    m_Localized: "Da\xF1o Pentagono"
     m_Metadata:
       m_Items: []
   - m_Id: 826970787852
@@ -319,7 +319,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787862
-    m_Localized: Dano Cuadrado
+    m_Localized: "Da\xF1o Cuadrado"
     m_Metadata:
       m_Items: []
   - m_Id: 826970787863
@@ -327,39 +327,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982144
-    m_Localized: Dano emitido Cuadrado 140%
+    m_Localized: "Da\xF1o emitido Cuadrado 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982145
-    m_Localized: El dano que hace el cuadrado a la zona aumaenta al 140%
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982146
-    m_Localized: Dano emitido cuadrado 160%
+    m_Localized: "Da\xF1o emitido cuadrado 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982147
-    m_Localized: El dano que hace el cuadrado a la zona aumaenta al 160%
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982148
-    m_Localized: Dano emitido cuadrado 180%
+    m_Localized: "Da\xF1o emitido cuadrado 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982149
-    m_Localized: El dano que hace el cuadrado a la zona aumaenta al 180%
+    m_Localized: "El da\xF1o que hace el cuadrado a la zona aumaenta al 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982150
-    m_Localized: Dano emitido cuadrado 200%
+    m_Localized: "Da\xF1o emitido cuadrado 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982151
-    m_Localized: El dano que hace el cuadradoa la zona aumaenta al 200%
+    m_Localized: "El da\xF1o que hace el cuadradoa la zona aumaenta al 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982152
-    m_Localized: Dano Triangulo
+    m_Localized: "Da\xF1o Triangulo"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982153
@@ -367,39 +367,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982154
-    m_Localized: Dano emitido Triangulo 140%
+    m_Localized: "Da\xF1o emitido Triangulo 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982155
-    m_Localized: El dano que hace el triangulo a la zona aumaenta al 140%
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982156
-    m_Localized: Dano emitido Triangulo 160%
+    m_Localized: "Da\xF1o emitido Triangulo 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982157
-    m_Localized: El dano que hace el triangulo a la zona aumaenta al 160%
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982158
-    m_Localized: Dano emitido Triangulo 180%
+    m_Localized: "Da\xF1o emitido Triangulo 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982159
-    m_Localized: El dano que hace el triangulo a la zona aumaenta al 180%
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982160
-    m_Localized: Dano emitido Triangulo 200%
+    m_Localized: "Da\xF1o emitido Triangulo 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982161
-    m_Localized: El dano que hace el triangulo a la zona aumaenta al 200%
+    m_Localized: "El da\xF1o que hace el triangulo a la zona aumaenta al 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982162
-    m_Localized: Dano Circulo
+    m_Localized: "Da\xF1o Circulo"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982163
@@ -407,35 +407,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982164
-    m_Localized: Dano emitido Circulo 140%
+    m_Localized: "Da\xF1o emitido Circulo 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982165
-    m_Localized: El dano que hace el circulo a la zona aumaenta al 140%
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 140%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982166
-    m_Localized: Dano emitido Circulo 160%
+    m_Localized: "Da\xF1o emitido Circulo 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982167
-    m_Localized: El dano que hace el circulo a la zona aumaenta al 160%
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 160%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982168
-    m_Localized: Dano emitido Circulo 180%
+    m_Localized: "Da\xF1o emitido Circulo 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982169
-    m_Localized: El dano que hace el circulo a la zona aumaenta al 180%
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 180%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982170
-    m_Localized: Dano emitido Circulo 200%
+    m_Localized: "Da\xF1o emitido Circulo 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982171
-    m_Localized: El dano que hace el circulo a la zona aumaenta al 200%
+    m_Localized: "El da\xF1o que hace el circulo a la zona aumaenta al 200%"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982173
@@ -654,60 +654,12 @@ MonoBehaviour:
     m_Localized: Te otorga una mejora aleatoria
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176495
-    m_Localized: Monedas Hexagono
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176496
-    m_Localized: El hexagono da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176498
-    m_Localized: Monedas Pentagono
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176499
-    m_Localized: El pentagono da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176501
-    m_Localized: Monedas Cuadrado
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176502
-    m_Localized: El cuadrado da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176504
-    m_Localized: Monedas Triangulo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176505
-    m_Localized: El cuadrado da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176507
-    m_Localized: Monedas Circulo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176508
-    m_Localized: El circulo da mas monedas
-    m_Metadata:
-      m_Items: []
   - m_Id: 826979176510
     m_Localized: Pared Infectiva
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
     m_Localized: Probabilidad de saltar una fase al chocar contra la pared
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9172339707938
-    m_Localized: hola
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9829406789632
-    m_Localized: key_pum
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -720,6 +672,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9172335513601
     m_Localized: TOTAL CARAMBOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259438174208
+    m_Localized: Monedas Hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259459145728
+    m_Localized: El hexagono da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963821199360
+    m_Localized: Monedas Pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393664
+    m_Localized: El pentagono da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393665
+    m_Localized: Monedas Cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393666
+    m_Localized: El cuadrado da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393668
+    m_Localized: El cuadrado da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393669
+    m_Localized: Monedas Circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393670
+    m_Localized: El circulo da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36237889818624
+    m_Localized: Monedas Triangulo
     m_Metadata:
       m_Items: []
   references:

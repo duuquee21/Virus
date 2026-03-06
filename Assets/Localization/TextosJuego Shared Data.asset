@@ -779,60 +779,60 @@ MonoBehaviour:
     m_Key: MONEDAS HEXAGONO
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176495
-    m_Key: skill_monedasHexagon_tit
+  - m_Id: 23259438174208
+    m_Key: skill_hexagoncoin_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176496
-    m_Key: skill_monedasHexagon_desc
+  - m_Id: 23259459145728
+    m_Key: skill_hexagoncoin_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707933
     m_Key: MONEDAS PENTAGONO
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176498
-    m_Key: skill_monedasPentagon_tit
+  - m_Id: 23963821199360
+    m_Key: skill_pentagoncoin_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176499
-    m_Key: skill_monedasPentagon_desc
+  - m_Id: 23963825393664
+    m_Key: skill_pentagoncoin_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707934
     m_Key: MONEDAS CUADRADO
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176501
-    m_Key: skill_monedasSquare_tit
+  - m_Id: 23963825393665
+    m_Key: skill_squarecoin_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176502
-    m_Key: skill_monedasSquare_desc
+  - m_Id: 23963825393666
+    m_Key: skill_squarecoin_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707935
     m_Key: MONEDAS TRIANGULO
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176504
-    m_Key: skill_monedasTriangle_tit
+  - m_Id: 36237889818624
+    m_Key: skill_trianglecoin_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176505
-    m_Key: skill_monedasTriangle_desc
+  - m_Id: 23963825393668
+    m_Key: skill_trianglecoin_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707936
     m_Key: MONEDAS CIRCULO
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176507
-    m_Key: skill_monedasCirculo_tit
+  - m_Id: 23963825393669
+    m_Key: skill_circlecoin_tit
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176508
-    m_Key: skill_monedasCirculo_desc
+  - m_Id: 23963825393670
+    m_Key: skill_circlecoin_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707937
@@ -845,14 +845,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 826979176511
     m_Key: skill_paredInfec_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9172339707938
-    m_Key: hola
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9829406789632
-    m_Key: key_pum
     m_Metadata:
       m_Items: []
   m_Metadata:
