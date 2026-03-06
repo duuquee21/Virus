@@ -27,11 +27,10 @@ public class Guardado : MonoBehaviour
     public bool virusReboteActiva = false;
 
     [Header("Habilidad Especial")]
-    public bool carambolaNormalActiva = false;
-    public bool carambolaProActiva = false;
-    public bool carambolaSupremaActiva = false;
+
     public bool destroyCoralOnInfectedImpact = false;
     public float probabilidadDuplicarChoque = 0f;
+    public int nivelCarambola = -1; // 0 = desactivada, 1-5 niveles
 
     [Header("Mejoras de Daño Individuales")]
     public int dañoExtraCirculo = 0;
@@ -85,6 +84,7 @@ public class Guardado : MonoBehaviour
 
     public void HardResetVariables()
     {
+        nivelCarambola = -1; // Añade esta línea aquí
         totalInfected = 0;
         freeInitialUpgrade = -1;
         coinMultiplier = 1;
@@ -95,9 +95,7 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
-        carambolaNormalActiva = false;
-        carambolaProActiva = false;
-        carambolaSupremaActiva = false;
+
         probabilidadDuplicarChoque = 0f;
         paredInfectivaActiva = false;
         nivelParedInfectiva = 1;
@@ -142,9 +140,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("SpeedMult", speedMultiplier);
         PlayerPrefs.SetFloat("InfectSpeedMult", infectSpeedMultiplier);
         PlayerPrefs.SetFloat("ProbDuplicar", probabilidadDuplicarChoque);
-        PlayerPrefs.SetInt("CarambolaNormal", carambolaNormalActiva ? 1 : 0);
-        PlayerPrefs.SetInt("CarambolaPro", carambolaProActiva ? 1 : 0);
-        PlayerPrefs.SetInt("CarambolaSuprema", carambolaSupremaActiva ? 1 : 0);
+        PlayerPrefs.SetInt("NivelCarambola", nivelCarambola);
         PlayerPrefs.SetInt("ParedInfectivaActiva", paredInfectivaActiva ? 1 : 0);
         PlayerPrefs.SetInt("NivelPared", nivelParedInfectiva);
         PlayerPrefs.SetInt("DmgCirculo", dañoExtraCirculo);
@@ -189,9 +185,8 @@ public class Guardado : MonoBehaviour
         dañoExtraPentagono = PlayerPrefs.GetInt("DmgPentagono", 0);
         dañoExtraHexagono = PlayerPrefs.GetInt("DmgHexagono", 0);
         dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
-        carambolaNormalActiva = PlayerPrefs.GetInt("CarambolaNormal", 0) == 1;
-        carambolaProActiva = PlayerPrefs.GetInt("CarambolaPro", 0) == 1;
-        carambolaSupremaActiva = PlayerPrefs.GetInt("CarambolaSuprema", 0) == 1;
+        nivelCarambola = PlayerPrefs.GetInt("NivelCarambola", -1);
+
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
@@ -247,10 +242,18 @@ public class Guardado : MonoBehaviour
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
 
     // Métodos Carambola y Pared
-    public void ActivarCarambolaNormal() { carambolaNormalActiva = true; SaveData(); }
+
     public void ReboteConCoral() { virusReboteActiva = true; SaveData(); }
-    public void ActivarCarambolaPro() { carambolaProActiva = true; SaveData(); }
-    public void ActivarCarambolaSuprema() { carambolaSupremaActiva = true; SaveData(); }
+    public void SubirNivelCarambola()
+    {
+        if (nivelCarambola < 6)
+        {
+            nivelCarambola++;
+            // Importante: Actualizamos el valor y llamamos a SaveData
+            SaveData();
+            Debug.Log("Carambola mejorada al nivel: " + nivelCarambola);
+        }
+    }
     public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
 
     // Añade esto a Guardado.cs

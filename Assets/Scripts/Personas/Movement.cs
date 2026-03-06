@@ -187,111 +187,52 @@ public class Movement : MonoBehaviour
         else if (!personaInfeccion.alreadyInfected && otro.CompareTag("Persona"))
         {
             PersonaInfeccion scriptAtacante = otro.GetComponent<PersonaInfeccion>();
+            if (Guardado.instance == null || scriptAtacante == null) return;
 
-            // NUEVA CONDICIÓN: Si el otro está infectado, ignoramos el rebote manual
-            if (scriptAtacante != null && scriptAtacante.alreadyInfected)
+            // 1. FILTRO DE NIVEL (Si no hay nivel o la fase es superior, se ignoran)
+            int nivelPermitido = Guardado.instance.nivelCarambola;
+            if (personaInfeccion.faseActual > nivelPermitido || scriptAtacante.faseActual > nivelPermitido)
             {
-                // Solo el objeto con el ID menor ejecuta la lógica para evitar duplicidad
+                return; // No hay nivel suficiente para que estas fases interactúen
+            }
+
+            // 2. LÓGICA DE INFECCIÓN (Si uno ya está infectado, contagia al otro)
+            if (scriptAtacante.alreadyInfected)
+            {
                 if (gameObject.GetInstanceID() < otro.gameObject.GetInstanceID())
                 {
                     personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-
-
                     scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
                 }
                 return;
             }
-            if (Guardado.instance == null) return;
 
-            if (!Guardado.instance.carambolaNormalActiva &&
-            !Guardado.instance.carambolaProActiva &&
-            !Guardado.instance.carambolaSupremaActiva)
-                return;
-
+            // 3. REBOTE FÍSICO (Solo si ambos son aptos por nivel pero ninguno estaba infectado aún)
             Rigidbody2D rbAtacante = otro.GetComponent<Rigidbody2D>();
             Movement movAtacante = otro.GetComponent<Movement>();
 
-            if (rbAtacante != null && movAtacante != null && scriptAtacante != null)
+            if (rbAtacante != null && movAtacante != null)
             {
-                // 1. CÁLCULO DE FÍSICA
                 Vector2 puntoContacto = otro.ClosestPoint(transform.position);
                 Vector2 normalChoque = ((Vector2)transform.position - puntoContacto).normalized;
-
-                if (normalChoque.sqrMagnitude < 0.01f)
-                {
-                    normalChoque = ((Vector2)transform.position - (Vector2)otro.transform.position).normalized;
-                }
-
-                if (normalChoque == Vector2.zero) normalChoque = rbAtacante.linearVelocity.normalized;
+                if (normalChoque.sqrMagnitude < 0.01f) normalChoque = ((Vector2)transform.position - (Vector2)otro.transform.position).normalized;
 
                 float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
-                float mTransmision = 1f;
                 float velocidadMaximaEnChoque = Mathf.Max(rb.linearVelocity.magnitude, rbAtacante.linearVelocity.magnitude);
                 bool hayImpactoFuerte = velocidadMaximaEnChoque > 6.5f;
-                // Solo procesamos el avance de fase si somos el "dueño" de la colisión actual
-               
-                if (gameObject.GetInstanceID() < otro.gameObject.GetInstanceID())
-                {
-                    if (hayImpactoFuerte)
-                    {
-                        if (Guardado.instance.nivelParedInfectiva > personaInfeccion.faseActual)
-                        {
-                            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                        }
 
-                        if (Guardado.instance.nivelParedInfectiva > scriptAtacante.faseActual)
-                        {
-                            scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                        }
-                    }
+                // --- ELIMINADO: Aquí tenías código que volvía a llamar a avanzar fase ignorando filtros ---
 
-                }
-                else if (hayImpactoFuerte)
+                if (hayImpactoFuerte && InfectionFeedback.instance != null)
                 {
                     InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
                 }
-               
 
-                if (Guardado.instance.carambolaSupremaActiva)
-                {
-                    // Megapro (Suprema): Siempre transmite el 100%
-                    mTransmision = hayImpactoFuerte ? 0.75f : 1f;
-                }
-                else if (Guardado.instance.carambolaProActiva)
-                {
-                    // Pro: 100% en velocidad baja, 50% en velocidad alta
-                    mTransmision = hayImpactoFuerte ? 0.5f : 1f;
-                }
-                else if (Guardado.instance.carambolaNormalActiva)
-                {
-                    // Normal: 100% en velocidad baja, 15% en velocidad alta
-                    mTransmision = hayImpactoFuerte ? 0.15f : 1f;
-                }
-
-                // 4. APLICACIÓN DE VELOCIDADES CON LÓGICA DE FASE MÁXIMA
+                // Aplicación de velocidades
                 float fuerzaExtra = hayImpactoFuerte ? 1.2f : 1f;
-                // Lógica para el receptor (this)
-                if (personaInfeccion.EsFaseMaxima() && Guardado.instance.nivelParedInfectiva == 6)
-                {
-                    rb.linearVelocity = normalChoque * 22.5f;
-                }
-                else
-                {
-                    rb.linearVelocity = normalChoque * (velocidadImpacto * mTransmision * fuerzaExtra);
-                }
+                rb.linearVelocity = normalChoque * (velocidadImpacto * fuerzaExtra);
+                rbAtacante.linearVelocity = -normalChoque * (velocidadImpacto * fuerzaExtra);
 
-                // Lógica para el atacante (otro)
-                float factorReboteAtacante = hayImpactoFuerte ? 0.8f : mTransmision;
-                if (scriptAtacante.EsFaseMaxima())
-                {
-                    rbAtacante.linearVelocity = -normalChoque * 22.5f;
-                }
-                else
-                {
-                    rbAtacante.linearVelocity = -normalChoque * (velocidadImpacto * factorReboteAtacante * fuerzaExtra);
-                }
-
-                // 5. ACTUALIZACIÓN DE ESTADOS DE MOVIMIENTO
                 this.estaEmpujado = true;
                 this.direccion = rb.linearVelocity.normalized;
                 movAtacante.SetEstaEmpujado(true, rbAtacante.linearVelocity.normalized);

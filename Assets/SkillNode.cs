@@ -434,9 +434,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break;
             case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break;
 
-            case SkillEffectType.CarambolaNormal: Guardado.instance.ActivarCarambolaNormal(); break;
-            case SkillEffectType.CarambolaPro: Guardado.instance.ActivarCarambolaPro(); break;
-            case SkillEffectType.CarambolaSuprema: Guardado.instance.ActivarCarambolaSuprema(); break;
+            // Sustituye los tres cases anteriores por este:
+            case SkillEffectType.CarambolaNormal:
+            case SkillEffectType.CarambolaPro:
+            case SkillEffectType.CarambolaSuprema:
+                Guardado.instance.SubirNivelCarambola();
+                break;
 
             case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
