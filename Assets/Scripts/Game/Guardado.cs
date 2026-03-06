@@ -100,7 +100,7 @@ public class Guardado : MonoBehaviour
         carambolaSupremaActiva = false;
         probabilidadDuplicarChoque = 0f;
         paredInfectivaActiva = false;
-        nivelParedInfectiva = 0;
+        nivelParedInfectiva = 1;
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
