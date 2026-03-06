@@ -1,0 +1,727 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextosJuego_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: d513c2be9fe99bb43813b65ab5656af5, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 826903678976
+    m_Localized: NEW GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826941427712
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622016
+    m_Localized: SETTING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622017
+    m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622018
+    m_Localized: Hexagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622019
+    m_Localized: Pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622020
+    m_Localized: Square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622021
+    m_Localized: Triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622022
+    m_Localized: Circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622023
+    m_Localized: White Ball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622024
+    m_Localized: Coins earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622025
+    m_Localized: Total coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622026
+    m_Localized: Zone Evolutions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622027
+    m_Localized: Wall Evolutions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622028
+    m_Localized: Bounce Evolutions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622032
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622033
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622034
+    m_Localized: coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622035
+    m_Localized: Cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816320
+    m_Localized: Shiny DNA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816321
+    m_Localized: Coins x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816322
+    m_Localized: Multiplies all earned coins by 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816323
+    m_Localized: Coins x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816324
+    m_Localized: Multiplies all earned coins by 3.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816325
+    m_Localized: Coins x4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816326
+    m_Localized: Multiplies all earned coins by 4.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816327
+    m_Localized: Coins x5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816328
+    m_Localized: Multiplies all earned coins by 5.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816329
+    m_Localized: skill_coinsx6_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816330
+    m_Localized: skill_coinsx6_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816332
+    m_Localized: Initial Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816333
+    m_Localized: Increases movement speed by 25%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816334
+    m_Localized: Initial Speed x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816335
+    m_Localized: Increases movement speed by 50%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816337
+    m_Localized: Time+
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816338
+    m_Localized: Increases total time by +2s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816360
+    m_Localized: Basic Rebound Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816361
+    m_Localized: Basic rebounds between figures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816362
+    m_Localized: Advanced Rebound Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816363
+    m_Localized: Advanced rebounds between figures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816364
+    m_Localized: Maximum Rebound Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816365
+    m_Localized: Maximum rebounds between figures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816366
+    m_Localized: iguhguyf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816367
+    m_Localized: Tri-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816368
+    m_Localized: Tri-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816369
+    m_Localized: Capture triangles faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010627
+    m_Localized: Square-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010628
+    m_Localized: Capture squares faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010634
+    m_Localized: Hexa-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010635
+    m_Localized: Capture hexagons faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010641
+    m_Localized: Penta-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010642
+    m_Localized: Capture pentagons faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010648
+    m_Localized: Cir-Capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010649
+    m_Localized: Capture circles faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010655
+    m_Localized: Spawn interval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010656
+    m_Localized: Reduces the time between the spawn of figures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010666
+    m_Localized: Maximun population
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010667
+    m_Localized: Increase the maximum simultaneous population
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010673
+    m_Localized: Radio upgrade x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010674
+    m_Localized: Multiply the attack radius by x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204934
+    m_Localized: Infection speed x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204935
+    m_Localized: Increases infection speed by x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204939
+    m_Localized: Level of radio 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204940
+    m_Localized: Upgrades radio controles by 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204950
+    m_Localized: Speed level 125%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204951
+    m_Localized: Established speed level  by 125%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204959
+    m_Localized: Time probability 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204960
+    m_Localized: Probability of increasing the time by 1s by 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826962399238
+    m_Localized: Level infection speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826966593539
+    m_Localized: Duplicate on hit 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826966593540
+    m_Localized: 'Probability of doubling the figure upon collision: 5%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787840
+    m_Localized: Damage dealt Hexagon 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787841
+    m_Localized: The damage caused by the hexagon to the area increases to 120%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787851
+    m_Localized: Damage dealt Pentagon 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787852
+    m_Localized: The damage caused by the pentagon to the area increases to 120%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787862
+    m_Localized: Damage dealt Square 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787863
+    m_Localized: The damage caused by the square to the area increases to 120%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982144
+    m_Localized: Damage dealt square 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982145
+    m_Localized: The damage caused by the square to the area increases to 140%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982146
+    m_Localized: Damage dealt square 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982147
+    m_Localized: The damage caused by the square to the area increases to 160%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982148
+    m_Localized: Damage dealt square 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982149
+    m_Localized: The damage caused by the square to the area increases to 180%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982150
+    m_Localized: Damage dealt square 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982151
+    m_Localized: The damage caused by the square to the area increases to 200%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982152
+    m_Localized: Damage dealt Triangle 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982153
+    m_Localized: The damage caused by the triangle to the area increases to 120%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982154
+    m_Localized: Damage dealt Triangle 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982155
+    m_Localized: The damage caused by the triangle to the area increases to 140%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982156
+    m_Localized: Damage dealt Triangle 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982157
+    m_Localized: The damage caused by the triangle to the area increases to 160%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982158
+    m_Localized: Damage dealt Triangle 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982159
+    m_Localized: The damage caused by the triangle to the area increases to 180%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982160
+    m_Localized: Damage dealt Triangle 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982161
+    m_Localized: The damage caused by the triangle to the area increases to 200%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982162
+    m_Localized: Damage dealt Hexagon 120%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982163
+    m_Localized: The damage caused by the hexagon to the area increases to 120%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982164
+    m_Localized: Damage dealt Hexagon 140%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982165
+    m_Localized: The damage caused by the hexagon to the area increases to 140%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982166
+    m_Localized: Damage dealt Hexagon 160%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982167
+    m_Localized: The damage caused by the hexagon to the area increases to 160%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982168
+    m_Localized: Damage dealt Hexagon 180%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982169
+    m_Localized: The damage caused by the hexagon to the area increases to 180%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982170
+    m_Localized: Damage dealt Circle 200%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982171
+    m_Localized: The damage caused by the circle to the area increases to 200%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982173
+    m_Localized: Rebound with Coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982174
+    m_Localized: Activates special bounce upon impact with surface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982176
+    m_Localized: Skip Stages 5 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982177
+    m_Localized: 'Probability of skipping a phase: 5%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982178
+    m_Localized: Skip Stages 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982179
+    m_Localized: 'Probability of skipping a phase: 10%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982180
+    m_Localized: Skip Stages 15 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982181
+    m_Localized: 'Probability of skipping a phase: 15%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982182
+    m_Localized: Skip Stages 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982183
+    m_Localized: 'Probability of skipping a phase: 20%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982185
+    m_Localized: Extra Capture 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982186
+    m_Localized: 'Chance of capturing an extra figure : 5%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176450
+    m_Localized: Gold Figure 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176451
+    m_Localized: Probability of generating a golden figure at 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176452
+    m_Localized: Gold Figure 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176453
+    m_Localized: Probability of generating a golden figure at 10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176454
+    m_Localized: Gold Figure 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176455
+    m_Localized: Probability of generating a golden figure at 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176456
+    m_Localized: Gold Figure 5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176457
+    m_Localized: Probability of generating a golden figure at 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176458
+    m_Localized: Gold Figure 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176459
+    m_Localized: Probability of generating a golden figure at 25%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176461
+    m_Localized: Multi Golden x1.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176462
+    m_Localized: Multiply the amount given by the gold figure by x1.25.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176463
+    m_Localized: Multi Golden x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176464
+    m_Localized: Multiply the amount given by the gold figure by x1.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176465
+    m_Localized: Multi Golden x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176466
+    m_Localized: Multiply the amount given by the gold figure by x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176467
+    m_Localized: Multi Golden x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176468
+    m_Localized: Multiply the amount given by the gold figure by x3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176469
+    m_Localized: Multi Golden x4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176470
+    m_Localized: Multiply the amount given by the gold figure by x4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176472
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176473
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176474
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176475
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176476
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176477
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176478
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176479
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176480
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176481
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176482
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176483
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176484
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176485
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176486
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176487
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176488
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176489
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176490
+    m_Localized: Number Initial Figures +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176491
+    m_Localized: Number of figures at the start of the run +10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176492
+    m_Localized: Random Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176493
+    m_Localized: Get a Random Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176495
+    m_Localized: Damage Hexagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176496
+    m_Localized: It makes it easier to capture the hexagon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176498
+    m_Localized: Damage Pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176499
+    m_Localized: It makes it easier to capture the pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176501
+    m_Localized: Damage Square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176502
+    m_Localized: It makes it easier to capture the square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176504
+    m_Localized: Damage Triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176505
+    m_Localized: It makes it easier to capture the triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176507
+    m_Localized: Damage Circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176508
+    m_Localized: It makes it easier to capture the circule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176510
+    m_Localized: Infectious Wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176511
+    m_Localized: The figures can skip a level by bouncing off the wall.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707938
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9829406789632
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172310347776
+    m_Localized: ZONE TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172335513600
+    m_Localized: WALL TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172335513601
+    m_Localized: BOUNCE TOTAL
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

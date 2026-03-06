@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: TextosJuego
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: d513c2be9fe99bb43813b65ab5656af5, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: b13b78bd26b022144a9458c42e43abf4, type: 2}
+  - {fileID: 11400000, guid: 68c52e53bb6f5a544a92922a4b680e52, type: 2}
+  m_Extensions:
+  - rid: 2796215450289570023
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds:
+    - rid: 2796215450289570023
+      type: {class: GoogleSheetsExtension, ns: UnityEditor.Localization.Plugins.Google, asm: Unity.Localization.Editor}
+      data:
+        m_Collection: {fileID: 11400000}
+        m_SheetsServiceProvider: {fileID: 11400000, guid: 864124c3f614b1b42819afbb9ec06bbf, type: 2}
+        m_SpreadsheetId: 19H4C2miR_8db2R8PnuZKkyq04Bq1Xxi_FGoIlAkc3ks
+        m_SheetId: 0
+        m_Columns:
+        - rid: 2796215450289570025
+        - rid: 2796215450289570026
+        - rid: 2796215450289570027
+        m_RemoveMissingPulledKeys: 1
+    - rid: 2796215450289570025
+      type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: Key
+    - rid: 2796215450289570026
+      type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: es
+        m_LocaleIdentifier:
+          m_Code: es
+        m_IncludeComments: 0
+    - rid: 2796215450289570027
+      type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: en
+        m_LocaleIdentifier:
+          m_Code: en
+        m_IncludeComments: 0

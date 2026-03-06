@@ -1015,8 +1015,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (SkillTooltip.instance != null)
         {
             // Busca la traducción en tu tabla TextosUI
-            string localizedName = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", skillNameKey);
-            string localizedDesc = LocalizationSettings.StringDatabase.GetLocalizedString("TextosUI", descriptionKey);
+            string localizedName = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", skillNameKey);
+            string localizedDesc = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", descriptionKey);
 
             // Si por algún motivo falta la traducción, mandamos la Key para no dejarlo en blanco
             if (string.IsNullOrEmpty(localizedName)) localizedName = skillNameKey;

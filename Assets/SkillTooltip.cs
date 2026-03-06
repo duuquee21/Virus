@@ -27,7 +27,7 @@ public class SkillTooltip : MonoBehaviour
 
 
     // 1. ¡Actualizado al nombre de tu nueva tabla!
-    private string nombreTabla = "TextosUI";
+    private string nombreTabla = "TextosJuego";
 
     void Awake()
     {
