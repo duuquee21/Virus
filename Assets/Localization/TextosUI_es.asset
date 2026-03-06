@@ -411,11 +411,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488971
-    m_Localized: Mejora intervalo de spawn 15%
+    m_Localized: 'Mejora intervalo de spawn '
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488972
-    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 15%"
+    m_Localized: "Reduce el tiempo entre aparici\xF3n de personas en un 0.5s"
     m_Metadata:
       m_Items: []
   - m_Id: 7468160072302617

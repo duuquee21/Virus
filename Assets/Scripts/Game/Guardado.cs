@@ -282,16 +282,13 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    public void AddRandomSpawnPhaseChance(float extra)
+    public void AddRandomSpawnPhaseChance(float amount)
     {
-        randomSpawnPhaseChance = Mathf.Clamp01(randomSpawnPhaseChance + extra);
+        // Sumamos la nueva cantidad al valor actual
+        randomSpawnPhaseChance = Mathf.Clamp01(randomSpawnPhaseChance + amount);
         SaveData();
     }
-    public void SetRandomSpawnPhaseChance(float chance)
-    {
-        randomSpawnPhaseChance = Mathf.Clamp01(chance);
-        SaveData();
-    }
+
     // --- REPARACIÓN DE ERRORES ESPECÍFICOS ---
     public void AddNivelParedInfectiva(int cantidad)
     {

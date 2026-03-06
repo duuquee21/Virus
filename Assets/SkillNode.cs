@@ -363,7 +363,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break;
             case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break;
 
-            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.20f); break;
+            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.5f); break;
             case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
             case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); break;
             case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
@@ -492,16 +492,22 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
             case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
 
-            case SkillEffectType.RandomSpawnAnyPhase5: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.05f)); break;
-            case SkillEffectType.RandomSpawnAnyPhase10: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.10f)); break;
-            case SkillEffectType.RandomSpawnAnyPhase15: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.15f)); break;
-            case SkillEffectType.RandomSpawnAnyPhase20: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.20f)); break;
-            case SkillEffectType.RandomSpawnAnyPhase25: Guardado.instance.SetRandomSpawnPhaseChance(GetFloat(0.25f)); break;
+            case SkillEffectType.RandomSpawnAnyPhase5:
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+            case SkillEffectType.RandomSpawnAnyPhase10:
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+            case SkillEffectType.RandomSpawnAnyPhase15:
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+            case SkillEffectType.RandomSpawnAnyPhase20:
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+            case SkillEffectType.RandomSpawnAnyPhase25:
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
 
             case SkillEffectType.CoinsCirculoPlus1:
                 Guardado.instance.coinsExtraCirculo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
+
             case SkillEffectType.CoinsTrianguloPlus1:
                 Guardado.instance.coinsExtraTriangulo += GetInt(1);
                 Guardado.instance.SaveData();

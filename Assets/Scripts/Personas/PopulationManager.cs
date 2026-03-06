@@ -239,9 +239,18 @@ public class PopulationManager : MonoBehaviour
     void ApplySpawnBonus()
     {
         if (Guardado.instance == null) return;
-        float bonus = Guardado.instance.spawnSpeedBonus;
-        spawnInterval = baseSpawnInterval * (1f - bonus);
-        if (spawnInterval < 0.3f) spawnInterval = 0.3f;
+
+        // Convertimos el bonus a int para restar segundos enteros
+        float bonusSegundos = Guardado.instance.spawnSpeedBonus;
+
+        // Restamos los segundos directamente a la base
+        spawnInterval = baseSpawnInterval - bonusSegundos;
+
+        // Seguridad: No permitimos que el intervalo sea menor a 0.3 segundos
+        if (spawnInterval < 0.3f)
+        {
+            spawnInterval = 0.3f;
+        }
     }
 
     public void ClearAllPersonas()

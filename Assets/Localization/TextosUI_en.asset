@@ -411,11 +411,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488971
-    m_Localized: Spawn interval Upgrade 15%
+    m_Localized: 'Spawn interval Upgrade '
     m_Metadata:
       m_Items: []
   - m_Id: 7126289761488972
-    m_Localized: Reduces the time between people appearing by 15%
+    m_Localized: Reduces the time between people appearing by 0.5s
     m_Metadata:
       m_Items: []
   - m_Id: 7468160072302617
