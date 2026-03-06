@@ -580,6 +580,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     string GetPreviewValues()
     {
+        bool comprado = repeatLevel > 0;
+
         if (Guardado.instance == null) return "";
 
         Guardado g = Guardado.instance;
@@ -589,147 +591,366 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         switch (effectType)
         {
-            // ========================
+            // -------------------------
             // TIEMPO
-            // ========================
+            // -------------------------
 
             case SkillEffectType.AddTime2Seconds:
-                sb.AppendLine($"Tiempo: {baseTime:F0}s → {baseTime + 2:F0}s");
-                break;
+                {
+                    float actual = baseTime;
+                    float despues = baseTime + 2f;
 
-            // ========================
-            // DAÑO (base + bonus)
-            // ========================
+                    if (comprado)
+                        sb.AppendLine($"Tiempo: {actual:F1}s");
+                    else
+                        sb.AppendLine($"Tiempo: {actual:F1}s → {despues:F1}s");
+
+                    break;
+                }
+
+            // -------------------------
+            // DAÑO
+            // -------------------------
 
             case SkillEffectType.DmgHexagono:
                 {
-                    float baseDmg = 1f;
-                    int bonus = g.dañoExtraHexagono;
+                    int actual = 1 + g.dañoExtraHexagono;
 
-                    sb.AppendLine($"Daño Hexágono: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Daño Hexágono: {actual}");
+                    else
+                        sb.AppendLine($"Daño Hexágono: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.DmgPentagono:
                 {
-                    float baseDmg = 2f;
-                    int bonus = g.dañoExtraPentagono;
+                    int actual = 2 + g.dañoExtraPentagono;
 
-                    sb.AppendLine($"Daño Pentágono: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Daño Pentágono: {actual}");
+                    else
+                        sb.AppendLine($"Daño Pentágono: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.DmgCuadrado:
                 {
-                    float baseDmg = 3f;
-                    int bonus = g.dañoExtraCuadrado;
+                    int actual = 3 + g.dañoExtraCuadrado;
 
-                    sb.AppendLine($"Daño Cuadrado: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Daño Cuadrado: {actual}");
+                    else
+                        sb.AppendLine($"Daño Cuadrado: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.DmgTriangulo:
                 {
-                    float baseDmg = 4f;
-                    int bonus = g.dañoExtraTriangulo;
+                    int actual = 4 + g.dañoExtraTriangulo;
 
-                    sb.AppendLine($"Daño Triángulo: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Daño Triángulo: {actual}");
+                    else
+                        sb.AppendLine($"Daño Triángulo: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.DmgCirculo:
                 {
-                    float baseDmg = 5f;
-                    int bonus = g.dañoExtraCirculo;
+                    int actual = 5 + g.dañoExtraCirculo;
 
-                    sb.AppendLine($"Daño Círculo: {baseDmg + bonus} → {baseDmg + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Daño Círculo: {actual}");
+                    else
+                        sb.AppendLine($"Daño Círculo: {actual} → {actual + 1}");
+
                     break;
                 }
 
-            // ========================
-            // MONEDAS (base + bonus)
-            // ========================
+            // -------------------------
+            // MONEDAS
+            // -------------------------
 
             case SkillEffectType.CoinsHexagonoPlus1:
                 {
-                    int baseCoins = 1;
-                    int bonus = g.coinsExtraHexagono;
+                    int actual = 1 + g.coinsExtraHexagono;
 
-                    sb.AppendLine($"Monedas Hexágono: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Monedas Hexágono: {actual}");
+                    else
+                        sb.AppendLine($"Monedas Hexágono: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.CoinsPentagonoPlus1:
                 {
-                    int baseCoins = 2;
-                    int bonus = g.coinsExtraPentagono;
+                    int actual = 2 + g.coinsExtraPentagono;
 
-                    sb.AppendLine($"Monedas Pentágono: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Monedas Pentágono: {actual}");
+                    else
+                        sb.AppendLine($"Monedas Pentágono: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.CoinsCuadradoPlus1:
                 {
-                    int baseCoins = 3;
-                    int bonus = g.coinsExtraCuadrado;
+                    int actual = 3 + g.coinsExtraCuadrado;
 
-                    sb.AppendLine($"Monedas Cuadrado: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Monedas Cuadrado: {actual}");
+                    else
+                        sb.AppendLine($"Monedas Cuadrado: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.CoinsTrianguloPlus1:
                 {
-                    int baseCoins = 4;
-                    int bonus = g.coinsExtraTriangulo;
+                    int actual = 4 + g.coinsExtraTriangulo;
 
-                    sb.AppendLine($"Monedas Triángulo: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Monedas Triángulo: {actual}");
+                    else
+                        sb.AppendLine($"Monedas Triángulo: {actual} → {actual + 1}");
+
                     break;
                 }
 
             case SkillEffectType.CoinsCirculoPlus1:
                 {
-                    int baseCoins = 5;
-                    int bonus = g.coinsExtraCirculo;
+                    int actual = 5 + g.coinsExtraCirculo;
 
-                    sb.AppendLine($"Monedas Círculo: {baseCoins + bonus} → {baseCoins + bonus + 1}");
+                    if (comprado)
+                        sb.AppendLine($"Monedas Círculo: {actual}");
+                    else
+                        sb.AppendLine($"Monedas Círculo: {actual} → {actual + 1}");
+
                     break;
                 }
 
-            // ========================
-            // MULTIPLICADORES
-            // ========================
+            // -------------------------
+            // RADIO
+            // -------------------------
 
             case SkillEffectType.MultiplyRadius125:
-                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 0.25f:F2}");
-                break;
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio Virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio Virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
 
             case SkillEffectType.MultiplyRadius150:
-                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 0.50f:F2}");
-                break;
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.50f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio Virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio Virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
 
             case SkillEffectType.MultiplyRadius200:
-                sb.AppendLine($"Radio Virus: {g.radiusMultiplier:F2} → {g.radiusMultiplier + 1f:F2}");
-                break;
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 1f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio Virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio Virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            // -------------------------
+            // VELOCIDAD
+            // -------------------------
 
             case SkillEffectType.MultiplySpeed125:
-                sb.AppendLine($"Velocidad Virus: {g.speedMultiplier:F2} → {g.speedMultiplier + 0.25f:F2}");
-                break;
+                {
+                    float actual = g.speedMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Velocidad Virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad Virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
 
             case SkillEffectType.MultiplySpeed150:
-                sb.AppendLine($"Velocidad Virus: {g.speedMultiplier:F2} → {g.speedMultiplier + 0.50f:F2}");
-                break;
+                {
+                    float actual = g.speedMultiplier;
+                    float despues = actual + 0.50f;
+
+                    if (comprado)
+                        sb.AppendLine($"Velocidad Virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad Virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            // -------------------------
+            // VELOCIDAD INFECCIÓN
+            // -------------------------
 
             case SkillEffectType.InfectSpeed50:
-                sb.AppendLine($"Velocidad infección: {g.infectSpeedMultiplier:F2} → {g.infectSpeedMultiplier + 0.50f:F2}");
-                break;
+                {
+                    float actual = g.infectSpeedMultiplier;
+                    float despues = actual + 0.50f;
+
+                    if (comprado)
+                        sb.AppendLine($"Velocidad infección: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad infección: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
 
             case SkillEffectType.InfectSpeed100:
-                sb.AppendLine($"Velocidad infección: {g.infectSpeedMultiplier:F2} → {g.infectSpeedMultiplier + 1.00f:F2}");
-                break;
+                {
+                    float actual = g.infectSpeedMultiplier;
+                    float despues = actual + 1f;
 
-            // ========================
+                    if (comprado)
+                        sb.AppendLine($"Velocidad infección: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad infección: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+
+            // -------------------------
+            // CAPTURA POR FASE (TIEMPO REAL)
+            // -------------------------
+
+            case SkillEffectType.InfectSpeedPhase0_10:
+            case SkillEffectType.InfectSpeedPhase0_20:
+            case SkillEffectType.InfectSpeedPhase0_30:
+            case SkillEffectType.InfectSpeedPhase0_40:
+            case SkillEffectType.InfectSpeedPhase0_50:
+                {
+                    float resistencia = 1f;
+                    float actualVel = g.infectSpeedPerPhase[0];
+                    float nuevaVel = actualVel + 0.10f;
+
+                    float tiempoActual = (PersonaInfeccion.globalInfectTime * resistencia) / actualVel;
+                    float tiempoNuevo = (PersonaInfeccion.globalInfectTime * resistencia) / nuevaVel;
+
+                    if (comprado)
+                        sb.AppendLine($"Tiempo captura Hexágono: {tiempoActual:F2}s");
+                    else
+                        sb.AppendLine($"Tiempo captura Hexágono: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
+
+                    break;
+                }
+
+            case SkillEffectType.InfectSpeedPhase1_10:
+            case SkillEffectType.InfectSpeedPhase1_20:
+            case SkillEffectType.InfectSpeedPhase1_30:
+            case SkillEffectType.InfectSpeedPhase1_40:
+            case SkillEffectType.InfectSpeedPhase1_50:
+                {
+                    float resistencia = 1.2f;
+                    float actualVel = g.infectSpeedPerPhase[1];
+                    float nuevaVel = actualVel + 0.10f;
+
+                    float tiempoActual = (PersonaInfeccion.globalInfectTime * resistencia) / actualVel;
+                    float tiempoNuevo = (PersonaInfeccion.globalInfectTime * resistencia) / nuevaVel;
+
+                    if (comprado)
+                        sb.AppendLine($"Tiempo captura Pentágono: {tiempoActual:F2}s");
+                    else
+                        sb.AppendLine($"Tiempo captura Pentágono: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
+
+                    break;
+                }
+
+            case SkillEffectType.InfectSpeedPhase2_10:
+            case SkillEffectType.InfectSpeedPhase2_20:
+            case SkillEffectType.InfectSpeedPhase2_30:
+            case SkillEffectType.InfectSpeedPhase2_40:
+            case SkillEffectType.InfectSpeedPhase2_50:
+                {
+                    float resistencia = 1.5f;
+                    float actualVel = g.infectSpeedPerPhase[2];
+                    float nuevaVel = actualVel + 0.10f;
+
+                    float tiempoActual = (PersonaInfeccion.globalInfectTime * resistencia) / actualVel;
+                    float tiempoNuevo = (PersonaInfeccion.globalInfectTime * resistencia) / nuevaVel;
+
+                    if (comprado)
+                        sb.AppendLine($"Tiempo captura Cuadrado: {tiempoActual:F2}s");
+                    else
+                        sb.AppendLine($"Tiempo captura Cuadrado: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
+
+                    break;
+                }
+
+            case SkillEffectType.InfectSpeedPhase3_10:
+            case SkillEffectType.InfectSpeedPhase3_20:
+            case SkillEffectType.InfectSpeedPhase3_30:
+            case SkillEffectType.InfectSpeedPhase3_40:
+            case SkillEffectType.InfectSpeedPhase3_50:
+                {
+                    float resistencia = 1.8f;
+                    float actualVel = g.infectSpeedPerPhase[3];
+                    float nuevaVel = actualVel + 0.10f;
+
+                    float tiempoActual = (PersonaInfeccion.globalInfectTime * resistencia) / actualVel;
+                    float tiempoNuevo = (PersonaInfeccion.globalInfectTime * resistencia) / nuevaVel;
+
+                    if (comprado)
+                        sb.AppendLine($"Tiempo captura Triángulo: {tiempoActual:F2}s");
+                    else
+                        sb.AppendLine($"Tiempo captura Triángulo: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
+
+                    break;
+                }
+
+            case SkillEffectType.InfectSpeedPhase4_10:
+            case SkillEffectType.InfectSpeedPhase4_20:
+            case SkillEffectType.InfectSpeedPhase4_30:
+            case SkillEffectType.InfectSpeedPhase4_40:
+            case SkillEffectType.InfectSpeedPhase4_50:
+                {
+                    float resistencia = 2.2f;
+                    float actualVel = g.infectSpeedPerPhase[4];
+                    float nuevaVel = actualVel + 0.10f;
+
+                    float tiempoActual = (PersonaInfeccion.globalInfectTime * resistencia) / actualVel;
+                    float tiempoNuevo = (PersonaInfeccion.globalInfectTime * resistencia) / nuevaVel;
+
+                    if (comprado)
+                        sb.AppendLine($"Tiempo captura Círculo: {tiempoActual:F2}s");
+                    else
+                        sb.AppendLine($"Tiempo captura Círculo: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
+
+                    break;
+                }
+            // -------------------------
             // PROBABILIDADES
-            // ========================
+            // -------------------------
 
             case SkillEffectType.AddTimeOnPhaseChance5:
             case SkillEffectType.AddTimeOnPhaseChance10:
@@ -740,7 +961,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = g.addTimeOnPhaseChance * 100f;
                     float despues = (g.addTimeOnPhaseChance + 0.05f) * 100f;
 
-                    sb.AppendLine($"Bonus tiempo fase: {actual:F0}% → {despues:F0}%");
+                    if (comprado)
+                        sb.AppendLine($"Bonus tiempo fase: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Bonus tiempo fase: {actual:F0}% → {despues:F0}%");
+
                     break;
                 }
 
@@ -753,7 +978,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = g.doubleUpgradeChance * 100f;
                     float despues = (g.doubleUpgradeChance + 0.05f) * 100f;
 
-                    sb.AppendLine($"Upgrade doble: {actual:F0}% → {despues:F0}%");
+                    if (comprado)
+                        sb.AppendLine($"Upgrade doble: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Upgrade doble: {actual:F0}% → {despues:F0}%");
+
                     break;
                 }
 
@@ -766,7 +995,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = g.randomSpawnPhaseChance * 100f;
                     float despues = (g.randomSpawnPhaseChance + 0.05f) * 100f;
 
-                    sb.AppendLine($"Spawn aleatorio: {actual:F0}% → {despues:F0}%");
+                    if (comprado)
+                        sb.AppendLine($"Spawn aleatorio: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Spawn aleatorio: {actual:F0}% → {despues:F0}%");
+
                     break;
                 }
         }
