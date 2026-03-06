@@ -9,7 +9,7 @@ public class PopulationManager : MonoBehaviour
     private GameObject currentPrefab;
 
     [Header("Settings")]
-    public float spawnInterval = 9f;
+    public float spawnInterval = 18f;
   
     private float baseSpawnInterval;
 
