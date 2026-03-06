@@ -1,0 +1,868 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: TextosJuego Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: TextosJuego
+  m_TableCollectionNameGuidString: d513c2be9fe99bb43813b65ab5656af5
+  m_Entries:
+  - m_Id: 826903678976
+    m_Key: btn_jugar_pro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826941427712
+    m_Key: btn_continuar_pro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622016
+    m_Key: btn_ajustes_pro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622017
+    m_Key: btn_salir_pro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622018
+    m_Key: fase_hex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622019
+    m_Key: fase_pent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622020
+    m_Key: fase_cuad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622021
+    m_Key: fase_tri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622022
+    m_Key: fase_circ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622023
+    m_Key: fase_bola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622024
+    m_Key: titulo_monedas_ganadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622025
+    m_Key: titulo_monedas_totales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622026
+    m_Key: titulo_ev_zona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622027
+    m_Key: titulo_ev_pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622028
+    m_Key: titulo_ev_carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172310347776
+    m_Key: txt_total_zona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172335513600
+    m_Key: txt_total_pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172335513601
+    m_Key: txt_total_carambola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622032
+    m_Key: btn_omitir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622033
+    m_Key: btn_continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622034
+    m_Key: monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826945622035
+    m_Key: txt_coste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816320
+    m_Key: txt_adn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816321
+    m_Key: skill_coinsx2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816322
+    m_Key: skill_coinsx2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816323
+    m_Key: skill_coinsx3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816324
+    m_Key: skill_coinsx3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816325
+    m_Key: skill_coinsx4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816326
+    m_Key: skill_coinsx4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816327
+    m_Key: skill_coinsx5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816328
+    m_Key: skill_coinsx5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816329
+    m_Key: skill_coinsx6_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816330
+    m_Key: skill_coinsx6_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707904
+    m_Key: MULTIPLICADOR VELOCIDAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816332
+    m_Key: skill_speed_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816333
+    m_Key: skill_speed_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816334
+    m_Key: skill_speed_tit2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816335
+    m_Key: skill_speed_desc2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707905
+    m_Key: NIVEL TIEMPO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816337
+    m_Key: skill_time_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816338
+    m_Key: skill_time_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707906
+    m_Key: MEJORA CARAMBOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816360
+    m_Key: skill_rebound_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816361
+    m_Key: skill_rebound_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816362
+    m_Key: skill_rebound2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816363
+    m_Key: skill_rebound2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816364
+    m_Key: skill_rebound3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816365
+    m_Key: skill_rebound3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816366
+    m_Key: DANO AL TRIANGULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816367
+    m_Key: skill_triangle_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816368
+    m_Key: skill_triangle_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826949816369
+    m_Key: skill_triangle_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707907
+    m_Key: skill_triangle2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707908
+    m_Key: skill_triangle2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707909
+    m_Key: skill_triangle3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707910
+    m_Key: skill_triangle3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010627
+    m_Key: skill_square_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010628
+    m_Key: skill_square_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707911
+    m_Key: DANO AL HEXAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010634
+    m_Key: skill_hexagon_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010635
+    m_Key: skill_hexagon_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707912
+    m_Key: DANO AL PENTAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010641
+    m_Key: skill_pentagon_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010642
+    m_Key: skill_pentagon_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707913
+    m_Key: DANO AL CIRCULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010648
+    m_Key: skill_circle_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010649
+    m_Key: skill_circle_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707914
+    m_Key: MEJORA SPAWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010655
+    m_Key: skill_spawn_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010656
+    m_Key: skill_spawn_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707915
+    m_Key: AUMENTO POBLACION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010666
+    m_Key: skill_population_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010667
+    m_Key: skill_population_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707916
+    m_Key: MEJORA RADIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010673
+    m_Key: skill_radius_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826954010674
+    m_Key: skill_radius_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707917
+    m_Key: MULTIPLICADOR VELOCIDAD INFECCION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204934
+    m_Key: skill_infectionSpeedMulti_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204935
+    m_Key: skill_infectionSpeed_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707918
+    m_Key: NIVEL RADIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204939
+    m_Key: skill_radioControl_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204940
+    m_Key: skill_radioControl_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707919
+    m_Key: NIVEL VELOCIDAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204950
+    m_Key: skill_speedLevel_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204951
+    m_Key: skill_speedLevel_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707920
+    m_Key: MEJORA PROBABILIDAD TIEMPO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204959
+    m_Key: skill_timeProbability_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204960
+    m_Key: skill_timeProbability_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707921
+    m_Key: MEJORA VELOCIDAD DE INFECCION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826962399238
+    m_Key: skill_infectionSpeed_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707922
+    m_Key: MEJORA DUPLICAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826966593539
+    m_Key: skill_hitduplication_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826966593540
+    m_Key: skill_hitduplication_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707923
+    m_Key: DANO EMITIDO HEXAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787840
+    m_Key: skill_zoneDamageHex_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787841
+    m_Key: skill_zoneDamageHex_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707924
+    m_Key: DANO EMITIDO PENTAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787851
+    m_Key: skill_zoneDamagePen_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787852
+    m_Key: skill_zoneDamagePen_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707925
+    m_Key: DANO EMITIDO CUADRADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787862
+    m_Key: skill_zoneDamageSqr_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826970787863
+    m_Key: skill_zoneDamageSqr_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982144
+    m_Key: skill_zoneDamageSqr2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982145
+    m_Key: skill_zoneDamageSqr2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982146
+    m_Key: skill_zoneDamageSqr3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982147
+    m_Key: skill_zoneDamageSqr3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982148
+    m_Key: skill_zoneDamageSqr4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982149
+    m_Key: skill_zoneDamageSqr4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982150
+    m_Key: skill_zoneDamageSqr5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982151
+    m_Key: skill_zoneDamageSqr5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982152
+    m_Key: skill_zoneDamageTri_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982153
+    m_Key: skill_zoneDamageTri_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982154
+    m_Key: skill_zoneDamageTri2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982155
+    m_Key: skill_zoneDamageTri2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982156
+    m_Key: skill_zoneDamageTri3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982157
+    m_Key: skill_zoneDamageTri3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982158
+    m_Key: skill_zoneDamageTri4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982159
+    m_Key: skill_zoneDamageTri4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982160
+    m_Key: skill_zoneDamageTri5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982161
+    m_Key: skill_zoneDamageTri5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982162
+    m_Key: skill_zoneDamageCir_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982163
+    m_Key: skill_zoneDamageCir_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982164
+    m_Key: skill_zoneDamageCir2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982165
+    m_Key: skill_zoneDamageCir2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982166
+    m_Key: skill_zoneDamageCir3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982167
+    m_Key: skill_zoneDamageCir3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982168
+    m_Key: skill_zoneDamageCir4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982169
+    m_Key: skill_zoneDamageCir4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982170
+    m_Key: skill_zoneDamageCir5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982171
+    m_Key: skill_zoneDamageCir5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707926
+    m_Key: REBOTE CON CORAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982173
+    m_Key: skill_coralRebound_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982174
+    m_Key: skill_coralRebound_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707927
+    m_Key: MEJORA SALTA FASES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982176
+    m_Key: skill_skipStages_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982177
+    m_Key: skill_skipStages_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982178
+    m_Key: skill_skipStages2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982179
+    m_Key: skill_skipStages2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982180
+    m_Key: skill_skipStages3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982181
+    m_Key: skill_skipStages3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982182
+    m_Key: skill_skipStages4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982183
+    m_Key: skill_skipStages4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707928
+    m_Key: MEJORA CAPTURA EXTRA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982185
+    m_Key: skill_extraCapture_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826974982186
+    m_Key: skill_extraCapture_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707929
+    m_Key: MEJORA FIGURA DORADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176450
+    m_Key: skill_goldFigure_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176451
+    m_Key: skill_goldFigure_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176452
+    m_Key: skill_goldFigure2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176453
+    m_Key: skill_goldFigure2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176454
+    m_Key: skill_goldFigure3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176455
+    m_Key: skill_goldFigure3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176456
+    m_Key: skill_goldFigure4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176457
+    m_Key: skill_goldFigure4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176458
+    m_Key: skill_goldFigure5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176459
+    m_Key: skill_goldFigure5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707930
+    m_Key: MULTIPLICADOR DORADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176461
+    m_Key: skill_multiGold_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176462
+    m_Key: skill_multiGold_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176463
+    m_Key: skill_multiGold2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176464
+    m_Key: skill_multiGold2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176465
+    m_Key: skill_multiGold3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176466
+    m_Key: skill_multiGold3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176467
+    m_Key: skill_multiGold4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176468
+    m_Key: skill_multiGold4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176469
+    m_Key: skill_multiGold5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176470
+    m_Key: skill_multiGold5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707931
+    m_Key: FIGURAS INICIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176472
+    m_Key: skill_initialFigures_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176473
+    m_Key: skill_initialFigures_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176474
+    m_Key: skill_initialFigures2_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176475
+    m_Key: skill_initialFigures2_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176476
+    m_Key: skill_initialFigures3_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176477
+    m_Key: skill_initialFigures3_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176478
+    m_Key: skill_initialFigures4_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176479
+    m_Key: skill_initialFigures4_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176480
+    m_Key: skill_initialFigures5_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176481
+    m_Key: skill_initialFigures5_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176482
+    m_Key: skill_initialFigures6_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176483
+    m_Key: skill_initialFigures6_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176484
+    m_Key: skill_initialFigures7_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176485
+    m_Key: skill_initialFigures7_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176486
+    m_Key: skill_initialFigures8_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176487
+    m_Key: skill_initialFigures8_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176488
+    m_Key: skill_initialFigures9_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176489
+    m_Key: skill_initialFigures9_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176490
+    m_Key: skill_initialFigures10_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176491
+    m_Key: skill_initialFigures10_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176492
+    m_Key: skill_root_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176493
+    m_Key: skill_root_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707932
+    m_Key: MONEDAS HEXAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176495
+    m_Key: skill_monedasHexagon_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176496
+    m_Key: skill_monedasHexagon_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707933
+    m_Key: MONEDAS PENTAGONO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176498
+    m_Key: skill_monedasPentagon_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176499
+    m_Key: skill_monedasPentagon_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707934
+    m_Key: MONEDAS CUADRADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176501
+    m_Key: skill_monedasSquare_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176502
+    m_Key: skill_monedasSquare_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707935
+    m_Key: MONEDAS TRIANGULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176504
+    m_Key: skill_monedasTriangle_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176505
+    m_Key: skill_monedasTriangle_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707936
+    m_Key: MONEDAS CIRCULO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176507
+    m_Key: skill_monedasCirculo_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176508
+    m_Key: skill_monedasCirculo_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707937
+    m_Key: PARED INFECTICA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176510
+    m_Key: skill_paredInfec_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826979176511
+    m_Key: skill_paredInfec_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9172339707938
+    m_Key: hola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9829406789632
+    m_Key: key_pum
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2796215450289569840
+  references:
+    version: 2
+    RefIds:
+    - rid: 2796215450289569840
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1772811776768

@@ -40,15 +40,16 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Daño Total")]
     public TextMeshProUGUI zonaDamageText;
 
-
     // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
     private readonly string[] clavesFases = { "fase_hex", "fase_pent", "fase_cuad", "fase_tri", "fase_circ", "fase_bola" };
 
-    // Monedas base por fase que usa el panel (si tu juego usa otra tabla, cámbiala aquí)
+    // Monedas base por fase que usa el panel
     private readonly int[] valorZonaPorFase = { 1, 2, 3, 4, 5 };
 
-    // CAMBIO 1: Apuntamos a la nueva tabla
-    private string nombreTablaLocalization = "TextosUI";
+    // ==========================================
+    // CAMBIO AQUÍ: Nombre de la nueva tabla
+    // ==========================================
+    private string nombreTablaLocalization = "TextosJuego";
 
     [Header("Animación")]
     private bool isTransferring = false;
@@ -69,16 +70,18 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Feedback de Partículas")]
     public ParticleSystem coinParticles;
     public int maxParticlesPerFlash = 20;
+
     [Header("Barras de Vida de Planetas")]
     public Transform barrasContainer;
     public GameObject barraVidaPrefab;
+
     void Awake()
     {
         instance = this;
         panel.SetActive(false);
     }
 
-    // CAMBIO 2: Mejoramos la función para que no falle si falta una clave
+    // Método para obtener el texto traducido de la tabla "TextosJuego"
     string GetTexto(string clave)
     {
         var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTablaLocalization, clave);
@@ -88,7 +91,6 @@ public class EndDayResultsPanel : MonoBehaviour
 
     // -------------------------
     // BONUS MONEDAS POR FASE
-    // Orden real: 0 HEX, 1 PENT, 2 CUAD, 3 TRI, 4 CIRC
     // -------------------------
     private int GetCoinBonusForPhase(int fase)
     {
@@ -107,7 +109,6 @@ public class EndDayResultsPanel : MonoBehaviour
 
     // -------------------------
     // DAÑO POR HIT (BASE + BONUS) POR FASE
-    // Base igual que PersonaInfeccion.dañoPorFasePredeterminado = {1,2,3,4,5}
     // -------------------------
     private float GetBaseDamageForPhase(int fase)
     {
@@ -152,7 +153,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
 
-        GenerarBarraPlanetaActual();   // ← añadir esto
+        GenerarBarraPlanetaActual();
     }
 
     // ======================================================
@@ -217,7 +218,6 @@ public class EndDayResultsPanel : MonoBehaviour
         zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
         zonaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalZona:F0}";
 
-
         // ===================== CHOQUE =====================
         int totalP = 0;
         string tituloChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
@@ -258,7 +258,6 @@ public class EndDayResultsPanel : MonoBehaviour
 
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
 
-
         // ===================== CARAMBOLA =====================
         int totalC = 0;
         string tituloCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
@@ -297,10 +296,7 @@ public class EndDayResultsPanel : MonoBehaviour
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
 
-
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
-
-
 
         // ===================== RESUMEN GENERAL =====================
         monedasTempPartida = monedasGanadas;
