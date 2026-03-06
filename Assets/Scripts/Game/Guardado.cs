@@ -23,7 +23,7 @@ public class Guardado : MonoBehaviour
 
     [Header("Habilidades de Entorno")]
     public bool paredInfectivaActiva = false;
-    public int nivelParedInfectiva = 0; // 0 = desactivada, 1-5 niveles
+    public int nivelParedInfectiva = 1; // 0 = desactivada, 1-5 niveles
     public bool virusReboteActiva = false;
 
     [Header("Habilidad Especial")]
@@ -290,7 +290,11 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
     // --- REPARACIÓN DE ERRORES ESPECÍFICOS ---
-    public void SetNivelParedInfectiva(int nivel) { nivelParedInfectiva = nivel; SaveData(); }
+    public void AddNivelParedInfectiva(int cantidad)
+    {
+        nivelParedInfectiva += cantidad; // Suma a lo que ya existe
+        SaveData();
+    }
     public void SetDuplicateProbability(float amount) { probabilidadDuplicarChoque = amount; SaveData(); }
     // Este método cubre el error de SetInfectionSpeedBonus
     public void SetInfectionSpeedBonus(float amount) { infectSpeedMultiplier = amount; SaveData(); }

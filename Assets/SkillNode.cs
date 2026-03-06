@@ -440,23 +440,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(GetInt(1));
-                break;
-            case SkillEffectType.ParedInfectiva_Nivel2:
-                Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(GetInt(2));
-                break;
-            case SkillEffectType.ParedInfectiva_Nivel3:
-                Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(GetInt(3));
-                break;
-            case SkillEffectType.ParedInfectiva_Nivel4:
-                Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(GetInt(4));
-                break;
-            case SkillEffectType.ParedInfectiva_Nivel5:
-                Guardado.instance.ActivarParedInfectiva();
-                Guardado.instance.SetNivelParedInfectiva(GetInt(5));
+                Guardado.instance.AddNivelParedInfectiva(1);
                 break;
 
             case SkillEffectType.ReboteConCoral:
