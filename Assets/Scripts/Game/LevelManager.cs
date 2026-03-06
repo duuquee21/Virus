@@ -536,6 +536,11 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
+        if (MapSequenceManager.instance != null)
+        {
+            MapSequenceManager.instance.ResetToFirstMap();
+        }
+
         ManualSetCycler cycler = Object.FindFirstObjectByType<ManualSetCycler>();
         if (cycler != null) cycler.ResetCycler();
 
@@ -545,6 +550,8 @@ public class LevelManager : MonoBehaviour
             if (mapList[i] != null)
             {
                 mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].transform.localPosition = Vector3.zero;
+                mapList[i].transform.localScale = Vector3.one;
                 mapList[i].SetActive(i == 0);
             }
         }
@@ -602,10 +609,11 @@ public class LevelManager : MonoBehaviour
             if (mapList[i] != null)
             {
                 mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].transform.localPosition = Vector3.zero;
+                mapList[i].transform.localScale = Vector3.one;
                 mapList[i].SetActive(i == 0);
             }
         }
-
         // Buscamos TODOS los scripts de planetas, incluso los que están desactivados
         PlanetCrontrollator[] todosLosPlanetas = Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 

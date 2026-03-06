@@ -69,7 +69,9 @@ public class EndDayResultsPanel : MonoBehaviour
     [Header("Feedback de Partículas")]
     public ParticleSystem coinParticles;
     public int maxParticlesPerFlash = 20;
-
+    [Header("Barras de Vida de Planetas")]
+    public Transform barrasContainer;
+    public GameObject barraVidaPrefab;
     void Awake()
     {
         instance = this;
@@ -147,7 +149,10 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         Time.timeScale = 0f;
         panel.SetActive(true);
+
         UpdateAllTexts(monedasGanadas, monedasTotales);
+
+        GenerarBarraPlanetaActual();   // ← añadir esto
     }
 
     // ======================================================
@@ -318,6 +323,29 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         monedasPartidaText.text = monedasTempPartida.ToString();
         monedasTotalesText.text = monedasTempTotales.ToString();
+    }
+
+    void GenerarBarraPlanetaActual()
+    {
+        if (barrasContainer == null || barraVidaPrefab == null) return;
+        if (MapSequenceManager.instance == null) return;
+
+        // limpiar barras anteriores
+        foreach (Transform child in barrasContainer)
+            Destroy(child.gameObject);
+
+        var maps = MapSequenceManager.instance.maps;
+        int current = MapSequenceManager.instance.GetCurrentMapIndex();
+
+        if (current >= maps.Count) return;
+
+        GameObject barra = Instantiate(barraVidaPrefab, barrasContainer);
+
+        var barraUI = barra.GetComponent<PlanetHealthBarUI>();
+
+        float porcentaje = maps[current].currentHealth / maps[current].maxHealth;
+
+        barraUI.Setup(maps[current].mapName, porcentaje);
     }
 
     public void StartCoinTransfer(System.Action onComplete)

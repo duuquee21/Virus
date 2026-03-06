@@ -51,7 +51,15 @@ public class MapSequenceManager : MonoBehaviour
 
         LevelManager.instance.NextMapTransition();
     }
+    public void ResetToFirstMap()
+    {
+        currentMapIndex = 0;
 
+        for (int i = 0; i < maps.Count; i++)
+        {
+            maps[i].currentHealth = maps[i].maxHealth;
+        }
+    }
     public MapData GetCurrentMap()
     {
         return maps[currentMapIndex];
