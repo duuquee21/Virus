@@ -319,7 +319,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787862
-    m_Localized: Dano Cuadrado
+    m_Localized: "Da\xF1o Cuadrado"
     m_Metadata:
       m_Items: []
   - m_Id: 826970787863
@@ -654,60 +654,12 @@ MonoBehaviour:
     m_Localized: Te otorga una mejora aleatoria
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176495
-    m_Localized: Monedas Hexagono
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176496
-    m_Localized: El hexagono da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176498
-    m_Localized: Monedas Pentagono
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176499
-    m_Localized: El pentagono da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176501
-    m_Localized: Monedas Cuadrado
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176502
-    m_Localized: El cuadrado da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176504
-    m_Localized: Monedas Triangulo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176505
-    m_Localized: El cuadrado da mas monedas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176507
-    m_Localized: Monedas Circulo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176508
-    m_Localized: El circulo da mas monedas
-    m_Metadata:
-      m_Items: []
   - m_Id: 826979176510
     m_Localized: Pared Infectiva
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
     m_Localized: Probabilidad de saltar una fase al chocar contra la pared
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9172339707938
-    m_Localized: hola
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9829406789632
-    m_Localized: key_pum
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -720,6 +672,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9172335513601
     m_Localized: TOTAL CARAMBOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259438174208
+    m_Localized: Monedas Hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259459145728
+    m_Localized: El hexagono da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963821199360
+    m_Localized: Monedas Pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393664
+    m_Localized: El pentagono da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393665
+    m_Localized: Monedas Cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393666
+    m_Localized: El cuadrado da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393668
+    m_Localized: El cuadrado da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393669
+    m_Localized: Monedas Circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393670
+    m_Localized: El circulo da mas monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36237889818624
+    m_Localized: Monedas Triangulo
     m_Metadata:
       m_Items: []
   references:

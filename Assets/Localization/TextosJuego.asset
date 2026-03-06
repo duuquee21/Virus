@@ -28,7 +28,7 @@ MonoBehaviour:
         m_Collection: {fileID: 11400000}
         m_SheetsServiceProvider: {fileID: 11400000, guid: 864124c3f614b1b42819afbb9ec06bbf, type: 2}
         m_SpreadsheetId: 19H4C2miR_8db2R8PnuZKkyq04Bq1Xxi_FGoIlAkc3ks
-        m_SheetId: 0
+        m_SheetId: 371885069
         m_Columns:
         - rid: 2796215450289570025
         - rid: 2796215450289570026
@@ -37,18 +37,18 @@ MonoBehaviour:
     - rid: 2796215450289570025
       type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: Key
+        m_Column: A
     - rid: 2796215450289570026
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: es
+        m_Column: D
         m_LocaleIdentifier:
-          m_Code: es
+          m_Code: en
         m_IncludeComments: 0
     - rid: 2796215450289570027
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: en
+        m_Column: C
         m_LocaleIdentifier:
-          m_Code: en
+          m_Code: es
         m_IncludeComments: 0

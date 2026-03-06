@@ -654,60 +654,12 @@ MonoBehaviour:
     m_Localized: Get a Random Upgrade
     m_Metadata:
       m_Items: []
-  - m_Id: 826979176495
-    m_Localized: Damage Hexagon
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176496
-    m_Localized: It makes it easier to capture the hexagon.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176498
-    m_Localized: Damage Pentagon
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176499
-    m_Localized: It makes it easier to capture the pentagon
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176501
-    m_Localized: Damage Square
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176502
-    m_Localized: It makes it easier to capture the square
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176504
-    m_Localized: Damage Triangle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176505
-    m_Localized: It makes it easier to capture the triangle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176507
-    m_Localized: Damage Circle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176508
-    m_Localized: It makes it easier to capture the circule
-    m_Metadata:
-      m_Items: []
   - m_Id: 826979176510
     m_Localized: Infectious Wall
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
     m_Localized: The figures can skip a level by bouncing off the wall.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9172339707938
-    m_Localized: 
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9829406789632
-    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -720,6 +672,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9172335513601
     m_Localized: BOUNCE TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259438174208
+    m_Localized: Damage Hexagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23259459145728
+    m_Localized: It makes it easier to capture the hexagon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963821199360
+    m_Localized: Damage Pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393664
+    m_Localized: It makes it easier to capture the pentagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393665
+    m_Localized: Damage Square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393666
+    m_Localized: It makes it easier to capture the square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393668
+    m_Localized: It makes it easier to capture the triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393669
+    m_Localized: Damage Circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23963825393670
+    m_Localized: It makes it easier to capture the circule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36237889818624
+    m_Localized: Damage Triangle
     m_Metadata:
       m_Items: []
   references:
