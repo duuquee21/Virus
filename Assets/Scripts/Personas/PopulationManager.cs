@@ -9,10 +9,10 @@ public class PopulationManager : MonoBehaviour
     private GameObject currentPrefab;
 
     [Header("Settings")]
-    public float spawnInterval = 3f;
-    public float maxPopulation = 15f;
+    public float spawnInterval = 9f;
+  
     private float baseSpawnInterval;
-    public float baseMaxPopulation = 15f;
+
     public int initialPopulation = 10;
     public static PopulationManager instance;
 
@@ -102,12 +102,20 @@ public class PopulationManager : MonoBehaviour
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
 
-        for (int i = 0; i < initialPopulation; i++)
+        // CALCULAR POBLACIÓN INICIAL CON EL BONUS
+        int poblacionReal = initialPopulation;
+        if (Guardado.instance != null)
+        {
+            // Si el bonus es 1f, sumará 1 persona extra. 
+            // Si quieres que sea un porcentaje, usa: initialPopulation * (1 + bonus)
+            poblacionReal = initialPopulation + (int)Guardado.instance.populationBonus;
+        }
+
+        for (int i = 0; i < poblacionReal; i++)
         {
             SpawnPerson(false);
         }
     }
-
     void Update()
     {
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
@@ -121,17 +129,13 @@ public class PopulationManager : MonoBehaviour
 
         int currentCount = GetTotalPopulationCount();
 
-        if (timer >= spawnInterval && currentCount < maxPopulation)
+        if (timer >= spawnInterval )
         {
             SpawnPerson(true);
             timer = 0;
         }
 
-        if (Guardado.instance != null)
-        {
-            float bonus = Guardado.instance.populationBonus;
-            maxPopulation = baseMaxPopulation * (1f + bonus);
-        }
+       
     }
 
     private int GetTotalPopulationCount()

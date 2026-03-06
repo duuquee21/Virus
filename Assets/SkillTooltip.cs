@@ -56,8 +56,7 @@ public class SkillTooltip : MonoBehaviour
         descriptionText.text = translatedDescription;
 
         string textoCoste = GetTexto("txt_coste");
-        string textoAdn = GetTexto("txt_adn");
-        costText.text = $"{textoCoste}: {cost} {textoAdn}";
+        costText.text = $"{textoCoste}: {cost} ";
 
         if (rect != null && target != null)
         {
