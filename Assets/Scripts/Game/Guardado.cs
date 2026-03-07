@@ -380,7 +380,11 @@ public class Guardado : MonoBehaviour
     }
 
 
-
+    public void AddSpeedMultiplier(float extra)
+    {
+        speedMultiplier += extra;
+        SaveData();
+    }
     public bool HasSavedGame() => PlayerPrefs.GetInt("Run_InProgress", 0) == 1;
     public void ResetAllProgress() { PlayerPrefs.DeleteAll(); HardResetVariables(); }
 }

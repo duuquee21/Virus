@@ -379,7 +379,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break;
             case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break;
 
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(1f); break;
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(0.25f); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
 
@@ -988,6 +988,257 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                         sb.AppendLine($"Upgrade doble: {actual:F0}%");
                     else
                         sb.AppendLine($"Upgrade doble: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+
+            // -------------------------
+            // POBLACIÓN
+            // -------------------------
+
+            case SkillEffectType.IncreasePopulation25:
+                {
+                    float actualTotal = (1f + g.populationBonus) * 100f;
+                    float despuesTotal = (1f + g.populationBonus + 0.25f) * 100f;
+
+                    if (comprado)
+                        sb.AppendLine($"Población máxima: {actualTotal:F0}%");
+                    else
+                        sb.AppendLine($"Población máxima: {actualTotal:F0}% → {despuesTotal:F0}%");
+
+                    break;
+                }
+
+            case SkillEffectType.IncreasePopulation50:
+                {
+                    float actualTotal = (1f + g.populationBonus) * 100f;
+                    float despuesTotal = (1f + g.populationBonus + 0.50f) * 100f;
+
+                    if (comprado)
+                        sb.AppendLine($"Población máxima: {actualTotal:F0}%");
+                    else
+                        sb.AppendLine($"Población máxima: {actualTotal:F0}% → {despuesTotal:F0}%");
+
+                    break;
+                }
+            // -------------------------
+            // PARED INFECTIVA
+            // -------------------------
+
+            case SkillEffectType.ParedInfectiva_Nivel1:
+            case SkillEffectType.ParedInfectiva_Nivel2:
+            case SkillEffectType.ParedInfectiva_Nivel3:
+            case SkillEffectType.ParedInfectiva_Nivel4:
+            case SkillEffectType.ParedInfectiva_Nivel5:
+                {
+                    int actual = g.nivelParedInfectiva;
+                    int despues = actual + 1;
+
+                    if (comprado)
+                        sb.AppendLine($"Pared infectiva: Nivel {actual}");
+                    else
+                        sb.AppendLine($"Pared infectiva: Nivel {actual} → Nivel {despues}");
+
+                    break;
+                }
+
+            // -------------------------
+            // RADIO LEVEL (AUMENTO REAL)
+            // -------------------------
+
+            case SkillEffectType.RadiusLevel2:
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio del virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            case SkillEffectType.RadiusLevel3:
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio del virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            case SkillEffectType.RadiusLevel4:
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio del virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            case SkillEffectType.RadiusLevel5:
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio del virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            case SkillEffectType.RadiusLevel6:
+                {
+                    float actual = g.radiusMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Radio del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Radio del virus: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+
+            // -------------------------
+            // INFECTION SPEED LEVEL
+            // -------------------------
+
+            case SkillEffectType.InfectionSpeedLevel2:
+            case SkillEffectType.InfectionSpeedLevel3:
+            case SkillEffectType.InfectionSpeedLevel4:
+            case SkillEffectType.InfectionSpeedLevel5:
+            case SkillEffectType.InfectionSpeedLevel6:
+                {
+                    float actual = g.infectSpeedMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Velocidad infección: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad infección: {actual:F2} → {despues:F2}");
+
+                    break;
+                }
+            // -------------------------
+            // INTERVALO DE SPAWN
+            // -------------------------
+
+            case SkillEffectType.ReduceSpawnInterval20:
+            case SkillEffectType.ReduceSpawnInterval40:
+            case SkillEffectType.ReduceSpawnInterval60:
+            case SkillEffectType.ReduceSpawnInterval80:
+            case SkillEffectType.ReduceSpawnInterval100:
+                {
+                    float baseInterval = 2f; // intervalo base del juego
+                    float actualBonus = g.spawnSpeedBonus;
+                    float nuevoBonus = actualBonus + 0.20f;
+
+                    float actual = baseInterval / (1f + actualBonus);
+                    float despues = baseInterval / (1f + nuevoBonus);
+
+                    if (comprado)
+                        sb.AppendLine($"Intervalo aparición: {actual:F2}s");
+                    else
+                        sb.AppendLine($"Intervalo aparición: {actual:F2}s → {despues:F2}s");
+
+                    break;
+                }
+            // -------------------------
+            // DUPLICAR IMPACTO
+            // -------------------------
+
+            case SkillEffectType.DuplicateOnHit20:
+                {
+                    float actual = g.probabilidadDuplicarChoque * 100f;
+                    float despues = 20f;
+
+                    if (comprado)
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+
+            case SkillEffectType.DuplicateOnHit40:
+                {
+                    float actual = g.probabilidadDuplicarChoque * 100f;
+                    float despues = 40f;
+
+                    if (comprado)
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+
+            case SkillEffectType.DuplicateOnHit60:
+                {
+                    float actual = g.probabilidadDuplicarChoque * 100f;
+                    float despues = 60f;
+
+                    if (comprado)
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+
+            case SkillEffectType.DuplicateOnHit80:
+                {
+                    float actual = g.probabilidadDuplicarChoque * 100f;
+                    float despues = 80f;
+
+                    if (comprado)
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+
+            case SkillEffectType.DuplicateOnHit100:
+                {
+                    float actual = g.probabilidadDuplicarChoque * 100f;
+                    float despues = 100f;
+
+                    if (comprado)
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
+
+                    break;
+                }
+            // -------------------------
+            // SPEED LEVEL
+            // -------------------------
+
+            case SkillEffectType.SpeedLevel2:
+            case SkillEffectType.SpeedLevel3:
+            case SkillEffectType.SpeedLevel4:
+            case SkillEffectType.SpeedLevel5:
+                {
+                    float actual = g.speedMultiplier;
+                    float despues = actual + 0.25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Velocidad del virus: {actual:F2}");
+                    else
+                        sb.AppendLine($"Velocidad del virus: {actual:F2} → {despues:F2}");
 
                     break;
                 }

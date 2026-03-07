@@ -25,6 +25,13 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
     public void UpgradeInfectionSpeed()
     {
         currentLevel++;
+
+        float newTime = baseInfectTime - (currentLevel - 1) * reductionStep;
+        newTime = Mathf.Max(newTime, minInfectTime);
+
+        if (Guardado.instance != null)
+            Guardado.instance.SetInfectionSpeedBonus(baseInfectTime / newTime);
+
         ApplySpeed();
     }
 

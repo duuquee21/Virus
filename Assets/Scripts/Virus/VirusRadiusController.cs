@@ -29,8 +29,14 @@ public class VirusRadiusController : MonoBehaviour
     public void UpgradeRadius()
     {
         currentLevel++;
+
+        // sincronizamos con Guardado
+        if (Guardado.instance != null)
+            Guardado.instance.AddRadiusMultiplier(radiusIncrement);
+
         ApplyScale();
     }
+
 
     public void SetLevel(int level)
     {

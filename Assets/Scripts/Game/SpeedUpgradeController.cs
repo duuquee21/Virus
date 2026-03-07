@@ -29,6 +29,10 @@ public class SpeedUpgradeController : MonoBehaviour
     public void UpgradeSpeed()
     {
         currentLevel++;
+
+        if (Guardado.instance != null)
+            Guardado.instance.AddSpeedMultiplier(speedIncrement);
+
         ApplySpeed();
     }
 
@@ -40,14 +44,19 @@ public class SpeedUpgradeController : MonoBehaviour
 
     void ApplySpeed()
     {
-        // 1. Calculamos la velocidad base del nivel actual
-        // Si baseSpeed es 20 y nivel 1: 20 + (0 * 0.5) = 20
+        // velocidad base según nivel del upgrade
         float calculatedSpeed = baseSpeed + ((currentLevel - 1) * speedIncrement);
 
-        // 2. Le enviamos esa nueva velocidad al script de movimiento
+        // multiplicador de habilidades guardadas
+        float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.speedMultiplier : 1f;
+
+        // velocidad final
+        float finalSpeed = calculatedSpeed * skillMultiplier;
+
+        // aplicamos al movimiento del virus
         if (VirusMovement.instance != null)
         {
-            VirusMovement.instance.SetSpeed(calculatedSpeed);
+            VirusMovement.instance.SetSpeed(finalSpeed);
         }
     }
 
