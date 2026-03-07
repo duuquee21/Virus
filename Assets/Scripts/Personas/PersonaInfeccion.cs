@@ -83,6 +83,13 @@ public class PersonaInfeccion : MonoBehaviour
 
     public GameObject floatingTextPrefab;
 
+
+    [Header("Ajustes del Rastro")]
+    private TrailRenderer trail1; // El que está en el mismo objeto
+    public TrailRenderer trail2;  // El que asignarás desde el Inspector
+    private float trailTimer = 0f;
+    private bool trailActivatedThisCycle = false;
+
     void Start()
     {
         movementScript = GetComponent<Movement>();
@@ -93,6 +100,11 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(true);
 
+        trail1 = GetComponent<TrailRenderer>();
+        // Apagamos ambos al inicio
+        if (trail1 != null) trail1.emitting = false;
+        if (trail2 != null) trail2.emitting = false;
+
         ActualizarVisualFase();
         ActualizarProgresoBarras(0f);
         GameObject jugadorVirus = GameObject.FindGameObjectWithTag("Virus");
@@ -101,7 +113,11 @@ public class PersonaInfeccion : MonoBehaviour
             managerAnimacion = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
         }
     }
-
+    private void SetTrailsEmitting(bool emit)
+    {
+        if (trail1 != null) trail1.emitting = emit;
+        if (trail2 != null) trail2.emitting = emit;
+    }
     void OnEnable()
     {
         // Nos suscribimos al evento de destrucción
@@ -121,13 +137,18 @@ public class PersonaInfeccion : MonoBehaviour
 
     void Update()
     {
-        if (alreadyInfected) return;
+        if (alreadyInfected)
+        {
+            SetTrailsEmitting(false); // Cambia trail.emitting = false por esto
+            return;
+        }
 
         float resistenciaActual = (faseActual < resistenciaPorFase.Length) ? resistenciaPorFase[faseActual] : 1f;
         float tiempoNecesarioEstaFase = globalInfectTime * resistenciaActual;
 
         if (isInsideZone)
         {
+           
             // CASO A: Jugador Jugable (Infección normal)
             if (managerAnimacion == null || managerAnimacion.playable)
             {
@@ -229,7 +250,12 @@ public class PersonaInfeccion : MonoBehaviour
             }
         }
     }
-
+    private IEnumerator ActivarRastroTemporal()
+    {
+        SetTrailsEmitting(true);
+        yield return new WaitForSeconds(0.5f);
+        SetTrailsEmitting(false);
+    }
 
     public static void ResetDaños()
     {
@@ -271,7 +297,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         int faseAnterior = faseActual;
         currentInfectionTime = 0f; // Reset inmediato del progreso para evitar re-entrada
-
+        StartCoroutine(ActivarRastroTemporal());
         // 1.5 HABILIDAD: probabilidad de subir 2 fases en vez de 1
         int steps = 1;
         if (Guardado.instance != null)
