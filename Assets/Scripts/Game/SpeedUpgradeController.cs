@@ -5,8 +5,8 @@ public class SpeedUpgradeController : MonoBehaviour
     public static SpeedUpgradeController instance;
 
     [Header("Configuración de Velocidad")]
-    [SerializeField] float baseSpeed = 5f;      // Velocidad inicial nivel 1
-    [SerializeField] float speedIncrement = 0.5f; // Lo que se suma por cada upgrade
+    [SerializeField] float baseSpeed = 60f;      // Velocidad inicial nivel 1
+    [SerializeField] float speedIncrement = 1f; // Lo que se suma por cada upgrade
 
     private int currentLevel = 1;
 
@@ -26,15 +26,7 @@ public class SpeedUpgradeController : MonoBehaviour
     }
 
     // Método para sumar un nivel (+0.5f a la velocidad)
-    public void UpgradeSpeed()
-    {
-        currentLevel++;
-
-        if (Guardado.instance != null)
-            Guardado.instance.AddSpeedMultiplier(speedIncrement);
-
-        ApplySpeed();
-    }
+ 
 
     public void SetLevel(int level)
     {
@@ -44,20 +36,28 @@ public class SpeedUpgradeController : MonoBehaviour
 
     void ApplySpeed()
     {
-        // velocidad base según nivel del upgrade
+        // 1. Calculamos la velocidad base puramente por nivel
+        // Si nivel 1 = 60, nivel 2 = 61...
         float calculatedSpeed = baseSpeed + ((currentLevel - 1) * speedIncrement);
 
-        // multiplicador de habilidades guardadas
+        // 2. Obtenemos el multiplicador (Si es un x2, x3, etc.)
+        // Asegúrate de que en Guardado.instance.speedMultiplier el valor inicial sea 1f
         float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.speedMultiplier : 1f;
 
-        // velocidad final
-        float finalSpeed = calculatedSpeed * skillMultiplier;
-
-        // aplicamos al movimiento del virus
+        // 3. Enviamos el valor final al virus
         if (VirusMovement.instance != null)
         {
-            VirusMovement.instance.SetSpeed(finalSpeed);
+            // IMPORTANTE: Solo enviamos el cálculo final
+            VirusMovement.instance.SetSpeed(calculatedSpeed * skillMultiplier);
         }
+    }
+
+    public void UpgradeSpeed()
+    {
+        currentLevel++;
+
+
+        ApplySpeed();
     }
 
     public int GetCurrentLevel() => currentLevel;
@@ -66,5 +66,12 @@ public class SpeedUpgradeController : MonoBehaviour
     {
         currentLevel = 1;
         ApplySpeed();
+    }
+
+    public float GetCurrentSpeed()
+    {
+        float calculatedSpeed = baseSpeed + ((currentLevel - 1) * speedIncrement);
+        float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.speedMultiplier : 1f;
+        return calculatedSpeed * skillMultiplier;
     }
 }
