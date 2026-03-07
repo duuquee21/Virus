@@ -280,4 +280,17 @@ public class PopulationManager : MonoBehaviour
     }
 
     public void SetZonePrefab(int index) => SelectPrefab(index);
+
+    public int GetRoundInitialPopulation()
+    {
+        int poblacionReal = initialPopulation;
+
+        if (Guardado.instance != null)
+        {
+            // Replicamos la lógica de ConfigureRound
+            poblacionReal = initialPopulation + (int)Guardado.instance.populationBonus;
+        }
+
+        return poblacionReal;
+    }
 }

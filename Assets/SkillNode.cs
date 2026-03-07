@@ -998,8 +998,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.IncreasePopulation25:
                 {
-                    float actualTotal = (PopulationManager.instance.initialPopulation);
-                    float despuesTotal = (PopulationManager.instance.initialPopulation + 1);
+                    float actualTotal = (PopulationManager.instance.GetRoundInitialPopulation());
+                    float despuesTotal = (PopulationManager.instance.GetRoundInitialPopulation() + 1);
 
                     if (comprado)
                         sb.AppendLine($"Población máxima: {actualTotal:F0}");
