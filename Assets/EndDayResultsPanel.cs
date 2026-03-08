@@ -334,7 +334,9 @@ public class EndDayResultsPanel : MonoBehaviour
     public void OnClickContinue()
     {
         FinalizarConSkip();
-        LevelManager.instance.OnEndDayResultsFinished(0, 0);
+   
+        LevelManager.instance.SoftRestartRun();
+
     }
 
     public void OnClickArbol()
@@ -356,7 +358,7 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTempTotales = totalCuentaFinal;
         ActualizarTextosMonedas();
 
-        panel.SetActive(false);
+     
         Time.timeScale = 1f;
     }
 

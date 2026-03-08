@@ -122,10 +122,29 @@ public class LevelManager : MonoBehaviour
     public void OpenShinyShop() { if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
     public void CloseShinyShop()
     {
-        if (shinyPanel != null)
-            shinyPanel.SetActive(false);
-        zonePanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejoras
+        StartCoroutine(TransitionBackFromSkillTree());
+    }
 
+    private IEnumerator TransitionBackFromSkillTree()
+    {
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1);
+            transitionScript.CloseBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+
+        // Volvemos al panel de zonas o resultados
+        if (zonePanel != null) zonePanel.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     public void OpenZoneShop() { if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
@@ -1003,22 +1022,51 @@ public class LevelManager : MonoBehaviour
 
     public void OpenSkillTreePanel()
     {
-        // 1. Si el panel está abierto y hay monedas...
+        // 1. Si el panel de resultados tiene monedas pendientes, procesar animación primero
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
             EndDayResultsPanel.instance.StartCoinTransfer(() => {
-                Debug.Log("Animación terminada. Pulsa otra vez para ir al Skill Tree.");
+                // Una vez terminadas las monedas, lanzamos la transición al árbol
+                StartCoroutine(TransitionToSkillTree());
             });
-            return; // Obliga a una segunda pulsación
         }
-
-        // 2. Si ya se contaron las monedas...
-        if (EndDayResultsPanel.instance.panel.activeSelf)
+        else
         {
-            EndDayResultsPanel.instance.panel.SetActive(false);
+            // Si no hay monedas pendientes, transición directa
+            StartCoroutine(TransitionToSkillTree());
+        }
+    }
+
+    private IEnumerator TransitionToSkillTree()
+    {
+        // A. Iniciar cierre de iris/forma
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // Hexágono
+            transitionScript.CloseBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f); // Tiempo del shader
         }
 
-        EjecutarAbrirSkillTree();
+        // B. Cambio de Paneles (Mientras está en negro)
+        if (EndDayResultsPanel.instance != null)
+            EndDayResultsPanel.instance.panel.SetActive(false);
+
+        if (zonePanel != null) zonePanel.SetActive(false);
+
+        // Activamos la tienda de ADN
+        if (shinyPanel != null)
+        {
+            shinyPanel.SetActive(true);
+            UpdateUI();
+        }
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        // C. Abrir iris/forma
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     private void EjecutarAbrirSkillTree()
