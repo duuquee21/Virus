@@ -57,6 +57,7 @@ public class Guardado : MonoBehaviour
     public float addTimeOnPhaseChance = 0f; // 0..1 (0.10 = 10%)
     public float doubleUpgradeChance = 0f; // 0..1
     public float randomSpawnPhaseChance = 0f; // 0..1 (0.05 = 5%)
+    public int speedLevel = 1;
 
     public float[] infectSpeedPerPhase = new float[5];
 
@@ -117,6 +118,7 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = 0;
         coinsExtraTriangulo = 0;
         coinsExtraCirculo = 0;
+        speedLevel = 1;
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -153,6 +155,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("AddTimeOnPhaseChance", addTimeOnPhaseChance);
         PlayerPrefs.SetFloat("DoubleUpgradeChance", doubleUpgradeChance);
         PlayerPrefs.SetFloat("RandomSpawnPhaseChance", randomSpawnPhaseChance);
+        PlayerPrefs.SetInt("SpeedLevel", speedLevel);
         PlayerPrefs.SetInt("CoinsHexagono", coinsExtraHexagono);
         PlayerPrefs.SetInt("CoinsPentagono", coinsExtraPentagono);
         PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
@@ -162,6 +165,7 @@ public class Guardado : MonoBehaviour
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
         }
+
         PlayerPrefs.Save();
     }
 
@@ -186,6 +190,7 @@ public class Guardado : MonoBehaviour
         dañoExtraHexagono = PlayerPrefs.GetInt("DmgHexagono", 0);
         dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
         nivelCarambola = PlayerPrefs.GetInt("NivelCarambola", -1);
+        speedLevel = PlayerPrefs.GetInt("SpeedLevel", 1);
 
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);

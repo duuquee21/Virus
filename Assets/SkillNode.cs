@@ -586,7 +586,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     string GetPreviewValues()
     {
-        bool comprado = repeatLevel > 0;
+        bool comprado = IsUnlocked || repeatLevel > 0;
 
         if (Guardado.instance == null) return "";
 
@@ -1232,8 +1232,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.SpeedLevel4:
             case SkillEffectType.SpeedLevel5:
                 {
-                    float actual = g.speedMultiplier;
-                    float despues = actual + 0.25f;
+                    int level = Guardado.instance.speedLevel;
+
+                    float actual = 1f + ((level - 1) * 0.25f);
+                    float despues = 1f + (level * 0.25f);
 
                     if (comprado)
                         sb.AppendLine($"Velocidad del virus: {actual:F2}");
