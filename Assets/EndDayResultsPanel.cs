@@ -75,6 +75,13 @@ public class EndDayResultsPanel : MonoBehaviour
     public Transform barrasContainer;
     public GameObject barraVidaPrefab;
 
+    [Header("UI - Botones")]
+    public GameObject btnContinue;   // Arrastra el botón de Continuar
+    public GameObject btnArbol;      // Arrastra el botón de Árbol
+    public GameObject btnClaim;      // Arrastra el NUEVO botón de Claim Coins
+
+    private int totalCuentaFinal;    // Para saber el valor final en caso de skip
+
     void Awake()
     {
         instance = this;
@@ -151,11 +158,27 @@ public class EndDayResultsPanel : MonoBehaviour
         Time.timeScale = 0f;
         panel.SetActive(true);
 
-        UpdateAllTexts(monedasGanadas, monedasTotales);
+        // NUEVO: Ocultar navegación y mostrar solo Claim
+        btnClaim.SetActive(true);
+        btnContinue.SetActive(false);
+        btnArbol.SetActive(false);
 
+        totalCuentaFinal = monedasTotales; // Guardamos el total para el skip
+
+        UpdateAllTexts(monedasGanadas, monedasTotales);
         GenerarBarraPlanetaActual();
     }
-
+    public void OnClickClaim()
+    {
+        btnClaim.SetActive(false); // Desaparece al pulsar
+        btnContinue.SetActive(true);
+        btnArbol.SetActive(true);
+        StartCoinTransfer(() =>
+        {
+            // Al terminar la animación, se muestran los otros dos
+           
+        });
+    }
     // ======================================================
     // MÉTODO PARA ACTUALIZAR EN VIVO
     // ======================================================
@@ -310,9 +333,31 @@ public class EndDayResultsPanel : MonoBehaviour
 
     public void OnClickContinue()
     {
+        FinalizarConSkip();
+        LevelManager.instance.OnEndDayResultsFinished(0, 0);
+    }
+
+    public void OnClickArbol()
+    {
+        FinalizarConSkip();
+        LevelManager.instance.OpenSkillTreePanel();
+    }
+
+    private void FinalizarConSkip()
+    {
+        if (isTransferring)
+        {
+            StopAllCoroutines(); // Detiene la animación de golpe
+            isTransferring = false;
+        }
+
+        // Forzamos valores finales
+        monedasTempPartida = 0;
+        monedasTempTotales = totalCuentaFinal;
+        ActualizarTextosMonedas();
+
         panel.SetActive(false);
         Time.timeScale = 1f;
-        LevelManager.instance.OnEndDayResultsFinished(0, 0);
     }
 
     private void ActualizarTextosMonedas()

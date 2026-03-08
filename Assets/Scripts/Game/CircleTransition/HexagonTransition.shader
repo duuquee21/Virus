@@ -1,9 +1,10 @@
-Shader "Custom/ShapeTransition"
+Shader "Custom/ShapeTransitionRounded"
 {
     Properties
     {
         _Color ("Color", Color) = (0,0,0,1)
-        _Radius ("Size", Range(0.0, 1.5)) = 0
+        _Radius ("Size", Range(0.0, 1.5)) = 0.5
+        _Roundness ("Roundness", Range(0.0, 0.5)) = 0.1
         _CenterX ("Center X", Range(0.0, 1.0)) = 0.5
         _CenterY ("Center Y", Range(0.0, 1.0)) = 0.5
         _Aspect ("Aspect Ratio", Float) = 1.77
@@ -22,7 +23,7 @@ Shader "Custom/ShapeTransition"
             #include "UnityCG.cginc"
 
             fixed4 _Color;
-            float _Radius, _CenterX, _CenterY, _Aspect;
+            float _Radius, _Roundness, _CenterX, _CenterY, _Aspect;
             int _Shape;
 
             struct appdata { float4 vertex : POSITION; float2 uv : TEXCOORD0; };
@@ -35,10 +36,12 @@ Shader "Custom/ShapeTransition"
                 return o;
             }
 
-            // Distancia Círculo
-            float sdCircle(float2 p, float r) { return length(p) - r; }
+            // --- Funciones de Distancia (SDF) ---
 
-            // Distancia Hexágono
+            float sdCircle(float2 p, float r) {
+                return length(p) - r;
+            }
+
             float sdHexagon(float2 p, float r) {
                 const float3 k = float3(-0.866025404, 0.5, 0.577350269);
                 p = abs(p);
@@ -47,7 +50,6 @@ Shader "Custom/ShapeTransition"
                 return length(p) * sign(p.y);
             }
 
-            // Distancia Pentágono
             float sdPentagon(float2 p, float r) {
                 const float3 k = float3(0.809016994, 0.587785252, 0.726542528);
                 p.x = abs(p.x);
@@ -61,12 +63,19 @@ Shader "Custom/ShapeTransition"
                 float2 uv = i.uv - float2(_CenterX, _CenterY);
                 uv.x *= _Aspect;
 
+                // Para redondear: 
+                // 1. Reducimos el radio base por la cantidad de redondeo
+                float r = _Radius - _Roundness;
                 float d = 0;
-                if (_Shape == 0) d = sdCircle(uv, _Radius);
-                else if (_Shape == 1) d = sdHexagon(uv, _Radius);
-                else d = sdPentagon(uv, _Radius);
 
-                return fixed4(_Color.rgb, smoothstep(0.0, 0.01, d));
+                if (_Shape == 0) d = sdCircle(uv, _Radius); // El círculo ya es redondo
+                else if (_Shape == 1) d = sdHexagon(uv, r) - _Roundness;
+                else d = sdPentagon(uv, r) - _Roundness;
+
+                // El smoothstep mantiene la figura "negativa" (transparente dentro, color fuera)
+                float alpha = smoothstep(0.0, 0.01, d);
+                
+                return fixed4(_Color.rgb, alpha * _Color.a);
             }
             ENDCG
         }
