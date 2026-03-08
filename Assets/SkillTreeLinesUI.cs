@@ -190,6 +190,7 @@ public class SkillTreeLinesUI : MonoBehaviour
         img.fillOrigin = (int)Image.OriginHorizontal.Left;
         img.rectTransform.pivot = new Vector2(0f, 0.5f);
         img.gameObject.SetActive(false);
+        img.rectTransform.SetAsFirstSibling();
         return img;
     }
 
