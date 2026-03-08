@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
-    public int maxInfectionsPerRound = 5;
+   
      public int monedasGanadasSesion;
 
 
@@ -60,10 +60,29 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public int currentSessionInfected;
 
     float currentTimer;
+    public bool timerStarted = false; // Nueva variable
 
 
     [Header("Transición")]
     public Collections.Shaders.ShapeTransition.ShapeTransition transitionScript;
+
+    [Header("Extra Time Settings")]
+    public GameObject extraTimeUI; // Arrastra aquí el objeto de texto "Extra Time"
+    private List<PersonaInfeccion> figurasCandidatas = new List<PersonaInfeccion>();
+    private bool checkParaExtraTimeRealizado = false;
+
+    [Header("Configuración de Cámara y Final")]
+    public Camera mainCamera;
+    public float defaultZoom = 14f;
+    public float endSessionZoom = 25f; // Cuanto más alto, más lejos se verá
+    public float slowMotionDuration = 1.5f; // Segundos reales que dura el efecto
+
+    private Coroutine animacionExtraTime;
+    private Coroutine animacionTimer;
+    private bool timerAnimando = false; // Para evitar que la corrutina se dispare mil veces
+
+    public Image timerIcon;
+    private Vector3 timerIconOriginalScale;
 
     // Añade esto en EndDayResultsPanel
 
@@ -93,6 +112,10 @@ public class LevelManager : MonoBehaviour
 
         ForceHardReset();
         ShowMainMenu();
+        if (timerIcon != null)
+        {
+            timerIconOriginalScale = timerIcon.rectTransform.localScale;
+        }
     }
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
@@ -134,10 +157,9 @@ public class LevelManager : MonoBehaviour
 
     public void RegisterInfection()
     {
-        if (!isGameActive || currentSessionInfected >= maxInfectionsPerRound) return;
+
         currentSessionInfected++;
         UpdateUI();
-        if (currentSessionInfected >= maxInfectionsPerRound) EndSessionDay();
     }
 
     public Color GetCurrentLevelColor()
@@ -256,15 +278,165 @@ public class LevelManager : MonoBehaviour
         if (!isGameActive) return;
         if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
 
-        currentTimer -= Time.deltaTime;
-        foreach (var t in timerTexts)
+        if (timerStarted)
         {
-            if (t != null) t.text = currentTimer.ToString("F1") + "s";
+            currentTimer -= Time.deltaTime;
         }
 
-        if (currentTimer <= 0) EndSessionDay();
+        // Actualizar textos del timer
+        // Actualizar textos del timer
+        foreach (var t in timerTexts)
+        {
+            if (t != null)
+            {
+                if (currentTimer > 0)
+                {
+                    t.text = currentTimer.ToString("F1") + "s";
+                    // Aseguramos que si el tiempo vuelve a ser > 0 (por un powerup), la escala sea normal
+                    t.rectTransform.localScale = Vector3.one;
+                }
+                else
+                {
+                    t.text = "0.0s"; // Forzamos el 0.0 visual
+
+                    // Si el timer llega a 0 y no hemos empezado a animar, arrancamos el "latido"
+                    if (!timerAnimando)
+                    {
+                        timerAnimando = true;
+                        if (animacionTimer != null) StopCoroutine(animacionTimer);
+                        animacionTimer = StartCoroutine(AnimarRespiracionTimer());
+                    }
+                }
+            }
+        }
+
+        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
+        if (currentTimer <= 0)
+        {
+            // 1. Justo al llegar a 0, guardamos una "foto" de quiénes están dentro
+            if (!checkParaExtraTimeRealizado)
+            {
+                figurasCandidatas.Clear();
+                // Buscamos solo las personas que están en el radio en este instante
+                PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
+                foreach (var p in todas)
+                {
+                    if (p.IsInsideZone && !p.alreadyInfected)
+                    {
+                        figurasCandidatas.Add(p);
+                    }
+                }
+                checkParaExtraTimeRealizado = true;
+            }
+
+            // 2. Verificamos si alguna de esas figuras candidatas sigue siendo válida
+            if (figurasCandidatas.Count > 0)
+            {
+                ValidarEstadoTiempoExtra();
+            }
+            else
+            {
+
+                EndSessionDay();
+            }
+        }
+    }
+    private IEnumerator AnimarRespiracionTimer()
+    {
+        while (timerAnimando)
+        {
+            // Usamos un factor común basado en el tiempo global del juego
+            // 5f es la velocidad, 0.15f es la amplitud (qué tanto crece)
+            float pulse = 1f + Mathf.Sin(Time.unscaledTime * 5f) * 0.15f;
+
+            foreach (var t in timerTexts)
+            {
+                if (t != null) t.rectTransform.localScale = Vector3.one * pulse;
+            }
+
+            if (timerIcon != null)
+            {
+                timerIcon.rectTransform.localScale = timerIconOriginalScale * pulse;
+            }
+
+            yield return null;
+        }
+
+        // Reset al terminar
+        ResetTimerVisuals();
+    }
+    private void ValidarEstadoTiempoExtra()
+    {
+        for (int i = figurasCandidatas.Count - 1; i >= 0; i--)
+        {
+            var p = figurasCandidatas[i];
+            if (p == null || p.alreadyInfected || !p.IsInsideZone)
+            {
+                figurasCandidatas.RemoveAt(i);
+            }
+        }
+
+        if (figurasCandidatas.Count > 0)
+        {
+            if (extraTimeUI != null && !extraTimeUI.activeSelf)
+            {
+                extraTimeUI.SetActive(true);
+                // Iniciamos la animación solo si no estaba ya activa
+                if (animacionExtraTime != null) StopCoroutine(animacionExtraTime);
+                animacionExtraTime = StartCoroutine(AnimarTextoExtraTime());
+            }
+        }
+        
     }
 
+    private IEnumerator AnimarTextoExtraTime()
+    {
+        RectTransform rect = extraTimeUI.GetComponent<RectTransform>();
+        rect.localScale = Vector3.zero;
+
+        float appearanceDuration = 0.4f; // Tiempo que tarda en aparecer
+        float elapsed = 0f;
+
+        // 1. Fase de aparición con mezcla suave hacia el latido
+        while (elapsed < appearanceDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float progress = elapsed / appearanceDuration;
+
+            // Curva de aparición (de 0 a 1)
+            float appearanceScale = Mathf.SmoothStep(0f, 1.0f, progress);
+
+            // Calculamos el pulso actual del "metrónomo" global
+            float currentPulse = 1f + Mathf.Sin(Time.unscaledTime * 5f) * 0.15f;
+
+            // Mezclamos la aparición con el pulso para que cuando llegue a 1.0 
+            // ya esté vibrando al mismo ritmo que el timer.
+            float finalScale = appearanceScale * currentPulse;
+
+            rect.localScale = new Vector3(finalScale, finalScale, 1f);
+            yield return null;
+        }
+
+        // 2. Bucle infinito sincronizado (sin interrupciones)
+        while (extraTimeUI.activeSelf)
+        {
+            float pulse = 1f + Mathf.Sin(Time.unscaledTime * 5f) * 0.15f;
+            rect.localScale = new Vector3(pulse, pulse, 1f);
+            yield return null;
+        }
+    }
+
+    private void ResetTimerVisuals()
+    {
+        foreach (var t in timerTexts)
+        {
+            if (t != null) t.rectTransform.localScale = Vector3.one;
+        }
+        if (timerIcon != null)
+        {
+            timerIcon.rectTransform.localScale = timerIconOriginalScale;
+        }
+    }
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
@@ -316,10 +488,36 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-   
+        timerStarted = false;
+        checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
+        figurasCandidatas.Clear();
         if (menuPanel) menuPanel.SetActive(false);
+        ResetCameraZoom(); // <--- IMPORTANTE: Volver al zoom de 14
+                           // RESET DE CÁMARA Y TIEMPO
 
+        if (extraTimeUI != null)
+        {
+            extraTimeUI.SetActive(false);
+            extraTimeUI.GetComponent<RectTransform>().localScale = Vector3.one;
+        }
+        if (timerIcon != null) if (timerIcon != null) timerIcon.rectTransform.localScale = timerIconOriginalScale;
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.002f;
+        if (mainCamera == null) mainCamera = Camera.main;
+        mainCamera.orthographicSize = defaultZoom;
+
+        timerAnimando = false; // <-- RESETEAR ESTO
+        if (animacionTimer != null) StopCoroutine(animacionTimer);
+
+        // Resetear escala de los textos por si acaso
+        foreach (var t in timerTexts) if (t != null) t.rectTransform.localScale = Vector3.one;
+
+        checkParaExtraTimeRealizado = false;
+
+        // Si no hay nadie dentro o ya terminaron, cerramos la sesión
+        if (extraTimeUI != null) extraTimeUI.SetActive(false);
+        if (animacionExtraTime != null) StopCoroutine(animacionExtraTime);
+
 
         if (Guardado.instance != null)
         {
@@ -418,31 +616,81 @@ public class LevelManager : MonoBehaviour
 
     void EndSessionDay()
     {
-        int totalAntes = contagionCoins - monedasGanadasSesion;
-        int totalFinal = totalAntes + monedasGanadasSesion;
-        isGameActive = false;
-        SetMapsActive(false); // <--- AÑADIR ESTA LÍNEA
-        Time.timeScale = 0.2f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        // Evitamos que se llame varias veces si el timer llega a 0 y hay lag
+        if (!isGameActive) return;
 
-        gameUI.SetActive(false);
+        isGameActive = false;
+        StartCoroutine(SlowMotionExitRoutine());
+    }
+    public void ResetCameraZoom()
+    {
+        if (mainCamera == null) mainCamera = Camera.main;
+        mainCamera.orthographicSize = defaultZoom;
+    }
+    private IEnumerator SlowMotionExitRoutine()
+    {
+        float currentTime = 0f;
+        float startScale = 1f;
+        float endScale = 0.05f; // Casi detenido al final
+
+        // Asegurar referencia a la cámara
+        if (mainCamera == null) mainCamera = Camera.main;
+
+        // Desactivamos el movimiento del virus para evitar que "patine" por el lag físico
         if (virusMovementScript != null) virusMovementScript.enabled = false;
 
+        while (currentTime < slowMotionDuration)
+        {
+            // Usamos unscaledDeltaTime porque el timeScale estará bajando
+            currentTime += Time.unscaledDeltaTime;
+            float t = currentTime / slowMotionDuration;
+
+            // Suavizado de la curva (SmoothStep)
+            float smoothT = t * t * (3f - 2f * t);
+
+            // 1. EFECTO CÁMARA LENTA (Slow Motion)
+            // Bajamos el timeScale de 1.0 a 0.05
+            Time.timeScale = Mathf.Lerp(startScale, endScale, t);
+
+            // Ajustamos el tiempo físico para que las animaciones no den tirones
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+            // 2. EFECTO ZOOM OUT
+            if (mainCamera != null)
+            {
+                mainCamera.orthographicSize = Mathf.Lerp(defaultZoom, endSessionZoom, smoothT);
+            }
+
+            yield return null;
+        }
+
+        // Final de la transición
+        CompleteEndSessionLogic();
+    }
+
+    private void CompleteEndSessionLogic()
+    {
+        // Detener el tiempo del todo o dejarlo muy bajo
+        Time.timeScale = 0f;
+
+        SetMapsActive(false);
+        gameUI.SetActive(false);
+
+        int totalAntes = contagionCoins - monedasGanadasSesion;
+        int totalFinal = totalAntes + monedasGanadasSesion;
+
         int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        int zoneMultiplier = (mapIndex == 1) ? 2 : (mapIndex == 2) ? 3 : 1;
-        int baseMultiplier = Guardado.instance != null ? Guardado.instance.coinMultiplier : 1;
+        // (Aquí puedes mantener tus multiplicadores si los usas)
 
         if (EndDayResultsPanel.instance != null)
         {
-
             EndDayResultsPanel.instance.ShowResults(
                 monedasGanadasSesion,
                 totalFinal);
         }
 
-
-
-        if (Guardado.instance != null) Guardado.instance.AddTotalData(currentSessionInfected);
+        if (Guardado.instance != null)
+            Guardado.instance.AddTotalData(currentSessionInfected);
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -473,7 +721,7 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        foreach (var t in sessionScoreTexts) if (t != null) t.text = "Hoy: " + currentSessionInfected + " / " + maxInfectionsPerRound;
+       
         foreach (var t in contagionCoinsTexts) if (t != null) t.text = "Monedas: " + contagionCoins;
     }
 

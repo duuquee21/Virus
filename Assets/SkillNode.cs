@@ -379,7 +379,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break;
             case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break;
 
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(0.25f); break;
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(1f); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
 
@@ -998,29 +998,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.IncreasePopulation25:
                 {
-                    float actualTotal = (1f + g.populationBonus) * 100f;
-                    float despuesTotal = (1f + g.populationBonus + 0.25f) * 100f;
+                    float actualTotal = (PopulationManager.instance.GetRoundInitialPopulation());
+                    float despuesTotal = (PopulationManager.instance.GetRoundInitialPopulation() + 1);
 
                     if (comprado)
-                        sb.AppendLine($"Población máxima: {actualTotal:F0}%");
+                        sb.AppendLine($"Población máxima: {actualTotal:F0}");
                     else
-                        sb.AppendLine($"Población máxima: {actualTotal:F0}% → {despuesTotal:F0}%");
+                        sb.AppendLine($"Población máxima: {actualTotal:F0} → {despuesTotal:F0}");
 
                     break;
                 }
 
-            case SkillEffectType.IncreasePopulation50:
-                {
-                    float actualTotal = (1f + g.populationBonus) * 100f;
-                    float despuesTotal = (1f + g.populationBonus + 0.50f) * 100f;
-
-                    if (comprado)
-                        sb.AppendLine($"Población máxima: {actualTotal:F0}%");
-                    else
-                        sb.AppendLine($"Población máxima: {actualTotal:F0}% → {despuesTotal:F0}%");
-
-                    break;
-                }
+        
             // -------------------------
             // PARED INFECTIVA
             // -------------------------
@@ -1232,19 +1221,20 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.SpeedLevel4:
             case SkillEffectType.SpeedLevel5:
                 {
-                    int level = Guardado.instance.speedLevel;
+                    // Convertimos el resultado de la función a int
+                    int actual = (int)SpeedUpgradeController.instance.GetCurrentSpeed();
+                    int despues = actual + 20;
 
                     float actual = 1f + ((level - 1) * 0.25f);
                     float despues = 1f + (level * 0.25f);
 
                     if (comprado)
-                        sb.AppendLine($"Velocidad del virus: {actual:F2}");
+                        sb.AppendLine($"Velocidad del virus: {actual}");
                     else
-                        sb.AppendLine($"Velocidad del virus: {actual:F2} → {despues:F2}");
+                        sb.AppendLine($"Velocidad del virus: {actual} → {despues}");
 
                     break;
                 }
-
             case SkillEffectType.RandomSpawnAnyPhase5:
             case SkillEffectType.RandomSpawnAnyPhase10:
             case SkillEffectType.RandomSpawnAnyPhase15:

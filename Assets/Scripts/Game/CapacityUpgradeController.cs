@@ -36,7 +36,7 @@ public class CapacityUpgradeController : MonoBehaviour
     {
         if (LevelManager.instance == null) return;
         int newCapacity = UpgradeManager.instance.GetCapacityValueByTable(currentLevel);
-        LevelManager.instance.maxInfectionsPerRound = newCapacity;
+      
 
     }
 

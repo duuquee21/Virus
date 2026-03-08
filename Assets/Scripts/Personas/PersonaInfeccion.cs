@@ -57,6 +57,7 @@ public class PersonaInfeccion : MonoBehaviour
     private float currentInfectionTime;
 
     private bool isInsideZone = false;
+    public bool IsInsideZone => isInsideZone;
     public bool alreadyInfected = false;
     private Color originalColor;
     public int faseActual; // Ahora el planeta sí puede leerla
@@ -359,6 +360,11 @@ public class PersonaInfeccion : MonoBehaviour
         {
             // ES EL FINAL: Infección completa
             BecomeInfected();
+        }
+
+        if(!LevelManager.instance.timerStarted)
+        {
+            LevelManager.instance.timerStarted= true;
         }
     }
     void BecomeInfected()
