@@ -670,27 +670,41 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteEndSessionLogic()
     {
-        // Detener el tiempo del todo o dejarlo muy bajo
-        Time.timeScale = 0f;
+        // Iniciamos la transición a negro antes de mostrar el panel
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // O la forma que prefieras
+            transitionScript.CloseBlackScreen();
+        }
 
+        StartCoroutine(ShowResultsWithTransition());
+    }
+
+    private IEnumerator ShowResultsWithTransition()
+    {
+        // Esperamos a que la pantalla esté en negro (ajusta el tiempo según tu shader)
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        Time.timeScale = 0f;
         SetMapsActive(false);
         gameUI.SetActive(false);
 
         int totalAntes = contagionCoins - monedasGanadasSesion;
         int totalFinal = totalAntes + monedasGanadasSesion;
 
-        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        // (Aquí puedes mantener tus multiplicadores si los usas)
-
         if (EndDayResultsPanel.instance != null)
         {
-            EndDayResultsPanel.instance.ShowResults(
-                monedasGanadasSesion,
-                totalFinal);
+            EndDayResultsPanel.instance.ShowResults(monedasGanadasSesion, totalFinal);
         }
 
         if (Guardado.instance != null)
             Guardado.instance.AddTotalData(currentSessionInfected);
+
+        // Abrimos el iris/forma para mostrar el panel de resultados
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -769,10 +783,12 @@ public class LevelManager : MonoBehaviour
         }
         if (shinyPanel != null) shinyPanel.SetActive(false);
         // B. Limpieza de UI
+        if (shinyPanel != null) shinyPanel.SetActive(false);
         if (EndDayResultsPanel.instance.panel.activeSelf)
         {
             EndDayResultsPanel.instance.panel.SetActive(false);
         }
+     
         if (gameUI) gameUI.SetActive(false);
 
         // C. Lógica de Reinicio (Extraída de EjecutarSoftRestartLogica)
