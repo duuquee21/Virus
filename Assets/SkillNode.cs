@@ -2,8 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.Localization.Settings; // <-- ESTA ES LA BUENA (No la de UnityEditor)
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -170,18 +170,25 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CheckIfShouldShow()
     {
+        // Si llegó al máximo nivel
         if (((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel) ||
             (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel))
         {
-            SetAppearance(true, 1f, false);
+            // CAMBIO: El tercer parámetro ahora es TRUE para que el ratón lo detecte
+            SetAppearance(true, 1f, true);
+            // El botón se desactiva aquí (es el primer parámetro de SetState)
             SetState(false, Color.gray, false);
             return;
         }
 
         if (IsUnlocked)
         {
+            // CAMBIO: Aseguramos que se pueda detectar el ratón
             SetAppearance(true, 1f, true);
-            SetState(true, Color.white, false);
+
+            // Si es una habilidad que NO se puede repetir, desactivamos el botón tras comprarla
+            bool canStillBuy = IsDamageSkill() || IsCoinSkill() || IsTimeSkill();
+            SetState(canStillBuy, Color.white, false);
             return;
         }
 
@@ -586,7 +593,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     string GetPreviewValues()
     {
-        bool comprado = repeatLevel > 0;
+        // CAMBIO AQUÍ: Ahora detecta si está comprado por repetición O por desbloqueo único
+        bool comprado = (repeatLevel > 0) || unlocked;
 
         if (Guardado.instance == null) return "";
 
@@ -1023,10 +1031,29 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     int actual = g.nivelParedInfectiva;
                     int despues = actual + 1;
 
+                    // Diccionario o función rápida para obtener el nombre de la figura según el nivel
+                    string GetFigura(int nivel) => nivel switch
+                    {
+                        2 => "pentágonos",
+                        3 => "cuadrados",
+                        4 => "triángulos",
+                        5 => "círculos",
+                        _ => "figuras"
+                    };
+
+                    string figuraActual = GetFigura(actual);
+                    string figuraSiguiente = GetFigura(despues);
+
                     if (comprado)
-                        sb.AppendLine($"Pared infectiva: Nivel {actual}");
+                    {
+                        
+                        sb.AppendLine($"Los {figuraActual} y sus fases anteriores se romperán al chocar a mucha velocidad.");
+                    }
                     else
-                        sb.AppendLine($"Pared infectiva: Nivel {actual} → Nivel {despues}");
+                    {
+                      
+                        sb.AppendLine($"Los {figuraSiguiente} avanzarán de fase al chocar a mucha velocidad.");
+                    }
 
                     break;
                 }
@@ -1151,7 +1178,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.DuplicateOnHit20:
                 {
                     float actual = g.probabilidadDuplicarChoque * 100f;
-                    float despues = 20f;
+                    float despues = (g.probabilidadDuplicarChoque + 0.20f) * 100f;
 
                     if (comprado)
                         sb.AppendLine($"Duplicar impacto: {actual:F0}%");
@@ -1161,57 +1188,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     break;
                 }
 
-            case SkillEffectType.DuplicateOnHit40:
-                {
-                    float actual = g.probabilidadDuplicarChoque * 100f;
-                    float despues = 40f;
-
-                    if (comprado)
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
-                    else
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
-
-                    break;
-                }
-
-            case SkillEffectType.DuplicateOnHit60:
-                {
-                    float actual = g.probabilidadDuplicarChoque * 100f;
-                    float despues = 60f;
-
-                    if (comprado)
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
-                    else
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
-
-                    break;
-                }
-
-            case SkillEffectType.DuplicateOnHit80:
-                {
-                    float actual = g.probabilidadDuplicarChoque * 100f;
-                    float despues = 80f;
-
-                    if (comprado)
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
-                    else
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
-
-                    break;
-                }
-
-            case SkillEffectType.DuplicateOnHit100:
-                {
-                    float actual = g.probabilidadDuplicarChoque * 100f;
-                    float despues = 100f;
-
-                    if (comprado)
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}%");
-                    else
-                        sb.AppendLine($"Duplicar impacto: {actual:F0}% → {despues:F0}%");
-
-                    break;
-                }
+          
             // -------------------------
             // SPEED LEVEL
             // -------------------------
