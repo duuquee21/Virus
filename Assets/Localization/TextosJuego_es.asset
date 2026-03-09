@@ -714,6 +714,71 @@ MonoBehaviour:
     m_Localized: Monedas Triangulo
     m_Metadata:
       m_Items: []
+  - m_Id: 1103911079616512
+    m_Localized: Tiempo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104619329789952
+    m_Localized: "Da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104675273416704
+    m_Localized: Monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104716847357952
+    m_Localized: Radio Virus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104734325022720
+    m_Localized: Velocidad Virus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104750733139968
+    m_Localized: "Velocidad Infecci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104771742408704
+    m_Localized: Tiempo captura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104787743678464
+    m_Localized: Bonus tiempo fase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104799189934080
+    m_Localized: Upgrade doble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104811768651776
+    m_Localized: "Poblaci\xF3n m\xE1xima"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104823382679552
+    m_Localized: Spawn aleatorio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104834426281984
+    m_Localized: Duplicar impacto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104849148289024
+    m_Localized: "Intervalo aparici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104860493881344
+    m_Localized: figuras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104870593765376
+    m_Localized: "Los {0} y sus fases anteriores se romper\xE1n al chocar a mucha
+      velocidad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104881570258944
+    m_Localized: "Los {0} avanzar\xE1n de fase al chocar a mucha velocidad."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

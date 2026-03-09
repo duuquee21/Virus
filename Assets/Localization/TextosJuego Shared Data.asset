@@ -847,6 +847,70 @@ MonoBehaviour:
     m_Key: skill_paredInfec_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1103911079616512
+    m_Key: prev_tiempo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104619329789952
+    m_Key: prev_dano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104675273416704
+    m_Key: prev_monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104716847357952
+    m_Key: prev_radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104734325022720
+    m_Key: prev_vel_virus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104750733139968
+    m_Key: prev_vel_infec
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104771742408704
+    m_Key: prev_tiempo_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104787743678464
+    m_Key: prev_bonus_fase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104799189934080
+    m_Key: prev_upg_doble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104811768651776
+    m_Key: prev_pob_max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104823382679552
+    m_Key: prev_spawn_rnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104834426281984
+    m_Key: prev_duplicar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104849148289024
+    m_Key: prev_spawn_int
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104860493881344
+    m_Key: prev_figuras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104870593765376
+    m_Key: prev_pared_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104881570258944
+    m_Key: prev_pared_2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
