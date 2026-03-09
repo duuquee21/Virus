@@ -62,6 +62,8 @@ public class Guardado : MonoBehaviour
 
     public float[] probParedInfectiva = new float[6]; // Índices 1 a 5
 
+    public bool hasExtraTimeUnlock; // true si el jugador compró/desbloqueó la habilidad
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -97,6 +99,7 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
+        hasExtraTimeUnlock = false; // <--- AÑADIDO
 
         probabilidadDuplicarChoque = 0f;
         paredInfectivaActiva = false;
@@ -165,6 +168,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
         PlayerPrefs.SetInt("CoinsTriangulo", coinsExtraTriangulo);
         PlayerPrefs.SetInt("CoinsCirculo", coinsExtraCirculo);
+        PlayerPrefs.SetInt("ExtraTimeUnlock", hasExtraTimeUnlock ? 1 : 0);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
@@ -211,6 +215,8 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = PlayerPrefs.GetInt("CoinsCuadrado", 0);
         coinsExtraTriangulo = PlayerPrefs.GetInt("CoinsTriangulo", 0);
         coinsExtraCirculo = PlayerPrefs.GetInt("CoinsCirculo", 0);
+        hasExtraTimeUnlock = PlayerPrefs.GetInt("ExtraTimeUnlock", 0) == 1;
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
@@ -223,6 +229,12 @@ public class Guardado : MonoBehaviour
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
+    public void ActivarExtraTime()
+    {
+        hasExtraTimeUnlock = true;
+        SaveData();
+        Debug.Log("<color=cyan>Habilidad Tiempo Extra Desbloqueada Permanentemente</color>");
+    }
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
     public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
     public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
@@ -239,6 +251,7 @@ public class Guardado : MonoBehaviour
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
     public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
+
     public void SetDoubleUpgradeChance(float chance)
     {
         doubleUpgradeChance = Mathf.Clamp01(chance);
