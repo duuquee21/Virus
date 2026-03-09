@@ -911,6 +911,10 @@ MonoBehaviour:
     m_Key: prev_pared_2
     m_Metadata:
       m_Items: []
+  - m_Id: 1131443170549760
+    m_Key: txt_dano_total
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
