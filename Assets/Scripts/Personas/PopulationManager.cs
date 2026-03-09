@@ -101,6 +101,7 @@ public class PopulationManager : MonoBehaviour
         timer = 0f;
         baseSpawnInterval = spawnInterval;
         ApplySpawnBonus();
+  
 
         // CALCULAR POBLACIÓN INICIAL CON EL BONUS
         int poblacionReal = initialPopulation;
@@ -134,8 +135,8 @@ public class PopulationManager : MonoBehaviour
             SpawnPerson(true);
             timer = 0;
         }
+       // Debug.Log($"Spawn interval after bonus: {spawnInterval} seconds");
 
-       
     }
 
     private int GetTotalPopulationCount()
@@ -252,7 +253,10 @@ public class PopulationManager : MonoBehaviour
             spawnInterval = 0.3f;
         }
     }
-
+    public float GetCurrentSpawnInterval()
+    {
+        return spawnInterval;
+    }
     public void ClearAllPersonas()
     {
         GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");

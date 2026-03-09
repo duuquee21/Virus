@@ -334,32 +334,43 @@ public class LevelManager : MonoBehaviour
         }
 
         // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
+        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
         if (currentTimer <= 0)
         {
-            // 1. Justo al llegar a 0, guardamos una "foto" de quiénes están dentro
-            if (!checkParaExtraTimeRealizado)
-            {
-                figurasCandidatas.Clear();
-                // Buscamos solo las personas que están en el radio en este instante
-                PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
-                foreach (var p in todas)
-                {
-                    if (p.IsInsideZone && !p.alreadyInfected)
-                    {
-                        figurasCandidatas.Add(p);
-                    }
-                }
-                checkParaExtraTimeRealizado = true;
-            }
+            // Verificamos si existe la mejora en el guardado
+            // (Asegúrate de que 'tieneTiempoExtra' sea el nombre real del bool en tu script Guardado)
+            bool poseeMejora = Guardado.instance != null && Guardado.instance.hasExtraTimeUnlock;
 
-            // 2. Verificamos si alguna de esas figuras candidatas sigue siendo válida
-            if (figurasCandidatas.Count > 0)
+            if (poseeMejora)
             {
-                ValidarEstadoTiempoExtra();
+                // 1. Lógica de candidatos (Solo si tiene la mejora)
+                if (!checkParaExtraTimeRealizado)
+                {
+                    figurasCandidatas.Clear();
+                    PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
+                    foreach (var p in todas)
+                    {
+                        if (p.IsInsideZone && !p.alreadyInfected)
+                        {
+                            figurasCandidatas.Add(p);
+                        }
+                    }
+                    checkParaExtraTimeRealizado = true;
+                }
+
+                // 2. Validar si los candidatos siguen dentro
+                if (figurasCandidatas.Count > 0)
+                {
+                    ValidarEstadoTiempoExtra();
+                }
+                else
+                {
+                    EndSessionDay();
+                }
             }
             else
             {
-
+                // Si no tiene la mejora o no hay instancia de guardado, termina al instante
                 EndSessionDay();
             }
         }

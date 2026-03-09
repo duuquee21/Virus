@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826945622024
-    m_Localized: Monedas ganadas
+    m_Localized: MONEDAS GANADAS
     m_Metadata:
       m_Items: []
   - m_Id: 826945622025
-    m_Localized: Monedas totales
+    m_Localized: MONEDAS TOTALES
     m_Metadata:
       m_Items: []
   - m_Id: 826945622026
@@ -777,6 +777,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1104881570258944
     m_Localized: "Los {0} avanzar\xE1n de fase al chocar a mucha velocidad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1131443170549760
+    m_Localized: "DA\xD1O TOTAL"
     m_Metadata:
       m_Items: []
   references:

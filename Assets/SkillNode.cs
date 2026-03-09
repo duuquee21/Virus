@@ -66,7 +66,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         InfectSpeedPhase1_10, InfectSpeedPhase1_20, InfectSpeedPhase1_30, InfectSpeedPhase1_40, InfectSpeedPhase1_50,
         InfectSpeedPhase2_10, InfectSpeedPhase2_20, InfectSpeedPhase2_30, InfectSpeedPhase2_40, InfectSpeedPhase2_50,
         InfectSpeedPhase3_10, InfectSpeedPhase3_20, InfectSpeedPhase3_30, InfectSpeedPhase3_40, InfectSpeedPhase3_50,
-        InfectSpeedPhase4_10, InfectSpeedPhase4_20, InfectSpeedPhase4_30, InfectSpeedPhase4_40, InfectSpeedPhase4_50
+        InfectSpeedPhase4_10, InfectSpeedPhase4_20, InfectSpeedPhase4_30, InfectSpeedPhase4_40, InfectSpeedPhase4_50,
+        ParedInfectiva_Hexagono,
+        ParedInfectiva_Pentagono,
+        ParedInfectiva_Cuadrado,
+        ParedInfectiva_Triangulo,
+        ParedInfectiva_Circulo,
+        UnlockExtraTimeLogic,
     }
 
     [Header("Save ID")]
@@ -117,6 +123,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public int maxRepeatLevel = 5;
     [Header("Límite especial tiempo extra")]
     public int maxTimeRepeatLevel = 10;
+
+
 
     public bool IsUnlocked =>
         unlocked ||
@@ -453,6 +461,27 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AddNivelParedInfectiva(1);
                 break;
 
+            case SkillEffectType.ParedInfectiva_Hexagono:
+                Guardado.instance.ActivarParedInfectiva(); // Activa la habilidad general
+                Guardado.instance.AddNivelParedInfectivaPorFigura(0); // Fase 0 = Hexágono
+                break;
+            case SkillEffectType.ParedInfectiva_Pentagono:
+                Guardado.instance.ActivarParedInfectiva(); // Activa la habilidad general
+                Guardado.instance.AddNivelParedInfectivaPorFigura(1); // Fase 1 = Pentágono
+                break;
+
+            case SkillEffectType.ParedInfectiva_Cuadrado:
+                Guardado.instance.AddNivelParedInfectivaPorFigura(2); // Fase 2 = Cuadrado
+                break;
+
+            case SkillEffectType.ParedInfectiva_Triangulo:
+                Guardado.instance.AddNivelParedInfectivaPorFigura(3); // Fase 3 = Triángulo
+                break;
+
+            case SkillEffectType.ParedInfectiva_Circulo:
+                Guardado.instance.AddNivelParedInfectivaPorFigura(4); // Fase 4 = Círculo
+                break;
+
             case SkillEffectType.ReboteConCoral:
                 Guardado.instance.ReboteConCoral();
                 break;
@@ -561,6 +590,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+
+            case SkillEffectType.UnlockExtraTimeLogic:
+                // Llamamos al método que creamos en el paso anterior en Guardado.cs
+                Guardado.instance.hasExtraTimeUnlock = true;
+                Guardado.instance.SaveData();
+                break;
 
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
@@ -861,6 +896,40 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // -------------------------
             // PROBABILIDADES
             // -------------------------
+            case SkillEffectType.ParedInfectiva_Hexagono:
+                {
+                    int idx = 0; // El índice del hexágono es 0
+                    float nivelActual = g.probParedInfectiva[idx];
+                    float probActual = nivelActual * 25f;
+                    float probSiguiente = (nivelActual + 1) * 25f;
+
+                    if (comprado)
+                        sb.AppendLine($"Prob. Infección Hexágono: {probActual}%");
+                    else
+                        sb.AppendLine($"Prob. Infección Hexágono: {probActual}% → {probSiguiente}%");
+                    break;
+                }
+            case SkillEffectType.ParedInfectiva_Pentagono:
+            case SkillEffectType.ParedInfectiva_Cuadrado:
+            case SkillEffectType.ParedInfectiva_Triangulo:
+            case SkillEffectType.ParedInfectiva_Circulo:
+                {
+                    // Determinamos el índice según el tipo de efecto
+                    int idx = (effectType == SkillEffectType.ParedInfectiva_Pentagono) ? 1 :
+                              (effectType == SkillEffectType.ParedInfectiva_Cuadrado) ? 2 :
+                              (effectType == SkillEffectType.ParedInfectiva_Triangulo) ? 3 : 4;
+
+                    float nivelActual = g.probParedInfectiva[idx];
+                    float probActual = nivelActual * 25f; // Mostramos en formato 0-100%
+                    float probSiguiente = (nivelActual + 1) * 25f;
+
+                    if (comprado) // Si no es repetible y ya se compró
+                        sb.AppendLine($"Prob. Infección: {probActual}%");
+                    else
+                        sb.AppendLine($"Prob. Infección: {probActual}% → {probSiguiente}%");
+
+                    break;
+                }
             case SkillEffectType.AddTimeOnPhaseChance5:
             case SkillEffectType.AddTimeOnPhaseChance10:
             case SkillEffectType.AddTimeOnPhaseChance15:
@@ -969,17 +1038,25 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.ReduceSpawnInterval80:
             case SkillEffectType.ReduceSpawnInterval100:
                 {
-                    float baseInterval = 2f;
-                    float actualBonus = g.spawnSpeedBonus;
-                    float nuevoBonus = actualBonus + 0.20f;
+                    float baseInterval = PopulationManager.instance.GetCurrentSpawnInterval(); // intervalo base del juego
+                    float actualBonus = 0.5f;
+                 
 
-                    float actual = baseInterval / (1f + actualBonus);
-                    float despues = baseInterval / (1f + nuevoBonus);
+                    float actual = baseInterval;
+                    float despues = baseInterval - actualBonus;
 
                     if (comprado) sb.AppendLine($"{GetTexto("prev_spawn_int")}: {actual:F2}s");
                     else sb.AppendLine($"{GetTexto("prev_spawn_int")}: {actual:F2}s → {despues:F2}s");
                     break;
                 }
+
+
+            case SkillEffectType.UnlockExtraTimeLogic:
+                if (unlocked)
+                    sb.AppendLine($"{GetTexto("status_unlocked")}");
+                else
+                    sb.AppendLine($"{GetTexto("extra_time_desc")}"); // Crea esta clave en tu Localization
+                break;
         }
 
         return sb.ToString();
