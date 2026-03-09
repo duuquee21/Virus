@@ -239,8 +239,7 @@ public class EndDayResultsPanel : MonoBehaviour
         if (zonaDamageDetailText != null) zonaDamageDetailText.text = zonaDamageLines;
 
         zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
-        zonaDamageText.text = $"Daño total: {PersonaInfeccion.dañoTotalZona:F0}";
-
+        zonaDamageText.text = $"{GetTexto("txt_dano_total")}: {PersonaInfeccion.dañoTotalZona:F0}";
         // ===================== CHOQUE =====================
         int totalP = 0;
         string tituloChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";

@@ -220,6 +220,11 @@ public class PlanetCrontrollator : MonoBehaviour
 
         ActualizarUI();
     }
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
 
     void Die()
     {

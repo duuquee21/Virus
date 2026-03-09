@@ -256,25 +256,29 @@ public class LevelManager : MonoBehaviour
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
 
-        Guardado.instance.LoadEvolutionData();
-        int monedasGanadas = PlayerPrefs.GetInt("Run_MonedasGanadas", 0);
+        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
+        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
 
-        EndDayResultsPanel.instance.ShowResults(
-            monedasGanadas,
-            contagionCoins
-        );
+        Guardado.instance.LoadEvolutionData();
 
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
-        // CAMBIO: Ahora usamos la transición para ir del menú al panel de zona
-     
-            if (transitionScript != null) transitionScript.SetShape(1);
+        currentTimer = savedTimer;
 
-            StartCoroutine(TransitionRoutine(menuPanel, gameUI));
-        
+        if (transitionScript != null) transitionScript.SetShape(1);
+
+        StartCoroutine(TransitionRoutine(menuPanel, gameUI));
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+
+        foreach (SkillNode node in nodes)
+        {
+            node.LoadNodeState();
+            node.CheckIfShouldShow();
+        }
+        // IMPORTANTE
+        StartSession();
     }
-
     public void NewGameFromMainMenu()
     {
         ResetRunData();
@@ -330,32 +334,43 @@ public class LevelManager : MonoBehaviour
         }
 
         // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
+        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
         if (currentTimer <= 0)
         {
-            // 1. Justo al llegar a 0, guardamos una "foto" de quiénes están dentro
-            if (!checkParaExtraTimeRealizado)
-            {
-                figurasCandidatas.Clear();
-                // Buscamos solo las personas que están en el radio en este instante
-                PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
-                foreach (var p in todas)
-                {
-                    if (p.IsInsideZone && !p.alreadyInfected)
-                    {
-                        figurasCandidatas.Add(p);
-                    }
-                }
-                checkParaExtraTimeRealizado = true;
-            }
+            // Verificamos si existe la mejora en el guardado
+            // (Asegúrate de que 'tieneTiempoExtra' sea el nombre real del bool en tu script Guardado)
+            bool poseeMejora = Guardado.instance != null && Guardado.instance.hasExtraTimeUnlock;
 
-            // 2. Verificamos si alguna de esas figuras candidatas sigue siendo válida
-            if (figurasCandidatas.Count > 0)
+            if (poseeMejora)
             {
-                ValidarEstadoTiempoExtra();
+                // 1. Lógica de candidatos (Solo si tiene la mejora)
+                if (!checkParaExtraTimeRealizado)
+                {
+                    figurasCandidatas.Clear();
+                    PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
+                    foreach (var p in todas)
+                    {
+                        if (p.IsInsideZone && !p.alreadyInfected)
+                        {
+                            figurasCandidatas.Add(p);
+                        }
+                    }
+                    checkParaExtraTimeRealizado = true;
+                }
+
+                // 2. Validar si los candidatos siguen dentro
+                if (figurasCandidatas.Count > 0)
+                {
+                    ValidarEstadoTiempoExtra();
+                }
+                else
+                {
+                    EndSessionDay();
+                }
             }
             else
             {
-
+                // Si no tiene la mejora o no hay instancia de guardado, termina al instante
                 EndSessionDay();
             }
         }
@@ -507,7 +522,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        timerStarted = false;
+        timerStarted = true;
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
         if (menuPanel) menuPanel.SetActive(false);
@@ -1152,10 +1167,18 @@ public class LevelManager : MonoBehaviour
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
+        float planetHealth = 0f;
+        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+        {
+            planetHealth = planet.GetCurrentHealth();
+        }
+
         Guardado.instance.SaveRunState(
-            0,
+            currentTimer,
             contagionCoins,
-            currentMap
+            currentMap,
+            planetHealth
         );
 
         Guardado.instance.SaveEvolutionData();
@@ -1245,6 +1268,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void OnApplicationQuit()
+    {
+        if (Guardado.instance == null) return;
+
+        // Si el juego está activo (timer corriendo), NO guardar
+        if (isGameActive) return;
+
+        float timer = currentTimer;
+        int coins = contagionCoins;
+        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+        float planetHealth = 0f;
+
+        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+        {
+            planetHealth = planet.GetCurrentHealth();
+        }
+
+        Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
+    }
 
 
 }

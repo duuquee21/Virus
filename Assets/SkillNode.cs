@@ -67,11 +67,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         InfectSpeedPhase2_10, InfectSpeedPhase2_20, InfectSpeedPhase2_30, InfectSpeedPhase2_40, InfectSpeedPhase2_50,
         InfectSpeedPhase3_10, InfectSpeedPhase3_20, InfectSpeedPhase3_30, InfectSpeedPhase3_40, InfectSpeedPhase3_50,
         InfectSpeedPhase4_10, InfectSpeedPhase4_20, InfectSpeedPhase4_30, InfectSpeedPhase4_40, InfectSpeedPhase4_50,
-             ParedInfectiva_Hexagono,
+        ParedInfectiva_Hexagono,
         ParedInfectiva_Pentagono,
         ParedInfectiva_Cuadrado,
         ParedInfectiva_Triangulo,
         ParedInfectiva_Circulo,
+        UnlockExtraTimeLogic,
     }
 
     [Header("Save ID")]
@@ -590,6 +591,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
             case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
 
+            case SkillEffectType.UnlockExtraTimeLogic:
+                // Llamamos al método que creamos en el paso anterior en Guardado.cs
+                Guardado.instance.hasExtraTimeUnlock = true;
+                Guardado.instance.SaveData();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -1042,6 +1049,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     else sb.AppendLine($"{GetTexto("prev_spawn_int")}: {actual:F2}s → {despues:F2}s");
                     break;
                 }
+
+
+            case SkillEffectType.UnlockExtraTimeLogic:
+                if (unlocked)
+                    sb.AppendLine($"{GetTexto("status_unlocked")}");
+                else
+                    sb.AppendLine($"{GetTexto("extra_time_desc")}"); // Crea esta clave en tu Localization
+                break;
         }
 
         return sb.ToString();
