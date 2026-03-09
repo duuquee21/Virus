@@ -10,6 +10,13 @@ public class Guardado : MonoBehaviour
     [Header("Datos Globales Acumulados")]
     public int totalInfected = 0;
 
+    [Header("Run Save")]
+    public float runTimer = 0f;
+    public int runCoins = 0;
+    public int runMapIndex = 0;
+    public float runPlanetHealth = 0f;
+    public bool runInProgress = false;
+
     [Header("Permanentes del Árbol (Habilidades)")]
     public int freeInitialUpgrade = -1;
     public int coinMultiplier = 1;
@@ -338,14 +345,17 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    public void SaveRunState(int ignoredDay, int currentCoins, int currentMap)
+    public void SaveRunState(float timer, int currentCoins, int currentMap, float planetHealth)
     {
         PlayerPrefs.SetInt("Run_InProgress", 1);
+
+        PlayerPrefs.SetFloat("Run_Timer", timer);
         PlayerPrefs.SetInt("Run_Coins", currentCoins);
         PlayerPrefs.SetInt("Run_Map", currentMap);
+        PlayerPrefs.SetFloat("Run_PlanetHealth", planetHealth);
+
         PlayerPrefs.Save();
     }
-
     public void ClearRunState()
     {
         PlayerPrefs.SetInt("Run_InProgress", 0);

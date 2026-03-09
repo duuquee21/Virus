@@ -256,25 +256,29 @@ public class LevelManager : MonoBehaviour
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
 
-        Guardado.instance.LoadEvolutionData();
-        int monedasGanadas = PlayerPrefs.GetInt("Run_MonedasGanadas", 0);
+        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
+        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
 
-        EndDayResultsPanel.instance.ShowResults(
-            monedasGanadas,
-            contagionCoins
-        );
+        Guardado.instance.LoadEvolutionData();
 
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
-        // CAMBIO: Ahora usamos la transición para ir del menú al panel de zona
-     
-            if (transitionScript != null) transitionScript.SetShape(1);
+        currentTimer = savedTimer;
 
-            StartCoroutine(TransitionRoutine(menuPanel, gameUI));
-        
+        if (transitionScript != null) transitionScript.SetShape(1);
+
+        StartCoroutine(TransitionRoutine(menuPanel, gameUI));
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+
+        foreach (SkillNode node in nodes)
+        {
+            node.LoadNodeState();
+            node.CheckIfShouldShow();
+        }
+        // IMPORTANTE
+        StartSession();
     }
-
     public void NewGameFromMainMenu()
     {
         ResetRunData();
@@ -507,7 +511,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        timerStarted = false;
+        timerStarted = true;
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
         if (menuPanel) menuPanel.SetActive(false);
@@ -1152,10 +1156,18 @@ public class LevelManager : MonoBehaviour
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
+        float planetHealth = 0f;
+        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+        {
+            planetHealth = planet.GetCurrentHealth();
+        }
+
         Guardado.instance.SaveRunState(
-            0,
+            currentTimer,
             contagionCoins,
-            currentMap
+            currentMap,
+            planetHealth
         );
 
         Guardado.instance.SaveEvolutionData();
@@ -1245,6 +1257,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void OnApplicationQuit()
+    {
+        if (Guardado.instance == null) return;
+
+        // Si el juego está activo (timer corriendo), NO guardar
+        if (isGameActive) return;
+
+        float timer = currentTimer;
+        int coins = contagionCoins;
+        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+        float planetHealth = 0f;
+
+        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+        {
+            planetHealth = planet.GetCurrentHealth();
+        }
+
+        Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
+    }
 
 
 }
