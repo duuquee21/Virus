@@ -89,10 +89,25 @@ public class PlanetCrontrollator : MonoBehaviour
 
                 if (Guardado.instance != null)
                 {
-                    if (Guardado.instance.nivelParedInfectiva > scriptInfeccion.faseActual)
+                    // Obtenemos el tipo de figura actual (0=Hex, 1=Pent, etc.)
+                    int faseActual = (int)scriptInfeccion.faseActual;
+
+                    // Calculamos la probabilidad: Cada nivel de habilidad otorga 25% (0.25f)
+                    // El índice 1 corresponde a Pentágonos, 2 a Cuadrados, etc.
+                    float nivelHabilidad = Guardado.instance.probParedInfectiva[faseActual];
+                    float probabilidadDeRomper = nivelHabilidad * 0.25f;
+
+                    // Generamos un número aleatorio entre 0 y 1 para decidir si se rompe
+                    if (Random.value <= probabilidadDeRomper)
+                    {
+                        // Éxito: La pared infectiva funciona y la figura avanza/se rompe
                         scriptInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Wall);
+                    }
                     else
+                    {
+                        // Fallo: Solo efecto visual de impacto normal
                         InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
+                    }
                 }
             }
         }

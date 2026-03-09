@@ -60,6 +60,8 @@ public class Guardado : MonoBehaviour
 
     public float[] infectSpeedPerPhase = new float[5];
 
+    public float[] probParedInfectiva = new float[6]; // Índices 1 a 5
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -121,6 +123,11 @@ public class Guardado : MonoBehaviour
         {
             infectSpeedPerPhase[i] = 1f;
         }
+        // Dentro de HardResetVariables()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            probParedInfectiva[i] = 0f;
+        }
         ClearRunState();
         SaveData();
     }
@@ -161,6 +168,11 @@ public class Guardado : MonoBehaviour
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
+        }
+        // Al final de SaveData()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            PlayerPrefs.SetFloat("ProbParedInfectiva_" + i, probParedInfectiva[i]);
         }
         PlayerPrefs.Save();
     }
@@ -203,6 +215,11 @@ public class Guardado : MonoBehaviour
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
         }
+        // Al final de LoadData()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            probParedInfectiva[i] = PlayerPrefs.GetFloat("ProbParedInfectiva_" + i, 0f);
+        }
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -233,6 +250,16 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
+    public void AddNivelParedInfectivaPorFigura(int fase)
+    {
+        if (fase >= 0 && fase < probParedInfectiva.Length)
+        {
+            // Aumenta el nivel de esa figura específica
+            probParedInfectiva[fase] += 1f;
+            SaveData();
+            Debug.Log($"Mejorada Pared Infectiva Fase {fase}. Nivel actual: {probParedInfectiva[fase]}");
+        }
+    }
     // Métodos de Daño
     public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
     public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; SaveData(); }
