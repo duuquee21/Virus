@@ -82,6 +82,9 @@ public class EndDayResultsPanel : MonoBehaviour
 
     private int totalCuentaFinal;    // Para saber el valor final en caso de skip
 
+    [Header("Configuración Jackpot")]
+    public int jackpotThreshold = 100; // Define cuánto es un "Gran Jackpot"
+
     void Awake()
     {
         instance = this;
@@ -405,12 +408,13 @@ public class EndDayResultsPanel : MonoBehaviour
         int inicialPartida = monedasTempPartida;
         int inicialTotales = monedasTempTotales;
 
-        // Duración basada en la cantidad, pero con límites sanos
+        // Comprobamos si esta partida merece el color dorado
+        bool esGrandJackpot = totalAMover >= jackpotThreshold;
+
         float duration = Mathf.Clamp(totalAMover * 0.01f, 0.8f, 3.5f);
         float elapsed = 0f;
 
-        // CONTROL MUSICAL
-        float soundInterval = 0.08f; // Tiempo mínimo entre sonidos (ritmo)
+        float soundInterval = 0.08f;
         float lastSoundTime = -1f;
         int notasTocadas = 0;
 
@@ -419,56 +423,51 @@ public class EndDayResultsPanel : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
 
-            // Curva de progresión
             float curvedT = t * (2 - t);
             int actualMovido = Mathf.RoundToInt(curvedT * totalAMover);
 
-            // --- LÓGICA DE SATISFACCIÓN MUSICAL ---
-            // Solo suena si ha pasado el intervalo y si realmente hay monedas nuevas que mostrar
             if (elapsed - lastSoundTime >= soundInterval && actualMovido > (inicialPartida - monedasTempPartida))
             {
                 if (audioSource != null && tickSound != null)
                 {
-                    // Pitch musical: Sube en semitonos (1.059 es la raíz doceava de 2)
-                    // Esto hace que suene como una escala musical real en lugar de un motor acelerando
-                    float step = notasTocadas % 12; // Reinicia la octava cada 12 notas
+                    float step = notasTocadas % 12;
                     audioSource.pitch = Mathf.Pow(1.059f, step) * 0.9f;
-
-                    // Un pequeño toque de variación de volumen según el progreso
                     float dynamicVolume = soundVolume * (0.8f + (t * 0.2f));
                     audioSource.PlayOneShot(tickSound, dynamicVolume);
 
                     lastSoundTime = elapsed;
                     notasTocadas++;
-
-                    // Aceleramos el ritmo sutilmente a medida que avanza
                     soundInterval = Mathf.Max(0.04f, soundInterval * 0.98f);
                 }
 
-                // Partículas sincronizadas con el pulso musical
                 if (coinParticles != null)
                 {
-                    // Emitimos un "chorro" dependiendo de la cantidad total
                     int burst = totalAMover > 50 ? 3 : 1;
                     coinParticles.Emit(burst);
                 }
             }
 
-            // Actualización visual de textos
             monedasTempPartida = inicialPartida - actualMovido;
             monedasTempTotales = inicialTotales + actualMovido;
             ActualizarTextosMonedas();
 
-            // Feedback visual en el texto (pulso rítmico)
             float pulse = Mathf.Sin(t * Mathf.PI) * (maxScale - 1.0f);
             monedasTotalesText.transform.localScale = escalaOriginal + new Vector3(pulse, pulse, pulse);
-            monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, t);
+
+            // --- CAMBIO AQUÍ: Color condicional ---
+            if (esGrandJackpot)
+            {
+                monedasTotalesText.color = Color.Lerp(colorNormal, colorPremio, t);
+            }
+            else
+            {
+                monedasTotalesText.color = colorNormal;
+            }
 
             yield return null;
         }
 
         // --- CIERRE FINAL ---
-        // Sonido final de confirmación (un poco más grave y fuerte)
         if (audioSource != null && tickSound != null)
         {
             audioSource.pitch = 1.2f;
@@ -479,6 +478,8 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTempTotales = inicialTotales + totalAMover;
         ActualizarTextosMonedas();
         monedasTotalesText.transform.localScale = escalaOriginal;
+
+        // Aseguramos que vuelva al normal al terminar
         monedasTotalesText.color = colorNormal;
 
         isTransferring = false;
