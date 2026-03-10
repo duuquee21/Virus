@@ -495,6 +495,7 @@ public class LevelManager : MonoBehaviour
             }
 
             Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
+            Guardado.instance.SaveEvolutionData(); // ← ESTA LÍNEA FALTABA
         }
 
         if (AudioManager.instance != null)

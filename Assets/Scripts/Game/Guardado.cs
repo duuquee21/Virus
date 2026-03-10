@@ -401,22 +401,32 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("Run_InProgress", 0);
         PlayerPrefs.Save();
     }
-
     public void SaveEvolutionData()
     {
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        int fases = PersonaInfeccion.dañoZonaPorFase.Length;
+
+        for (int i = 0; i < fases; i++)
         {
             PlayerPrefs.SetInt("Run_Zona_" + i, PersonaInfeccion.evolucionesEntreFases[i]);
             PlayerPrefs.SetInt("Run_Choque_" + i, PersonaInfeccion.evolucionesPorChoque[i]);
             PlayerPrefs.SetInt("Run_Carambola_" + i, PersonaInfeccion.evolucionesCarambola[i]);
+
+            PlayerPrefs.SetFloat("Run_DmgZona_" + i, PersonaInfeccion.dañoZonaPorFase[i]);
+            PlayerPrefs.SetFloat("Run_DmgChoque_" + i, PersonaInfeccion.dañoChoquePorFase[i]);
+            PlayerPrefs.SetFloat("Run_DmgCarambola_" + i, PersonaInfeccion.dañoCarambolaPorFase[i]);
+
+            PlayerPrefs.SetInt("Run_Golpes_" + i, PersonaInfeccion.golpesAlPlanetaPorFase[i]);
         }
+
+        PlayerPrefs.SetFloat("Run_DmgTotalZona", PersonaInfeccion.dañoTotalZona);
 
         PlayerPrefs.Save();
     }
-
     public void LoadEvolutionData()
     {
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        int fases = PersonaInfeccion.evolucionesEntreFases.Length;
+
+        for (int i = 0; i < fases; i++)
         {
             PersonaInfeccion.evolucionesEntreFases[i] =
                 PlayerPrefs.GetInt("Run_Zona_" + i, 0);
@@ -426,9 +436,23 @@ public class Guardado : MonoBehaviour
 
             PersonaInfeccion.evolucionesCarambola[i] =
                 PlayerPrefs.GetInt("Run_Carambola_" + i, 0);
-        }
-    }
 
+            PersonaInfeccion.dañoZonaPorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgZona_" + i, 0);
+
+            PersonaInfeccion.dañoChoquePorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgChoque_" + i, 0);
+
+            PersonaInfeccion.dañoCarambolaPorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgCarambola_" + i, 0);
+
+            PersonaInfeccion.golpesAlPlanetaPorFase[i] =
+                PlayerPrefs.GetInt("Run_Golpes_" + i, 0);
+        }
+
+        PersonaInfeccion.dañoTotalZona =
+            PlayerPrefs.GetFloat("Run_DmgTotalZona", 0);
+    }
 
     public void AddSpeedMultiplier(float extra)
     {
