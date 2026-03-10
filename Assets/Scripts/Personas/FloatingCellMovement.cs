@@ -24,12 +24,53 @@ public class FloatingCellMovement : MonoBehaviour
     public AudioClip reboteVirusClip;
 
 
-
+    [Header("Efectos de Partículas")]
+    public ParticleSystem moveParticles;
+    public float velocityThreshold = 0.1f;
+    public float minEmission = 5f;
+    public float maxEmission = 30f;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
+    }
+
+    void Update()
+    {
+        HandleParticles();
+    }
+
+    private void HandleParticles()
+    {
+        if (moveParticles == null) return;
+
+        // Usamos la velocidad base y la dirección actual
+        float currentSpeed = velocidadBase;
+
+        if (currentSpeed > velocityThreshold)
+        {
+            if (!moveParticles.isEmitting) moveParticles.Play();
+
+            // --- 1. ROTACIÓN (Igual al Virus) ---
+            float angle = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
+            float invertedRotation = (angle + 270f + 180f) % 360f;
+            moveParticles.transform.rotation = Quaternion.Euler(0, 0, invertedRotation);
+
+            var main = moveParticles.main;
+            main.startRotation = -invertedRotation * Mathf.Deg2Rad;
+
+            // --- 2. EMISIÓN DINÁMICA ---
+            var emission = moveParticles.emission;
+            float speedPercent = Mathf.Clamp01(currentSpeed / 10f); // 10f es la referencia de velocidad
+            emission.rateOverTime = Mathf.Lerp(minEmission, maxEmission, speedPercent);
+        }
+        else
+        {
+            var emission = moveParticles.emission;
+            emission.rateOverTime = 0;
+            if (moveParticles.isEmitting) moveParticles.Stop();
+        }
     }
 
     void Start()
