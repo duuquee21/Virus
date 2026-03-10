@@ -473,16 +473,33 @@ public class LevelManager : MonoBehaviour
     }
     public void ReturnToMenu()
     {
+        // Detener la sesión
+        isGameActive = false;
+        timerStarted = false;
+
         Time.timeScale = 1f;
-        if (Guardado.instance)
+
+        // Guardar partida
+        if (Guardado.instance != null)
         {
-            int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+            float timer = currentTimer;
+            int coins = contagionCoins;
+            int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+            float planetHealth = 0f;
+
+            PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+            if (planet != null)
+            {
+                planetHealth = planet.GetCurrentHealth();
+            }
+
+            Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
         }
 
-        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+        if (AudioManager.instance != null)
+            AudioManager.instance.SwitchToMenuMusic();
 
-     
-   
         if (pausePanel != null) pausePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
 
@@ -1267,28 +1284,5 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-    void OnApplicationQuit()
-    {
-        if (Guardado.instance == null) return;
-
-        // Si el juego está activo (timer corriendo), NO guardar
-        if (isGameActive) return;
-
-        float timer = currentTimer;
-        int coins = contagionCoins;
-        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-
-        float planetHealth = 0f;
-
-        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
-        if (planet != null)
-        {
-            planetHealth = planet.GetCurrentHealth();
-        }
-
-        Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
-    }
-
 
 }

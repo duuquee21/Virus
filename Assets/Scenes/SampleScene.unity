@@ -8888,7 +8888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2583ca44664f7cd45aeff7c8612a2b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 0}
+  pauseMenuUI: {fileID: 949125761}
 --- !u!1 &192948721
 GameObject:
   m_ObjectHideFlags: 0
@@ -58394,7 +58394,7 @@ Transform:
   m_GameObject: {fileID: 1162771609}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.617526, y: 0.9663325, z: 3.62862}
+  m_LocalPosition: {x: 7.617526, y: 0, z: 3.62862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -113184,7 +113184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7783845700506898009, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7881963736437565688, guid: 06976079489a633408d3a618be4e96ea, type: 3}
       propertyPath: m_LocalPosition.x
