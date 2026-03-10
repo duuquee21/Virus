@@ -255,6 +255,11 @@ public class PopulationManager : MonoBehaviour
     }
     public float GetCurrentSpawnInterval()
     {
+        // Convertimos el bonus a int para restar segundos enteros
+        float bonusSegundos = Guardado.instance.spawnSpeedBonus;
+        // Restamos los segundos directamente a la base
+        spawnInterval = baseSpawnInterval - bonusSegundos;
+
         return spawnInterval;
     }
     public void ClearAllPersonas()
