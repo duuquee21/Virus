@@ -2198,6 +2198,8 @@ MonoBehaviour:
   - 0
   - 0
   hasExtraTimeUnlock: 0
+  coralInfeciosoActivo: 0
+  coralCapacity: 1
 --- !u!4 &38468938
 Transform:
   m_ObjectHideFlags: 0
@@ -52293,7 +52295,7 @@ MonoBehaviour:
   growDuration: 0.4
   fuerzaImpulsoClon: 2
   buggedPersonPrefab: {fileID: 1796759239455511930, guid: a5f87eb0afc3b4845bf3908b4ecd10f9, type: 3}
-  buggedSpawnChance: 20
+  buggedSpawnChance: 40.4
 --- !u!4 &1039353547
 Transform:
   m_ObjectHideFlags: 0
@@ -58369,6 +58371,7 @@ MonoBehaviour:
   btnContinue: {fileID: 1404261065}
   btnArbol: {fileID: 1110968531}
   btnClaim: {fileID: 1977209587}
+  jackpotThreshold: 100
 --- !u!1 &1162771609
 GameObject:
   m_ObjectHideFlags: 0
@@ -101022,9 +101025,9 @@ MonoBehaviour:
   titleText: {fileID: 791247424}
   descriptionText: {fileID: 551978990}
   costText: {fileID: 225724588}
-  initialAmplitude: 22
-  swingFrequency: 15
-  dampingSpeed: 6
+  initialAmplitude: 20
+  swingFrequency: 20
+  dampingSpeed: 12
 --- !u!225 &2041343782
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -291,7 +291,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
-    void IntentarAvanzarFase()
+   public void IntentarAvanzarFase()
     {
         // 1. SEGURIDAD: Si ya está infectado o ya pasó el límite, ignoramos cualquier llamada extra
         if (alreadyInfected || faseActual >= fasesSprites.Length) return;
@@ -602,9 +602,21 @@ public class PersonaInfeccion : MonoBehaviour
         {
             GameObject textObj = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
 
+            // Accedemos al MeshRenderer para cambiar el Order in Layer
+            MeshRenderer meshRenderer = textObj.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                // 32767 es el valor máximo permitido en el Sorting Order de Unity
+                meshRenderer.sortingOrder = 32767;
+            }
+
             // Accedemos al componente de texto para cambiar el color a negro
             TMPro.TextMeshPro tm = textObj.GetComponent<TMPro.TextMeshPro>();
-            if (tm != null) tm.color = Color.black;
+            if (tm != null)
+            {
+                tm.color = Color.black;
+                tm.text = "+" + cantidad.ToString(); // También puedes asignarlo aquí directamente
+            }
 
             FloatingText ft = textObj.GetComponent<FloatingText>();
             if (ft != null) ft.SetText("+" + cantidad.ToString());

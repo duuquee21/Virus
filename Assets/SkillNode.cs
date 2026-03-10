@@ -73,6 +73,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Triangulo,
         ParedInfectiva_Circulo,
         UnlockExtraTimeLogic,
+        ActivarCoralInfeccioso,
+        MejorarCapacidadCoral
     }
 
     [Header("Save ID")]
@@ -597,6 +599,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.ActivarCoralInfeccioso:
+                Guardado.instance.coralInfeciosoActivo = true;
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.MejorarCapacidadCoral:
+                // Aumentamos en 1 la capacidad por cada compra (o usa overrideInt si prefieres un valor fijo)
+                Guardado.instance.coralCapacity += GetInt(1);
+                Guardado.instance.SaveData();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -1056,6 +1069,23 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     sb.AppendLine($"{GetTexto("status_unlocked")}");
                 else
                     sb.AppendLine($"{GetTexto("extra_time_desc")}"); // Crea esta clave en tu Localization
+                break;
+
+            case SkillEffectType.MejorarCapacidadCoral:
+                {
+                    int actual = g.coralCapacity;
+                    if (comprado)
+                        sb.AppendLine($"{GetTexto("prev_capacidad")}: {actual}");
+                    else
+                        sb.AppendLine($"{GetTexto("prev_capacidad")}: {actual} → {actual + 1}");
+                    break;
+                }
+               
+            case SkillEffectType.ActivarCoralInfeccioso:
+                if (unlocked)
+                    sb.AppendLine($"{GetTexto("status_unlocked")}");
+                else
+                    sb.AppendLine($"{GetTexto("coral_infec_desc")}"); // Crea esta clave en tu Localization
                 break;
         }
 

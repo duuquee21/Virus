@@ -253,31 +253,53 @@ public class LevelManager : MonoBehaviour
 
     void LoadRunAndStart()
     {
+        // Iniciamos la corrutina para que la carga respete la transición
+        StartCoroutine(LoadRunRoutine());
+    }
+
+    private IEnumerator LoadRunRoutine()
+    {
+        // 1. Iniciamos la transición visual (Cerrar pantalla)
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // Hexágono
+            transitionScript.CloseBlackScreen();
+            // Esperamos a que el shader termine de cerrarse (aprox 0.5s según tu código)
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        // 2. Carga de datos (Esto ocurre mientras la pantalla está en negro)
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
-
         float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
         float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
 
         Guardado.instance.LoadEvolutionData();
-
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
         currentTimer = savedTimer;
 
-        if (transitionScript != null) transitionScript.SetShape(1);
-
-        StartCoroutine(TransitionRoutine(menuPanel, gameUI));
+        // Actualizamos los nodos de habilidad
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
-
         foreach (SkillNode node in nodes)
         {
             node.LoadNodeState();
             node.CheckIfShouldShow();
         }
-        // IMPORTANTE
+
+        // 3. Preparar la UI antes de mostrar
+        if (menuPanel) menuPanel.SetActive(false);
+        if (gameUI) gameUI.SetActive(true);
+
+        // 4. Iniciar la sesión de juego
         StartSession();
+
+        // 5. Abrir la transición (Mostrar el juego ya cargado)
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
     public void NewGameFromMainMenu()
     {

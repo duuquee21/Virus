@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f8800f8dfedbc48b0e4019142d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabTexto: {fileID: 7455663746959264046, guid: c64a759bf91bd7b43a1082a76f5dee33, type: 3}
   tiempoEsperaCoral: 0.2
 --- !u!58 &8893301974829255167
 CircleCollider2D:
@@ -81,7 +82,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.6
+  m_Radius: 0.5
 --- !u!1001 &644589487263786069
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -71,6 +71,9 @@ public class Guardado : MonoBehaviour
 
     public bool hasExtraTimeUnlock; // true si el jugador compró/desbloqueó la habilidad
 
+    public bool coralInfeciosoActivo = false;
+    public int coralCapacity = 5;
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -107,8 +110,7 @@ public class Guardado : MonoBehaviour
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
         hasExtraTimeUnlock = false; // <--- AÑADIDO
-
-        probabilidadDuplicarChoque = 0f;
+    probabilidadDuplicarChoque = 0f;
         paredInfectivaActiva = false;
         nivelParedInfectiva = 1;
         radiusMultiplier = 1.0f;
@@ -129,6 +131,10 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = 0;
         coinsExtraTriangulo = 0;
         coinsExtraCirculo = 0;
+
+        coralInfeciosoActivo = false;
+        coralCapacity = 5; // Valor base por defecto
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -176,6 +182,9 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoinsTriangulo", coinsExtraTriangulo);
         PlayerPrefs.SetInt("CoinsCirculo", coinsExtraCirculo);
         PlayerPrefs.SetInt("ExtraTimeUnlock", hasExtraTimeUnlock ? 1 : 0);
+        PlayerPrefs.SetInt("CoralInfeciosoActivo", coralInfeciosoActivo ? 1 : 0);
+        PlayerPrefs.SetInt("CoralCapacity", coralCapacity);
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
@@ -223,6 +232,8 @@ public class Guardado : MonoBehaviour
         coinsExtraTriangulo = PlayerPrefs.GetInt("CoinsTriangulo", 0);
         coinsExtraCirculo = PlayerPrefs.GetInt("CoinsCirculo", 0);
         hasExtraTimeUnlock = PlayerPrefs.GetInt("ExtraTimeUnlock", 0) == 1;
+        coralInfeciosoActivo = PlayerPrefs.GetInt("CoralInfeciosoActivo", 0) == 1;
+        coralCapacity = PlayerPrefs.GetInt("CoralCapacity", 5); // 5 como valor por defecto si no existe
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -287,6 +298,18 @@ public class Guardado : MonoBehaviour
     public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
+
+    public void ActivarCoralInfeccioso()
+    {
+        coralInfeciosoActivo = true;
+        SaveData();
+    }
+
+    public void MejorarCapacidadCoral(int extra)
+    {
+        coralCapacity += extra;
+        SaveData();
+    }
 
     // Métodos Carambola y Pared
 

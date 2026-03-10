@@ -20,7 +20,7 @@ public class FloatingCellMovement : MonoBehaviour
     private SpriteRenderer sr;
     private MaterialPropertyBlock propBlock;
 
-    public AudioSource audioSource;
+     AudioSource audioSource;
     public AudioClip reboteVirusClip;
 
 
@@ -34,6 +34,11 @@ public class FloatingCellMovement : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
+        GameObject objAudio = GameObject.Find("SFXAudioSource");
+        if (objAudio != null)
+        {
+            audioSource = objAudio.GetComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -95,17 +100,15 @@ public class FloatingCellMovement : MonoBehaviour
         LevelTransitioner.OnTransitionStart -= Desaparecer;
     }
 
-    void Desaparecer()
+   public void Desaparecer()
     {
         // 1. Ejecutamos el feedback visual (el mismo que usan las personas)
         if (InfectionFeedback.instance != null)
         {
             // Usamos el efecto de impacto básico en blanco, similar a PersonaInfeccion
-            Color miColor;
-            if (ColorUtility.TryParseHtmlString("#FD4C52", out miColor))
-            {
-                InfectionFeedback.instance.PlayEffect(transform.position, miColor,true);
-            }
+          
+                InfectionFeedback.instance.PlayEffect(transform.position, Color.white,true);
+            
         }
 
         // 2. Destruimos el objeto coral
