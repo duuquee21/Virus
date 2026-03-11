@@ -634,4 +634,9 @@ public class PersonaInfeccion : MonoBehaviour
         return Mathf.Max(0, baseCoins + extra);
     }
     public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
+
+    public void SetInfector(Transform nuevoInfector)
+    {
+        transformInfector = nuevoInfector;
+    }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic; // Necesario para la lista de afectados
 
-public class BlackHoleSlashAdvanced : MonoBehaviour
+public class BlackSwordSpawner : MonoBehaviour
 {
     [Header("Configuración del Prefab")]
     public GameObject slashPrefab;

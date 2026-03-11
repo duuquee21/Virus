@@ -370,16 +370,22 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         if (isTransferring)
         {
-            StopAllCoroutines(); // Detiene la animación de golpe
+            StopAllCoroutines();
             isTransferring = false;
         }
 
-        // Forzamos valores finales
+        // Forzamos valores finales de lógica
         monedasTempPartida = 0;
         monedasTempTotales = totalCuentaFinal;
         ActualizarTextosMonedas();
 
-     
+        // --- CORRECCIÓN AQUÍ: Resetear escala y color visualmente ---
+        if (monedasTotalesText != null)
+        {
+            monedasTotalesText.transform.localScale = Vector3.one; // Forzar escala 1,1,1
+            monedasTotalesText.color = colorNormal;
+        }
+
         Time.timeScale = 1f;
     }
 
@@ -421,7 +427,10 @@ public class EndDayResultsPanel : MonoBehaviour
     private IEnumerator TransferRoutine(System.Action onComplete)
     {
         isTransferring = true;
-        Vector3 escalaOriginal = monedasTotalesText.transform.localScale;
+        monedasTotalesText.transform.localScale = Vector3.one;
+        Vector3 escalaOriginal = Vector3.one;
+
+
 
         int totalAMover = monedasTempPartida;
         int inicialPartida = monedasTempPartida;
@@ -498,7 +507,7 @@ public class EndDayResultsPanel : MonoBehaviour
         ActualizarTextosMonedas();
         monedasTotalesText.transform.localScale = escalaOriginal;
 
-        // Aseguramos que vuelva al normal al terminar
+        monedasTotalesText.transform.localScale = Vector3.one;
         monedasTotalesText.color = colorNormal;
 
         isTransferring = false;
