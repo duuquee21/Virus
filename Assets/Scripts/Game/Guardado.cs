@@ -74,6 +74,8 @@ public class Guardado : MonoBehaviour
     public bool coralInfeciosoActivo = false;
     public int coralCapacity = 5;
 
+    public bool hojaNegraData = false; // Ejemplo de variable para el sistema de Hoja Negra
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
