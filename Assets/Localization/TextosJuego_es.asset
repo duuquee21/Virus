@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826945622024
-    m_Localized: MONEDAS GANADAS
+    m_Localized: Monedas ganadas
     m_Metadata:
       m_Items: []
   - m_Id: 826945622025
-    m_Localized: MONEDAS TOTALES
+    m_Localized: Monedas totales
     m_Metadata:
       m_Items: []
   - m_Id: 826945622026
@@ -659,7 +659,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
-    m_Localized: ' '
+    m_Localized: Probabilidad de saltar una fase al chocar contra la pared
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -779,8 +779,36 @@ MonoBehaviour:
     m_Localized: "Los {0} avanzar\xE1n de fase al chocar a mucha velocidad."
     m_Metadata:
       m_Items: []
-  - m_Id: 1131443170549760
+  - m_Id: 1820888534929408
     m_Localized: "DA\xD1O TOTAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1824803229847552
+    m_Localized: Reclamar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825111343419392
+    m_Localized: Arbol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826841913249792
+    m_Localized: Monedas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113024
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113025
+    m_Localized: 'Jugar '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113026
+    m_Localized: Ajustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113027
+    m_Localized: Nueva Partida
     m_Metadata:
       m_Items: []
   references:

@@ -331,6 +331,25 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTotalesEtiqueta.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b>";
 
         ActualizarTextosMonedas();
+        if (btnContinue != null)
+        {
+            TextMeshProUGUI textoContinue = btnContinue.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (textoContinue != null) textoContinue.text = GetTexto("btn_continuar");
+        }
+
+        // 2. Botón Claim (Reclamar)
+        if (btnClaim != null)
+        {
+            TextMeshProUGUI textoClaim = btnClaim.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (textoClaim != null) textoClaim.text = GetTexto("btn_claim");
+        }
+
+        // 3. Botón Árbol (Habilidades)
+        if (btnArbol != null)
+        {
+            TextMeshProUGUI textoArbol = btnArbol.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (textoArbol != null) textoArbol.text = GetTexto("btn_arbol");
+        }
     }
 
     public void OnClickContinue()
