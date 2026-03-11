@@ -74,7 +74,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ParedInfectiva_Circulo,
         UnlockExtraTimeLogic,
         ActivarCoralInfeccioso,
-        MejorarCapacidadCoral
+        MejorarCapacidadCoral,
+        ActivarHojaNegra
     }
 
     [Header("Save ID")]
@@ -610,6 +611,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.ActivarHojaNegra:
+                Guardado.instance.ActivarHojaNegra();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -1086,6 +1091,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     sb.AppendLine($"{GetTexto("status_unlocked")}");
                 else
                     sb.AppendLine($"{GetTexto("coral_infec_desc")}"); // Crea esta clave en tu Localization
+                break;
+
+            case SkillEffectType.ActivarHojaNegra:
+                if (comprado)
+                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("activado")}");
+                else
+                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("desactivado")}");
                 break;
         }
 
