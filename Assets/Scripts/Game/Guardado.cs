@@ -10,6 +10,13 @@ public class Guardado : MonoBehaviour
     [Header("Datos Globales Acumulados")]
     public int totalInfected = 0;
 
+    [Header("Run Save")]
+    public float runTimer = 0f;
+    public int runCoins = 0;
+    public int runMapIndex = 0;
+    public float runPlanetHealth = 0f;
+    public bool runInProgress = false;
+
     [Header("Permanentes del Árbol (Habilidades)")]
     public int freeInitialUpgrade = -1;
     public int coinMultiplier = 1;
@@ -61,6 +68,15 @@ public class Guardado : MonoBehaviour
 
     public float[] infectSpeedPerPhase = new float[5];
 
+    public float[] probParedInfectiva = new float[6]; // Índices 1 a 5
+
+    public bool hasExtraTimeUnlock; // true si el jugador compró/desbloqueó la habilidad
+
+    public bool coralInfeciosoActivo = false;
+    public int coralCapacity = 5;
+
+    public bool hojaNegraData = false; // Ejemplo de variable para el sistema de Hoja Negra
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -96,8 +112,8 @@ public class Guardado : MonoBehaviour
         coinsPerZoneDaily = 0;
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
-
-        probabilidadDuplicarChoque = 0f;
+        hasExtraTimeUnlock = false; // <--- AÑADIDO
+    probabilidadDuplicarChoque = 0f;
         paredInfectivaActiva = false;
         nivelParedInfectiva = 1;
         radiusMultiplier = 1.0f;
@@ -118,10 +134,20 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = 0;
         coinsExtraTriangulo = 0;
         coinsExtraCirculo = 0;
-        speedLevel = 1;
+
+        coralInfeciosoActivo = false;
+        coralCapacity = 5; // Valor base por defecto
+
+        hojaNegraData = false; // Añadido
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
+        }
+        // Dentro de HardResetVariables()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            probParedInfectiva[i] = 0f;
         }
         ClearRunState();
         SaveData();
@@ -161,11 +187,22 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
         PlayerPrefs.SetInt("CoinsTriangulo", coinsExtraTriangulo);
         PlayerPrefs.SetInt("CoinsCirculo", coinsExtraCirculo);
+        PlayerPrefs.SetInt("ExtraTimeUnlock", hasExtraTimeUnlock ? 1 : 0);
+        PlayerPrefs.SetInt("CoralInfeciosoActivo", coralInfeciosoActivo ? 1 : 0);
+        PlayerPrefs.SetInt("CoralCapacity", coralCapacity);
+
+        PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
+
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
         }
-
+        // Al final de SaveData()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            PlayerPrefs.SetFloat("ProbParedInfectiva_" + i, probParedInfectiva[i]);
+        }
         PlayerPrefs.Save();
     }
 
@@ -204,13 +241,28 @@ public class Guardado : MonoBehaviour
         coinsExtraCuadrado = PlayerPrefs.GetInt("CoinsCuadrado", 0);
         coinsExtraTriangulo = PlayerPrefs.GetInt("CoinsTriangulo", 0);
         coinsExtraCirculo = PlayerPrefs.GetInt("CoinsCirculo", 0);
+        hasExtraTimeUnlock = PlayerPrefs.GetInt("ExtraTimeUnlock", 0) == 1;
+        coralInfeciosoActivo = PlayerPrefs.GetInt("CoralInfeciosoActivo", 0) == 1;
+        coralCapacity = PlayerPrefs.GetInt("CoralCapacity", 5); // 5 como valor por defecto si no existe
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
         }
+        // Al final de LoadData()
+        for (int i = 0; i < probParedInfectiva.Length; i++)
+        {
+            probParedInfectiva[i] = PlayerPrefs.GetFloat("ProbParedInfectiva_" + i, 0f);
+        }
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
+    public void ActivarExtraTime()
+    {
+        hasExtraTimeUnlock = true;
+        SaveData();
+        Debug.Log("<color=cyan>Habilidad Tiempo Extra Desbloqueada Permanentemente</color>");
+    }
     public void AddTotalData(int val) { totalInfected += val; SaveData(); }
     public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
     public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
@@ -227,6 +279,7 @@ public class Guardado : MonoBehaviour
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
     public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
+
     public void SetDoubleUpgradeChance(float chance)
     {
         doubleUpgradeChance = Mathf.Clamp01(chance);
@@ -238,6 +291,16 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
+    public void AddNivelParedInfectivaPorFigura(int fase)
+    {
+        if (fase >= 0 && fase < probParedInfectiva.Length)
+        {
+            // Aumenta el nivel de esa figura específica
+            probParedInfectiva[fase] += 1f;
+            SaveData();
+            Debug.Log($"Mejorada Pared Infectiva Fase {fase}. Nivel actual: {probParedInfectiva[fase]}");
+        }
+    }
     // Métodos de Daño
     public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
     public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; SaveData(); }
@@ -245,6 +308,25 @@ public class Guardado : MonoBehaviour
     public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
+
+    public void ActivarHojaNegra()
+    {
+        hojaNegraData = true;
+        SaveData();
+        Debug.Log("<color=black><b>Hojanegra activada permanentemente</b></color>");
+    }
+
+    public void ActivarCoralInfeccioso()
+    {
+        coralInfeciosoActivo = true;
+        SaveData();
+    }
+
+    public void MejorarCapacidadCoral(int extra)
+    {
+        coralCapacity += extra;
+        SaveData();
+    }
 
     // Métodos Carambola y Pared
 
@@ -343,35 +425,48 @@ public class Guardado : MonoBehaviour
         SaveData();
     }
 
-    public void SaveRunState(int ignoredDay, int currentCoins, int currentMap)
+    public void SaveRunState(float timer, int currentCoins, int currentMap, float planetHealth)
     {
         PlayerPrefs.SetInt("Run_InProgress", 1);
+
+        PlayerPrefs.SetFloat("Run_Timer", timer);
         PlayerPrefs.SetInt("Run_Coins", currentCoins);
         PlayerPrefs.SetInt("Run_Map", currentMap);
+        PlayerPrefs.SetFloat("Run_PlanetHealth", planetHealth);
+
         PlayerPrefs.Save();
     }
-
     public void ClearRunState()
     {
         PlayerPrefs.SetInt("Run_InProgress", 0);
         PlayerPrefs.Save();
     }
-
     public void SaveEvolutionData()
     {
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        int fases = PersonaInfeccion.dañoZonaPorFase.Length;
+
+        for (int i = 0; i < fases; i++)
         {
             PlayerPrefs.SetInt("Run_Zona_" + i, PersonaInfeccion.evolucionesEntreFases[i]);
             PlayerPrefs.SetInt("Run_Choque_" + i, PersonaInfeccion.evolucionesPorChoque[i]);
             PlayerPrefs.SetInt("Run_Carambola_" + i, PersonaInfeccion.evolucionesCarambola[i]);
+
+            PlayerPrefs.SetFloat("Run_DmgZona_" + i, PersonaInfeccion.dañoZonaPorFase[i]);
+            PlayerPrefs.SetFloat("Run_DmgChoque_" + i, PersonaInfeccion.dañoChoquePorFase[i]);
+            PlayerPrefs.SetFloat("Run_DmgCarambola_" + i, PersonaInfeccion.dañoCarambolaPorFase[i]);
+
+            PlayerPrefs.SetInt("Run_Golpes_" + i, PersonaInfeccion.golpesAlPlanetaPorFase[i]);
         }
+
+        PlayerPrefs.SetFloat("Run_DmgTotalZona", PersonaInfeccion.dañoTotalZona);
 
         PlayerPrefs.Save();
     }
-
     public void LoadEvolutionData()
     {
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
+        int fases = PersonaInfeccion.evolucionesEntreFases.Length;
+
+        for (int i = 0; i < fases; i++)
         {
             PersonaInfeccion.evolucionesEntreFases[i] =
                 PlayerPrefs.GetInt("Run_Zona_" + i, 0);
@@ -381,9 +476,23 @@ public class Guardado : MonoBehaviour
 
             PersonaInfeccion.evolucionesCarambola[i] =
                 PlayerPrefs.GetInt("Run_Carambola_" + i, 0);
-        }
-    }
 
+            PersonaInfeccion.dañoZonaPorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgZona_" + i, 0);
+
+            PersonaInfeccion.dañoChoquePorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgChoque_" + i, 0);
+
+            PersonaInfeccion.dañoCarambolaPorFase[i] =
+                PlayerPrefs.GetFloat("Run_DmgCarambola_" + i, 0);
+
+            PersonaInfeccion.golpesAlPlanetaPorFase[i] =
+                PlayerPrefs.GetInt("Run_Golpes_" + i, 0);
+        }
+
+        PersonaInfeccion.dañoTotalZona =
+            PlayerPrefs.GetFloat("Run_DmgTotalZona", 0);
+    }
 
     public void AddSpeedMultiplier(float extra)
     {

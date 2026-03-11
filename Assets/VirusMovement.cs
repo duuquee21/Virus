@@ -26,6 +26,15 @@ public class VirusMovement : MonoBehaviour
     private Material jellyMat;
     private Vector2 currentJellyVector;
 
+    [Header("Efectos de Partículas")]
+    public ParticleSystem moveParticles;
+    public float velocityThreshold = 0.1f; // Velocidad mínima para activar partículas
+
+    [Header("Ajustes de Emisión")]
+    public float minEmission = 10f;  // Partículas cuando se mueve lento
+    public float maxEmission = 50f;  // Partículas a máxima velocidad
+    public float speedForMaxEmission = 80f; // Velocidad a la que se alcanza el máximo (tu baseMoveSpeed)
+
     void Awake()
     {
         instance = this;
@@ -79,6 +88,7 @@ public class VirusMovement : MonoBehaviour
             currentJellyVector = Vector2.Lerp(currentJellyVector, targetJelly, Time.deltaTime * jellyLerpSpeed);
             jellyMat.SetVector("_VelocityDir", currentJellyVector);
         }
+        HandleParticles();
 
     }
 
@@ -92,6 +102,51 @@ public class VirusMovement : MonoBehaviour
 
         // Aplicamos una fuerza proporcional a la aceleración
         rb.AddForce(velocityChange * acceleration);
+    }
+
+    private void HandleParticles()
+    {
+        if (moveParticles == null) return;
+
+        // Usamos la magnitud de la velocidad actual del Rigidbody
+        float currentSpeed = rb.linearVelocity.magnitude;
+
+        if (currentSpeed > velocityThreshold)
+        {
+            if (!moveParticles.isEmitting) moveParticles.Play();
+
+            // --- 1. ROTACIÓN ---
+            float angle = Mathf.Atan2(rb.linearVelocity.y, rb.linearVelocity.x) * Mathf.Rad2Deg;
+            float invertedRotation = (angle + 270f + 180f) % 360f;
+            moveParticles.transform.rotation = Quaternion.Euler(0, 0, invertedRotation);
+
+            var main = moveParticles.main;
+            main.startRotation = -invertedRotation * Mathf.Deg2Rad;
+
+            // --- 2. EMISIÓN DINÁMICA (Optimizada) ---
+            var emission = moveParticles.emission;
+
+            // Calculamos qué tan rápido vamos respecto al máximo actual
+            // Usamos currentFinalSpeed para que se adapte si compras mejoras de velocidad
+            float maxReferenceSpeed = currentFinalSpeed > 0 ? currentFinalSpeed : speedForMaxEmission;
+            float speedPercent = Mathf.Clamp01(currentSpeed / maxReferenceSpeed);
+
+            // Aplicamos un Lerp entre el mínimo y el máximo
+            // Si quieres que casi no salgan partículas al ir lento, pon minEmission en un valor bajo (ej. 2)
+            float dynamicRate = Mathf.Lerp(minEmission, maxEmission, speedPercent);
+
+            emission.rateOverTime = dynamicRate;
+
+            // OPCIONAL: También puedes variar el tamaño o la vida de la partícula según la velocidad
+            // main.startSize = Mathf.Lerp(0.1f, 0.5f, speedPercent);
+        }
+        else
+        {
+            // Si la velocidad es casi cero, dejamos de emitir
+            var emission = moveParticles.emission;
+            emission.rateOverTime = 0;
+            if (moveParticles.isEmitting) moveParticles.Stop();
+        }
     }
 
     public void ApplySpeedMultiplier()

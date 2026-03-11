@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826945622024
-    m_Localized: Coins earned
+    m_Localized: COINS EARNED
     m_Metadata:
       m_Items: []
   - m_Id: 826945622025
-    m_Localized: Total coins
+    m_Localized: TOTAL COINS
     m_Metadata:
       m_Items: []
   - m_Id: 826945622026
@@ -659,7 +659,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
-    m_Localized: The figures can skip a level by bouncing off the wall.
+    m_Localized: ' '
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -712,6 +712,74 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 36237889818624
     m_Localized: Damage Triangle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1103911079616512
+    m_Localized: Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104619329789952
+    m_Localized: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104675273416704
+    m_Localized: Coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104716847357952
+    m_Localized: Virus Radius
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104734325022720
+    m_Localized: Virus Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104750733139968
+    m_Localized: Infection Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104771742408704
+    m_Localized: Capture Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104787743678464
+    m_Localized: Phase Time Bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104799189934080
+    m_Localized: Double Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104811768651776
+    m_Localized: Max Population
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104823382679552
+    m_Localized: Random Spawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104834426281984
+    m_Localized: Duplicate on Hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104849148289024
+    m_Localized: Spawn Interval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104860493881344
+    m_Localized: figures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104870593765376
+    m_Localized: '{0} and lower phases will break upon high-speed impact.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1104881570258944
+    m_Localized: '{0} will advance phase upon high-speed impact.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1131443170549760
+    m_Localized: TOTAL DAMAGE
     m_Metadata:
       m_Items: []
   references:

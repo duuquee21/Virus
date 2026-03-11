@@ -94,8 +94,14 @@ public class SkillTreeLinesUI : MonoBehaviour
     {
         foreach (var c in connections)
         {
+            // 1. Creamos el fondo primero
             c.lineBackground = CreateLineImage($"BG_{c.nodeA.name}_{c.nodeB.name}", lockedColor);
+
+            // 2. Creamos el frente después
             c.lineForeground = CreateLineImage($"FG_{c.nodeA.name}_{c.nodeB.name}", unlockedColor);
+
+            // Forzamos que el Foreground sea hermano posterior (se dibuja encima)
+            c.lineForeground.rectTransform.SetSiblingIndex(c.lineBackground.rectTransform.GetSiblingIndex() + 1);
 
             SkillNode sA = c.nodeA.GetComponent<SkillNode>();
             SkillNode sB = c.nodeB.GetComponent<SkillNode>();
@@ -190,6 +196,7 @@ public class SkillTreeLinesUI : MonoBehaviour
         img.fillOrigin = (int)Image.OriginHorizontal.Left;
         img.rectTransform.pivot = new Vector2(0f, 0.5f);
         img.gameObject.SetActive(false);
+        img.rectTransform.SetAsFirstSibling();
         return img;
     }
 

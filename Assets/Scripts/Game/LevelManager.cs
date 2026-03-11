@@ -122,10 +122,29 @@ public class LevelManager : MonoBehaviour
     public void OpenShinyShop() { if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
     public void CloseShinyShop()
     {
-        if (shinyPanel != null)
-            shinyPanel.SetActive(false);
-        zonePanel.SetActive(true); // Volvemos al panel de fin de día al cerrar la tienda de ADN/Mejoras
+        StartCoroutine(TransitionBackFromSkillTree());
+    }
 
+    private IEnumerator TransitionBackFromSkillTree()
+    {
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1);
+            transitionScript.CloseBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+
+        // Volvemos al panel de zonas o resultados
+        if (zonePanel != null) zonePanel.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     public void OpenZoneShop() { if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
@@ -234,28 +253,54 @@ public class LevelManager : MonoBehaviour
 
     void LoadRunAndStart()
     {
+        // Iniciamos la corrutina para que la carga respete la transición
+        StartCoroutine(LoadRunRoutine());
+    }
+
+    private IEnumerator LoadRunRoutine()
+    {
+        // 1. Iniciamos la transición visual (Cerrar pantalla)
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // Hexágono
+            transitionScript.CloseBlackScreen();
+            // Esperamos a que el shader termine de cerrarse (aprox 0.5s según tu código)
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        // 2. Carga de datos (Esto ocurre mientras la pantalla está en negro)
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
         int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
+        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
+        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
 
         Guardado.instance.LoadEvolutionData();
-        int monedasGanadas = PlayerPrefs.GetInt("Run_MonedasGanadas", 0);
-
-        EndDayResultsPanel.instance.ShowResults(
-            monedasGanadas,
-            contagionCoins
-        );
-
         PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
         PlayerPrefs.Save();
 
-        // CAMBIO: Ahora usamos la transición para ir del menú al panel de zona
-     
-            if (transitionScript != null) transitionScript.SetShape(1);
+        currentTimer = savedTimer;
 
-            StartCoroutine(TransitionRoutine(menuPanel, gameUI));
-        
+        // Actualizamos los nodos de habilidad
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.LoadNodeState();
+            node.CheckIfShouldShow();
+        }
+
+        // 3. Preparar la UI antes de mostrar
+        if (menuPanel) menuPanel.SetActive(false);
+        if (gameUI) gameUI.SetActive(true);
+
+        // 4. Iniciar la sesión de juego
+        StartSession();
+
+        // 5. Abrir la transición (Mostrar el juego ya cargado)
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
-
     public void NewGameFromMainMenu()
     {
         ResetRunData();
@@ -311,32 +356,43 @@ public class LevelManager : MonoBehaviour
         }
 
         // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
+        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
         if (currentTimer <= 0)
         {
-            // 1. Justo al llegar a 0, guardamos una "foto" de quiénes están dentro
-            if (!checkParaExtraTimeRealizado)
-            {
-                figurasCandidatas.Clear();
-                // Buscamos solo las personas que están en el radio en este instante
-                PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
-                foreach (var p in todas)
-                {
-                    if (p.IsInsideZone && !p.alreadyInfected)
-                    {
-                        figurasCandidatas.Add(p);
-                    }
-                }
-                checkParaExtraTimeRealizado = true;
-            }
+            // Verificamos si existe la mejora en el guardado
+            // (Asegúrate de que 'tieneTiempoExtra' sea el nombre real del bool en tu script Guardado)
+            bool poseeMejora = Guardado.instance != null && Guardado.instance.hasExtraTimeUnlock;
 
-            // 2. Verificamos si alguna de esas figuras candidatas sigue siendo válida
-            if (figurasCandidatas.Count > 0)
+            if (poseeMejora)
             {
-                ValidarEstadoTiempoExtra();
+                // 1. Lógica de candidatos (Solo si tiene la mejora)
+                if (!checkParaExtraTimeRealizado)
+                {
+                    figurasCandidatas.Clear();
+                    PersonaInfeccion[] todas = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
+                    foreach (var p in todas)
+                    {
+                        if (p.IsInsideZone && !p.alreadyInfected)
+                        {
+                            figurasCandidatas.Add(p);
+                        }
+                    }
+                    checkParaExtraTimeRealizado = true;
+                }
+
+                // 2. Validar si los candidatos siguen dentro
+                if (figurasCandidatas.Count > 0)
+                {
+                    ValidarEstadoTiempoExtra();
+                }
+                else
+                {
+                    EndSessionDay();
+                }
             }
             else
             {
-
+                // Si no tiene la mejora o no hay instancia de guardado, termina al instante
                 EndSessionDay();
             }
         }
@@ -439,16 +495,34 @@ public class LevelManager : MonoBehaviour
     }
     public void ReturnToMenu()
     {
+        // Detener la sesión
+        isGameActive = false;
+        timerStarted = false;
+
         Time.timeScale = 1f;
-        if (Guardado.instance)
+
+        // Guardar partida
+        if (Guardado.instance != null)
         {
-            int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+            float timer = currentTimer;
+            int coins = contagionCoins;
+            int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+            float planetHealth = 0f;
+
+            PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+            if (planet != null)
+            {
+                planetHealth = planet.GetCurrentHealth();
+            }
+
+            Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
+            Guardado.instance.SaveEvolutionData(); // ← ESTA LÍNEA FALTABA
         }
 
-        if (AudioManager.instance != null) AudioManager.instance.SwitchToMenuMusic();
+        if (AudioManager.instance != null)
+            AudioManager.instance.SwitchToMenuMusic();
 
-     
-   
         if (pausePanel != null) pausePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
 
@@ -488,7 +562,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        timerStarted = false;
+        timerStarted = true;
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
         if (menuPanel) menuPanel.SetActive(false);
@@ -670,27 +744,41 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteEndSessionLogic()
     {
-        // Detener el tiempo del todo o dejarlo muy bajo
-        Time.timeScale = 0f;
+        // Iniciamos la transición a negro antes de mostrar el panel
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // O la forma que prefieras
+            transitionScript.CloseBlackScreen();
+        }
 
+        StartCoroutine(ShowResultsWithTransition());
+    }
+
+    private IEnumerator ShowResultsWithTransition()
+    {
+        // Esperamos a que la pantalla esté en negro (ajusta el tiempo según tu shader)
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        Time.timeScale = 0f;
         SetMapsActive(false);
         gameUI.SetActive(false);
 
         int totalAntes = contagionCoins - monedasGanadasSesion;
         int totalFinal = totalAntes + monedasGanadasSesion;
 
-        int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        // (Aquí puedes mantener tus multiplicadores si los usas)
-
         if (EndDayResultsPanel.instance != null)
         {
-            EndDayResultsPanel.instance.ShowResults(
-                monedasGanadasSesion,
-                totalFinal);
+            EndDayResultsPanel.instance.ShowResults(monedasGanadasSesion, totalFinal);
         }
 
         if (Guardado.instance != null)
             Guardado.instance.AddTotalData(currentSessionInfected);
+
+        // Abrimos el iris/forma para mostrar el panel de resultados
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -769,10 +857,12 @@ public class LevelManager : MonoBehaviour
         }
         if (shinyPanel != null) shinyPanel.SetActive(false);
         // B. Limpieza de UI
+        if (shinyPanel != null) shinyPanel.SetActive(false);
         if (EndDayResultsPanel.instance.panel.activeSelf)
         {
             EndDayResultsPanel.instance.panel.SetActive(false);
         }
+     
         if (gameUI) gameUI.SetActive(false);
 
         // C. Lógica de Reinicio (Extraída de EjecutarSoftRestartLogica)
@@ -987,22 +1077,51 @@ public class LevelManager : MonoBehaviour
 
     public void OpenSkillTreePanel()
     {
-        // 1. Si el panel está abierto y hay monedas...
+        // 1. Si el panel de resultados tiene monedas pendientes, procesar animación primero
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
             EndDayResultsPanel.instance.StartCoinTransfer(() => {
-                Debug.Log("Animación terminada. Pulsa otra vez para ir al Skill Tree.");
+                // Una vez terminadas las monedas, lanzamos la transición al árbol
+                StartCoroutine(TransitionToSkillTree());
             });
-            return; // Obliga a una segunda pulsación
         }
-
-        // 2. Si ya se contaron las monedas...
-        if (EndDayResultsPanel.instance.panel.activeSelf)
+        else
         {
-            EndDayResultsPanel.instance.panel.SetActive(false);
+            // Si no hay monedas pendientes, transición directa
+            StartCoroutine(TransitionToSkillTree());
+        }
+    }
+
+    private IEnumerator TransitionToSkillTree()
+    {
+        // A. Iniciar cierre de iris/forma
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1); // Hexágono
+            transitionScript.CloseBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f); // Tiempo del shader
         }
 
-        EjecutarAbrirSkillTree();
+        // B. Cambio de Paneles (Mientras está en negro)
+        if (EndDayResultsPanel.instance != null)
+            EndDayResultsPanel.instance.panel.SetActive(false);
+
+        if (zonePanel != null) zonePanel.SetActive(false);
+
+        // Activamos la tienda de ADN
+        if (shinyPanel != null)
+        {
+            shinyPanel.SetActive(true);
+            UpdateUI();
+        }
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        // C. Abrir iris/forma
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
     }
 
     private void EjecutarAbrirSkillTree()
@@ -1088,10 +1207,18 @@ public class LevelManager : MonoBehaviour
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
 
+        float planetHealth = 0f;
+        PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
+        if (planet != null)
+        {
+            planetHealth = planet.GetCurrentHealth();
+        }
+
         Guardado.instance.SaveRunState(
-            0,
+            currentTimer,
             contagionCoins,
-            currentMap
+            currentMap,
+            planetHealth
         );
 
         Guardado.instance.SaveEvolutionData();
@@ -1180,7 +1307,5 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-
 
 }

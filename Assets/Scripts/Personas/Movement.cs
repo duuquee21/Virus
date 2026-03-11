@@ -1,3 +1,4 @@
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -133,6 +134,12 @@ public class Movement : MonoBehaviour
         // El vector solo indica "hacia d�nde", y la variable 'fuerza' decide "cu�nto".
         Vector2 direccionNormalizada = direccionEmpuje.normalized;
 
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direccionEmpuje, 0.5f);
+        if (hit.collider != null && hit.collider.CompareTag("Pared"))
+        {
+            // Si hay pared, invertimos la dirección del impacto antes de aplicarlo
+            direccionNormalizada = Vector2.Reflect(direccionNormalizada, hit.normal);
+        }
         // Reiniciamos la velocidad actual para que empujes previos no se sumen de forma extra�a
         rb.linearVelocity = Vector2.zero;
 
@@ -163,6 +170,7 @@ public class Movement : MonoBehaviour
             {
                 // Calculamos el nuevo vector de rebote
                 Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
+
 
                 if (personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance.nivelParedInfectiva == 6)
                 {
@@ -213,32 +221,84 @@ public class Movement : MonoBehaviour
 
             if (rbAtacante != null && movAtacante != null)
             {
-                Vector2 puntoContacto = otro.ClosestPoint(transform.position);
-                Vector2 normalChoque = ((Vector2)transform.position - puntoContacto).normalized;
-                if (normalChoque.sqrMagnitude < 0.01f) normalChoque = ((Vector2)transform.position - (Vector2)otro.transform.position).normalized;
+                // 1. Dirección del rebote (del centro del atacante hacia este objeto)
+                Vector2 direccionRebote = (Vector2)transform.position - (Vector2)otro.transform.position;
 
-                float velocidadImpacto = rbAtacante.linearVelocity.magnitude;
-                float velocidadMaximaEnChoque = Mathf.Max(rb.linearVelocity.magnitude, rbAtacante.linearVelocity.magnitude);
-                bool hayImpactoFuerte = velocidadMaximaEnChoque > 6.5f;
-
-                // --- ELIMINADO: Aquí tenías código que volvía a llamar a avanzar fase ignorando filtros ---
-
-                if (hayImpactoFuerte && InfectionFeedback.instance != null)
+                if (direccionRebote.sqrMagnitude < 0.001f)
                 {
-                    InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
+                    direccionRebote = UnityEngine.Random.insideUnitCircle.normalized;
+                }
+                else
+                {
+                    direccionRebote.Normalize();
                 }
 
-                // Aplicación de velocidades
-                float fuerzaExtra = hayImpactoFuerte ? 1.2f : 1f;
-                rb.linearVelocity = normalChoque * (velocidadImpacto * fuerzaExtra);
-                rbAtacante.linearVelocity = -normalChoque * (velocidadImpacto * fuerzaExtra);
+                // 2. OBTENER VELOCIDADES ORIGINALES
+                // Guardamos la magnitud antes de que el motor de física la altere en este frame
+                float velPropia = rb.linearVelocity.magnitude;
+                float velAtacante = rbAtacante.linearVelocity.magnitude;
 
+                // Calculamos una velocidad media de impacto para que el rebote sea equitativo
+                // o simplemente usamos la velocidad que traía el que golpeó.
+                float velocidadDeIntercambio = (velPropia + velAtacante) * 0.5f;
+
+                // 3. FILTRO DE IMPACTO FUERTE (Solo para efectos visuales)
+                bool hayImpactoFuerte = velocidadDeIntercambio > 6.5f;
+
+                if (hayImpactoFuerte)
+                {
+                    // --- SOLUCIÓN: Solo una figura procesa el choque ---
+                    // Comparamos IDs para que el código solo se ejecute UNA vez por pareja de choque
+                    if (this.gameObject.GetInstanceID() < otro.gameObject.GetInstanceID()) return;
+
+                    Guardado g = Guardado.instance;
+                    bool algunaFiguraEvoluciono = false;
+
+                    // 1. Probabilidad para la figura actual (this)
+                    int fasePropia = personaInfeccion.faseActual;
+                    if (fasePropia >= 0 && fasePropia < g.probParedInfectiva.Length)
+                    {
+                        float prob = g.probParedInfectiva[fasePropia] * 0.25f;
+                        if (UnityEngine.Random.value < prob)
+                        {
+                            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+                            algunaFiguraEvoluciono = true;
+                        }
+                    }
+
+                    // 2. Probabilidad para la figura atacante (otro)
+                    int faseAtacante = scriptAtacante.faseActual;
+                    if (faseAtacante >= 0 && faseAtacante < g.probParedInfectiva.Length)
+                    {
+                        float probAtacante = g.probParedInfectiva[faseAtacante] * 0.25f;
+                        if (UnityEngine.Random.value < probAtacante)
+                        {
+                            scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+                            algunaFiguraEvoluciono = true;
+                        }
+                    }
+
+                    // El feedback visual también se ejecutará solo una vez ahora
+                    if (!algunaFiguraEvoluciono && InfectionFeedback.instance != null)
+                    {
+                        InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
+                    }
+                }
+                // 4. REFLEXIÓN PURA
+                // Usamos un factor de restitución (0.9f = pierde 10% de energía, 1.0f = rebote perfecto)
+                float factorRestitucion = 0.95f;
+
+                // Aplicamos la velocidad reflejada
+                rb.linearVelocity = direccionRebote * (velocidadDeIntercambio * factorRestitucion);
+                rbAtacante.linearVelocity = -direccionRebote * (velocidadDeIntercambio * factorRestitucion);
+
+                // 5. ESTADOS
                 this.estaEmpujado = true;
                 this.direccion = rb.linearVelocity.normalized;
                 movAtacante.SetEstaEmpujado(true, rbAtacante.linearVelocity.normalized);
             }
         }
-    }
+    } 
     public void SetEstaEmpujado(bool estado, Vector2 nuevaDir)
     {
         estaEmpujado = estado;

@@ -20,16 +20,62 @@ public class FloatingCellMovement : MonoBehaviour
     private SpriteRenderer sr;
     private MaterialPropertyBlock propBlock;
 
-    public AudioSource audioSource;
+     AudioSource audioSource;
     public AudioClip reboteVirusClip;
 
 
-
+    [Header("Efectos de Partículas")]
+    public ParticleSystem moveParticles;
+    public float velocityThreshold = 0.1f;
+    public float minEmission = 5f;
+    public float maxEmission = 30f;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
+        GameObject objAudio = GameObject.Find("SFXAudioSource");
+        if (objAudio != null)
+        {
+            audioSource = objAudio.GetComponent<AudioSource>();
+        }
+    }
+
+    void Update()
+    {
+        HandleParticles();
+    }
+
+    private void HandleParticles()
+    {
+        if (moveParticles == null) return;
+
+        // Usamos la velocidad base y la dirección actual
+        float currentSpeed = velocidadBase;
+
+        if (currentSpeed > velocityThreshold)
+        {
+            if (!moveParticles.isEmitting) moveParticles.Play();
+
+            // --- 1. ROTACIÓN (Igual al Virus) ---
+            float angle = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
+            float invertedRotation = (angle + 270f + 180f) % 360f;
+            moveParticles.transform.rotation = Quaternion.Euler(0, 0, invertedRotation);
+
+            var main = moveParticles.main;
+            main.startRotation = -invertedRotation * Mathf.Deg2Rad;
+
+            // --- 2. EMISIÓN DINÁMICA ---
+            var emission = moveParticles.emission;
+            float speedPercent = Mathf.Clamp01(currentSpeed / 10f); // 10f es la referencia de velocidad
+            emission.rateOverTime = Mathf.Lerp(minEmission, maxEmission, speedPercent);
+        }
+        else
+        {
+            var emission = moveParticles.emission;
+            emission.rateOverTime = 0;
+            if (moveParticles.isEmitting) moveParticles.Stop();
+        }
     }
 
     void Start()
@@ -54,17 +100,15 @@ public class FloatingCellMovement : MonoBehaviour
         LevelTransitioner.OnTransitionStart -= Desaparecer;
     }
 
-    void Desaparecer()
+   public void Desaparecer()
     {
         // 1. Ejecutamos el feedback visual (el mismo que usan las personas)
         if (InfectionFeedback.instance != null)
         {
             // Usamos el efecto de impacto básico en blanco, similar a PersonaInfeccion
-            Color miColor;
-            if (ColorUtility.TryParseHtmlString("#FD4C52", out miColor))
-            {
-                InfectionFeedback.instance.PlayEffect(transform.position, miColor,true);
-            }
+          
+                InfectionFeedback.instance.PlayEffect(transform.position, Color.white,true);
+            
         }
 
         // 2. Destruimos el objeto coral
