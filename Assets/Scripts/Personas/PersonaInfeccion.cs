@@ -141,6 +141,7 @@ public class PersonaInfeccion : MonoBehaviour
         if (alreadyInfected)
         {
             SetTrailsEmitting(false); // Cambia trail.emitting = false por esto
+            
             return;
         }
 

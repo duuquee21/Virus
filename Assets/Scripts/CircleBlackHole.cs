@@ -6,7 +6,11 @@ public class BlackHoleController : MonoBehaviour
     [Header("Referencias")]
     public GameObject circuloPrefab;
 
-    [Header("Configuración de Spawn")]
+    [Header("Configuración de Spawn Automático")]
+    public float frecuenciaSpawn = 3.0f; // Cada cuánto tiempo aparece uno solo
+    private float nextSpawnTime;
+
+    [Header("Configuración de Spawn Posición")]
     public float radioDeAparicionAleatoria = 5f;
 
     [Header("Configuración de Escala")]
@@ -17,7 +21,6 @@ public class BlackHoleController : MonoBehaviour
 
     [Header("Fuerzas y Atracción")]
     public float fuerzaAtraccion = 15f;
-    // NUEVA VARIABLE: Independiente de la escala visual
     public float radioDeAtraccionEfectiva = 7f;
     public float radioDeInfeccionFinal = 5f;
     public float fuerzaExpansionInfeccion = 25f;
@@ -28,6 +31,17 @@ public class BlackHoleController : MonoBehaviour
 
     void Update()
     {
+        // LÓGICA AUTOMÁTICA (Igual que BlackSwordSpawner)
+        // 1. Verifica si la habilidad está desbloqueada en Guardado (asumo que se llama agujeroNegroData)
+        // 2. Verifica el cronómetro de spawn
+        // 3. Verifica si el juego está activo en LevelManager
+        if (Guardado.instance.agujeroNegroData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
+        {
+            SpawnBlackHole();
+            nextSpawnTime = Time.time + frecuenciaSpawn;
+        }
+
+        // Mantengo el input manual por si quieres testear, puedes borrarlo si no lo usas
         if (Input.GetKeyDown(KeyCode.E))
         {
             SpawnBlackHole();
@@ -50,7 +64,6 @@ public class BlackHoleController : MonoBehaviour
     IEnumerator ExecuteBlackHoleSequence(GameObject objeto, ParticleSystem ps)
     {
         SpriteRenderer sr = objeto.GetComponent<SpriteRenderer>();
-        // Ya no necesitamos estrictamente el collider para la atracción
         float elapsed = 0;
 
         if (ps != null) ps.Play();
@@ -76,7 +89,6 @@ public class BlackHoleController : MonoBehaviour
             if (sr != null) sr.color = new Color(0, 0, 0, t);
             objeto.transform.Rotate(0, 0, velocidadRotacion * Time.deltaTime);
 
-            // LLAMADA MODIFICADA: Usamos la posición del objeto y el nuevo radio
             AtraerPersonas(objeto.transform.position);
 
             yield return null;
@@ -108,9 +120,6 @@ public class BlackHoleController : MonoBehaviour
         Destroy(objeto);
     }
 
-    // NUEVA LÓGICA DE ATRACCIÓN
-    // Dentro de AtraerPersonas en BlackHoleController.cs
-
     void AtraerPersonas(Vector3 centro)
     {
         Collider2D[] personas = Physics2D.OverlapCircleAll(centro, radioDeAtraccionEfectiva);
@@ -124,15 +133,11 @@ public class BlackHoleController : MonoBehaviour
 
                 if (rbPersona != null)
                 {
-                    // Activamos el estado para que Movement.cs no intente frenar la atracción
                     if (mov != null) mov.SetEstaEmpujado(true, rbPersona.linearVelocity.normalized);
 
                     Vector2 direccionHaciaCentro = (Vector2)centro - rbPersona.position;
                     float distancia = direccionHaciaCentro.magnitude;
 
-                    // Aplicamos fuerza continua. 
-                    // Usamos ForceMode2D.Force para que sea una aceleración constante 
-                    // y permita que los rebotes cambien el vector de velocidad.
                     float intensidad = fuerzaAtraccion / (distancia + 0.8f);
                     rbPersona.AddForce(direccionHaciaCentro.normalized * intensidad * 10f, ForceMode2D.Force);
                 }
@@ -157,7 +162,6 @@ public class BlackHoleController : MonoBehaviour
         }
     }
 
-    // Opcional: Para ver el radio en el Editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

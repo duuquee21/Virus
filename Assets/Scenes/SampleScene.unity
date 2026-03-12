@@ -2201,6 +2201,7 @@ MonoBehaviour:
   coralInfeciosoActivo: 0
   coralCapacity: 1
   hojaNegraData: 0
+  agujeroNegroData: 1
 --- !u!4 &38468938
 Transform:
   m_ObjectHideFlags: 0
@@ -3993,7 +3994,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 126.65
+  m_fontSize: 150
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -58417,7 +58418,7 @@ MonoBehaviour:
   shinyStoreTexts: []
   gameDuration: 5
   monedasGanadasSesion: 0
-  faseInicialPorMapa: 00000000
+  faseInicialPorMapa: 03000000
   coloresPorMapa:
   - {r: 0.6627451, g: 0.31764707, b: 0.3372549, a: 0}
   - {r: 0.627451, g: 0.68235296, b: 0.5176471, a: 0}
@@ -80337,6 +80338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circuloPrefab: {fileID: 1901913494163928558, guid: 94ab0d29d4c5433439f44075960d9b24, type: 3}
+  frecuenciaSpawn: 3
   radioDeAparicionAleatoria: 11
   radioInicial: 5
   radioFinal: 1
@@ -103248,7 +103250,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2100339708}
   - component: {fileID: 2100339707}
-  - component: {fileID: 2100339709}
   m_Layer: 0
   m_Name: UpgradeManager
   m_TagString: Untagged
@@ -103289,38 +103290,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 38468938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2100339709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100339706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6421c08afd4adb4783e2a2e6a4ea986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  milestones:
-  - requiredShinies: 1
-    objects:
-    - {fileID: 0}
-    - {fileID: 0}
-    unlocked: 0
-  - requiredShinies: 3
-    objects:
-    - {fileID: 0}
-    - {fileID: 0}
-    unlocked: 0
-  - requiredShinies: 9
-    objects:
-    - {fileID: 0}
-    - {fileID: 0}
-    unlocked: 0
-  - requiredShinies: 81
-    objects:
-    - {fileID: 0}
-    unlocked: 0
 --- !u!4 &2105907647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}

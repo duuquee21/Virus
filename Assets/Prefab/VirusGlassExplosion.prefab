@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 328621615622337309}
   m_Layer: 0
   m_Name: VirusGlassExplosion
-  m_TagString: Untagged
+  m_TagString: Efectos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

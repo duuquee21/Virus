@@ -76,6 +76,8 @@ public class Guardado : MonoBehaviour
 
     public bool hojaNegraData = false; // Ejemplo de variable para el sistema de Hoja Negra
 
+    public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
