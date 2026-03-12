@@ -373,12 +373,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.AddCoinMultiplier(1);
                 break;
 
-            case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); break;
-            case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); break;
-            case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); break;
-            case SkillEffectType.StartWith2500Coins: Guardado.instance.AddStartingCoins(2500); break;
-            case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break;
-            case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break;
+            case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); break; //old
+            case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); break; //old
+            case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); break; //old
+            case SkillEffectType.StartWith2500Coins: Guardado.instance.AddStartingCoins(2500); break; //old
+            case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break; //old
+            case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break; //old
 
             case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.5f); break;
             case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
@@ -386,19 +386,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
             case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); break;
 
-            case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); break;
-            case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); break;
-            case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); break;
-            case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); break;
-            case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); break;
+            case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); break; //old
+            case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); break; //old
+            case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); break; //old
+            case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); break; //old
+            case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); break; //old
 
-            case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); break;
-            case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break;
-            case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break;
+            case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); break; //old
+            case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break; //old
+            case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break; //old
 
             case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(1f); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
-            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break;
+            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break; //old
 
             case SkillEffectType.RadiusLevel2:
             case SkillEffectType.RadiusLevel3:
@@ -431,11 +431,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed();
                 break;
 
-            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break;
-            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); break;
+            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break; //old
+            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); break; //old
 
-            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); break;
-            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); break;
+            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); break; //old
+            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); break; //old
 
             case SkillEffectType.KeepUpgradesOnResetEffect:
                 Guardado.instance.keepUpgradesOnReset = true;
@@ -445,11 +445,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.ActivateKeepZones();
                 break;
 
-            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); break;
-            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); break;
-            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); break;
-            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break;
-            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break;
+            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); break; //old
+            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); break; //old
+            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); break; //old
+            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break; //old
+            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break; //old
 
             // Sustituye los tres cases anteriores por este:
             case SkillEffectType.CarambolaNormal:
@@ -497,15 +497,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgCuadrado:
-                Guardado.instance.dañoExtraCuadrado += GetInt(1);
+                Guardado.instance.dañoExtraCuadrado += GetInt(2);
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgTriangulo:
-                Guardado.instance.dañoExtraTriangulo += GetInt(1);
+                Guardado.instance.dañoExtraTriangulo += GetInt(3);
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgCirculo:
-                Guardado.instance.dañoExtraCirculo += GetInt(1);
+                Guardado.instance.dañoExtraCirculo += GetInt(4);
                 Guardado.instance.SaveData();
                 break;
 
@@ -563,35 +563,35 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
 
-            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
 
-            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
+            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
+            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
+            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
+            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
 
-            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
+            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
+            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
+            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
+            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
 
-            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
-            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
+            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
+            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
+            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
+            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
 
             case SkillEffectType.UnlockExtraTimeLogic:
                 // Llamamos al método que creamos en el paso anterior en Guardado.cs
@@ -686,28 +686,28 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 }
             case SkillEffectType.DmgPentagono:
                 {
-                    int actual = 2 + g.dañoExtraPentagono;
+                    int actual = 1 + g.dañoExtraPentagono;
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCuadrado:
                 {
-                    int actual = 3 + g.dañoExtraCuadrado;
+                    int actual = 2 + g.dañoExtraCuadrado;
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgTriangulo:
                 {
-                    int actual = 4 + g.dañoExtraTriangulo;
+                    int actual = 3 + g.dañoExtraTriangulo;
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCirculo:
                 {
-                    int actual = 5 + g.dañoExtraCirculo;
+                    int actual = 4 + g.dañoExtraCirculo;
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual} → {actual + 1}");
                     break;

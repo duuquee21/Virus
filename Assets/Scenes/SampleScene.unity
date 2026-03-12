@@ -816,7 +816,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagon_tit
   descriptionKey: skill_hexagon_desc
-  CoinCost: 8
+  CoinCost: 6
   nextNodes: []
   requiredParentNodes:
   - {fileID: 407586760}
@@ -1727,8 +1727,8 @@ MonoBehaviour:
   button: {fileID: 30808113}
   nodeImage: {fileID: 30808114}
   costText: {fileID: 0}
-  hoverSprite: {fileID: -3406059089922838627, guid: 8568ea5d3d6f4f148b3c814b692ea455, type: 3}
-  normalSprite: {fileID: -3877039321911045793, guid: d73009c24a1ea64479fa08c9d0353352, type: 3}
+  hoverSprite: {fileID: -7227463440389186562, guid: 7d3754849344dd54d9802b906ba54a9a, type: 3}
+  normalSprite: {fileID: 7394359693388661460, guid: 0c46706d540d51043aa744d412d8ab21, type: 3}
   notEnoughMoneySprite: {fileID: 4466576982585602529, guid: 9ed91d10764d35f4aaedbc4b61424f46, type: 3}
   disabledSprite: {fileID: -2896248637602845539, guid: e302354f5293f7849bbf8bc66bd81281, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
@@ -1767,11 +1767,11 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagon_tit
   descriptionKey: skill_hexagon_desc
-  CoinCost: 12
+  CoinCost: 32
   nextNodes: []
   requiredParentNodes:
   - {fileID: 116029488}
-  effectType: 114
+  effectType: 117
   button: {fileID: 30808113}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   - {fileID: 8811017}
   - {fileID: 151827302}
   - {fileID: 1439613808}
-  effectType: 114
+  effectType: 144
   button: {fileID: 31917059}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -5548,13 +5548,13 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagoncoin_tit
   descriptionKey: skill_hexagoncoin_desc
-  CoinCost: 18
+  CoinCost: 30
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1582465759}
   - {fileID: 686109906}
   - {fileID: 30808112}
-  - {fileID: 531154061}
+  - {fileID: 0}
   effectType: 109
   button: {fileID: 116029489}
   lockIcon: {fileID: 0}
@@ -5846,10 +5846,10 @@ MonoBehaviour:
   button: {fileID: 125608819}
   nodeImage: {fileID: 125608820}
   costText: {fileID: 0}
-  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
-  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
-  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
-  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
+  hoverSprite: {fileID: -4140073442392472634, guid: 97994d494035b3b48ba087aa2165f4b9, type: 3}
+  normalSprite: {fileID: 7610785278498187448, guid: cf69f5c1feb93a5438819b864d66fe2b, type: 3}
+  notEnoughMoneySprite: {fileID: -3149661667989880294, guid: a3c468155db67ba408616ed4d6aac11d, type: 3}
+  disabledSprite: {fileID: -3163715419515639616, guid: 07d0b1843a909ca4894564d138715429, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &125608817
 CanvasGroup:
@@ -5886,12 +5886,12 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamagePen_tit
   descriptionKey: skill_zoneDamagePen_desc
-  CoinCost: 18
+  CoinCost: 15
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1055916627}
   - {fileID: 1914251209}
-  effectType: 84
+  effectType: 83
   button: {fileID: 125608819}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -5979,7 +5979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  m_Sprite: {fileID: -3149661667989880294, guid: a3c468155db67ba408616ed4d6aac11d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7045,9 +7045,9 @@ RectTransform:
   - {fileID: 754507403}
   - {fileID: 879777740}
   - {fileID: 474215730}
+  - {fileID: 1973898785}
   - {fileID: 1614307347}
   - {fileID: 1951653948}
-  - {fileID: 531154057}
   - {fileID: 1396887377}
   - {fileID: 151827300}
   - {fileID: 954987303}
@@ -14137,12 +14137,12 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagon_tit
   descriptionKey: skill_pentagon_desc
-  CoinCost: 36
+  CoinCost: 28
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1228263475}
   - {fileID: 1296002569}
-  effectType: 119
+  effectType: 120
   button: {fileID: 350984044}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -16005,10 +16005,10 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_spawn_tit
   descriptionKey: skill_spawn_desc
-  CoinCost: 18
+  CoinCost: 34
   nextNodes: []
   requiredParentNodes:
-  - {fileID: 531154061}
+  - {fileID: 0}
   - {fileID: 1396887379}
   effectType: 13
   button: {fileID: 378396975}
@@ -16236,7 +16236,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_spawn_tit
   descriptionKey: skill_spawn_desc
-  CoinCost: 12
+  CoinCost: 9
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1439613808}
@@ -17259,111 +17259,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397164376}
   m_CullTransparentMesh: 1
---- !u!1001 &397330022
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 531154057}
-    m_Modifications:
-    - target: {fileID: 700878121169898452, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_SortingOrder
-      value: 32765
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3748.0005
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.type
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.arc.mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.arc.value
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.arc.spread
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.donutRadius
-      value: 1.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 0.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7197056637472312061, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-      propertyPath: m_Name
-      value: BuyParticler
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e78367f78827eae408345a381b2d0c73, type: 3}
 --- !u!1 &406750154
 GameObject:
   m_ObjectHideFlags: 0
@@ -17708,7 +17603,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagoncoin_tit
   descriptionKey: skill_hexagoncoin_desc
-  CoinCost: 10
+  CoinCost: 8
   nextNodes: []
   requiredParentNodes:
   - {fileID: 8811017}
@@ -20175,7 +20070,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_speedLevel_tit
   descriptionKey: skill_speedLevel_desc
-  CoinCost: 22
+  CoinCost: 15
   nextNodes: []
   requiredParentNodes:
   - {fileID: 797128903}
@@ -20425,7 +20320,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_squarecoin_tit
   descriptionKey: skill_squarecoin_desc
-  CoinCost: 144
+  CoinCost: 26
   nextNodes: []
   requiredParentNodes:
   - {fileID: 739443374}
@@ -27353,7 +27248,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_square_tit
   descriptionKey: skill_square_desc
-  CoinCost: 36
+  CoinCost: 28
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1228263475}
@@ -27854,238 +27749,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &531154056
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 531154057}
-  - component: {fileID: 531154064}
-  - component: {fileID: 531154063}
-  - component: {fileID: 531154062}
-  - component: {fileID: 531154061}
-  - component: {fileID: 531154060}
-  - component: {fileID: 531154059}
-  - component: {fileID: 531154058}
-  m_Layer: 5
-  m_Name: Skill_speedMulti
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &531154057
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2017056619}
-  m_Father: {fileID: 154249163}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 745, y: -380.00012}
-  m_SizeDelta: {x: 87, y: 95.6666}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &531154058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9b60f61d7a59224d9e3f537c781eabd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillNode: {fileID: 531154061}
-  button: {fileID: 531154062}
-  nodeImage: {fileID: 531154063}
-  costText: {fileID: 0}
-  hoverSprite: {fileID: 1817521010485118385, guid: 6982db56472d62e45b62c296b481a122, type: 3}
-  normalSprite: {fileID: 5786553476663502313, guid: 9251dce9ef287a44ba59287c90f01152, type: 3}
-  notEnoughMoneySprite: {fileID: -7789458304055496908, guid: 5ee27e5633f51f4469fe26f57408808f, type: 3}
-  disabledSprite: {fileID: 4287090996553358896, guid: 7f1c2a028d1f2174da4187784d811708, type: 3}
-  lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
---- !u!114 &531154059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efdefecf89ade8645a7bc2f1e41cce48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rect: {fileID: 531154057}
-  infoPanel: {fileID: 2041343776}
-  audioSource: {fileID: 1534932859}
-  hoverSound: {fileID: 8300000, guid: dd555a00d68928c47a8b25896e32cd4e, type: 3}
-  volume: 0.3
-  purchasedScale: 0.8
-  hoverScale: 1.1
-  speed: 8
-  hoverOffsetX: 10
---- !u!225 &531154060
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &531154061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveID: 148
-  useOverride: 0
-  overrideInt: 0
-  overrideFloat: 0
-  overrideIndex: 0
-  infoPanel: {fileID: 0}
-  infoTitle: {fileID: 0}
-  infoDescription: {fileID: 0}
-  infoCost: {fileID: 0}
-  skillNameKey: skill_infectionSpeedMulti_tit
-  descriptionKey: skill_infectionSpeed_desc
-  CoinCost: 24
-  nextNodes: []
-  requiredParentNodes:
-  - {fileID: 116029488}
-  - {fileID: 1989663731}
-  - {fileID: 378396974}
-  effectType: 29
-  button: {fileID: 531154062}
-  lockIcon: {fileID: 0}
-  nodeImage: {fileID: 0}
-  skillNameText: {fileID: 0}
-  canvasGroup: {fileID: 0}
-  audioSource: {fileID: 1534932859}
-  unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
-  isStartingNode: 0
-  repeatLevel: 0
-  maxRepeatLevel: 1
-  maxTimeRepeatLevel: 1
---- !u!114 &531154062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 531154063}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 531154061}
-        m_TargetAssemblyTypeName: SkillNode, Assembly-CSharp
-        m_MethodName: TryUnlock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &531154063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -7789458304055496908, guid: 5ee27e5633f51f4469fe26f57408808f, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &531154064
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531154056}
-  m_CullTransparentMesh: 1
 --- !u!1 &534153781
 GameObject:
   m_ObjectHideFlags: 0
@@ -28637,7 +28300,7 @@ MonoBehaviour:
   requiredParentNodes:
   - {fileID: 802097012}
   - {fileID: 1708901996}
-  effectType: 114
+  effectType: 118
   button: {fileID: 544632741}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -32511,7 +32174,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_time_tit
   descriptionKey: skill_time_desc
-  CoinCost: 18
+  CoinCost: 32
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1296002569}
@@ -32829,7 +32492,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_initialFigures_tit
   descriptionKey: skill_initialFigures_desc
-  CoinCost: 24
+  CoinCost: 28
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1296002569}
@@ -34192,7 +33855,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagoncoin_tit
   descriptionKey: skill_pentagoncoin_desc
-  CoinCost: 18
+  CoinCost: 24
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1914251209}
@@ -35101,6 +34764,111 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748039271}
   m_CullTransparentMesh: 1
+--- !u!1001 &750404727
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1973898785}
+    m_Modifications:
+    - target: {fileID: 700878121169898452, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_SortingOrder
+      value: 32765
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3748.0005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.type
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.arc.value
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.arc.spread
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843893043477303254, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7197056637472312061, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+      propertyPath: m_Name
+      value: BuyParticler
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e78367f78827eae408345a381b2d0c73, type: 3}
 --- !u!1 &750702834
 GameObject:
   m_ObjectHideFlags: 0
@@ -41605,7 +41373,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_time_tit
   descriptionKey: skill_time_desc
-  CoinCost: 20
+  CoinCost: 14
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1278883309}
@@ -43182,10 +42950,10 @@ MonoBehaviour:
   button: {fileID: 823844520}
   nodeImage: {fileID: 823844521}
   costText: {fileID: 0}
-  hoverSprite: {fileID: -3406059089922838627, guid: 8568ea5d3d6f4f148b3c814b692ea455, type: 3}
-  normalSprite: {fileID: -3877039321911045793, guid: d73009c24a1ea64479fa08c9d0353352, type: 3}
-  notEnoughMoneySprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
-  disabledSprite: {fileID: 139530798587393011, guid: 9c99f583a66b7354b8e4ca0fbfe84b04, type: 3}
+  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
+  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
+  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &823844518
 CanvasGroup:
@@ -43222,11 +42990,11 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamageHex_tit
   descriptionKey: skill_zoneDamageHex_desc
-  CoinCost: 22
+  CoinCost: 15
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1050803135}
-  effectType: 85
+  effectType: 84
   button: {fileID: 823844520}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -43314,7 +43082,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
+  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -44682,7 +44450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44705,8 +44473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00048828125, y: -0.00012207031}
-  m_SizeDelta: {x: 9113.43, y: 5088.83}
+  m_AnchoredPosition: {x: 0.00048828125, y: -0.00024414062}
+  m_SizeDelta: {x: 2690.79, y: 2419.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858966971
 MonoBehaviour:
@@ -47782,7 +47550,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_squarecoin_tit
   descriptionKey: skill_squarecoin_desc
-  CoinCost: 15
+  CoinCost: 10
   nextNodes: []
   requiredParentNodes:
   - {fileID: 382369587}
@@ -49410,7 +49178,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_radius_tit
   descriptionKey: skill_radius_desc
-  CoinCost: 16
+  CoinCost: 12
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1079378718}
@@ -50775,7 +50543,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagoncoin_tit
   descriptionKey: skill_hexagoncoin_desc
-  CoinCost: 24
+  CoinCost: 16
   nextNodes: []
   requiredParentNodes:
   - {fileID: 474215732}
@@ -52295,7 +52063,7 @@ MonoBehaviour:
   growDuration: 0.4
   fuerzaImpulsoClon: 2
   buggedPersonPrefab: {fileID: 1796759239455511930, guid: a5f87eb0afc3b4845bf3908b4ecd10f9, type: 3}
-  buggedSpawnChance: 40.4
+  buggedSpawnChance: 5
 --- !u!4 &1039353547
 Transform:
   m_ObjectHideFlags: 0
@@ -53451,13 +53219,13 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_rebound_tit
   descriptionKey: skill_rebound_desc
-  CoinCost: 20
+  CoinCost: 14
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1278883309}
   - {fileID: 823844519}
   - {fileID: 2002969990}
-  effectType: 23
+  effectType: 78
   button: {fileID: 1050803136}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -53836,14 +53604,14 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagon_tit
   descriptionKey: skill_hexagon_desc
-  CoinCost: 18
+  CoinCost: 14
   nextNodes: []
   requiredParentNodes:
   - {fileID: 661437727}
   - {fileID: 1334769234}
   - {fileID: 125608818}
   - {fileID: 1654223963}
-  effectType: 114
+  effectType: 116
   button: {fileID: 1055916628}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -54558,7 +54326,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_initialFigures_tit
   descriptionKey: skill_initialFigures_desc
-  CoinCost: 16
+  CoinCost: 11
   nextNodes: []
   requiredParentNodes:
   - {fileID: 918505374}
@@ -58119,7 +57887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maps:
   - mapName: ZonaHexagonal
-    maxHealth: 100
+    maxHealth: 75
     currentHealth: 0
   - mapName: ZonaPentagonal
     maxHealth: 200
@@ -61561,10 +61329,10 @@ MonoBehaviour:
   button: {fileID: 1228263476}
   nodeImage: {fileID: 1228263477}
   costText: {fileID: 0}
-  hoverSprite: {fileID: -3406059089922838627, guid: 8568ea5d3d6f4f148b3c814b692ea455, type: 3}
-  normalSprite: {fileID: -3877039321911045793, guid: d73009c24a1ea64479fa08c9d0353352, type: 3}
-  notEnoughMoneySprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
-  disabledSprite: {fileID: 139530798587393011, guid: 9c99f583a66b7354b8e4ca0fbfe84b04, type: 3}
+  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
+  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
+  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &1228263474
 CanvasGroup:
@@ -61601,14 +61369,14 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamageHex_tit
   descriptionKey: skill_zoneDamageHex_desc
-  CoinCost: 58
+  CoinCost: 26
   nextNodes: []
   requiredParentNodes:
   - {fileID: 478085950}
   - {fileID: 350984043}
   - {fileID: 686109906}
   - {fileID: 525428708}
-  effectType: 85
+  effectType: 84
   button: {fileID: 1228263476}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -61696,7 +61464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
+  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -62577,6 +62345,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
   m_PrefabInstance: {fileID: 1043432740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1265448910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+  m_PrefabInstance: {fileID: 750404727}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1265474759
 GameObject:
@@ -63729,7 +63502,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_timeProbability_tit
   descriptionKey: skill_timeProbability_desc
-  CoinCost: 18
+  CoinCost: 13
   nextNodes: []
   requiredParentNodes:
   - {fileID: 954987305}
@@ -64631,7 +64404,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagoncoin_tit
   descriptionKey: skill_pentagoncoin_desc
-  CoinCost: 36
+  CoinCost: 30
   nextNodes: []
   requiredParentNodes:
   - {fileID: 678139296}
@@ -66003,7 +65776,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_initialFigures_tit
   descriptionKey: skill_initialFigures_desc
-  CoinCost: 30
+  CoinCost: 18
   nextNodes: []
   requiredParentNodes:
   - {fileID: 474215732}
@@ -68124,7 +67897,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_radius_tit
   descriptionKey: skill_radius_desc
-  CoinCost: 18
+  CoinCost: 36
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1989663731}
@@ -79498,10 +79271,10 @@ MonoBehaviour:
   button: {fileID: 1439613809}
   nodeImage: {fileID: 1439613810}
   costText: {fileID: 0}
-  hoverSprite: {fileID: -3406059089922838627, guid: 8568ea5d3d6f4f148b3c814b692ea455, type: 3}
-  normalSprite: {fileID: -3877039321911045793, guid: d73009c24a1ea64479fa08c9d0353352, type: 3}
-  notEnoughMoneySprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
-  disabledSprite: {fileID: 139530798587393011, guid: 9c99f583a66b7354b8e4ca0fbfe84b04, type: 3}
+  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
+  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
+  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &1439613807
 CanvasGroup:
@@ -79544,7 +79317,7 @@ MonoBehaviour:
   - {fileID: 31917058}
   - {fileID: 876571097}
   - {fileID: 382369587}
-  effectType: 85
+  effectType: 84
   button: {fileID: 1439613809}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -79632,7 +79405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
+  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -81127,9 +80900,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1047858352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 98.995, y: -18.0625}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 197.99, y: 36.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1504968031
@@ -83776,10 +83549,10 @@ MonoBehaviour:
   button: {fileID: 1582465760}
   nodeImage: {fileID: 1582465761}
   costText: {fileID: 0}
-  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
-  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
-  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
-  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
+  hoverSprite: {fileID: -4140073442392472634, guid: 97994d494035b3b48ba087aa2165f4b9, type: 3}
+  normalSprite: {fileID: 7610785278498187448, guid: cf69f5c1feb93a5438819b864d66fe2b, type: 3}
+  notEnoughMoneySprite: {fileID: -3149661667989880294, guid: a3c468155db67ba408616ed4d6aac11d, type: 3}
+  disabledSprite: {fileID: -3163715419515639616, guid: 07d0b1843a909ca4894564d138715429, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &1582465758
 CanvasGroup:
@@ -83816,12 +83589,12 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamagePen_tit
   descriptionKey: skill_zoneDamagePen_desc
-  CoinCost: 12
+  CoinCost: 30
   nextNodes: []
   requiredParentNodes:
   - {fileID: 116029488}
   - {fileID: 1296002569}
-  effectType: 84
+  effectType: 83
   button: {fileID: 1582465760}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -83909,7 +83682,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  m_Sprite: {fileID: -3149661667989880294, guid: a3c468155db67ba408616ed4d6aac11d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -86740,7 +86513,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagoncoin_tit
   descriptionKey: skill_hexagoncoin_desc
-  CoinCost: 12
+  CoinCost: 22
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1914251209}
@@ -86932,10 +86705,10 @@ MonoBehaviour:
   button: {fileID: 1654223964}
   nodeImage: {fileID: 1654223965}
   costText: {fileID: 0}
-  hoverSprite: {fileID: -3406059089922838627, guid: 8568ea5d3d6f4f148b3c814b692ea455, type: 3}
-  normalSprite: {fileID: -3877039321911045793, guid: d73009c24a1ea64479fa08c9d0353352, type: 3}
-  notEnoughMoneySprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
-  disabledSprite: {fileID: 139530798587393011, guid: 9c99f583a66b7354b8e4ca0fbfe84b04, type: 3}
+  hoverSprite: {fileID: 7186408394169255089, guid: 6e89f886c0044de45acc9ace1d7c9c9c, type: 3}
+  normalSprite: {fileID: -8838536337403216067, guid: 2215acdf5bdac0a478076c63d45fc1d5, type: 3}
+  notEnoughMoneySprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
+  disabledSprite: {fileID: -4168427450390053259, guid: cd244ca4c72661b4590f81c3b66f7f66, type: 3}
   lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
 --- !u!225 &1654223962
 CanvasGroup:
@@ -86972,13 +86745,13 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamageHex_tit
   descriptionKey: skill_zoneDamageHex_desc
-  CoinCost: 12
+  CoinCost: 15
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1055916627}
   - {fileID: 304200323}
   - {fileID: 1914251209}
-  effectType: 85
+  effectType: 84
   button: {fileID: 1654223964}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -87066,7 +86839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3749860807155352222, guid: d2bce972cbf687f468ec5a767630f2ea, type: 3}
+  m_Sprite: {fileID: -5029655625667293076, guid: 57c9a77960b583746825387ae2d11a59, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91836,7 +91609,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_skipStages_tit
   descriptionKey: skill_skipStages_desc
-  CoinCost: 6
+  CoinCost: 20
   nextNodes: []
   requiredParentNodes:
   - {fileID: 304200323}
@@ -95595,7 +95368,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagon_tit
   descriptionKey: skill_pentagon_desc
-  CoinCost: 18
+  CoinCost: 16
   nextNodes: []
   requiredParentNodes:
   - {fileID: 125608818}
@@ -98053,6 +97826,239 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e78367f78827eae408345a381b2d0c73, type: 3}
+--- !u!1 &1973898784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1973898785}
+  - component: {fileID: 1973898792}
+  - component: {fileID: 1973898791}
+  - component: {fileID: 1973898790}
+  - component: {fileID: 1973898789}
+  - component: {fileID: 1973898788}
+  - component: {fileID: 1973898787}
+  - component: {fileID: 1973898786}
+  m_Layer: 5
+  m_Name: Skill_Speed (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1973898785
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2035777378}
+  - {fileID: 1265448910}
+  m_Father: {fileID: 154249163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 745.00006, y: -380}
+  m_SizeDelta: {x: 87, y: 95.6666}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1973898786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdefecf89ade8645a7bc2f1e41cce48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 1973898785}
+  infoPanel: {fileID: 2041343776}
+  audioSource: {fileID: 1534932859}
+  hoverSound: {fileID: 8300000, guid: dd555a00d68928c47a8b25896e32cd4e, type: 3}
+  volume: 0.3
+  purchasedScale: 0.8
+  hoverScale: 1.1
+  speed: 8
+  hoverOffsetX: 10
+--- !u!114 &1973898787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b60f61d7a59224d9e3f537c781eabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillNode: {fileID: 1973898789}
+  button: {fileID: 1973898790}
+  nodeImage: {fileID: 1973898791}
+  costText: {fileID: 0}
+  hoverSprite: {fileID: 8570141232023643447, guid: 71259a41d8da49246aadff07737cdb4f, type: 3}
+  normalSprite: {fileID: -43533334268844009, guid: 9bf2a7d1f5311224d8280f0f9848d230, type: 3}
+  notEnoughMoneySprite: {fileID: -8489468393053760396, guid: 72e4607e10f692144a4ce5ede4c6c96f, type: 3}
+  disabledSprite: {fileID: -4776669549077437378, guid: 9cecaf62c27a6d847bbe8fcc17b3361d, type: 3}
+  lockedNextLevelSprite: {fileID: 3076159473309818569, guid: a1ab01571c6088f4d96b9a6c391d8492, type: 3}
+--- !u!225 &1973898788
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1973898789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a303446f60abdfd488ca758f1a411292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveID: 175
+  useOverride: 0
+  overrideInt: 0
+  overrideFloat: 0
+  overrideIndex: 0
+  infoPanel: {fileID: 0}
+  infoTitle: {fileID: 0}
+  infoDescription: {fileID: 0}
+  infoCost: {fileID: 0}
+  skillNameKey: skill_speedLevel_tit
+  descriptionKey: skill_speedLevel_desc
+  CoinCost: 30
+  nextNodes: []
+  requiredParentNodes:
+  - {fileID: 116029488}
+  - {fileID: 1989663731}
+  - {fileID: 378396974}
+  effectType: 42
+  button: {fileID: 1973898790}
+  lockIcon: {fileID: 0}
+  nodeImage: {fileID: 0}
+  skillNameText: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  audioSource: {fileID: 1534932859}
+  unlockSound: {fileID: 8300000, guid: 185e26c4d423a014db3127f843d7c713, type: 3}
+  isStartingNode: 0
+  repeatLevel: 0
+  maxRepeatLevel: 1
+  maxTimeRepeatLevel: 1
+--- !u!114 &1973898790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1973898791}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1973898789}
+        m_TargetAssemblyTypeName: SkillNode, Assembly-CSharp
+        m_MethodName: TryUnlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1973898791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -8489468393053760396, guid: 72e4607e10f692144a4ce5ede4c6c96f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1973898792
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973898784}
+  m_CullTransparentMesh: 1
 --- !u!1 &1975602357
 GameObject:
   m_ObjectHideFlags: 0
@@ -98816,7 +98822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1989049609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -99026,12 +99032,12 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_squarecoin_tit
   descriptionKey: skill_squarecoin_desc
-  CoinCost: 36
+  CoinCost: 30
   nextNodes: []
   requiredParentNodes:
   - {fileID: 686109906}
   - {fileID: 525428708}
-  - {fileID: 531154061}
+  - {fileID: 0}
   - {fileID: 1396887379}
   effectType: 111
   button: {fileID: 1989663732}
@@ -99579,13 +99585,13 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagon_tit
   descriptionKey: skill_hexagon_desc
-  CoinCost: 22
+  CoinCost: 15
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1050803135}
   - {fileID: 797128903}
   - {fileID: 987115519}
-  effectType: 114
+  effectType: 115
   button: {fileID: 2002969991}
   lockIcon: {fileID: 0}
   nodeImage: {fileID: 0}
@@ -99915,11 +99921,6 @@ RectTransform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
   m_PrefabInstance: {fileID: 594482481}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2017056619 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
-  m_PrefabInstance: {fileID: 397330022}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2017288677 stripped
 Transform:
@@ -100524,6 +100525,144 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035632879}
+  m_CullTransparentMesh: 1
+--- !u!1 &2035777377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035777378}
+  - component: {fileID: 2035777380}
+  - component: {fileID: 2035777379}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2035777378
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035777377}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1973898785}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2035777379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035777377}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Movimiento Nivel 4
+
+'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2035777380
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035777377}
   m_CullTransparentMesh: 1
 --- !u!1 &2036250118
 GameObject:
