@@ -310,8 +310,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             unlocked = true;
 
         ApplyEffect();
-        SaveNodeState();
-
+        // SaveNodeState();
         LevelManager.instance.UpdateUI();
 
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
@@ -334,13 +333,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
     }
 
-    void SaveNodeState()
+    public void SaveNodeState()
     {
         if (string.IsNullOrEmpty(saveID)) return;
 
         PlayerPrefs.SetInt("Skill_" + saveID + "_Unlocked", unlocked ? 1 : 0);
         PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
-        PlayerPrefs.Save();
+    }
+
+    public void ResetNodeState()
+    {
+        unlocked = isStartingNode;
+        repeatLevel = 0;
+        CheckIfShouldShow();
     }
 
     void ApplyEffect()

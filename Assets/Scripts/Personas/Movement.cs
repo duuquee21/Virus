@@ -20,6 +20,8 @@ public class Movement : MonoBehaviour
     private Vector3 escalaInicialEfecto;
     private float tiempoEfecto = 0f;
     public float duracionAbsorcion = 1.5f; // Segundos que tarda en desaparecer
+    private float tiempoEmpujeRestante = 0f;
+    public float duracionMinimaEmpuje = 0.25f;
 
     [Header("Ajustes de Transición")]
     public float friccionDuranteAnimacion = 15f; // Mayor valor = frenazo más seco
@@ -72,18 +74,13 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            // --- CAMBIO AQUÍ ---
-            // Si hay poca velocidad, recuperamos el control. 
-            // Pero NO forzamos la velocidad a cero, dejamos que las fuerzas externas (agujero) actúen.
-            if (rb.linearVelocity.magnitude <= velocidadObjetivo * 0.5f)
+            tiempoEmpujeRestante -= Time.fixedDeltaTime;
+
+            if (tiempoEmpujeRestante <= 0f && rb.linearVelocity.magnitude <= 2f)
             {
-                // Solo desactivamos si no hay fuerzas extremas actuando
-                // (Opcional: puedes añadir un timer para que el estado dure un mínimo de tiempo)
                 estaEmpujado = false;
             }
 
-            // Actualizamos 'direccion' constantemente basándonos en la velocidad actual del RB
-            // para que si choca con una pared, el vector de rebote sea coherente con su trayectoria de atracción.
             if (rb.linearVelocity.sqrMagnitude > 0.1f)
             {
                 direccion = rb.linearVelocity.normalized;
@@ -101,27 +98,22 @@ public class Movement : MonoBehaviour
     {
         estaEmpujado = true;
         estaGirando = true;
+        tiempoEmpujeRestante = duracionMinimaEmpuje;
 
-        // NORMALIZACI�N: Esto hace que la distancia no importe. 
-        // El vector solo indica "hacia d�nde", y la variable 'fuerza' decide "cu�nto".
         Vector2 direccionNormalizada = direccionEmpuje.normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direccionEmpuje, 0.5f);
         if (hit.collider != null && hit.collider.CompareTag("Pared"))
         {
-            // Si hay pared, invertimos la dirección del impacto antes de aplicarlo
             direccionNormalizada = Vector2.Reflect(direccionNormalizada, hit.normal);
         }
-        // Reiniciamos la velocidad actual para que empujes previos no se sumen de forma extra�a
-        rb.linearVelocity = Vector2.zero;
 
-        // Aplicamos la fuerza constante
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(direccionNormalizada * fuerza, ForceMode2D.Impulse);
 
         float direccionGiro = Random.Range(-1f, 1f);
         rb.AddTorque(direccionGiro * torque, ForceMode2D.Impulse);
     }
-
     public bool EstaEmpujado()
     {
         return estaEmpujado;
@@ -299,5 +291,21 @@ public class Movement : MonoBehaviour
         transform.localScale = Vector3.Lerp(escalaInicialEfecto, Vector3.zero, progreso);
 
         if (progreso >= 1f) gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.collider.CompareTag("Pared")) return;
+
+        ContactPoint2D contact = collision.GetContact(0);
+        Vector2 normal = contact.normal;
+
+        direccion = Vector2.Reflect(direccion, normal).normalized;
+
+        if (estaEmpujado)
+        {
+            Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
+            rb.linearVelocity = nuevaVelocidad;
+        }
     }
 }

@@ -277,165 +277,134 @@ public class Guardado : MonoBehaviour
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
-    public void ActivarExtraTime()
-    {
-        hasExtraTimeUnlock = true;
-        SaveData();
-        Debug.Log("<color=cyan>Habilidad Tiempo Extra Desbloqueada Permanentemente</color>");
-    }
-    public void AddTotalData(int val) { totalInfected += val; SaveData(); }
-    public void SetRadiusMultiplier(float val) { radiusMultiplier = val; SaveData(); }
-    public void SetSpeedMultiplier(float val) { speedMultiplier = val; SaveData(); }
-    public void SetCoinMultiplier(int val) { coinMultiplier = val; SaveData(); }
-    public void AddCoinMultiplier(int extra){coinMultiplier += extra; SaveData();}
-    public void AddStartingCoins(int extra){startingCoins += extra;SaveData();}
-    public void SetStartingCoins(int val) { startingCoins = val; SaveData(); }
-    public void AddSpawnSpeedBonus(float val) {spawnSpeedBonus += val;SaveData();}
-    public void AddPopulationBonus(float val){ populationBonus += val;SaveData();}
-    public void AddZonePassiveIncome(int extra){coinsPerZoneDaily += extra;SaveData();}
-    public void AddRadiusMultiplier(float extra){radiusMultiplier += extra;SaveData();}
-    public void ActivateZoneDiscount() { zoneDiscountActive = true; SaveData(); }
-    public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; SaveData(); }
-    public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; SaveData(); }
-    public void ActivateKeepZones() { keepZonesUnlocked = true; SaveData(); }
-    public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; SaveData(); }
+    public void AddCoinMultiplier(int extra) { coinMultiplier += extra; }
+    public void AddStartingCoins(int extra) { startingCoins += extra; }
+    public void AddSpawnSpeedBonus(float val) { spawnSpeedBonus += val; }
+    public void AddPopulationBonus(float val) { populationBonus += val; }
+    public void AddZonePassiveIncome(int extra) { coinsPerZoneDaily += extra; }
+    public void AddRadiusMultiplier(float extra) { radiusMultiplier += extra; }
+    public void ActivateZoneDiscount() { zoneDiscountActive = true; }
+    public void SetZonePassiveIncome(int val) { coinsPerZoneDaily = val; }
+    public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; }
+    public void ActivateKeepZones() { keepZonesUnlocked = true; }
+    public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; }
 
     public void SetDoubleUpgradeChance(float chance)
     {
         doubleUpgradeChance = Mathf.Clamp01(chance);
-        SaveData();
     }
+
     public void SetAddTimeOnPhaseChance(float chance)
     {
         addTimeOnPhaseChance = Mathf.Clamp01(chance);
-        SaveData();
     }
 
     public void AddNivelParedInfectivaPorFigura(int fase)
     {
         if (fase >= 0 && fase < probParedInfectiva.Length)
         {
-            // Aumenta el nivel de esa figura específica
             probParedInfectiva[fase] += 1f;
-            SaveData();
             Debug.Log($"Mejorada Pared Infectiva Fase {fase}. Nivel actual: {probParedInfectiva[fase]}");
         }
     }
-    // Métodos de Daño
-    public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; SaveData(); }
-    public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; SaveData(); }
-    public void ActivarDañoExtraCuadrado() { dañoExtraCuadrado = 1; SaveData(); }
-    public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
-    public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
-    public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
+
+    public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; }
+    public void ActivarDañoExtraTriangulo() { dañoExtraTriangulo = 1; }
+    public void ActivarDañoExtraCuadrado() { dañoExtraCuadrado = 1; }
+    public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; }
+    public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; }
+    public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; }
 
     public void ActivarAgujeroNegro()
     {
         agujeroNegroData = true;
-        SaveData();
         Debug.Log("<color=purple>Agujero Negro activado permanentemente</color>");
     }
 
     public void MejorarSpawnHojaNegra(float extraSpawn, int extraFases)
     {
         hojaSpawnRate += extraSpawn;
-        SaveData();
     }
 
     public void MejorarDmgHojaNegra(float extraSpawn, int extraFases)
     {
         hojaFases += extraFases;
-        SaveData();
     }
 
     public void MejorarSpawnAgujeroNegro(float extraSpawn)
     {
         agujeroSpawnRate += extraSpawn;
-        SaveData();
     }
 
     public void ActivarHojaNegra()
     {
         hojaNegraData = true;
-        SaveData();
         Debug.Log("<color=black><b>Hojanegra activada permanentemente</b></color>");
     }
 
     public void ActivarCoralInfeccioso()
     {
         coralInfeciosoActivo = true;
-        SaveData();
     }
 
     public void MejorarCapacidadCoral(int extra)
     {
         coralCapacity += extra;
-        SaveData();
     }
 
-    // Métodos Carambola y Pared
+    public void ReboteConCoral() { virusReboteActiva = true; }
 
-    public void ReboteConCoral() { virusReboteActiva = true; SaveData(); }
     public void SubirNivelCarambola()
     {
         if (nivelCarambola < 6)
         {
             nivelCarambola++;
-            // Importante: Actualizamos el valor y llamamos a SaveData
-            SaveData();
             Debug.Log("Carambola mejorada al nivel: " + nivelCarambola);
         }
     }
-    public void ActivarParedInfectiva() { paredInfectivaActiva = true; SaveData(); }
 
-    // Añade esto a Guardado.cs
+    public void ActivarParedInfectiva() { paredInfectivaActiva = true; }
+
     public void AddInfectSpeedPerPhase(int phaseIndex, float extraMultiplier)
     {
         if (phaseIndex >= 0 && phaseIndex < infectSpeedPerPhase.Length)
         {
-            // Sumamos el extra al multiplicador actual de esa fase
-            // Ejemplo: 1.0f + 0.1f = 1.1f
             infectSpeedPerPhase[phaseIndex] += extraMultiplier;
-            SaveData();
             Debug.Log($"Fase {phaseIndex} actualizada. Nuevo Multiplicador: {infectSpeedPerPhase[phaseIndex]}");
         }
     }
-    // --- NUEVOS MÉTODOS ACUMULATIVOS ---
 
     public void AddAddTimeOnPhaseChance(float extra)
     {
         addTimeOnPhaseChance = Mathf.Clamp01(addTimeOnPhaseChance + extra);
-        SaveData();
     }
 
     public void AddDoubleUpgradeChance(float extra)
     {
         doubleUpgradeChance = Mathf.Clamp01(doubleUpgradeChance + extra);
-        SaveData();
     }
 
     public void AddRandomSpawnPhaseChance(float amount)
     {
-        // Sumamos la nueva cantidad al valor actual
         randomSpawnPhaseChance = Mathf.Clamp01(randomSpawnPhaseChance + amount);
-        SaveData();
     }
 
-    // --- REPARACIÓN DE ERRORES ESPECÍFICOS ---
     public void AddNivelParedInfectiva(int cantidad)
     {
-        nivelParedInfectiva += cantidad; // Suma a lo que ya existe
-        SaveData();
+        nivelParedInfectiva += cantidad;
     }
-    public void SetDuplicateProbability(float amount) { probabilidadDuplicarChoque = amount; SaveData(); }
-    // Este método cubre el error de SetInfectionSpeedBonus
-    public void SetInfectionSpeedBonus(float amount) { infectSpeedMultiplier = amount; SaveData(); }
 
-    // --- SOLUCIÓN A LOS ERRORES DE REFERENCIA ---
+    public void SetDuplicateProbability(float amount) { probabilidadDuplicarChoque = amount; }
+    public void SetInfectionSpeedBonus(float amount) { infectSpeedMultiplier = amount; }
+
     public void AddExtraBaseTime(float seconds)
     {
         extraBaseTime += seconds;
-        SaveData();
+    }
+
+    public void AddSpeedMultiplier(float extra)
+    {
+        speedMultiplier += extra;
     }
     // Este método aplica físicamente la mejora gratuita al empezar una partida
     public void ApplyPermanentInitialUpgrade()
@@ -539,11 +508,49 @@ public class Guardado : MonoBehaviour
             PlayerPrefs.GetFloat("Run_DmgTotalZona", 0);
     }
 
-    public void AddSpeedMultiplier(float extra)
+    public void AddTotalData(int val)
     {
-        speedMultiplier += extra;
-        SaveData();
+        totalInfected += val;
+    }
+
+    public void SetRadiusMultiplier(float val)
+    {
+        radiusMultiplier = val;
+    }
+
+    public void SetSpeedMultiplier(float val)
+    {
+        speedMultiplier = val;
+    }
+
+    public void SetCoinMultiplier(int val)
+    {
+        coinMultiplier = val;
+    }
+
+    public void SetStartingCoins(int val)
+    {
+        startingCoins = val;
     }
     public bool HasSavedGame() => PlayerPrefs.GetInt("Run_InProgress", 0) == 1;
-    public void ResetAllProgress() { PlayerPrefs.DeleteAll(); HardResetVariables(); }
+    public void ResetAllProgress()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        HardResetVariables();
+
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.ResetNodeState();
+        }
+
+        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
+        if (lines != null)
+        {
+            lines.ResetAllLinesVisuals();
+            lines.RefreshAllLinesFromNodes();
+        }
+    }
 }

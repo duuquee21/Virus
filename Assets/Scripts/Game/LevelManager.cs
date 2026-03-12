@@ -243,9 +243,18 @@ public class LevelManager : MonoBehaviour
     public void Button_NewGame()
     {
         if (Guardado.instance) Guardado.instance.ResetAllProgress();
+
+        RebuildSkillTree();
+
+        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
+        if (lines != null)
+        {
+            lines.ResetAllLinesVisuals();
+            lines.RefreshAllLinesFromNodes();
+        }
+
         NewGameFromMainMenu();
     }
-
     public void AddTimeToCurrentTimer(float seconds)
     {
         if (!isGameActive) return;
@@ -296,6 +305,12 @@ public class LevelManager : MonoBehaviour
             node.CheckIfShouldShow();
         }
 
+        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
+        if (lines != null)
+        {
+            lines.ResetAllLinesVisuals();
+            lines.RefreshAllLinesFromNodes();
+        }
         // 3. Preparar la UI antes de mostrar
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(true);
@@ -525,7 +540,16 @@ public class LevelManager : MonoBehaviour
             }
 
             Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
-            Guardado.instance.SaveEvolutionData(); // ← ESTA LÍNEA FALTABA
+            Guardado.instance.SaveEvolutionData();
+            Guardado.instance.SaveData();
+
+            SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+            foreach (SkillNode node in nodes)
+            {
+                node.SaveNodeState();
+            }
+
+            PlayerPrefs.Save();
         }
 
         if (AudioManager.instance != null)
@@ -1103,30 +1127,35 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator TransitionToSkillTree()
     {
-        // A. Iniciar cierre de iris/forma
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1); // Hexágono
+            transitionScript.SetShape(1);
             transitionScript.CloseBlackScreen();
-            yield return new WaitForSecondsRealtime(0.5f); // Tiempo del shader
+            yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // B. Cambio de Paneles (Mientras está en negro)
         if (EndDayResultsPanel.instance != null)
             EndDayResultsPanel.instance.panel.SetActive(false);
 
         if (zonePanel != null) zonePanel.SetActive(false);
 
-        // Activamos la tienda de ADN
         if (shinyPanel != null)
         {
             shinyPanel.SetActive(true);
             UpdateUI();
         }
 
+        RebuildSkillTree();
+
+        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
+        if (lines != null)
+        {
+            lines.ResetAllLinesVisuals();
+            lines.RefreshAllLinesFromNodes();
+        }
+
         yield return new WaitForSecondsRealtime(0.1f);
 
-        // C. Abrir iris/forma
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
@@ -1231,6 +1260,15 @@ public class LevelManager : MonoBehaviour
         );
 
         Guardado.instance.SaveEvolutionData();
+        Guardado.instance.SaveData();
+
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.SaveNodeState();
+        }
+
+        PlayerPrefs.Save();
 
         Debug.Log("PARTIDA GUARDADA COMPLETA");
     }

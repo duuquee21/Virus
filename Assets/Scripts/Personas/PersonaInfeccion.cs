@@ -356,32 +356,44 @@ public class PersonaInfeccion : MonoBehaviour
     }
     void BecomeInfected()
     {
-        // Si ya entramos aquí por IntentarAvanzarFase, marcamos como infectado
         alreadyInfected = true;
 
-        if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
+        if (infectionBarCanvas != null)
+            infectionBarCanvas.SetActive(false);
 
         if (InfectionFeedback.instance != null)
-            InfectionFeedback.instance.PlayEffect(transform.position, Color.white,false);
+            InfectionFeedback.instance.PlayEffect(transform.position, Color.white, false);
 
         particulasDeFuego?.Play();
 
         if (LevelManager.instance != null)
-        {
             LevelManager.instance.RegisterInfection();
-        }
 
-        // --- NUEVA LÓGICA DE EMPUJE AL INFECTARSE ---
-        if (transformInfector != null && movementScript != null)
+        // Empuje garantizado hacia fuera
+        if (movementScript != null)
         {
-            // Calculamos la dirección desde el infector hacia la persona
-            Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
-            // Aplicamos la misma fuerza que usas en el cambio de fase
+            Vector2 dirEmpuje = Vector2.zero;
+
+            if (transformInfector != null)
+            {
+                dirEmpuje = (Vector2)(transform.position - transformInfector.position);
+            }
+
+            // Si está demasiado cerca del centro o la dirección sale mal,
+            // usamos una dirección aleatoria para asegurar el rebote
+            if (dirEmpuje.sqrMagnitude < 0.0001f)
+            {
+                dirEmpuje = Random.insideUnitCircle.normalized;
+            }
+            else
+            {
+                dirEmpuje = dirEmpuje.normalized;
+            }
+
             movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
         }
 
-        transform.localScale =transform.localScale * 1.125f; // Aumentamos el tamaño para destacar la infección
-        // --------------------------------------------
+        transform.localScale = transform.localScale * 1.125f;
 
         IniciarCambioColor(InfectionColorSequence());
     }
@@ -473,7 +485,14 @@ public class PersonaInfeccion : MonoBehaviour
 
 
 
-    void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("InfectionZone")) isInsideZone = false; }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("InfectionZone"))
+        {
+            isInsideZone = false;
+            transformInfector = null;
+        }
+    }
 
     private IEnumerator InfectionColorSequence()
     {
@@ -557,7 +576,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
 
         // --- Pared infectiva ---
-        if (!collision.collider.CompareTag("Wall")) return;
+        if (!collision.collider.CompareTag("Pared")) return;
 
         if (Guardado.instance == null) return;
         if (Guardado.instance.nivelParedInfectiva <= 0) return;
