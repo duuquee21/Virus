@@ -145,7 +145,7 @@ public class Guardado : MonoBehaviour
         hojaNegraData = false; // Añadido
 
         hojaSpawnRate = 10f; // O el valor base que prefieras
-        hojaFases = 0;
+        hojaFases = 1;
         agujeroNegroData = false;
         agujeroSpawnRate = 10f;
 
@@ -258,7 +258,7 @@ public class Guardado : MonoBehaviour
         coralCapacity = PlayerPrefs.GetInt("CoralCapacity", 5); // 5 como valor por defecto si no existe
         hojaNegraData = PlayerPrefs.GetInt("HojaNegraData", 0) == 1;
         hojaSpawnRate = PlayerPrefs.GetFloat("HojaSpawnRate", 10f);
-        hojaFases = PlayerPrefs.GetInt("HojaFases", 0);
+        hojaFases = PlayerPrefs.GetInt("HojaFases", 1);
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 10f);
 

@@ -36,7 +36,7 @@ public class BlackSwordSpawner : MonoBehaviour
         if (Guardado.instance.hojaNegraData&&Time.time > nextSpawnTime&&LevelManager.instance.isGameActive)
         {
             StartCoroutine(ExecuteSlashSequence());
-            nextSpawnTime = Time.time + frecuenciaSpawn;
+            nextSpawnTime = Time.time + Guardado.instance.hojaSpawnRate;
         }
     }
 
@@ -143,7 +143,7 @@ public class BlackSwordSpawner : MonoBehaviour
             // Si tiene el componente y no ha sido golpeada por ESTE tajo aún
             if (persona != null && !golpeados.Contains(persona))
             {
-                persona.IntentarAvanzarFase();
+                persona.IntentarAvanzarFase(Guardado.instance.hojaFases);
                 golpeados.Add(persona);
 
                 // Debug visual

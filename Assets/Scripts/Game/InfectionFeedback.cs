@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic; // Necesario para el control de duplicados
 
 public class InfectionFeedback : MonoBehaviour
 {
@@ -13,12 +13,15 @@ public class InfectionFeedback : MonoBehaviour
 
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
+    // Agregamos un pequeño cooldown para evitar saturación de clips idénticos
+    private float lastSoundTime;
+    private const float MIN_SOUND_INTERVAL = 0.02f;
+
     public AudioClip[] infectionSounds;
     public AudioClip[] phaseChangeSounds;
     public AudioClip[] bolaBlancaSounds;
     public AudioClip[] basicWallImpactSounds;
     public AudioClip[] basicImpactSounds;
-
 
     [Header("Cámara & Shake")]
     public Transform cameraTransform;
@@ -29,167 +32,142 @@ public class InfectionFeedback : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            // Opcional: Don'tDestroyOnLoad(gameObject); si quieres que persista
+        }
 
-        // Si no asignas la cámara, intenta buscar la principal por defecto
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
+
+        // Configuración profesional del AudioSource si no está en el inspector
+        if (audioSource != null)
+        {
+            audioSource.playOnAwake = false;
+            audioSource.priority = 128; // Prioridad media
+        }
     }
+
+    // --- MÉTODOS ORIGINALES MANTENIDOS ---
 
     public void PlayEffect(Vector3 position, Color particleColor, bool mute)
     {
         // 1. VISUAL
         if (infection1Particles != null)
         {
-            GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
-
-            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = particleColor;
-            }
-
-            Destroy(vfx, 2f);
+            SpawnVFX(infection1Particles, position, particleColor, 1.0f);
         }
 
-        // 2. SONIDO
-        if (audioSource != null && infectionSounds.Length > 0 && !mute)
+        // 2. SONIDO con limitación de frecuencia
+        if (!mute)
         {
-
-            AudioClip clip = infectionSounds[Random.Range(0, infectionSounds.Length)];
-
-
-
-            audioSource.pitch = Random.Range(0.85f, 1.15f);
-            audioSource.PlayOneShot(clip);
+            PlayRandomClip(infectionSounds, 0.85f, 1.15f);
         }
-
-     
     }
 
     public void PlayPhaseChangeEffect(Vector3 position, Color particleColor)
     {
-        // 1. VISUAL
         if (infectionParticles != null)
         {
-            GameObject vfx = Instantiate(infectionParticles, position, Quaternion.identity);
-
-            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = Color.white * 1.3f;
-            }
-
-            Destroy(vfx, 2f);
+            SpawnVFX(infectionParticles, position, Color.white * 1.3f, 1.0f);
         }
-
         PlayPhaseChangeSound();
-
     }
 
     public void PlayPhaseChangeSound()
     {
-        if (audioSource != null && phaseChangeSounds.Length > 0)
-        {
-            AudioClip clip = phaseChangeSounds[Random.Range(0, phaseChangeSounds.Length)];
-            // Un pitch un poco más alto para que suene "progresivo"
-            audioSource.pitch = Random.Range(1.1f, 1.3f);
-            audioSource.PlayOneShot(clip);
-        }
-
+        // Pitch más alto para progresión, como pediste
+        PlayRandomClip(phaseChangeSounds, 1.1f, 1.3f);
     }
+
     public void PlayBasicImpactSoundAgainstWall()
     {
-        if (audioSource != null && basicWallImpactSounds.Length > 0)
-        {
-            AudioClip clip = basicWallImpactSounds[Random.Range(0, basicWallImpactSounds.Length)];
-            // Un pitch un poco más alto para que suene "progresivo"
-            audioSource.pitch = Random.Range(1.1f, 1.3f);
-            audioSource.PlayOneShot(clip);
-        }
-
+        PlayRandomClip(basicWallImpactSounds, 1.1f, 1.3f);
     }
+
     public void PlayBasicImpactSound()
     {
-        if (audioSource != null && basicImpactSounds.Length > 0)
-        {
-            AudioClip clip = basicImpactSounds[Random.Range(0, basicImpactSounds.Length)];
-            // Un pitch un poco más alto para que suene "progresivo"
-            audioSource.pitch = Random.Range(1.1f, 1.3f);
-            audioSource.PlayOneShot(clip);
-        }
-
+        PlayRandomClip(basicImpactSounds, 1.1f, 1.3f);
     }
 
     public void PlayBasicImpactEffectAgainstWall(Vector3 position, Color particleColor)
     {
-        // 1. VISUAL
         if (basicImpactParticles != null)
         {
-            GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
-
-            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = Color.white * 1.3f;
-            }
-
-            Destroy(vfx, 2f);
+            SpawnVFX(basicImpactParticles, position, Color.white * 1.3f, 1.0f);
         }
 
         PlayBasicImpactSoundAgainstWall();
 
-        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
-        foreach (GameObject zona in zonas)
-        {
-            StartCoroutine(ShakeObject(zona.transform, 2)); // Cambia el 2 por el multiplicador que quieras
-        }
+        TriggerShakeOnZonas(2);
     }
 
     public void PlayBasicImpactEffect(Vector3 position, Color particleColor, bool sonido)
     {
-        // 1. VISUAL
         if (basicImpactParticles != null)
         {
-
-            GameObject vfx = Instantiate(basicImpactParticles, position, Quaternion.identity);
-
-            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
-
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = Color.white * 1.3f;
-
-                // Accedemos al valor constante actual y lo multiplicamos
-                float currentSize = main.startSize.constant;
-                main.startSize = currentSize * 0.5f;
-            }
-
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = Color.white * 1.3f;
-            }
-
-            Destroy(vfx, 2f);
+            // Lógica de tamaño reducido que tenías
+            SpawnVFX(basicImpactParticles, position, Color.white * 1.3f, 0.5f);
         }
         if (sonido)
         {
             PlayBasicImpactSound();
         }
-
     }
 
+    public void PlayUltraEffect(Vector3 position, Color particleColor)
+    {
+        if (infection1Particles != null)
+        {
+            SpawnVFX(infection1Particles, position, Color.white * 1.3f, 1.0f);
+        }
+
+        PlayRandomClip(bolaBlancaSounds, 0.85f, 1.15f);
+        TriggerShakeOnZonas(2);
+    }
+
+    // --- LÓGICA INTERNA PROFESIONAL (HELPER METHODS) ---
+
+    private void PlayRandomClip(AudioClip[] clips, float minPitch, float maxPitch)
+    {
+        // LIMITACIÓN DE VOZ: Si el juego está "loko", no dispares sonidos en intervalos menores a 20ms
+        // Esto evita que los altavoces "peten" por acumulación de ondas.
+        if (clips == null || clips.Length == 0 || audioSource == null) return;
+        if (Time.time < lastSoundTime + MIN_SOUND_INTERVAL) return;
+
+        AudioClip clip = clips[Random.Range(0, clips.Length)];
+        audioSource.pitch = Random.Range(minPitch, maxPitch);
+
+        // Volumen adaptativo: si hay muchos sonidos, bajar un poco el volumen individual
+        audioSource.PlayOneShot(clip, 0.8f);
+        lastSoundTime = Time.time;
+    }
+
+    private void SpawnVFX(GameObject prefab, Vector3 pos, Color color, float sizeMultiplier)
+    {
+        GameObject vfx = Instantiate(prefab, pos, Quaternion.identity);
+        ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            var main = ps.main;
+            main.startColor = color;
+            main.startSize = main.startSize.constant * sizeMultiplier;
+        }
+        Destroy(vfx, 2f);
+    }
+
+    private void TriggerShakeOnZonas(int multiplier)
+    {
+        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
+        foreach (GameObject zona in zonas)
+        {
+            StartCoroutine(ShakeObject(zona.transform, multiplier));
+        }
+    }
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
-       // if (!GameSettings.instance.shakeEnabled)
-          //  yield break;
-
         Vector3 originalPos = objTransform.localPosition;
         float elapsed = 0.0f;
 
@@ -198,67 +176,20 @@ public class InfectionFeedback : MonoBehaviour
             float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
             float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
 
-            objTransform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-
+            objTransform.localPosition = originalPos + new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         objTransform.localPosition = originalPos;
     }
 
-    public void PlayUltraEffect(Vector3 position, Color particleColor)
-    {
-        // 1. VISUAL
-        if (infection1Particles != null)
-        {
-            GameObject vfx = Instantiate(infection1Particles, position, Quaternion.identity);
-
-            ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
-            if (ps != null)
-            {
-                var main = ps.main;
-                main.startColor = Color.white * 1.3f;
-            }
-
-            Destroy(vfx, 2f);
-        }
-
-        // 2. SONIDO
-        if (audioSource != null && bolaBlancaSounds.Length > 0)
-        {
-
-            AudioClip clip = bolaBlancaSounds[Random.Range(0, bolaBlancaSounds.Length)];
-
-
-
-            audioSource.pitch = Random.Range(0.85f, 1.15f);
-            audioSource.PlayOneShot(clip);
-        }
-
-        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
-        foreach (GameObject zona in zonas)
-        {
-            StartCoroutine(ShakeObject(zona.transform, 2)); // Cambia el 2 por el multiplicador que quieras
-        }
-    }
-
-    // Añade esto al final de InfectionFeedback.cs
     public void CleanAllActiveParticles()
     {
-        // Buscamos todos los ParticleSystems en la escena
-        ParticleSystem[] allParticles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
-
-        foreach (ParticleSystem ps in allParticles)
+        // Optimización: Usar el tag para no iterar por TODOS los ParticleSystems si no es necesario
+        GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
+        foreach (GameObject ef in efectos)
         {
-            // 1. Verificamos que esté en la jerarquía (no sea un prefab)
-            // 2. Verificamos que tenga el tag específico
-            if (ps.gameObject.scene.name != null && ps.CompareTag("Efectos"))
-            {
-                Destroy(ps.gameObject);
-            }
+            Destroy(ef);
         }
     }
-
-
 }

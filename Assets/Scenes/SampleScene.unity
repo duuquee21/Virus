@@ -46875,7 +46875,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d6c574210e0aa1747bbff1f6ed4b2256, type: 3}
   - {fileID: 8300000, guid: 2ee17dc805a35c74fa3a4bc3659f5ee6, type: 3}
   bolaBlancaSounds:
-  - {fileID: 8300000, guid: c7a45613f44523f40a5ec660ab4ea047, type: 3}
+  - {fileID: 8300000, guid: 2707ec07535f5a34484a167e51f9f998, type: 3}
   basicWallImpactSounds:
   - {fileID: 8300000, guid: 311f4b522d7b7344bb12ef66f68988b6, type: 3}
   basicImpactSounds:

@@ -53,15 +53,15 @@ public class Movement : MonoBehaviour
 
         // --- SEGURIDAD ABSOLUTA: Límite de velocidad ---
         // Esto actúa como un limitador físico constante.
-        if (rb.linearVelocity.magnitude > 30f && !personaInfeccion.alreadyInfected)
+        if (rb.linearVelocity.magnitude > 50f)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * 30f;
+            rb.linearVelocity = rb.linearVelocity.normalized * 50f;
         }
     }
 
     private void ManejarMovimientoNormal()
     {
-        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 20f : velocidadBase;
+        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 40f : velocidadBase;
 
         if (!estaEmpujado)
         {
