@@ -68,7 +68,7 @@ public class PersonaInfeccion : MonoBehaviour
 
     private ManagerAnimacionJugador managerAnimacion; // Nueva referencia
 
-    public float shakeIntensity = 0.05f;
+    public float shakeIntentarçsity = 0.05f;
     private Vector3 originalPosition;
     private Vector3 initialPosition;
     private bool positionSaved = false;
@@ -314,9 +314,16 @@ public class PersonaInfeccion : MonoBehaviour
         // Aplicamos el avance
         faseActual += steps;
 
+        // Tutorial: primera vez que una figura avanza al menos una fase
+        if (faseAnterior == 0 && faseActual > 0)
+        {
+            if (TutorialManager.instance != null)
+            {
+                TutorialManager.instance.OnFirstPhaseAdvance();
+            }
+        }
+
         // --- RECOMPENSAS ACUMULADAS ---
-        // Si avanza 3 fases de golpe, deberías darle las monedas de esas 3 fases.
-        // Hacemos un bucle desde la fase anterior hasta la nueva para no perder dinero.
         if (LevelManager.instance != null)
         {
             for (int i = faseAnterior; i < faseActual && i < valorPorFase.Length; i++)
@@ -325,7 +332,6 @@ public class PersonaInfeccion : MonoBehaviour
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
                 SpawnFloatingMoney(monedasADar);
 
-                // Estadísticas
                 if (i < evolucionesEntreFases.Length) evolucionesEntreFases[i]++;
             }
         }
@@ -338,7 +344,6 @@ public class PersonaInfeccion : MonoBehaviour
         }
         else
         {
-            // Feedback visual de cambio
             ActualizarVisualFase();
             IniciarCambioColor(FlashCambioFase());
 
@@ -354,6 +359,8 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (!LevelManager.instance.timerStarted) LevelManager.instance.timerStarted = true;
     }
+
+
     void BecomeInfected()
     {
         alreadyInfected = true;

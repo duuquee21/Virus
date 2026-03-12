@@ -184,7 +184,6 @@ public class LevelManager : MonoBehaviour
 
     public void RegisterInfection()
     {
-
         currentSessionInfected++;
         UpdateUI();
     }
@@ -594,9 +593,24 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
-        timerStarted = true;
+        timerStarted = false;
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
+        if (TutorialManager.instance != null && VirusMovement.instance != null)
+        {
+            if (!TutorialManager.instance.HasSeenTutorial())
+            {
+                TutorialManager.instance.StartTutorial(VirusMovement.instance.transform);
+            }
+            else
+            {
+                timerStarted = true;
+            }
+        }
+        else
+        {
+            timerStarted = true;
+        }
         if (menuPanel) menuPanel.SetActive(false);
         ResetCameraZoom(); // <--- IMPORTANTE: Volver al zoom de 14
                            // RESET DE CÁMARA Y TIEMPO
