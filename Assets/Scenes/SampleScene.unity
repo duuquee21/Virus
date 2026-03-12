@@ -1429,6 +1429,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 200
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!4 &23496250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
@@ -31356,6 +31358,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 500
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!1 &661437724
 GameObject:
   m_ObjectHideFlags: 0
@@ -45178,7 +45182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &872458528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50973,6 +50977,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 200
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!1001 &1004090379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89564,6 +89570,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 200
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!4 &1725002164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
@@ -90387,6 +90395,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 500
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!4 &1755479562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1070046169139960513, guid: e78367f78827eae408345a381b2d0c73, type: 3}
@@ -94337,6 +94347,8 @@ MonoBehaviour:
   minTorque: -200
   maxTorque: 200
   spawnOffset: 500
+  minSpawnDistance: 120
+  maxSpawnAttempts: 10
 --- !u!1001 &1867399763
 PrefabInstance:
   m_ObjectHideFlags: 0
