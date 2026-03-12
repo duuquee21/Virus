@@ -141,6 +141,7 @@ public class PersonaInfeccion : MonoBehaviour
         if (alreadyInfected)
         {
             SetTrailsEmitting(false); // Cambia trail.emitting = false por esto
+            
             return;
         }
 
@@ -425,9 +426,6 @@ public class PersonaInfeccion : MonoBehaviour
                             barraInterna.sprite = contornosFases[i];
                         }
                     }
-
-                    // Nota: El Padre NO cambia de sprite aquí para mantener su fondo/outline original
-                    // que configuraste manualmente en el Inspector.
                 }
             }
         }
@@ -473,15 +471,10 @@ public class PersonaInfeccion : MonoBehaviour
             isInsideZone = true;
             transformInfector = other.transform;
         }
-
-        // 🔴 NUEVA CONDICIÓN
       
         {
             Debug.Log($"[TRIGGER] {gameObject.name} tocó {other.name} | Tag: {other.tag} | alreadyInfected: {alreadyInfected}");
-
-
         }
-
     }
 
     void Desaparecer()
@@ -614,7 +607,7 @@ public class PersonaInfeccion : MonoBehaviour
             TMPro.TextMeshPro tm = textObj.GetComponent<TMPro.TextMeshPro>();
             if (tm != null)
             {
-                tm.color = Color.black;
+                tm.color = Color.white;
                 tm.text = "+" + cantidad.ToString(); // También puedes asignarlo aquí directamente
             }
 
@@ -642,4 +635,9 @@ public class PersonaInfeccion : MonoBehaviour
         return Mathf.Max(0, baseCoins + extra);
     }
     public bool EsFaseMaxima() => faseActual >= fasesSprites.Length - 1;
+
+    public void SetInfector(Transform nuevoInfector)
+    {
+        transformInfector = nuevoInfector;
+    }
 }

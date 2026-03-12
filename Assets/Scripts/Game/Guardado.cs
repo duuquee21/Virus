@@ -74,6 +74,10 @@ public class Guardado : MonoBehaviour
     public bool coralInfeciosoActivo = false;
     public int coralCapacity = 5;
 
+    public bool hojaNegraData = false; // Ejemplo de variable para el sistema de Hoja Negra
+
+    public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -135,6 +139,8 @@ public class Guardado : MonoBehaviour
         coralInfeciosoActivo = false;
         coralCapacity = 5; // Valor base por defecto
 
+        hojaNegraData = false; // Añadido
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -184,6 +190,9 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("ExtraTimeUnlock", hasExtraTimeUnlock ? 1 : 0);
         PlayerPrefs.SetInt("CoralInfeciosoActivo", coralInfeciosoActivo ? 1 : 0);
         PlayerPrefs.SetInt("CoralCapacity", coralCapacity);
+
+        PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
+
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -298,6 +307,13 @@ public class Guardado : MonoBehaviour
     public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
+
+    public void ActivarHojaNegra()
+    {
+        hojaNegraData = true;
+        SaveData();
+        Debug.Log("<color=black><b>Hojanegra activada permanentemente</b></color>");
+    }
 
     public void ActivarCoralInfeccioso()
     {

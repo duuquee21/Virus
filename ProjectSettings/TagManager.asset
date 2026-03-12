@@ -12,6 +12,7 @@ TagManager:
   - SpawnArea
   - Zona
   - PlayableArea
+  - Efectos
   layers:
   - Default
   - TransparentFX

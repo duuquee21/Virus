@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 328621615622337309}
   m_Layer: 0
   m_Name: VirusJiggleExplosion 1
-  m_TagString: Untagged
+  m_TagString: Efectos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4859,7 +4859,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 32767
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 3

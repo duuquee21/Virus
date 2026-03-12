@@ -911,8 +911,36 @@ MonoBehaviour:
     m_Key: prev_pared_2
     m_Metadata:
       m_Items: []
-  - m_Id: 1131443170549760
+  - m_Id: 1820888534929408
     m_Key: txt_dano_total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1824803229847552
+    m_Key: btn_claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825111343419392
+    m_Key: btn_arbol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826841913249792
+    m_Key: txt_monedas_ui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113024
+    m_Key: btn_exitMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113025
+    m_Key: btn_playMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113026
+    m_Key: btn_settingsMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113027
+    m_Key: btn_newGame
     m_Metadata:
       m_Items: []
   m_Metadata:

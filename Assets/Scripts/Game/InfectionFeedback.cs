@@ -243,5 +243,22 @@ public class InfectionFeedback : MonoBehaviour
         }
     }
 
+    // Añade esto al final de InfectionFeedback.cs
+    public void CleanAllActiveParticles()
+    {
+        // Buscamos todos los ParticleSystems en la escena
+        ParticleSystem[] allParticles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
+
+        foreach (ParticleSystem ps in allParticles)
+        {
+            // 1. Verificamos que esté en la jerarquía (no sea un prefab)
+            // 2. Verificamos que tenga el tag específico
+            if (ps.gameObject.scene.name != null && ps.CompareTag("Efectos"))
+            {
+                Destroy(ps.gameObject);
+            }
+        }
+    }
+
 
 }

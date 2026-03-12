@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
-using TMPro; // Necesario para el texto
+using TMPro;
 
 public class DetectorMortal : MonoBehaviour
 {
     [Header("Configuración de Capacidad")]
-    [Header("Configuración de Capacidad")]
-    public GameObject prefabTexto; // Arrastra aquí tu Prefab de TextMeshPro desde la carpeta Assets
-    private TextMeshPro textoInstanciado; // Esta será nuestra referencia interna
+    public GameObject prefabTexto;
+    private TextMeshPro textoInstanciado;
     private int capacidadActual;
 
     [Header("Ajustes de Destrucción")]
@@ -17,15 +16,11 @@ public class DetectorMortal : MonoBehaviour
     {
         if (prefabTexto != null)
         {
-            // Añadimos 'transform' al final para que sea HIJO de este objeto
             GameObject objTexto = Instantiate(prefabTexto, transform.position, Quaternion.identity, transform);
-
-            // Referencia al componente para actualizar el número
             textoInstanciado = objTexto.GetComponent<TextMeshPro>();
 
-            // Forzar el Order in Layer máximo
-            MeshRenderer mesh = objTexto.GetComponent<MeshRenderer>();
-            if (mesh != null) mesh.sortingOrder = 32767;
+            // --- SOLUCIÓN DE CAPAS ---
+            AjustarCapaTexto();
         }
 
         if (Guardado.instance != null)
@@ -35,23 +30,42 @@ public class DetectorMortal : MonoBehaviour
         }
     }
 
+    private void AjustarCapaTexto()
+    {
+        if (textoInstanciado == null) return;
+
+        // Intentamos obtener el SpriteRenderer del objeto actual o del padre
+        SpriteRenderer srPadre = GetComponentInParent<SpriteRenderer>();
+
+        if (srPadre != null)
+        {
+            // Copiamos la capa exacta del padre
+            textoInstanciado.sortingLayerID = srPadre.sortingLayerID;
+            // Lo ponemos justo una unidad por encima
+            textoInstanciado.sortingOrder = srPadre.sortingOrder + 1;
+        }
+        else
+        {
+            // Si no hay SpriteRenderer, al menos asegúrate de que no use "Overlay"
+            // Puedes asignar una capa específica manualmente si lo prefieres
+            textoInstanciado.sortingOrder = 1;
+        }
+    }
+
+    // ... Resto del código (Update, OnTriggerEnter2D, etc.) se mantiene igual ...
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Persona"))
         {
             PersonaInfeccion persona = other.GetComponent<PersonaInfeccion>();
             if (persona == null) return;
-            // Reducir capacidad cada vez que entra alguien
             ReducirCapacidad();
 
-            // Lógica si el coral infeccioso NO está activo
             if (!Guardado.instance.coralInfeciosoActivo)
             {
-              
-
                 if (persona.faseActual >= 5 || persona.alreadyInfected)
                 {
-                    Debug.Log("<color=cyan>[IMPACTO]</color> Fase 5 detectada.");
                     StartCoroutine(SecuenciaDestruccionPadre(transform.parent != null ? transform.parent.gameObject : gameObject));
                     Destroy(other.gameObject);
                 }
@@ -61,7 +75,6 @@ public class DetectorMortal : MonoBehaviour
                     Destroy(other.gameObject);
                 }
             }
-            // Lógica si el coral infeccioso SÍ está activo
             else
             {
                 persona.IntentarAvanzarFase();
@@ -73,35 +86,20 @@ public class DetectorMortal : MonoBehaviour
     {
         capacidadActual--;
         ActualizarInterfaz();
-
-        if (capacidadActual <= 0)
-        {
-            EjecutarDesaparecerEnPadre();
-        }
+        if (capacidadActual <= 0) EjecutarDesaparecerEnPadre();
     }
 
     private void ActualizarInterfaz()
     {
-        if (textoInstanciado != null)
-        {
-            textoInstanciado.text = capacidadActual.ToString();
-        }
+        if (textoInstanciado != null) textoInstanciado.text = capacidadActual.ToString();
     }
 
     private void EjecutarDesaparecerEnPadre()
     {
-        // Buscamos el componente fLOATINGcELLmOVEMENT en el objeto padre
         if (transform.parent != null)
         {
             FloatingCellMovement movement = transform.parent.GetComponent<FloatingCellMovement>();
-            if (movement != null)
-            {
-                movement.Desaparecer();
-            }
-            else
-            {
-                Debug.LogError("No se encontró el script FloatingCellMovement en el padre.");
-            }
+            if (movement != null) movement.Desaparecer();
         }
     }
 
