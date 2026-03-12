@@ -75,8 +75,11 @@ public class Guardado : MonoBehaviour
     public int coralCapacity = 5;
 
     public bool hojaNegraData = false; // Ejemplo de variable para el sistema de Hoja Negra
+    public float hojaSpawnRate;
+    public int hojaFases;
 
     public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
+    public float agujeroSpawnRate;
 
     void Awake()
     {
@@ -141,6 +144,11 @@ public class Guardado : MonoBehaviour
 
         hojaNegraData = false; // Añadido
 
+        hojaSpawnRate = 10f; // O el valor base que prefieras
+        hojaFases = 0;
+        agujeroNegroData = false;
+        agujeroSpawnRate = 10f;
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -192,6 +200,11 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoralCapacity", coralCapacity);
 
         PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
+        PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
+        PlayerPrefs.SetFloat("HojaSpawnRate", hojaSpawnRate);
+        PlayerPrefs.SetInt("HojaFases", hojaFases);
+        PlayerPrefs.SetInt("AgujeroNegroData", agujeroNegroData ? 1 : 0);
+        PlayerPrefs.SetFloat("AgujeroSpawnRate", agujeroSpawnRate);
 
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
@@ -243,6 +256,11 @@ public class Guardado : MonoBehaviour
         hasExtraTimeUnlock = PlayerPrefs.GetInt("ExtraTimeUnlock", 0) == 1;
         coralInfeciosoActivo = PlayerPrefs.GetInt("CoralInfeciosoActivo", 0) == 1;
         coralCapacity = PlayerPrefs.GetInt("CoralCapacity", 5); // 5 como valor por defecto si no existe
+        hojaNegraData = PlayerPrefs.GetInt("HojaNegraData", 0) == 1;
+        hojaSpawnRate = PlayerPrefs.GetFloat("HojaSpawnRate", 10f);
+        hojaFases = PlayerPrefs.GetInt("HojaFases", 0);
+        agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
+        agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 10f);
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -307,6 +325,31 @@ public class Guardado : MonoBehaviour
     public void ActivarDañoExtraPentagono() { dañoExtraPentagono = 1; SaveData(); }
     public void ActivarDañoExtraHexagono() { dañoExtraHexagono = 1; SaveData(); }
     public void ActivarMejoraDaño() { dañoExtraHabilidad = 1; SaveData(); }
+
+    public void ActivarAgujeroNegro()
+    {
+        agujeroNegroData = true;
+        SaveData();
+        Debug.Log("<color=purple>Agujero Negro activado permanentemente</color>");
+    }
+
+    public void MejorarSpawnHojaNegra(float extraSpawn, int extraFases)
+    {
+        hojaSpawnRate += extraSpawn;
+        SaveData();
+    }
+
+    public void MejorarDmgHojaNegra(float extraSpawn, int extraFases)
+    {
+        hojaFases += extraFases;
+        SaveData();
+    }
+
+    public void MejorarSpawnAgujeroNegro(float extraSpawn)
+    {
+        agujeroSpawnRate += extraSpawn;
+        SaveData();
+    }
 
     public void ActivarHojaNegra()
     {

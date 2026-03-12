@@ -75,7 +75,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         UnlockExtraTimeLogic,
         ActivarCoralInfeccioso,
         MejorarCapacidadCoral,
-        ActivarHojaNegra
+        ActivarHojaNegra,
+        ActivarAgujeroNegro,
+        MejorarSpawnHojaNegra,
+        MejorarDmgHojaNegra,
+        MejorarSpawnAgujeroNegro
     }
 
     [Header("Save ID")]
@@ -611,8 +615,27 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.ActivarHojaNegra:
-                Guardado.instance.ActivarHojaNegra();
+            case SkillEffectType.MejorarSpawnHojaNegra:
+                // Suma el valor de overrideFloat al spawn actual
+                Guardado.instance.hojaSpawnRate += GetFloat(0.25f);
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.MejorarDmgHojaNegra:
+                // Suma el valor de overrideInt a las fases/daño
+                Guardado.instance.hojaFases += GetInt(1);
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.ActivarAgujeroNegro:
+                Guardado.instance.agujeroNegroData = true;
+                Guardado.instance.SaveData();
+                Debug.Log("<color=purple>Agujero Negro activado permanentemente</color>");
+                break;
+
+            case SkillEffectType.MejorarSpawnAgujeroNegro:
+                Guardado.instance.agujeroSpawnRate += GetFloat(0.25f);
+                Guardado.instance.SaveData();
                 break;
 
             default:
@@ -659,6 +682,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         Guardado g = Guardado.instance;
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        int GetInt(int defaultValue) => useOverride ? overrideInt : defaultValue;
+        float GetFloat(float defaultValue) => useOverride ? overrideFloat : defaultValue;
 
         float baseTime = 10f + g.extraBaseTime;
 
@@ -1099,6 +1125,31 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 else
                     sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("desactivado")}");
                 break;
+
+            case SkillEffectType.MejorarSpawnHojaNegra:
+                {
+                    float actual = g.hojaSpawnRate;
+                    float extra = GetFloat(0.1f);
+                    if (comprado) sb.AppendLine($"Spawn Hoja: {actual:F2}");
+                    else sb.AppendLine($"Spawn Hoja: {actual:F2} → {(actual + extra):F2}");
+                    break;
+                }
+            case SkillEffectType.MejorarDmgHojaNegra:
+                {
+                    int actual = g.hojaFases;
+                    int extra = GetInt(1);
+                    if (comprado) sb.AppendLine($"Fases Hoja: {actual}");
+                    else sb.AppendLine($"Fases Hoja: {actual} → {actual + extra}");
+                    break;
+                }
+            case SkillEffectType.MejorarSpawnAgujeroNegro:
+                {
+                    float actual = g.agujeroSpawnRate;
+                    float extra = GetFloat(0.1f);
+                    if (comprado) sb.AppendLine($"Spawn Agujero: {actual:F2}");
+                    else sb.AppendLine($"Spawn Agujero: {actual:F2} → {(actual + extra):F2}");
+                    break;
+                }
         }
 
         return sb.ToString();

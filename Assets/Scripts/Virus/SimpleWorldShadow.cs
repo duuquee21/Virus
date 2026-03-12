@@ -59,7 +59,7 @@ public class SimpleWorldShadow : MonoBehaviour
         // Si existe el script y IsInfected es true, reducimos la escala a la mitad
         if (scriptInfeccion != null && scriptInfeccion.alreadyInfected)
         {
-            currentScale *= 0.5f;
+            currentScale *= 0.75f;
         }
 
         // Aplicar escala y rotación
