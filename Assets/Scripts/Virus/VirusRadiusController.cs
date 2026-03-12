@@ -6,7 +6,7 @@ public class VirusRadiusController : MonoBehaviour
 
     [Header("Configuración de Radio")]
     public float baseScale = 1f;
-    [SerializeField] float radiusIncrement = 0.25f; // Lo que se suma al multiplicador por nivel
+    [SerializeField] float radiusIncrement = 0f; // Lo que se suma al multiplicador por nivel
 
     private int currentLevel = 1;
 

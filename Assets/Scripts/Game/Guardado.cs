@@ -56,7 +56,7 @@ public class Guardado : MonoBehaviour
     public float extraBaseTime = 0f;
 
     [Header("Multiplicadores de Virus")]
-    public float radiusMultiplier = 1.0f;
+    public float radiusMultiplier = 5.0f;
     public float speedMultiplier = 1.0f;
     public float infectSpeedMultiplier = 1.0f;
 

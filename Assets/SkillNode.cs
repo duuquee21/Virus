@@ -406,7 +406,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break; //old
             case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break; //old
 
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(1f); break;
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(5f); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break; //old
 
