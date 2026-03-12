@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826945622024
-    m_Localized: COINS EARNED
+    m_Localized: Coins earned
     m_Metadata:
       m_Items: []
   - m_Id: 826945622025
-    m_Localized: TOTAL COINS
+    m_Localized: Total coins
     m_Metadata:
       m_Items: []
   - m_Id: 826945622026
@@ -659,7 +659,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
-    m_Localized: ' '
+    m_Localized: The figures can skip a level by bouncing off the wall.
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
@@ -778,8 +778,36 @@ MonoBehaviour:
     m_Localized: '{0} will advance phase upon high-speed impact.'
     m_Metadata:
       m_Items: []
-  - m_Id: 1131443170549760
+  - m_Id: 1820888534929408
     m_Localized: TOTAL DAMAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1824803229847552
+    m_Localized: Claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825111343419392
+    m_Localized: Tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826841913249792
+    m_Localized: Coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113024
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113025
+    m_Localized: 'Play '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113026
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1828125194113027
+    m_Localized: New Game
     m_Metadata:
       m_Items: []
   references:

@@ -122,18 +122,18 @@ MonoBehaviour:
   - {fileID: 4277757446306236056, guid: e016bf81363ea0640ba5c00192bc1551, type: 3}
   coloresFases: []
   resistenciaPorFase:
-  - 1
   - 1.2
-  - 1.5
-  - 1.8
-  - 2.2
-  monedasPorFase: 0100000002000000030000000400000005000000
-  "da\xF1oPorFasePredeterminado":
-  - 1
   - 2
   - 3
   - 4
   - 5
+  monedasPorFase: 0100000002000000030000000400000005000000
+  "da\xF1oPorFasePredeterminado":
+  - 5
+  - 1
+  - 2
+  - 3
+  - 4
   spritePersona: {fileID: 8087179694804657894}
   fillingBarImages:
   - {fileID: 1191201025130916878}

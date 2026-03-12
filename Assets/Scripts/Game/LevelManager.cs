@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings; 
 
 public class LevelManager : MonoBehaviour
 {
@@ -98,6 +99,13 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    // Método para obtener el texto traducido
+    string GetTexto(string clave)
+    {
+        var op = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", clave);
+        if (string.IsNullOrEmpty(op)) return clave;
+        return op;
+    }
 
     void Start()
     {
@@ -170,7 +178,7 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var t in contagionCoinsTexts)
             if (t != null)
-                t.text = "Monedas: " + contagionCoins;
+                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}"; // <-- CAMBIO AQUÍ
     }
 
 
@@ -809,8 +817,9 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateUI()
     {
-       
-        foreach (var t in contagionCoinsTexts) if (t != null) t.text = "Monedas: " + contagionCoins;
+        foreach (var t in contagionCoinsTexts)
+            if (t != null)
+                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}"; // <-- CAMBIO AQUÍ
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }

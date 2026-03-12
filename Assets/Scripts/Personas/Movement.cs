@@ -46,75 +46,47 @@ public class Movement : MonoBehaviour
         if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
         {
             EjecutarEfectoAbsorcion();
-            return; // Bloquea el resto del movimiento
+            return;
         }
-     
 
         ManejarMovimientoNormal();
+
+        // --- SEGURIDAD ABSOLUTA: Límite de velocidad ---
+        // Esto actúa como un limitador físico constante.
+        if (rb.linearVelocity.magnitude > 50f)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * 50f;
+        }
     }
 
     private void ManejarMovimientoNormal()
     {
-        // 1. Definimos la velocidad objetivo
-        float velocidadObjetivo = velocidadBase;
-
-        // Si está infectado, su velocidad objetivo sube a 20f
-        if (personaInfeccion != null && personaInfeccion.alreadyInfected)
-        {
-            velocidadObjetivo = 20f;
-        }
+        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 40f : velocidadBase;
 
         if (!estaEmpujado)
         {
             float aceleracionRapida = 50f;
             Vector2 velocidadActual = rb.linearVelocity;
-
-            // --- CORRECCIÓN AQUÍ ---
-            // 1. Empezamos con la velocidad de patrulla normal
             Vector2 velocidadDeseada = direccion * velocidadObjetivo;
-
-            // 2. Lógica de atracción
-            if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
-            {
-                // Calculamos el centro de la pantalla en coordenadas del mundo
-                // Usamos la cámara principal para asegurar que el centro sea el que ve el jugador
-                Vector2 centroPantallaMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-
-                // Calculamos la dirección hacia ese punto central
-                Vector2 direccionHaciaCentro = (centroPantallaMundo - (Vector2)transform.position).normalized;
-
-                // Sumamos la fuerza de atracción hacia el centro
-                velocidadDeseada += direccionHaciaCentro * fuerzaAtraccion;
-            }
-
-
-            // 3. Aplicamos el resultado final al Rigidbody
             rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
-            // -----------------------
-
-            if (!estaGirando && rb.angularVelocity != 0)
-            {
-                rb.angularVelocity = 0;
-            }
         }
         else
         {
-            // Lógica cuando ha sido empujado (Knockback)
-            // Limitamos la velocidad máxima si está infectado para que no salga disparado al infinito
-            if (personaInfeccion != null && personaInfeccion.alreadyInfected)
+            // --- CAMBIO AQUÍ ---
+            // Si hay poca velocidad, recuperamos el control. 
+            // Pero NO forzamos la velocidad a cero, dejamos que las fuerzas externas (agujero) actúen.
+            if (rb.linearVelocity.magnitude <= velocidadObjetivo * 0.5f)
             {
-                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 25f);
+                // Solo desactivamos si no hay fuerzas extremas actuando
+                // (Opcional: puedes añadir un timer para que el estado dure un mínimo de tiempo)
+                estaEmpujado = false;
             }
 
-            // Si la velocidad cae por debajo de la base, recuperamos el control
-            if (rb.linearVelocity.magnitude <= velocidadObjetivo)
+            // Actualizamos 'direccion' constantemente basándonos en la velocidad actual del RB
+            // para que si choca con una pared, el vector de rebote sea coherente con su trayectoria de atracción.
+            if (rb.linearVelocity.sqrMagnitude > 0.1f)
             {
-                if (rb.linearVelocity.magnitude > 0.1f)
-                {
-                    direccion = rb.linearVelocity.normalized;
-                }
-                estaEmpujado = false;
-                estaGirando = false;
+                direccion = rb.linearVelocity.normalized;
             }
         }
     }

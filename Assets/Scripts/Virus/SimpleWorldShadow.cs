@@ -18,9 +18,14 @@ public class SimpleWorldShadow : MonoBehaviour
     private SpriteRenderer shadowSR;
     private GameObject shadowObj;
 
+    // Referencia al script de infección
+    private PersonaInfeccion scriptInfeccion;
+
     void Start()
     {
         parentSR = GetComponent<SpriteRenderer>();
+        // Buscamos el script Infeccion en este mismo objeto
+        scriptInfeccion = GetComponent<PersonaInfeccion>();
 
         if (parentSR != null)
         {
@@ -30,7 +35,6 @@ public class SimpleWorldShadow : MonoBehaviour
             shadowSR = shadowObj.AddComponent<SpriteRenderer>();
             shadowSR.color = new Color(shadowColor.r, shadowColor.g, shadowColor.b, alpha);
 
-            // Asignamos el orden directamente al inicio
             shadowSR.sortingOrder = shadowOrder;
         }
     }
@@ -44,18 +48,25 @@ public class SimpleWorldShadow : MonoBehaviour
         shadowSR.flipX = parentSR.flipX;
         shadowSR.flipY = parentSR.flipY;
 
-        // Forzar el orden manual en cada frame (por si lo cambias en el inspector en tiempo real)
         shadowSR.sortingOrder = shadowOrder;
 
         // Posicionamiento
         shadowObj.transform.position = (Vector2)transform.position + worldOffset;
 
-        // Escala y rotación
-        shadowObj.transform.localScale = transform.localScale * scaleMultiplier;
+        // --- LÓGICA DE INFECCIÓN ---
+        float currentScale = scaleMultiplier;
+
+        // Si existe el script y IsInfected es true, reducimos la escala a la mitad
+        if (scriptInfeccion != null && scriptInfeccion.alreadyInfected)
+        {
+            currentScale *= 0.75f;
+        }
+
+        // Aplicar escala y rotación
+        shadowObj.transform.localScale = transform.localScale * currentScale;
         shadowObj.transform.rotation = transform.rotation;
     }
 
-    // Añade esto dentro de la clase SimpleWorldShadow
     public void CleanupShadow()
     {
         if (shadowObj != null)

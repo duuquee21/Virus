@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic; // Necesario para la lista de afectados
 
-public class BlackHoleSlashAdvanced : MonoBehaviour
+public class BlackSwordSpawner : MonoBehaviour
 {
     [Header("Configuración del Prefab")]
     public GameObject slashPrefab;
@@ -36,7 +36,7 @@ public class BlackHoleSlashAdvanced : MonoBehaviour
         if (Guardado.instance.hojaNegraData&&Time.time > nextSpawnTime&&LevelManager.instance.isGameActive)
         {
             StartCoroutine(ExecuteSlashSequence());
-            nextSpawnTime = Time.time + frecuenciaSpawn;
+            nextSpawnTime = Time.time + Guardado.instance.hojaSpawnRate;
         }
     }
 
@@ -143,7 +143,7 @@ public class BlackHoleSlashAdvanced : MonoBehaviour
             // Si tiene el componente y no ha sido golpeada por ESTE tajo aún
             if (persona != null && !golpeados.Contains(persona))
             {
-                persona.IntentarAvanzarFase();
+                persona.IntentarAvanzarFase(Guardado.instance.hojaFases);
                 golpeados.Add(persona);
 
                 // Debug visual
