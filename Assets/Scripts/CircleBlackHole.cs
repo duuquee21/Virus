@@ -38,7 +38,7 @@ public class BlackHoleController : MonoBehaviour
         if (Guardado.instance.agujeroNegroData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
         {
             SpawnBlackHole();
-            nextSpawnTime = Time.time + frecuenciaSpawn;
+            nextSpawnTime = Time.time + Guardado.instance.agujeroSpawnRate;
         }
 
         // Mantengo el input manual por si quieres testear, puedes borrarlo si no lo usas

@@ -292,59 +292,53 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
-   public void IntentarAvanzarFase()
+    public void IntentarAvanzarFase(int cantidadFases = 1)
     {
-        // 1. SEGURIDAD: Si ya está infectado o ya pasó el límite, ignoramos cualquier llamada extra
         if (alreadyInfected || faseActual >= fasesSprites.Length) return;
 
         int faseAnterior = faseActual;
-        currentInfectionTime = 0f; // Reset inmediato del progreso para evitar re-entrada
+        currentInfectionTime = 0f;
         StartCoroutine(ActivarRastroTemporal());
-        // 1.5 HABILIDAD: probabilidad de subir 2 fases en vez de 1
-        int steps = 1;
-        if (Guardado.instance != null)
+
+        // Calculamos el avance base
+        int steps = cantidadFases;
+
+        // Mantenemos tu lógica de probabilidad de "doble mejora" si es un avance normal (1 fase)
+        if (steps == 1 && Guardado.instance != null)
         {
-            float chanceDouble = Guardado.instance.doubleUpgradeChance; // 0..1 (0.05, 0.10, 0.15, 0.20, 0.25)
+            float chanceDouble = Guardado.instance.doubleUpgradeChance;
             if (chanceDouble > 0f && Random.value < chanceDouble)
                 steps = 2;
         }
 
+        // Aplicamos el avance
         faseActual += steps;
 
-        // Seguridad: no sobrepasar el final (el final válido es fasesSprites.Length)
-        if (faseActual > fasesSprites.Length)
-            faseActual = fasesSprites.Length;
-
-        // 2. SISTEMA DE RECOMPENSAS (Unificado aquí) - usa faseAnterior (correcto)
-        if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
+        // --- RECOMPENSAS ACUMULADAS ---
+        // Si avanza 3 fases de golpe, deberías darle las monedas de esas 3 fases.
+        // Hacemos un bucle desde la fase anterior hasta la nueva para no perder dinero.
+        if (LevelManager.instance != null)
         {
-            int monedasADar = GetCoinsForPhase(faseAnterior);
-            LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
-            SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
-        }
-
-        // 2.5 HABILIDAD: probabilidad variable de sumar +1s al tiempo al subir fase por zona
-        if (Guardado.instance != null)
-        {
-            float chanceTime = Guardado.instance.addTimeOnPhaseChance; // 0..1 (0.10f, 0.15f, 0.20f, 0.25f)
-            if (chanceTime > 0f && Random.value < chanceTime)
+            for (int i = faseAnterior; i < faseActual && i < valorPorFase.Length; i++)
             {
-                if (LevelManager.instance != null)
-                    LevelManager.instance.AddTimeToCurrentTimer(1f);
+                int monedasADar = GetCoinsForPhase(i);
+                LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+                SpawnFloatingMoney(monedasADar);
+
+                // Estadísticas
+                if (i < evolucionesEntreFases.Length) evolucionesEntreFases[i]++;
             }
         }
 
-        // 3. ESTADÍSTICAS
-        if (faseAnterior < evolucionesEntreFases.Length)
+        // Seguridad: no sobrepasar el límite
+        if (faseActual >= fasesSprites.Length)
         {
-            evolucionesEntreFases[faseAnterior]++;
-            Debug.Log($"[EVOLUCIÓN] {gameObject.name}: {faseAnterior} -> {faseActual}");
+            faseActual = fasesSprites.Length;
+            BecomeInfected();
         }
-
-        // 4. CAMBIO VISUAL O FINALIZACIÓN
-        if (faseActual < fasesSprites.Length)
+        else
         {
-            // Aún no es el final: Cambiamos sprite y damos feedback de empuje
+            // Feedback visual de cambio
             ActualizarVisualFase();
             IniciarCambioColor(FlashCambioFase());
 
@@ -357,16 +351,8 @@ public class PersonaInfeccion : MonoBehaviour
                 movementScript.AplicarEmpuje(dirEmpuje, fuerzaRetroceso, fuerzaRotacion);
             }
         }
-        else
-        {
-            // ES EL FINAL: Infección completa
-            BecomeInfected();
-        }
 
-        if(!LevelManager.instance.timerStarted)
-        {
-            LevelManager.instance.timerStarted= true;
-        }
+        if (!LevelManager.instance.timerStarted) LevelManager.instance.timerStarted = true;
     }
     void BecomeInfected()
     {
