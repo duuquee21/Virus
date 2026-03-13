@@ -259,20 +259,26 @@ public class PersonaInfeccion : MonoBehaviour
         SetTrailsEmitting(false);
     }
 
-    public static void ResetDaños()
+    public static void ResetearEstadisticas()
     {
+        // 1. Reiniciar totales de daño
         dañoTotalZona = 0f;
         dañoTotalChoque = 0f;
         dañoTotalCarambola = 0f;
 
+        // 2. Limpiar todos los arrays (Daño, Evoluciones y Golpes)
         for (int i = 0; i < 5; i++)
         {
             dañoZonaPorFase[i] = 0f;
             dañoChoquePorFase[i] = 0f;
             dañoCarambolaPorFase[i] = 0f;
+
+            evolucionesEntreFases[i] = 0;
+            evolucionesPorChoque[i] = 0;
+            evolucionesCarambola[i] = 0;
+            golpesAlPlanetaPorFase[i] = 0;
         }
     }
-
     public void EstablecerFaseDirecta(int fase)
     {
         faseActual = fase;

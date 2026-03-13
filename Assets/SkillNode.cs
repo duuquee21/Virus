@@ -8,6 +8,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    private static readonly System.Collections.Generic.Dictionary<string, bool> runtimeUnlocked =
+    new System.Collections.Generic.Dictionary<string, bool>();
+
+    private static readonly System.Collections.Generic.Dictionary<string, int> runtimeRepeat =
+        new System.Collections.Generic.Dictionary<string, int>();
     public enum SkillEffectType
     {
         None, RandomInitialUpgrade,
@@ -157,32 +162,34 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
     }
-
     public void LoadNodeState()
     {
         if (string.IsNullOrEmpty(saveID)) return;
 
+        // Primero: estado de la run actual
+        if (runtimeUnlocked.TryGetValue(saveID, out bool runUnlocked))
+        {
+            unlocked = runUnlocked;
+            repeatLevel = runtimeRepeat.TryGetValue(saveID, out int runRepeat) ? runRepeat : 0;
+            return;
+        }
+
+        // Si no hay estado de run, cargamos del save real
         int estadoGuardado = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", -1);
 
         if (estadoGuardado == 1)
-        {
             unlocked = true;
-        }
         else if (estadoGuardado == 0)
-        {
             unlocked = false;
-        }
         else
-        {
-            if (isStartingNode)
-                unlocked = true;
-            else
-                unlocked = false;
-        }
+            unlocked = isStartingNode;
 
         repeatLevel = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
-    }
 
+        // Guardamos también en memoria de run
+        runtimeUnlocked[saveID] = unlocked;
+        runtimeRepeat[saveID] = repeatLevel;
+    }
     public void CheckIfShouldShow()
     {
         // Si llegó al máximo nivel
@@ -281,6 +288,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
+        // 1. Validaciones iniciales para ver si ya se compró o llegó al máximo
         if (!IsDamageSkill() && !IsCoinSkill() && !IsTimeSkill() && unlocked) return;
 
         if ((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel)
@@ -289,6 +297,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel)
             return;
 
+        // 2. Comprobamos PRIMERO si tiene dinero suficiente
         if (LevelManager.instance.ContagionCoins < CoinCost)
         {
             if (AudioManager.instance != null)
@@ -296,21 +305,30 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
+        // 3. Cobramos las monedas
+        LevelManager.instance.ContagionCoins -= CoinCost;
+
+        // 4. Reproducimos los sonidos de compra
         if (AudioManager.instance != null)
             AudioManager.instance.PlayBuyUpgrade();
 
         if (audioSource != null && unlockSound != null)
             audioSource.PlayOneShot(unlockSound);
 
-        LevelManager.instance.ContagionCoins -= CoinCost;
-
+        // 5. Actualizamos el estado de desbloqueo / niveles (UNA SOLA VEZ)
         if (IsDamageSkill() || IsTimeSkill() || IsCoinSkill())
             repeatLevel++;
         else
             unlocked = true;
 
+        // Guardar estado en memoria de la run
+        runtimeUnlocked[saveID] = unlocked;
+        runtimeRepeat[saveID] = repeatLevel;
+
+        // 6. Aplicamos el efecto (UNA SOLA VEZ)
         ApplyEffect();
-        // SaveNodeState();
+
+        // 7. Actualizamos la Interfaz y damos Feedback visual
         LevelManager.instance.UpdateUI();
 
         SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
@@ -340,12 +358,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         PlayerPrefs.SetInt("Skill_" + saveID + "_Unlocked", unlocked ? 1 : 0);
         PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
     }
-
     public void ResetNodeState()
     {
         unlocked = isStartingNode;
         repeatLevel = 0;
+
+        if (!string.IsNullOrEmpty(saveID))
+        {
+            runtimeUnlocked[saveID] = unlocked;
+            runtimeRepeat[saveID] = repeatLevel;
+        }
+
         CheckIfShouldShow();
+    }
+
+    public static void ClearRuntimeState()
+    {
+        runtimeUnlocked.Clear();
+        runtimeRepeat.Clear();
     }
 
     void ApplyEffect()

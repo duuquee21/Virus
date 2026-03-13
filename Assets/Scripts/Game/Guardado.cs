@@ -1,7 +1,9 @@
 using UnityEngine;
 
+
 public class Guardado : MonoBehaviour
 {
+
     public static Guardado instance;
 
     [Header("Debug Herramientas")]
@@ -537,6 +539,8 @@ public class Guardado : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        SkillNode.ClearRuntimeState();
 
         HardResetVariables();
 

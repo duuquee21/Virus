@@ -584,6 +584,11 @@ public class LevelManager : MonoBehaviour
 
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
+
+        // ---> ¡AQUÍ ES EL LUGAR PERFECTO! <---
+        // Solo se limpiarán las estadísticas al iniciar una run desde cero.
+        PersonaInfeccion.ResetearEstadisticas();
+
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset) ForceHardReset();
         if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
 
@@ -656,17 +661,6 @@ public class LevelManager : MonoBehaviour
         isGameActive = true;
         currentSessionInfected = 0;
         monedasGanadasSesion = 0;
-
-
-        // Reset estadísticas de evolución entre fases
-        for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
-        {
-            PersonaInfeccion.evolucionesEntreFases[i] = 0;
-        }
-        for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
-        {
-            PersonaInfeccion.evolucionesPorChoque[i] = 0;
-        }
 
 
         float tiempoTotal = gameDuration;
@@ -1158,8 +1152,7 @@ public class LevelManager : MonoBehaviour
             shinyPanel.SetActive(true);
             UpdateUI();
         }
-
-        RebuildSkillTree();
+        RefreshSkillTreeVisualOnly();
 
         SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
         if (lines != null)
@@ -1367,6 +1360,16 @@ public class LevelManager : MonoBehaviour
                 PopulationManager.instance.ClearAllPersonas();
             }
         }
+    }
+    public void RefreshSkillTreeVisualOnly()
+    {
+        var nodes = FindObjectsOfType<SkillNode>(true);
+
+        foreach (var node in nodes)
+            node.gameObject.SetActive(true);
+
+        foreach (var node in nodes)
+            node.CheckIfShouldShow();
     }
 
 }
