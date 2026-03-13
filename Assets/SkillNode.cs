@@ -200,6 +200,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             SetAppearance(true, 1f, true);
             // El botón se desactiva aquí (es el primer parámetro de SetState)
             SetState(false, Color.gray, false);
+            // Asegurar que la escala reducida se aplique
+            SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
+            if (fx != null) fx.SetPurchasedState(true);
             return;
         }
 
@@ -211,6 +214,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // Si es una habilidad que NO se puede repetir, desactivamos el botón tras comprarla
             bool canStillBuy = IsDamageSkill() || IsCoinSkill() || IsTimeSkill();
             SetState(canStillBuy, Color.white, false);
+            // Asegurar que la escala reducida se aplique cuando se carga una partida guardada
+            SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
+            if (fx != null) fx.SetPurchasedState(true);
             return;
         }
 
