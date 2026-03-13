@@ -411,34 +411,35 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.CoinsX5:
             case SkillEffectType.CoinsX6:
                 Guardado.instance.AddCoinMultiplier(1);
+                Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); break; //old
-            case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); break; //old
-            case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); break; //old
-            case SkillEffectType.StartWith2500Coins: Guardado.instance.AddStartingCoins(2500); break; //old
-            case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); break; //old
-            case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); break; //old
+            case SkillEffectType.StartWith50Coins: Guardado.instance.AddStartingCoins(50); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.StartWith100Coins: Guardado.instance.AddStartingCoins(100); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.StartWith500Coins: Guardado.instance.AddStartingCoins(500); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.StartWith2500Coins: Guardado.instance.AddStartingCoins(2500); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.StartWith25000Coins: Guardado.instance.AddStartingCoins(25000); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.StartWith50000Coins: Guardado.instance.AddStartingCoins(50000); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.5f); break;
-            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); break;
-            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); break;
-            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); break;
-            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); break;
+            case SkillEffectType.ReduceSpawnInterval20: Guardado.instance.AddSpawnSpeedBonus(0.5f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.ReduceSpawnInterval40: Guardado.instance.AddSpawnSpeedBonus(0.40f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.ReduceSpawnInterval60: Guardado.instance.AddSpawnSpeedBonus(0.60f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.ReduceSpawnInterval80: Guardado.instance.AddSpawnSpeedBonus(0.80f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.ReduceSpawnInterval100: Guardado.instance.AddSpawnSpeedBonus(1.00f); Guardado.instance.SaveData(); break;
 
-            case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); break; //old
-            case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); break; //old
-            case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); break; //old
-            case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); break; //old
-            case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); break; //old
+            case SkillEffectType.ZoneIncome100: Guardado.instance.AddZonePassiveIncome(100); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.ZoneIncome250: Guardado.instance.AddZonePassiveIncome(250); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.ZoneIncome500: Guardado.instance.AddZonePassiveIncome(500); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.ZoneIncome1000: Guardado.instance.AddZonePassiveIncome(1000); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.ZoneIncome5000: Guardado.instance.AddZonePassiveIncome(5000); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); break; //old
-            case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); break; //old
-            case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); break; //old
+            case SkillEffectType.MultiplyRadius125: Guardado.instance.AddRadiusMultiplier(0.25f); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(5f); break;
-            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); break;
-            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); break; //old
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(5f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); Guardado.instance.SaveData(); break; //old
 
             case SkillEffectType.RadiusLevel2:
             case SkillEffectType.RadiusLevel3:
@@ -471,61 +472,71 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 InfectionSpeedUpgradeController.instance.UpgradeInfectionSpeed();
                 break;
 
-            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); break; //old
-            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); break; //old
+            case SkillEffectType.MultiplySpeed125: Guardado.instance.SetSpeedMultiplier(GetFloat(1.25f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.MultiplySpeed150: Guardado.instance.SetSpeedMultiplier(GetFloat(1.50f)); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); break; //old
-            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); break; //old
+            case SkillEffectType.InfectSpeed50: Guardado.instance.SetInfectionSpeedBonus(GetFloat(0.50f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.InfectSpeed100: Guardado.instance.SetInfectionSpeedBonus(GetFloat(1.00f)); Guardado.instance.SaveData(); break; //old
 
             case SkillEffectType.KeepUpgradesOnResetEffect:
                 Guardado.instance.keepUpgradesOnReset = true;
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.KeepZonesOnReset:
                 Guardado.instance.ActivateKeepZones();
+                Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); break; //old
-            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); break; //old
-            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); break; //old
-            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); break; //old
-            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); break; //old
+            case SkillEffectType.DuplicateOnHit20: Guardado.instance.SetDuplicateProbability(GetFloat(0.20f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.DuplicateOnHit40: Guardado.instance.SetDuplicateProbability(GetFloat(0.40f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.DuplicateOnHit60: Guardado.instance.SetDuplicateProbability(GetFloat(0.60f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.DuplicateOnHit80: Guardado.instance.SetDuplicateProbability(GetFloat(0.80f)); Guardado.instance.SaveData(); break; //old
+            case SkillEffectType.DuplicateOnHit100: Guardado.instance.SetDuplicateProbability(GetFloat(1.00f)); Guardado.instance.SaveData(); break; //old
 
             // Sustituye los tres cases anteriores por este:
             case SkillEffectType.CarambolaNormal:
             case SkillEffectType.CarambolaPro:
             case SkillEffectType.CarambolaSuprema:
                 Guardado.instance.SubirNivelCarambola();
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ParedInfectiva_Nivel1:
                 Guardado.instance.ActivarParedInfectiva();
                 Guardado.instance.AddNivelParedInfectiva(1);
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ParedInfectiva_Hexagono:
                 Guardado.instance.ActivarParedInfectiva(); // Activa la habilidad general
                 Guardado.instance.AddNivelParedInfectivaPorFigura(0); // Fase 0 = Hexágono
+                Guardado.instance.SaveData();
                 break;
             case SkillEffectType.ParedInfectiva_Pentagono:
                 Guardado.instance.ActivarParedInfectiva(); // Activa la habilidad general
                 Guardado.instance.AddNivelParedInfectivaPorFigura(1); // Fase 1 = Pentágono
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ParedInfectiva_Cuadrado:
                 Guardado.instance.AddNivelParedInfectivaPorFigura(2); // Fase 2 = Cuadrado
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ParedInfectiva_Triangulo:
                 Guardado.instance.AddNivelParedInfectivaPorFigura(3); // Fase 3 = Triángulo
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ParedInfectiva_Circulo:
                 Guardado.instance.AddNivelParedInfectivaPorFigura(4); // Fase 4 = Círculo
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.ReboteConCoral:
                 Guardado.instance.ReboteConCoral();
+                Guardado.instance.SaveData();
                 break;
 
             case SkillEffectType.DmgHexagono:
@@ -556,30 +567,31 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.AddTime2Seconds:
                 Guardado.instance.AddExtraBaseTime(GetFloat(2f));
+                Guardado.instance.SaveData();
                 break;
 
-            case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
-            case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
-            case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
-            case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
-            case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); break;
+            case SkillEffectType.AddTimeOnPhaseChance5: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.AddTimeOnPhaseChance10: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.AddTimeOnPhaseChance15: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.AddTimeOnPhaseChance20: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.AddTimeOnPhaseChance25: Guardado.instance.AddAddTimeOnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
 
-            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
-            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
-            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
-            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
-            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.AddDoubleUpgradeChance(0.05f); break;
+            case SkillEffectType.DoubleUpgradeChance05: Guardado.instance.AddDoubleUpgradeChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.DoubleUpgradeChance10: Guardado.instance.AddDoubleUpgradeChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.DoubleUpgradeChance15: Guardado.instance.AddDoubleUpgradeChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.DoubleUpgradeChance20: Guardado.instance.AddDoubleUpgradeChance(0.05f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.DoubleUpgradeChance25: Guardado.instance.AddDoubleUpgradeChance(0.05f); Guardado.instance.SaveData(); break;
 
             case SkillEffectType.RandomSpawnAnyPhase5:
-                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
             case SkillEffectType.RandomSpawnAnyPhase10:
-                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
             case SkillEffectType.RandomSpawnAnyPhase15:
-                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
             case SkillEffectType.RandomSpawnAnyPhase20:
-                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
             case SkillEffectType.RandomSpawnAnyPhase25:
-                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); break;
+                Guardado.instance.AddRandomSpawnPhaseChance(0.05f); Guardado.instance.SaveData(); break;
 
             case SkillEffectType.CoinsCirculoPlus1:
                 Guardado.instance.coinsExtraCirculo += GetInt(1);

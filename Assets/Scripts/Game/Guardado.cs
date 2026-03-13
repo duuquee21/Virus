@@ -204,7 +204,6 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("CoralCapacity", coralCapacity);
 
         PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
-        PlayerPrefs.SetInt("HojaNegraData", hojaNegraData ? 1 : 0);
         PlayerPrefs.SetFloat("HojaSpawnRate", hojaSpawnRate);
         PlayerPrefs.SetInt("HojaFases", hojaFases);
         PlayerPrefs.SetInt("AgujeroNegroData", agujeroNegroData ? 1 : 0);
@@ -556,5 +555,23 @@ public class Guardado : MonoBehaviour
             lines.ResetAllLinesVisuals();
             lines.RefreshAllLinesFromNodes();
         }
+    }
+
+    // ========== GUARDADO AL CERRAR LA APLICACIÓN ==========
+    void OnApplicationQuit()
+    {
+        // Guardar TODO antes de que se cierre la app
+        SaveData();
+        SaveEvolutionData();
+        
+        // También guardamos el estado de todos los nodos del árbol
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.SaveNodeState();
+        }
+        
+        PlayerPrefs.Save();
+        Debug.Log("<color=yellow>[Guardado]</color> Datos guardados antes de cerrar aplicación");
     }
 }

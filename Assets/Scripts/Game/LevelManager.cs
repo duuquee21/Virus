@@ -85,6 +85,10 @@ public class LevelManager : MonoBehaviour
     public Image timerIcon;
     private Vector3 timerIconOriginalScale;
 
+    // Sistema de guardado automático de monedas
+    private float autoSaveInterval = 10f; // Guardar cada 10 segundos
+    private float timeSinceLastAutoSave = 0f;
+
     // Añade esto en EndDayResultsPanel
 
     void Awake()
@@ -418,6 +422,18 @@ public class LevelManager : MonoBehaviour
                 EndSessionDay();
             }
         }
+
+        // Sistema de guardado automático de monedas cada X segundos
+        if (isGameActive)
+        {
+            timeSinceLastAutoSave += Time.deltaTime;
+            if (timeSinceLastAutoSave >= autoSaveInterval)
+            {
+                SaveCurrentRun();
+                timeSinceLastAutoSave = 0f;
+                Debug.Log($"<color=cyan>[AUTO-SAVE]</color> Monedas guardadas automáticamente: {contagionCoins}");
+            }
+        }
     }
     private IEnumerator AnimarRespiracionTimer()
     {
@@ -557,6 +573,9 @@ public class LevelManager : MonoBehaviour
         if (pausePanel != null) pausePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
 
+        // Limpiar diccionario de runtime state del árbol de habilidades
+        SkillNode.ClearRuntimeState();
+
         ShowMainMenu();
     }
 
@@ -601,6 +620,8 @@ public class LevelManager : MonoBehaviour
         timerStarted = false;
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
+        timeSinceLastAutoSave = 0f; // Reiniciar contador de auto-save
+        
         if (TutorialManager.instance != null && VirusMovement.instance != null)
         {
             if (!TutorialManager.instance.HasSeenTutorial())
@@ -842,9 +863,25 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-   
-       
-        if (Guardado.instance) Guardado.instance.ClearRunState();
+        // Guardar los últimos datos antes de limpiar el estado de run
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.SaveRunState(currentTimer, contagionCoins, PlayerPrefs.GetInt("CurrentMapIndex", 0), 0f);
+            Guardado.instance.SaveEvolutionData();
+            Guardado.instance.SaveData();
+
+            // También guardar estado de todos los nodos
+            SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+            foreach (SkillNode node in nodes)
+            {
+                node.SaveNodeState();
+            }
+
+            PlayerPrefs.Save();
+            
+            // Limpiar el estado de run después de guardar
+            Guardado.instance.ClearRunState();
+        }
     }
 
     public void UpdateUI()
@@ -1370,6 +1407,17 @@ public class LevelManager : MonoBehaviour
 
         foreach (var node in nodes)
             node.CheckIfShouldShow();
+    }
+
+    // ========== GUARDADO AL CERRAR LA APLICACIÓN ==========
+    void OnApplicationQuit()
+    {
+        // Si hay una partida activa, guardar todas las monedas y datos antes de cerrar
+        if (isGameActive && Guardado.instance != null)
+        {
+            SaveCurrentRun();
+            Debug.Log($"<color=yellow>[QUIT-SAVE]</color> Partida guardada antes de cerrar. Monedas: {contagionCoins}");
+        }
     }
 
 }
