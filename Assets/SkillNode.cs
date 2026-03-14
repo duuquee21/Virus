@@ -554,15 +554,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgCuadrado:
-                Guardado.instance.dañoExtraCuadrado += GetInt(2);
+                Guardado.instance.dañoExtraCuadrado += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgTriangulo:
-                Guardado.instance.dañoExtraTriangulo += GetInt(3);
+                Guardado.instance.dañoExtraTriangulo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.DmgCirculo:
-                Guardado.instance.dañoExtraCirculo += GetInt(4);
+                Guardado.instance.dañoExtraCirculo += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
 
@@ -620,36 +620,40 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.coinsExtraHexagono += GetInt(1);
                 Guardado.instance.SaveData();
                 break;
+            // Fase 0 (Hexágono)
+            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            // Fase 1 (Pentágono)
+            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
-            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
-            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
-            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
-            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            // Fase 2 (Cuadrado)
+            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
-            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
-            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
-            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
-            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.40f); break;
+            // Fase 3 (Triángulo)
+            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.10f); break;
 
-            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
-            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
-            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
-            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
-            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.50f); break;
-
-            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
-            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
-            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
-            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
-            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.60f); break;
+            // Fase 4 (Círculo)
+            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
+            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.10f); break;
 
             case SkillEffectType.UnlockExtraTimeLogic:
                 // Llamamos al método que creamos en el paso anterior en Guardado.cs
@@ -763,35 +767,35 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // -------------------------
             case SkillEffectType.DmgHexagono:
                 {
-                    int actual = 1 + g.dañoExtraHexagono;
+                    int actual = 1 + g.dañoExtraHexagono; // El Hexágono está bien (1)
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_hex")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_hex")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgPentagono:
                 {
-                    int actual = 1 + g.dañoExtraPentagono;
+                    int actual = 2 + g.dañoExtraPentagono; // <--- Cambiado a 2
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCuadrado:
                 {
-                    int actual = 2 + g.dañoExtraCuadrado;
+                    int actual = 3 + g.dañoExtraCuadrado; // <--- Cambiado a 3
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgTriangulo:
                 {
-                    int actual = 3 + g.dañoExtraTriangulo;
+                    int actual = 4 + g.dañoExtraTriangulo; // <--- Cambiado a 4
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCirculo:
                 {
-                    int actual = 4 + g.dañoExtraCirculo;
+                    int actual = 5 + g.dañoExtraCirculo; // <--- Cambiado a 5
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual} → {actual + 1}");
                     break;
@@ -905,7 +909,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     else sb.AppendLine($"{GetTexto("prev_vel_infec")}: {actual:F2} → {despues:F2}");
                     break;
                 }
-
             // -------------------------
             // CAPTURA POR FASE (TIEMPO REAL)
             // -------------------------
@@ -989,7 +992,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     else sb.AppendLine($"{GetTexto("prev_tiempo_cap")} {GetTexto("fase_circ")}: {tiempoActual:F2}s → {tiempoNuevo:F2}s");
                     break;
                 }
-
             // -------------------------
             // PROBABILIDADES
             // -------------------------
