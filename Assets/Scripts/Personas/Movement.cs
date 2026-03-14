@@ -55,15 +55,15 @@ public class Movement : MonoBehaviour
 
         // --- SEGURIDAD ABSOLUTA: Límite de velocidad ---
         // Esto actúa como un limitador físico constante.
-        if (rb.linearVelocity.magnitude > 50f)
+        if (rb.linearVelocity.magnitude > 100f)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * 50f;
+            rb.linearVelocity = rb.linearVelocity.normalized * 100f;
         }
     }
 
     private void ManejarMovimientoNormal()
     {
-        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 40f : velocidadBase;
+        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 60f : velocidadBase;
 
         if (!estaEmpujado)
         {
@@ -250,7 +250,7 @@ public class Movement : MonoBehaviour
                 }
                 // 4. REFLEXIÓN PURA
                 // Usamos un factor de restitución (0.9f = pierde 10% de energía, 1.0f = rebote perfecto)
-                float factorRestitucion = 0.95f;
+                float factorRestitucion = 1.2f;
 
                 // Aplicamos la velocidad reflejada
                 rb.linearVelocity = direccionRebote * (velocidadDeIntercambio * factorRestitucion);

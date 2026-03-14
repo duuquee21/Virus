@@ -410,6 +410,19 @@ public class EndDayResultsPanel : MonoBehaviour
         if (current >= maps.Count) return;
 
         GameObject barra = Instantiate(barraVidaPrefab, barrasContainer);
+        
+        // IMPORTANTE: Forzar que el RectTransform mantenga los valores del prefab
+        RectTransform barraRect = barra.GetComponent<RectTransform>();
+        if (barraRect != null)
+        {
+            RectTransform prefabRect = barraVidaPrefab.GetComponent<RectTransform>();
+            if (prefabRect != null)
+            {
+                barraRect.sizeDelta = prefabRect.sizeDelta;
+                barraRect.anchoredPosition = prefabRect.anchoredPosition;
+                barraRect.localScale = prefabRect.localScale;
+            }
+        }
 
         var barraUI = barra.GetComponent<PlanetHealthBarUI>();
 
