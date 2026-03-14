@@ -767,35 +767,35 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // -------------------------
             case SkillEffectType.DmgHexagono:
                 {
-                    int actual = 1 + g.dañoExtraHexagono;
+                    int actual = 1 + g.dañoExtraHexagono; // El Hexágono está bien (1)
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_hex")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_hex")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgPentagono:
                 {
-                    int actual = 1 + g.dañoExtraPentagono;
+                    int actual = 2 + g.dañoExtraPentagono; // <--- Cambiado a 2
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_pent")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCuadrado:
                 {
-                    int actual = 2 + g.dañoExtraCuadrado;
+                    int actual = 3 + g.dañoExtraCuadrado; // <--- Cambiado a 3
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_cuad")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgTriangulo:
                 {
-                    int actual = 3 + g.dañoExtraTriangulo;
+                    int actual = 4 + g.dañoExtraTriangulo; // <--- Cambiado a 4
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_tri")}: {actual} → {actual + 1}");
                     break;
                 }
             case SkillEffectType.DmgCirculo:
                 {
-                    int actual = 4 + g.dañoExtraCirculo;
+                    int actual = 5 + g.dañoExtraCirculo; // <--- Cambiado a 5
                     if (comprado) sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual}");
                     else sb.AppendLine($"{GetTexto("prev_dano")} {GetTexto("fase_circ")}: {actual} → {actual + 1}");
                     break;
