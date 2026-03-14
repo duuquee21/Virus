@@ -283,7 +283,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826958204959
-    m_Localized: Probabilidad tiempo
+    m_Localized: Bonus temporal
     m_Metadata:
       m_Items: []
   - m_Id: 826958204960
@@ -699,7 +699,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393668
-    m_Localized: El cuadrado da mas monedas
+    m_Localized: El triangulo da mas monedas
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393669
@@ -743,7 +743,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1104787743678464
-    m_Localized: Bonus tiempo fase
+    m_Localized: Prob. de bonus
     m_Metadata:
       m_Items: []
   - m_Id: 1104799189934080
@@ -809,6 +809,104 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1828125194113027
     m_Localized: Nueva Partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129920
+    m_Localized: Tiempo extra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129921
+    m_Localized: Al finalizar el tiempo te permite capturar la ultima figura en tu
+      area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129923
+    m_Localized: Pared infecta hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129924
+    m_Localized: Probabilidad de que los hexagonos pierdan un lado contra la pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129925
+    m_Localized: Pared infecta pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129926
+    m_Localized: Probabilidad de que los pentagonos pierdan un lado contra la pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129927
+    m_Localized: Pared infecta cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129928
+    m_Localized: Probabilidad de que los cuadrados pierdan un lado contra la pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129929
+    m_Localized: Pared infecta triangulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129930
+    m_Localized: Probabilidad de que los triangulos pierdan un lado contra la pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129931
+    m_Localized: Pared infecta circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129932
+    m_Localized: Probabilidad de que los circulos pierdan un lado contra la pared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129934
+    m_Localized: Carambola hexagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129935
+    m_Localized: Probabilidad de que los hexagonos pierdan un lado al chocar contra
+      otra figura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129936
+    m_Localized: Carambola pentagono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129937
+    m_Localized: Probabilidad de que los pentagonos pierdan un lado al chocar contra
+      otra figura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129938
+    m_Localized: Carambola cuadrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129939
+    m_Localized: Probabilidad de que los cuadrados pierdan un lado al chocar contra
+      otra figura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129940
+    m_Localized: Carambola triangulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129941
+    m_Localized: Probabilidad de que los triangulos pierdan un lado al chocar contra
+      otra figura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129942
+    m_Localized: Carambola circulo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129943
+    m_Localized: Probabilidad de que los circulos pierdan un lado al chocar contra
+      otra figura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129944
+    m_Localized: asfdsaf
     m_Metadata:
       m_Items: []
   references:

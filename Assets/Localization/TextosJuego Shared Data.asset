@@ -943,6 +943,110 @@ MonoBehaviour:
     m_Key: btn_newGame
     m_Metadata:
       m_Items: []
+  - m_Id: 2831660836769792
+    m_Key: TIEMPO EXTRA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129920
+    m_Key: skill_extratime_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129921
+    m_Key: skill_extratime_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129922
+    m_Key: PARED INFECTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129923
+    m_Key: skill_wallhex_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129924
+    m_Key: skill_wallhex_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129925
+    m_Key: skill_wallpen_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129926
+    m_Key: skill_wallpen_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129927
+    m_Key: skill_wallcua_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129928
+    m_Key: skill_wallcua_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129929
+    m_Key: skill_walltri_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129930
+    m_Key: skill_walltri_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129931
+    m_Key: skill_wallcir_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129932
+    m_Key: skill_wallcir_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129933
+    m_Key: CARAMBOLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129934
+    m_Key: skill_carambolahex_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129935
+    m_Key: skill_carambolahex_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129936
+    m_Key: skill_carambolapen_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129937
+    m_Key: skill_carambolapen_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129938
+    m_Key: skill_carambolacua_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129939
+    m_Key: skill_carambolacua_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129940
+    m_Key: skill_carambolatri_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129941
+    m_Key: skill_carambolatri_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129942
+    m_Key: skill_carambolacir_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129943
+    m_Key: skill_carambolacir_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831660866129944
+    m_Key: asfsf
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -11,10 +11,12 @@ public class ControlVolumen : MonoBehaviour
     {
         if (sliderVolumen != null)
         {
-            
-            float volumenActual = AudioListener.volume;
-            
-           
+            float volumenActual = PlayerPrefs.GetFloat("MasterVolume", 0.75f);
+            AudioListener.volume = volumenActual;
+
+            if (AudioManager.instance != null)
+                AudioManager.instance.UpdateMixerVolume("Master", volumenActual);
+
             sliderVolumen.value = volumenActual;
         }
     }
@@ -22,11 +24,12 @@ public class ControlVolumen : MonoBehaviour
     
     public void CambiarVolumen(float valor)
     {
-        
         AudioListener.volume = valor;
 
-        
-        PlayerPrefs.SetFloat("VolumenGlobal", valor);
+        if (AudioManager.instance != null)
+            AudioManager.instance.UpdateMixerVolume("Master", valor);
+
+        PlayerPrefs.SetFloat("MasterVolume", valor);
         PlayerPrefs.Save();
     }
 }
