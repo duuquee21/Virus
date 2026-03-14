@@ -1770,7 +1770,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagon_tit
   descriptionKey: skill_hexagon_desc
-  CoinCost: 32
+  CoinCost: 135
   nextNodes: []
   requiredParentNodes:
   - {fileID: 116029488}
@@ -1929,8 +1929,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_hexagon_tit
-  descriptionKey: skill_hexagon_desc
+  skillNameKey: skill_extratime_tit
+  descriptionKey: skill_extratime_desc
   CoinCost: 4
   nextNodes: []
   requiredParentNodes:
@@ -4002,7 +4002,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 150
+  m_fontSize: 126.65
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5600,7 +5600,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_hexagoncoin_tit
   descriptionKey: skill_hexagoncoin_desc
-  CoinCost: 30
+  CoinCost: 130
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1582465759}
@@ -5936,8 +5936,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamagePen_tit
-  descriptionKey: skill_zoneDamagePen_desc
+  skillNameKey: skill_zoneDamageSqr_tit
+  descriptionKey: skill_zoneDamageSqr_desc
   CoinCost: 36
   nextNodes: []
   requiredParentNodes:
@@ -12309,7 +12309,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_timeProbability_tit
   descriptionKey: skill_timeProbability_desc
-  CoinCost: 18
+  CoinCost: 150
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1396887379}
@@ -14272,7 +14272,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagon_tit
   descriptionKey: skill_pentagon_desc
-  CoinCost: 28
+  CoinCost: 120
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1228263475}
@@ -16140,7 +16140,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_spawn_tit
   descriptionKey: skill_spawn_desc
-  CoinCost: 34
+  CoinCost: 150
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1973898789}
@@ -20446,8 +20446,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallpen_tit
+  descriptionKey: skill_wallpen_desc
   CoinCost: 100
   nextNodes: []
   requiredParentNodes:
@@ -21508,7 +21508,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_zoneDamageCir_tit
   descriptionKey: skill_zoneDamageCir_desc
-  CoinCost: 144
+  CoinCost: 10000
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1996337750}
@@ -27376,7 +27376,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_square_tit
   descriptionKey: skill_square_desc
-  CoinCost: 28
+  CoinCost: 120
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1228263475}
@@ -32304,7 +32304,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_time_tit
   descriptionKey: skill_time_desc
-  CoinCost: 32
+  CoinCost: 150
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1296002569}
@@ -32622,7 +32622,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_initialFigures_tit
   descriptionKey: skill_initialFigures_desc
-  CoinCost: 28
+  CoinCost: 120
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1296002569}
@@ -42141,8 +42141,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_rebound2_tit
-  descriptionKey: skill_rebound2_desc
+  skillNameKey: skill_carambolapen_tit
+  descriptionKey: skill_carambolapen_desc
   CoinCost: 72
   nextNodes: []
   requiredParentNodes:
@@ -43118,8 +43118,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamageHex_tit
-  descriptionKey: skill_zoneDamageHex_desc
+  skillNameKey: skill_zoneDamagePen_tit
+  descriptionKey: skill_zoneDamagePen_desc
   CoinCost: 16
   nextNodes: []
   requiredParentNodes:
@@ -47678,8 +47678,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallhex_tit
+  descriptionKey: skill_wallhex_desc
   CoinCost: 8
   nextNodes: []
   requiredParentNodes:
@@ -50354,8 +50354,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallcir_tit
+  descriptionKey: skill_wallcir_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -53350,8 +53350,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_rebound_tit
-  descriptionKey: skill_rebound_desc
+  skillNameKey: skill_carambolahex_tit
+  descriptionKey: skill_carambolahex_desc
   CoinCost: 14
   nextNodes: []
   requiredParentNodes:
@@ -57728,7 +57728,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: -0.00002670288}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -58386,8 +58386,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_rebound_tit
-  descriptionKey: skill_rebound_desc
+  skillNameKey: skill_carambolacua_tit
+  descriptionKey: skill_carambolacua_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -59539,8 +59539,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallpen_tit
+  descriptionKey: skill_wallpen_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -59918,8 +59918,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_rebound_tit
-  descriptionKey: skill_rebound_desc
+  skillNameKey: skill_carambolatri_tit
+  descriptionKey: skill_carambolatri_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -61542,8 +61542,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamageHex_tit
-  descriptionKey: skill_zoneDamageHex_desc
+  skillNameKey: skill_zoneDamagePen_tit
+  descriptionKey: skill_zoneDamagePen_desc
   CoinCost: 120
   nextNodes: []
   requiredParentNodes:
@@ -64227,8 +64227,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallcua_tit
+  descriptionKey: skill_wallcua_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -64620,7 +64620,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_pentagoncoin_tit
   descriptionKey: skill_pentagoncoin_desc
-  CoinCost: 30
+  CoinCost: 130
   nextNodes: []
   requiredParentNodes:
   - {fileID: 678139296}
@@ -65685,8 +65685,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallhex_tit
+  descriptionKey: skill_wallhex_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -68113,7 +68113,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_radius_tit
   descriptionKey: skill_radius_desc
-  CoinCost: 36
+  CoinCost: 140
   nextNodes: []
   requiredParentNodes:
   - {fileID: 1989663731}
@@ -79525,8 +79525,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamageHex_tit
-  descriptionKey: skill_zoneDamageHex_desc
+  skillNameKey: skill_zoneDamagePen_tit
+  descriptionKey: skill_zoneDamagePen_desc
   CoinCost: 6
   nextNodes: []
   requiredParentNodes:
@@ -82080,7 +82080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1538493144
 Transform:
   m_ObjectHideFlags: 0
@@ -82416,8 +82416,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallcua_tit
+  descriptionKey: skill_wallcua_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -83889,9 +83889,9 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamagePen_tit
-  descriptionKey: skill_zoneDamagePen_desc
-  CoinCost: 30
+  skillNameKey: skill_zoneDamageSqr_tit
+  descriptionKey: skill_zoneDamageSqr_desc
+  CoinCost: 135
   nextNodes: []
   requiredParentNodes:
   - {fileID: 116029488}
@@ -84156,8 +84156,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_walltri_tit
+  descriptionKey: skill_walltri_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -87086,8 +87086,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_zoneDamageHex_tit
-  descriptionKey: skill_zoneDamageHex_desc
+  skillNameKey: skill_zoneDamagePen_tit
+  descriptionKey: skill_zoneDamagePen_desc
   CoinCost: 36
   nextNodes: []
   requiredParentNodes:
@@ -92350,8 +92350,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_walltri_tit
+  descriptionKey: skill_walltri_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -93290,8 +93290,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_rebound_tit
-  descriptionKey: skill_rebound_desc
+  skillNameKey: skill_carambolacir_tit
+  descriptionKey: skill_carambolacir_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
@@ -95981,7 +95981,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_time_tit
   descriptionKey: skill_time_desc
-  CoinCost: 24
+  CoinCost: 10000
   nextNodes: []
   requiredParentNodes:
   - {fileID: 2096388056}
@@ -98296,7 +98296,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_speedLevel_tit
   descriptionKey: skill_speedLevel_desc
-  CoinCost: 30
+  CoinCost: 140
   nextNodes: []
   requiredParentNodes:
   - {fileID: 116029488}
@@ -99171,7 +99171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1989049609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -99381,7 +99381,7 @@ MonoBehaviour:
   infoCost: {fileID: 0}
   skillNameKey: skill_squarecoin_tit
   descriptionKey: skill_squarecoin_desc
-  CoinCost: 30
+  CoinCost: 130
   nextNodes: []
   requiredParentNodes:
   - {fileID: 686109906}
@@ -99626,8 +99626,8 @@ MonoBehaviour:
   infoTitle: {fileID: 0}
   infoDescription: {fileID: 0}
   infoCost: {fileID: 0}
-  skillNameKey: skill_squarecoin_tit
-  descriptionKey: skill_squarecoin_desc
+  skillNameKey: skill_wallcir_tit
+  descriptionKey: skill_wallcir_desc
   CoinCost: 144
   nextNodes: []
   requiredParentNodes:
