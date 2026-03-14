@@ -129,11 +129,11 @@ MonoBehaviour:
   - 5
   monedasPorFase: 0100000002000000030000000400000005000000
   "da\xF1oPorFasePredeterminado":
-  - 5
   - 1
   - 2
   - 3
   - 4
+  - 5
   spritePersona: {fileID: 8087179694804657894}
   fillingBarImages:
   - {fileID: 1191201025130916878}
@@ -151,7 +151,7 @@ MonoBehaviour:
   fuerzaRotacion: 12.5
   alreadyInfected: 0
   faseActual: 0
-  shakeIntensity: 0.05
+  "shakeIntentar\xE7sity": 0.05
   particulasDeFuego: {fileID: 5683650011450178379}
   floatingTextPrefab: {fileID: 7455663746959264046, guid: 208b04a8589de64439d4218bb9fe91c9, type: 3}
   trail2: {fileID: 2134046717023327967}
@@ -206,6 +206,7 @@ MonoBehaviour:
   velocidadBase: 2
   fuerzaAtraccion: 2
   duracionAbsorcion: 4
+  duracionMinimaEmpuje: 0.25
   friccionDuranteAnimacion: 10
 --- !u!114 &2679614929921104373
 MonoBehaviour:
