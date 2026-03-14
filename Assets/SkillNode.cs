@@ -1150,12 +1150,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 }
 
 
-            case SkillEffectType.UnlockExtraTimeLogic:
+            /*case SkillEffectType.UnlockExtraTimeLogic:
                 if (unlocked)
                     sb.AppendLine($"{GetTexto("status_unlocked")}");
                 else
                     sb.AppendLine($"{GetTexto("extra_time_desc")}"); // Crea esta clave en tu Localization
-                break;
+                break;*/
 
             case SkillEffectType.MejorarCapacidadCoral:
                 {
