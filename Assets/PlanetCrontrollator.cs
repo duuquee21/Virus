@@ -186,11 +186,18 @@ public class PlanetCrontrollator : MonoBehaviour
     {
         if (healthBar != null)
         {
+            // Actualizar el llenado de la barra
             float fill = currentHealth / maxHealth;
             healthBar.fillAmount = fill;
 
             if (healthBarOutLine != null)
                 healthBarOutLine.fillAmount = fill + 0.0012f;
+
+            // Resetear la posición local del padre a (0, 0, 0)
+            if (healthBar.transform.parent != null)
+            {
+                healthBar.transform.parent.localPosition = Vector3.zero;
+            }
         }
     }
 
