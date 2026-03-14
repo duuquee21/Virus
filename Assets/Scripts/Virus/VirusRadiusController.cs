@@ -4,7 +4,7 @@ public class VirusRadiusController : MonoBehaviour
 {
     public static VirusRadiusController instance;
 
-    [Header("Configuración de Radio")]
+    [Header("Configuraciï¿½n de Radio")]
     public float baseScale = 1f;
     [SerializeField] float radiusIncrement = 0f; // Lo que se suma al multiplicador por nivel
 
@@ -32,7 +32,11 @@ public class VirusRadiusController : MonoBehaviour
 
         // sincronizamos con Guardado
         if (Guardado.instance != null)
+        {
             Guardado.instance.AddRadiusMultiplier(radiusIncrement);
+            Guardado.instance.radiusLevel = currentLevel;
+            Guardado.instance.SaveData();
+        }
 
         ApplyScale();
     }
@@ -46,14 +50,14 @@ public class VirusRadiusController : MonoBehaviour
 
     public void ApplyScale()
     {
-        // FÓRMULA: Multiplicador base (1.0) + (niveles extra * incremento)
+        // Fï¿½RMULA: Multiplicador base (1.0) + (niveles extra * incremento)
         float currentMultiplier = 1f + ((currentLevel - 1) * radiusIncrement);
 
         float shopRadius = baseScale * currentMultiplier;
         float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.radiusMultiplier : 1f;
         float finalRadius = shopRadius * skillMultiplier;
 
-        // --- Sincronización de Componentes ---
+        // --- Sincronizaciï¿½n de Componentes ---
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         if (collider != null) collider.radius = finalRadius;
 
@@ -81,7 +85,7 @@ public class VirusRadiusController : MonoBehaviour
 
     public int GetCurrentLevel() => currentLevel;
 
-    // Ya no hay un "Máximo" técnico, pero puedes poner uno si quieres
+    // Ya no hay un "Mï¿½ximo" tï¿½cnico, pero puedes poner uno si quieres
     public bool IsMaxLevel() => false;
 
     public void ResetUpgrade()

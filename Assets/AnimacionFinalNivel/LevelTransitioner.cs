@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class LevelTransitioner : MonoBehaviour
 {
-    [Header("Configuración de Giro")]
+    [Header("Configuraciï¿½n de Giro")]
     public float aceleracion = 1500f;
     public float frenado = 1200f;
     public float velocidadMaxima = 3500f;
 
-    [Header("Configuración de Escala")]
+    [Header("Configuraciï¿½n de Escala")]
     public float escalaMinima = 0.6f;
-    public float suavizadoEscala = 8f; // Un poco más rápido para el impacto
+    public float suavizadoEscala = 8f; // Un poco mï¿½s rï¿½pido para el impacto
 
-    [Header("Configuración de Impacto Seco")]
+    [Header("Configuraciï¿½n de Impacto Seco")]
     [Tooltip("Fuerza del primer golpe")]
     public float intensidadImpacto = 0.5f;
-    [Tooltip("Qué tan rápido se detiene la vibración (más alto = más seco)")]
+    [Tooltip("Quï¿½ tan rï¿½pido se detiene la vibraciï¿½n (mï¿½s alto = mï¿½s seco)")]
     public float velocidadRetorno = 5f;
 
     private float velocidadActual = 0f;
@@ -24,13 +24,13 @@ public class LevelTransitioner : MonoBehaviour
     private Camera mainCam;
     public ManualSetCycler manualSetCycler;
 
-    [Header("Configuración de Zoom Cámara")]
+    [Header("Configuraciï¿½n de Zoom Cï¿½mara")]
     public float zoomMaximo = 7f;
     public float velocidadZoomIn = 5f;
     public float velocidadZoomOut = 3f;
     private float zoomOriginal;
 
-    // 2. Crea el Evento Estático
+    // 2. Crea el Evento Estï¿½tico
     public static event Action<float> OnImpactShake;
 
     public static event Action OnTransitionStart;
@@ -46,23 +46,23 @@ public class LevelTransitioner : MonoBehaviour
             zoomOriginal = mainCam.orthographicSize;
         }
 
-        // --- RESETEO DE ROTACIÓN DE PLANETAS AL INICIAR ---
+        // --- RESETEO DE ROTACIï¿½N DE PLANETAS AL INICIAR ---
         PlanetCrontrollator planeta = FindFirstObjectByType<PlanetCrontrollator>();
         if (planeta != null)
         {
             planeta.transform.rotation = Quaternion.identity;
-            // Esto establece la rotación a (0, 0, 0)
+            // Esto establece la rotaciï¿½n a (0, 0, 0)
         }
     }
 
     private void Start()
     {
-        // --- RESETEO DE ROTACIÓN DE PLANETAS AL INICIAR ---
+        // --- RESETEO DE ROTACIï¿½N DE PLANETAS AL INICIAR ---
         PlanetCrontrollator planeta = FindFirstObjectByType<PlanetCrontrollator>();
         if (planeta != null)
         {
             planeta.transform.rotation = Quaternion.identity;
-            // Esto establece la rotación a (0, 0, 0)
+            // Esto establece la rotaciï¿½n a (0, 0, 0)
         }
     }
 
@@ -89,7 +89,7 @@ public class LevelTransitioner : MonoBehaviour
         {
             escalaOriginal = mapaVisual.transform.localScale;
 
-            // --- NUEVA CONEXIÓN: Avisar al ManualSetCycler ---
+            // --- NUEVA CONEXIï¿½N: Avisar al ManualSetCycler ---
             // Buscamos el script en el mapa actual o sus hijos
           
             if (manualSetCycler != null)
@@ -122,12 +122,12 @@ public class LevelTransitioner : MonoBehaviour
             mapaVisual = LevelManager.instance.mapList[nextMap];
             mapaVisual.transform.localScale = escalaObjetivoMin;
 
-            planeta = FindFirstObjectByType<PlanetCrontrollator>();
+            // === CACHÃ‰: Reutilizar planeta en lugar de buscar de nuevo ===
             if (planeta != null) planeta.isInvulnerable = true;
             LevelManager.instance.currentSessionInfected = 0;
         }
 
-        // --- FASE 3: ESPERA TÉCNICA ---
+        // --- FASE 3: ESPERA Tï¿½CNICA ---
         float distanciaFrenado = (velocidadActual * velocidadActual) / (2f * frenado);
         bool calculandoMomento = true;
         while (calculandoMomento)
@@ -162,7 +162,7 @@ public class LevelTransitioner : MonoBehaviour
         if (popManager != null) popManager.ConfigureRound(0);
 
         // Al invocar esto, el Cycler (que estaba esperando en su WaitForSeconds) 
-        // empezará a encogerse justo en este frame, coincidiendo con el Shake.
+        // empezarï¿½ a encogerse justo en este frame, coincidiendo con el Shake.
         OnImpactShake?.Invoke(intensidadImpacto);
         mainCam.orthographicSize = zoomOriginal; // Para asegurar que quede exacto al terminar
         StartCoroutine(DryImpactShake());

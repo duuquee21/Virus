@@ -2189,6 +2189,10 @@ MonoBehaviour:
   doubleUpgradeChance: 0
   randomSpawnPhaseChance: 0
   speedLevel: 1
+  radiusLevel: 1
+  capacityLevel: 1
+  timeLevel: 1
+  infectionSpeedLevel: 1
   infectSpeedPerPhase:
   - 0
   - 0
@@ -107461,7 +107465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4402787917658371641, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4402787917658371641, guid: dd719b5a404dbc84db42debf238609f9, type: 3}
       propertyPath: m_TagString

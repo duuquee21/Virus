@@ -208,6 +208,7 @@ MonoBehaviour:
   duracionAbsorcion: 4
   duracionMinimaEmpuje: 0.25
   friccionDuranteAnimacion: 10
+  cellSize: 5
 --- !u!114 &2679614929921104373
 MonoBehaviour:
   m_ObjectHideFlags: 0

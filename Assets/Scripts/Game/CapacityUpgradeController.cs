@@ -16,16 +16,28 @@ public class CapacityUpgradeController : MonoBehaviour
 
     void Start()
     {
+        if (Guardado.instance != null)
+            currentLevel = Guardado.instance.capacityLevel;
+        else
+            currentLevel = 1;
+
         ApplyCapacity();
     }
 
     public void UpgradeCapacity()
     {
         currentLevel++;
+
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.capacityLevel = currentLevel;
+            Guardado.instance.SaveData();
+        }
+
         ApplyCapacity();
     }
 
-    // NUEVO — para bonus inicial permanente
+    // NUEVO ï¿½ para bonus inicial permanente
     public void SetLevel(int level)
     {
         currentLevel = Mathf.Max(1, level);

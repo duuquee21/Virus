@@ -6,35 +6,35 @@ public class BlackHoleController : MonoBehaviour
     [Header("Referencias")]
     public GameObject circuloPrefab;
 
-    [Header("Configuración de Spawn Automático")]
-    public float frecuenciaSpawn = 3.0f; // Cada cuánto tiempo aparece uno solo
+    [Header("Configuraciï¿½n de Spawn Automï¿½tico")]
+    public float frecuenciaSpawn = 3.0f; // Cada cuï¿½nto tiempo aparece uno solo
     private float nextSpawnTime;
 
-    [Header("Configuración de Spawn Posición")]
+    [Header("Configuraciï¿½n de Spawn Posiciï¿½n")]
     public float radioDeAparicionAleatoria = 5f;
 
-    [Header("Configuración de Escala")]
+    [Header("Configuraciï¿½n de Escala")]
     public float radioInicial = 10f;
     public float radioFinal = 1f;
     public float tiempoReduccion = 2f;
     public float velocidadRotacion = 720f;
 
-    [Header("Fuerzas y Atracción")]
+    [Header("Fuerzas y Atracciï¿½n")]
     public float fuerzaAtraccion = 15f;
     public float radioDeAtraccionEfectiva = 7f;
     public float radioDeInfeccionFinal = 5f;
     public float fuerzaExpansionInfeccion = 25f;
 
-    [Header("Visuales de Explosión")]
+    [Header("Visuales de Explosiï¿½n")]
     public float escalaExplosionMutiplicador = 3f;
     public float tiempoExplosionGrow = 0.4f;
 
     void Update()
     {
-        // LÓGICA AUTOMÁTICA (Igual que BlackSwordSpawner)
-        // 1. Verifica si la habilidad está desbloqueada en Guardado (asumo que se llama agujeroNegroData)
-        // 2. Verifica el cronómetro de spawn
-        // 3. Verifica si el juego está activo en LevelManager
+        // Lï¿½GICA AUTOMï¿½TICA (Igual que BlackSwordSpawner)
+        // 1. Verifica si la habilidad estï¿½ desbloqueada en Guardado (asumo que se llama agujeroNegroData)
+        // 2. Verifica el cronï¿½metro de spawn
+        // 3. Verifica si el juego estï¿½ activo en LevelManager
         if (Guardado.instance.agujeroNegroData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
         {
             SpawnBlackHole();
@@ -100,7 +100,7 @@ public class BlackHoleController : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         sr.color = Color.black;
 
-        // --- FASE 3: EXPLOSIÓN ---
+        // --- FASE 3: EXPLOSIï¿½N ---
         ExplotarEInfectar(objeto.transform.position);
 
         float elapsedExplosion = 0;

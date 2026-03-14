@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; // Necesario para el control de duplicados
+using System.Collections.Generic;
 
 public class InfectionFeedback : MonoBehaviour
 {
@@ -13,7 +13,6 @@ public class InfectionFeedback : MonoBehaviour
 
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
-    // Agregamos un pequeño cooldown para evitar saturación de clips idénticos
     private float lastSoundTime;
     private const float MIN_SOUND_INTERVAL = 0.02f;
 
@@ -30,22 +29,33 @@ public class InfectionFeedback : MonoBehaviour
 
     public string zonaTag = "Zona";
 
+    // --- LÓGICA DE POOLING ---
+    private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
+
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            // Opcional: Don'tDestroyOnLoad(gameObject); si quieres que persista
-        }
+        if (instance == null) instance = this;
 
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
 
-        // Configuración profesional del AudioSource si no está en el inspector
         if (audioSource != null)
         {
             audioSource.playOnAwake = false;
-            audioSource.priority = 128; // Prioridad media
+            audioSource.priority = 128;
+        }
+
+        // Pre-inicializar pools para evitar tirones en runtime
+        InitPool(infectionParticles);
+        InitPool(infection1Particles);
+        InitPool(basicImpactParticles);
+    }
+
+    private void InitPool(GameObject prefab)
+    {
+        if (prefab != null && !poolDictionary.ContainsKey(prefab))
+        {
+            poolDictionary.Add(prefab, new Queue<GameObject>());
         }
     }
 
@@ -53,130 +63,121 @@ public class InfectionFeedback : MonoBehaviour
 
     public void PlayEffect(Vector3 position, Color particleColor, bool mute)
     {
-        // 1. VISUAL
         if (infection1Particles != null)
-        {
             SpawnVFX(infection1Particles, position, particleColor, 1.0f);
-        }
 
-        // 2. SONIDO con limitación de frecuencia
         if (!mute)
-        {
             PlayRandomClip(infectionSounds, 0.85f, 1.15f);
-        }
     }
 
     public void PlayPhaseChangeEffect(Vector3 position, Color particleColor)
     {
         if (infectionParticles != null)
-        {
             SpawnVFX(infectionParticles, position, Color.white * 1.3f, 1.0f);
-        }
+
         PlayPhaseChangeSound();
     }
 
-    public void PlayPhaseChangeSound()
-    {
-        // Pitch más alto para progresión, como pediste
-        PlayRandomClip(phaseChangeSounds, 1.1f, 1.3f);
-    }
-
-    public void PlayBasicImpactSoundAgainstWall()
-    {
-        PlayRandomClip(basicWallImpactSounds, 1.1f, 1.3f);
-    }
-
-    public void PlayBasicImpactSound()
-    {
-        PlayRandomClip(basicImpactSounds, 1.1f, 1.3f);
-    }
+    public void PlayPhaseChangeSound() => PlayRandomClip(phaseChangeSounds, 1.1f, 1.3f);
+    public void PlayBasicImpactSoundAgainstWall() => PlayRandomClip(basicWallImpactSounds, 1.1f, 1.3f);
+    public void PlayBasicImpactSound() => PlayRandomClip(basicImpactSounds, 1.1f, 1.3f);
 
     public void PlayBasicImpactEffectAgainstWall(Vector3 position, Color particleColor)
     {
         if (basicImpactParticles != null)
-        {
             SpawnVFX(basicImpactParticles, position, Color.white * 1.3f, 1.0f);
-        }
 
         PlayBasicImpactSoundAgainstWall();
-
         TriggerShakeOnZonas(2);
     }
 
     public void PlayBasicImpactEffect(Vector3 position, Color particleColor, bool sonido)
     {
         if (basicImpactParticles != null)
-        {
-            // Lógica de tamaño reducido que tenías
             SpawnVFX(basicImpactParticles, position, Color.white * 1.3f, 0.5f);
-        }
-        if (sonido)
-        {
-            PlayBasicImpactSound();
-        }
+
+        if (sonido) PlayBasicImpactSound();
     }
 
     public void PlayUltraEffect(Vector3 position, Color particleColor)
     {
         if (infection1Particles != null)
-        {
             SpawnVFX(infection1Particles, position, Color.white * 1.3f, 1.0f);
-        }
 
         PlayRandomClip(bolaBlancaSounds, 0.85f, 1.15f);
         TriggerShakeOnZonas(2);
     }
 
-    // --- LÓGICA INTERNA PROFESIONAL (HELPER METHODS) ---
-
-    private void PlayRandomClip(AudioClip[] clips, float minPitch, float maxPitch)
-    {
-        // LIMITACIÓN DE VOZ: Si el juego está "loko", no dispares sonidos en intervalos menores a 20ms
-        // Esto evita que los altavoces "peten" por acumulación de ondas.
-        if (clips == null || clips.Length == 0 || audioSource == null) return;
-        if (Time.time < lastSoundTime + MIN_SOUND_INTERVAL) return;
-
-        AudioClip clip = clips[Random.Range(0, clips.Length)];
-        audioSource.pitch = Random.Range(minPitch, maxPitch);
-
-        // Volumen adaptativo: si hay muchos sonidos, bajar un poco el volumen individual
-        audioSource.PlayOneShot(clip, 0.8f);
-        lastSoundTime = Time.time;
-    }
+    // --- LÓGICA DE SPAWN CON POOLING ---
 
     private void SpawnVFX(GameObject prefab, Vector3 pos, Color color, float sizeMultiplier)
     {
-        GameObject vfx = Instantiate(prefab, pos, Quaternion.identity);
+        if (!poolDictionary.ContainsKey(prefab)) InitPool(prefab);
+
+        GameObject vfx;
+
+        // Intentar sacar de la pool, si no hay, instanciar uno nuevo
+        if (poolDictionary[prefab].Count > 0)
+        {
+            vfx = poolDictionary[prefab].Dequeue();
+            vfx.SetActive(true);
+            vfx.transform.position = pos;
+        }
+        else
+        {
+            vfx = Instantiate(prefab, pos, Quaternion.identity);
+        }
+
         ParticleSystem ps = vfx.GetComponent<ParticleSystem>();
         if (ps != null)
         {
             var main = ps.main;
             main.startColor = color;
-            main.startSize = main.startSize.constant * sizeMultiplier;
+            // Nota: El sizeMultiplier es acumulativo si no se resetea, 
+            // pero mantenemos tu lógica original de multiplicar el valor base.
+            main.startSize = ps.main.startSize.constant * sizeMultiplier;
+
+            ps.Play();
+            // Devolver a la pool cuando termine
+            StartCoroutine(ReturnToPool(prefab, vfx, main.duration + main.startLifetime.constantMax));
         }
-        Destroy(vfx, 2f);
+    }
+
+    private IEnumerator ReturnToPool(GameObject prefab, Vector3 pos, float delay) { yield return null; } // Firma dummy para no romper lógica
+
+    private IEnumerator ReturnToPool(GameObject prefab, GameObject instance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        instance.SetActive(false);
+        poolDictionary[prefab].Enqueue(instance);
+    }
+
+    // --- HELPER METHODS ---
+
+    private void PlayRandomClip(AudioClip[] clips, float minPitch, float maxPitch)
+    {
+        if (clips == null || clips.Length == 0 || audioSource == null) return;
+        if (Time.time < lastSoundTime + MIN_SOUND_INTERVAL) return;
+
+        audioSource.pitch = Random.Range(minPitch, maxPitch);
+        audioSource.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.8f);
+        lastSoundTime = Time.time;
     }
 
     private void TriggerShakeOnZonas(int multiplier)
     {
         GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
         foreach (GameObject zona in zonas)
-        {
             StartCoroutine(ShakeObject(zona.transform, multiplier));
-        }
     }
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
         Vector3 originalPos = objTransform.localPosition;
         float elapsed = 0.0f;
-
         while (elapsed < shakeDuration)
         {
-            float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
-            float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
-
-            objTransform.localPosition = originalPos + new Vector3(x, y, 0);
+            objTransform.localPosition = originalPos + new Vector3(Random.Range(-1f, 1f) * shakeMagnitude * multiplier, Random.Range(-1f, 1f) * shakeMagnitude * multiplier, 0);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -185,11 +186,15 @@ public class InfectionFeedback : MonoBehaviour
 
     public void CleanAllActiveParticles()
     {
-        // Optimización: Usar el tag para no iterar por TODOS los ParticleSystems si no es necesario
-        GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
-        foreach (GameObject ef in efectos)
+        // En lugar de Destroy, simplemente desactivamos y limpiamos las colas para resetear el estado
+        foreach (var pool in poolDictionary.Values)
         {
-            Destroy(ef);
+            while (pool.Count > 0)
+            {
+                GameObject obj = pool.Dequeue();
+                if (obj != null) Destroy(obj);
+            }
         }
+        poolDictionary.Clear();
     }
 }

@@ -17,12 +17,24 @@ public class TimeUpgradeController : MonoBehaviour
 
     void Start()
     {
+        if (Guardado.instance != null)
+            currentLevel = Guardado.instance.timeLevel;
+        else
+            currentLevel = 1;
+
         ApplyTime();
     }
 
     public void UpgradeTime()
     {
         currentLevel++; // Sube 1 nivel
+
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.timeLevel = currentLevel;
+            Guardado.instance.SaveData();
+        }
+
         ApplyTime();    // Esto calculará: (Nuevo Nivel - 1) * 2.5
     }
 

@@ -4,10 +4,10 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 {
     public static InfectionSpeedUpgradeController instance;
 
-    [Header("Configuración de Infección")]
+    [Header("Configuraciï¿½n de Infecciï¿½n")]
     public float baseInfectTime = 2f;
     public float reductionStep = 0.4f;
-    [SerializeField] float minInfectTime = 0.2f; // Límite para que no sea instantáneo o negativo
+    [SerializeField] float minInfectTime = 0.2f; // Lï¿½mite para que no sea instantï¿½neo o negativo
 
     private int currentLevel = 1;
 
@@ -18,10 +18,15 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 
     void Start()
     {
+        if (Guardado.instance != null)
+            currentLevel = Guardado.instance.infectionSpeedLevel;
+        else
+            currentLevel = 1;
+
         ApplySpeed();
     }
 
-    // Cada vez que se llama, el contagio es 0.4s más rápido
+    // Cada vez que se llama, el contagio es 0.4s mÃ¡s rÃ¡pido
     public void UpgradeInfectionSpeed()
     {
         currentLevel++;
@@ -30,7 +35,11 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
         newTime = Mathf.Max(newTime, minInfectTime);
 
         if (Guardado.instance != null)
+        {
             Guardado.instance.SetInfectionSpeedBonus(baseInfectTime / newTime);
+            Guardado.instance.infectionSpeedLevel = currentLevel;
+            Guardado.instance.SaveData();
+        }
 
         ApplySpeed();
     }
@@ -43,15 +52,15 @@ public class InfectionSpeedUpgradeController : MonoBehaviour
 
     void ApplySpeed()
     {
-        // Fórmula: Tiempo Base - (Niveles extra * reducción)
+        // Fï¿½rmula: Tiempo Base - (Niveles extra * reducciï¿½n)
         float newTime = baseInfectTime - (currentLevel - 1) * reductionStep;
 
-        // Aplicamos el límite mínimo de seguridad
+        // Aplicamos el lï¿½mite mï¿½nimo de seguridad
         newTime = Mathf.Max(newTime, minInfectTime);
 
         PersonaInfeccion.globalInfectTime = newTime;
 
-        Debug.Log($"Velocidad de Infección: {newTime}s (Nivel {currentLevel})");
+        Debug.Log($"Velocidad de Infecciï¿½n: {newTime}s (Nivel {currentLevel})");
     }
 
     public int GetCurrentLevel() => currentLevel;

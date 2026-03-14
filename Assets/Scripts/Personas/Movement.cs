@@ -1,5 +1,6 @@
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Movement : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class Movement : MonoBehaviour
     private bool estaEmpujado = false;
     private bool estaGirando = false;
     private PersonaInfeccion personaInfeccion;
-
 
     private GameObject jugadorVirus;
     private ManagerAnimacionJugador managerAnimacionJugador;
@@ -26,11 +26,20 @@ public class Movement : MonoBehaviour
     [Header("Ajustes de Transición")]
     public float friccionDuranteAnimacion = 15f; // Mayor valor = frenazo más seco
 
+    // ===== SPATIAL HASH GRID =====
+    private CircleCollider2D circleCollider;
+    private static Dictionary<Vector2Int, HashSet<Movement>> espacialGrid = new Dictionary<Vector2Int, HashSet<Movement>>();
+    private static float tamañoCelda = 5f;
+    private Vector2Int ultimaPosicionGrid;
+    private HashSet<Movement> objetosColisionadosEsteFrame = new HashSet<Movement>();
+
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
+        
         float angulo = Random.Range(0f, 360f);
         direccion = new Vector2(Mathf.Cos(angulo * Mathf.Deg2Rad),
                                 Mathf.Sin(angulo * Mathf.Deg2Rad)).normalized;
@@ -41,6 +50,10 @@ public class Movement : MonoBehaviour
         {
             managerAnimacionJugador = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
         }
+
+        // Registrar en el grid espacial
+        ActualizarPosicionGrid();
+        ultimaPosicionGrid = ObtenerPosicionGrid();
     }
 
     void FixedUpdate()
@@ -53,6 +66,10 @@ public class Movement : MonoBehaviour
 
         ManejarMovimientoNormal();
 
+        // Actualizar posición en el grid y detectar colisiones circle-to-circle
+        ActualizarPosicionGrid();
+        DetectarColisionesCircleToCircle();
+
         // --- SEGURIDAD ABSOLUTA: Límite de velocidad ---
         // Esto actúa como un limitador físico constante.
         if (rb.linearVelocity.magnitude > 100f)
@@ -63,7 +80,7 @@ public class Movement : MonoBehaviour
 
     private void ManejarMovimientoNormal()
     {
-        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 60f : velocidadBase;
+        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 30f : velocidadBase;
 
         if (!estaEmpujado)
         {
@@ -156,112 +173,7 @@ public class Movement : MonoBehaviour
                 }
             }
         }
-        else if (!personaInfeccion.alreadyInfected && otro.CompareTag("Persona"))
-        {
-            PersonaInfeccion scriptAtacante = otro.GetComponent<PersonaInfeccion>();
-            if (Guardado.instance == null || scriptAtacante == null) return;
-
-            // 1. FILTRO DE NIVEL (Si no hay nivel o la fase es superior, se ignoran)
-            int nivelPermitido = Guardado.instance.nivelCarambola;
-            if (personaInfeccion.faseActual > nivelPermitido || scriptAtacante.faseActual > nivelPermitido)
-            {
-                return; // No hay nivel suficiente para que estas fases interactúen
-            }
-
-            // 2. LÓGICA DE INFECCIÓN (Si uno ya está infectado, contagia al otro)
-            if (scriptAtacante.alreadyInfected)
-            {
-                if (gameObject.GetInstanceID() < otro.gameObject.GetInstanceID())
-                {
-                    personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                    scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                }
-                return;
-            }
-
-            // 3. REBOTE FÍSICO (Solo si ambos son aptos por nivel pero ninguno estaba infectado aún)
-            Rigidbody2D rbAtacante = otro.GetComponent<Rigidbody2D>();
-            Movement movAtacante = otro.GetComponent<Movement>();
-
-            if (rbAtacante != null && movAtacante != null)
-            {
-                // 1. Dirección del rebote (del centro del atacante hacia este objeto)
-                Vector2 direccionRebote = (Vector2)transform.position - (Vector2)otro.transform.position;
-
-                if (direccionRebote.sqrMagnitude < 0.001f)
-                {
-                    direccionRebote = UnityEngine.Random.insideUnitCircle.normalized;
-                }
-                else
-                {
-                    direccionRebote.Normalize();
-                }
-
-                // 2. OBTENER VELOCIDADES ORIGINALES
-                // Guardamos la magnitud antes de que el motor de física la altere en este frame
-                float velPropia = rb.linearVelocity.magnitude;
-                float velAtacante = rbAtacante.linearVelocity.magnitude;
-
-                // Calculamos una velocidad media de impacto para que el rebote sea equitativo
-                // o simplemente usamos la velocidad que traía el que golpeó.
-                float velocidadDeIntercambio = (velPropia + velAtacante) * 0.5f;
-
-                // 3. FILTRO DE IMPACTO FUERTE (Solo para efectos visuales)
-                bool hayImpactoFuerte = velocidadDeIntercambio > 6.5f;
-
-                if (hayImpactoFuerte)
-                {
-                    // --- SOLUCIÓN: Solo una figura procesa el choque ---
-                    // Comparamos IDs para que el código solo se ejecute UNA vez por pareja de choque
-                    if (this.gameObject.GetInstanceID() < otro.gameObject.GetInstanceID()) return;
-
-                    Guardado g = Guardado.instance;
-                    bool algunaFiguraEvoluciono = false;
-
-                    // 1. Probabilidad para la figura actual (this)
-                    int fasePropia = personaInfeccion.faseActual;
-                    if (fasePropia >= 0 && fasePropia < g.probParedInfectiva.Length)
-                    {
-                        float prob = g.probParedInfectiva[fasePropia] * 0.25f;
-                        if (UnityEngine.Random.value < prob)
-                        {
-                            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                            algunaFiguraEvoluciono = true;
-                        }
-                    }
-
-                    // 2. Probabilidad para la figura atacante (otro)
-                    int faseAtacante = scriptAtacante.faseActual;
-                    if (faseAtacante >= 0 && faseAtacante < g.probParedInfectiva.Length)
-                    {
-                        float probAtacante = g.probParedInfectiva[faseAtacante] * 0.25f;
-                        if (UnityEngine.Random.value < probAtacante)
-                        {
-                            scriptAtacante.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-                            algunaFiguraEvoluciono = true;
-                        }
-                    }
-
-                    // El feedback visual también se ejecutará solo una vez ahora
-                    if (!algunaFiguraEvoluciono && InfectionFeedback.instance != null)
-                    {
-                        InfectionFeedback.instance.PlayBasicImpactEffect(otro.transform.position, Color.white, true);
-                    }
-                }
-                // 4. REFLEXIÓN PURA
-                // Usamos un factor de restitución (0.9f = pierde 10% de energía, 1.0f = rebote perfecto)
-                float factorRestitucion = 1.2f;
-
-                // Aplicamos la velocidad reflejada
-                rb.linearVelocity = direccionRebote * (velocidadDeIntercambio * factorRestitucion);
-                rbAtacante.linearVelocity = -direccionRebote * (velocidadDeIntercambio * factorRestitucion);
-
-                // 5. ESTADOS
-                this.estaEmpujado = true;
-                this.direccion = rb.linearVelocity.normalized;
-                movAtacante.SetEstaEmpujado(true, rbAtacante.linearVelocity.normalized);
-            }
-        }
+        // NOTA: Las colisiones entre personas se detectan con circle-to-circle en DetectarColisionesCircleToCircle()
     } 
     public void SetEstaEmpujado(bool estado, Vector2 nuevaDir)
     {
@@ -307,5 +219,210 @@ public class Movement : MonoBehaviour
             Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
             rb.linearVelocity = nuevaVelocidad;
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Desregistrar del grid al destruir
+        if (circleCollider != null)
+        {
+            Vector2Int posGrid = ObtenerPosicionGrid();
+            if (espacialGrid.ContainsKey(posGrid))
+            {
+                espacialGrid[posGrid].Remove(this);
+                if (espacialGrid[posGrid].Count == 0)
+                {
+                    espacialGrid.Remove(posGrid);
+                }
+            }
+        }
+    }
+
+    // ===== MÉTODOS DEL SPATIAL HASH GRID =====
+
+    private Vector2Int ObtenerPosicionGrid()
+    {
+        Vector3 pos = transform.position;
+        return new Vector2Int(
+            Mathf.FloorToInt(pos.x / tamañoCelda),
+            Mathf.FloorToInt(pos.y / tamañoCelda)
+        );
+    }
+
+    private void ActualizarPosicionGrid()
+    {
+        if (circleCollider == null) return;
+
+        Vector2Int nuevaPosicion = ObtenerPosicionGrid();
+
+        // Si cambió de celda, actualizar el diccionario
+        if (nuevaPosicion != ultimaPosicionGrid)
+        {
+            // Remover de la celda anterior
+            if (espacialGrid.ContainsKey(ultimaPosicionGrid))
+            {
+                espacialGrid[ultimaPosicionGrid].Remove(this);
+                if (espacialGrid[ultimaPosicionGrid].Count == 0)
+                {
+                    espacialGrid.Remove(ultimaPosicionGrid);
+                }
+            }
+
+            // Agregar a la nueva celda
+            if (!espacialGrid.ContainsKey(nuevaPosicion))
+            {
+                espacialGrid[nuevaPosicion] = new HashSet<Movement>();
+            }
+            espacialGrid[nuevaPosicion].Add(this);
+            ultimaPosicionGrid = nuevaPosicion;
+        }
+        else if (!espacialGrid.ContainsKey(nuevaPosicion) || !espacialGrid[nuevaPosicion].Contains(this))
+        {
+            // Primera vez o se perdió del registro, re-agregar
+            if (!espacialGrid.ContainsKey(nuevaPosicion))
+            {
+                espacialGrid[nuevaPosicion] = new HashSet<Movement>();
+            }
+            espacialGrid[nuevaPosicion].Add(this);
+            ultimaPosicionGrid = nuevaPosicion;
+        }
+    }
+
+    private void DetectarColisionesCircleToCircle()
+    {
+        if (circleCollider == null || personaInfeccion == null) return;
+
+        Vector2Int miPosGrid = ObtenerPosicionGrid();
+        float miRadio = circleCollider.radius * transform.localScale.x;
+        Vector2 miPosicion = (Vector2)transform.position;
+
+        // Limpiar conjunto de colisiones del frame anterior
+        objetosColisionadosEsteFrame.Clear();
+
+        // Revisar 9 celdas (la actual + 8 adyacentes)
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                Vector2Int celdaAdyacente = miPosGrid + new Vector2Int(x, y);
+
+                if (espacialGrid.ContainsKey(celdaAdyacente))
+                {
+                    foreach (Movement otra in espacialGrid[celdaAdyacente])
+                    {
+                        if (otra == this || otra.personaInfeccion == null) continue;
+                        if (objetosColisionadosEsteFrame.Contains(otra)) continue; // Ya procesada
+
+                        Vector2 otraPosicion = (Vector2)otra.transform.position;
+                        float otroRadio = otra.circleCollider.radius * otra.transform.localScale.x;
+
+                        // Circle-to-Circle: comparar distancia al cuadrado vs suma de radios al cuadrado
+                        float distanciaCuadrada = (miPosicion - otraPosicion).sqrMagnitude;
+                        float sumaRadiosCuadrada = (miRadio + otroRadio) * (miRadio + otroRadio);
+
+                        if (distanciaCuadrada < sumaRadiosCuadrada)
+                        {
+                            ProcesarColisionCircleToCircle(otra, otroRadio, otraPosicion, distanciaCuadrada);
+                            objetosColisionadosEsteFrame.Add(otra);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void ProcesarColisionCircleToCircle(Movement otra, float otroRadio, Vector2 otraPosicion, float distanciaCuadrada)
+    {
+        // Evitar procesar dos veces la misma colisión
+        if (this.gameObject.GetInstanceID() > otra.gameObject.GetInstanceID()) return;
+
+        Rigidbody2D rbOtra = otra.rb;
+        PersonaInfeccion otroPersona = otra.personaInfeccion;
+
+        if (Guardado.instance == null || rbOtra == null) return;
+
+        // 1. FILTRO DE NIVEL
+        int nivelPermitido = Guardado.instance.nivelCarambola;
+        if (personaInfeccion.faseActual > nivelPermitido || otroPersona.faseActual > nivelPermitido)
+        {
+            return;
+        }
+
+        // 2. LÓGICA DE INFECCIÓN
+        if (otroPersona.alreadyInfected && !personaInfeccion.alreadyInfected)
+        {
+            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+            otroPersona.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+            return;
+        }
+        else if (personaInfeccion.alreadyInfected && !otroPersona.alreadyInfected)
+        {
+            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+            otroPersona.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+            return;
+        }
+
+        // 3. REBOTE FÍSICO
+        Vector2 direccionRebote = ((Vector2)transform.position - otraPosicion);
+        if (direccionRebote.sqrMagnitude < 0.001f)
+        {
+            direccionRebote = UnityEngine.Random.insideUnitCircle.normalized;
+        }
+        else
+        {
+            direccionRebote.Normalize();
+        }
+
+        float velPropia = rb.linearVelocity.magnitude;
+        float velOtra = rbOtra.linearVelocity.magnitude;
+        float velocidadDeIntercambio = (velPropia + velOtra) * 0.5f;
+
+        // Filtro de impacto fuerte
+        bool hayImpactoFuerte = velocidadDeIntercambio > 6.5f;
+        if (!hayImpactoFuerte)
+        {
+            return;
+        }
+
+        // Procesar probabilidades de evolución
+        Guardado g = Guardado.instance;
+        bool algunaFiguraEvoluciono = false;
+
+        int fasePropia = personaInfeccion.faseActual;
+        if (fasePropia >= 0 && fasePropia < g.probParedInfectiva.Length)
+        {
+            float prob = g.probParedInfectiva[fasePropia] * 0.25f;
+            if (UnityEngine.Random.value < prob)
+            {
+                personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+                algunaFiguraEvoluciono = true;
+            }
+        }
+
+        int faseOtra = otroPersona.faseActual;
+        if (faseOtra >= 0 && faseOtra < g.probParedInfectiva.Length)
+        {
+            float probOtra = g.probParedInfectiva[faseOtra] * 0.25f;
+            if (UnityEngine.Random.value < probOtra)
+            {
+                otroPersona.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
+                algunaFiguraEvoluciono = true;
+            }
+        }
+
+        if (!algunaFiguraEvoluciono && InfectionFeedback.instance != null)
+        {
+            InfectionFeedback.instance.PlayBasicImpactEffect(otraPosicion, Color.white, true);
+        }
+
+        // 4. APLICAR REBOTE
+        float factorRestitucion = 1.2f;
+        rb.linearVelocity = direccionRebote * (velocidadDeIntercambio * factorRestitucion);
+        rbOtra.linearVelocity = -direccionRebote * (velocidadDeIntercambio * factorRestitucion);
+
+        // 5. ACTUALIZAR ESTADO
+        this.estaEmpujado = true;
+        this.direccion = rb.linearVelocity.normalized;
+        otra.SetEstaEmpujado(true, rbOtra.linearVelocity.normalized);
     }
 }

@@ -67,6 +67,10 @@ public class Guardado : MonoBehaviour
     public float doubleUpgradeChance = 0f; // 0..1
     public float randomSpawnPhaseChance = 0f; // 0..1 (0.05 = 5%)
     public int speedLevel = 1;
+    public int radiusLevel = 1;
+    public int capacityLevel = 1;
+    public int timeLevel = 1;
+    public int infectionSpeedLevel = 1;
 
     public float[] infectSpeedPerPhase = new float[5];
 
@@ -126,6 +130,11 @@ public class Guardado : MonoBehaviour
         radiusMultiplier = 1.0f;
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
+        speedLevel = 1;
+        radiusLevel = 1;
+        capacityLevel = 1;
+        timeLevel = 1;
+        infectionSpeedLevel = 1;
         dañoExtraCirculo = 0;
         dañoExtraTriangulo = 0;
         dañoExtraCuadrado = 0;
@@ -194,6 +203,10 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("DoubleUpgradeChance", doubleUpgradeChance);
         PlayerPrefs.SetFloat("RandomSpawnPhaseChance", randomSpawnPhaseChance);
         PlayerPrefs.SetInt("SpeedLevel", speedLevel);
+        PlayerPrefs.SetInt("RadiusLevel", radiusLevel);
+        PlayerPrefs.SetInt("CapacityLevel", capacityLevel);
+        PlayerPrefs.SetInt("TimeLevel", timeLevel);
+        PlayerPrefs.SetInt("InfectionSpeedLevel", infectionSpeedLevel);
         PlayerPrefs.SetInt("CoinsHexagono", coinsExtraHexagono);
         PlayerPrefs.SetInt("CoinsPentagono", coinsExtraPentagono);
         PlayerPrefs.SetInt("CoinsCuadrado", coinsExtraCuadrado);
@@ -244,6 +257,10 @@ public class Guardado : MonoBehaviour
         dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
         nivelCarambola = PlayerPrefs.GetInt("NivelCarambola", -1);
         speedLevel = PlayerPrefs.GetInt("SpeedLevel", 1);
+        radiusLevel = PlayerPrefs.GetInt("RadiusLevel", 1);
+        capacityLevel = PlayerPrefs.GetInt("CapacityLevel", 1);
+        timeLevel = PlayerPrefs.GetInt("TimeLevel", 1);
+        infectionSpeedLevel = PlayerPrefs.GetInt("InfectionSpeedLevel", 1);
 
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);

@@ -122,7 +122,12 @@ public class LevelManager : MonoBehaviour
         if (virusPlayer != null && virusMovementScript == null)
             virusMovementScript = virusPlayer.GetComponent<VirusMovement>();
 
-        ForceHardReset();
+        // Solo resetear si NO hay una partida continuada guardada
+        if (Guardado.instance != null && !Guardado.instance.HasSavedGame())
+        {
+            ForceHardReset();
+        }
+        
         ShowMainMenu();
         if (timerIcon != null)
         {
@@ -300,6 +305,9 @@ public class LevelManager : MonoBehaviour
 
         currentTimer = savedTimer;
 
+        // 2.5 SINCRONIZAR CONTROLLERS CON DATOS GUARDADOS
+        SyncControllersWithSavedData();
+
         // Actualizamos los nodos de habilidad
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
         foreach (SkillNode node in nodes)
@@ -342,6 +350,50 @@ public class LevelManager : MonoBehaviour
         if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
         if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
         if (InfectionSpeedUpgradeController.instance) InfectionSpeedUpgradeController.instance.ResetUpgrade();
+    }
+
+    // === SINCRONIZACIÓN DE CONTROLADORES AL REANUDAR PARTIDA ===
+    void SyncControllersWithSavedData()
+    {
+        if (Guardado.instance == null) return;
+
+        // 1. Sincronizar VirusRadiusController
+        if (VirusRadiusController.instance != null)
+        {
+            int radiusLevel = Guardado.instance.radiusLevel;
+            VirusRadiusController.instance.SetLevel(radiusLevel);
+            VirusRadiusController.instance.ApplyScale();
+        }
+
+        // 2. Sincronizar SpeedUpgradeController
+        if (SpeedUpgradeController.instance != null)
+        {
+            int speedLevel = Guardado.instance.speedLevel;
+            SpeedUpgradeController.instance.SetLevel(speedLevel);
+        }
+
+        // 3. Sincronizar InfectionSpeedUpgradeController
+        if (InfectionSpeedUpgradeController.instance != null)
+        {
+            int infectionSpeedLevel = Guardado.instance.infectionSpeedLevel;
+            InfectionSpeedUpgradeController.instance.SetLevel(infectionSpeedLevel);
+        }
+
+        // 4. Sincronizar CapacityUpgradeController (si existe)
+        if (CapacityUpgradeController.instance != null)
+        {
+            int capacityLevel = Guardado.instance.capacityLevel;
+            CapacityUpgradeController.instance.SetLevel(capacityLevel);
+        }
+
+        // 5. Sincronizar TimeUpgradeController (si existe)
+        if (TimeUpgradeController.instance != null)
+        {
+            int timeLevel = Guardado.instance.timeLevel;
+            TimeUpgradeController.instance.SetLevel(timeLevel);
+        }
+
+        Debug.Log($"<color=cyan>[SYNC]</color> ✓ Controladores sincronizados con datos guardados");
     }
 
     void Update()
@@ -584,13 +636,18 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMapIndex", zoneID);
         PlayerPrefs.Save();
 
+        // === NUEVA OPTIMIZACIÓN: Limpiar población ANTES de cambiar de mapa ===
+        PopulationManager popManager = Object.FindFirstObjectByType<PopulationManager>();
+        if (popManager != null)
+        {
+            popManager.ClearAllPersonas();
+            popManager.SelectPrefab(zoneID);
+        }
+
         for (int i = 0; i < mapList.Length; i++)
         {
             if (mapList[i] != null) mapList[i].SetActive(i == zoneID);
         }
-
-        PopulationManager popManager = Object.FindFirstObjectByType<PopulationManager>();
-        if (popManager != null) popManager.SelectPrefab(zoneID);
     }
 
     void ResetRunData()

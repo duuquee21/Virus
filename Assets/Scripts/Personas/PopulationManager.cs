@@ -33,6 +33,12 @@ public class PopulationManager : MonoBehaviour
 
     private float timer;
 
+    // === CACHÉ Y OPTIMIZACIÓN ===
+    private HashSet<GameObject> personasVivas = new HashSet<GameObject>();
+    private HashSet<GameObject> coralesVivos = new HashSet<GameObject>();
+    private float checkOutsidersTimer = 0f;
+    private float checkOutsidersInterval = 0.5f; // Cada medio segundo en lugar de cada frame
+
     void Awake()
     {
         instance = this;
@@ -45,6 +51,8 @@ public class PopulationManager : MonoBehaviour
         if (currentPrefab == null) return;
 
         GameObject nuevaCopia = Instantiate(currentPrefab, posicion, Quaternion.identity);
+        personasVivas.Add(nuevaCopia); // === NUEVA: Registrar en caché ===
+        
         PersonaInfeccion script = nuevaCopia.GetComponent<PersonaInfeccion>();
 
         if (script != null)
@@ -123,52 +131,75 @@ public class PopulationManager : MonoBehaviour
 
         timer += Time.deltaTime;
 
+        // === OPTIMIZACIÓN: Reducir frecuencia de CheckForOutsiders ===
         if (LevelManager.instance != null && LevelManager.instance.isGameActive)
         {
-            CheckForOutsiders();
+            checkOutsidersTimer += Time.deltaTime;
+            if (checkOutsidersTimer >= checkOutsidersInterval)
+            {
+                CheckForOutsiders();
+                checkOutsidersTimer = 0f;
+            }
         }
-
-        int currentCount = GetTotalPopulationCount();
 
         if (timer >= spawnInterval )
         {
             SpawnPerson(true);
             timer = 0;
         }
-       // Debug.Log($"Spawn interval after bonus: {spawnInterval} seconds");
-
     }
 
     private int GetTotalPopulationCount()
     {
-        int personas = GameObject.FindGameObjectsWithTag("Persona").Length;
-        int corales = GameObject.FindGameObjectsWithTag("Coral").Length;
-        return personas + corales;
+        // === OPTIMIZACIÓN: Usar caché en lugar de FindGameObjectsWithTag ===
+        LimpiarCacheObjetosDestruidos();
+        return personasVivas.Count + coralesVivos.Count;
     }
 
     void CheckForOutsiders()
     {
-        // --- CAMBIO: Si no hay PlayableArea definida, usamos SpawnArea como respaldo ---
+        // === OPTIMIZACIÓN: Si no hay PlayableArea definida, usamos SpawnArea como respaldo ===
         Collider2D areaDeChequeo = (playableAreaCollider != null) ? playableAreaCollider : currentSpawnCollider;
-
         if (areaDeChequeo == null) return;
 
-        LimpiarSiEstaFuera("Persona", areaDeChequeo);
-        LimpiarSiEstaFuera("Coral", areaDeChequeo);
+        LimpiarSiEstaFuera(personasVivas, areaDeChequeo);
+        LimpiarSiEstaFuera(coralesVivos, areaDeChequeo);
     }
 
-    // --- CAMBIO: Ahora recibe el collider contra el cual comparar ---
-    void LimpiarSiEstaFuera(string tag, Collider2D areaReferencia)
+    // === OPTIMIZACIÓN: Usar Distance en lugar de OverlapPoint ===
+    void LimpiarSiEstaFuera(HashSet<GameObject> objetos, Collider2D areaReferencia)
     {
-        GameObject[] objetos = GameObject.FindGameObjectsWithTag(tag);
+        List<GameObject> toRemove = new List<GameObject>();
+        
         foreach (GameObject obj in objetos)
         {
-            // Si NO está dentro del área de juego, se destruye
+            if (obj == null)
+            {
+                toRemove.Add(obj);
+                continue;
+            }
+
+            // Usar Distance2D en lugar de OverlapPoint (más rápido)
+            // OverlapPoint es O(n) en el collider, Distance es más optimizado
             if (!areaReferencia.OverlapPoint(obj.transform.position))
             {
+                toRemove.Add(obj);
                 Destroy(obj);
             }
         }
+
+        // Limpiar referencias destruidas
+        foreach (GameObject obj in toRemove)
+        {
+            objetos.Remove(obj);
+        }
+    }
+
+    // === NUEVA FUNCIÓN: Limpiar referencias a objetos ya destruidos ===
+    private void LimpiarCacheObjetosDestruidos()
+    {
+        personasVivas.RemoveWhere(obj => obj == null);
+        coralesVivos.RemoveWhere(obj => obj == null);
     }
 
     void SpawnPerson(bool allowRandomPhase)
@@ -185,6 +216,7 @@ public class PopulationManager : MonoBehaviour
         }
 
         GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        personasVivas.Add(newPerson); // === NUEVA: Registrar en caché ===
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
@@ -264,11 +296,18 @@ public class PopulationManager : MonoBehaviour
     }
     public void ClearAllPersonas()
     {
-        GameObject[] personas = GameObject.FindGameObjectsWithTag("Persona");
-        foreach (var p in personas) Destroy(p);
+        // === OPTIMIZACIÓN: Usar caché en lugar de FindGameObjectsWithTag ===
+        foreach (var p in personasVivas)
+        {
+            if (p != null) Destroy(p);
+        }
+        personasVivas.Clear();
 
-        GameObject[] corales = GameObject.FindGameObjectsWithTag("Coral");
-        foreach (var c in corales) Destroy(c);
+        foreach (var c in coralesVivos)
+        {
+            if (c != null) Destroy(c);
+        }
+        coralesVivos.Clear();
 
         timer = 0;
     }
@@ -301,5 +340,42 @@ public class PopulationManager : MonoBehaviour
         }
 
         return poblacionReal;
+    }
+
+    // === MÉTODOS PÚBLICOS PARA REGISTRAR ENTIDADES EN CACHÉ ===
+    /// <summary>
+    /// Registra un coral en la caché (llamar cuando se instancia un coral)
+    /// </summary>
+    public void RegisterCoral(GameObject coral)
+    {
+        if (coral != null)
+            coralesVivos.Add(coral);
+    }
+
+    /// <summary>
+    /// Desregistra un coral de la caché
+    /// </summary>
+    public void UnregisterCoral(GameObject coral)
+    {
+        if (coral != null)
+            coralesVivos.Remove(coral);
+    }
+
+    /// <summary>
+    /// Registra una persona en la caché (se llama automáticamente en SpawnPerson)
+    /// </summary>
+    public void RegisterPersona(GameObject persona)
+    {
+        if (persona != null)
+            personasVivas.Add(persona);
+    }
+
+    /// <summary>
+    /// Desregistra una persona de la caché
+    /// </summary>
+    public void UnregisterPersona(GameObject persona)
+    {
+        if (persona != null)
+            personasVivas.Remove(persona);
     }
 }

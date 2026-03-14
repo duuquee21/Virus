@@ -60,6 +60,11 @@ public class SpeedUpgradeController : MonoBehaviour
     {
         currentLevel++;
 
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.speedLevel = currentLevel;
+            Guardado.instance.SaveData();
+        }
 
         ApplySpeed();
     }
