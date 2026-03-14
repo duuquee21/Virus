@@ -621,6 +621,8 @@ public class LevelManager : MonoBehaviour
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f; // Reiniciar contador de auto-save
+
+
         
         if (TutorialManager.instance != null && VirusMovement.instance != null)
         {
@@ -682,6 +684,8 @@ public class LevelManager : MonoBehaviour
         isGameActive = true;
         currentSessionInfected = 0;
         monedasGanadasSesion = 0;
+
+        PersonaInfeccion.ResetearEstadisticas();
 
 
         float tiempoTotal = gameDuration;

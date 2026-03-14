@@ -202,7 +202,7 @@ public class EndDayResultsPanel : MonoBehaviour
     {
         string txtMonedas = GetTexto("monedas");
 
-        // ===================== ZONA =====================
+        // ===================== ZONA Y DAÑO =====================
         int totalZ = 0;
         string tituloZona = $"<b>{GetTexto("titulo_ev_zona")}</b>\n\n";
         string zonaCoinsLines = "";
@@ -210,31 +210,35 @@ public class EndDayResultsPanel : MonoBehaviour
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
-            int cant = PersonaInfeccion.golpesAlPlanetaPorFase[i];
-
+            // 1. CÁLCULO DE MONEDAS (Estilo Estadísticas)
+            int cantEvoluciones = PersonaInfeccion.evolucionesEntreFases[i];
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);
             int valFinal = valBase + coinBonus;
 
-            totalZ += cant * valFinal;
+            totalZ += cantEvoluciones * valFinal;
 
+            // Ahora mostramos el VALOR por unidad, siempre visible
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
-                : $"({valBase}×{cant}={cant * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cantEvoluciones * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cantEvoluciones * valFinal}";
 
-            zonaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+            zonaCoinsLines += $"{GetTexto(clavesFases[i])}: {cantEvoluciones}  |  {coinTxt}\n";
 
+            // 2. CÁLCULO DE DAÑO (Estilo Estadísticas)
+            int cantGolpes = PersonaInfeccion.golpesAlPlanetaPorFase[i];
             float totalDmg = (i < PersonaInfeccion.dañoZonaPorFase.Length) ? PersonaInfeccion.dañoZonaPorFase[i] : 0f;
 
             float hitBase = GetBaseDamageForPhase(i);
             int hitBonus = GetDamageBonusForPhase(i);
             float hitFinal = GetDamagePerHitForPhase(i);
 
+            // Mostramos el HIT por unidad, siempre visible
             string hitTxt = (hitBonus != 0)
-                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
+                ? $"Hit: {hitFinal:F0} <color=#55FF55>(+{hitBonus})</color>"
                 : $"Hit: {hitFinal:F0}";
 
-            zonaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
+            zonaDamageLines += $"{GetTexto(clavesFases[i])}: {cantGolpes}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
         }
 
         zonaEvolutionText.text = tituloZona;
@@ -243,16 +247,15 @@ public class EndDayResultsPanel : MonoBehaviour
 
         zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
         zonaDamageText.text = $"{GetTexto("txt_dano_total")}: {PersonaInfeccion.dañoTotalZona:F0}";
+
         // ===================== CHOQUE =====================
         int totalP = 0;
         string tituloChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
         string choqueCoinsLines = "";
-        string choqueDamageLines = "";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesPorChoque[i];
-
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);
             int valFinal = valBase + coinBonus;
@@ -260,39 +263,24 @@ public class EndDayResultsPanel : MonoBehaviour
             totalP += cant * valFinal;
 
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
-                : $"({valBase}×{cant}={cant * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cant * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cant * valFinal}";
 
-            choqueCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
-
-            float totalDmg = (i < PersonaInfeccion.dañoChoquePorFase.Length) ? PersonaInfeccion.dañoChoquePorFase[i] : 0f;
-
-            float hitBase = GetBaseDamageForPhase(i);
-            int hitBonus = GetDamageBonusForPhase(i);
-            float hitFinal = GetDamagePerHitForPhase(i);
-
-            string hitTxt = (hitBonus != 0)
-                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
-                : $"Hit: {hitFinal:F0}";
-
-            choqueDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
+            choqueCoinsLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {coinTxt}\n";
         }
 
         choqueEvolutionText.text = tituloChoque;
         if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
-
         choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
 
         // ===================== CARAMBOLA =====================
         int totalC = 0;
         string tituloCarambola = $"<b>{GetTexto("titulo_ev_carambola")}</b>\n\n";
         string carambolaCoinsLines = "";
-        string carambolaDamageLines = "";
 
         for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
         {
             int cant = PersonaInfeccion.evolucionesCarambola[i];
-
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);
             int valFinal = valBase + coinBonus;
@@ -300,27 +288,14 @@ public class EndDayResultsPanel : MonoBehaviour
             totalC += cant * valFinal;
 
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
-                : $"({valBase}×{cant}={cant * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cant * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cant * valFinal}";
 
-            carambolaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
-
-            float totalDmg = (i < PersonaInfeccion.dañoCarambolaPorFase.Length) ? PersonaInfeccion.dañoCarambolaPorFase[i] : 0f;
-
-            float hitBase = GetBaseDamageForPhase(i);
-            int hitBonus = GetDamageBonusForPhase(i);
-            float hitFinal = GetDamagePerHitForPhase(i);
-
-            string hitTxt = (hitBonus != 0)
-                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
-                : $"Hit: {hitFinal:F0}";
-
-            carambolaDamageLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
+            carambolaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {coinTxt}\n";
         }
 
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
-
         carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
 
         // ===================== RESUMEN GENERAL =====================
@@ -331,20 +306,19 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTotalesEtiqueta.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b>";
 
         ActualizarTextosMonedas();
+
         if (btnContinue != null)
         {
             TextMeshProUGUI textoContinue = btnContinue.GetComponentInChildren<TextMeshProUGUI>(true);
             if (textoContinue != null) textoContinue.text = GetTexto("btn_continuar");
         }
 
-        // 2. Botón Claim (Reclamar)
         if (btnClaim != null)
         {
             TextMeshProUGUI textoClaim = btnClaim.GetComponentInChildren<TextMeshProUGUI>(true);
             if (textoClaim != null) textoClaim.text = GetTexto("btn_claim");
         }
 
-        // 3. Botón Árbol (Habilidades)
         if (btnArbol != null)
         {
             TextMeshProUGUI textoArbol = btnArbol.GetComponentInChildren<TextMeshProUGUI>(true);
