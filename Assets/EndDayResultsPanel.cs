@@ -210,7 +210,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
         {
-            // 1. CÁLCULO DE MONEDAS (Basado en Evoluciones en la Zona)
+            // 1. CÁLCULO DE MONEDAS (Estilo Estadísticas)
             int cantEvoluciones = PersonaInfeccion.evolucionesEntreFases[i];
             int valBase = valorZonaPorFase[i];
             int coinBonus = GetCoinBonusForPhase(i);
@@ -218,13 +218,14 @@ public class EndDayResultsPanel : MonoBehaviour
 
             totalZ += cantEvoluciones * valFinal;
 
+            // Ahora mostramos el VALOR por unidad, siempre visible
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cantEvoluciones}={cantEvoluciones * valFinal})"
-                : $"({valBase}×{cantEvoluciones}={cantEvoluciones * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cantEvoluciones * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cantEvoluciones * valFinal}";
 
-            zonaCoinsLines += $"{GetTexto(clavesFases[i])}: {cantEvoluciones} {coinTxt}\n";
+            zonaCoinsLines += $"{GetTexto(clavesFases[i])}: {cantEvoluciones}  |  {coinTxt}\n";
 
-            // 2. CÁLCULO DE DAÑO (Basado en Golpes al Planeta)
+            // 2. CÁLCULO DE DAÑO (Estilo Estadísticas)
             int cantGolpes = PersonaInfeccion.golpesAlPlanetaPorFase[i];
             float totalDmg = (i < PersonaInfeccion.dañoZonaPorFase.Length) ? PersonaInfeccion.dañoZonaPorFase[i] : 0f;
 
@@ -232,8 +233,9 @@ public class EndDayResultsPanel : MonoBehaviour
             int hitBonus = GetDamageBonusForPhase(i);
             float hitFinal = GetDamagePerHitForPhase(i);
 
+            // Mostramos el HIT por unidad, siempre visible
             string hitTxt = (hitBonus != 0)
-                ? $"Hit: ({hitBase:F0}+{hitBonus}={hitFinal:F0})"
+                ? $"Hit: {hitFinal:F0} <color=#55FF55>(+{hitBonus})</color>"
                 : $"Hit: {hitFinal:F0}";
 
             zonaDamageLines += $"{GetTexto(clavesFases[i])}: {cantGolpes}  |  {hitTxt}  |  Total: {totalDmg:F0}\n";
@@ -261,10 +263,10 @@ public class EndDayResultsPanel : MonoBehaviour
             totalP += cant * valFinal;
 
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
-                : $"({valBase}×{cant}={cant * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cant * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cant * valFinal}";
 
-            choqueCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+            choqueCoinsLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {coinTxt}\n";
         }
 
         choqueEvolutionText.text = tituloChoque;
@@ -286,10 +288,10 @@ public class EndDayResultsPanel : MonoBehaviour
             totalC += cant * valFinal;
 
             string coinTxt = (coinBonus != 0)
-                ? $"(({valBase}+{coinBonus})×{cant}={cant * valFinal})"
-                : $"({valBase}×{cant}={cant * valFinal})";
+                ? $"Valor: {valFinal} <color=#55FF55>(+{coinBonus})</color>  |  Total: {cant * valFinal}"
+                : $"Valor: {valFinal}  |  Total: {cant * valFinal}";
 
-            carambolaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant} {coinTxt}\n";
+            carambolaCoinsLines += $"{GetTexto(clavesFases[i])}: {cant}  |  {coinTxt}\n";
         }
 
         carambolaEvolutionText.text = tituloCarambola;
@@ -304,20 +306,19 @@ public class EndDayResultsPanel : MonoBehaviour
         monedasTotalesEtiqueta.text = $"<b>{GetTexto("titulo_monedas_totales")}:</b>";
 
         ActualizarTextosMonedas();
+
         if (btnContinue != null)
         {
             TextMeshProUGUI textoContinue = btnContinue.GetComponentInChildren<TextMeshProUGUI>(true);
             if (textoContinue != null) textoContinue.text = GetTexto("btn_continuar");
         }
 
-        // 2. Botón Claim (Reclamar)
         if (btnClaim != null)
         {
             TextMeshProUGUI textoClaim = btnClaim.GetComponentInChildren<TextMeshProUGUI>(true);
             if (textoClaim != null) textoClaim.text = GetTexto("btn_claim");
         }
 
-        // 3. Botón Árbol (Habilidades)
         if (btnArbol != null)
         {
             TextMeshProUGUI textoArbol = btnArbol.GetComponentInChildren<TextMeshProUGUI>(true);
