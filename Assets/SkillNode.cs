@@ -672,6 +672,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.ActivarHojaNegra:
+                // Suma el valor de overrideFloat al spawn actual
+                Guardado.instance.hojaNegraData = true;
+                Guardado.instance.SaveData();
+                break;
+
             case SkillEffectType.MejorarSpawnHojaNegra:
                 // Suma el valor de overrideFloat al spawn actual
                 Guardado.instance.hojaSpawnRate += GetFloat(0.25f);
