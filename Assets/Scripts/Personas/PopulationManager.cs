@@ -131,16 +131,8 @@ public class PopulationManager : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        // === OPTIMIZACIÓN: Reducir frecuencia de CheckForOutsiders ===
-        if (LevelManager.instance != null && LevelManager.instance.isGameActive)
-        {
-            checkOutsidersTimer += Time.deltaTime;
-            if (checkOutsidersTimer >= checkOutsidersInterval)
-            {
-                CheckForOutsiders();
-                checkOutsidersTimer = 0f;
-            }
-        }
+        
+      
 
         if (timer >= spawnInterval )
         {

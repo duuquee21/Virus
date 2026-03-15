@@ -30,6 +30,9 @@ public class PlanetCrontrollator : MonoBehaviour
     private float maxHealth;
     private float currentHealth;
 
+    private bool resultsDirty = false;
+
+
     public enum TipoImpacto
     {
         Zona,
@@ -52,6 +55,16 @@ public class PlanetCrontrollator : MonoBehaviour
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
         posOriginal = transform.position;
     }
+    void Update()
+    {
+        // Solo actualizamos la UI una vez por frame, sin importar cuántos choques hubo
+        if (resultsDirty)
+        {
+            if (EndDayResultsPanel.instance != null)
+                EndDayResultsPanel.instance.RefreshResults();
+            resultsDirty = false;
+        }
+    }
 
     private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
@@ -62,8 +75,8 @@ public class PlanetCrontrollator : MonoBehaviour
 
         lastImpactTimes[id] = Time.time;
 
-        PersonaInfeccion scriptInfeccion = obj.GetComponent<PersonaInfeccion>();
-        if (scriptInfeccion == null) return;
+        // OPTIMIZACIÓN: Intentar obtener el componente sin basura en memoria (TryGetComponent es más rápido en versiones recientes)
+        if (!obj.TryGetComponent<PersonaInfeccion>(out var scriptInfeccion)) return;
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
         int fase = scriptInfeccion.faseActual;
@@ -77,12 +90,9 @@ public class PlanetCrontrollator : MonoBehaviour
             return;
         }
 
-        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (obj.TryGetComponent<Rigidbody2D>(out var rb))
         {
-            float fuerzaImpacto = rb.linearVelocity.magnitude;
-
-            if (fuerzaImpacto > 6.5f)
+            if (rb.linearVelocity.sqrMagnitude > 42.25f) // Usar sqrMagnitude (6.5 * 6.5) es MUCHO más rápido que .magnitude
             {
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
                 TakeDamage(dañoCalculado, posicion);
@@ -137,8 +147,7 @@ public class PlanetCrontrollator : MonoBehaviour
                 break;
         }
 
-        if (EndDayResultsPanel.instance != null)
-            EndDayResultsPanel.instance.RefreshResults();
+        resultsDirty = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -147,11 +156,6 @@ public class PlanetCrontrollator : MonoBehaviour
             ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Zona);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Persona"))
-            ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Choque);
-    }
 
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
