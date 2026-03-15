@@ -69,13 +69,14 @@ public class PlanetCrontrollator : MonoBehaviour
     private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
         int id = obj.GetInstanceID();
+        float time = Time.time;
 
-        if (lastImpactTimes.ContainsKey(id) && Time.time < lastImpactTimes[id] + cooldownTime)
+        // Usar TryGetValue para buscar solo una vez en el diccionario
+        if (lastImpactTimes.TryGetValue(id, out float lastTime) && time < lastTime + cooldownTime)
             return;
 
-        lastImpactTimes[id] = Time.time;
+        lastImpactTimes[id] = time;
 
-        // OPTIMIZACIÓN: Intentar obtener el componente sin basura en memoria (TryGetComponent es más rápido en versiones recientes)
         if (!obj.TryGetComponent<PersonaInfeccion>(out var scriptInfeccion)) return;
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
@@ -173,8 +174,7 @@ public class PlanetCrontrollator : MonoBehaviour
 
         if (damageTextPrefab != null)
         {
-            GameObject textObj = Instantiate(damageTextPrefab, spawnPos, Quaternion.identity);
-            textObj.GetComponent<FloatingText>().SetText("-" + amount.ToString("F0"));
+            TextPooler.Instance.SpawnText(spawnPos, "-" + amount.ToString("F0"));
         }
 
         if (currentHealth <= 0)

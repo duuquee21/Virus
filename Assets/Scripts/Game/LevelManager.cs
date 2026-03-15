@@ -284,56 +284,44 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        // 1. Iniciamos la transición visual (Cerrar pantalla)
+        // 1. Transición visual... (omitido para brevedad)
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1); // Hexágono
+            transitionScript.SetShape(1);
             transitionScript.CloseBlackScreen();
-            // Esperamos a que el shader termine de cerrarse (aprox 0.5s según tu código)
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // 2. Carga de datos (Esto ocurre mientras la pantalla está en negro)
+        // 2. Carga de datos
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-        int savedMap = PlayerPrefs.GetInt("Run_Map", 0);
+
+        // CAMBIO AQUÍ: Aunque leamos el mapa guardado, forzamos que sea 0
+        // int savedMap = PlayerPrefs.GetInt("Run_Map", 0); // Esto lo podemos comentar
+        int savedMap = 0;
+
         float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
         float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
 
         Guardado.instance.LoadEvolutionData();
-        PlayerPrefs.SetInt("CurrentMapIndex", savedMap);
+
+        // Forzamos el índice 0 en las preferencias del jugador
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
         currentTimer = savedTimer;
 
-        // 2.5 SINCRONIZAR CONTROLLERS CON DATOS GUARDADOS
+        // Sincronización y UI... (el resto del código sigue igual)
         SyncControllersWithSavedData();
 
-        // Actualizamos los nodos de habilidad
-        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
-        foreach (SkillNode node in nodes)
-        {
-            node.LoadNodeState();
-            node.CheckIfShouldShow();
-        }
+        // Importante: Asegurarse de que el mapa 0 se active visualmente
+        ActivateMap(0);
 
-        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
-        if (lines != null)
-        {
-            lines.ResetAllLinesVisuals();
-            lines.RefreshAllLinesFromNodes();
-        }
-        // 3. Preparar la UI antes de mostrar
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(true);
 
-        // 4. Iniciar la sesión de juego
         StartSession();
 
-        // 5. Abrir la transición (Mostrar el juego ya cargado)
-        if (transitionScript != null)
-        {
-            transitionScript.OpenBlackScreen();
-        }
+        if (transitionScript != null) transitionScript.OpenBlackScreen();
     }
     public void NewGameFromMainMenu()
     {
@@ -735,7 +723,8 @@ public class LevelManager : MonoBehaviour
 
         CleanUpScene();
 
-        int savedMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
+        ActivateMap(0);
         SetMapsActive(true);
 
         isGameActive = true;

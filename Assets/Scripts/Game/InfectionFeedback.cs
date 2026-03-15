@@ -29,6 +29,8 @@ public class InfectionFeedback : MonoBehaviour
 
     public string zonaTag = "Zona";
 
+    private Transform[] zonasCached; // Añade esta variable arriba
+
     // --- LÓGICA DE POOLING ---
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
@@ -49,6 +51,17 @@ public class InfectionFeedback : MonoBehaviour
         InitPool(infectionParticles);
         InitPool(infection1Particles);
         InitPool(basicImpactParticles);
+    }
+
+    void Start()
+    {
+        // Cacheamos las zonas una sola vez
+        GameObject[] objetosZona = GameObject.FindGameObjectsWithTag(zonaTag);
+        zonasCached = new Transform[objetosZona.Length];
+        for (int i = 0; i < objetosZona.Length; i++)
+        {
+            zonasCached[i] = objetosZona[i].transform;
+        }
     }
 
     private void InitPool(GameObject prefab)
@@ -116,7 +129,6 @@ public class InfectionFeedback : MonoBehaviour
 
         GameObject vfx;
 
-        // Intentar sacar de la pool, si no hay, instanciar uno nuevo
         if (poolDictionary[prefab].Count > 0)
         {
             vfx = poolDictionary[prefab].Dequeue();
@@ -133,13 +145,17 @@ public class InfectionFeedback : MonoBehaviour
         {
             var main = ps.main;
             main.startColor = color;
-            // Nota: El sizeMultiplier es acumulativo si no se resetea, 
-            // pero mantenemos tu lógica original de multiplicar el valor base.
-            main.startSize = ps.main.startSize.constant * sizeMultiplier;
+
+            // --- CORRECCIÓN AQUÍ ---
+            // Usamos el valor del prefab original para que el multiplicador no sea acumulativo
+            float baseSize = prefab.GetComponent<ParticleSystem>().main.startSize.constant;
+            main.startSize = baseSize * sizeMultiplier;
 
             ps.Play();
-            // Devolver a la pool cuando termine
-            StartCoroutine(ReturnToPool(prefab, vfx, main.duration + main.startLifetime.constantMax));
+
+            // Calculamos el tiempo total de vida para saber cuándo apagarlo
+            float totalDuration = main.duration + main.startLifetime.constantMax;
+            StartCoroutine(ReturnToPool(prefab, vfx, totalDuration));
         }
     }
 
@@ -166,9 +182,11 @@ public class InfectionFeedback : MonoBehaviour
 
     private void TriggerShakeOnZonas(int multiplier)
     {
-        GameObject[] zonas = GameObject.FindGameObjectsWithTag(zonaTag);
-        foreach (GameObject zona in zonas)
-            StartCoroutine(ShakeObject(zona.transform, multiplier));
+        if (zonasCached == null) return;
+        foreach (Transform zona in zonasCached)
+        {
+            if (zona != null) StartCoroutine(ShakeObject(zona, multiplier));
+        }
     }
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
