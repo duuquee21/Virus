@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -47,4 +47,4 @@ public class SettingsMenu : MonoBehaviour
         Screen.fullScreen = isFullscreen;
         PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
     }
-}
+}*/
