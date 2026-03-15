@@ -7,17 +7,19 @@ public class ControlVolumenVFX : MonoBehaviour
 
     void Start()
     {
-        float volumenGuardado = PlayerPrefs.GetFloat("VFXVolume", 0.75f);
+        float volumenGuardado = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
         sliderVFX.value = volumenGuardado;
 
-        AudioManager.instance.UpdateMixerVolume("SFXVol", volumenGuardado);
+        if (AudioManager.instance != null)
+            AudioManager.instance.UpdateMixerVolume("SFXVol", volumenGuardado);
     }
 
     public void CambiarVolumenVFX(float valor)
     {
-        AudioManager.instance.UpdateMixerVolume("SFXVol", valor);
+        if (AudioManager.instance != null)
+            AudioManager.instance.UpdateMixerVolume("SFXVol", valor);
 
-        PlayerPrefs.SetFloat("VFXVolume", valor);
+        PlayerPrefs.SetFloat("SFXVolume", valor);
         PlayerPrefs.Save();
     }
 }
