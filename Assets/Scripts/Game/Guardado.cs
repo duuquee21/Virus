@@ -232,6 +232,12 @@ public class Guardado : MonoBehaviour
         {
             PlayerPrefs.SetFloat("ProbParedInfectiva_" + i, probParedInfectiva[i]);
         }
+
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.SaveNodeState();
+        }
         PlayerPrefs.Save();
     }
 

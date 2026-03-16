@@ -73,8 +73,18 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void SetPurchasedState(bool purchased)
     {
         isPurchased = purchased;
+        // Forzamos que la escala base sea la de comprado o la normal
         originalScale = purchased ? Vector3.one * purchasedScale : Vector3.one;
+
+        // IMPORTANTE: Actualizamos el target y la escala actual de inmediato
         targetScale = originalScale;
+        if (rect == null) rect = GetComponent<RectTransform>();
+        rect.localScale = originalScale;
+
+        if (infoPanel != null)
+        {
+            infoPanel.localScale = originalScale;
+        }
     }
 
     public void PlayClickFeedback()

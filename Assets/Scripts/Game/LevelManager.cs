@@ -89,19 +89,18 @@ public class LevelManager : MonoBehaviour
     private float autoSaveInterval = 10f; // Guardar cada 10 segundos
     private float timeSinceLastAutoSave = 0f;
 
+    private int lastActiveMapIndex = -1;
+    private PopulationManager cachedPopManager;
+
     // Añade esto en EndDayResultsPanel
 
     void Awake()
     {
+        if (instance == null) { instance = this; }
+        else { Destroy(gameObject); return; }
 
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // Caché de componentes para evitar Find en cada transición
+        cachedPopManager = Object.FindFirstObjectByType<PopulationManager>();
     }
     // Método para obtener el texto traducido
     string GetTexto(string clave)
@@ -622,19 +621,24 @@ public class LevelManager : MonoBehaviour
     public void ActivateMap(int zoneID)
     {
         PlayerPrefs.SetInt("CurrentMapIndex", zoneID);
-        PlayerPrefs.Save();
 
-        // === NUEVA OPTIMIZACIÓN: Limpiar población ANTES de cambiar de mapa ===
-        PopulationManager popManager = Object.FindFirstObjectByType<PopulationManager>();
-        if (popManager != null)
+        // Limpieza usando la caché
+        if (cachedPopManager != null)
         {
-            popManager.ClearAllPersonas();
-            popManager.SelectPrefab(zoneID);
+            cachedPopManager.ClearAllPersonas();
+            cachedPopManager.SelectPrefab(zoneID);
         }
 
-        for (int i = 0; i < mapList.Length; i++)
+        // OPTIMIZACIÓN: Solo apaga el anterior y enciende el nuevo (sin bucles)
+        if (lastActiveMapIndex != -1 && lastActiveMapIndex < mapList.Length)
         {
-            if (mapList[i] != null) mapList[i].SetActive(i == zoneID);
+            if (mapList[lastActiveMapIndex] != null) mapList[lastActiveMapIndex].SetActive(false);
+        }
+
+        if (zoneID < mapList.Length && mapList[zoneID] != null)
+        {
+            mapList[zoneID].SetActive(true);
+            lastActiveMapIndex = zoneID;
         }
     }
 
@@ -695,7 +699,7 @@ public class LevelManager : MonoBehaviour
         }
         if (timerIcon != null) if (timerIcon != null) timerIcon.rectTransform.localScale = timerIconOriginalScale;
         Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.002f;
+        Time.fixedDeltaTime = 0.025f;
         if (mainCamera == null) mainCamera = Camera.main;
         mainCamera.orthographicSize = defaultZoom;
 

@@ -14,7 +14,7 @@ public class InfectionFeedback : MonoBehaviour
     [Header("Efectos de Sonido (SFX)")]
     public AudioSource audioSource;
     private float lastSoundTime;
-    private const float MIN_SOUND_INTERVAL = 0.02f;
+    private const float MIN_SOUND_INTERVAL = 0.05f;
 
     public AudioClip[] infectionSounds;
     public AudioClip[] phaseChangeSounds;

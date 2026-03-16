@@ -27,7 +27,16 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     {
         disabledParticles = GetComponentInChildren<ParticleSystem>();
     }
-
+    void Start()
+    {
+        // Al iniciar, forzamos la escala correcta según el guardado
+        var fx = GetComponent<SkillNodeHoverFX>();
+        if (fx != null && skillNode != null)
+        {
+            // Si el nodo ya estaba desbloqueado o al límite, aplicar escala de comprado
+            fx.SetPurchasedState(IsAtLimit());
+        }
+    }
     void Update()
     {
         if (skillNode == null || LevelManager.instance == null)

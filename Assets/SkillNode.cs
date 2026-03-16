@@ -331,6 +331,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         runtimeUnlocked[saveID] = unlocked;
         runtimeRepeat[saveID] = repeatLevel;
 
+        SaveNodeState();
+
         // 6. Aplicamos el efecto (UNA SOLA VEZ)
         ApplyEffect();
 
@@ -363,6 +365,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         PlayerPrefs.SetInt("Skill_" + saveID + "_Unlocked", unlocked ? 1 : 0);
         PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
+
+        // -------- AÑADE ESTO AQUÍ --------
+        PlayerPrefs.Save();
+        // ---------------------------------
     }
     public void ResetNodeState()
     {

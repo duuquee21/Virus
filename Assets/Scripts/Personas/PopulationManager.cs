@@ -108,22 +108,22 @@ public class PopulationManager : MonoBehaviour
     {
         RefreshSpawnArea();
         timer = 0f;
-        baseSpawnInterval = spawnInterval;
-        ApplySpawnBonus();
-  
 
-        // CALCULAR POBLACIÓN INICIAL CON EL BONUS
         int poblacionReal = initialPopulation;
         if (Guardado.instance != null)
-        {
-            // Si el bonus es 1f, sumará 1 persona extra. 
-            // Si quieres que sea un porcentaje, usa: initialPopulation * (1 + bonus)
             poblacionReal = initialPopulation + (int)Guardado.instance.populationBonus;
-        }
 
-        for (int i = 0; i < poblacionReal; i++)
+        // Lanzamos corrutina para no saturar el frame
+        StartCoroutine(SpawnInitialPopulationRoutine(poblacionReal));
+    }
+
+    private IEnumerator SpawnInitialPopulationRoutine(int cantidad)
+    {
+        for (int i = 0; i < cantidad; i++)
         {
             SpawnPerson(false);
+            // Espera al siguiente frame después de cada spawn
+            yield return null;
         }
     }
     void Update()
@@ -149,8 +149,7 @@ public class PopulationManager : MonoBehaviour
 
     private int GetTotalPopulationCount()
     {
-        // === OPTIMIZACIÓN: Usar caché en lugar de FindGameObjectsWithTag ===
-        LimpiarCacheObjetosDestruidos();
+        // Ya no necesitas limpiar la caché aquí, porque se limpian solas en OnDestroy
         return personasVivas.Count + coralesVivos.Count;
     }
 
@@ -240,24 +239,46 @@ public class PopulationManager : MonoBehaviour
         StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
     }
 
-    Vector3 GetRandomPointInCollider(Collider2D collider)
+    // Modifica el método para ser más directo
+    Vector3 GetRandomPointInCollider(Collider2D col)
     {
-        Bounds bounds = collider.bounds;
-        Vector3 point;
-        int attempts = 0;
+        if (col == null) return Vector3.zero;
 
-        do
+        // Forzamos al collider a recalcular sus dimensiones internas
+        // Esto evita que devuelva (0,0,0) si el objeto acaba de activarse
+        Bounds bounds = col.bounds;
+
+        // Si los bounds son minúsculos, algo va mal con la referencia
+        if (bounds.size.magnitude < 0.1f)
         {
-            float x = Random.Range(bounds.min.x + margenSeguridad, bounds.max.x - margenSeguridad);
-            float y = Random.Range(bounds.min.y + margenSeguridad, bounds.max.y - margenSeguridad);
-            point = new Vector3(x, y, 0);
-            attempts++;
+            Debug.LogWarning("El SpawnCollider tiene un tamaño casi nulo. Revisando posición...");
+            return col.transform.position;
+        }
 
-            if (collider.OverlapPoint(point)) return point;
+        Vector2 randomPoint = Vector2.zero;
+        bool puntoValido = false;
+        int intentos = 0;
 
-        } while (attempts < 50);
+        while (!puntoValido && intentos < 30)
+        {
+            float rx = Random.Range(bounds.min.x + margenSeguridad, bounds.max.x - margenSeguridad);
+            float ry = Random.Range(bounds.min.y + margenSeguridad, bounds.max.y - margenSeguridad);
+            randomPoint = new Vector2(rx, ry);
 
-        return bounds.center;
+            // Verificamos si el punto está dentro de la FORMA (no solo del rectángulo)
+            if (col.OverlapPoint(randomPoint))
+            {
+                puntoValido = true;
+            }
+            intentos++;
+        }
+
+        // Si fallan los intentos, devolvemos un punto aleatorio simple en el bound
+        return puntoValido ? (Vector3)randomPoint : new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            0
+        );
     }
 
     void ApplySpawnBonus()

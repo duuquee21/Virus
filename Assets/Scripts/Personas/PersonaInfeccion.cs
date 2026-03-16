@@ -8,6 +8,7 @@ public class PersonaInfeccion : MonoBehaviour
 
     [Header("Sprites de Evolución")]
     public Sprite[] fasesSprites;
+    public Sprite spriteInfectado; // <-- Añade esta línea
     public Sprite[] contornosFases;
     public Color[] coloresFases;
 
@@ -216,6 +217,11 @@ public class PersonaInfeccion : MonoBehaviour
     void OnDestroy()
     {
         if (PersonaManager.Instance != null) PersonaManager.Instance.DesregistrarPersona(this);
+        // Cuando el objeto se destruye (por cualquier razón), se quita de la lista
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.UnregisterPersona(this.gameObject);
+        }
     }
 
     void ActualizarProgresoBarras(float progress)
@@ -370,6 +376,10 @@ public class PersonaInfeccion : MonoBehaviour
     {
         alreadyInfected = true;
         if (instanciaBarraActual != null) Destroy(instanciaBarraActual);
+        if (spriteInfectado != null)
+        {
+            spritePersona.sprite = spriteInfectado;
+        }
 
         if (infectionBarCanvas != null)
             infectionBarCanvas.SetActive(false);

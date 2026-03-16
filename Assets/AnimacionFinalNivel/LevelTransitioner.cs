@@ -24,18 +24,19 @@ public class LevelTransitioner : MonoBehaviour
 
     public ManualSetCycler manualSetCycler;
 
-    // Eventos
     public static event Action<float> OnImpactShake;
     public static event Action OnTransitionStart;
 
-    // Caché de variables privadas
     private float velocidadActual = 0f;
     private Vector3 escalaOriginal = Vector3.one;
     private Camera mainCam;
-    private Transform camTransform; // Cache de transform de la cámara
+    private Transform camTransform;
     private float zoomOriginal;
-    private PlanetCrontrollator cachedPlaneta; // Cache del planeta
-    private WaitForEndOfFrame frameWait = new WaitForEndOfFrame(); // Evita allocs en corrutinas
+    private PlanetCrontrollator cachedPlaneta;
+
+    // OPTIMIZACIÓN 1: Caché de componentes pesados
+    private PopulationManager popManager;
+    private LevelManager lm;
 
     void Awake()
     {
@@ -46,39 +47,36 @@ public class LevelTransitioner : MonoBehaviour
             zoomOriginal = mainCam.orthographicSize;
         }
 
-        // Centralizamos el reseteo
-        ResetPlanetRotation();
-    }
+        // Buscamos las instancias una sola vez al inicio
+        lm = LevelManager.instance;
+        popManager = FindFirstObjectByType<PopulationManager>();
+        cachedPlaneta = FindFirstObjectByType<PlanetCrontrollator>();
 
-    private void Start()
-    {
-        // Si el planeta no se encontró en Awake, lo buscamos aquí una sola vez
-        if (cachedPlaneta == null) ResetPlanetRotation();
+        ResetPlanetRotation();
     }
 
     private void ResetPlanetRotation()
     {
-        if (cachedPlaneta == null) cachedPlaneta = FindFirstObjectByType<PlanetCrontrollator>();
         if (cachedPlaneta != null) cachedPlaneta.transform.rotation = Quaternion.identity;
     }
 
     public void StartLevelTransition()
     {
-        StopAllCoroutines(); // Seguridad para evitar corrutinas duplicadas
+        StopAllCoroutines();
         StartCoroutine(ExecuteFullTransition());
     }
 
     private IEnumerator ExecuteFullTransition()
     {
-        LevelManager lm = LevelManager.instance;
+        // Usamos la referencia cacheada del LevelManager
+        if (lm == null) lm = LevelManager.instance;
         lm.isGameActive = false;
 
-        if (cachedPlaneta == null) cachedPlaneta = FindFirstObjectByType<PlanetCrontrollator>();
         if (cachedPlaneta != null) cachedPlaneta.isInvulnerable = true;
 
         int currentIdx = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         GameObject mapaVisual = lm.mapList[currentIdx];
-        Transform mapaTransform = mapaVisual.transform; // Caché del transform del mapa
+        Transform mapaTransform = mapaVisual.transform;
 
         float tiempoAcel = velocidadMaxima / aceleracion;
         float tiempoFren = velocidadMaxima / frenado;
@@ -107,20 +105,33 @@ public class LevelTransitioner : MonoBehaviour
             yield return null;
         }
 
-        // --- FASE 2: CAMBIO DE MAPA ---
+        // --- FASE 2: CAMBIO DE MAPA (Punto crítico de LAG) ---
+        // Dentro de ExecuteFullTransition en LevelTransitioner.cs
+        // Busca la Fase 2 (Cambio de mapa)
+
+        // --- FASE 2: CAMBIO DE MAPA (En el pico de velocidad) ---
         int nextMap = currentIdx + 1;
         if (nextMap < lm.mapList.Length)
         {
+            // 1. Limpiamos antes de activar el siguiente para liberar RAM
+            if (popManager != null) popManager.ClearAllPersonas();
+
+            // 2. Activamos el nuevo mapa en el LevelManager
             lm.ActivateMap(nextMap);
+
+            // 3. ACTUALIZACIÓN CRÍTICA: Ahora mapaVisual es el nuevo mapa
             mapaVisual = lm.mapList[nextMap];
-            mapaTransform = mapaVisual.transform; // Actualizamos caché del transform
+            mapaTransform = mapaVisual.transform;
+
+            // 4. Aplicamos la escala pequeña al nuevo mapa para que no aparezca gigante de golpe
             mapaTransform.localScale = escalaObjetivoMin;
 
+            // 5. Reset de estados
             if (cachedPlaneta != null) cachedPlaneta.isInvulnerable = true;
             lm.currentSessionInfected = 0;
         }
 
-        // --- FASE 3: ESPERA TÉCNICA (Optimización de cálculo de ángulo) ---
+        // --- FASE 3: ESPERA TÉCNICA ---
         float distanciaFrenado = (velocidadActual * velocidadActual) / (2f * frenado);
         while (true)
         {
@@ -129,12 +140,13 @@ public class LevelTransitioner : MonoBehaviour
             float anguloActualZ = mapaTransform.localEulerAngles.z;
             float anguloFinalPredecido = (anguloActualZ + distanciaFrenado) % 360f;
 
-            if (anguloFinalPredecido < (velocidadActual * dt)) break;
+            // Seguridad: si la velocidad es muy baja, salir para evitar bucle infinito
+            if (anguloFinalPredecido < (velocidadActual * dt) || velocidadActual < 10f) break;
             yield return null;
         }
 
         // --- FASE 4: FRENAR Y CRECER ---
-        while (velocidadActual > 0.1f) // Cambiado a 0.1f para evitar frames muertos
+        while (velocidadActual > 0.1f)
         {
             float dt = Time.deltaTime;
             velocidadActual = Mathf.MoveTowards(velocidadActual, 0, frenado * dt);
@@ -147,13 +159,15 @@ public class LevelTransitioner : MonoBehaviour
             yield return null;
         }
 
-        // --- IMPACTO FINAL ---
+        // --- IMPACTO FINAL Y SPAWN ---
         mapaTransform.SetPositionAndRotation(mapaTransform.position, Quaternion.identity);
         mapaTransform.localScale = escalaOriginal;
 
-        // Caché de PopulationManager
-        PopulationManager popManager = FindFirstObjectByType<PopulationManager>();
-        if (popManager != null) popManager.ConfigureRound(0);
+        // OPTIMIZACIÓN 3: ConfigureRound ahora es una corrutina que no spawnea todo de golpe
+        if (popManager != null)
+        {
+            popManager.ConfigureRound(0);
+        }
 
         OnImpactShake?.Invoke(intensidadImpacto);
         mainCam.orthographicSize = zoomOriginal;
