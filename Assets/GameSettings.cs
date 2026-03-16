@@ -1,10 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio; // Necesario para el control de volumen
 
 public class GameSettings : MonoBehaviour
 {
     public static GameSettings instance;
 
+    [Header("Motor de Audio")]
+    public AudioMixer audioMixer; // Arrastra aquí tu AudioMixer
+
+    // Variables guardadas
     public bool shakeEnabled = true;
+    public bool isFullscreen = true;
+    public int targetFPS = 60;
+    public float masterVol = 1f;
+    public float musicVol = 1f;
+    public float sfxVol = 1f;
 
     void Awake()
     {
@@ -12,8 +22,7 @@ public class GameSettings : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-
-            shakeEnabled = PlayerPrefs.GetInt("ShakeEnabled", 1) == 1;
+            LoadSettings();
         }
         else
         {
@@ -21,10 +30,78 @@ public class GameSettings : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        ApplyAllSettings();
+    }
+
+    
+    public void LoadSettings()
+    {
+        shakeEnabled = PlayerPrefs.GetInt("ShakeEnabled", 1) == 1;
+        isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        targetFPS = PlayerPrefs.GetInt("FPS", 60);
+        masterVol = PlayerPrefs.GetFloat("MasterVol", 1f);
+        musicVol = PlayerPrefs.GetFloat("MusicVol", 1f);
+        sfxVol = PlayerPrefs.GetFloat("SFXVol", 1f);
+    }
+
+    
+    public void ApplyAllSettings()
+    {
+        SetFullscreen(isFullscreen);
+        SetFPS(targetFPS);
+        SetMasterVolume(masterVol);
+        SetMusicVolume(musicVol);
+        SetSFXVolume(sfxVol);
+    }
+
+    // 🎛️ FUNCIONES DE SETEO
     public void SetShake(bool value)
     {
         shakeEnabled = value;
         PlayerPrefs.SetInt("ShakeEnabled", value ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    public void SetFullscreen(bool isFull)
+    {
+        isFullscreen = isFull;
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt("Fullscreen", isFull ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    public void SetFPS(int fps)
+    {
+        targetFPS = fps;
+        Application.targetFrameRate = targetFPS;
+        PlayerPrefs.SetInt("FPS", targetFPS);
+        PlayerPrefs.Save();
+    }
+
+    // 🔊 VOLUMEN (Convertido a escala Logarítmica para que suene natural)
+    public void SetMasterVolume(float vol)
+    {
+        masterVol = vol;
+        if (audioMixer != null) audioMixer.SetFloat("MasterVol", Mathf.Log10(Mathf.Max(vol, 0.0001f)) * 20f);
+        PlayerPrefs.SetFloat("MasterVol", vol);
+        PlayerPrefs.Save();
+    }
+
+    public void SetMusicVolume(float vol)
+    {
+        musicVol = vol;
+        if (audioMixer != null) audioMixer.SetFloat("MusicVol", Mathf.Log10(Mathf.Max(vol, 0.0001f)) * 20f);
+        PlayerPrefs.SetFloat("MusicVol", vol);
+        PlayerPrefs.Save();
+    }
+
+    public void SetSFXVolume(float vol)
+    {
+        sfxVol = vol;
+        if (audioMixer != null) audioMixer.SetFloat("SFXVol", Mathf.Log10(Mathf.Max(vol, 0.0001f)) * 20f);
+        PlayerPrefs.SetFloat("SFXVol", vol);
         PlayerPrefs.Save();
     }
 }
