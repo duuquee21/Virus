@@ -323,7 +323,40 @@ public class PopulationManager : MonoBehaviour
 
         timer = 0;
     }
+    public void SpawnPersonAtBasePhase()
+    {
+        if (currentPrefab == null || currentSpawnCollider == null) return;
 
+        Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
+
+        GameObject prefabToSpawn = currentPrefab;
+        if (buggedPersonPrefab != null && Random.Range(0f, 100f) < buggedSpawnChance)
+        {
+            prefabToSpawn = buggedPersonPrefab;
+        }
+
+        GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        personasVivas.Add(newPerson);
+
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
+
+        if (script != null && LevelManager.instance != null)
+        {
+            int baseFase = 0;
+            if (currentMap < LevelManager.instance.faseInicialPorMapa.Length)
+                baseFase = LevelManager.instance.faseInicialPorMapa[currentMap];
+
+            script.EstablecerFaseDirecta(baseFase);
+            script.AplicarColor(LevelManager.instance.GetCurrentLevelColor());
+
+            Debug.Log($"[SPAWN BASE] Nueva figura creada en fase base {baseFase} del mapa {currentMap}");
+        }
+
+        Vector3 targetScale = newPerson.transform.localScale;
+        newPerson.transform.localScale = Vector3.zero;
+        StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
+    }
     IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
     {
         float t = 0f;

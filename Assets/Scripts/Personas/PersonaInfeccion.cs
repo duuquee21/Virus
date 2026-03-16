@@ -77,8 +77,9 @@ public class PersonaInfeccion : MonoBehaviour
     private Vector3 originalPosition;
     private Vector3 initialPosition;
     private bool positionSaved = false;
+    private bool yaActivoSpawnPorFaseFinal = false;
 
-  
+
 
 
 
@@ -224,6 +225,35 @@ public class PersonaInfeccion : MonoBehaviour
         }
     }
 
+
+
+    private void IntentarActivarSpawnAlInfectarseFinal(int faseAnterior, int faseNueva)
+    {
+        if (yaActivoSpawnPorFaseFinal) return;
+        if (Guardado.instance == null || PopulationManager.instance == null) return;
+
+        int maxFase = GetMaxFaseIndex();
+        bool acabaDePasarAFinal = faseAnterior == maxFase && faseNueva >= fasesSprites.Length;
+
+        if (!acabaDePasarAFinal) return;
+
+        yaActivoSpawnPorFaseFinal = true;
+
+        float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
+        float tirada = Random.value;
+
+        Debug.Log($"[FINAL] {gameObject.name} pasó de fase máxima a infectado/final. Chance: {chance * 100f:F0}% | Tirada: {tirada:F3}");
+
+        if (chance > 0f && tirada < chance)
+        {
+            Debug.Log("[FINAL] ÉXITO. Se genera nueva figura base.");
+            PopulationManager.instance.SpawnPersonAtBasePhase();
+        }
+        else
+        {
+            Debug.Log("[FINAL] FALLO. No se genera nueva figura.");
+        }
+    }
     void ActualizarProgresoBarras(float progress)
     {
         if (fillingBarImages == null) return;
@@ -324,6 +354,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         // Aplicamos el avance
         faseActual += steps;
+        IntentarActivarSpawnAlInfectarseFinal(faseAnterior, faseActual);
 
         // Tutorial: primera vez que una figura avanza al menos una fase
         if (faseAnterior == 0 && faseActual > 0)
@@ -527,7 +558,6 @@ public class PersonaInfeccion : MonoBehaviour
             currentInfectionTime = 0f;
             faseActual++;
 
-            // -------- ESTADÍSTICAS --------
             if (faseAnterior < evolucionesPorChoque.Length)
             {
                 if (tipo == TipoChoque.Wall)
@@ -540,22 +570,22 @@ public class PersonaInfeccion : MonoBehaviour
                 }
             }
 
-            // -------- RECOMPENSA UNIFICADA --------
             if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
             {
                 int monedasADar = GetCoinsForPhase(faseAnterior);
                 LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
-                SpawnFloatingMoney(monedasADar); // <--- AÑADIR ESTA LÍNEA
+                SpawnFloatingMoney(monedasADar);
             }
+
             if (InfectionFeedback.instance != null)
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
-
 
             ActualizarVisualFase();
             StartCoroutine(FlashCambioFase());
         }
         else
         {
+            IntentarActivarSpawnAlInfectarseFinal(faseAnterior, fasesSprites.Length);
             BecomeInfected();
         }
     }
