@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class SettingsMenuUI : MonoBehaviour
 {
-    [Header("UI - Volúmenes (Sliders de 0.0001 a 1)")]
+    [Header("UI - Volï¿½menes (Sliders de 0.0001 a 1)")]
     public Slider masterSlider;
     public Slider musicSlider;
     public Slider sfxSlider;
@@ -42,7 +42,11 @@ public class SettingsMenuUI : MonoBehaviour
             if (fpsDropdown != null) fpsDropdown.value = GetFPSDropdownIndex(GameSettings.instance.targetFPS);
         }
 
-        // 3. Configurar el Dropdown de Idiomas automáticamente
+        // 2.5. Asegurar que los Dropdowns TMP tengan su Template asignado (si se ha perdido en el prefab/escena)
+        FixTMPDropdownTemplate(fpsDropdown);
+        FixTMPDropdownTemplate(languageDropdown);
+
+        // 3. Configurar el Dropdown de Idiomas automï¿½ticamente
         // Set up the Language Dropdown automatically
         ConfigurarDropdownIdiomas();
 
@@ -59,7 +63,7 @@ public class SettingsMenuUI : MonoBehaviour
         isReady = true;
     }
 
-    // --- LÓGICA DE FPS ---
+    // --- Lï¿½GICA DE FPS ---
     int GetFPSDropdownIndex(int fps)
     {
         if (fps == 30) return 0;
@@ -79,7 +83,7 @@ public class SettingsMenuUI : MonoBehaviour
         GameSettings.instance.SetFPS(fps);
     }
 
-    // --- LÓGICA DE IDIOMA (LOCALIZATION) ---
+    // --- Lï¿½GICA DE IDIOMA (LOCALIZATION) ---
     void ConfigurarDropdownIdiomas()
     {
         if (languageDropdown == null) return;
@@ -107,5 +111,31 @@ public class SettingsMenuUI : MonoBehaviour
     {
         if (!isReady) return;
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[indice];
+    }
+
+    void FixTMPDropdownTemplate(TMP_Dropdown dropdown)
+    {
+        if (dropdown == null) return;
+        if (dropdown.template != null) return;
+
+        // Busca un child llamado "Template" (es lo que crea el prefab por defecto)
+        var template = dropdown.transform.Find("Template") as RectTransform;
+        if (template == null)
+        {
+            foreach (var child in dropdown.GetComponentsInChildren<RectTransform>(true))
+            {
+                if (child.name.ToLower().Contains("template"))
+                {
+                    template = child;
+                    break;
+                }
+            }
+        }
+
+        if (template != null)
+        {
+            dropdown.template = template;
+            Debug.Log($"TMP Dropdown template asignado automÃ¡ticamente para {dropdown.gameObject.name}", dropdown);
+        }
     }
 }

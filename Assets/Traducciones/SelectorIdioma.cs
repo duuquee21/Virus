@@ -13,6 +13,8 @@ public class SelectorIdioma : MonoBehaviour
     {
         yield return LocalizationSettings.InitializationOperation;
 
+        FixTMPDropdownTemplate(dropdown);
+
         var opciones = new List<string>();
         int indiceSeleccionado = 0;
 
@@ -58,5 +60,30 @@ public class SelectorIdioma : MonoBehaviour
 
         // Cambiamos al idioma seleccionado
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[indice];
+    }
+
+    void FixTMPDropdownTemplate(TMP_Dropdown dropdown)
+    {
+        if (dropdown == null) return;
+        if (dropdown.template != null) return;
+
+        var template = dropdown.transform.Find("Template") as RectTransform;
+        if (template == null)
+        {
+            foreach (var child in dropdown.GetComponentsInChildren<RectTransform>(true))
+            {
+                if (child.name.ToLower().Contains("template"))
+                {
+                    template = child;
+                    break;
+                }
+            }
+        }
+
+        if (template != null)
+        {
+            dropdown.template = template;
+            Debug.Log($"TMP Dropdown template asignado automáticamente para {dropdown.gameObject.name}", dropdown);
+        }
     }
 }
