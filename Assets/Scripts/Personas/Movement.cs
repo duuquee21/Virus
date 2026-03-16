@@ -348,19 +348,7 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        // 2. LÓGICA DE INFECCIÓN
-        if (otroPersona.alreadyInfected && !personaInfeccion.alreadyInfected)
-        {
-            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-            otroPersona.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-            return;
-        }
-        else if (personaInfeccion.alreadyInfected && !otroPersona.alreadyInfected)
-        {
-            personaInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-            otroPersona.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Carambola);
-            return;
-        }
+      
 
         // 3. REBOTE FÍSICO
         Vector2 direccionRebote = ((Vector2)transform.position - otraPosicion);
