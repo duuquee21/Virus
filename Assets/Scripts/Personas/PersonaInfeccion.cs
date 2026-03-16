@@ -552,7 +552,15 @@ public class PersonaInfeccion : MonoBehaviour
 
 
             ActualizarVisualFase();
-            StartCoroutine(FlashCambioFase());
+
+            if (this.gameObject.activeInHierarchy)
+            {
+                StartCoroutine(FlashCambioFase());
+            }
+            else
+            {
+                Debug.LogWarning("Se intentó iniciar corrutina en " + name + " pero está inactivo.");
+            }
         }
         else
         {

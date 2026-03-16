@@ -142,10 +142,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         unlocked ||
         ((IsDamageSkill() || IsCoinSkill() || IsTimeSkill()) && repeatLevel > 0);
 
-    void Awake() { if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>(); }
+    void Awake()
+    {
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+
+        // 1. CARGAMOS EL ESTADO AQUÍ, ANTES DE QUE NADIE PREGUNTE
+        LoadNodeState();
+    }
 
     void Start()
     {
+        // Forzamos la carga por si acaso Awake falló por orden de ejecución
         LoadNodeState();
         CheckIfShouldShow();
 
@@ -166,16 +173,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (string.IsNullOrEmpty(saveID)) return;
 
-        // Primero: estado de la run actual
-        if (runtimeUnlocked.TryGetValue(saveID, out bool runUnlocked))
-        {
-            unlocked = runUnlocked;
-            repeatLevel = runtimeRepeat.TryGetValue(saveID, out int runRepeat) ? runRepeat : 0;
-            return;
-        }
-
-        // Si no hay estado de run, cargamos del save real
+        // 1. Intentamos cargar primero de PlayerPrefs (el dato real en disco)
         int estadoGuardado = PlayerPrefs.GetInt("Skill_" + saveID + "_Unlocked", -1);
+        int repeatGuardado = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
 
         if (estadoGuardado == 1)
             unlocked = true;
@@ -184,9 +184,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         else
             unlocked = isStartingNode;
 
-        repeatLevel = PlayerPrefs.GetInt("Skill_" + saveID + "_Repeat", 0);
+        repeatLevel = repeatGuardado;
 
-        // Guardamos también en memoria de run
+        // 2. Sincronizamos el estado de runtime para que el resto del sistema lo vea
         runtimeUnlocked[saveID] = unlocked;
         runtimeRepeat[saveID] = repeatLevel;
     }
@@ -855,24 +855,36 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // -------------------------
             // RADIO
             // -------------------------
+            // Dentro de ApplyEffect() en SkillNode.cs
+
             case SkillEffectType.MultiplyRadius125:
+                Guardado.instance.AddRadiusMultiplier(0.25f);
+                Guardado.instance.SaveData();
+                // AGREGAR ESTO:
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+
             case SkillEffectType.MultiplyRadius150:
+                Guardado.instance.AddRadiusMultiplier(0.50f);
+                Guardado.instance.SaveData();
+                // AGREGAR ESTO:
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+
             case SkillEffectType.MultiplyRadius200:
+                Guardado.instance.AddRadiusMultiplier(1.00f);
+                Guardado.instance.SaveData();
+                // AGREGAR ESTO:
+                if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
+                break;
+
             case SkillEffectType.RadiusLevel2:
             case SkillEffectType.RadiusLevel3:
             case SkillEffectType.RadiusLevel4:
             case SkillEffectType.RadiusLevel5:
             case SkillEffectType.RadiusLevel6:
-                {
-                    float actual = g.radiusMultiplier;
-                    float bonus = (effectType == SkillEffectType.MultiplyRadius200) ? 1f :
-                                  (effectType == SkillEffectType.MultiplyRadius150) ? 0.5f : 0.25f;
-                    float despues = actual + bonus;
-
-                    if (comprado) sb.AppendLine($"{GetTexto("prev_radio")}: {actual:F2}");
-                    else sb.AppendLine($"{GetTexto("prev_radio")}: {actual:F2} → {despues:F2}");
-                    break;
-                }
+                VirusRadiusController.instance.UpgradeRadius(); // Este ya llama a ApplyScale() internamente, así que está bien.
+                break;
 
             // -------------------------
             // VELOCIDAD VIRUS

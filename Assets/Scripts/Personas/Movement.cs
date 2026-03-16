@@ -107,6 +107,8 @@ public class Movement : MonoBehaviour
                 // Le enviamos este gameObject, el punto del impacto y le decimos que es un Choque
                 planeta.ProcesarImpacto(this.gameObject, hit.point, PlanetCrontrollator.TipoImpacto.Choque);
             }
+
+            if (!gameObject.activeInHierarchy) return;
             // =======================================
 
             // Ejecutamos tu lógica exacta de rebote de inmediato
