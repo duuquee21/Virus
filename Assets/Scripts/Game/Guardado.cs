@@ -87,6 +87,7 @@ public class Guardado : MonoBehaviour
 
     public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
     public float agujeroSpawnRate;
+    public float spawnBaseOnMaxPhaseChance = 0f;
 
     void Awake()
     {
@@ -160,6 +161,7 @@ public class Guardado : MonoBehaviour
         hojaFases = 1;
         agujeroNegroData = false;
         agujeroSpawnRate = 10f;
+        spawnBaseOnMaxPhaseChance = 0f;
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -222,7 +224,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("AgujeroNegroData", agujeroNegroData ? 1 : 0);
         PlayerPrefs.SetFloat("AgujeroSpawnRate", agujeroSpawnRate);
 
-
+        PlayerPrefs.SetFloat("SpawnBaseOnMaxPhaseChance", spawnBaseOnMaxPhaseChance);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             PlayerPrefs.SetFloat("InfectSpeedPhase_" + i, infectSpeedPerPhase[i]);
@@ -288,7 +290,7 @@ public class Guardado : MonoBehaviour
         hojaFases = PlayerPrefs.GetInt("HojaFases", 1);
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 10f);
-
+        spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
@@ -318,7 +320,10 @@ public class Guardado : MonoBehaviour
     public void SetInfectSpeedMultiplier(float val) { infectSpeedMultiplier = val; }
     public void ActivateKeepZones() { keepZonesUnlocked = true; }
     public void ActivateKeepUpgrades() { keepUpgradesOnReset = true; }
-
+    public void AddSpawnBaseOnMaxPhaseChance(float amount)
+    {
+        spawnBaseOnMaxPhaseChance += amount;
+    }
     public void SetDoubleUpgradeChance(float chance)
     {
         doubleUpgradeChance = Mathf.Clamp01(chance);

@@ -946,6 +946,26 @@ MonoBehaviour:
     m_Localized: Aumenta la probabilidad de que brote una Hoja Negra.
     m_Metadata:
       m_Items: []
+  - m_Id: 3616385972543488
+    m_Localized: Volumen General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616467572727808
+    m_Localized: "Volumen M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616490419101696
+    m_Localized: Volumen SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616508370722816
+    m_Localized: Temblor Pantalla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616534979387392
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

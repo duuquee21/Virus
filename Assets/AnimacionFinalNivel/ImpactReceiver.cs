@@ -3,7 +3,7 @@ using UnityEngine;
 public class ImpactReceiver : MonoBehaviour
 {
     [Header("Ajustes Individuales")]
-    [Tooltip("Permite que unos objetos se sacudan más que otros (1 = normal)")]
+    [Tooltip("Permite que unos objetos se sacudan mï¿½s que otros (1 = normal)")]
     public float multiplicadorMasa = 1f;
 
     private float fuerzaActual = 0f;
@@ -24,11 +24,13 @@ public class ImpactReceiver : MonoBehaviour
 
     private void StartShake(float intensidad)
     {
+        if (!GameSettings.instance.shakeEnabled) return;
+
         // Aplicamos la intensidad del evento multiplicada por la masa del objeto
         fuerzaActual = intensidad * multiplicadorMasa;
     }
 
-    void LateUpdate() // Usamos LateUpdate para que ocurra DESPUÉS del movimiento normal
+    void LateUpdate() // Usamos LateUpdate para que ocurra DESPUï¿½S del movimiento normal
     {
         if (fuerzaActual > 0.01f)
         {
@@ -37,7 +39,7 @@ public class ImpactReceiver : MonoBehaviour
             float y = UnityEngine.Random.Range(-1f, 1f) * fuerzaActual;
 
             // 2. Restamos el offset anterior y sumamos el nuevo
-            // Esto permite que el objeto siga su ruta original pero con la vibración encima
+            // Esto permite que el objeto siga su ruta original pero con la vibraciï¿½n encima
             transform.localPosition -= offsetActual;
             offsetActual = new Vector3(x, y, 0);
             transform.localPosition += offsetActual;

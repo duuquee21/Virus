@@ -84,7 +84,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ActivarAgujeroNegro,
         MejorarSpawnHojaNegra,
         MejorarDmgHojaNegra,
-        MejorarSpawnAgujeroNegro
+        MejorarSpawnAgujeroNegro,
+        SpawnBaseFigureOnMaxPhase20
     }
 
     [Header("Save ID")]
@@ -706,6 +707,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.agujeroSpawnRate += GetFloat(0.25f);
                 Guardado.instance.SaveData();
                 break;
+            case SkillEffectType.SpawnBaseFigureOnMaxPhase20:
+                Guardado.instance.AddSpawnBaseOnMaxPhaseChance(1f);
+                Guardado.instance.SaveData();
+                break;
 
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
@@ -1237,6 +1242,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float extra = GetFloat(0.1f);
                     if (comprado) sb.AppendLine($"Spawn Agujero: {actual:F2}");
                     else sb.AppendLine($"Spawn Agujero: {actual:F2} → {(actual + extra):F2}");
+                    break;
+                }
+
+            case SkillEffectType.SpawnBaseFigureOnMaxPhase20:
+                {
+                    float actual = g.spawnBaseOnMaxPhaseChance * 100f;
+                    float despues = (g.spawnBaseOnMaxPhaseChance + 0.20f) * 100f;
+
+                    if (comprado)
+                        sb.AppendLine($"Prob. generación al fase final: {actual:F0}%");
+                    else
+                        sb.AppendLine($"Prob. generación al fase final: {actual:F0}% → {despues:F0}%");
                     break;
                 }
         }

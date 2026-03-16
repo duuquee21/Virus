@@ -169,7 +169,10 @@ public class LevelTransitioner : MonoBehaviour
             popManager.ConfigureRound(0);
         }
 
-        OnImpactShake?.Invoke(intensidadImpacto);
+        if (GameSettings.instance.shakeEnabled)
+        {
+            OnImpactShake?.Invoke(intensidadImpacto);
+        }
         mainCam.orthographicSize = zoomOriginal;
 
         yield return StartCoroutine(DryImpactShake());
@@ -180,6 +183,8 @@ public class LevelTransitioner : MonoBehaviour
 
     private IEnumerator DryImpactShake()
     {
+        if (!GameSettings.instance.shakeEnabled) yield break;
+
         Vector3 posOriginal = camTransform.localPosition;
         float fuerzaActual = intensidadImpacto;
 
