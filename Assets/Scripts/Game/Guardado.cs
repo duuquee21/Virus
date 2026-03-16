@@ -298,6 +298,12 @@ public class Guardado : MonoBehaviour
         {
             probParedInfectiva[i] = PlayerPrefs.GetFloat("ProbParedInfectiva_" + i, 0f);
         }
+
+        SkillNodeStateController[] controllers = FindObjectsOfType<SkillNodeStateController>(true);
+        foreach (var controller in controllers)
+        {
+            controller.RefreshScale();
+        }
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---

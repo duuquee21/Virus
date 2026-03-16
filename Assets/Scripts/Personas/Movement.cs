@@ -34,6 +34,9 @@ public class Movement : MonoBehaviour
     private HashSet<Movement> objetosColisionadosEsteFrame = new HashSet<Movement>();
 
 
+    [Header("Ajustes Anti-Tunneling")]
+    public LayerMask capaParedes;   
+
 
     void Start()
     {
@@ -64,17 +67,81 @@ public class Movement : MonoBehaviour
             return;
         }
 
+        // 1. PREDICCIÓN DE IMPACTO (El sistema Anti-Tunneling)
+        PredecirColisionParedes();
+
+        // 2. Movimiento
         ManejarMovimientoNormal();
 
-        // Actualizar posición en el grid y detectar colisiones circle-to-circle
+        // 3. Grid y colisiones entre personas
         ActualizarPosicionGrid();
         DetectarColisionesCircleToCircle();
 
-        // --- SEGURIDAD ABSOLUTA: Límite de velocidad ---
-        // Esto actúa como un limitador físico constante.
+        // 4. Límite de velocidad
         if (rb.linearVelocity.magnitude > 100f)
         {
             rb.linearVelocity = rb.linearVelocity.normalized * 100f;
+        }
+    }
+
+    /// <summary>
+    /// Lanza un "rayo" del tamaño del collider hacia adelante para ver si en este frame vamos a atravesar una pared.
+    /// </summary>
+    private void PredecirColisionParedes()
+    {
+        if (rb.linearVelocity.sqrMagnitude < 0.1f) return;
+
+        float distanciaFrame = rb.linearVelocity.magnitude * Time.fixedDeltaTime;
+        Vector2 direccionMovimiento = rb.linearVelocity.normalized;
+        float miRadio = circleCollider.radius * transform.localScale.x;
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, miRadio, direccionMovimiento, distanciaFrame, capaParedes);
+
+        if (hit.collider != null && hit.collider.CompareTag("Pared"))
+        {
+            // === NUEVO: APLICAR DAÑO MANUALMENTE ===
+            // Buscamos el script del planeta en el objeto con el que chocamos
+            PlanetCrontrollator planeta = hit.collider.GetComponent<PlanetCrontrollator>();
+            if (planeta != null)
+            {
+                // Le enviamos este gameObject, el punto del impacto y le decimos que es un Choque
+                planeta.ProcesarImpacto(this.gameObject, hit.point, PlanetCrontrollator.TipoImpacto.Choque);
+            }
+            // =======================================
+
+            // Ejecutamos tu lógica exacta de rebote de inmediato
+            ProcesarReboteContraPared(hit.point, hit.normal);
+
+            // Separar ligeramente el objeto de la pared para evitar que se quede pegado
+            transform.position = hit.centroid + (hit.normal * 0.05f);
+        }
+    }
+
+    /// <summary>
+    /// Contiene exactamente tu misma matemática de rebote que tenías en OnTriggerEnter2D / OnCollisionEnter2D
+    /// </summary>
+    private void ProcesarReboteContraPared(Vector2 puntoImpacto, Vector2 normal)
+    {
+        // Tu rebote de la direccion base
+        direccion = Vector2.Reflect(direccion, normal).normalized;
+
+        if (estaEmpujado)
+        {
+            // Tu cálculo del nuevo vector de rebote
+            Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
+
+            if (personaInfeccion != null && personaInfeccion.EsFaseMaxima() && rb.linearVelocity.magnitude > 6.5f && Guardado.instance != null && Guardado.instance.nivelParedInfectiva == 6)
+            {
+                Debug.Log("<color=blue>Rebote de Fase Final: Velocidad Constante Aplicada.</color>");
+                Vector2 direccionRebote = Vector2.Reflect(rb.linearVelocity, normal).normalized;
+                float velocidadFija = 30f;
+                rb.linearVelocity = direccionRebote * velocidadFija;
+            }
+            else
+            {
+                // Rebote normal
+                rb.linearVelocity = nuevaVelocidad;
+            }
         }
     }
 
