@@ -43,6 +43,14 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
         targetPos = originalPos;
     }
 
+    void Awake()
+    {
+        if (rect == null) rect = GetComponent<RectTransform>();
+        originalScale = rect.localScale;
+        targetScale = originalScale;
+        targetPos = rect.anchoredPosition;
+    }
+
     void Update()
     {
         rect.localScale = Vector3.Lerp(rect.localScale, targetScale, Time.unscaledDeltaTime * speed);
@@ -73,18 +81,19 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void SetPurchasedState(bool purchased)
     {
         isPurchased = purchased;
-        // Forzamos que la escala base sea la de comprado o la normal
-        originalScale = purchased ? Vector3.one * purchasedScale : Vector3.one;
 
-        // IMPORTANTE: Actualizamos el target y la escala actual de inmediato
-        targetScale = originalScale;
+        // IMPORTANTE: Definimos la escala según el estado
+        Vector3 baseScale = purchased ? Vector3.one * purchasedScale : Vector3.one;
+
+        // Actualizamos tanto la escala actual como la de referencia (originalScale)
+        // para que el OnPointerExit no lo devuelva a un tamaño erróneo
+        originalScale = baseScale;
+        targetScale = baseScale;
+
         if (rect == null) rect = GetComponent<RectTransform>();
-        rect.localScale = originalScale;
+        rect.localScale = baseScale;
 
-        if (infoPanel != null)
-        {
-            infoPanel.localScale = originalScale;
-        }
+        if (infoPanel != null) infoPanel.localScale = baseScale;
     }
 
     public void PlayClickFeedback()

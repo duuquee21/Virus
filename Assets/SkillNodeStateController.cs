@@ -29,13 +29,8 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     }
     void Start()
     {
-        // Al iniciar, forzamos la escala correcta según el guardado
-        var fx = GetComponent<SkillNodeHoverFX>();
-        if (fx != null && skillNode != null)
-        {
-            // Si el nodo ya estaba desbloqueado o al límite, aplicar escala de comprado
-            fx.SetPurchasedState(IsAtLimit());
-        }
+        // Usamos una pequeña espera o aseguramos que el nodo tenga sus datos
+        RefreshScale();
     }
     void Update()
     {
@@ -43,6 +38,17 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             return;
 
         UpdateState();
+    }
+
+    public void RefreshScale()
+    {
+        var fx = GetComponent<SkillNodeHoverFX>();
+        if (fx != null && skillNode != null)
+        {
+            // Forzamos la carga de datos del ScriptableObject/Nodo si fuera necesario
+            // skillNode.LoadNodeState(); 
+            fx.SetPurchasedState(IsAtLimit());
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData) => isHovered = true;

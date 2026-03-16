@@ -66,7 +66,7 @@ public class PlanetCrontrollator : MonoBehaviour
         }
     }
 
-    private void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
+    public void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
         int id = obj.GetInstanceID();
         float time = Time.time;

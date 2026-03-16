@@ -6,7 +6,7 @@ using DG.Tweening; // Importante: Instala DOTween
 
 public class ScalableButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [Header("Configuración de UI")]
+    [Header("Configuraciï¿½n de UI")]
     [SerializeField] private Image buttonImage;
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private Sprite purchasedSprite;
@@ -39,11 +39,11 @@ public class ScalableButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (isPurchased) return;
 
-        // Animación de escala + movimiento sutil
+        // Animaciï¿½n de escala + movimiento sutil
         transform.DOScale(hoverScale, animationDuration).SetEase(transitionEase);
         if (infoText != null) infoText.gameObject.SetActive(true);
 
-        OnHoverEnterEffect(); // Para partículas/sonido futuro
+        OnHoverEnterEffect(); // Para partï¿½culas/sonido futuro
     }
 
     // FASE 3: Mouse Exit
@@ -60,7 +60,7 @@ public class ScalableButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (isPurchased) return;
 
-        // Lógica de compra (Ejemplo simple)
+        // Lï¿½gica de compra (Ejemplo simple)
         bool canAfford = CheckEconomy();
 
         if (canAfford)
@@ -78,30 +78,33 @@ public class ScalableButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         isPurchased = true;
         buttonImage.sprite = purchasedSprite;
 
-        // Animación de éxito (Fase 4)
+        // Animaciï¿½n de ï¿½xito (Fase 4)
         transform.DOScale(normalScale, animationDuration).SetEase(Ease.OutBounce);
         if (infoText != null) infoText.gameObject.SetActive(false);
 
         Debug.Log("Comprado!");
-        // Aquí llamarías a tu sistema de partículas o sonidos
+        // Aquï¿½ llamarï¿½as a tu sistema de partï¿½culas o sonidos
     }
 
     private void ExecuteErrorFeedback()
     {
         // Fase 5: Movimiento y color rojo
         buttonImage.DOColor(errorColor, 0.1f).SetLoops(2, LoopType.Yoyo);
-        transform.DOShakePosition(0.3f, shakeStrength);
+        if (GameSettings.instance.shakeEnabled)
+        {
+            transform.DOShakePosition(0.3f, shakeStrength);
+        }
     }
 
     private bool CheckEconomy()
     {
-        // Sustituir por tu lógica real de dinero
+        // Sustituir por tu lï¿½gica real de dinero
         return true;
     }
 
-    // --- MÉTODOS PARA ESCALABILIDAD FUTURA ---
+    // --- Mï¿½TODOS PARA ESCALABILIDAD FUTURA ---
     protected virtual void OnHoverEnterEffect()
     {
-        // Aquí podrás añadir sonidos o partículas sin romper la lógica base
+        // Aquï¿½ podrï¿½s aï¿½adir sonidos o partï¿½culas sin romper la lï¿½gica base
     }
 }
