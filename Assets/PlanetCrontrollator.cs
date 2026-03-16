@@ -22,7 +22,21 @@ public class PlanetCrontrollator : MonoBehaviour
     [Header("Ajustes de Muerte")]
     public float delayMuerte = 1.5f;
     public float fuerzaVibracion = 0.1f;
-    private Vector3 posOriginal;
+
+    // --- NUEVO SISTEMA DE GUARDADO DE JERARQUÍA ---
+    private struct TransformData
+    {
+        public Vector3 localPosition;
+        public Quaternion localRotation;
+
+        public TransformData(Vector3 pos, Quaternion rot)
+        {
+            localPosition = pos;
+            localRotation = rot;
+        }
+    }
+    private Dictionary<Transform, TransformData> transformacionesOriginales;
+    // ----------------------------------------------
 
     [Header("Efectos de Daño")]
     public GameObject damageTextPrefab;
@@ -31,8 +45,6 @@ public class PlanetCrontrollator : MonoBehaviour
     private float currentHealth;
 
     private bool resultsDirty = false;
-
-
 
     public enum TipoImpacto
     {
@@ -54,8 +66,11 @@ public class PlanetCrontrollator : MonoBehaviour
         ActualizarUI();
 
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
-        posOriginal = transform.position;
+
+        // --- GUARDAR TRANSFORMACIONES DE LA FAMILIA ---
+        GuardarEstadoJerarquia();
     }
+
     void Update()
     {
         // Solo actualizamos la UI una vez por frame, sin importar cuántos choques hubo
@@ -64,6 +79,23 @@ public class PlanetCrontrollator : MonoBehaviour
             if (EndDayResultsPanel.instance != null)
                 EndDayResultsPanel.instance.RefreshResults();
             resultsDirty = false;
+        }
+    }
+
+    private void GuardarEstadoJerarquia()
+    {
+        transformacionesOriginales = new Dictionary<Transform, TransformData>();
+
+        // Si tiene padre, el "root" a guardar es el padre. Si no, es este mismo objeto.
+        Transform root = transform.parent != null ? transform.parent : transform;
+
+        // Guardamos el padre
+        transformacionesOriginales[root] = new TransformData(root.localPosition, root.localRotation);
+
+        // Guardamos todos los hijos del padre (esto incluye a los hermanos y a este mismo objeto)
+        foreach (Transform child in root)
+        {
+            transformacionesOriginales[child] = new TransformData(child.localPosition, child.localRotation);
         }
     }
 
@@ -101,23 +133,16 @@ public class PlanetCrontrollator : MonoBehaviour
 
                 if (Guardado.instance != null)
                 {
-                    // Obtenemos el tipo de figura actual (0=Hex, 1=Pent, etc.)
                     int faseActual = (int)scriptInfeccion.faseActual;
-
-                    // Calculamos la probabilidad: Cada nivel de habilidad otorga 25% (0.25f)
-                    // El índice 1 corresponde a Pentágonos, 2 a Cuadrados, etc.
                     float nivelHabilidad = Guardado.instance.probParedInfectiva[faseActual];
                     float probabilidadDeRomper = nivelHabilidad * 0.25f;
 
-                    // Generamos un número aleatorio entre 0 y 1 para decidir si se rompe
                     if (Random.value <= probabilidadDeRomper)
                     {
-                        // Éxito: La pared infectiva funciona y la figura avanza/se rompe
                         scriptInfeccion.IntentarAvanzarFasePorChoque(PersonaInfeccion.TipoChoque.Wall);
                     }
                     else
                     {
-                        // Fallo: Solo efecto visual de impacto normal
                         InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
                     }
                 }
@@ -158,7 +183,6 @@ public class PlanetCrontrollator : MonoBehaviour
             ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Zona);
     }
 
-
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
@@ -191,14 +215,12 @@ public class PlanetCrontrollator : MonoBehaviour
     {
         if (healthBar != null)
         {
-            // Actualizar el llenado de la barra
             float fill = currentHealth / maxHealth;
             healthBar.fillAmount = fill;
 
             if (healthBarOutLine != null)
                 healthBarOutLine.fillAmount = fill + 0.0012f;
 
-            // Resetear la posición local del padre a (0, 0, 0)
             if (healthBar.transform.parent != null)
             {
                 healthBar.transform.parent.localPosition = Vector3.zero;
@@ -228,15 +250,26 @@ public class PlanetCrontrollator : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        transform.position = posOriginal;
+        // --- RESTAURAR TRANSFORMACIONES DE LA FAMILIA ---
+        if (transformacionesOriginales != null)
+        {
+            foreach (var kvp in transformacionesOriginales)
+            {
+                if (kvp.Key != null)
+                {
+                    kvp.Key.localPosition = kvp.Value.localPosition;
+                    kvp.Key.localRotation = kvp.Value.localRotation;
+                }
+            }
+        }
 
         ActualizarUI();
     }
+
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
-
 
     void Die()
     {

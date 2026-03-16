@@ -283,7 +283,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        // 1. Transición visual... (omitido para brevedad)
+        // 1. Transición visual...
         if (transitionScript != null)
         {
             transitionScript.SetShape(1);
@@ -293,9 +293,6 @@ public class LevelManager : MonoBehaviour
 
         // 2. Carga de datos
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-
-        // CAMBIO AQUÍ: Aunque leamos el mapa guardado, forzamos que sea 0
-        // int savedMap = PlayerPrefs.GetInt("Run_Map", 0); // Esto lo podemos comentar
         int savedMap = 0;
 
         float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
@@ -303,16 +300,19 @@ public class LevelManager : MonoBehaviour
 
         Guardado.instance.LoadEvolutionData();
 
+        // ---> AÑADIR ESTA LÍNEA: Reconstruir el árbol con los datos de la partida cargada
+        RebuildSkillTree();
+        // <--- FIN DEL CAMBIO
+
         // Forzamos el índice 0 en las preferencias del jugador
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
         currentTimer = savedTimer;
 
-        // Sincronización y UI... (el resto del código sigue igual)
+        // Sincronización y UI...
         SyncControllersWithSavedData();
 
-        // Importante: Asegurarse de que el mapa 0 se active visualmente
         ActivateMap(0);
 
         if (menuPanel) menuPanel.SetActive(false);
@@ -322,6 +322,7 @@ public class LevelManager : MonoBehaviour
 
         if (transitionScript != null) transitionScript.OpenBlackScreen();
     }
+
     public void NewGameFromMainMenu()
     {
         ResetRunData();
@@ -699,7 +700,7 @@ public class LevelManager : MonoBehaviour
         }
         if (timerIcon != null) if (timerIcon != null) timerIcon.rectTransform.localScale = timerIconOriginalScale;
         Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.025f;
+        Time.fixedDeltaTime = 0.02f;
         if (mainCamera == null) mainCamera = Camera.main;
         mainCamera.orthographicSize = defaultZoom;
 

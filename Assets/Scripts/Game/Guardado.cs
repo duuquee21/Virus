@@ -301,6 +301,13 @@ public class Guardado : MonoBehaviour
             probParedInfectiva[i] = PlayerPrefs.GetFloat("ProbParedInfectiva_" + i, 0f);
         }
 
+        // ---> AÑADIR ESTE BLOQUE: Cargar el estado individual de cada nodo
+        SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
+        foreach (SkillNode node in nodes)
+        {
+            node.LoadNodeState();
+        }
+
         SkillNodeStateController[] controllers = FindObjectsOfType<SkillNodeStateController>(true);
         foreach (var controller in controllers)
         {
