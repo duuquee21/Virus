@@ -157,10 +157,10 @@ public class Guardado : MonoBehaviour
 
         hojaNegraData = false; // Añadido
 
-        hojaSpawnRate = 10f; // O el valor base que prefieras
+        hojaSpawnRate = 5f; // O el valor base que prefieras
         hojaFases = 1;
         agujeroNegroData = false;
-        agujeroSpawnRate = 10f;
+        agujeroSpawnRate = 5f;
         spawnBaseOnMaxPhaseChance = 0f;
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
@@ -286,10 +286,10 @@ public class Guardado : MonoBehaviour
         coralInfeciosoActivo = PlayerPrefs.GetInt("CoralInfeciosoActivo", 0) == 1;
         coralCapacity = PlayerPrefs.GetInt("CoralCapacity", 5); // 5 como valor por defecto si no existe
         hojaNegraData = PlayerPrefs.GetInt("HojaNegraData", 0) == 1;
-        hojaSpawnRate = PlayerPrefs.GetFloat("HojaSpawnRate", 10f);
+        hojaSpawnRate = PlayerPrefs.GetFloat("HojaSpawnRate", 5f);
         hojaFases = PlayerPrefs.GetInt("HojaFases", 1);
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
-        agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 10f);
+        agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 5f);
         spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -365,7 +365,7 @@ public class Guardado : MonoBehaviour
 
     public void MejorarSpawnHojaNegra(float extraSpawn, int extraFases)
     {
-        hojaSpawnRate += extraSpawn;
+        hojaSpawnRate -= extraSpawn;
     }
 
     public void MejorarDmgHojaNegra(float extraSpawn, int extraFases)
@@ -375,7 +375,7 @@ public class Guardado : MonoBehaviour
 
     public void MejorarSpawnAgujeroNegro(float extraSpawn)
     {
-        agujeroSpawnRate += extraSpawn;
+        agujeroSpawnRate -= extraSpawn;
     }
 
     public void ActivarHojaNegra()
