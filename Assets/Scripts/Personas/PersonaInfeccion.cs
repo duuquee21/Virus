@@ -581,7 +581,15 @@ public class PersonaInfeccion : MonoBehaviour
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
 
             ActualizarVisualFase();
-            StartCoroutine(FlashCambioFase());
+
+            if (this.gameObject.activeInHierarchy)
+            {
+                StartCoroutine(FlashCambioFase());
+            }
+            else
+            {
+                Debug.LogWarning("Se intentó iniciar corrutina en " + name + " pero está inactivo.");
+            }
         }
         else
         {
