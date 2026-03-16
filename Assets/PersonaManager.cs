@@ -41,13 +41,13 @@ public class PersonaManager : MonoBehaviour
         for (int i = 0; i < total; i++)
         {
             PersonaInfeccion p = todasLasPersonas[i];
-            if (p == null) continue;
+
+            // VERIFICACIÓN: Si el objeto está nulo o desactivado, lo saltamos
+            if (p == null || !p.gameObject.activeInHierarchy) continue;
 
             Vector2 distDiff = (Vector2)p.transform.position - virusPos;
             bool estaDentro = distDiff.sqrMagnitude < radioSq;
 
-            // Pasamos el deltaTime multiplicado para compensar si no se actualiza cada frame
-            // O mejor: actualiza la lógica de infección para que sea independiente del frame
             p.ActualizacionOptimizada(estaDentro, virusTransform, dt);
         }
     }

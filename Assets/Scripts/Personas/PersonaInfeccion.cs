@@ -134,12 +134,15 @@ public class PersonaInfeccion : MonoBehaviour
         // Nos suscribimos al evento de destrucción
         LevelTransitioner.OnTransitionStart += Desaparecer;
         if (PersonaManager.Instance != null) PersonaManager.Instance.RegistrarPersona(this);
+
     }
 
     void OnDisable()
     {
         // Muy importante desuscribirse para evitar errores de memoria
         LevelTransitioner.OnTransitionStart -= Desaparecer;
+        if (PersonaManager.Instance != null)
+            PersonaManager.Instance.DesregistrarPersona(this);
     }
     public enum TipoChoque
     {
@@ -339,7 +342,11 @@ public class PersonaInfeccion : MonoBehaviour
 
         int faseAnterior = faseActual;
         currentInfectionTime = 0f;
-        StartCoroutine(ActivarRastroTemporal());
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(ActivarRastroTemporal());
+        }
+
 
         // Calculamos el avance base
         int steps = cantidadFases;
@@ -604,8 +611,18 @@ public class PersonaInfeccion : MonoBehaviour
 
     private void IniciarCambioColor(IEnumerator nuevaCorrutina)
     {
-        if (colorCoroutine != null) StopCoroutine(colorCoroutine);
-        colorCoroutine = StartCoroutine(nuevaCorrutina);
+        // 1. Verificamos si el componente está habilitado y el GameObject activo en la jerarquía
+        if (this.gameObject.activeInHierarchy)
+        {
+            if (colorCoroutine != null) StopCoroutine(colorCoroutine);
+            colorCoroutine = StartCoroutine(nuevaCorrutina);
+        }
+        else
+        {
+            // Opcional: Si el objeto está desactivado, simplemente aplicamos el color final 
+            // directamente sin animación para evitar que se quede con un color extraño.
+            Debug.LogWarning($"No se pudo iniciar corrutina en {gameObject.name} porque está inactivo.");
+        }
     }
     private void SpawnFloatingMoney(int cantidad)
     {
