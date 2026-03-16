@@ -37,7 +37,8 @@ public class PopulationManager : MonoBehaviour
     private HashSet<GameObject> personasVivas = new HashSet<GameObject>();
     private HashSet<GameObject> coralesVivos = new HashSet<GameObject>();
     private float checkOutsidersTimer = 0f;
-    private float checkOutsidersInterval = 0.5f; // Cada medio segundo en lugar de cada frame
+    private float checkOutsidersInterval = 0.25f; // Cada medio segundo en lugar de cada frame
+
 
     void Awake()
     {
@@ -131,8 +132,13 @@ public class PopulationManager : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        
-      
+
+        checkOutsidersTimer += Time.deltaTime;
+        if (checkOutsidersTimer >= checkOutsidersInterval)
+        {
+            CheckForOutsiders();
+            checkOutsidersTimer = 0f;
+        }
 
         if (timer >= spawnInterval )
         {
@@ -162,17 +168,11 @@ public class PopulationManager : MonoBehaviour
     void LimpiarSiEstaFuera(HashSet<GameObject> objetos, Collider2D areaReferencia)
     {
         List<GameObject> toRemove = new List<GameObject>();
-        
+
         foreach (GameObject obj in objetos)
         {
-            if (obj == null)
-            {
-                toRemove.Add(obj);
-                continue;
-            }
+            if (obj == null) { toRemove.Add(obj); continue; }
 
-            // Usar Distance2D en lugar de OverlapPoint (más rápido)
-            // OverlapPoint es O(n) en el collider, Distance es más optimizado
             if (!areaReferencia.OverlapPoint(obj.transform.position))
             {
                 toRemove.Add(obj);
@@ -180,7 +180,6 @@ public class PopulationManager : MonoBehaviour
             }
         }
 
-        // Limpiar referencias destruidas
         foreach (GameObject obj in toRemove)
         {
             objetos.Remove(obj);

@@ -28,6 +28,10 @@ public class PersonaInfeccion : MonoBehaviour
     public static float[] dañoCarambolaPorFase = new float[5];
     public static int[] golpesAlPlanetaPorFase = new int[5];
 
+    [Header("Barras Falsas por Fase")]
+    public GameObject[] prefabsBarraFalsa;
+    private GameObject instanciaBarraActual;
+
 
     [Header("Recompensa Económica (Coins)")]
     public int[] monedasPorFase = { 5, 4, 3, 2, 1 };
@@ -73,6 +77,7 @@ public class PersonaInfeccion : MonoBehaviour
     private Vector3 initialPosition;
     private bool positionSaved = false;
 
+  
 
 
 
@@ -91,28 +96,31 @@ public class PersonaInfeccion : MonoBehaviour
     private float trailTimer = 0f;
     private bool trailActivatedThisCycle = false;
 
+
+    private float lastProgressSent = -1f;
+
     void Start()
     {
         movementScript = GetComponent<Movement>();
-        rb = GetComponent<Rigidbody2D>(); // Asignación del Rigidbody
+        rb = GetComponent<Rigidbody2D>();
 
         if (spritePersona == null) spritePersona = GetComponent<SpriteRenderer>();
         originalColor = spritePersona.color;
 
-        if (infectionBarCanvas != null) infectionBarCanvas.SetActive(true);
+        // --- CAMBIO AQUÍ: Empezar con el Canvas APAGADO ---
+        if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
 
         trail1 = GetComponent<TrailRenderer>();
-        // Apagamos ambos al inicio
         if (trail1 != null) trail1.emitting = false;
         if (trail2 != null) trail2.emitting = false;
 
         ActualizarVisualFase();
         ActualizarProgresoBarras(0f);
+
+        // Referencia al Manager de animación
         GameObject jugadorVirus = GameObject.FindGameObjectWithTag("Virus");
         if (jugadorVirus != null)
-        {
             managerAnimacion = jugadorVirus.GetComponent<ManagerAnimacionJugador>();
-        }
     }
     private void SetTrailsEmitting(bool emit)
     {
@@ -123,6 +131,7 @@ public class PersonaInfeccion : MonoBehaviour
     {
         // Nos suscribimos al evento de destrucción
         LevelTransitioner.OnTransitionStart += Desaparecer;
+        if (PersonaManager.Instance != null) PersonaManager.Instance.RegistrarPersona(this);
     }
 
     void OnDisable()
@@ -136,87 +145,77 @@ public class PersonaInfeccion : MonoBehaviour
         Carambola
     }
 
-    void Update()
+    // Añade este método para que el Manager lo controle
+    public void SetInsideZoneManual(bool inside, Transform infector)
     {
-        if (alreadyInfected)
-        {
-            SetTrailsEmitting(false); // Cambia trail.emitting = false por esto
-            
-            return;
-        }
+        isInsideZone = inside;
+        if (inside) transformInfector = infector;
+    }
 
-        float resistenciaActual = (faseActual < resistenciaPorFase.Length) ? resistenciaPorFase[faseActual] : 1f;
-        float tiempoNecesarioEstaFase = globalInfectTime * resistenciaActual;
+    public void ActualizacionOptimizada(bool dentro, Transform infector, float deltaTime)
+    {
+        if (alreadyInfected) return;
+
+        isInsideZone = dentro;
+        transformInfector = dentro ? infector : null;
 
         if (isInsideZone)
         {
-           
-            // CASO A: Jugador Jugable (Infección normal)
-            if (managerAnimacion == null || managerAnimacion.playable)
+            // 1. ACTIVAR Canvas de vida y DESACTIVAR Barra Falsa
+            if (infectionBarCanvas != null && !infectionBarCanvas.activeSelf)
+                infectionBarCanvas.SetActive(true);
+
+            if (instanciaBarraActual != null && instanciaBarraActual.activeSelf)
+                instanciaBarraActual.SetActive(false);
+
+            // --- Lógica de cálculo de tiempo ---
+            float resistencia = (faseActual < resistenciaPorFase.Length) ? resistenciaPorFase[faseActual] : 1f;
+            float tiempoNecesario = globalInfectTime * resistencia;
+
+            float multiplier = 1f;
+            if (Guardado.instance != null)
             {
-                if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
-
-                float multiplier = 1f;
-
-                if (Guardado.instance != null)
-                {
-                    // Multiplicador global (lo que ya tenías)
-                    multiplier = Guardado.instance.infectSpeedMultiplier;
-
-                    // Multiplicador por fase (nuevo)
-                    if (Guardado.instance.infectSpeedPerPhase != null &&
-                        faseActual < Guardado.instance.infectSpeedPerPhase.Length)
-                    {
-                        multiplier *= Guardado.instance.infectSpeedPerPhase[faseActual];
-                    }
-                }
-
-                currentInfectionTime += Time.deltaTime * multiplier;
+                multiplier = Guardado.instance.infectSpeedMultiplier;
+                if (Guardado.instance.infectSpeedPerPhase != null && faseActual < Guardado.instance.infectSpeedPerPhase.Length)
+                    multiplier *= Guardado.instance.infectSpeedPerPhase[faseActual];
             }
-            // CASO B: Jugador NO Jugable (Atracción al centro)
-            else
+
+            currentInfectionTime += deltaTime * multiplier;
+            float progresoActual = currentInfectionTime / tiempoNecesario;
+
+            if (Mathf.Abs(progresoActual - lastProgressSent) > 0.01f)
             {
-                // 1. Calculamos la distancia al centro de la pantalla
-                Vector3 centroMundo = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-                centroMundo.z = 0; // Asegurar que estamos en el mismo plano 2D
-                float distanciaAlCentro = Vector2.Distance(transform.position, (Vector2)centroMundo);
-
-                // 2. Solo vibramos si ya estamos "cerca" del centro (ej. radio de 0.5)
-                if (distanciaAlCentro < 0.5f)
-                {
-                    if (!positionSaved)
-                    {
-                        initialPosition = transform.position;
-                        positionSaved = true;
-                    }
-
-                    float currentShake = 0.05f;
-                    float offsetX = Random.Range(-1f, 1f) * currentShake;
-                    float offsetY = Random.Range(-1f, 1f) * currentShake;
-
-                    transform.position = initialPosition + new Vector3(offsetX, offsetY, 0);
-                }
-                else
-                {
-                    // Si aún no llegamos al centro exacto, reseteamos la posición base para que el Movement.cs 
-                    // pueda seguir moviéndolo suavemente sin saltos
-                    if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
-                }
+                ActualizarProgresoBarras(progresoActual);
+                lastProgressSent = progresoActual;
             }
+
+            if (currentInfectionTime >= tiempoNecesario)
+                IntentarAvanzarFase();
         }
         else
         {
-            // Fuera de zona: Reset
-            if (positionSaved) { transform.position = initialPosition; positionSaved = false; }
-            currentInfectionTime -= Time.deltaTime * 2f;
+            // Si no está dentro, el tiempo baja
+            if (currentInfectionTime > 0)
+            {
+                currentInfectionTime -= deltaTime * 2f;
+                float resistencia = (faseActual < resistenciaPorFase.Length) ? resistenciaPorFase[faseActual] : 1f;
+                ActualizarProgresoBarras(currentInfectionTime / (globalInfectTime * resistencia));
+            }
+            else
+            {
+                // 2. DESACTIVAR Canvas de vida (cuando llega a 0) y ACTIVAR Barra Falsa
+                if (infectionBarCanvas != null && infectionBarCanvas.activeSelf)
+                    infectionBarCanvas.SetActive(false);
+
+                if (instanciaBarraActual != null && !instanciaBarraActual.activeSelf)
+                    instanciaBarraActual.SetActive(true);
+            }
         }
-
-        // ... resto del código de barras y avance de fase ...
-        currentInfectionTime = Mathf.Clamp(currentInfectionTime, 0f, tiempoNecesarioEstaFase);
-        float progress = currentInfectionTime / tiempoNecesarioEstaFase;
-        ActualizarProgresoBarras(progress);
-
-        if (currentInfectionTime >= tiempoNecesarioEstaFase) IntentarAvanzarFase();
+    }
+    // 3. Limpieza al morir
+    void OnDestroy()
+    {
+        if (PersonaManager.Instance != null) PersonaManager.Instance.DesregistrarPersona(this);
     }
 
     void ActualizarProgresoBarras(float progress)
@@ -370,6 +369,7 @@ public class PersonaInfeccion : MonoBehaviour
     void BecomeInfected()
     {
         alreadyInfected = true;
+        if (instanciaBarraActual != null) Destroy(instanciaBarraActual);
 
         if (infectionBarCanvas != null)
             infectionBarCanvas.SetActive(false);
@@ -421,6 +421,7 @@ public class PersonaInfeccion : MonoBehaviour
         {
             spritePersona.sprite = fasesSprites[faseActual];
             if (faseActual < coloresFases.Length) spritePersona.color = coloresFases[faseActual];
+            ActualizarInstanciaBarraFalsa();
 
             for (int i = 0; i < fillingBarImages.Length; i++)
             {
@@ -475,37 +476,17 @@ public class PersonaInfeccion : MonoBehaviour
         spritePersona.color = colorObjetivo;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!alreadyInfected && other.CompareTag("InfectionZone"))
-        {
-            isInsideZone = true;
-            transformInfector = other.transform;
-        }
-      
-        {
-            Debug.Log($"[TRIGGER] {gameObject.name} tocó {other.name} | Tag: {other.tag} | alreadyInfected: {alreadyInfected}");
-        }
-    }
+   
 
     void Desaparecer()
     {
-     InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.white,false);
+     //InfectionFeedback.instance.PlayBasicImpactEffect(transform.position, Color.white,false);
 
-        Destroy(gameObject);
+       gameObject.SetActive(false);
     }
 
 
 
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("InfectionZone"))
-        {
-            isInsideZone = false;
-            transformInfector = null;
-        }
-    }
 
     private IEnumerator InfectionColorSequence()
     {
@@ -571,35 +552,6 @@ public class PersonaInfeccion : MonoBehaviour
 
 
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log($"[COLISION] {gameObject.name} chocó con {collision.collider.name} | Tag: {collision.collider.tag} | alreadyInfected: {alreadyInfected}");
-
-        // --- Habilidad nueva ---
-        if (alreadyInfected &&
-            Guardado.instance != null &&
-            Guardado.instance.destroyCoralOnInfectedImpact &&
-            collision.collider.CompareTag("Coral"))
-        {
-            Debug.Log("<color=red>[IMPACTO CORAL]</color> Destruyendo Coral y Bola Blanca");
-
-            //Destroy(collision.collider.gameObject);
-            //Destroy(gameObject);
-            return;
-        }
-
-        // --- Pared infectiva ---
-        if (!collision.collider.CompareTag("Pared")) return;
-
-        if (Guardado.instance == null) return;
-        if (Guardado.instance.nivelParedInfectiva <= 0) return;
-
-        if (Guardado.instance.nivelParedInfectiva > faseActual)
-        {
-            Debug.Log("<color=blue>[PARED INFECTIVA]</color> Evolución por choque con pared");
-            IntentarAvanzarFasePorChoque(TipoChoque.Wall);
-        }
-    }
 
 
     private void IniciarCambioColor(IEnumerator nuevaCorrutina)
@@ -609,28 +561,23 @@ public class PersonaInfeccion : MonoBehaviour
     }
     private void SpawnFloatingMoney(int cantidad)
     {
-        if (floatingTextPrefab != null)
+        if (TextPooler.Instance != null)
         {
-            GameObject textObj = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+            // 1. Pedimos el objeto al Pooler
+            GameObject obj = TextPooler.Instance.SpawnText(transform.position, "+" + cantidad.ToString());
 
-            // Accedemos al MeshRenderer para cambiar el Order in Layer
-            MeshRenderer meshRenderer = textObj.GetComponent<MeshRenderer>();
+            // 2. Configuramos lo que faltaba usando 'obj' (antes textObj)
+            MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
             if (meshRenderer != null)
             {
-                // 32767 es el valor máximo permitido en el Sorting Order de Unity
                 meshRenderer.sortingOrder = 32767;
             }
 
-            // Accedemos al componente de texto para cambiar el color a negro
-            TMPro.TextMeshPro tm = textObj.GetComponent<TMPro.TextMeshPro>();
+            TMPro.TextMeshPro tm = obj.GetComponent<TMPro.TextMeshPro>();
             if (tm != null)
             {
                 tm.color = Color.white;
-                tm.text = "+" + cantidad.ToString(); // También puedes asignarlo aquí directamente
             }
-
-            FloatingText ft = textObj.GetComponent<FloatingText>();
-            if (ft != null) ft.SetText("+" + cantidad.ToString());
         }
     }
     private int GetCoinsForPhase(int fase)
@@ -657,5 +604,20 @@ public class PersonaInfeccion : MonoBehaviour
     public void SetInfector(Transform nuevoInfector)
     {
         transformInfector = nuevoInfector;
+    }
+
+    private void ActualizarInstanciaBarraFalsa()
+    {
+        if (instanciaBarraActual != null) Destroy(instanciaBarraActual);
+
+        if (prefabsBarraFalsa != null && faseActual < prefabsBarraFalsa.Length)
+        {
+            if (prefabsBarraFalsa[faseActual] != null)
+            {
+                instanciaBarraActual = Instantiate(prefabsBarraFalsa[faseActual], transform);
+                // Si ya estamos en la zona, la barra falsa nace desactivada
+                instanciaBarraActual.SetActive(!isInsideZone);
+            }
+        }
     }
 }

@@ -3,37 +3,52 @@ using TMPro;
 
 public class FloatingText : MonoBehaviour
 {
-    public float destroyTime = 1f;
+    public float lifetime = 1f;
     public float speed = 2f;
 
     private TextMeshPro textMesh;
     private Color textColor;
+    private float timer;
 
-    void Start()
+    void Awake()
     {
         textMesh = GetComponent<TextMeshPro>();
-        textColor = textMesh.color;
+    }
 
-        Destroy(gameObject, destroyTime);
+    // Se ejecuta cada vez que el pool activa el objeto
+    void OnEnable()
+    {
+        timer = 0f;
+        if (textMesh != null)
+        {
+            textColor = textMesh.color;
+            textColor.a = 1f; // Resetear opacidad
+            textMesh.color = textColor;
+        }
 
-        // Pequeña variación horizontal para evitar solapamiento perfecto
+        // Variación horizontal inicial
         transform.position += new Vector3(Random.Range(-0.2f, 0.2f), 0, 0);
     }
 
     void Update()
     {
-        // 1. Movimiento hacia arriba
         transform.position += Vector3.up * speed * Time.deltaTime;
 
-        // 2. Reducción del Alfa
-        // Restamos el alfa proporcionalmente al tiempo de vida total
-        textColor.a -= (1f / destroyTime) * Time.deltaTime;
+        timer += Time.deltaTime;
+
+        // Fade out
+        textColor.a = Mathf.Lerp(1f, 0f, timer / lifetime);
         textMesh.color = textColor;
+
+        // En lugar de Destroy, lo desactivamos al terminar el tiempo
+        if (timer >= lifetime)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void SetText(string text)
     {
-        // Aseguramos que tenemos la referencia si se llama antes del Start
         if (textMesh == null) textMesh = GetComponent<TextMeshPro>();
         textMesh.text = text;
     }

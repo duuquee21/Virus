@@ -1043,8 +1043,44 @@ MonoBehaviour:
     m_Key: skill_carambolacir_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 2831660866129944
-    m_Key: asfsf
+  - m_Id: 3381372799209472
+    m_Key: skill_blackHole_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3381372799209473
+    m_Key: skill_blackHole_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676992
+    m_Key: skill_blackHoleSpawn_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676993
+    m_Key: skill_blackHoleSpawn_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676994
+    m_Key: skill_blackleaf_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676995
+    m_Key: skill_blackleaf_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676996
+    m_Key: skill_blackLeafDamage_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676997
+    m_Key: skill_blackLeafDamage_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676998
+    m_Key: skill_blackleafSpawn_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676999
+    m_Key: skill_blackleafSpawn_desc
     m_Metadata:
       m_Items: []
   m_Metadata:

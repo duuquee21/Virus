@@ -155,11 +155,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816337
-    m_Localized: Tiempo+
+    m_Localized: Un ratito mas...
     m_Metadata:
       m_Items: []
   - m_Id: 826949816338
-    m_Localized: Aumenta el tiempo
+    m_Localized: ' +2s tiempo para seguir infectando.'
     m_Metadata:
       m_Items: []
   - m_Id: 826949816360
@@ -191,7 +191,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816367
-    m_Localized: Tri-Captura
+    m_Localized: Tri-Captura+
     m_Metadata:
       m_Items: []
   - m_Id: 826949816368
@@ -199,47 +199,47 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816369
-    m_Localized: Captura triangulos mas rapido
+    m_Localized: "Acelera el tiempo de infecci\xF3n de los triangulos."
     m_Metadata:
       m_Items: []
   - m_Id: 826954010627
-    m_Localized: Cuadra-Captura
+    m_Localized: Cuadra-Captura+
     m_Metadata:
       m_Items: []
   - m_Id: 826954010628
-    m_Localized: Captura cuadrados mas rapido
+    m_Localized: "Acelera el tiempo de infecci\xF3n de los cuadrados."
     m_Metadata:
       m_Items: []
   - m_Id: 826954010634
-    m_Localized: Hexa-Captura
+    m_Localized: Hexa-Captura+
     m_Metadata:
       m_Items: []
   - m_Id: 826954010635
-    m_Localized: Captura hexagonos mas rapido
+    m_Localized: "Acelera el tiempo de infecci\xF3n de los hex\xE1gonos."
     m_Metadata:
       m_Items: []
   - m_Id: 826954010641
-    m_Localized: Penta-Captura
+    m_Localized: Penta-Captura+
     m_Metadata:
       m_Items: []
   - m_Id: 826954010642
-    m_Localized: Captura pentagonos mas rapido
+    m_Localized: "Acelera el tiempo de infecci\xF3n de los pentagonos."
     m_Metadata:
       m_Items: []
   - m_Id: 826954010648
-    m_Localized: Cir-Captura
+    m_Localized: Cir-Captura+
     m_Metadata:
       m_Items: []
   - m_Id: 826954010649
-    m_Localized: Captura circulos mas rapido
+    m_Localized: "Acelera el tiempo de infecci\xF3n de los circulos."
     m_Metadata:
       m_Items: []
   - m_Id: 826954010655
-    m_Localized: Intervalo de aparicion
+    m_Localized: "Aparici\xF3n Expr\xE9s"
     m_Metadata:
       m_Items: []
   - m_Id: 826954010656
-    m_Localized: Reduce el tiempo entre aparicion de figuras
+    m_Localized: Acelera el ritmo al que llegan nuevas figuras al mapa.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010666
@@ -251,11 +251,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010673
-    m_Localized: Aumento radio
+    m_Localized: Aura Infecciosa
     m_Metadata:
       m_Items: []
   - m_Id: 826954010674
-    m_Localized: Aumenta el radio de ataque
+    m_Localized: Tu zona de contagio crece.
     m_Metadata:
       m_Items: []
   - m_Id: 826958204934
@@ -275,19 +275,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826958204950
-    m_Localized: Nivel de velocidad
+    m_Localized: Turbo-Fiebre
     m_Metadata:
       m_Items: []
   - m_Id: 826958204951
-    m_Localized: Mejora el nivel de la velocidad
+    m_Localized: Aumenta tu velocidad de movimiento.
     m_Metadata:
       m_Items: []
   - m_Id: 826958204959
-    m_Localized: Bonus temporal
+    m_Localized: Segundo de Suerte
     m_Metadata:
       m_Items: []
   - m_Id: 826958204960
-    m_Localized: Probabilidad de aumentar el tiempo 1s
+    m_Localized: Probabilidad de rascar 1 segundo extra al reloj.
     m_Metadata:
       m_Items: []
   - m_Id: 826962399238
@@ -303,27 +303,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787840
-    m_Localized: "Da\xF1o Hexagono"
+    m_Localized: Furia Hexagonal
     m_Metadata:
       m_Items: []
   - m_Id: 826970787841
-    m_Localized: "Aumenta el da\xF1o del hexagono"
+    m_Localized: Los hexagonos golpean mas fuerte.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787851
-    m_Localized: "Da\xF1o Pentagono"
+    m_Localized: Furia Pentagonal
     m_Metadata:
       m_Items: []
   - m_Id: 826970787852
-    m_Localized: "Aumenta el da\xF1o del pentagono"
+    m_Localized: "Los pent\xE1gonos golpean m\xE1s fuerte."
     m_Metadata:
       m_Items: []
   - m_Id: 826970787862
-    m_Localized: "Da\xF1o Cuadrado"
+    m_Localized: Furia Cuadrangular
     m_Metadata:
       m_Items: []
   - m_Id: 826970787863
-    m_Localized: "Aumenta el da\xF1o del cuadrado"
+    m_Localized: "Los cuadrados golpean m\xE1s fuerte."
     m_Metadata:
       m_Items: []
   - m_Id: 826974982144
@@ -359,11 +359,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982152
-    m_Localized: "Da\xF1o Triangulo"
+    m_Localized: Furia Triangular
     m_Metadata:
       m_Items: []
   - m_Id: 826974982153
-    m_Localized: "Aumenta el da\xF1o del triangulo"
+    m_Localized: "Los triangulos golpean m\xE1s fuerte."
     m_Metadata:
       m_Items: []
   - m_Id: 826974982154
@@ -399,11 +399,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982162
-    m_Localized: "Da\xF1o Circulo"
+    m_Localized: Furia Circular
     m_Metadata:
       m_Items: []
   - m_Id: 826974982163
-    m_Localized: "Aumenta el da\xF1o del circulo"
+    m_Localized: "Los circulos golpean m\xE1s fuerte."
     m_Metadata:
       m_Items: []
   - m_Id: 826974982164
@@ -447,11 +447,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982176
-    m_Localized: Critico
+    m_Localized: "Golpe Cr\xEDtico"
     m_Metadata:
       m_Items: []
   - m_Id: 826974982177
-    m_Localized: "Probabilidad de hacer el doble de da\xF1o"
+    m_Localized: "Probabilidad de saltar una fase al atacar (doble da\xF1o)."
     m_Metadata:
       m_Items: []
   - m_Id: 826974982178
@@ -567,11 +567,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176472
-    m_Localized: Poblacion
+    m_Localized: "Explosi\xF3n Demogr\xE1fica"
     m_Metadata:
       m_Items: []
   - m_Id: 826979176473
-    m_Localized: Aumenta el numero de figuras inicial
+    m_Localized: "A\xF1ade figuras al empezar la partida."
     m_Metadata:
       m_Items: []
   - m_Id: 826979176474
@@ -675,43 +675,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
-    m_Localized: Monedas Hexagono
+    m_Localized: "Hexa-Bot\xEDn"
     m_Metadata:
       m_Items: []
   - m_Id: 23259459145728
-    m_Localized: El hexagono da mas monedas
+    m_Localized: "Ganas m\xE1s monedas al capturar un hex\xE1gono."
     m_Metadata:
       m_Items: []
   - m_Id: 23963821199360
-    m_Localized: Monedas Pentagono
+    m_Localized: "Penta-Bot\xEDn"
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393664
-    m_Localized: El pentagono da mas monedas
+    m_Localized: "Ganas m\xE1s monedas al capturar un pentagono."
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393665
-    m_Localized: Monedas Cuadrado
+    m_Localized: "Cuadra-Bot\xEDn"
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393666
-    m_Localized: El cuadrado da mas monedas
+    m_Localized: "Ganas m\xE1s monedas al capturar un cuadrado."
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393668
-    m_Localized: El triangulo da mas monedas
+    m_Localized: "Ganas m\xE1s monedas al capturar un triangulo."
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393669
-    m_Localized: Monedas Circulo
+    m_Localized: "Bot\xEDn Circular"
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393670
-    m_Localized: El circulo da mas monedas
+    m_Localized: "Ganas m\xE1s monedas al capturar un Circulo."
     m_Metadata:
       m_Items: []
   - m_Id: 36237889818624
-    m_Localized: Monedas Triangulo
+    m_Localized: "Tri-Bot\xEDn"
     m_Metadata:
       m_Items: []
   - m_Id: 1103911079616512
@@ -812,65 +812,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129920
-    m_Localized: Tiempo extra
+    m_Localized: Tiempo de Descuento
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129921
-    m_Localized: Al finalizar el tiempo te permite capturar la ultima figura en tu
-      area
+    m_Localized: "Captura a la \xFAltima figura en tu radio al acabar el tiempo."
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129923
-    m_Localized: Pared infecta hexagono
+    m_Localized: "Rompe-Hex\xE1gonos"
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129924
-    m_Localized: Probabilidad de que los hexagonos pierdan un lado contra la pared
+    m_Localized: "Probabilidad de que los hex\xE1gonos pierdan un lado contra el
+      muro."
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129925
-    m_Localized: Pared infecta pentagono
+    m_Localized: "Rompe-Pent\xE1gonos"
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129926
-    m_Localized: Probabilidad de que los pentagonos pierdan un lado contra la pared
+    m_Localized: "Probabilidad de que los pent\xE1gonos pierdan un lado contra el
+      muro."
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129927
-    m_Localized: Pared infecta cuadrado
+    m_Localized: Rompe-Cuadrados
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129928
-    m_Localized: Probabilidad de que los cuadrados pierdan un lado contra la pared
+    m_Localized: Probabilidad de que los cuadrados pierdan un lado contra el muro.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129929
-    m_Localized: Pared infecta triangulo
+    m_Localized: Rompe-Triangulos
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129930
-    m_Localized: Probabilidad de que los triangulos pierdan un lado contra la pared
+    m_Localized: Probabilidad de que los triangulos pierdan un lado contra el muro.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129931
-    m_Localized: Pared infecta circulo
+    m_Localized: Rompe-Circulos
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129932
-    m_Localized: Probabilidad de que los circulos pierdan un lado contra la pared
+    m_Localized: Probabilidad de que los circulos pierdan un lado contra el muro.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129934
-    m_Localized: Carambola hexagono
+    m_Localized: Billar Hexagonal
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129935
-    m_Localized: Probabilidad de que los hexagonos pierdan un lado al chocar contra
-      otra figura
+    m_Localized: "Probabilidad de que el hex\xE1gono pierda un lado al chocar con
+      otra figura."
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129936
-    m_Localized: Carambola pentagono
+    m_Localized: Billar Pentagonal
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129937
@@ -879,7 +880,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129938
-    m_Localized: Carambola cuadrado
+    m_Localized: Billar Cuadrangular
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129939
@@ -888,7 +889,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129940
-    m_Localized: Carambola triangulo
+    m_Localized: Billar Triangular
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129941
@@ -897,7 +898,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129942
-    m_Localized: Carambola circulo
+    m_Localized: Billar Circular
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129943
@@ -905,8 +906,44 @@ MonoBehaviour:
       otra figura
     m_Metadata:
       m_Items: []
-  - m_Id: 2831660866129944
-    m_Localized: asfdsaf
+  - m_Id: 3391644670676992
+    m_Localized: "Frecuencia C\xF3smica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3381372799209472
+    m_Localized: Agujero Negro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3381372799209473
+    m_Localized: Invoca un agujero negro que absorbe las figuras.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676993
+    m_Localized: "Acelera la creaci\xF3n de agujeros negros para tragar m\xE1s figuras."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676994
+    m_Localized: Hoja Negra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676995
+    m_Localized: Invoca la hoja negra y siembra el caos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676996
+    m_Localized: Poder Oscuro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676997
+    m_Localized: "La Hoja Negra golpea con m\xE1s fuerza."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676998
+    m_Localized: Semilla del Caos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3391644670676999
+    m_Localized: Aumenta la probabilidad de que brote una Hoja Negra.
     m_Metadata:
       m_Items: []
   references:
