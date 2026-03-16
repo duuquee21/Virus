@@ -1083,6 +1083,26 @@ MonoBehaviour:
     m_Key: skill_blackleafSpawn_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 3616385972543488
+    m_Key: settings_volumeMaster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616467572727808
+    m_Key: settings_volumeMusic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616490419101696
+    m_Key: settings_volumeSFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616508370722816
+    m_Key: settings_screenShake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616534979387392
+    m_Key: settings_language
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

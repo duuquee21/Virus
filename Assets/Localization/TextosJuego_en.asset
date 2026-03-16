@@ -940,6 +940,26 @@ MonoBehaviour:
     m_Localized: Increases the chance for a Black Leaf to sprout.
     m_Metadata:
       m_Items: []
+  - m_Id: 3616385972543488
+    m_Localized: General Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616467572727808
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616490419101696
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616508370722816
+    m_Localized: Screen Shake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616534979387392
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
