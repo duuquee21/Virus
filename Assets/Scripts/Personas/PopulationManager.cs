@@ -43,6 +43,11 @@ public class PopulationManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        // ¡AQUÍ ESTÁ LA SOLUCIÓN!
+        // Guardamos el intervalo original del Inspector antes de aplicar cualquier bonus
+        baseSpawnInterval = spawnInterval;
+
         if (personPrefabs.Length > 0)
             currentPrefab = personPrefabs[0];
     }
