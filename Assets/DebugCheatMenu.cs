@@ -25,7 +25,7 @@ public class DebugCheatMenu : MonoBehaviour
 
         InitStyles();
 
-        GUI.Box(new Rect(10, 10, 580, 990), "PANEL DE CONTROL TOTAL (MODO INFINITO)", boxStyle);
+        GUI.Box(new Rect(10, 10, 580, 990), "PANEL DE CHEATS", boxStyle);
 
         if (Guardado.instance == null)
         {
@@ -36,7 +36,7 @@ public class DebugCheatMenu : MonoBehaviour
         scrollPosition = GUI.BeginScrollView(
             new Rect(25, 60, 545, 870),
             scrollPosition,
-            new Rect(0, 0, 500, 5000)
+            new Rect(0, 0, 500, 2600)
         );
 
         int y = 0;
@@ -114,9 +114,7 @@ public class DebugCheatMenu : MonoBehaviour
         if (Btn("+5000 Monedas de Contagio", ref y, btnH))
         {
             if (LevelManager.instance != null)
-            {
                 LevelManager.instance.AddCoins(5000);
-            }
         }
 
         y += 20;
@@ -126,7 +124,7 @@ public class DebugCheatMenu : MonoBehaviour
         // -------------------------------------------------
         Header("VIRUS STATS", ref y);
 
-        Label($"Radio Multiplier: {Guardado.instance.radiusMultiplier:F2}", ref y);
+        Label($"Radio Multiplier actual: {Guardado.instance.radiusMultiplier:F2}", ref y);
         if (Btn("Radio +0.5", ref y, btnH))
         {
             Guardado.instance.SetRadiusMultiplier(Guardado.instance.radiusMultiplier + 0.5f);
@@ -136,7 +134,7 @@ public class DebugCheatMenu : MonoBehaviour
                 VirusRadiusController.instance.ApplyScale();
         }
 
-        Label($"Velocidad Multiplier: {Guardado.instance.speedMultiplier:F2}", ref y);
+        Label($"Velocidad Multiplier actual: {Guardado.instance.speedMultiplier:F2}", ref y);
         if (Btn("Velocidad +0.5", ref y, btnH))
         {
             Guardado.instance.SetSpeedMultiplier(Guardado.instance.speedMultiplier + 0.5f);
@@ -214,7 +212,7 @@ public class DebugCheatMenu : MonoBehaviour
         y += 20;
 
         // -------------------------------------------------
-        // TOGGLES
+        // ESTADOS ESPECIALES
         // -------------------------------------------------
         Header("ESTADOS ESPECIALES", ref y);
 
@@ -243,159 +241,6 @@ public class DebugCheatMenu : MonoBehaviour
             Guardado.instance.SaveData();
         }
         y += 50;
-
-        // -------------------------------------------------
-        // ESTADISTICAS EN VIVO
-        // -------------------------------------------------
-        Header("ESTADISTICAS EN VIVO", ref y);
-
-        SubHeader("[Guardado]", ref y);
-        Label($"totalInfected: {Guardado.instance.totalInfected}", ref y);
-        Label($"coinMultiplier: {Guardado.instance.coinMultiplier}", ref y);
-        Label($"startingCoins: {Guardado.instance.startingCoins}", ref y);
-        Label($"spawnSpeedBonus: {Guardado.instance.spawnSpeedBonus:F2}", ref y);
-        Label($"populationBonus: {Guardado.instance.populationBonus:F2}", ref y);
-        Label($"zoneDiscountActive: {Guardado.instance.zoneDiscountActive}", ref y);
-        Label($"coinsPerZoneDaily: {Guardado.instance.coinsPerZoneDaily}", ref y);
-        Label($"keepUpgradesOnReset: {Guardado.instance.keepUpgradesOnReset}", ref y);
-        Label($"keepZonesUnlocked: {Guardado.instance.keepZonesUnlocked}", ref y);
-
-        y += 10;
-
-        SubHeader("[Virus]", ref y);
-        Label($"radiusMultiplier: {Guardado.instance.radiusMultiplier:F2}", ref y);
-        Label($"speedMultiplier: {Guardado.instance.speedMultiplier:F2}", ref y);
-        Label($"infectSpeedMultiplier: {Guardado.instance.infectSpeedMultiplier:F2}", ref y);
-        Label($"extraBaseTime: {Guardado.instance.extraBaseTime:F2}", ref y);
-        Label($"addTimeOnPhaseChance: {Guardado.instance.addTimeOnPhaseChance * 100f:F0}%", ref y);
-        Label($"doubleUpgradeChance: {Guardado.instance.doubleUpgradeChance * 100f:F0}%", ref y);
-        Label($"randomSpawnPhaseChance: {Guardado.instance.randomSpawnPhaseChance * 100f:F0}%", ref y);
-        Label($"spawnBaseOnMaxPhaseChance: {Guardado.instance.spawnBaseOnMaxPhaseChance * 100f:F0}%", ref y);
-
-        y += 10;
-
-        SubHeader("[Daño Extra]", ref y);
-        Label($"dañoExtraHexagono: {Guardado.instance.dañoExtraHexagono}", ref y);
-        Label($"dañoExtraPentagono: {Guardado.instance.dañoExtraPentagono}", ref y);
-        Label($"dañoExtraCuadrado: {Guardado.instance.dañoExtraCuadrado}", ref y);
-        Label($"dañoExtraTriangulo: {Guardado.instance.dañoExtraTriangulo}", ref y);
-        Label($"dañoExtraCirculo: {Guardado.instance.dañoExtraCirculo}", ref y);
-
-        y += 10;
-
-        SubHeader("[Coins Extra]", ref y);
-        Label($"coinsExtraHexagono: {Guardado.instance.coinsExtraHexagono}", ref y);
-        Label($"coinsExtraPentagono: {Guardado.instance.coinsExtraPentagono}", ref y);
-        Label($"coinsExtraCuadrado: {Guardado.instance.coinsExtraCuadrado}", ref y);
-        Label($"coinsExtraTriangulo: {Guardado.instance.coinsExtraTriangulo}", ref y);
-        Label($"coinsExtraCirculo: {Guardado.instance.coinsExtraCirculo}", ref y);
-
-        y += 10;
-
-        SubHeader("[Entorno / Especiales]", ref y);
-        Label($"paredInfectivaActiva: {Guardado.instance.paredInfectivaActiva}", ref y);
-        Label($"nivelParedInfectiva: {Guardado.instance.nivelParedInfectiva}", ref y);
-        Label($"virusReboteActiva: {Guardado.instance.virusReboteActiva}", ref y);
-        Label($"destroyCoralOnInfectedImpact: {Guardado.instance.destroyCoralOnInfectedImpact}", ref y);
-        Label($"probabilidadDuplicarChoque: {Guardado.instance.probabilidadDuplicarChoque * 100f:F0}%", ref y);
-        Label($"nivelCarambola: {Guardado.instance.nivelCarambola}", ref y);
-
-        y += 10;
-
-        SubHeader("[Coral / Hoja / Agujero]", ref y);
-        Label($"coralInfeciosoActivo: {Guardado.instance.coralInfeciosoActivo}", ref y);
-        Label($"coralCapacity: {Guardado.instance.coralCapacity}", ref y);
-        Label($"hojaNegraData: {Guardado.instance.hojaNegraData}", ref y);
-        Label($"hojaSpawnRate: {Guardado.instance.hojaSpawnRate:F2}", ref y);
-        Label($"hojaFases: {Guardado.instance.hojaFases}", ref y);
-        Label($"agujeroNegroData: {Guardado.instance.agujeroNegroData}", ref y);
-        Label($"agujeroSpawnRate: {Guardado.instance.agujeroSpawnRate:F2}", ref y);
-
-        y += 10;
-
-        SubHeader("[Levels]", ref y);
-        Label($"speedLevel: {Guardado.instance.speedLevel}", ref y);
-        Label($"radiusLevel: {Guardado.instance.radiusLevel}", ref y);
-        Label($"capacityLevel: {Guardado.instance.capacityLevel}", ref y);
-        Label($"timeLevel: {Guardado.instance.timeLevel}", ref y);
-        Label($"infectionSpeedLevel: {Guardado.instance.infectionSpeedLevel}", ref y);
-
-        y += 10;
-
-        if (Guardado.instance.infectSpeedPerPhase != null)
-        {
-            SubHeader("[infectSpeedPerPhase]", ref y);
-            for (int i = 0; i < Guardado.instance.infectSpeedPerPhase.Length; i++)
-            {
-                Label($"infectSpeedPerPhase[{i}]: {Guardado.instance.infectSpeedPerPhase[i]:F2}", ref y);
-            }
-            y += 10;
-        }
-
-        if (Guardado.instance.probParedInfectiva != null)
-        {
-            SubHeader("[probParedInfectiva]", ref y);
-            for (int i = 0; i < Guardado.instance.probParedInfectiva.Length; i++)
-            {
-                Label($"probParedInfectiva[{i}]: {Guardado.instance.probParedInfectiva[i]:F2}", ref y);
-            }
-            y += 10;
-        }
-
-        if (LevelManager.instance != null)
-        {
-            SubHeader("[LevelManager]", ref y);
-            Label($"ContagionCoins: {LevelManager.instance.ContagionCoins}", ref y);
-            Label($"isGameActive: {LevelManager.instance.isGameActive}", ref y);
-            Label($"timerStarted: {LevelManager.instance.timerStarted}", ref y);
-            Label($"gameDuration: {LevelManager.instance.gameDuration:F2}", ref y);
-            y += 10;
-        }
-
-        if (PopulationManager.instance != null)
-        {
-            SubHeader("[PopulationManager]", ref y);
-            Label($"spawnInterval: {PopulationManager.instance.spawnInterval:F2}", ref y);
-            Label($"initialPopulation: {PopulationManager.instance.initialPopulation}", ref y);
-            y += 10;
-        }
-
-        SubHeader("[PersonaInfeccion - Global]", ref y);
-        Label($"dañoTotalZona: {PersonaInfeccion.dañoTotalZona:F2}", ref y);
-        Label($"dañoTotalChoque: {PersonaInfeccion.dañoTotalChoque:F2}", ref y);
-        Label($"dañoTotalCarambola: {PersonaInfeccion.dañoTotalCarambola:F2}", ref y);
-
-        if (PersonaInfeccion.evolucionesEntreFases != null)
-        {
-            y += 10;
-            SubHeader("[evolucionesEntreFases]", ref y);
-            for (int i = 0; i < PersonaInfeccion.evolucionesEntreFases.Length; i++)
-            {
-                Label($"evolucionesEntreFases[{i}]: {PersonaInfeccion.evolucionesEntreFases[i]}", ref y);
-            }
-        }
-
-        if (PersonaInfeccion.evolucionesPorChoque != null)
-        {
-            y += 10;
-            SubHeader("[evolucionesPorChoque]", ref y);
-            for (int i = 0; i < PersonaInfeccion.evolucionesPorChoque.Length; i++)
-            {
-                Label($"evolucionesPorChoque[{i}]: {PersonaInfeccion.evolucionesPorChoque[i]}", ref y);
-            }
-        }
-
-        if (PersonaInfeccion.evolucionesCarambola != null)
-        {
-            y += 10;
-            SubHeader("[evolucionesCarambola]", ref y);
-            for (int i = 0; i < PersonaInfeccion.evolucionesCarambola.Length; i++)
-            {
-                Label($"evolucionesCarambola[{i}]: {PersonaInfeccion.evolucionesCarambola[i]}", ref y);
-            }
-        }
-
-        y += 20;
 
         // -------------------------------------------------
         // SISTEMA
@@ -448,12 +293,6 @@ public class DebugCheatMenu : MonoBehaviour
     {
         GUI.Label(new Rect(0, y, 470, 40), t, headerStyle);
         y += 42;
-    }
-
-    void SubHeader(string t, ref int y)
-    {
-        GUI.Label(new Rect(0, y, 470, 30), t, labelStyle);
-        y += 28;
     }
 
     void Label(string t, ref int y)
