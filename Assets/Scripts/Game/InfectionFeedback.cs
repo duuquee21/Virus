@@ -33,6 +33,7 @@ public class InfectionFeedback : MonoBehaviour
 
     // --- LÓGICA DE POOLING ---
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
+    private Dictionary<Transform, Coroutine> activeShakes = new Dictionary<Transform, Coroutine>();
 
     void Awake()
     {
@@ -55,13 +56,21 @@ public class InfectionFeedback : MonoBehaviour
 
     void Start()
     {
-        // Cacheamos las zonas una sola vez
-        GameObject[] objetosZona = GameObject.FindGameObjectsWithTag(zonaTag);
-        zonasCached = new Transform[objetosZona.Length];
-        for (int i = 0; i < objetosZona.Length; i++)
+        // Esto busca TODOS los objetos de tipo Transform en la escena, incluso desactivados
+        Transform[] todosLosTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+        List<Transform> listaZonas = new List<Transform>();
+
+        foreach (Transform t in todosLosTransforms)
         {
-            zonasCached[i] = objetosZona[i].transform;
+            // Filtramos por Tag y nos aseguramos que pertenezcan a la escena (no sean prefabs en la carpeta)
+            if (t.CompareTag(zonaTag) && t.gameObject.scene.name != null)
+            {
+                listaZonas.Add(t);
+            }
         }
+
+        zonasCached = listaZonas.ToArray();
+        Debug.Log($"Se han encontrado {zonasCached.Length} zonas (incluyendo desactivadas)");
     }
 
     private void InitPool(GameObject prefab)
@@ -183,9 +192,18 @@ public class InfectionFeedback : MonoBehaviour
     private void TriggerShakeOnZonas(int multiplier)
     {
         if (zonasCached == null) return;
+        if (GameSettings.instance != null && !GameSettings.instance.shakeEnabled) return;
         foreach (Transform zona in zonasCached)
         {
-            if (zona != null) StartCoroutine(ShakeObject(zona, multiplier));
+            if (zona != null)
+            {
+                // Si ya está vibrando, la detenemos para no acumular offsets
+                if (activeShakes.ContainsKey(zona) && activeShakes[zona] != null)
+                {
+                    StopCoroutine(activeShakes[zona]);
+                }
+                activeShakes[zona] = StartCoroutine(ShakeObject(zona, multiplier));
+            }
         }
     }
 

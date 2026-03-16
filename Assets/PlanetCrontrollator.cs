@@ -33,6 +33,7 @@ public class PlanetCrontrollator : MonoBehaviour
     private bool resultsDirty = false;
 
 
+
     public enum TipoImpacto
     {
         Zona,
