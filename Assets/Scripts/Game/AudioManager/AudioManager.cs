@@ -33,10 +33,34 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         // Cargar volúmenes guardados al iniciar el juego
-        UpdateMixerVolume("MusicVol", PlayerPrefs.GetFloat("MusicVolume", 0.75f));
-        UpdateMixerVolume("SFXVol", PlayerPrefs.GetFloat("SFXVolume", 0.75f));
+        float master = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        AudioListener.volume = master;
+        UpdateMixerVolume("Master", master);
 
-        if (menuMusic != null) { musicSource.clip = menuMusic; musicSource.Play(); }
+        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+        float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        UpdateMixerVolume("MusicVol", musicVol);
+        UpdateMixerVolume("SFXVol", sfxVol);
+
+        if (musicSource != null)
+        {
+            musicSource.volume = 1f;
+            musicSource.mute = false;
+        }
+
+        Debug.Log($"[AudioManager] Start: master={master}, music={musicVol}, sfx={sfxVol}, musicSource={(musicSource!=null ? "ok" : "NULL")}");
+
+        if (menuMusic != null && musicSource != null)
+        {
+            musicSource.clip = menuMusic;
+            musicSource.Play();
+            Debug.Log($"[AudioManager] Reproduciendo menuMusic: {menuMusic.name}");
+        }
+        else
+        {
+            if (menuMusic == null) Debug.LogWarning("[AudioManager] menuMusic no asignado");
+            if (musicSource == null) Debug.LogWarning("[AudioManager] musicSource no asignado");
+        }
     }
 
     // Método centralizado para el volumen (Escala logarítmica para el Mixer)
