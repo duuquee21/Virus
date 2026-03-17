@@ -115,7 +115,8 @@ public class LevelManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = PlayerPrefs.GetInt("FPSLimit", 120);
 
-        float volumenGuardado = PlayerPrefs.GetFloat("VolumenGlobal", 1f);
+        // Alineamos la activación de audio con la clave principal del juego (MasterVolume)
+        float volumenGuardado = PlayerPrefs.GetFloat("MasterVolume", PlayerPrefs.GetFloat("VolumenGlobal", 1f));
         AudioListener.volume = volumenGuardado;
 
         if (virusPlayer != null && virusMovementScript == null)
@@ -128,6 +129,11 @@ public class LevelManager : MonoBehaviour
         }
         
         ShowMainMenu();
+
+        // Aseguramos que la música del menú suene desde el inicio del juego.
+        if (AudioManager.instance != null)
+            AudioManager.instance.SwitchToMenuMusic();
+
         if (timerIcon != null)
         {
             timerIconOriginalScale = timerIcon.rectTransform.localScale;

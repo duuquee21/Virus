@@ -41,7 +41,8 @@ public class GameSettings : MonoBehaviour
         shakeEnabled = PlayerPrefs.GetInt("ShakeEnabled", 1) == 1;
         isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         targetFPS = PlayerPrefs.GetInt("FPS", 60);
-        masterVol = PlayerPrefs.GetFloat("MasterVol", 1f);
+        // Compatibilidad: algunos sistemas usan las claves "MasterVolume" vs "MasterVol"
+        masterVol = PlayerPrefs.GetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVol", 1f));
         musicVol = PlayerPrefs.GetFloat("MusicVol", 1f);
         sfxVol = PlayerPrefs.GetFloat("SFXVol", 1f);
     }
@@ -84,8 +85,12 @@ public class GameSettings : MonoBehaviour
     public void SetMasterVolume(float vol)
     {
         masterVol = vol;
-        if (audioMixer != null) audioMixer.SetFloat("MasterVol", Mathf.Log10(Mathf.Max(vol, 0.0001f)) * 20f);
+        if (audioMixer != null) audioMixer.SetFloat("Master", Mathf.Log10(Mathf.Max(vol, 0.0001f)) * 20f);
+
+        // Guardamos en varias claves para mantener compatibilidad con código antiguo.
+        PlayerPrefs.SetFloat("MasterVolume", vol);
         PlayerPrefs.SetFloat("MasterVol", vol);
+        PlayerPrefs.SetFloat("VolumenGlobal", vol);
         PlayerPrefs.Save();
     }
 
