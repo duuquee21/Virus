@@ -78,9 +78,9 @@ public class Movement : MonoBehaviour
         DetectarColisionesCircleToCircle();
 
         // 4. Límite de velocidad
-        if (rb.linearVelocity.magnitude > 100f)
+        if (rb.linearVelocity.magnitude > 50f)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * 100f;
+            rb.linearVelocity = rb.linearVelocity.normalized * 50f;
         }
     }
 
@@ -149,7 +149,7 @@ public class Movement : MonoBehaviour
 
     private void ManejarMovimientoNormal()
     {
-        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 30f : velocidadBase;
+        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 50f : velocidadBase;
 
         if (!estaEmpujado)
         {
