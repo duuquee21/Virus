@@ -62,18 +62,21 @@ public class VirusRadiusController : MonoBehaviour
     }
 
     public void ApplyScale()
-    {
-        // Sumamos el nivel comprado (currentLevel) + el bonus temporal de la ronda
-        float currentMultiplier = 1f + ((currentLevel + bonusLevel - 1) * radiusIncrement);
-        float shopRadius = baseScale * currentMultiplier;
-        float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.radiusMultiplier : 1f;
+    {// 1. Calculamos el multiplicador basado estrictamente en el NIVEL de la tienda
+     // Si nivel es 1 y increment es 0.25 -> mult = 1 + (0 * 0.25) = 1.0
+        float shopMultiplier = 1f + ((currentLevel + bonusLevel - 1) * radiusIncrement);
 
-        // Guardamos el resultado en la variable de clase
-        currentFinalRadius = shopRadius * skillMultiplier;
+        // 2. Obtenemos el multiplicador PERMANENTE del árbol de habilidades
+        // Aseguramos que si Guardado no existe, sea 1 (no afecta)
+        float skillTreeMultiplier = (Guardado.instance != null) ? Guardado.instance.radiusMultiplier : 1f;
 
-        // --- Sincronización de Componentes ---
+        // 3. RESULTADO FINAL: Base * Multiplicador Tienda * Multiplicador Árbol
+        currentFinalRadius = baseScale * shopMultiplier * skillTreeMultiplier;
+
+        // --- Aplicación física ---
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         if (collider != null) collider.radius = currentFinalRadius;
+
 
         RadiusLineRenderer line = GetComponentInChildren<RadiusLineRenderer>();
         if (line != null)
