@@ -55,8 +55,10 @@ Material:
     - _StencilWriteMask: 255
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
+    - _VortexStrength: 0
     - _Zoom: 0.03
     m_Colors:
+    - _CenterOffset: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color1: {r: 0, g: 0, b: 0, a: 0.07058824}
     - _Color2: {r: 0.16089246, g: 0.1492524, b: 0.24528301, a: 0.15686275}
