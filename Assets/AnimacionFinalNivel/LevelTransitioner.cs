@@ -70,7 +70,16 @@ public class LevelTransitioner : MonoBehaviour
     {
         // Usamos la referencia cacheada del LevelManager
         if (lm == null) lm = LevelManager.instance;
-        lm.isGameActive = false;
+
+        // Detenemos el movimiento actual del virus para que no continúe arrastrando la velocidad durante la transición
+        if (lm != null)
+        {
+            lm.isTransitioning = true;
+            if (lm.virusMovementScript != null)
+                lm.virusMovementScript.StopMovement();
+
+            lm.isGameActive = false;
+        }
 
         if (cachedPlaneta != null) cachedPlaneta.isInvulnerable = true;
 
@@ -178,7 +187,16 @@ public class LevelTransitioner : MonoBehaviour
         yield return StartCoroutine(DryImpactShake());
 
         if (cachedPlaneta != null) cachedPlaneta.isInvulnerable = false;
-        lm.isGameActive = true;
+
+        // Restauramos el estado normal de juego y permitimos el control de jugador
+        if (lm != null)
+        {
+            lm.isGameActive = true;
+            lm.isTransitioning = false;
+            if (lm.virusMovementScript != null) lm.virusMovementScript.enabled = true;
+        }
+
+        Time.timeScale = 1f; // En caso de que alguna transición anterior lo dejara en 0
     }
 
     private IEnumerator DryImpactShake()

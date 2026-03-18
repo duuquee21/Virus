@@ -32,6 +32,10 @@ public class TextPooler : MonoBehaviour
 
     public GameObject SpawnText(Vector3 position, string text)
     {
+        // Si el panel de resultados est√° abierto, no generamos textos flotantes.
+        if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null && EndDayResultsPanel.instance.panel.activeSelf)
+            return null;
+
         GameObject obj = null;
         for (int i = 0; i < pool.Count; i++)
         {
@@ -53,6 +57,6 @@ public class TextPooler : MonoBehaviour
         FloatingText ft = obj.GetComponent<FloatingText>();
         if (ft != null) ft.SetText(text);
 
-        return obj; // <--- ESTA LÕNEA ES VITAL
+        return obj; // <--- ESTA LÔøΩNEA ES VITAL
     }
 }
