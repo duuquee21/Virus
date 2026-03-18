@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -15,11 +16,19 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     public Sprite normalSprite;
     public Sprite notEnoughMoneySprite;
     public Sprite disabledSprite;
-    public Sprite lockedNextLevelSprite; // <-- NUEVO: Sprite para el segundo nivel (candado)
+    public Sprite lockedNextLevelSprite;
 
     [Header("Efectos")]
     private ParticleSystem disabledParticles;
     private bool hasPlayedDisabledEffect = false;
+
+    [Header("Configuración de Animación")]
+    public float animationDuration = 0.5f;
+    public float overshootFactor = 1.2f; // Qué tanto se agranda antes de volver a su tamaño
+    private Coroutine animationCoroutine;
+
+    // Variable para rastrear si el estado anterior era "Bloqueado por padres"
+    private bool wasLockedByParent = true;
 
     private bool isHovered = false;
 
@@ -27,11 +36,14 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     {
         disabledParticles = GetComponentInChildren<ParticleSystem>();
     }
+
     void Start()
     {
-        // Usamos una pequeña espera o aseguramos que el nodo tenga sus datos
+        // Inicializamos el estado de bloqueo
+        wasLockedByParent = !IsParentUnlocked();
         RefreshScale();
     }
+
     void Update()
     {
         if (skillNode == null || LevelManager.instance == null)
@@ -45,8 +57,6 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         var fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null && skillNode != null)
         {
-            // Forzamos la carga de datos del ScriptableObject/Nodo si fuera necesario
-            // skillNode.LoadNodeState(); 
             fx.SetPurchasedState(IsAtLimit());
         }
     }
@@ -56,10 +66,12 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
     void UpdateState()
     {
-        // 1. Si ya está desbloqueado / Al límite (Máximo nivel)
+        bool currentlyLocked = !IsParentUnlocked();
+
+        // 1. Si ya está desbloqueado / Al límite
         if (IsAtLimit())
         {
-            SetVisual(disabledSprite, false);
+            SetVisual(disabledSprite, false, currentlyLocked);
             if (!hasPlayedDisabledEffect && disabledParticles != null)
             {
                 disabledParticles.Play();
@@ -68,37 +80,51 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             return;
         }
 
-        // 2. LÓGICA PARA EL SEGUNDO NIVEL (Nietos)
-        // Si el nodo es visible pero NO es comprable todavía porque sus padres están bloqueados
-        if (!IsParentUnlocked())
+        // 2. LÓGICA PARA EL SEGUNDO NIVEL (Locked)
+        if (currentlyLocked)
         {
-            SetVisual(lockedNextLevelSprite, false);
-            if (costText != null) costText.text = "???"; // Opcional: ocultar costo
+            SetVisual(lockedNextLevelSprite, false, currentlyLocked);
+            if (costText != null) costText.text = "???";
             return;
         }
 
         // 3. Si no hay suficiente dinero
         if (LevelManager.instance.ContagionCoins < skillNode.CoinCost)
         {
-            SetVisual(notEnoughMoneySprite, false);
+            SetVisual(notEnoughMoneySprite, false, currentlyLocked);
             return;
         }
 
-        // 4. Estado Hover (Comprable)
+        // 4. Estado Hover
         if (isHovered && hoverSprite != null)
         {
-            SetVisual(hoverSprite, true);
+            SetVisual(hoverSprite, true, currentlyLocked);
             return;
         }
 
-        // 5. Estado Normal (Disponible para comprar)
-        SetVisual(normalSprite, true);
+        // 5. Estado Normal
+        SetVisual(normalSprite, true, currentlyLocked);
     }
 
-    void SetVisual(Sprite sprite, bool isInteractable)
+    void SetVisual(Sprite sprite, bool isInteractable, bool isCurrentlyLocked)
     {
         if (nodeImage != null && sprite != null)
-            nodeImage.sprite = sprite;
+        {
+            // DETECTAR TRANSICIÓN: Si antes estaba bloqueado y ahora NO lo está
+            if (wasLockedByParent && !isCurrentlyLocked)
+            {
+                nodeImage.sprite = sprite;
+                TriggerUnlockAnimation();
+            }
+            else if (nodeImage.sprite != sprite)
+            {
+                // Cambio normal de sprite sin animación especial
+                nodeImage.sprite = sprite;
+            }
+        }
+
+        // Actualizamos la memoria del estado de bloqueo para el siguiente frame
+        wasLockedByParent = isCurrentlyLocked;
 
         if (button != null)
             button.interactable = isInteractable;
@@ -107,7 +133,56 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             costText.text = skillNode.CoinCost.ToString();
     }
 
-    // Función auxiliar para saber si el nodo es comprable ahora mismo
+    private void TriggerUnlockAnimation()
+    {
+        if (animationCoroutine != null)
+            StopCoroutine(animationCoroutine);
+
+        animationCoroutine = StartCoroutine(UnlockAnimationRoutine());
+    }
+
+    private IEnumerator UnlockAnimationRoutine()
+    {
+        float elapsed = 0f;
+        Vector3 initialScale = Vector3.zero;
+        Vector3 targetScale = Vector3.one;
+        Vector3 peakScale = Vector3.one * overshootFactor;
+
+        Vector3 startEuler = transform.localEulerAngles;
+        float targetZ = startEuler.z + 360f;
+
+        while (elapsed < animationDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / animationDuration;
+
+            // 1. Animación de Rotación (0 a 360)
+            float currentZ = Mathf.Lerp(startEuler.z, targetZ, t);
+            transform.localEulerAngles = new Vector3(startEuler.x, startEuler.y, currentZ);
+
+            // 2. Animación de Escala (0 -> peakScale -> 1)
+            // Usamos una curva de evaluación simple o un Evaluate manual
+            if (t < 0.7f) // Crecimiento hasta el pico
+            {
+                float tScale = t / 0.7f;
+                transform.localScale = Vector3.Lerp(initialScale, peakScale, tScale);
+            }
+            else // Regreso al tamaño normal (1)
+            {
+                float tScale = (t - 0.7f) / 0.3f;
+                transform.localScale = Vector3.Lerp(peakScale, targetScale, tScale);
+            }
+
+            yield return null;
+        }
+
+        // Limpieza final para asegurar precisión
+        transform.localEulerAngles = startEuler;
+        transform.localScale = targetScale;
+        animationCoroutine = null;
+    }
+
+    // --- Métodos de comprobación originales ---
     bool IsParentUnlocked()
     {
         if (skillNode.isStartingNode || skillNode.requiredParentNodes == null || skillNode.requiredParentNodes.Length == 0)
@@ -125,7 +200,6 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         if (skillNode == null) return false;
         if (skillNode.IsUnlocked) return true;
 
-        // Comprobación de repetibles
         bool isTime = skillNode.effectType == SkillNode.SkillEffectType.AddTime2Seconds;
         if (isTime && skillNode.repeatLevel >= skillNode.maxTimeRepeatLevel) return true;
 

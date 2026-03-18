@@ -32,7 +32,7 @@ Material:
     - _Aspect: 1.7781532
     - _CenterX: 0.5
     - _CenterY: 0.5
-    - _Radius: 0.0035972316
+    - _Radius: 1.5
     - _Roundness: 0.1
     - _Shape: 1
     m_Colors:
