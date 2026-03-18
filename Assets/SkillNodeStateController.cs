@@ -39,11 +39,27 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
     void Start()
     {
-        // Inicializamos el estado de bloqueo
-        wasLockedByParent = !IsParentUnlocked();
+        // 1. Determinar el estado inicial
+        bool currentlyLocked = !IsParentUnlocked();
+        wasLockedByParent = currentlyLocked;
+
+        // 2. Si NO está bloqueado al empezar, asegurar escala 1
+        // Si está bloqueado, podrías querer una escala específica (ej: 0.8f) o dejarla en 1
+        if (!currentlyLocked)
+        {
+            transform.localScale = Vector3.one;
+        }
+        else
+        {
+            // Opcional: Si quieres que los bloqueados se vean un poco más chicos por diseño:
+            // transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+            // Si quieres que midan lo mismo que todos:
+            transform.localScale = Vector3.one;
+        }
+
         RefreshScale();
     }
-
     void Update()
     {
         if (skillNode == null || LevelManager.instance == null)

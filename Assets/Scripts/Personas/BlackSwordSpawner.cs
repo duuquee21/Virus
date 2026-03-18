@@ -33,7 +33,7 @@ public class BlackSwordSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Guardado.instance.hojaNegraData&&Time.time > nextSpawnTime&&LevelManager.instance.isGameActive)
+        if (Guardado.instance.hojaNegraData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
         {
             StartCoroutine(ExecuteSlashSequence());
             nextSpawnTime = Time.time + Guardado.instance.hojaSpawnRate;
@@ -150,5 +150,12 @@ public class BlackSwordSpawner : MonoBehaviour
                 Debug.Log("<color=black>Tajo Negro impactó a: </color>" + col.name);
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(transform.position, radioDeAparicion);
+
     }
 }

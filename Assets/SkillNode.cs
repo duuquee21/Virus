@@ -87,7 +87,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         MejorarSpawnAgujeroNegro,
         SpawnBaseFigureOnMaxPhase20,
         UpgradeBuggedSpawnChance5,
-        IncreaseBuggedLimit1
+        IncreaseBuggedLimit1,
+        IncreaseMaxBlackHoles
     }
 
     [Header("Save ID")]
@@ -724,6 +725,13 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.IncreaseMaxBlackHoles:
+                // Usamos overrideInt si está marcado, si no, sumamos 1 por defecto
+                int cantidadExtra = useOverride ? overrideInt : 1;
+                Guardado.instance.MejorarCantidadAgujeros(cantidadExtra);
+                Guardado.instance.SaveData();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -1280,6 +1288,19 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                         sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual}");
                     else
                         sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual} → {despues}");
+                    break;
+                }
+
+            case SkillEffectType.IncreaseMaxBlackHoles:
+                {
+                    int actual = g.cantidadMaxAgujeros;
+                    int extra = useOverride ? overrideInt : 1;
+                    int despues = actual + extra;
+
+                    if (comprado)
+                        sb.AppendLine($"{GetTexto("prev_max_agujeros")}: {actual}");
+                    else
+                        sb.AppendLine($"{GetTexto("prev_max_agujeros")}: {actual} → {despues}");
                     break;
                 }
         }
