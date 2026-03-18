@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelTransitioner : MonoBehaviour
 {
@@ -38,6 +39,10 @@ public class LevelTransitioner : MonoBehaviour
     private PopulationManager popManager;
     private LevelManager lm;
 
+    [Header("Configuración de Shader")]
+    public Material materialFondo; // Arrastra aquí el material que tiene el shader del vortex
+    private string vortexProp = "_VortexStrength";
+
     void Awake()
     {
         mainCam = Camera.main;
@@ -45,6 +50,15 @@ public class LevelTransitioner : MonoBehaviour
         {
             camTransform = mainCam.transform;
             zoomOriginal = mainCam.orthographicSize;
+        }
+
+
+        Image img = GetComponentInChildren<Image>();
+        if (img != null)
+        {
+            // Esto crea una instancia única para este objeto
+            materialFondo = img.material;
+            materialFondo.SetFloat(vortexProp, 0f);
         }
 
         // Buscamos las instancias una sola vez al inicio
@@ -104,6 +118,11 @@ public class LevelTransitioner : MonoBehaviour
         {
             float dt = Time.deltaTime;
             velocidadActual += aceleracion * dt;
+
+            float progresoAcel = velocidadActual / velocidadMaxima;
+            if (materialFondo != null)
+                materialFondo.SetFloat(vortexProp, progresoAcel * 25f);
+
             mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
 
             if (mapaVisual)
@@ -159,6 +178,11 @@ public class LevelTransitioner : MonoBehaviour
         {
             float dt = Time.deltaTime;
             velocidadActual = Mathf.MoveTowards(velocidadActual, 0, frenado * dt);
+
+            float progresoFrenado = velocidadActual / velocidadMaxima;
+            // Aplicamos el valor al shader (50 a 0)
+            if (materialFondo != null)
+                materialFondo.SetFloat(vortexProp, progresoFrenado * 25f);
 
             if (mapaVisual)
             {
