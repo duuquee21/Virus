@@ -1049,38 +1049,33 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             // -------------------------
             // PROBABILIDADES
             // -------------------------
+            // -------------------------
+            // PROBABILIDADES PARED INFECTIVA
+            // -------------------------
             case SkillEffectType.ParedInfectiva_Hexagono:
-                {
-                    int idx = 0;
-                    float nivelActual = g.probParedInfectiva[idx];
-                    float probActual = nivelActual * 25f;
-                    float probSiguiente = (nivelActual + 1) * 25f;
-
-                    // LOCALIZADO
-                    if (comprado)
-                        sb.AppendLine($"{GetTexto("prev_prob_inf")} {GetTexto("fase_hex")}: {probActual}%");
-                    else
-                        sb.AppendLine($"{GetTexto("prev_prob_inf")} {GetTexto("fase_hex")}: {probActual}% → {probSiguiente}%");
-                    break;
-                }
             case SkillEffectType.ParedInfectiva_Pentagono:
             case SkillEffectType.ParedInfectiva_Cuadrado:
             case SkillEffectType.ParedInfectiva_Triangulo:
             case SkillEffectType.ParedInfectiva_Circulo:
                 {
-                    int idx = (effectType == SkillEffectType.ParedInfectiva_Pentagono) ? 1 :
-                              (effectType == SkillEffectType.ParedInfectiva_Cuadrado) ? 2 :
-                              (effectType == SkillEffectType.ParedInfectiva_Triangulo) ? 3 : 4;
+                    // 1. Identificar el índice correcto según el tipo de efecto
+                    int idx = 0; // Por defecto Hexágono
+                    if (effectType == SkillEffectType.ParedInfectiva_Pentagono) idx = 1;
+                    else if (effectType == SkillEffectType.ParedInfectiva_Cuadrado) idx = 2;
+                    else if (effectType == SkillEffectType.ParedInfectiva_Triangulo) idx = 3;
+                    else if (effectType == SkillEffectType.ParedInfectiva_Circulo) idx = 4;
 
+                    // 2. Obtener datos de Guardado
                     float nivelActual = g.probParedInfectiva[idx];
                     float probActual = nivelActual * 25f;
                     float probSiguiente = (nivelActual + 1) * 25f;
 
-                    // LOCALIZADO
+                    // 3. Construir el texto (Asegúrate de que la clave "prev_prob" existe o cámbialo por texto directo)
+                    // Usamos Append para que se sume a la descripción
                     if (comprado)
-                        sb.AppendLine($" {probActual}%");
+                        sb.AppendLine($"{probActual}%");
                     else
-                        sb.AppendLine($" {probActual}% → {probSiguiente}%");
+                        sb.AppendLine($"{probActual}% → {probSiguiente}%");
 
                     break;
                 }
