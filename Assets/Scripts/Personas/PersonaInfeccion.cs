@@ -230,33 +230,7 @@ public class PersonaInfeccion : MonoBehaviour
 
 
 
-    private void IntentarActivarSpawnAlInfectarseFinal(int faseAnterior, int faseNueva)
-    {
-        if (yaActivoSpawnPorFaseFinal) return;
-        if (Guardado.instance == null || PopulationManager.instance == null) return;
-
-        int maxFase = GetMaxFaseIndex();
-        bool acabaDePasarAFinal = faseAnterior == maxFase && faseNueva >= fasesSprites.Length;
-
-        if (!acabaDePasarAFinal) return;
-
-        yaActivoSpawnPorFaseFinal = true;
-
-        float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
-        float tirada = Random.value;
-
-        Debug.Log($"[FINAL] {gameObject.name} pasó de fase máxima a infectado/final. Chance: {chance * 100f:F0}% | Tirada: {tirada:F3}");
-
-        if (chance > 0f && tirada < chance)
-        {
-            Debug.Log("[FINAL] ÉXITO. Se genera nueva figura base.");
-            PopulationManager.instance.SpawnPersonAtBasePhase();
-        }
-        else
-        {
-            Debug.Log("[FINAL] FALLO. No se genera nueva figura.");
-        }
-    }
+  
     void ActualizarProgresoBarras(float progress)
     {
         if (fillingBarImages == null) return;
@@ -361,7 +335,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         // Aplicamos el avance
         faseActual += steps;
-        IntentarActivarSpawnAlInfectarseFinal(faseAnterior, faseActual);
+      
 
         // Tutorial: primera vez que una figura avanza al menos una fase
         if (faseAnterior == 0 && faseActual > 0)
@@ -417,6 +391,20 @@ public class PersonaInfeccion : MonoBehaviour
         if (spriteInfectado != null)
         {
             spritePersona.sprite = spriteInfectado;
+        }
+
+        if (Guardado.instance != null && PopulationManager.instance != null)
+        {
+            // Supongamos que tu variable en Guardado se llama 'probabilidadSpawnAlInfectar' (0.0f a 1.0f)
+            // Si usas 'spawnBaseOnMaxPhaseChance', cámbiala aquí:
+            float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
+
+            if (Random.value < chance)
+            {
+                // Llamamos al PopulationManager para que cree una nueva persona en posición aleatoria
+                PopulationManager.instance.SpawnPersonAtBasePhase();
+                Debug.Log("¡Suerte! Se ha generado una nueva persona tras la infección.");
+            }
         }
 
         if (infectionBarCanvas != null)
@@ -600,7 +588,7 @@ public class PersonaInfeccion : MonoBehaviour
         }
         else
         {
-            IntentarActivarSpawnAlInfectarseFinal(faseAnterior, fasesSprites.Length);
+         
             BecomeInfected();
         }
     }
