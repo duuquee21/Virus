@@ -6,45 +6,56 @@ public class BlackHoleController : MonoBehaviour
     [Header("Referencias")]
     public GameObject circuloPrefab;
 
-    [Header("Configuraci�n de Spawn Autom�tico")]
-    public float frecuenciaSpawn = 3.0f; // Cada cu�nto tiempo aparece uno solo
+    [Header("Configuración de Spawn Automático")]
+    public float frecuenciaSpawn = 3.0f;
     private float nextSpawnTime;
 
-    [Header("Configuraci�n de Spawn Posici�n")]
+    // Contador interno para limitar la cantidad simultánea
+    private int agujerosActivos = 0;
+
+    [Header("Configuración de Spawn Posición")]
     public float radioDeAparicionAleatoria = 5f;
 
-    [Header("Configuraci�n de Escala")]
+    [Header("Configuración de Escala")]
     public float radioInicial = 10f;
     public float radioFinal = 1f;
     public float tiempoReduccion = 2f;
     public float velocidadRotacion = 720f;
 
-    [Header("Fuerzas y Atracci�n")]
+    [Header("Fuerzas y Atracción")]
     public float fuerzaAtraccion = 15f;
     public float radioDeAtraccionEfectiva = 7f;
     public float radioDeInfeccionFinal = 5f;
     public float fuerzaExpansionInfeccion = 25f;
 
-    [Header("Visuales de Explosi�n")]
+    [Header("Visuales de Explosión")]
     public float escalaExplosionMutiplicador = 3f;
     public float tiempoExplosionGrow = 0.4f;
 
     void Update()
     {
-        // L�GICA AUTOM�TICA (Igual que BlackSwordSpawner)
-        // 1. Verifica si la habilidad est� desbloqueada en Guardado (asumo que se llama agujeroNegroData)
-        // 2. Verifica el cron�metro de spawn
-        // 3. Verifica si el juego est� activo en LevelManager
-        if (Guardado.instance.agujeroNegroData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
+        // LÓGICA AUTOMÁTICA
+        if (Guardado.instance.agujeroNegroData &&
+            Time.time > nextSpawnTime &&
+            LevelManager.instance.isGameActive)
         {
-            SpawnBlackHole();
+            // CAMBIO CLAVE: Mientras falten agujeros para llegar al límite, los spawneamos todos de golpe
+            while (agujerosActivos < Guardado.instance.cantidadMaxAgujeros)
+            {
+                SpawnBlackHole();
+            }
+
+            // Una vez lanzados todos, calculamos el tiempo para la siguiente "oleada"
             nextSpawnTime = Time.time + Guardado.instance.agujeroSpawnRate;
         }
 
-        // Mantengo el input manual por si quieres testear, puedes borrarlo si no lo usas
+        // Input manual para testeo (permite rellenar hasta el límite)
         if (Input.GetKeyDown(KeyCode.E))
         {
-            SpawnBlackHole();
+            if (agujerosActivos < Guardado.instance.cantidadMaxAgujeros)
+            {
+                SpawnBlackHole();
+            }
         }
     }
 
@@ -52,6 +63,9 @@ public class BlackHoleController : MonoBehaviour
     {
         if (circuloPrefab == null) return;
 
+        agujerosActivos++;
+
+        // Calculamos posición aleatoria única para cada uno
         Vector2 desplazamientoAleatorio = Random.insideUnitCircle * radioDeAparicionAleatoria;
         Vector3 posicionSpawn = transform.position + new Vector3(desplazamientoAleatorio.x, desplazamientoAleatorio.y, 0);
 
@@ -73,7 +87,12 @@ public class BlackHoleController : MonoBehaviour
 
         while (elapsed < tiempoReduccion)
         {
-            if (objeto == null) yield break;
+            if (objeto == null)
+            {
+                DecrementarContador();
+                yield break;
+            }
+
             elapsed += Time.deltaTime;
 
             if (!emisionDetenida && ps != null && (tiempoReduccion - elapsed) <= 0.4f)
@@ -95,12 +114,15 @@ public class BlackHoleController : MonoBehaviour
         }
 
         // --- FASE 2: FLASH ---
-        sr.color = Color.white;
-        objeto.transform.localScale = new Vector3(radioFinal * 1.2f, radioFinal * 1.2f, 1);
+        if (sr != null)
+        {
+            sr.color = Color.white;
+            objeto.transform.localScale = new Vector3(radioFinal * 1.2f, radioFinal * 1.2f, 1);
+        }
         yield return new WaitForSeconds(0.05f);
-        sr.color = Color.black;
+        if (sr != null) sr.color = Color.black;
 
-        // --- FASE 3: EXPLOSI�N ---
+        // --- FASE 3: EXPLOSIÓN ---
         ExplotarEInfectar(objeto.transform.position);
 
         float elapsedExplosion = 0;
@@ -109,7 +131,12 @@ public class BlackHoleController : MonoBehaviour
 
         while (elapsedExplosion < tiempoExplosionGrow)
         {
-            if (objeto == null) yield break;
+            if (objeto == null)
+            {
+                DecrementarContador();
+                yield break;
+            }
+
             elapsedExplosion += Time.deltaTime;
             float tEx = elapsedExplosion / tiempoExplosionGrow;
             objeto.transform.localScale = Vector3.Lerp(escalaPostFlash, escalaObjetivo, tEx);
@@ -118,26 +145,30 @@ public class BlackHoleController : MonoBehaviour
         }
 
         Destroy(objeto);
+        DecrementarContador();
     }
 
+    private void DecrementarContador()
+    {
+        agujerosActivos--;
+        if (agujerosActivos < 0) agujerosActivos = 0;
+    }
+
+    // Los métodos AtraerPersonas, ExplotarEInfectar y OnDrawGizmos se mantienen igual
     void AtraerPersonas(Vector3 centro)
     {
         Collider2D[] personas = Physics2D.OverlapCircleAll(centro, radioDeAtraccionEfectiva);
-
         foreach (var col in personas)
         {
             if (col.CompareTag("Persona"))
             {
                 Rigidbody2D rbPersona = col.GetComponent<Rigidbody2D>();
                 Movement mov = col.GetComponent<Movement>();
-
                 if (rbPersona != null)
                 {
                     if (mov != null) mov.SetEstaEmpujado(true, rbPersona.linearVelocity.normalized);
-
                     Vector2 direccionHaciaCentro = (Vector2)centro - rbPersona.position;
                     float distancia = direccionHaciaCentro.magnitude;
-
                     float intensidad = fuerzaAtraccion / (distancia + 0.8f);
                     rbPersona.AddForce(direccionHaciaCentro.normalized * intensidad * 10f, ForceMode2D.Force);
                 }
@@ -168,5 +199,7 @@ public class BlackHoleController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radioDeAtraccionEfectiva);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radioDeInfeccionFinal);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radioDeAparicionAleatoria);
     }
 }

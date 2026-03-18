@@ -88,6 +88,7 @@ public class Guardado : MonoBehaviour
     public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
     public float agujeroSpawnRate;
     public float spawnBaseOnMaxPhaseChance = 0f;
+    public int cantidadMaxAgujeros = 1; // Límite de
 
     public float buggedSpawnChance = 0f; // Probabilidad de que spawnee un enemigo bugueado
 
@@ -165,6 +166,7 @@ public class Guardado : MonoBehaviour
         hojaFases = 1;
         agujeroNegroData = false;
         agujeroSpawnRate = 5f;
+        cantidadMaxAgujeros = 1;
         spawnBaseOnMaxPhaseChance = 0f;
 
         buggedSpawnChance = 0f;
@@ -246,8 +248,9 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("BuggedSpawnChance", buggedSpawnChance);
 
         PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
+        PlayerPrefs.SetInt("CantidadMaxAgujeros", cantidadMaxAgujeros);
 
-      
+
 
 
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
@@ -318,6 +321,7 @@ public class Guardado : MonoBehaviour
         {
             probParedInfectiva[i] = PlayerPrefs.GetFloat("ProbParedInfectiva_" + i, 0f);
         }
+        cantidadMaxAgujeros = PlayerPrefs.GetInt("CantidadMaxAgujeros", 1);
 
         // ---> AÑADIR ESTE BLOQUE: Cargar el estado individual de cada nodo
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
@@ -372,6 +376,12 @@ public class Guardado : MonoBehaviour
             probParedInfectiva[fase] += 1f;
             Debug.Log($"Mejorada Pared Infectiva Fase {fase}. Nivel actual: {probParedInfectiva[fase]}");
         }
+    }
+
+    public void MejorarCantidadAgujeros(int extra)
+    {
+        cantidadMaxAgujeros += extra;
+        Debug.Log("<color=purple>Cantidad máxima de Agujeros Negros aumentada a: </color>" + cantidadMaxAgujeros);
     }
 
     public void ActivarDañoExtraCirculo() { dañoExtraCirculo = 1; }
