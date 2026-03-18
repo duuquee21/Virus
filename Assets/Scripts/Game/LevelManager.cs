@@ -872,7 +872,7 @@ public class LevelManager : MonoBehaviour
             transitionScript.SetShape(1); // O la forma que prefieras
             transitionScript.CloseBlackScreen();
         }
-
+        CleanUpEffectsAndUI();
         StartCoroutine(ShowResultsWithTransition());
     }
 
@@ -1479,6 +1479,31 @@ public class LevelManager : MonoBehaviour
             SaveCurrentRun();
             Debug.Log($"<color=yellow>[QUIT-SAVE]</color> Partida guardada antes de cerrar. Monedas: {contagionCoins}");
         }
+    }
+
+    private void CleanUpEffectsAndUI()
+    {
+        // 1. Limpiar Sistemas de Partículas con el tag "efectos"
+        GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
+        foreach (GameObject efecto in efectos)
+        {
+            if (efecto != null) Destroy(efecto);
+        }
+
+        // 2. Limpiar Textos Flotantes (FloatingText)
+        // Buscamos todos los objetos que tengan el script FloatingText
+        FloatingText[] textosEnPantalla = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
+        foreach (FloatingText texto in textosEnPantalla)
+        {
+            if (texto != null)
+            {
+                // Como tu script usa un sistema de Pool (SetActive(false)), 
+                // los desactivamos en lugar de destruirlos para no romper el Pool.
+                texto.gameObject.SetActive(false);
+            }
+        }
+
+        Debug.Log($"<color=cyan>[CLEANUP]</color> Partículas y Textos limpiados para la siguiente run.");
     }
 
 }

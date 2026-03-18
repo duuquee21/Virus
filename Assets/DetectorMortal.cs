@@ -52,7 +52,7 @@ public class DetectorMortal : MonoBehaviour
         }
     }
 
-    // ... Resto del código (Update, OnTriggerEnter2D, etc.) se mantiene igual ...
+    
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -60,10 +60,12 @@ public class DetectorMortal : MonoBehaviour
         {
             PersonaInfeccion persona = other.GetComponent<PersonaInfeccion>();
             if (persona == null) return;
+
             ReducirCapacidad();
 
             if (!Guardado.instance.coralInfeciosoActivo)
             {
+                // ... lógica de destrucción (se mantiene igual) ...
                 if (persona.faseActual >= 5 || persona.alreadyInfected)
                 {
                     StartCoroutine(SecuenciaDestruccionPadre(transform.parent != null ? transform.parent.gameObject : gameObject));
@@ -77,7 +79,19 @@ public class DetectorMortal : MonoBehaviour
             }
             else
             {
+                // 1. Avanza la fase de la persona
                 persona.IntentarAvanzarFase();
+
+                // 2. Aplicar el lanzamiento aleatorio
+                Movement mov = persona.GetComponent<Movement>();
+                if (mov != null)
+                {
+                    // Genera una dirección al azar (360 grados)
+                    Vector2 direccionAleatoria = Random.insideUnitCircle.normalized;
+
+                    // Aplica el empuje usando las fuerzas propias de la persona
+                    mov.AplicarEmpuje(direccionAleatoria, persona.fuerzaRetroceso, persona.fuerzaRotacion);
+                }
             }
         }
     }

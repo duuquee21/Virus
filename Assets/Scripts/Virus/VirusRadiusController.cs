@@ -13,6 +13,8 @@ public class VirusRadiusController : MonoBehaviour
     private float currentFinalRadius; // Variable para guardar el valor calculado
     public float CurrentFinalRadius => currentFinalRadius; // Propiedad de solo lectura
 
+    private int bonusLevel = 0;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -25,6 +27,12 @@ public class VirusRadiusController : MonoBehaviour
 
     void Start()
     {
+        // 1. Cargamos el nivel real que está guardado en PlayerPrefs
+        if (Guardado.instance != null)
+        {
+            currentLevel = Guardado.instance.radiusLevel;
+        }
+
         ApplyScale();
     }
 
@@ -47,9 +55,16 @@ public class VirusRadiusController : MonoBehaviour
         ApplyScale();
     }
 
+    public void ApplyRoundBonus()
+    {
+        bonusLevel++;
+        ApplyScale();
+    }
+
     public void ApplyScale()
     {
-        float currentMultiplier = 1f + ((currentLevel - 1) * radiusIncrement);
+        // Sumamos el nivel comprado (currentLevel) + el bonus temporal de la ronda
+        float currentMultiplier = 1f + ((currentLevel + bonusLevel - 1) * radiusIncrement);
         float shopRadius = baseScale * currentMultiplier;
         float skillMultiplier = (Guardado.instance != null) ? Guardado.instance.radiusMultiplier : 1f;
 

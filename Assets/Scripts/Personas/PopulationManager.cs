@@ -10,15 +10,14 @@ public class PopulationManager : MonoBehaviour
 
     [Header("Settings")]
     public float spawnInterval = 18f;
-  
     private float baseSpawnInterval;
 
     public int initialPopulation = 10;
     public static PopulationManager instance;
 
     [Header("Spawn & Playable Areas")]
-    private Collider2D currentSpawnCollider; // Donde NACEN
-    private Collider2D playableAreaCollider; // Donde se PERMITE que estén
+    private Collider2D currentSpawnCollider;
+    private Collider2D playableAreaCollider;
     public float margenSeguridad = 0.5f;
 
     [Header("Spawn Animation")]
@@ -27,6 +26,7 @@ public class PopulationManager : MonoBehaviour
     [Header("Duplication Settings")]
     public float fuerzaImpulsoClon = 2f;
 
+    [Header("Bugged Person Settings")]
     public GameObject buggedPersonPrefab;
     [Range(0f, 100f)]
     public float buggedSpawnChance = 5f;
@@ -36,20 +36,26 @@ public class PopulationManager : MonoBehaviour
     // === CACHÉ Y OPTIMIZACIÓN ===
     private HashSet<GameObject> personasVivas = new HashSet<GameObject>();
     private HashSet<GameObject> coralesVivos = new HashSet<GameObject>();
-    private float checkOutsidersTimer = 0f;
-    private float checkOutsidersInterval = 0.25f; // Cada medio segundo en lugar de cada frame
+    private HashSet<GameObject> buggedPersonas = new HashSet<GameObject>(); // <-- NUEVA CACHÉ
 
+    private float checkOutsidersTimer = 0f;
+    private float checkOutsidersInterval = 0.25f;
 
     void Awake()
     {
         instance = this;
-
-        // ¡AQUÍ ESTÁ LA SOLUCIÓN!
-        // Guardamos el intervalo original del Inspector antes de aplicar cualquier bonus
         baseSpawnInterval = spawnInterval;
 
         if (personPrefabs.Length > 0)
             currentPrefab = personPrefabs[0];
+    }
+
+    private void UpdateBuggedChance()
+    {
+        if (Guardado.instance != null)
+        {
+            buggedSpawnChance = Guardado.instance.buggedSpawnChance;
+        }
     }
 
     public void InstanciarCopia(Vector3 posicion, int faseDestino, GameObject objetoQueChoco)
@@ -57,8 +63,8 @@ public class PopulationManager : MonoBehaviour
         if (currentPrefab == null) return;
 
         GameObject nuevaCopia = Instantiate(currentPrefab, posicion, Quaternion.identity);
-        personasVivas.Add(nuevaCopia); // === NUEVA: Registrar en caché ===
-        
+        personasVivas.Add(nuevaCopia);
+
         PersonaInfeccion script = nuevaCopia.GetComponent<PersonaInfeccion>();
 
         if (script != null)
@@ -83,17 +89,14 @@ public class PopulationManager : MonoBehaviour
         StartCoroutine(GrowFromZero(nuevaCopia.transform, targetScale));
     }
 
-    // --- CAMBIO: Buscamos ambos colliders por sus respectivos Tags ---
     public void RefreshSpawnArea()
     {
-        // 1. Área de NACIMIENTO
         GameObject areaObj = GameObject.FindWithTag("SpawnArea");
         if (areaObj != null)
         {
             currentSpawnCollider = areaObj.GetComponent<Collider2D>();
         }
 
-        // 2. Área JUGABLE (Para destruir si salen)
         GameObject playableObj = GameObject.FindWithTag("PlayableArea");
         if (playableObj != null)
         {
@@ -112,13 +115,13 @@ public class PopulationManager : MonoBehaviour
     public void ConfigureRound(int ignored)
     {
         RefreshSpawnArea();
+        UpdateBuggedChance();
         timer = 0f;
 
         int poblacionReal = initialPopulation;
         if (Guardado.instance != null)
             poblacionReal = initialPopulation + (int)Guardado.instance.populationBonus;
 
-        // Lanzamos corrutina para no saturar el frame
         StartCoroutine(SpawnInitialPopulationRoutine(poblacionReal));
     }
 
@@ -127,16 +130,15 @@ public class PopulationManager : MonoBehaviour
         for (int i = 0; i < cantidad; i++)
         {
             SpawnPerson(false);
-            // Espera al siguiente frame después de cada spawn
             yield return null;
         }
     }
+
     void Update()
     {
         if (LevelManager.instance != null && !LevelManager.instance.isGameActive) return;
 
         timer += Time.deltaTime;
-
 
         checkOutsidersTimer += Time.deltaTime;
         if (checkOutsidersTimer >= checkOutsidersInterval)
@@ -145,8 +147,9 @@ public class PopulationManager : MonoBehaviour
             checkOutsidersTimer = 0f;
         }
 
-        if (timer >= spawnInterval )
+        if (timer >= spawnInterval)
         {
+            UpdateBuggedChance();
             SpawnPerson(true);
             timer = 0;
         }
@@ -154,13 +157,11 @@ public class PopulationManager : MonoBehaviour
 
     private int GetTotalPopulationCount()
     {
-        // Ya no necesitas limpiar la caché aquí, porque se limpian solas en OnDestroy
         return personasVivas.Count + coralesVivos.Count;
     }
 
     void CheckForOutsiders()
     {
-        // === OPTIMIZACIÓN: Si no hay PlayableArea definida, usamos SpawnArea como respaldo ===
         Collider2D areaDeChequeo = (playableAreaCollider != null) ? playableAreaCollider : currentSpawnCollider;
         if (areaDeChequeo == null) return;
 
@@ -168,7 +169,6 @@ public class PopulationManager : MonoBehaviour
         LimpiarSiEstaFuera(coralesVivos, areaDeChequeo);
     }
 
-    // === OPTIMIZACIÓN: Usar Distance en lugar de OverlapPoint ===
     void LimpiarSiEstaFuera(HashSet<GameObject> objetos, Collider2D areaReferencia)
     {
         List<GameObject> toRemove = new List<GameObject>();
@@ -190,29 +190,45 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    // === NUEVA FUNCIÓN: Limpiar referencias a objetos ya destruidos ===
     private void LimpiarCacheObjetosDestruidos()
     {
         personasVivas.RemoveWhere(obj => obj == null);
         coralesVivos.RemoveWhere(obj => obj == null);
+        buggedPersonas.RemoveWhere(obj => obj == null); // <-- LIMPIRAR CACHÉ DE BUGEADOS
     }
 
     void SpawnPerson(bool allowRandomPhase)
     {
-        // --- AQUÍ SE SIGUE USANDO currentSpawnCollider PARA NACER ---
         if (currentPrefab == null || currentSpawnCollider == null) return;
 
         Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
 
+        // --- LÓGICA DE SPAWN BUGGEADO CON LÍMITE ---
+        buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos un conteo exacto
+
         GameObject prefabToSpawn = currentPrefab;
-        if (buggedPersonPrefab != null && Random.Range(0f, 100f) < buggedSpawnChance)
+        bool isBuggedSpawn = false;
+
+        if (buggedPersonPrefab != null && Guardado.instance != null)
         {
-            prefabToSpawn = buggedPersonPrefab;
+            // Verificamos si NO hemos superado el límite y si pasamos la probabilidad
+            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
+            {
+                prefabToSpawn = buggedPersonPrefab;
+                isBuggedSpawn = true;
+            }
         }
 
         GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
-        personasVivas.Add(newPerson); // === NUEVA: Registrar en caché ===
+        personasVivas.Add(newPerson);
 
+        if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
+
+        ConfigurarPersonaInstanciada(newPerson, allowRandomPhase);
+    }
+
+    private void ConfigurarPersonaInstanciada(GameObject newPerson, bool allowRandomPhase)
+    {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
 
@@ -235,25 +251,20 @@ public class PopulationManager : MonoBehaviour
             }
 
             script.EstablecerFaseDirecta(faseFinal);
-            Color colorNivel = LevelManager.instance.GetCurrentLevelColor();
-            script.AplicarColor(colorNivel);
+            script.AplicarColor(LevelManager.instance.GetCurrentLevelColor());
         }
 
         Vector3 targetScale = newPerson.transform.localScale;
         newPerson.transform.localScale = Vector3.zero;
-        StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
+        if (gameObject.activeInHierarchy) StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
     }
 
-    // Modifica el método para ser más directo
     Vector3 GetRandomPointInCollider(Collider2D col)
     {
         if (col == null) return Vector3.zero;
 
-        // Forzamos al collider a recalcular sus dimensiones internas
-        // Esto evita que devuelva (0,0,0) si el objeto acaba de activarse
         Bounds bounds = col.bounds;
 
-        // Si los bounds son minúsculos, algo va mal con la referencia
         if (bounds.size.magnitude < 0.1f)
         {
             Debug.LogWarning("El SpawnCollider tiene un tamaño casi nulo. Revisando posición...");
@@ -270,7 +281,6 @@ public class PopulationManager : MonoBehaviour
             float ry = Random.Range(bounds.min.y + margenSeguridad, bounds.max.y - margenSeguridad);
             randomPoint = new Vector2(rx, ry);
 
-            // Verificamos si el punto está dentro de la FORMA (no solo del rectángulo)
             if (col.OverlapPoint(randomPoint))
             {
                 puntoValido = true;
@@ -278,7 +288,6 @@ public class PopulationManager : MonoBehaviour
             intentos++;
         }
 
-        // Si fallan los intentos, devolvemos un punto aleatorio simple en el bound
         return puntoValido ? (Vector3)randomPoint : new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
             Random.Range(bounds.min.y, bounds.max.y),
@@ -289,36 +298,30 @@ public class PopulationManager : MonoBehaviour
     void ApplySpawnBonus()
     {
         if (Guardado.instance == null) return;
-
-        // Convertimos el bonus a int para restar segundos enteros
         float bonusSegundos = Guardado.instance.spawnSpeedBonus;
-
-        // Restamos los segundos directamente a la base
         spawnInterval = baseSpawnInterval - bonusSegundos;
 
-        // Seguridad: No permitimos que el intervalo sea menor a 0.3 segundos
         if (spawnInterval < 0.3f)
         {
             spawnInterval = 0.3f;
         }
     }
+
     public float GetCurrentSpawnInterval()
     {
-        // Convertimos el bonus a int para restar segundos enteros
         float bonusSegundos = Guardado.instance.spawnSpeedBonus;
-        // Restamos los segundos directamente a la base
         spawnInterval = baseSpawnInterval - bonusSegundos;
-
         return spawnInterval;
     }
+
     public void ClearAllPersonas()
     {
-        // === OPTIMIZACIÓN: Usar caché en lugar de FindGameObjectsWithTag ===
         foreach (var p in personasVivas)
         {
             if (p != null) Destroy(p);
         }
         personasVivas.Clear();
+        buggedPersonas.Clear(); // <-- VACIAR CACHÉ
 
         foreach (var c in coralesVivos)
         {
@@ -328,40 +331,36 @@ public class PopulationManager : MonoBehaviour
 
         timer = 0;
     }
+
     public void SpawnPersonAtBasePhase()
     {
         if (currentPrefab == null || currentSpawnCollider == null) return;
 
+        UpdateBuggedChance();
+        buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos un conteo exacto
+
         Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
 
         GameObject prefabToSpawn = currentPrefab;
-        if (buggedPersonPrefab != null && Random.Range(0f, 100f) < buggedSpawnChance)
+        bool isBuggedSpawn = false;
+
+        if (buggedPersonPrefab != null && Guardado.instance != null)
         {
-            prefabToSpawn = buggedPersonPrefab;
+            // Verificamos límite y probabilidad
+            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
+            {
+                prefabToSpawn = buggedPersonPrefab;
+                isBuggedSpawn = true;
+            }
         }
 
         GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
         personasVivas.Add(newPerson);
+        if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
 
-        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
-
-        if (script != null && LevelManager.instance != null)
-        {
-            int baseFase = 0;
-            if (currentMap < LevelManager.instance.faseInicialPorMapa.Length)
-                baseFase = LevelManager.instance.faseInicialPorMapa[currentMap];
-
-            script.EstablecerFaseDirecta(baseFase);
-            script.AplicarColor(LevelManager.instance.GetCurrentLevelColor());
-
-            Debug.Log($"[SPAWN BASE] Nueva figura creada en fase base {baseFase} del mapa {currentMap}");
-        }
-
-        Vector3 targetScale = newPerson.transform.localScale;
-        newPerson.transform.localScale = Vector3.zero;
-        StartCoroutine(GrowFromZero(newPerson.transform, targetScale));
+        ConfigurarPersonaInstanciada(newPerson, false);
     }
+
     IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
     {
         float t = 0f;
@@ -385,47 +384,36 @@ public class PopulationManager : MonoBehaviour
 
         if (Guardado.instance != null)
         {
-            // Replicamos la lógica de ConfigureRound
             poblacionReal = initialPopulation + (int)Guardado.instance.populationBonus;
         }
 
         return poblacionReal;
     }
 
-    // === MÉTODOS PÚBLICOS PARA REGISTRAR ENTIDADES EN CACHÉ ===
-    /// <summary>
-    /// Registra un coral en la caché (llamar cuando se instancia un coral)
-    /// </summary>
     public void RegisterCoral(GameObject coral)
     {
         if (coral != null)
             coralesVivos.Add(coral);
     }
 
-    /// <summary>
-    /// Desregistra un coral de la caché
-    /// </summary>
     public void UnregisterCoral(GameObject coral)
     {
         if (coral != null)
             coralesVivos.Remove(coral);
     }
 
-    /// <summary>
-    /// Registra una persona en la caché (se llama automáticamente en SpawnPerson)
-    /// </summary>
     public void RegisterPersona(GameObject persona)
     {
         if (persona != null)
             personasVivas.Add(persona);
     }
 
-    /// <summary>
-    /// Desregistra una persona de la caché
-    /// </summary>
     public void UnregisterPersona(GameObject persona)
     {
         if (persona != null)
+        {
             personasVivas.Remove(persona);
+            buggedPersonas.Remove(persona); // Por si se desregistra a mano
+        }
     }
 }

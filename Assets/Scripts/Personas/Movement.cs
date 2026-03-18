@@ -67,7 +67,7 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        // 1. PREDICCIÓN DE IMPACTO (El sistema Anti-Tunneling)
+        // 1. PREDICCIÓN DE IMPACTO
         PredecirColisionParedes();
 
         // 2. Movimiento
@@ -77,13 +77,26 @@ public class Movement : MonoBehaviour
         ActualizarPosicionGrid();
         DetectarColisionesCircleToCircle();
 
-        // 4. Límite de velocidad
-        if (rb.linearVelocity.magnitude > 50f)
+        // 4. MANTENER VELOCIDAD CONSTANTE (Ajuste Crítico)
+        // Si ya está infectado, forzamos que la magnitud sea exactamente 50
+        if (personaInfeccion != null && personaInfeccion.alreadyInfected)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * 50f;
+            if (rb.linearVelocity.sqrMagnitude > 0.01f)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * 30f;
+            }
+            else
+            {
+                // Si por alguna razón se detuvo (colisión frontal perfecta), 
+                // usamos la variable 'direccion' para relanzarlo
+                rb.linearVelocity = direccion * 50f;
+            }
+        }
+        else if (rb.linearVelocity.magnitude > 50f) // Cap para no infectados
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * 30f;
         }
     }
-
     /// <summary>
     /// Lanza un "rayo" del tamaño del collider hacia adelante para ver si en este frame vamos a atravesar una pared.
     /// </summary>
@@ -149,22 +162,29 @@ public class Movement : MonoBehaviour
 
     private void ManejarMovimientoNormal()
     {
-        float velocidadObjetivo = (personaInfeccion != null && personaInfeccion.alreadyInfected) ? 50f : velocidadBase;
+        bool isInfectado = (personaInfeccion != null && personaInfeccion.alreadyInfected);
+        float velocidadObjetivo = isInfectado ? 30f : velocidadBase;
 
         if (!estaEmpujado)
         {
-            float aceleracionRapida = 50f;
-            Vector2 velocidadActual = rb.linearVelocity;
+            // Si está infectado, la aceleración es instantánea para evitar "rampeos"
+            float aceleracion = isInfectado ? 500f : 50f;
             Vector2 velocidadDeseada = direccion * velocidadObjetivo;
-            rb.linearVelocity = Vector2.MoveTowards(velocidadActual, velocidadDeseada, aceleracionRapida * Time.fixedDeltaTime);
+            rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, velocidadDeseada, aceleracion * Time.fixedDeltaTime);
         }
         else
         {
+            // Lógica de empuje
             tiempoEmpujeRestante -= Time.fixedDeltaTime;
 
-            if (tiempoEmpujeRestante <= 0f && rb.linearVelocity.magnitude <= 2f)
+            // Si está infectado, queremos que recupere el control casi de inmediato 
+            // o que el empuje no lo frene por debajo de 50
+            if (tiempoEmpujeRestante <= 0f)
             {
-                estaEmpujado = false;
+                if (isInfectado || rb.linearVelocity.magnitude <= 2f)
+                {
+                    estaEmpujado = false;
+                }
             }
 
             if (rb.linearVelocity.sqrMagnitude > 0.1f)

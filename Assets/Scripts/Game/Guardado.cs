@@ -89,6 +89,10 @@ public class Guardado : MonoBehaviour
     public float agujeroSpawnRate;
     public float spawnBaseOnMaxPhaseChance = 0f;
 
+    public float buggedSpawnChance = 0f; // Probabilidad de que spawnee un enemigo bugueado
+
+    public int buggedSpawnLimit = 1; // Límite base (puedes cambiarlo a 0 si no quieres que spawneen sin la primera mejora)
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -163,6 +167,10 @@ public class Guardado : MonoBehaviour
         agujeroSpawnRate = 5f;
         spawnBaseOnMaxPhaseChance = 0f;
 
+        buggedSpawnChance = 0f;
+
+        buggedSpawnLimit = 1; // O el valor inicial que prefieras
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -235,12 +243,20 @@ public class Guardado : MonoBehaviour
             PlayerPrefs.SetFloat("ProbParedInfectiva_" + i, probParedInfectiva[i]);
         }
 
+        PlayerPrefs.SetFloat("BuggedSpawnChance", buggedSpawnChance);
+
+        PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
+
+      
+
+
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
         foreach (SkillNode node in nodes)
         {
             node.SaveNodeState();
         }
         PlayerPrefs.Save();
+
     }
 
     public void LoadData()
@@ -291,6 +307,8 @@ public class Guardado : MonoBehaviour
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 5f);
         spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
+        buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 0f); // 0f es el valor inicial
+        PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
@@ -313,6 +331,8 @@ public class Guardado : MonoBehaviour
         {
             controller.RefreshScale();
         }
+
+      
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -335,7 +355,11 @@ public class Guardado : MonoBehaviour
     {
         doubleUpgradeChance = Mathf.Clamp01(chance);
     }
-
+    public void AddBuggedSpawnLimit(int amount)
+    {
+        buggedSpawnLimit += amount;
+        Debug.Log($"<color=cyan>Límite de Bugeados aumentado a: {buggedSpawnLimit}</color>");
+    }
     public void SetAddTimeOnPhaseChance(float chance)
     {
         addTimeOnPhaseChance = Mathf.Clamp01(chance);
@@ -448,6 +472,14 @@ public class Guardado : MonoBehaviour
     {
         speedMultiplier += extra;
     }
+
+    public void AddBuggedSpawnChance(float amount)
+    {
+        // Aumenta la probabilidad y la limita entre 0 y 100
+        buggedSpawnChance = Mathf.Clamp(buggedSpawnChance + amount, 0f, 100f);
+        Debug.Log($"<color=cyan>Probabilidad Bugged actualizada: {buggedSpawnChance}%</color>");
+    }
+
     // Este método aplica físicamente la mejora gratuita al empezar una partida
     public void ApplyPermanentInitialUpgrade()
     {
@@ -457,7 +489,8 @@ public class Guardado : MonoBehaviour
 
         switch (freeInitialUpgrade)
         {
-            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.UpgradeRadius(); break;
+            // CAMBIO AQUÍ: Llamamos a ApplyRoundBonus en vez de UpgradeRadius
+            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.ApplyRoundBonus(); break;
             case 1: if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.UpgradeCapacity(); break;
             case 2: if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.UpgradeSpeed(); break;
             case 3: if (TimeUpgradeController.instance) TimeUpgradeController.instance.UpgradeTime(); break;

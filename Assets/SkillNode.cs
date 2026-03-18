@@ -85,7 +85,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         MejorarSpawnHojaNegra,
         MejorarDmgHojaNegra,
         MejorarSpawnAgujeroNegro,
-        SpawnBaseFigureOnMaxPhase20
+        SpawnBaseFigureOnMaxPhase20,
+        UpgradeBuggedSpawnChance5,
+        IncreaseBuggedLimit1
     }
 
     [Header("Save ID")]
@@ -712,6 +714,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.UpgradeBuggedSpawnChance5:
+                Guardado.instance.AddBuggedSpawnChance(5f); // Aumenta 5 puntos porcentuales
+                Guardado.instance.SaveData();
+                break;
+
+            case SkillEffectType.IncreaseBuggedLimit1:
+                Guardado.instance.AddBuggedSpawnLimit(GetInt(1)); // Sube 1, o usa overrideInt si lo pones en el inspector
+                Guardado.instance.SaveData();
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -1189,13 +1201,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 }
 
 
-            /*case SkillEffectType.UnlockExtraTimeLogic:
-                if (unlocked)
-                    sb.AppendLine($"{GetTexto("status_unlocked")}");
-                else
-                    sb.AppendLine($"{GetTexto("extra_time_desc")}"); // Crea esta clave en tu Localization
-                break;*/
-
             case SkillEffectType.MejorarCapacidadCoral:
                 {
                     int actual = g.coralCapacity;
@@ -1254,6 +1259,27 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                         sb.AppendLine($"Prob. generación al fase final: {actual:F0}%");
                     else
                         sb.AppendLine($"Prob. generación al fase final: {actual:F0}% → {despues:F0}%");
+                    break;
+                }
+
+            case SkillEffectType.UpgradeBuggedSpawnChance5:
+                {
+                    float actual = g.buggedSpawnChance;
+                    float despues = actual + 5f;
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_bug_chance")}: {actual}%");
+                    else sb.AppendLine($"{GetTexto("prev_bug_chance")}: {actual}% → {despues}%");
+                    break;
+                }
+
+            case SkillEffectType.IncreaseBuggedLimit1:
+                {
+                    int actual = g.buggedSpawnLimit;
+                    int despues = actual + GetInt(1);
+
+                    if (comprado)
+                        sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual}");
+                    else
+                        sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual} → {despues}");
                     break;
                 }
         }

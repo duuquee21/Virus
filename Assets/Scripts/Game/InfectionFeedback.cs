@@ -173,8 +173,17 @@ public class InfectionFeedback : MonoBehaviour
     private IEnumerator ReturnToPool(GameObject prefab, GameObject instance, float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        // Check if the object still exists before touching it
+        if (instance == null) yield break;
+
         instance.SetActive(false);
-        poolDictionary[prefab].Enqueue(instance);
+
+        // Check if the prefab/pool still exists (in case CleanAllActiveParticles was called)
+        if (prefab != null && poolDictionary.ContainsKey(prefab))
+        {
+            poolDictionary[prefab].Enqueue(instance);
+        }
     }
 
     // --- HELPER METHODS ---
@@ -222,7 +231,9 @@ public class InfectionFeedback : MonoBehaviour
 
     public void CleanAllActiveParticles()
     {
-        // En lugar de Destroy, simplemente desactivamos y limpiamos las colas para resetear el estado
+        // Stop all pending ReturnToPool routines to prevent them from accessing null refs
+        StopAllCoroutines();
+
         foreach (var pool in poolDictionary.Values)
         {
             while (pool.Count > 0)
@@ -232,5 +243,8 @@ public class InfectionFeedback : MonoBehaviour
             }
         }
         poolDictionary.Clear();
+
+        // Also clear the active shakes dictionary since those coroutines were just stopped
+        activeShakes.Clear();
     }
 }
