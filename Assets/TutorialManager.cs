@@ -40,6 +40,18 @@ public class TutorialManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        // Aseguramos que el panel esté cerrado por defecto, para evitar que quede vacío
+        // cuando el juego se reinicia/continúa y no se inicia el tutorial.
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
+
+        if (tutorialCanvasGroup != null)
+        {
+            tutorialCanvasGroup.alpha = 0f;
+            tutorialCanvasGroup.interactable = false;
+            tutorialCanvasGroup.blocksRaycasts = false;
+        }
     }
 
     public void StartTutorial(Transform player)
@@ -60,7 +72,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         StartFade(1f);
-        ShowMessage("Mu�vete.");
+        ShowMessage("Mu\u00E9vete.");
     }
 
     private void Update()
@@ -104,7 +116,18 @@ public class TutorialManager : MonoBehaviour
 
         tutorialFinished = true;
 
-        ShowMessage("Perfecto. Ya empieza la propagaci�n.");
+        // Asegurar que el panel esté visible al mostrar el mensaje final del tutorial.
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(true);
+
+        if (tutorialCanvasGroup != null)
+        {
+            tutorialCanvasGroup.alpha = 1f;
+            tutorialCanvasGroup.interactable = true;
+            tutorialCanvasGroup.blocksRaycasts = true;
+        }
+
+        ShowMessage("Perfecto. Ya empieza la propagaci\u00F3n.");
 
         if (LevelManager.instance != null)
         {
