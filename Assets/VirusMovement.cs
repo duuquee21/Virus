@@ -70,7 +70,9 @@ public class VirusMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        if(LevelManager.instance.isGameActive)
+        // Permitir controlar al virus durante la transición entre zonas.
+        // Esto evita que se quede “arrastrando” la dirección anterior mientras el mapa gira.
+        if (LevelManager.instance == null || LevelManager.instance.isGameActive || LevelManager.instance.isTransitioning)
         {
             movementInput = new Vector2(moveX, moveY);
         }
@@ -102,6 +104,20 @@ public class VirusMovement : MonoBehaviour
 
         // Aplicamos una fuerza proporcional a la aceleración
         rb.AddForce(velocityChange * acceleration);
+    }
+
+    /// <summary>
+    /// Detiene el movimiento del jugador y limpia el input.
+    /// Útil para transiciones donde queremos que el personaje deje de moverse inmediatamente.
+    /// </summary>
+    public void StopMovement()
+    {
+        movementInput = Vector2.zero;
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
     }
 
     private void HandleParticles()

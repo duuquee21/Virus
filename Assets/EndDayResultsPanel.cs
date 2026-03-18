@@ -82,6 +82,9 @@ public class EndDayResultsPanel : MonoBehaviour
 
     private int totalCuentaFinal;    // Para saber el valor final en caso de skip
 
+    // Partículas de la partida (se pausan mientras se muestra el panel de resumen)
+    private readonly System.Collections.Generic.List<ParticleSystem> pausedParticleSystems = new System.Collections.Generic.List<ParticleSystem>();
+
     [Header("Configuración Jackpot")]
     public int jackpotThreshold = 100; // Define cuánto es un "Gran Jackpot"
 
@@ -158,6 +161,24 @@ public class EndDayResultsPanel : MonoBehaviour
     // ======================================================
     public void ShowResults(int monedasGanadas, int monedasTotales)
     {
+        // Detenemos y limpiamos las partículas de la partida para que desaparezcan al abrir el panel
+        StopGameplayParticles();
+
+        // Eliminamos los números voladores y textos flotantes que puedan estar activos
+        var floatingScores = FindObjectsOfType<FloatingScoreUI>(true);
+        foreach (var fs in floatingScores)
+        {
+            if (fs != null)
+                Destroy(fs.gameObject);
+        }
+
+        var floatingTexts = FindObjectsOfType<FloatingText>(true);
+        foreach (var ft in floatingTexts)
+        {
+            if (ft != null)
+                ft.gameObject.SetActive(false);
+        }
+
         Time.timeScale = 0f;
         panel.SetActive(true);
 
@@ -361,12 +382,38 @@ public class EndDayResultsPanel : MonoBehaviour
         }
 
         Time.timeScale = 1f;
+        ResumeGameplayParticles();
     }
 
     private void ActualizarTextosMonedas()
     {
         monedasPartidaText.text = monedasTempPartida.ToString();
         monedasTotalesText.text = monedasTempTotales.ToString();
+    }
+
+    private void StopGameplayParticles()
+    {
+        pausedParticleSystems.Clear();
+        var allParticles = FindObjectsOfType<ParticleSystem>(true);
+        foreach (var ps in allParticles)
+        {
+            if (ps == null) continue;
+            if (!ps.isPlaying) continue;
+            if (ps.transform.IsChildOf(panel.transform)) continue; // No apagamos las partículas del panel de resultados
+
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            pausedParticleSystems.Add(ps);
+        }
+    }
+
+    private void ResumeGameplayParticles()
+    {
+        for (int i = 0; i < pausedParticleSystems.Count; i++)
+        {
+            var ps = pausedParticleSystems[i];
+            if (ps != null) ps.Play(true);
+        }
+        pausedParticleSystems.Clear();
     }
 
     void GenerarBarraPlanetaActual()

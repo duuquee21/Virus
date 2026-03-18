@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
 
 
     [HideInInspector] public bool isGameActive;
+    [HideInInspector] public bool isTransitioning;
     [HideInInspector] public int currentSessionInfected;
 
     float currentTimer;
@@ -1195,6 +1196,10 @@ public class LevelManager : MonoBehaviour
 
     public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
     {
+        // No mostramos los números voladores si estamos en el panel de resultados
+        if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null && EndDayResultsPanel.instance.panel.activeSelf)
+            return;
+
         AddCoins(puntosGanados); // Sumamos el dinero
 
         // --- ESTA LÍNEA TIENE QUE ESTAR ASÍ (Con los == null) ---
