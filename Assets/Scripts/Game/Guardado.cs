@@ -67,7 +67,7 @@ public class Guardado : MonoBehaviour
     public float doubleUpgradeChance = 0f; // 0..1
     public float randomSpawnPhaseChance = 0f; // 0..1 (0.05 = 5%)
     public int speedLevel = 1;
-    public int radiusLevel = 1;
+    public int radiusLevel = 0;
     public int capacityLevel = 1;
     public int timeLevel = 1;
     public int infectionSpeedLevel = 1;
@@ -137,7 +137,7 @@ public class Guardado : MonoBehaviour
         speedMultiplier = 1.0f;
         infectSpeedMultiplier = 1.0f;
         speedLevel = 1;
-        radiusLevel = 1;
+        radiusLevel = 0;
         capacityLevel = 1;
         timeLevel = 1;
         infectionSpeedLevel = 1;
@@ -172,6 +172,8 @@ public class Guardado : MonoBehaviour
         buggedSpawnChance = 0f;
 
         buggedSpawnLimit = 1; // O el valor inicial que prefieras
+
+        VirusRadiusController.instance.ApplyScale();
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -284,7 +286,7 @@ public class Guardado : MonoBehaviour
         dañoExtraHabilidad = PlayerPrefs.GetInt("DmgHabilidadGeneral", 0);
         nivelCarambola = PlayerPrefs.GetInt("NivelCarambola", -1);
         speedLevel = PlayerPrefs.GetInt("SpeedLevel", 1);
-        radiusLevel = PlayerPrefs.GetInt("RadiusLevel", 1);
+        radiusLevel = PlayerPrefs.GetInt("RadiusLevel", 0);
         capacityLevel = PlayerPrefs.GetInt("CapacityLevel", 1);
         timeLevel = PlayerPrefs.GetInt("TimeLevel", 1);
         infectionSpeedLevel = PlayerPrefs.GetInt("InfectionSpeedLevel", 1);
@@ -378,6 +380,11 @@ public class Guardado : MonoBehaviour
         }
     }
 
+    public void AddRadiusLevel(int extra)
+    {
+        radiusLevel += extra;
+     
+    }
     public void MejorarCantidadAgujeros(int extra)
     {
         cantidadMaxAgujeros += extra;
@@ -500,7 +507,7 @@ public class Guardado : MonoBehaviour
         switch (freeInitialUpgrade)
         {
             // CAMBIO AQUÍ: Llamamos a ApplyRoundBonus en vez de UpgradeRadius
-            case 0: if (VirusRadiusController.instance) VirusRadiusController.instance.ApplyRoundBonus(); break;
+          
             case 1: if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.UpgradeCapacity(); break;
             case 2: if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.UpgradeSpeed(); break;
             case 3: if (TimeUpgradeController.instance) TimeUpgradeController.instance.UpgradeTime(); break;

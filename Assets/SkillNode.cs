@@ -88,7 +88,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         SpawnBaseFigureOnMaxPhase20,
         UpgradeBuggedSpawnChance5,
         IncreaseBuggedLimit1,
-        IncreaseMaxBlackHoles
+        IncreaseMaxBlackHoles,
+        IncreaseRadiusLevel,
     }
 
     [Header("Save ID")]
@@ -457,14 +458,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); Guardado.instance.SaveData(); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.RadiusLevel2:
-            case SkillEffectType.RadiusLevel3:
-            case SkillEffectType.RadiusLevel4:
-            case SkillEffectType.RadiusLevel5:
-            case SkillEffectType.RadiusLevel6:
-                VirusRadiusController.instance.UpgradeRadius();
-                break;
-
             case SkillEffectType.SpeedLevel2:
             case SkillEffectType.SpeedLevel3:
             case SkillEffectType.SpeedLevel4:
@@ -732,6 +725,15 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
 
+            case SkillEffectType.IncreaseRadiusLevel:
+                Guardado.instance.AddRadiusLevel(GetInt(1));
+                Guardado.instance.SaveData();
+                if (VirusRadiusController.instance != null)
+                {
+                    VirusRadiusController.instance.ApplyScale();
+                }
+                break;
+
             default:
                 Debug.LogWarning($"El efecto {effectType} no tiene un Debug específico implementado.");
                 break;
@@ -903,14 +905,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
                 break;
 
-            case SkillEffectType.RadiusLevel2:
-            case SkillEffectType.RadiusLevel3:
-            case SkillEffectType.RadiusLevel4:
-            case SkillEffectType.RadiusLevel5:
-            case SkillEffectType.RadiusLevel6:
-                VirusRadiusController.instance.UpgradeRadius(); // Este ya llama a ApplyScale() internamente, así que está bien.
-                break;
-
+       
             // -------------------------
             // VELOCIDAD VIRUS
             // -------------------------
@@ -1298,6 +1293,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     int extra = useOverride ? overrideInt : 1;
                     int despues = actual + extra;
 
+                    if (comprado)
+                        sb.AppendLine($"{actual}");
+                    else
+                        sb.AppendLine($"{actual} → {despues}");
+                    break;
+                }
+
+            case SkillEffectType.IncreaseRadiusLevel:
+                {
+                    int actual = g.radiusLevel;
+                    int despues = actual + GetInt(1);
                     if (comprado)
                         sb.AppendLine($"{actual}");
                     else

@@ -34,7 +34,7 @@ public class FloatingCellMovement : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
-        GameObject objAudio = GameObject.Find("SFXAudioSource");
+        GameObject objAudio = GameObject.Find("SFXSource");
         if (objAudio != null)
         {
             audioSource = objAudio.GetComponent<AudioSource>();

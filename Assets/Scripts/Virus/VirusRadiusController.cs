@@ -6,7 +6,7 @@ public class VirusRadiusController : MonoBehaviour
 
     [Header("Configuraci�n de Radio")]
     public float baseScale = 1f;
-    [SerializeField] float radiusIncrement = 0f; // Lo que se suma al multiplicador por nivel
+  
 
     private int currentLevel = 1;
 
@@ -36,42 +36,12 @@ public class VirusRadiusController : MonoBehaviour
         ApplyScale();
     }
 
-    // Suma un nivel (y por tanto +0.25 al multiplicador)
-    public void UpgradeRadius()
-    {
-        currentLevel++;
-        if (Guardado.instance != null)
-        {
-            // Solo guardamos el nivel. El nodo de MultiplyRadius125 ya usa el AddRadiusMultiplier aparte.
-            Guardado.instance.radiusLevel = currentLevel;
-            Guardado.instance.SaveData();
-        }
-        ApplyScale();
-    }
-
-    public void SetLevel(int level)
-    {
-        currentLevel = Mathf.Max(1, level);
-        ApplyScale();
-    }
-
-    public void ApplyRoundBonus()
-    {
-        bonusLevel++;
-        ApplyScale();
-    }
-
     public void ApplyScale()
     {// 1. Calculamos el multiplicador basado estrictamente en el NIVEL de la tienda
-     // Si nivel es 1 y increment es 0.25 -> mult = 1 + (0 * 0.25) = 1.0
-        float shopMultiplier = 1f + ((currentLevel + bonusLevel - 1) * radiusIncrement);
 
-        // 2. Obtenemos el multiplicador PERMANENTE del árbol de habilidades
-        // Aseguramos que si Guardado no existe, sea 1 (no afecta)
-        float skillTreeMultiplier = (Guardado.instance != null) ? Guardado.instance.radiusMultiplier : 1f;
 
         // 3. RESULTADO FINAL: Base * Multiplicador Tienda * Multiplicador Árbol
-        currentFinalRadius = baseScale * shopMultiplier * skillTreeMultiplier;
+        currentFinalRadius = baseScale+Guardado.instance.radiusLevel;
 
         // --- Aplicación física ---
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
@@ -105,9 +75,5 @@ public class VirusRadiusController : MonoBehaviour
     // Ya no hay un "M�ximo" t�cnico, pero puedes poner uno si quieres
     public bool IsMaxLevel() => false;
 
-    public void ResetUpgrade()
-    {
-        currentLevel = 1;
-        ApplyScale();
-    }
+   
 }

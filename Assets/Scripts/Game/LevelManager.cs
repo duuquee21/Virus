@@ -307,6 +307,7 @@ public class LevelManager : MonoBehaviour
 
         Guardado.instance.LoadEvolutionData();
 
+        VirusRadiusController.instance.ApplyScale();
         // ---> AÑADIR ESTA LÍNEA: Reconstruir el árbol con los datos de la partida cargada
         RebuildSkillTree();
         // <--- FIN DEL CAMBIO
@@ -340,7 +341,7 @@ public class LevelManager : MonoBehaviour
     }
     void ForceHardReset()
     {
-        if (VirusRadiusController.instance) VirusRadiusController.instance.ResetUpgrade();
+        if (VirusRadiusController.instance) VirusRadiusController.instance.ApplyScale();
         if (CapacityUpgradeController.instance) CapacityUpgradeController.instance.ResetUpgrade();
         if (SpeedUpgradeController.instance) SpeedUpgradeController.instance.ResetUpgrade();
         if (TimeUpgradeController.instance) TimeUpgradeController.instance.ResetUpgrade();
@@ -353,13 +354,7 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance == null) return;
 
         // 1. Sincronizar VirusRadiusController
-        if (VirusRadiusController.instance != null)
-        {
-            int radiusLevel = Guardado.instance.radiusLevel;
-            VirusRadiusController.instance.SetLevel(radiusLevel);
-            VirusRadiusController.instance.ApplyScale();
-        }
-
+    
         // 2. Sincronizar SpeedUpgradeController
         if (SpeedUpgradeController.instance != null)
         {

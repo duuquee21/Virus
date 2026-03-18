@@ -89,8 +89,7 @@ public class LevelTransitioner : MonoBehaviour
         if (lm != null)
         {
             lm.isTransitioning = true;
-            if (lm.virusMovementScript != null)
-                lm.virusMovementScript.StopMovement();
+        
 
             lm.isGameActive = false;
         }
