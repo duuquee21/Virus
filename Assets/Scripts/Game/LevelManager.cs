@@ -290,47 +290,51 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        // 1. Transición visual...
+        // 1. Iniciamos la transición visual (Oscurecemos)
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1);
+            transitionScript.SetShape(1); // Hexágono
             transitionScript.CloseBlackScreen();
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // 2. Carga de datos
+        // --- PASO DE CARGA 1: Datos básicos ---
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-        int savedMap = 0;
-
-        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
-        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
-
         Guardado.instance.LoadEvolutionData();
+        yield return null; // Esperamos un frame para que la CPU respire
 
-        VirusRadiusController.instance.ApplyScale();
-        // ---> AÑADIR ESTA LÍNEA: Reconstruir el árbol con los datos de la partida cargada
+        // --- PASO DE CARGA 2: Reconstrucción del Árbol ---
+        // Esto es pesado porque busca muchos SkillNodes
         RebuildSkillTree();
-        // <--- FIN DEL CAMBIO
+        yield return null;
 
-        // Forzamos el índice 0 en las preferencias del jugador
+        // --- PASO DE CARGA 3: Sincronización de Controladores ---
+        SyncControllersWithSavedData();
+        yield return null;
+
+        // --- PASO DE CARGA 4: Preparar el Mapa 0 ---
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
-        currentTimer = savedTimer;
-
-        // Sincronización y UI...
-        SyncControllersWithSavedData();
+        // Limpiamos el grid espacial antes de que aparezcan las nuevas figuras
+        // Esto evita que datos viejos causen conflictos en el primer frame
+        Movement.espacialGrid.Clear();
 
         ActivateMap(0);
+        yield return null;
 
+        // 2. Quitamos los menús
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(true);
 
+        // 3. Lanzamos la sesión
         StartSession();
 
+        // 4. Abrimos el iris
         if (transitionScript != null) transitionScript.OpenBlackScreen();
-    }
 
+        Debug.Log("<color=green>[LOAD]</color> Carga completada sin picos de FPS.");
+    }
     public void NewGameFromMainMenu()
     {
         ResetRunData();

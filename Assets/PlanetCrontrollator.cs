@@ -70,18 +70,25 @@ public class PlanetCrontrollator : MonoBehaviour
         // --- GUARDAR TRANSFORMACIONES DE LA FAMILIA ---
         GuardarEstadoJerarquia();
     }
-
     void Update()
     {
-        // Solo actualizamos la UI una vez por frame, sin importar cuántos choques hubo
-        if (resultsDirty)
+        // Si hubo cambios en los resultados O en la vida, actualizamos
+        if (resultsDirty || uiDirty)
         {
-            if (EndDayResultsPanel.instance != null)
-                EndDayResultsPanel.instance.RefreshResults();
-            resultsDirty = false;
+            if (resultsDirty)
+            {
+                if (EndDayResultsPanel.instance != null)
+                    EndDayResultsPanel.instance.RefreshResults();
+                resultsDirty = false;
+            }
+
+            if (uiDirty)
+            {
+                ActualizarUI();
+                uiDirty = false;
+            }
         }
     }
-
     private void GuardarEstadoJerarquia()
     {
         transformacionesOriginales = new Dictionary<Transform, TransformData>();
@@ -185,19 +192,23 @@ public class PlanetCrontrollator : MonoBehaviour
             ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Zona);
     }
 
+
+
+    private bool uiDirty = false; // Nueva variable
+
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
         if (isInvulnerable) return;
 
         MapData map = MapSequenceManager.instance.GetCurrentMap();
-
         map.currentHealth -= amount;
         map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
 
         currentHealth = map.currentHealth;
         maxHealth = map.maxHealth;
 
-        ActualizarUI();
+        // EN LUGAR DE ActualizarUI() directamente:
+        uiDirty = true;
 
         if (damageTextPrefab != null)
         {
@@ -206,11 +217,6 @@ public class PlanetCrontrollator : MonoBehaviour
 
         if (currentHealth <= 0)
             Die();
-    }
-
-    public void TakeDamage(float amount)
-    {
-        TakeDamage(amount, transform.position);
     }
 
     void ActualizarUI()

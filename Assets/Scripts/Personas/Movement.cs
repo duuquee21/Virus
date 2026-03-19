@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
 
     // ===== SPATIAL HASH GRID =====
     private CircleCollider2D circleCollider;
-    private static Dictionary<Vector2Int, HashSet<Movement>> espacialGrid = new Dictionary<Vector2Int, HashSet<Movement>>();
+    public static Dictionary<Vector2Int, HashSet<Movement>> espacialGrid = new Dictionary<Vector2Int, HashSet<Movement>>();
     private static float tamañoCelda = 5f;
     private Vector2Int ultimaPosicionGrid;
     private HashSet<Movement> objetosColisionadosEsteFrame = new HashSet<Movement>();
