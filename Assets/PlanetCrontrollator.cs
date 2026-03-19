@@ -115,6 +115,7 @@ public class PlanetCrontrollator : MonoBehaviour
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
         int fase = scriptInfeccion.faseActual;
 
+        // Si ya está infectado (Círculo final), destruye al impactar y hace daño ultra
         if (scriptInfeccion.alreadyInfected)
         {
             InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
@@ -126,7 +127,8 @@ public class PlanetCrontrollator : MonoBehaviour
 
         if (obj.TryGetComponent<Rigidbody2D>(out var rb))
         {
-            if (rb.linearVelocity.sqrMagnitude > 42.25f) // Usar sqrMagnitude (6.5 * 6.5) es MUCHO más rápido que .magnitude
+            // Mantenemos tu optimización de sqrMagnitude (6.5 * 6.5 = 42.25)
+            if (rb.linearVelocity.sqrMagnitude > 42.25f)
             {
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
                 TakeDamage(dañoCalculado, posicion);
