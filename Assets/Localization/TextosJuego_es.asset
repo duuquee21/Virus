@@ -966,6 +966,54 @@ MonoBehaviour:
     m_Localized: Idioma
     m_Metadata:
       m_Items: []
+  - m_Id: 5067856513572864
+    m_Localized: Probabilidad Celula Negra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350080
+    m_Localized: Aumenta la probabilidad de spawnear una celula negra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350081
+    m_Localized: Capacidad Celula Negra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350082
+    m_Localized: Aumenta la capacidad de las celulas negras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350083
+    m_Localized: Celulas Negras Maximas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350084
+    m_Localized: Aumenta la cantidad maxima de celulas negras simultaneas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350085
+    m_Localized: Celulas Negras Infeciosas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350086
+    m_Localized: Las celulas negras infectan las figuras en vez de eliminarlas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350087
+    m_Localized: Spawn Al Infectar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350088
+    m_Localized: Aumenta la probabilidad de spawnear una figura al infectar otra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350089
+    m_Localized: Cantidad De Agujeros Negros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350090
+    m_Localized: Aumenta la cantidad de agujeros negros simultaneos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

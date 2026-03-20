@@ -960,6 +960,55 @@ MonoBehaviour:
     m_Localized: Language
     m_Metadata:
       m_Items: []
+  - m_Id: 5067856513572864
+    m_Localized: Black Cell Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350080
+    m_Localized: Increase the chance of spawning a black cell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350081
+    m_Localized: Black Cell Capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350082
+    m_Localized: Increases black cells capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350083
+    m_Localized: Black Cell Max Amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350084
+    m_Localized: Increases the maximum amount of simultanius black cells
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350085
+    m_Localized: Infectious Black Cells
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350086
+    m_Localized: 'Black cells infect figures instead of deleting them '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350087
+    m_Localized: Infection Spawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350088
+    m_Localized: Increases the chance of spawning a new figure when infecting another
+      one
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350089
+    m_Localized: Black Hole Amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350090
+    m_Localized: Increases the amount of simultanious black holes
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

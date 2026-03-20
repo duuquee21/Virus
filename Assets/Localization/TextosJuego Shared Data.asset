@@ -1103,6 +1103,54 @@ MonoBehaviour:
     m_Key: settings_language
     m_Metadata:
       m_Items: []
+  - m_Id: 5067856513572864
+    m_Key: skill_spawnbug_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350080
+    m_Key: skill_spawnbug_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350081
+    m_Key: skill_bugcapacity_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350082
+    m_Key: skill_bugcapacity_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350083
+    m_Key: skill_bugamount_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350084
+    m_Key: skill_bugamount_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350085
+    m_Key: skill_buginfection_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350086
+    m_Key: skill_buginfection_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350087
+    m_Key: skill_infectspawn_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350088
+    m_Key: skill_infectspawn_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350089
+    m_Key: skill_blackholeamount_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5067856530350090
+    m_Key: skill_blackholeamount_desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
