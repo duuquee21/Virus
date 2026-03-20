@@ -23,6 +23,10 @@ public class ZoneItem : MonoBehaviour
 
     private bool isUnlocked = false;
 
+    // Cooldown para prevenir doble clic
+    private float lastClickTime = 0f;
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
     void OnEnable()
     {
         if (mapIndex == 0)
@@ -48,6 +52,12 @@ public class ZoneItem : MonoBehaviour
 
     public void OnClickButton()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+
         if (isUnlocked) EquipZone();
         else TryBuyZone();
     }

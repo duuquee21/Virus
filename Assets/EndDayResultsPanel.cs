@@ -8,6 +8,24 @@ public class EndDayResultsPanel : MonoBehaviour
 {
     public static EndDayResultsPanel instance;
 
+    // Cooldown para prevenir doble clic en botones
+    private System.Collections.Generic.Dictionary<string, float> lastClickTimes = new System.Collections.Generic.Dictionary<string, float>();
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
+    private bool CanClick(string buttonName)
+    {
+        if (!lastClickTimes.ContainsKey(buttonName))
+        {
+            lastClickTimes[buttonName] = 0f;
+        }
+
+        if (Time.time - lastClickTimes[buttonName] < CLICK_COOLDOWN)
+            return false;
+
+        lastClickTimes[buttonName] = Time.time;
+        return true;
+    }
+
     [Header("UI")]
     public GameObject panel;
 
@@ -194,9 +212,11 @@ public class EndDayResultsPanel : MonoBehaviour
     }
     public void OnClickClaim()
     {
-        btnClaim.SetActive(false); // Desaparece al pulsar
-        btnContinue.SetActive(true);
-        btnArbol.SetActive(true);
+        if (!CanClick("Claim")) return;
+
+        if (btnClaim != null) btnClaim.SetActive(false); // Desaparece al pulsar
+        if (btnContinue != null) btnContinue.SetActive(true);
+        if (btnArbol != null) btnArbol.SetActive(true);
         StartCoinTransfer(() =>
         {
             // Al terminar la animación, se muestran los otros dos
@@ -358,6 +378,8 @@ public class EndDayResultsPanel : MonoBehaviour
 
     public void OnClickArbol()
     {
+        if (!CanClick("Arbol")) return;
+
         FinalizarConSkip();
         LevelManager.instance.OpenSkillTreePanel();
     }

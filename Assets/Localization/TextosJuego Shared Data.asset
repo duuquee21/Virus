@@ -1103,6 +1103,14 @@ MonoBehaviour:
     m_Key: settings_language
     m_Metadata:
       m_Items: []
+  - m_Id: 5108470592544768
+    m_Key: settings_movement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5108470609321984
+    m_Key: settings_screenSize
+    m_Metadata:
+      m_Items: []
   - m_Id: 5067856513572864
     m_Key: skill_spawnbug_tit
     m_Metadata:

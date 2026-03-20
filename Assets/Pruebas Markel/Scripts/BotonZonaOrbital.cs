@@ -11,6 +11,10 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
     public GameObject zonePanel;
     public GameObject dayOverPanel;// El panel que queremos cerrar
 
+    // Cooldown para prevenir doble clic
+    private float lastClickTime = 0f;
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
     void Update()
     {
         ActualizarEstado();
@@ -47,6 +51,12 @@ public class BotonConfirmarZonaOrbital : MonoBehaviour
 
     public void OnClickConfirmar()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+
         if (orbitaSistema == null) return;
 
         RectTransform planeta = orbitaSistema.GetPlanetaAlFrente();

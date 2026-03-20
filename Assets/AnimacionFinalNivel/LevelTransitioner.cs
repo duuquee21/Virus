@@ -122,7 +122,8 @@ public class LevelTransitioner : MonoBehaviour
             if (materialFondo != null)
                 materialFondo.SetFloat(vortexProp, progresoAcel * 25f);
 
-            mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
+            if (mainCam != null)
+                mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
 
             if (mapaVisual)
             {
@@ -205,7 +206,8 @@ public class LevelTransitioner : MonoBehaviour
         {
             OnImpactShake?.Invoke(intensidadImpacto);
         }
-        mainCam.orthographicSize = zoomOriginal;
+        if (mainCam != null)
+            mainCam.orthographicSize = zoomOriginal;
 
         yield return StartCoroutine(DryImpactShake());
 
@@ -224,7 +226,7 @@ public class LevelTransitioner : MonoBehaviour
 
     private IEnumerator DryImpactShake()
     {
-        if (!GameSettings.instance.shakeEnabled) yield break;
+        if (!GameSettings.instance.shakeEnabled || camTransform == null) yield break;
 
         Vector3 posOriginal = camTransform.localPosition;
         float fuerzaActual = intensidadImpacto;

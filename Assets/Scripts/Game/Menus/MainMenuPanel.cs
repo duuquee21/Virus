@@ -5,8 +5,21 @@ public class MainMenuPanel : MonoBehaviour
     public GameObject settingsPanel;
     public GameObject mainMenuPanel;
 
+    // Cooldown para prevenir doble clic
+    private float lastClickTime = 0f;
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
+    // Flag para saber si el panel de ajustes está abierto
+    private bool isSettingsOpen = false;
+
     public void PlayGame()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+
         if (LevelManager.instance != null)
         {
             // El LevelManager ya pone el hexágono (1) por defecto en NewGame
@@ -16,6 +29,17 @@ public class MainMenuPanel : MonoBehaviour
 
     public void OpenSettings()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        // Si ya está abierto, no hacer nada
+        if (isSettingsOpen)
+            return;
+
+        lastClickTime = Time.time;
+        isSettingsOpen = true;
+
         if (LevelManager.instance != null && LevelManager.instance.transitionScript != null)
         {
             // 1. Cambiamos la forma a Pentágono (2)
@@ -34,6 +58,13 @@ public class MainMenuPanel : MonoBehaviour
 
     public void CloseSettings()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+        isSettingsOpen = false;
+
         if (LevelManager.instance != null && LevelManager.instance.transitionScript != null)
         {
             // Opcional: Volver a círculo (0) al salir de ajustes

@@ -95,7 +95,17 @@ public class SettingsMenuUI : MonoBehaviour
         for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++)
         {
             var locale = LocalizationSettings.AvailableLocales.Locales[i];
-            opciones.Add(locale.Identifier.CultureInfo != null ? locale.Identifier.CultureInfo.NativeName : locale.name);
+            
+            // Obtener el nombre del idioma
+            string nombreIdioma = locale.Identifier.CultureInfo != null ? locale.Identifier.CultureInfo.NativeName : locale.name;
+            
+            // Capitalizar la primera letra
+            if (!string.IsNullOrEmpty(nombreIdioma))
+            {
+                nombreIdioma = char.ToUpper(nombreIdioma[0]) + nombreIdioma.Substring(1);
+            }
+            
+            opciones.Add(nombreIdioma);
 
             if (LocalizationSettings.SelectedLocale == locale)
                 indiceActual = i;

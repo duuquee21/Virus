@@ -19,6 +19,10 @@ public class ShinyUpgrade : MonoBehaviour
 
     private int currentLevel = 0;
 
+    // Cooldown para prevenir doble clic
+    private float lastClickTime = 0f;
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
     void Start()
     {
         // Cargar nivel guardado
@@ -41,6 +45,12 @@ public class ShinyUpgrade : MonoBehaviour
 
     public void BuyUpgrade()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+
         if (LevelManager.instance == null) return;
 
         // 1. COMPROBAR DINERO (Monedas normales)

@@ -13,6 +13,10 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private static readonly System.Collections.Generic.Dictionary<string, int> runtimeRepeat =
         new System.Collections.Generic.Dictionary<string, int>();
+
+    // Cooldown para prevenir doble clic
+    private float lastClickTime = 0f;
+    private const float CLICK_COOLDOWN = 0.3f; // 300ms
     public enum SkillEffectType
     {
         None, RandomInitialUpgrade,
@@ -299,6 +303,12 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void TryUnlock()
     {
+        // Chequear cooldown para prevenir doble clic
+        if (Time.time - lastClickTime < CLICK_COOLDOWN)
+            return;
+
+        lastClickTime = Time.time;
+
         // 1. Validaciones iniciales para ver si ya se compró o llegó al máximo
         if (!IsDamageSkill() && !IsCoinSkill() && !IsTimeSkill() && unlocked) return;
 
