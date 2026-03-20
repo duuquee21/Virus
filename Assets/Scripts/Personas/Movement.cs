@@ -202,6 +202,16 @@ public class Movement : MonoBehaviour
     /// <param name="torque">Fuerza de rotaci�n.</param>
     public void AplicarEmpuje(Vector2 direccionEmpuje, float fuerza, float torque)
     {
+
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+
+        // Si después de intentar obtenerlo sigue siendo nulo, salimos para evitar el crash
+        if (rb == null)
+        {
+            Debug.LogError($"No se encontró Rigidbody2D en {gameObject.name}");
+            return;
+        }
+
         estaEmpujado = true;
         estaGirando = true;
         tiempoEmpujeRestante = duracionMinimaEmpuje;
@@ -380,6 +390,8 @@ public class Movement : MonoBehaviour
     private void DetectarColisionesCircleToCircle()
     {
         if (circleCollider == null || personaInfeccion == null) return;
+
+        if (personaInfeccion.alreadyInfected) return;
 
         Vector2Int miPosGrid = ObtenerPosicionGrid();
         float miRadio = circleCollider.radius * transform.localScale.x;

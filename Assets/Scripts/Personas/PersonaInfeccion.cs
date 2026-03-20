@@ -388,6 +388,8 @@ public class PersonaInfeccion : MonoBehaviour
     {
         alreadyInfected = true;
 
+        gameObject.layer = LayerMask.NameToLayer("Infectado");
+
         // 1. Detener corrutinas de color previas para evitar conflictos
         if (colorCoroutine != null) StopCoroutine(colorCoroutine);
 
