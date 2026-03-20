@@ -290,50 +290,42 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        // 1. Iniciamos la transición visual (Oscurecemos)
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1); // Hexágono
+            transitionScript.SetShape(1);
             transitionScript.CloseBlackScreen();
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // --- PASO DE CARGA 1: Datos básicos ---
-        ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-        Guardado.instance.LoadEvolutionData();
-        yield return null; // Esperamos un frame para que la CPU respire
+        ResetSceneToNeutralState();
 
-        // --- PASO DE CARGA 2: Reconstrucción del Árbol ---
-        // Esto es pesado porque busca muchos SkillNodes
+        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
+        int savedCoins = PlayerPrefs.GetInt("Run_Coins", 0);
+        int savedMapIndex = PlayerPrefs.GetInt("Run_MapIndex", 0);
+        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", -1f);
+        ContagionCoins = savedCoins;
+
+        if (Guardado.instance != null)
+            Guardado.instance.LoadEvolutionData();
+
+        PersonaInfeccion.LoadStats();
+
+        yield return null;
+
         RebuildSkillTree();
         yield return null;
 
-        // --- PASO DE CARGA 3: Sincronización de Controladores ---
         SyncControllersWithSavedData();
         yield return null;
 
-        // --- PASO DE CARGA 4: Preparar el Mapa 0 ---
-        PlayerPrefs.SetInt("CurrentMapIndex", 0);
-        PlayerPrefs.Save();
-
-        // Limpiamos el grid espacial antes de que aparezcan las nuevas figuras
-        // Esto evita que datos viejos causen conflictos en el primer frame
         Movement.espacialGrid.Clear();
 
-        ActivateMap(0);
-        yield return null;
+        StartLoadedSession(savedTimer, savedMapIndex, savedPlanetHealth);
 
-        // 2. Quitamos los menús
-        if (menuPanel) menuPanel.SetActive(false);
-        if (gameUI) gameUI.SetActive(true);
+        if (transitionScript != null)
+            transitionScript.OpenBlackScreen();
 
-        // 3. Lanzamos la sesión
-        StartSession();
-
-        // 4. Abrimos el iris
-        if (transitionScript != null) transitionScript.OpenBlackScreen();
-
-        Debug.Log("<color=green>[LOAD]</color> Carga completada sin picos de FPS.");
+        Debug.Log("<color=green>[LOAD]</color> Continue restaurado correctamente.");
     }
     public void NewGameFromMainMenu()
     {
@@ -579,49 +571,17 @@ public class LevelManager : MonoBehaviour
     }
     public void ReturnToMenu()
     {
-        // Detener la sesión
-        isGameActive = false;
-        timerStarted = false;
-
-        Time.timeScale = 1f;
-
-        // Guardar partida
-        if (Guardado.instance != null)
+        if (isGameActive && Guardado.instance != null)
         {
-            float timer = currentTimer;
-            int coins = contagionCoins;
-            int mapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-
-            float planetHealth = 0f;
-
-            PlanetCrontrollator planet = FindFirstObjectByType<PlanetCrontrollator>();
-            if (planet != null)
-            {
-                planetHealth = planet.GetCurrentHealth();
-            }
-
-            Guardado.instance.SaveRunState(timer, coins, mapIndex, planetHealth);
-            Guardado.instance.SaveEvolutionData();
-            Guardado.instance.SaveData();
-
-            SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
-            foreach (SkillNode node in nodes)
-            {
-                node.SaveNodeState();
-            }
-
-            PlayerPrefs.Save();
+            SaveCurrentRun();
         }
 
         if (AudioManager.instance != null)
             AudioManager.instance.SwitchToMenuMusic();
 
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (shinyPanel != null) shinyPanel.SetActive(false);
-
-        // Limpiar diccionario de runtime state del árbol de habilidades
         SkillNode.ClearRuntimeState();
 
+        ResetSceneToNeutralState();
         ShowMainMenu();
     }
 
@@ -649,6 +609,182 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void ResetSceneToNeutralState()
+    {
+        isGameActive = false;
+        isTransitioning = false;
+        timerStarted = false;
+        checkParaExtraTimeRealizado = false;
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        if (animacionExtraTime != null)
+        {
+            StopCoroutine(animacionExtraTime);
+            animacionExtraTime = null;
+        }
+
+        if (animacionTimer != null)
+        {
+            StopCoroutine(animacionTimer);
+            animacionTimer = null;
+        }
+
+        timerAnimando = false;
+        ResetTimerVisuals();
+
+        if (extraTimeUI != null) extraTimeUI.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (zonePanel != null) zonePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+
+        figurasCandidatas.Clear();
+
+        if (cachedPopManager == null)
+            cachedPopManager = Object.FindFirstObjectByType<PopulationManager>();
+
+        if (cachedPopManager != null)
+            cachedPopManager.ClearAllPersonas();
+
+        CleanUpScene();
+
+        ManualSetCycler cycler = Object.FindFirstObjectByType<ManualSetCycler>();
+        if (cycler != null)
+            cycler.ResetCycler();
+
+        for (int i = 0; i < mapList.Length; i++)
+        {
+            if (mapList[i] != null)
+            {
+                mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].transform.localPosition = Vector3.zero;
+                mapList[i].transform.localScale = Vector3.one;
+                mapList[i].SetActive(false);
+            }
+        }
+
+        PlanetCrontrollator[] planetas =
+            Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (PlanetCrontrollator p in planetas)
+        {
+            if (p != null)
+            {
+                p.ResetHealthToInitial();
+                p.ClearPendingDamage();
+                p.isInvulnerable = false;
+            }
+        }
+
+        lastActiveMapIndex = -1;
+
+        if (virusPlayer != null) virusPlayer.SetActive(false);
+        if (virusMovementScript != null) virusMovementScript.enabled = false;
+    }
+
+    private PlanetCrontrollator GetActivePlanet()
+    {
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+        if (mapList != null && currentMap >= 0 && currentMap < mapList.Length && mapList[currentMap] != null)
+        {
+            PlanetCrontrollator p = mapList[currentMap].GetComponentInChildren<PlanetCrontrollator>(true);
+            if (p != null) return p;
+        }
+
+        return Object.FindFirstObjectByType<PlanetCrontrollator>();
+    }
+
+    private void StartLoadedSession(float savedTimer, int savedMapIndex, float savedPlanetHealth)
+    {
+        checkParaExtraTimeRealizado = false;
+        figurasCandidatas.Clear();
+        timeSinceLastAutoSave = 0f;
+
+        if (menuPanel != null) menuPanel.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (zonePanel != null) zonePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+        if (gameUI != null) gameUI.SetActive(true);
+
+        ResetCameraZoom();
+
+        if (extraTimeUI != null)
+        {
+            extraTimeUI.SetActive(false);
+            RectTransform rt = extraTimeUI.GetComponent<RectTransform>();
+            if (rt != null) rt.localScale = Vector3.one;
+        }
+
+        if (timerIcon != null)
+            timerIcon.rectTransform.localScale = timerIconOriginalScale;
+
+        if (animacionExtraTime != null) StopCoroutine(animacionExtraTime);
+        if (animacionTimer != null) StopCoroutine(animacionTimer);
+
+        animacionExtraTime = null;
+        animacionTimer = null;
+
+        timerAnimando = false;
+        ResetTimerVisuals();
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        if (mainCamera == null) mainCamera = Camera.main;
+        if (mainCamera != null) mainCamera.orthographicSize = defaultZoom;
+
+        if (cachedPopManager == null)
+            cachedPopManager = Object.FindFirstObjectByType<PopulationManager>();
+
+        PlayerPrefs.SetInt("CurrentMapIndex", savedMapIndex);
+        PlayerPrefs.Save();
+
+        if (MapSequenceManager.instance != null)
+            MapSequenceManager.instance.SetCurrentMapIndex(savedMapIndex, false);
+
+        ActivateMap(savedMapIndex);
+        SetMapsActive(true);
+        currentSessionInfected = 0;
+        monedasGanadasSesion = 0;
+
+        float tiempoBase = gameDuration;
+        if (Guardado.instance != null)
+            tiempoBase += Guardado.instance.extraBaseTime;
+
+        currentTimer = tiempoBase;
+
+        if (cachedPopManager != null)
+        {
+            cachedPopManager.ClearAllPersonas();
+            cachedPopManager.SelectPrefab(savedMapIndex);
+            cachedPopManager.ConfigureRound(savedMapIndex);
+        }
+
+        PlanetCrontrollator planeta = GetActivePlanet();
+        if (planeta != null)
+        {
+            planeta.ResetHealthToInitial();
+            planeta.ClearPendingDamage();
+            planeta.isInvulnerable = true;
+
+
+            planeta.isInvulnerable = false;
+        }
+
+        isTransitioning = false;
+        isGameActive = true;
+        timerStarted = true;
+
+        if (virusPlayer != null) virusPlayer.SetActive(true);
+        if (virusMovementScript != null) virusMovementScript.enabled = true;
+
+        if (AudioManager.instance != null)
+            AudioManager.instance.SwitchToGameMusic();
+
+        UpdateUI();
+    }
     void ResetRunData()
     {
         bool tieneHabilidadMeta = Guardado.instance != null && Guardado.instance.keepZonesUnlocked;
@@ -660,9 +796,13 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
+        if (MapSequenceManager.instance != null)
+            MapSequenceManager.instance.ResetToFirstMap();
+
         // ---> ¡AQUÍ ES EL LUGAR PERFECTO! <---
         // Solo se limpiarán las estadísticas al iniciar una run desde cero.
         PersonaInfeccion.ResetearEstadisticas();
+        PersonaInfeccion.ClearSavedStats();
 
         if (Guardado.instance == null || !Guardado.instance.keepUpgradesOnReset) ForceHardReset();
         if (Guardado.instance) Guardado.instance.ApplyPermanentInitialUpgrade();
@@ -1374,9 +1514,10 @@ public class LevelManager : MonoBehaviour
             currentMap,
             planetHealth
         );
-
         Guardado.instance.SaveEvolutionData();
         Guardado.instance.SaveData();
+
+        PersonaInfeccion.SaveStats();
 
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
         foreach (SkillNode node in nodes)

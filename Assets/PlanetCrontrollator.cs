@@ -8,7 +8,8 @@ public class PlanetCrontrollator : MonoBehaviour
     public Image healthBar;
     public Image healthBarOutLine;
     public bool nivelFinal = false;
-
+    [Header("Identidad del mapa")]
+    public int mapIndex = 0;
     [Header("Anti-Spam Impactos")]
     private readonly Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
@@ -45,6 +46,7 @@ public class PlanetCrontrollator : MonoBehaviour
     private bool resultsDirty = false;
     private bool uiDirty = false;
     private bool muriendo = false;
+    private bool initializedHealth = false;
 
     private struct TransformData
     {
@@ -69,11 +71,13 @@ public class PlanetCrontrollator : MonoBehaviour
 
     void Start()
     {
-        MapData map = MapSequenceManager.instance.GetCurrentMap();
-
-        maxHealth = map.maxHealth;
-        currentHealth = maxHealth;
-        map.currentHealth = maxHealth;
+        MapData map = GetOwnMapData();
+        if (map != null)
+        {
+            maxHealth = map.maxHealth;
+            currentHealth = map.currentHealth > 0f ? map.currentHealth : map.maxHealth;
+            map.currentHealth = currentHealth;
+        }
 
         ActualizarUI();
 
@@ -114,6 +118,11 @@ public class PlanetCrontrollator : MonoBehaviour
         }
     }
 
+    private MapData GetOwnMapData()
+    {
+        if (MapSequenceManager.instance == null) return null;
+        return MapSequenceManager.instance.GetMap(mapIndex);
+    }
     private void GuardarEstadoJerarquia()
     {
         transformacionesOriginales = new Dictionary<Transform, TransformData>();
@@ -238,7 +247,8 @@ public class PlanetCrontrollator : MonoBehaviour
 
     private void ApplyDamageImmediate(float amount, Vector3 spawnPos)
     {
-        MapData map = MapSequenceManager.instance.GetCurrentMap();
+        MapData map = GetOwnMapData();
+        if (map == null) return;
 
         map.currentHealth -= amount;
         map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
@@ -257,15 +267,25 @@ public class PlanetCrontrollator : MonoBehaviour
         if (currentHealth <= 0f)
             Die();
     }
-
     private void FlushPendingDamage()
     {
         if (pendingDamageHits <= 0) return;
 
+        if (isInvulnerable || muriendo)
+        {
+            ClearPendingDamage();
+            return;
+        }
+
         float totalDamage = pendingDamage;
         Vector3 avgPos = pendingDamagePosSum / pendingDamageHits;
 
-        MapData map = MapSequenceManager.instance.GetCurrentMap();
+        MapData map = GetOwnMapData();
+        if (map == null)
+        {
+            ClearPendingDamage();
+            return;
+        }
 
         map.currentHealth -= totalDamage;
         map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
@@ -281,10 +301,7 @@ public class PlanetCrontrollator : MonoBehaviour
                 TextPooler.Instance.SpawnText(avgPos, "-" + totalDamage.ToString("F0"));
         }
 
-        pendingDamage = 0f;
-        pendingDamagePosSum = Vector3.zero;
-        pendingDamageHits = 0;
-        nextDamageFlushTime = -1f;
+        ClearPendingDamage();
 
         if (currentHealth <= 0f)
             Die();
@@ -314,24 +331,29 @@ public class PlanetCrontrollator : MonoBehaviour
         }
     }
 
+
+
     public void ResetHealthToInitial()
     {
-        MapData map = MapSequenceManager.instance.GetCurrentMap();
-
-        map.currentHealth = map.maxHealth;
-
-        currentHealth = map.currentHealth;
-        maxHealth = map.maxHealth;
+        MapData map = GetOwnMapData();
+        if (map != null)
+        {
+            maxHealth = map.maxHealth;
+            map.currentHealth = map.maxHealth;
+            currentHealth = map.currentHealth;
+        }
+        else
+        {
+            currentHealth = maxHealth;
+        }
 
         lastImpactTimes.Clear();
+
         isInvulnerable = false;
-
-        pendingDamage = 0f;
-        pendingDamagePosSum = Vector3.zero;
-        pendingDamageHits = 0;
-        nextDamageFlushTime = -1f;
-
         muriendo = false;
+
+        ClearPendingDamage();
+
         uiDirty = false;
         resultsDirty = false;
 
@@ -363,11 +385,39 @@ public class PlanetCrontrollator : MonoBehaviour
         ActualizarUI();
     }
 
+    public void ClearPendingDamage()
+    {
+        pendingDamage = 0f;
+        pendingDamagePosSum = Vector3.zero;
+        pendingDamageHits = 0;
+        nextDamageFlushTime = -1f;
+    }
+    public void SetHealthDirect(float value)
+    {
+        MapData map = GetOwnMapData();
+        if (map != null)
+        {
+            maxHealth = map.maxHealth;
+            currentHealth = Mathf.Clamp(value, 0f, maxHealth);
+            map.currentHealth = currentHealth;
+        }
+        else
+        {
+            currentHealth = Mathf.Clamp(value, 0f, maxHealth);
+        }
+
+        ClearPendingDamage();
+
+        if (currentHealth > 0f)
+            muriendo = false;
+
+        uiDirty = true;
+        ActualizarUI();
+    }
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
-
     void Die()
     {
         if (muriendo) return;
@@ -378,6 +428,8 @@ public class PlanetCrontrollator : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
+        ClearPendingDamage();
+
         if (nivelFinal)
         {
             if (animacionFinalPlaneta != null)
@@ -385,7 +437,8 @@ public class PlanetCrontrollator : MonoBehaviour
         }
         else
         {
-            MapSequenceManager.instance.NextMap();
+            if (MapSequenceManager.instance != null)
+                MapSequenceManager.instance.NextMap();
         }
     }
 }
