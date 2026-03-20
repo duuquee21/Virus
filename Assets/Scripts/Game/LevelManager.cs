@@ -291,47 +291,51 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        // 1. Transición visual...
+        // 1. Iniciamos la transición visual (Oscurecemos)
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1);
+            transitionScript.SetShape(1); // Hexágono
             transitionScript.CloseBlackScreen();
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // 2. Carga de datos
+        // --- PASO DE CARGA 1: Datos básicos ---
         ContagionCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-        int savedMap = 0;
-
-        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
-        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", 0f);
-
         Guardado.instance.LoadEvolutionData();
+        yield return null; // Esperamos un frame para que la CPU respire
 
-        VirusRadiusController.instance.ApplyScale();
-        // ---> AÑADIR ESTA LÍNEA: Reconstruir el árbol con los datos de la partida cargada
+        // --- PASO DE CARGA 2: Reconstrucción del Árbol ---
+        // Esto es pesado porque busca muchos SkillNodes
         RebuildSkillTree();
-        // <--- FIN DEL CAMBIO
+        yield return null;
 
-        // Forzamos el índice 0 en las preferencias del jugador
+        // --- PASO DE CARGA 3: Sincronización de Controladores ---
+        SyncControllersWithSavedData();
+        yield return null;
+
+        // --- PASO DE CARGA 4: Preparar el Mapa 0 ---
         PlayerPrefs.SetInt("CurrentMapIndex", 0);
         PlayerPrefs.Save();
 
-        currentTimer = savedTimer;
-
-        // Sincronización y UI...
-        SyncControllersWithSavedData();
+        // Limpiamos el grid espacial antes de que aparezcan las nuevas figuras
+        // Esto evita que datos viejos causen conflictos en el primer frame
+        Movement.espacialGrid.Clear();
 
         ActivateMap(0);
+        yield return null;
 
+        // 2. Quitamos los menús
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(true);
 
+        // 3. Lanzamos la sesión
         StartSession();
 
+        // 4. Abrimos el iris
         if (transitionScript != null) transitionScript.OpenBlackScreen();
-    }
 
+        Debug.Log("<color=green>[LOAD]</color> Carga completada sin picos de FPS.");
+    }
     public void NewGameFromMainMenu()
     {
         ResetRunData();
@@ -969,46 +973,52 @@ public class LevelManager : MonoBehaviour
         for (int i = 1; i <= 10; i++) if (PlayerPrefs.GetInt("ZoneUnlocked_" + i, 0) == 1) count++;
         return count;
     }
+    private bool isSoftRestarting = false;
+    public bool IsSoftRestarting => isSoftRestarting;
+
     public void SoftRestartRun()
     {
-       
+        if (isSoftRestarting) return;
+        isSoftRestarting = true;
 
-        // 1. Si el panel de resultados tiene monedas pendientes, procesar animación de monedas
-        if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
+        if (EndDayResultsPanel.instance != null &&
+            EndDayResultsPanel.instance.panel != null &&
+            EndDayResultsPanel.instance.panel.activeSelf &&
+            EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
-            EndDayResultsPanel.instance.StartCoinTransfer(() => {
+            EndDayResultsPanel.instance.StartCoinTransfer(() =>
+            {
                 Debug.Log("Animación de monedas terminada.");
+                StartCoroutine(SoftRestartTransitionRoutine());
             });
             return;
         }
 
-        // 2. Si ya no hay monedas o el panel no estaba, ejecutar el reinicio con transición
         StartCoroutine(SoftRestartTransitionRoutine());
     }
 
     private IEnumerator SoftRestartTransitionRoutine()
     {
-        // A. Inicio de la transición (Pantalla a negro)
         if (transitionScript != null)
         {
-            transitionScript.SetShape(1); // Usar Hexágono o la forma que prefieras
+            transitionScript.SetShape(1);
             transitionScript.CloseBlackScreen();
-          
             yield return new WaitForSecondsRealtime(0.5f);
-           
         }
+
         if (shinyPanel != null) shinyPanel.SetActive(false);
-        // B. Limpieza de UI
-        if (shinyPanel != null) shinyPanel.SetActive(false);
-        if (EndDayResultsPanel.instance.panel.activeSelf)
+
+        if (EndDayResultsPanel.instance != null &&
+            EndDayResultsPanel.instance.panel != null &&
+            EndDayResultsPanel.instance.panel.activeSelf)
         {
             EndDayResultsPanel.instance.panel.SetActive(false);
         }
-     
+
         if (gameUI) gameUI.SetActive(false);
 
-        // C. Lógica de Reinicio (Extraída de EjecutarSoftRestartLogica)
         Debug.Log("Soft Restart ejecutado bajo transición.");
+
         monedasGanadasSesion = 0;
         currentSessionInfected = 0;
         currentTimer = gameDuration;
@@ -1017,14 +1027,12 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();
 
         if (MapSequenceManager.instance != null)
-        {
             MapSequenceManager.instance.ResetToFirstMap();
-        }
 
         ManualSetCycler cycler = Object.FindFirstObjectByType<ManualSetCycler>();
-        if (cycler != null) cycler.ResetCycler();
+        if (cycler != null)
+            cycler.ResetCycler();
 
-        // Resetear Mapas
         for (int i = 0; i < mapList.Length; i++)
         {
             if (mapList[i] != null)
@@ -1036,14 +1044,17 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        // Resetear Salud de Planetas
-        PlanetCrontrollator[] todosLosPlanetas = Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        PlanetCrontrollator[] todosLosPlanetas =
+            Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
         foreach (PlanetCrontrollator planet in todosLosPlanetas)
         {
-            if (planet != null) planet.ResetHealthToInitial();
+            if (planet != null)
+                planet.ResetHealthToInitial();
         }
 
         isGameActive = false;
+
         CleanUpScene();
 
         if (PopulationManager.instance != null)
@@ -1054,15 +1065,15 @@ public class LevelManager : MonoBehaviour
 
         UpdateUI();
 
-        // D. Iniciar la nueva sesión (Aún en negro)
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return null;
+        yield return new WaitForSecondsRealtime(0.05f);
+
         StartSession();
 
-        // E. Fin de la transición (Volver a mostrar el juego)
         if (transitionScript != null)
-        {
             transitionScript.OpenBlackScreen();
-        }
+
+        isSoftRestarting = false;
     }
     private void EjecutarSoftRestartLogica()
     {

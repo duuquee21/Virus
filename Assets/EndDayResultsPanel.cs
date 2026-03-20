@@ -349,10 +349,11 @@ public class EndDayResultsPanel : MonoBehaviour
 
     public void OnClickContinue()
     {
-        FinalizarConSkip();
-   
-        LevelManager.instance.SoftRestartRun();
+        if (LevelManager.instance == null) return;
+        if (LevelManager.instance.IsSoftRestarting) return;
 
+        FinalizarConSkip();
+        LevelManager.instance.SoftRestartRun();
     }
 
     public void OnClickArbol()
