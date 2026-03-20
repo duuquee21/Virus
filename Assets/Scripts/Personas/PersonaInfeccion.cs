@@ -291,6 +291,96 @@ public class PersonaInfeccion : MonoBehaviour
             golpesAlPlanetaPorFase[i] = 0;
         }
     }
+
+    public static void SaveStats()
+    {
+        PlayerPrefs.SetFloat("Stats_DanoTotalZona", dañoTotalZona);
+        PlayerPrefs.SetFloat("Stats_DanoTotalChoque", dañoTotalChoque);
+        PlayerPrefs.SetFloat("Stats_DanoTotalCarambola", dañoTotalCarambola);
+
+        SaveFloatArray("Stats_DanoZonaPorFase", dañoZonaPorFase);
+        SaveFloatArray("Stats_DanoChoquePorFase", dañoChoquePorFase);
+        SaveFloatArray("Stats_DanoCarambolaPorFase", dañoCarambolaPorFase);
+
+        SaveIntArray("Stats_GolpesAlPlanetaPorFase", golpesAlPlanetaPorFase);
+        SaveIntArray("Stats_EvolucionesEntreFases", evolucionesEntreFases);
+        SaveIntArray("Stats_EvolucionesPorChoque", evolucionesPorChoque);
+        SaveIntArray("Stats_EvolucionesCarambola", evolucionesCarambola);
+
+        PlayerPrefs.Save();
+    }
+
+    public static void LoadStats()
+    {
+        dañoTotalZona = PlayerPrefs.GetFloat("Stats_DanoTotalZona", 0f);
+        dañoTotalChoque = PlayerPrefs.GetFloat("Stats_DanoTotalChoque", 0f);
+        dañoTotalCarambola = PlayerPrefs.GetFloat("Stats_DanoTotalCarambola", 0f);
+
+        LoadFloatArray("Stats_DanoZonaPorFase", dañoZonaPorFase);
+        LoadFloatArray("Stats_DanoChoquePorFase", dañoChoquePorFase);
+        LoadFloatArray("Stats_DanoCarambolaPorFase", dañoCarambolaPorFase);
+
+        LoadIntArray("Stats_GolpesAlPlanetaPorFase", golpesAlPlanetaPorFase);
+        LoadIntArray("Stats_EvolucionesEntreFases", evolucionesEntreFases);
+        LoadIntArray("Stats_EvolucionesPorChoque", evolucionesPorChoque);
+        LoadIntArray("Stats_EvolucionesCarambola", evolucionesCarambola);
+    }
+
+    public static void ClearSavedStats()
+    {
+        PlayerPrefs.DeleteKey("Stats_DanoTotalZona");
+        PlayerPrefs.DeleteKey("Stats_DanoTotalChoque");
+        PlayerPrefs.DeleteKey("Stats_DanoTotalCarambola");
+
+        DeleteArrayKeys("Stats_DanoZonaPorFase", dañoZonaPorFase.Length);
+        DeleteArrayKeys("Stats_DanoChoquePorFase", dañoChoquePorFase.Length);
+        DeleteArrayKeys("Stats_DanoCarambolaPorFase", dañoCarambolaPorFase.Length);
+
+        DeleteArrayKeys("Stats_GolpesAlPlanetaPorFase", golpesAlPlanetaPorFase.Length);
+        DeleteArrayKeys("Stats_EvolucionesEntreFases", evolucionesEntreFases.Length);
+        DeleteArrayKeys("Stats_EvolucionesPorChoque", evolucionesPorChoque.Length);
+        DeleteArrayKeys("Stats_EvolucionesCarambola", evolucionesCarambola.Length);
+
+        PlayerPrefs.Save();
+    }
+
+    private static void SaveIntArray(string prefix, int[] array)
+    {
+        if (array == null) return;
+
+        for (int i = 0; i < array.Length; i++)
+            PlayerPrefs.SetInt(prefix + "_" + i, array[i]);
+    }
+
+    private static void LoadIntArray(string prefix, int[] array)
+    {
+        if (array == null) return;
+
+        for (int i = 0; i < array.Length; i++)
+            array[i] = PlayerPrefs.GetInt(prefix + "_" + i, 0);
+    }
+
+    private static void SaveFloatArray(string prefix, float[] array)
+    {
+        if (array == null) return;
+
+        for (int i = 0; i < array.Length; i++)
+            PlayerPrefs.SetFloat(prefix + "_" + i, array[i]);
+    }
+
+    private static void LoadFloatArray(string prefix, float[] array)
+    {
+        if (array == null) return;
+
+        for (int i = 0; i < array.Length; i++)
+            array[i] = PlayerPrefs.GetFloat(prefix + "_" + i, 0f);
+    }
+
+    private static void DeleteArrayKeys(string prefix, int length)
+    {
+        for (int i = 0; i < length; i++)
+            PlayerPrefs.DeleteKey(prefix + "_" + i);
+    }
     public void EstablecerFaseDirecta(int fase)
     {
         faseActual = fase;

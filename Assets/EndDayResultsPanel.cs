@@ -444,18 +444,17 @@ public class EndDayResultsPanel : MonoBehaviour
         if (barrasContainer == null || barraVidaPrefab == null) return;
         if (MapSequenceManager.instance == null) return;
 
-        // limpiar barras anteriores
         foreach (Transform child in barrasContainer)
             Destroy(child.gameObject);
 
         var maps = MapSequenceManager.instance.maps;
-        int current = MapSequenceManager.instance.GetCurrentMapIndex();
+        if (maps == null || maps.Count == 0) return;
 
-        if (current >= maps.Count) return;
+        int current = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        current = Mathf.Clamp(current, 0, maps.Count - 1);
 
         GameObject barra = Instantiate(barraVidaPrefab, barrasContainer);
-        
-        // IMPORTANTE: Forzar que el RectTransform mantenga los valores del prefab
+
         RectTransform barraRect = barra.GetComponent<RectTransform>();
         if (barraRect != null)
         {
@@ -469,8 +468,13 @@ public class EndDayResultsPanel : MonoBehaviour
         }
 
         var barraUI = barra.GetComponent<PlanetHealthBarUI>();
+        if (barraUI == null) return;
 
-        float porcentaje = maps[current].currentHealth / maps[current].maxHealth;
+        float porcentaje = 1f;
+        if (maps[current].maxHealth > 0f)
+            porcentaje = maps[current].currentHealth / maps[current].maxHealth;
+
+        porcentaje = Mathf.Clamp01(porcentaje);
 
         barraUI.Setup(maps[current].mapName, porcentaje);
     }
