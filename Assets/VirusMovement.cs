@@ -10,30 +10,34 @@ public class VirusMovement : MonoBehaviour
 
     [Header("Suavizado")]
     [Range(0.1f, 20f)]
-    public float acceleration = 5f; // Cuanto más bajo, más tarda en arrancar y frenar
-    public float linearDrag = 2f;    // Resistencia al movimiento (ayuda a frenar suavemente)
+    public float acceleration = 5f;
+    public float linearDrag = 2f;
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
-
     private ManagerAnimacionJugador managerAnimacionJugador;
 
     [Header("Efecto Gelatina")]
     public SpriteRenderer spriteRenderer;
-    public float jellySensitivity = 0.05f; // Qué tanto se deforma
-    public float jellyLerpSpeed = 10f;    // Suavizado del retorno a la forma original
+    public float jellySensitivity = 0.05f;
+    public float jellyLerpSpeed = 10f;
     public float maxDeform = 0.3f;
     private Material jellyMat;
     private Vector2 currentJellyVector;
 
     [Header("Efectos de Partículas")]
     public ParticleSystem moveParticles;
-    public float velocityThreshold = 0.1f; // Velocidad mínima para activar partículas
+    public float velocityThreshold = 0.1f;
 
     [Header("Ajustes de Emisión")]
-    public float minEmission = 10f;  // Partículas cuando se mueve lento
-    public float maxEmission = 50f;  // Partículas a máxima velocidad
-    public float speedForMaxEmission = 80f; // Velocidad a la que se alcanza el máximo (tu baseMoveSpeed)
+    public float minEmission = 10f;
+    public float maxEmission = 50f;
+    public float speedForMaxEmission = 80f;
+
+    [Header("Flecha de Dirección")]
+    public GameObject arrowIndicator; // Arrastra el objeto de la flecha aquí
+    public float arrowOrbitRadius = 2f; // Qué tan lejos del centro orbita
+
 
     void Awake()
     {
@@ -44,65 +48,80 @@ public class VirusMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         managerAnimacionJugador = GetComponent<ManagerAnimacionJugador>();
-
-        // Ajustamos el Drag para que no se deslice infinitamente
         rb.linearDamping = linearDrag;
 
         ApplySpeedMultiplier();
 
         if (spriteRenderer != null)
-            jellyMat = spriteRenderer.material; // Acceder a .material crea una copia local automática
-    }
+            jellyMat = spriteRenderer.material;
 
+
+        UpdateMovementVisuals();
+    }
 
     void Update()
     {
-      
-        // 1. Verificamos si existe el manager y si NO es jugable
+        arrowOrbitRadius = VirusRadiusController.instance.CurrentFinalRadius;
+        // 1. Verificamos si es jugable
         if (managerAnimacionJugador != null && !managerAnimacionJugador.playable)
         {
-            // Reseteamos el input a cero para que se detenga inmediatamente
             movementInput = Vector2.zero;
             return;
         }
-
-        // 2. Si es jugable, procesamos el movimiento normalmente
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-
-        // Permitir controlar al virus durante la transición entre zonas.
-        // Esto evita que se quede “arrastrando” la dirección anterior mientras el mapa gira.
-        if (LevelManager.instance == null || LevelManager.instance.isGameActive || LevelManager.instance.isTransitioning)
+        if (arrowIndicator != null)
         {
-            movementInput = new Vector2(moveX, moveY);
+            // La flecha solo debe estar activa si NO usamos teclado Y el juego está activo
+            bool deberiaMostrarFlecha = !Guardado.instance.UseKeyboard;
+
+            if (arrowIndicator.activeSelf != deberiaMostrarFlecha)
+            {
+                arrowIndicator.SetActive(deberiaMostrarFlecha);
+            }
         }
 
+        // 2. Lógica de selección de Input
+        if (LevelManager.instance == null || LevelManager.instance.isGameActive || LevelManager.instance.isTransitioning)
+        {
+            if (Guardado.instance.UseKeyboard)
+            {
+                // MODO TECLADO: Ignoramos el ratón
+                float moveX = Input.GetAxisRaw("Horizontal");
+                float moveY = Input.GetAxisRaw("Vertical");
+                movementInput = new Vector2(moveX, moveY).normalized;
+            }
+            else
+            {
+                // MODO RATÓN
+                UpdateArrowDirection();
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 directionToMouse = (Vector2)mousePosition - rb.position;
+
+                if (directionToMouse.magnitude > 0.2f)
+                    movementInput = directionToMouse.normalized;
+                else
+                    movementInput = Vector2.zero;
+            }
+        }
+
+
+        // Efecto Gelatina
         if (jellyMat != null)
         {
-            // 1. Calculamos la deformación deseada
             Vector2 targetJelly = rb.linearVelocity * jellySensitivity;
-
-            // 2. ¡NUEVO!: Limitamos la deformación máxima (ejemplo: 0.3f)
-            // Cambia el 0.3f por un valor mayor si quieres que se deforme más
             targetJelly = Vector2.ClampMagnitude(targetJelly, maxDeform);
-
-            // 3. Suavizamos y enviamos al shader
             currentJellyVector = Vector2.Lerp(currentJellyVector, targetJelly, Time.deltaTime * jellyLerpSpeed);
             jellyMat.SetVector("_VelocityDir", currentJellyVector);
         }
-        HandleParticles();
 
+        HandleParticles();
+        
+       
     }
 
     void FixedUpdate()
     {
-        // Calculamos la velocidad deseada
         Vector2 targetVelocity = movementInput * currentFinalSpeed;
-
-        // Calculamos la diferencia entre la velocidad actual y la deseada
         Vector2 velocityChange = targetVelocity - rb.linearVelocity;
-
-        // Aplicamos una fuerza proporcional a la aceleración
         rb.AddForce(velocityChange * acceleration);
     }
 
@@ -117,6 +136,16 @@ public class VirusMovement : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
+        }
+    }
+
+    public void UpdateMovementVisuals()
+    {
+        if (arrowIndicator != null)
+        {
+            // Si UseKeyboard es true, la flecha debe estar DESACTIVADA
+            // Si UseKeyboard es false (ratón), la flecha debe estar ACTIVADA
+            arrowIndicator.SetActive(!Guardado.instance.UseKeyboard);
         }
     }
 
@@ -198,4 +227,34 @@ public class VirusMovement : MonoBehaviour
 
         Debug.Log("Velocidad actualizada en el motor físico: " + currentFinalSpeed);
     }
+    private void UpdateArrowDirection()
+    {
+        if (arrowIndicator == null) return;
+
+        Vector2 direction = movementInput;
+
+        // Si no hay movimiento, ocultamos o detenemos la actualización
+        if (direction == Vector2.zero)
+        {
+            // Opcional: arrowIndicator.SetActive(false);
+            return;
+        }
+
+        if (!arrowIndicator.activeSelf) arrowIndicator.SetActive(true);
+
+        // USAMOS EL RADIO REAL
+        float finalRadius = VirusRadiusController.instance.CurrentFinalRadius;
+
+        float extraMargin = 2f;
+        float adjustedRadius = VirusRadiusController.instance.CurrentFinalRadius + extraMargin;
+
+        // Aplicamos la posición con el radio ajustado
+        arrowIndicator.transform.localPosition = (Vector3)(direction.normalized * adjustedRadius);
+
+        // Rotación (apuntando hacia afuera)
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrowIndicator.transform.localRotation = Quaternion.Euler(0, 0, angle - 90f);
+    }
+
+
 }

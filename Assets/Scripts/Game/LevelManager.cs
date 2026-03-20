@@ -223,6 +223,7 @@ public class LevelManager : MonoBehaviour
         menuPanel.SetActive(true);
         gameUI.SetActive(false);
         SetMapsActive(false); // <--- AÑADIR ESTA LÍNEA
+        UpdateCursorState(false);
 
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
@@ -670,6 +671,7 @@ public class LevelManager : MonoBehaviour
     public void StartSession()
     {
         timerStarted = false;
+        UpdateCursorState(true);
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f; // Reiniciar contador de auto-save
@@ -748,6 +750,10 @@ public class LevelManager : MonoBehaviour
 
         currentTimer = tiempoTotal;
 
+       
+
+        // Configuramos el cursor basado SIEMPRE en la elección del usuario
+        UpdateCursorState(true);
 
         PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
         if (pm != null) pm.ConfigureRound(0);
@@ -868,6 +874,7 @@ public class LevelManager : MonoBehaviour
             transitionScript.SetShape(1); // O la forma que prefieras
             transitionScript.CloseBlackScreen();
         }
+        UpdateCursorState(false);
         CleanUpEffectsAndUI();
         StartCoroutine(ShowResultsWithTransition());
     }
@@ -1129,12 +1136,14 @@ public class LevelManager : MonoBehaviour
         if (estaPausado)
         {
             pausePanel.SetActive(false);
+            UpdateCursorState(false);
             Time.timeScale = 1f;
             if (virusMovementScript != null) virusMovementScript.enabled = true;
         }
         else
         {
             pausePanel.SetActive(true);
+            UpdateCursorState(false);
             Time.timeScale = 0f;
             if (virusMovementScript != null) virusMovementScript.enabled = false;
         }
@@ -1505,5 +1514,20 @@ public class LevelManager : MonoBehaviour
 
         Debug.Log($"<color=cyan>[CLEANUP]</color> Partículas y Textos limpiados para la siguiente run.");
     }
+    public void UpdateCursorState(bool isPlaying)
+    {
+        if (isPlaying)
+        {
+            // Si usa teclado, el cursor NO se ve. Si usa ratón, SÍ se ve.
+            bool usaTeclado = Guardado.instance != null && Guardado.instance.UseKeyboard;
 
+            Cursor.visible = !usaTeclado;
+            Cursor.lockState = usaTeclado ? CursorLockMode.Locked : CursorLockMode.Confined;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }
