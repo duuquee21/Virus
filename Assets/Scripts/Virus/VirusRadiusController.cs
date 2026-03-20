@@ -41,7 +41,7 @@ public class VirusRadiusController : MonoBehaviour
 
 
         // 3. RESULTADO FINAL: Base * Multiplicador Tienda * Multiplicador Árbol
-        currentFinalRadius = baseScale+Guardado.instance.radiusLevel;
+        currentFinalRadius = baseScale+Guardado.instance.radiusLevel*2f;
 
         // --- Aplicación física ---
         CircleCollider2D collider = GetComponent<CircleCollider2D>();

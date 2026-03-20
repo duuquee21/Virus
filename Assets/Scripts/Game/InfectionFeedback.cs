@@ -34,6 +34,8 @@ public class InfectionFeedback : MonoBehaviour
     // --- LÓGICA DE POOLING ---
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
     private Dictionary<Transform, Coroutine> activeShakes = new Dictionary<Transform, Coroutine>();
+    // Guarda la posición real e inmutable de cada zona
+    private Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
 
     void Awake()
     {
@@ -62,10 +64,12 @@ public class InfectionFeedback : MonoBehaviour
 
         foreach (Transform t in todosLosTransforms)
         {
-            // Filtramos por Tag y nos aseguramos que pertenezcan a la escena (no sean prefabs en la carpeta)
             if (t.CompareTag(zonaTag) && t.gameObject.scene.name != null)
             {
                 listaZonas.Add(t);
+                // AÑADIR ESTO: Registra la posición exacta antes de cualquier movimiento
+                if (!originalPositions.ContainsKey(t))
+                    originalPositions.Add(t, t.localPosition);
             }
         }
 
@@ -218,15 +222,24 @@ public class InfectionFeedback : MonoBehaviour
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
-        Vector3 originalPos = objTransform.localPosition;
+        // SEGURIDAD: Usamos el valor guardado en el diccionario, no el localPosition actual
+        Vector3 anchorPos = originalPositions[objTransform];
         float elapsed = 0.0f;
+
         while (elapsed < shakeDuration)
         {
-            objTransform.localPosition = originalPos + new Vector3(Random.Range(-1f, 1f) * shakeMagnitude * multiplier, Random.Range(-1f, 1f) * shakeMagnitude * multiplier, 0);
+            float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
+            float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
+
+            objTransform.localPosition = anchorPos + new Vector3(x, y, 0);
+
             elapsed += Time.deltaTime;
             yield return null;
         }
-        objTransform.localPosition = originalPos;
+
+        // Retorno garantizado al punto exacto de inicio
+        objTransform.localPosition = anchorPos;
+        activeShakes[objTransform] = null;
     }
 
     public void CleanAllActiveParticles()

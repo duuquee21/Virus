@@ -362,7 +362,7 @@ public class PersonaInfeccion : MonoBehaviour
         // Seguridad: no sobrepasar el límite
         if (faseActual >= fasesSprites.Length)
         {
-            faseActual = fasesSprites.Length;
+            faseActual = fasesSprites.Length - 1; // Mantener el último índice válido
             BecomeInfected();
         }
         else
@@ -387,6 +387,16 @@ public class PersonaInfeccion : MonoBehaviour
     void BecomeInfected()
     {
         alreadyInfected = true;
+
+        // 1. Detener corrutinas de color previas para evitar conflictos
+        if (colorCoroutine != null) StopCoroutine(colorCoroutine);
+
+        // 2. CAMBIO CLAVE: Asignar el sprite ANTES de cualquier otra lógica
+        if (spriteInfectado != null)
+        {
+            spritePersona.sprite = spriteInfectado;
+            spritePersona.color = infectedColor; // Color base por si la corrutina falla
+        }
         if (instanciaBarraActual != null) Destroy(instanciaBarraActual);
         if (spriteInfectado != null)
         {
@@ -413,7 +423,10 @@ public class PersonaInfeccion : MonoBehaviour
         if (InfectionFeedback.instance != null)
             InfectionFeedback.instance.PlayEffect(transform.position, Color.white, false);
 
-        particulasDeFuego?.Play();
+        if (particulasDeFuego != null)
+        {
+            particulasDeFuego.Play();
+        }
 
         if (LevelManager.instance != null)
             LevelManager.instance.RegisterInfection();
@@ -453,10 +466,15 @@ public class PersonaInfeccion : MonoBehaviour
     }
     void ActualizarVisualFase()
     {
+        if (alreadyInfected) return;
+
         if (faseActual < fasesSprites.Length)
         {
+
             spritePersona.sprite = fasesSprites[faseActual];
-            if (faseActual < coloresFases.Length) spritePersona.color = coloresFases[faseActual];
+            // Solo aplicar color si el índice existe en el array de colores
+            if (coloresFases != null && faseActual < coloresFases.Length)
+                spritePersona.color = coloresFases[faseActual];
             ActualizarInstanciaBarraFalsa();
 
             for (int i = 0; i < fillingBarImages.Length; i++)

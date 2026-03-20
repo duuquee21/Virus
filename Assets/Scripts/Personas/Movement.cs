@@ -37,6 +37,13 @@ public class Movement : MonoBehaviour
     public LayerMask capaParedes;
 
 
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
+        personaInfeccion = GetComponent<PersonaInfeccion>();
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -98,31 +105,25 @@ public class Movement : MonoBehaviour
     {
         if (rb.linearVelocity.sqrMagnitude < 0.1f) return;
 
-        float distanciaFrame = rb.linearVelocity.magnitude * Time.fixedDeltaTime;
+        // Aumentamos un pequeño margen (0.1f) a la distancia del frame
+        float distanciaFrame = (rb.linearVelocity.magnitude * Time.fixedDeltaTime) + 0.1f;
         Vector2 direccionMovimiento = rb.linearVelocity.normalized;
         float miRadio = circleCollider.radius * transform.localScale.x;
 
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, miRadio, direccionMovimiento, distanciaFrame, capaParedes);
 
-        if (hit.collider != null && hit.collider.CompareTag("Pared"))
+        if (hit.collider != null)
         {
-            PlanetCrontrollator planeta = hit.collider.GetComponent<PlanetCrontrollator>();
-            if (planeta != null)
-            {
-                // FILTRO DE VELOCIDAD: Solo daña si va rápido (v > 6.5)
-                if (rb.linearVelocity.magnitude > 6.5f)
-                {
-                    planeta.ProcesarImpacto(this.gameObject, hit.point, PlanetCrontrollator.TipoImpacto.Choque);
-                }
-            }
+            // 1. Forzar la posición justo antes del impacto para evitar que se hunda en la pared
+            rb.position = hit.centroid;
 
-            if (!gameObject.activeInHierarchy) return;
-
+            // 2. Ejecutar el rebote
             ProcesarReboteContraPared(hit.point, hit.normal);
-            transform.position = hit.centroid + (hit.normal * 0.05f);
+
+            // 3. Importante: "Limpiar" la velocidad de este frame para que no siga avanzando hacia adentro
+            rb.linearVelocity = direccion * rb.linearVelocity.magnitude;
         }
     }
-
     private void ProcesarReboteContraPared(Vector2 puntoImpacto, Vector2 normal)
     {
         direccion = Vector2.Reflect(direccion, normal).normalized;
@@ -175,12 +176,23 @@ public class Movement : MonoBehaviour
 
     public void AplicarEmpuje(Vector2 direccionEmpuje, float fuerza, float torque)
     {
+        // Safety Check: If rb is still null, try to get it now
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+
+        // If it's STILL null, the object is missing a Rigidbody2D component entirely
+        if (rb == null)
+        {
+            Debug.LogError($"Movement.cs on {gameObject.name} is missing a Rigidbody2D!");
+            return;
+        }
+
         estaEmpujado = true;
         estaGirando = true;
         tiempoEmpujeRestante = duracionMinimaEmpuje;
 
         Vector2 direccionNormalizada = direccionEmpuje.normalized;
 
+        // Check for walls before applying force
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direccionEmpuje, 0.5f);
         if (hit.collider != null && hit.collider.CompareTag("Pared"))
         {

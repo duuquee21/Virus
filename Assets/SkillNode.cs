@@ -704,7 +704,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
             case SkillEffectType.SpawnBaseFigureOnMaxPhase20:
-                Guardado.instance.AddSpawnBaseOnMaxPhaseChance(0.05f);
+                Guardado.instance.AddSpawnBaseOnMaxPhaseChance(1f);
                 Guardado.instance.SaveData();
                 break;
 
