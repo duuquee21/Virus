@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +13,6 @@ public class PlanetCrontrollator : MonoBehaviour
     private readonly Dictionary<int, float> lastImpactTimes = new Dictionary<int, float>();
     private float cooldownTime = 0.1f;
 
-    private AnimacionFinalPlaneta animacionFinalPlaneta;
-
     [Header("Estado")]
     public bool isInvulnerable = false;
 
@@ -23,7 +20,32 @@ public class PlanetCrontrollator : MonoBehaviour
     public float delayMuerte = 1.5f;
     public float fuerzaVibracion = 0.1f;
 
-    // --- NUEVO SISTEMA DE GUARDADO DE JERARQUÍA ---
+    [Header("Efectos de Daño")]
+    public GameObject damageTextPrefab;
+
+    [Header("Batch de daño")]
+    public bool agruparDanio = true;
+    [Range(0.01f, 0.10f)] public float ventanaBatchDanio = 0.03f;
+    public bool combinarTextosDanio = true;
+    public int maxTextosDanioPorSegundo = 12;
+
+    private float pendingDamage = 0f;
+    private Vector3 pendingDamagePosSum = Vector3.zero;
+    private int pendingDamageHits = 0;
+    private float nextDamageFlushTime = -1f;
+
+    private float textWindowStart = 0f;
+    private int textsSpawnedThisWindow = 0;
+
+    private AnimacionFinalPlaneta animacionFinalPlaneta;
+
+    private float maxHealth;
+    private float currentHealth;
+
+    private bool resultsDirty = false;
+    private bool uiDirty = false;
+    private bool muriendo = false;
+
     private struct TransformData
     {
         public Vector3 localPosition;
@@ -35,16 +57,8 @@ public class PlanetCrontrollator : MonoBehaviour
             localRotation = rot;
         }
     }
+
     private Dictionary<Transform, TransformData> transformacionesOriginales;
-    // ----------------------------------------------
-
-    [Header("Efectos de Daño")]
-    public GameObject damageTextPrefab;
-
-    private float maxHealth;
-    private float currentHealth;
-
-    private bool resultsDirty = false;
 
     public enum TipoImpacto
     {
@@ -58,27 +72,37 @@ public class PlanetCrontrollator : MonoBehaviour
         MapData map = MapSequenceManager.instance.GetCurrentMap();
 
         maxHealth = map.maxHealth;
-
-        // Asegurar salud al máximo SIEMPRE
         currentHealth = maxHealth;
         map.currentHealth = maxHealth;
 
         ActualizarUI();
 
         animacionFinalPlaneta = GetComponent<AnimacionFinalPlaneta>();
-
-        // --- GUARDAR TRANSFORMACIONES DE LA FAMILIA ---
         GuardarEstadoJerarquia();
+
+        textWindowStart = Time.time;
     }
+
     void Update()
     {
-        // Si hubo cambios en los resultados O en la vida, actualizamos
+        if (pendingDamageHits > 0 && Time.time >= nextDamageFlushTime)
+        {
+            FlushPendingDamage();
+        }
+
+        if (Time.time - textWindowStart >= 1f)
+        {
+            textWindowStart = Time.time;
+            textsSpawnedThisWindow = 0;
+        }
+
         if (resultsDirty || uiDirty)
         {
             if (resultsDirty)
             {
                 if (EndDayResultsPanel.instance != null)
                     EndDayResultsPanel.instance.RefreshResults();
+
                 resultsDirty = false;
             }
 
@@ -89,17 +113,15 @@ public class PlanetCrontrollator : MonoBehaviour
             }
         }
     }
+
     private void GuardarEstadoJerarquia()
     {
         transformacionesOriginales = new Dictionary<Transform, TransformData>();
 
-        // Si tiene padre, el "root" a guardar es el padre. Si no, es este mismo objeto.
         Transform root = transform.parent != null ? transform.parent : transform;
 
-        // Guardamos el padre
         transformacionesOriginales[root] = new TransformData(root.localPosition, root.localRotation);
 
-        // Guardamos todos los hijos del padre (esto incluye a los hermanos y a este mismo objeto)
         foreach (Transform child in root)
         {
             transformacionesOriginales[child] = new TransformData(child.localPosition, child.localRotation);
@@ -108,24 +130,28 @@ public class PlanetCrontrollator : MonoBehaviour
 
     public void ProcesarImpacto(GameObject obj, Vector3 posicion, TipoImpacto tipoImpacto)
     {
+        if (muriendo || isInvulnerable) return;
+        if (obj == null) return;
+
         int id = obj.GetInstanceID();
         float time = Time.time;
 
-        // Usar TryGetValue para buscar solo una vez en el diccionario
         if (lastImpactTimes.TryGetValue(id, out float lastTime) && time < lastTime + cooldownTime)
             return;
 
         lastImpactTimes[id] = time;
 
-        if (!obj.TryGetComponent<PersonaInfeccion>(out var scriptInfeccion)) return;
+        if (!obj.TryGetComponent<PersonaInfeccion>(out var scriptInfeccion))
+            return;
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
         int fase = scriptInfeccion.faseActual;
 
-        // Si ya está infectado (Círculo final), destruye al impactar y hace daño ultra
         if (scriptInfeccion.alreadyInfected)
         {
-            InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
+            if (InfectionFeedback.instance != null)
+                InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
+
             RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
             TakeDamage(dañoCalculado, posicion);
             Destroy(obj);
@@ -134,7 +160,6 @@ public class PlanetCrontrollator : MonoBehaviour
 
         if (obj.TryGetComponent<Rigidbody2D>(out var rb))
         {
-            // Mantenemos tu optimización de sqrMagnitude (6.5 * 6.5 = 42.25)
             if (rb.linearVelocity.sqrMagnitude > 42.25f)
             {
                 RegistrarDaño(dañoCalculado, fase, tipoImpacto);
@@ -152,7 +177,8 @@ public class PlanetCrontrollator : MonoBehaviour
                     }
                     else
                     {
-                        InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
+                        if (InfectionFeedback.instance != null)
+                            InfectionFeedback.instance.PlayBasicImpactEffectAgainstWall(posicion, Color.white);
                     }
                 }
             }
@@ -192,31 +218,85 @@ public class PlanetCrontrollator : MonoBehaviour
             ProcesarImpacto(collision.gameObject, collision.transform.position, TipoImpacto.Zona);
     }
 
-
-
-    private bool uiDirty = false; // Nueva variable
-
     public void TakeDamage(float amount, Vector3 spawnPos)
     {
-        if (isInvulnerable) return;
+        if (isInvulnerable || muriendo) return;
 
+        if (!agruparDanio)
+        {
+            ApplyDamageImmediate(amount, spawnPos);
+            return;
+        }
+
+        pendingDamage += amount;
+        pendingDamagePosSum += spawnPos;
+        pendingDamageHits++;
+
+        if (nextDamageFlushTime < 0f)
+            nextDamageFlushTime = Time.time + ventanaBatchDanio;
+    }
+
+    private void ApplyDamageImmediate(float amount, Vector3 spawnPos)
+    {
         MapData map = MapSequenceManager.instance.GetCurrentMap();
+
         map.currentHealth -= amount;
         map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
 
         currentHealth = map.currentHealth;
         maxHealth = map.maxHealth;
 
-        // EN LUGAR DE ActualizarUI() directamente:
         uiDirty = true;
 
-        if (damageTextPrefab != null)
+        if (damageTextPrefab != null && CanSpawnDamageText())
         {
-            TextPooler.Instance.SpawnText(spawnPos, "-" + amount.ToString("F0"));
+            if (TextPooler.Instance != null)
+                TextPooler.Instance.SpawnText(spawnPos, "-" + amount.ToString("F0"));
         }
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0f)
             Die();
+    }
+
+    private void FlushPendingDamage()
+    {
+        if (pendingDamageHits <= 0) return;
+
+        float totalDamage = pendingDamage;
+        Vector3 avgPos = pendingDamagePosSum / pendingDamageHits;
+
+        MapData map = MapSequenceManager.instance.GetCurrentMap();
+
+        map.currentHealth -= totalDamage;
+        map.currentHealth = Mathf.Clamp(map.currentHealth, 0, map.maxHealth);
+
+        currentHealth = map.currentHealth;
+        maxHealth = map.maxHealth;
+
+        uiDirty = true;
+
+        if (damageTextPrefab != null && combinarTextosDanio && CanSpawnDamageText())
+        {
+            if (TextPooler.Instance != null)
+                TextPooler.Instance.SpawnText(avgPos, "-" + totalDamage.ToString("F0"));
+        }
+
+        pendingDamage = 0f;
+        pendingDamagePosSum = Vector3.zero;
+        pendingDamageHits = 0;
+        nextDamageFlushTime = -1f;
+
+        if (currentHealth <= 0f)
+            Die();
+    }
+
+    private bool CanSpawnDamageText()
+    {
+        if (textsSpawnedThisWindow >= maxTextosDanioPorSegundo)
+            return false;
+
+        textsSpawnedThisWindow++;
+        return true;
     }
 
     void ActualizarUI()
@@ -230,9 +310,7 @@ public class PlanetCrontrollator : MonoBehaviour
                 healthBarOutLine.fillAmount = fill + 0.0012f;
 
             if (healthBar.transform.parent != null)
-            {
                 healthBar.transform.parent.localPosition = Vector3.zero;
-            }
         }
     }
 
@@ -248,6 +326,18 @@ public class PlanetCrontrollator : MonoBehaviour
         lastImpactTimes.Clear();
         isInvulnerable = false;
 
+        pendingDamage = 0f;
+        pendingDamagePosSum = Vector3.zero;
+        pendingDamageHits = 0;
+        nextDamageFlushTime = -1f;
+
+        muriendo = false;
+        uiDirty = false;
+        resultsDirty = false;
+
+        textWindowStart = Time.time;
+        textsSpawnedThisWindow = 0;
+
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = true;
 
@@ -258,7 +348,6 @@ public class PlanetCrontrollator : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        // --- RESTAURAR TRANSFORMACIONES DE LA FAMILIA ---
         if (transformacionesOriginales != null)
         {
             foreach (var kvp in transformacionesOriginales)
@@ -281,9 +370,18 @@ public class PlanetCrontrollator : MonoBehaviour
 
     void Die()
     {
+        if (muriendo) return;
+
+        muriendo = true;
+        isInvulnerable = true;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
         if (nivelFinal)
         {
-            animacionFinalPlaneta.EjecutarSecuenciaVibracion();
+            if (animacionFinalPlaneta != null)
+                animacionFinalPlaneta.EjecutarSecuenciaVibracion();
         }
         else
         {

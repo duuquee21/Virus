@@ -36,7 +36,7 @@ public class DebugCheatMenu : MonoBehaviour
         scrollPosition = GUI.BeginScrollView(
             new Rect(25, 60, 545, 870),
             scrollPosition,
-            new Rect(0, 0, 500, 2600)
+            new Rect(0, 0, 500, 2800)
         );
 
         int y = 0;
@@ -114,7 +114,7 @@ public class DebugCheatMenu : MonoBehaviour
         if (Btn("+5000 Monedas de Contagio", ref y, btnH))
         {
             if (LevelManager.instance != null)
-                LevelManager.instance.AddCoins(5000);
+                LevelManager.instance.AddCoins(50000000);
         }
 
         y += 20;
@@ -150,6 +150,22 @@ public class DebugCheatMenu : MonoBehaviour
         // ARBOL DE HABILIDADES
         // -------------------------------------------------
         Header("ARBOL DE HABILIDADES", ref y);
+
+        GUI.backgroundColor = Color.green;
+        if (Btn("COMPRAR TODOS LOS NODOS DISPONIBLES", ref y, 55))
+        {
+            int totalComprados = BuyAllAvailableNodes(false);
+            Debug.Log($"[DEBUG] Compra masiva completada. Total comprados: {totalComprados}");
+        }
+        GUI.backgroundColor = Color.white;
+
+        GUI.backgroundColor = Color.cyan;
+        if (Btn("COMPRAR TODOS LOS NODOS DISPONIBLES GRATIS", ref y, 55))
+        {
+            int totalComprados = BuyAllAvailableNodes(true);
+            Debug.Log($"[DEBUG] Compra masiva gratis completada. Total comprados: {totalComprados}");
+        }
+        GUI.backgroundColor = Color.white;
 
         if (Btn("Mejora Inicial Aleatoria", ref y, btnH))
         {
@@ -299,6 +315,88 @@ public class DebugCheatMenu : MonoBehaviour
     {
         GUI.Label(new Rect(10, y, 470, 26), t, labelStyle);
         y += 24;
+    }
+
+    bool CanBuyNodeNow(SkillNode node)
+    {
+        if (node == null) return false;
+        if (!node.gameObject.activeInHierarchy) return false;
+
+        if (node.canvasGroup == null) return false;
+        if (!node.canvasGroup.interactable) return false;
+        if (!node.canvasGroup.blocksRaycasts) return false;
+
+        if (node.button == null) return false;
+        if (!node.button.interactable) return false;
+
+        return true;
+    }
+
+    int BuyAllAvailableNodes(bool freePurchase)
+    {
+        SkillNode[] allNodes = FindObjectsOfType<SkillNode>(true);
+
+        int totalBought = 0;
+        int safety = 0;
+        bool boughtSomething;
+
+        System.Text.StringBuilder idsComprados = new System.Text.StringBuilder();
+
+        do
+        {
+            boughtSomething = false;
+            safety++;
+
+            if (safety > 200)
+            {
+                Debug.LogWarning("[DEBUG] Corte de seguridad en compra masiva de nodos.");
+                break;
+            }
+
+            foreach (SkillNode node in allNodes)
+            {
+                if (!CanBuyNodeNow(node))
+                    continue;
+
+                int repeatBefore = node.repeatLevel;
+                bool unlockedBefore = node.IsUnlocked;
+
+                if (!freePurchase)
+                {
+                    if (LevelManager.instance == null) continue;
+                    if (LevelManager.instance.ContagionCoins < node.CoinCost) continue;
+                }
+                else
+                {
+                    if (LevelManager.instance != null && LevelManager.instance.ContagionCoins < node.CoinCost)
+                    {
+                        int falta = node.CoinCost - LevelManager.instance.ContagionCoins;
+                        LevelManager.instance.AddCoins(falta);
+                    }
+                }
+
+                node.TryUnlock();
+
+                bool changed = (node.repeatLevel != repeatBefore) || (node.IsUnlocked != unlockedBefore);
+
+                if (changed)
+                {
+                    boughtSomething = true;
+                    totalBought++;
+
+                    string id = string.IsNullOrEmpty(node.saveID) ? node.name : node.saveID;
+                    idsComprados.AppendLine(id);
+                }
+            }
+        }
+        while (boughtSomething);
+
+        if (idsComprados.Length > 0)
+            Debug.Log("[DEBUG] IDs comprados:\n" + idsComprados);
+        else
+            Debug.Log("[DEBUG] No se pudo comprar ningún nodo.");
+
+        return totalBought;
     }
 
     bool Btn(string t, ref int y, int h)
