@@ -518,4 +518,31 @@ public class Movement : MonoBehaviour
         this.direccion = rb.linearVelocity.normalized;
         otra.SetEstaEmpujado(true, rbOtra.linearVelocity.normalized);
     }
+    // Añade esto en Movement.cs
+    public void ResetearMovimientoDesdePool()
+    {
+        estaEmpujado = false;
+        estaGirando = false;
+        tiempoEmpujeRestante = 0f;
+        efectoIniciado = false;
+        tiempoEfecto = 0f;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.isKinematic = false;
+        }
+
+        // Recalcular una nueva dirección aleatoria como si acabara de hacer Start()
+        float angulo = Random.Range(0f, 360f);
+        direccion = new Vector2(Mathf.Cos(angulo * Mathf.Deg2Rad), Mathf.Sin(angulo * Mathf.Deg2Rad)).normalized;
+
+        // Limpiar colisiones viejas
+        objetosColisionadosEsteFrame.Clear();
+
+        // Re-registrar en el Grid
+        ActualizarPosicionGrid();
+        ultimaPosicionGrid = ObtenerPosicionGrid();
+    }
 }

@@ -41,6 +41,12 @@ public class PopulationManager : MonoBehaviour
     private float checkOutsidersTimer = 0f;
     private float checkOutsidersInterval = 1f;
 
+    [Header("Pooling")]
+    // Diccionario para manejar múltiples pools (uno por cada prefab diferente que tengas)
+    private Dictionary<GameObject, Queue<GameObject>> poolDePersonas = new Dictionary<GameObject, Queue<GameObject>>();
+
+
+
     void Awake()
     {
         instance = this;
@@ -180,7 +186,7 @@ public class PopulationManager : MonoBehaviour
             if (!areaReferencia.OverlapPoint(obj.transform.position))
             {
                 toRemove.Add(obj);
-                Destroy(obj);
+                DevolverAlPool(obj, currentPrefab);
             }
         }
 
@@ -219,7 +225,7 @@ public class PopulationManager : MonoBehaviour
             }
         }
 
-        GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        GameObject newPerson = ObtenerDelPool(prefabToSpawn, spawnPos);
         personasVivas.Add(newPerson);
 
         if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
@@ -231,6 +237,7 @@ public class PopulationManager : MonoBehaviour
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         PersonaInfeccion script = newPerson.GetComponent<PersonaInfeccion>();
+        Movement movScript = newPerson.GetComponent<Movement>(); // Obtenemos el script de movimiento
 
         if (script != null && LevelManager.instance != null)
         {
@@ -245,13 +252,15 @@ public class PopulationManager : MonoBehaviour
                 float chance = Guardado.instance.randomSpawnPhaseChance;
                 if (chance > 0f && Random.value < chance)
                 {
-                    int maxFase = script.GetMaxFaseIndex();
-                    faseFinal = Random.Range(0, maxFase + 1);
+                    faseFinal = Random.Range(0, script.GetMaxFaseIndex() + 1);
                 }
             }
 
-            script.EstablecerFaseDirecta(faseFinal);
-            script.AplicarColor(LevelManager.instance.GetCurrentLevelColor());
+            Color colorNivel = LevelManager.instance.GetCurrentLevelColor();
+
+            // AQUI USAMOS EL REINICIO TOTAL
+            script.ReinicioTotalDesdePool(faseFinal, colorNivel);
+            if (movScript != null) movScript.ResetearMovimientoDesdePool();
         }
 
         Vector3 targetScale = newPerson.transform.localScale;
@@ -354,7 +363,7 @@ public class PopulationManager : MonoBehaviour
             }
         }
 
-        GameObject newPerson = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        GameObject newPerson = ObtenerDelPool(prefabToSpawn, spawnPos);
         personasVivas.Add(newPerson);
         if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
 
@@ -416,6 +425,41 @@ public class PopulationManager : MonoBehaviour
             buggedPersonas.Remove(persona); // Por si se desregistra a mano
         }
     }
-    // En PopulationManager.cs
- 
+    private GameObject ObtenerDelPool(GameObject prefab, Vector3 posicion)
+    {
+        if (!poolDePersonas.ContainsKey(prefab))
+        {
+            poolDePersonas[prefab] = new Queue<GameObject>();
+        }
+
+        GameObject obj;
+
+        // Si hay objetos disponibles en el pool, sacamos uno
+        if (poolDePersonas[prefab].Count > 0)
+        {
+            obj = poolDePersonas[prefab].Dequeue();
+            obj.transform.position = posicion;
+            obj.SetActive(true);
+        }
+        else
+        {
+            // Si no hay, solo entonces instanciamos uno nuevo
+            obj = Instantiate(prefab, posicion, Quaternion.identity);
+        }
+
+        return obj;
+    }
+
+    public void DevolverAlPool(GameObject obj, GameObject prefabOriginal)
+    {
+        obj.SetActive(false); // Esto dispara el OnDisable() y se desregistra de las listas
+
+        if (!poolDePersonas.ContainsKey(prefabOriginal))
+        {
+            poolDePersonas[prefabOriginal] = new Queue<GameObject>();
+        }
+
+        poolDePersonas[prefabOriginal].Enqueue(obj);
+    }
+
 }

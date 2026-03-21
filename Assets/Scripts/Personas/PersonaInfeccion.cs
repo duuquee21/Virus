@@ -80,7 +80,8 @@ public class PersonaInfeccion : MonoBehaviour
     private bool yaActivoSpawnPorFaseFinal = false;
 
 
-
+    // Añade esta variable
+    private Vector3 escalaOriginal;
 
 
     // --- REFERENCIA QUE FALTABA ---
@@ -102,7 +103,11 @@ public class PersonaInfeccion : MonoBehaviour
     private float lastProgressSent = -1f;
 
     private float ultimoSpawnParedTime = 0f;
-
+    void Awake()
+    {
+        // El Awake se ejecuta antes que nada, así atrapamos su tamaño real
+        escalaOriginal = transform.localScale;
+    }
     void Start()
     {
         movementScript = GetComponent<Movement>();
@@ -110,6 +115,9 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (spritePersona == null) spritePersona = GetComponent<SpriteRenderer>();
         originalColor = spritePersona.color;
+
+
+       
 
         // --- CAMBIO AQUÍ: Empezar con el Canvas APAGADO ---
         if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
@@ -792,5 +800,51 @@ public class PersonaInfeccion : MonoBehaviour
                 PopulationManager.instance.SpawnPersonAtBasePhase();
             }
         }
+    }
+
+    // Añade esto en PersonaInfeccion.cs
+    public void ReinicioTotalDesdePool(int nuevaFase, Color colorMapa)
+    {
+        // 1. Estados lógicos básicos
+        alreadyInfected = false;
+        isInsideZone = false;
+        transformInfector = null;
+        currentInfectionTime = 0f;
+        lastProgressSent = -1f;
+        ultimoSpawnParedTime = 0f;
+        positionSaved = false;
+        yaActivoSpawnPorFaseFinal = false;
+
+        // 2. Físicas y Capas (¡CRÍTICO!)
+        // Si al infectarse cambiaba de capa, hay que devolverlo a su capa original
+        gameObject.layer = LayerMask.NameToLayer("Default"); // O la capa base que uses
+
+        // 3. Detener animaciones y corrutinas viejas
+        if (colorCoroutine != null)
+        {
+            StopCoroutine(colorCoroutine);
+            colorCoroutine = null;
+        }
+
+        // 4. Resetear los rastros (Trails) para que no dibujen una línea desde donde murieron
+        if (trail1 != null) { trail1.Clear(); trail1.emitting = false; }
+        if (trail2 != null) { trail2.Clear(); trail2.emitting = false; }
+
+        // 5. Resetear Canvas y Barras
+        if (infectionBarCanvas != null) infectionBarCanvas.SetActive(false);
+        if (instanciaBarraActual != null) Destroy(instanciaBarraActual); // O mándalo a su propio pool si lo optimizas luego
+
+        // 6. Reset visual y de fase
+        transform.localScale = escalaOriginal;
+        spritePersona.color = Color.white;  // Limpiar color previo
+
+        faseActual = nuevaFase;
+        originalColor = colorMapa;
+        AplicarColor(colorMapa);
+        ActualizarVisualFase();
+        ActualizarProgresoBarras(0f);
+
+        // Apagamos partículas si se quedaron encendidas
+        if (particulasDeFuego != null) particulasDeFuego.Stop();
     }
 }
