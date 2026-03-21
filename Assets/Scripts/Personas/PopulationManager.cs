@@ -155,7 +155,7 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    private int GetTotalPopulationCount()
+    public int GetTotalPopulationCount()
     {
         return personasVivas.Count + coralesVivos.Count;
     }
@@ -416,4 +416,6 @@ public class PopulationManager : MonoBehaviour
             buggedPersonas.Remove(persona); // Por si se desregistra a mano
         }
     }
+    // En PopulationManager.cs
+ 
 }

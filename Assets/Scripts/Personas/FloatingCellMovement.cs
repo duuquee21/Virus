@@ -181,11 +181,12 @@ public class FloatingCellMovement : MonoBehaviour
         }
         else
         {
-            // Si es un choque con una pared, la vibración es negativa
             if (slot != -1) StartCoroutine(DoJelly(puntoLocal, slot, -1));
             Rigidbody2D rbOtro = otro.GetComponent<Rigidbody2D>();
 
-            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f && Guardado.instance.virusReboteActiva)
+            // Check if Guardado.instance is NOT null before accessing virusReboteActiva
+            if (rbOtro != null && rbOtro.linearVelocity.magnitude > 5f &&
+                Guardado.instance != null && Guardado.instance.virusReboteActiva)
             {
                 Vector2 direccionEmpuje = (otro.transform.position - transform.position).normalized;
                 rbOtro.AddForce(direccionEmpuje * fuerzaEmpuje, ForceMode2D.Impulse);

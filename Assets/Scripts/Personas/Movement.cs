@@ -29,7 +29,7 @@ public class Movement : MonoBehaviour
     // ===== SPATIAL HASH GRID =====
     private CircleCollider2D circleCollider;
     public static Dictionary<Vector2Int, HashSet<Movement>> espacialGrid = new Dictionary<Vector2Int, HashSet<Movement>>();
-    private static float tamañoCelda = 5f;
+    private static float tamañoCelda = 0.5f;
     private Vector2Int ultimaPosicionGrid;
     private HashSet<Movement> objetosColisionadosEsteFrame = new HashSet<Movement>();
 
@@ -112,6 +112,8 @@ public class Movement : MonoBehaviour
 
         if (hit.collider != null && hit.collider.CompareTag("Pared"))
         {
+
+            if (personaInfeccion != null) personaInfeccion.IntentarSpawnPorChoquePared();
             // === NUEVO: APLICAR DAÑO MANUALMENTE ===
             // Buscamos el script del planeta en el objeto con el que chocamos
             PlanetCrontrollator planeta = hit.collider.GetComponent<PlanetCrontrollator>();
@@ -240,6 +242,8 @@ public class Movement : MonoBehaviour
     {
         if (otro.CompareTag("Pared"))
         {
+
+            if (personaInfeccion != null) personaInfeccion.IntentarSpawnPorChoquePared();
             Vector2 puntoImpacto = otro.ClosestPoint(transform.position);
             Vector2 normal = ((Vector2)transform.position - puntoImpacto).normalized;
 

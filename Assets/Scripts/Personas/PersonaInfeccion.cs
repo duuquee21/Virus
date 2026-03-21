@@ -101,6 +101,8 @@ public class PersonaInfeccion : MonoBehaviour
 
     private float lastProgressSent = -1f;
 
+    private float ultimoSpawnParedTime = 0f;
+
     void Start()
     {
         movementScript = GetComponent<Movement>();
@@ -495,19 +497,7 @@ public class PersonaInfeccion : MonoBehaviour
             spritePersona.sprite = spriteInfectado;
         }
 
-        if (Guardado.instance != null && PopulationManager.instance != null)
-        {
-            // Supongamos que tu variable en Guardado se llama 'probabilidadSpawnAlInfectar' (0.0f a 1.0f)
-            // Si usas 'spawnBaseOnMaxPhaseChance', cámbiala aquí:
-            float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
-
-            if (Random.value < chance)
-            {
-                // Llamamos al PopulationManager para que cree una nueva persona en posición aleatoria
-                PopulationManager.instance.SpawnPersonAtBasePhase();
-                Debug.Log("¡Suerte! Se ha generado una nueva persona tras la infección.");
-            }
-        }
+      
 
         if (infectionBarCanvas != null)
             infectionBarCanvas.SetActive(false);
@@ -780,6 +770,26 @@ public class PersonaInfeccion : MonoBehaviour
                 instanciaBarraActual = Instantiate(prefabsBarraFalsa[faseActual], transform);
                 // Si ya estamos en la zona, la barra falsa nace desactivada
                 instanciaBarraActual.SetActive(!isInsideZone);
+            }
+        }
+    }
+
+    public void IntentarSpawnPorChoquePared()
+    {
+        if (!alreadyInfected) return;
+        if (Time.time - ultimoSpawnParedTime < 0.2f) return;
+        ultimoSpawnParedTime = Time.time;
+
+        if (Guardado.instance != null && PopulationManager.instance != null)
+        {
+            // --- NUEVA VALIDACIÓN ---
+            // Si el total de personas vivas supera un límite (ej. 75), no spawneamos más.
+            if (PopulationManager.instance.GetTotalPopulationCount() > 50) return;
+
+            float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
+            if (Random.value < chance)
+            {
+                PopulationManager.instance.SpawnPersonAtBasePhase();
             }
         }
     }
