@@ -45,7 +45,7 @@ public class PopulationManager : MonoBehaviour
     // Diccionario para manejar múltiples pools (uno por cada prefab diferente que tengas)
     private Dictionary<GameObject, Queue<GameObject>> poolDePersonas = new Dictionary<GameObject, Queue<GameObject>>();
 
-
+    private bool limpiandoGradualmente = false;
 
     void Awake()
     {
@@ -315,7 +315,49 @@ public class PopulationManager : MonoBehaviour
             spawnInterval = 0.3f;
         }
     }
+    public void StartGradualClear(float duration)
+    {
+        StopAllCoroutines(); // Evita conflictos con otros spawns
+        StartCoroutine(ClearGraduallyRoutine(duration));
+    }
 
+    private IEnumerator ClearGraduallyRoutine(float duration)
+    {
+        limpiandoGradualmente = true;
+
+        // 1. Obtenemos todos los vivos actualmente (usamos los HashSets para ser más eficientes)
+        List<GameObject> aEliminar = new List<GameObject>(personasVivas);
+        aEliminar.AddRange(coralesVivos);
+
+        if (aEliminar.Count == 0)
+        {
+            limpiandoGradualmente = false;
+            yield break;
+        }
+
+        // 2. Calculamos el intervalo exacto. 
+        // Usamos el 90% de la duración para asegurar que el mapa esté vacío un poco antes de que termine el zoom.
+        float intervalo = (duration * 0.9f) / aEliminar.Count;
+
+        for (int i = 0; i < aEliminar.Count; i++)
+        {
+            if (aEliminar[i] != null)
+            {
+                // Si usas pooling, lo ideal es DevolverAlPool, si no, Destroy.
+                // Aquí usamos Destroy para asegurar limpieza total al fin del nivel.
+                Destroy(aEliminar[i]);
+            }
+
+            // Usamos Realtime para que no le afecte el Slow Motion (Time.timeScale) del LevelManager
+            yield return new WaitForSecondsRealtime(intervalo);
+        }
+
+        // 3. Limpieza final de las listas
+        personasVivas.Clear();
+        coralesVivos.Clear();
+        buggedPersonas.Clear();
+        limpiandoGradualmente = false;
+    }
     public float GetCurrentSpawnInterval()
     {
         float bonusSegundos = Guardado.instance.spawnSpeedBonus;
@@ -325,6 +367,7 @@ public class PopulationManager : MonoBehaviour
 
     public void ClearAllPersonas()
     {
+        if (limpiandoGradualmente) return;
         foreach (var p in personasVivas)
         {
             if (p != null) Destroy(p);

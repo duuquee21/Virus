@@ -912,6 +912,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(TransitionToSession());
     }
 
+  
     private IEnumerator TransitionToSession()
     {
         if (transitionScript != null)
@@ -973,31 +974,26 @@ public class LevelManager : MonoBehaviour
     {
         float currentTime = 0f;
         float startScale = 1f;
-        float endScale = 0.05f; // Casi detenido al final
+        float endScale = 0.05f;
 
-        // Asegurar referencia a la cámara
         if (mainCamera == null) mainCamera = Camera.main;
-
-        // Desactivamos el movimiento del virus para evitar que "patine" por el lag físico
         if (virusMovementScript != null) virusMovementScript.enabled = false;
+
+        // === NUEVA LÍNEA: Iniciamos la limpieza distribuida aquí ===
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.StartGradualClear(slowMotionDuration);
+        }
 
         while (currentTime < slowMotionDuration)
         {
-            // Usamos unscaledDeltaTime porque el timeScale estará bajando
             currentTime += Time.unscaledDeltaTime;
             float t = currentTime / slowMotionDuration;
-
-            // Suavizado de la curva (SmoothStep)
             float smoothT = t * t * (3f - 2f * t);
 
-            // 1. EFECTO CÁMARA LENTA (Slow Motion)
-            // Bajamos el timeScale de 1.0 a 0.05
             Time.timeScale = Mathf.Lerp(startScale, endScale, t);
-
-            // Ajustamos el tiempo físico para que las animaciones no den tirones
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-            // 2. EFECTO ZOOM OUT
             if (mainCamera != null)
             {
                 mainCamera.orthographicSize = Mathf.Lerp(defaultZoom, endSessionZoom, smoothT);
@@ -1006,7 +1002,6 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
 
-        // Final de la transición
         CompleteEndSessionLogic();
     }
 

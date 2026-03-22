@@ -477,15 +477,17 @@ public class PlanetCrontrollator : MonoBehaviour
 
         ClearPendingDamage();
 
-        if (nivelFinal)
+        // 1. Forzamos la transición visual directamente para que haga la animación
+        LevelTransitioner transitioner = FindFirstObjectByType<LevelTransitioner>();
+        if (transitioner != null)
         {
-            if (animacionFinalPlaneta != null)
-                animacionFinalPlaneta.EjecutarSecuenciaVibracion();
+            transitioner.StartLevelTransition();
         }
-        else
+
+        // 2. Llamamos al SequenceManager para que intente avanzar el índice o actualizar su estado
+        if (MapSequenceManager.instance != null)
         {
-            if (MapSequenceManager.instance != null)
-                MapSequenceManager.instance.NextMap();
+            MapSequenceManager.instance.NextMap();
         }
     }
 }
