@@ -365,6 +365,50 @@ public class PopulationManager : MonoBehaviour
         return spawnInterval;
     }
 
+    public GameObject SpawnPersonAtPosition(Vector3 pos, bool infectada = false)
+    {
+        if (currentPrefab == null) return null;
+
+        UpdateBuggedChance();
+        buggedPersonas.RemoveWhere(obj => obj == null);
+
+        GameObject prefabToSpawn = currentPrefab;
+        bool isBuggedSpawn = false;
+
+        // lógica de bugged igual que el spawn normal
+        if (buggedPersonPrefab != null && Guardado.instance != null)
+        {
+            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit &&
+                Random.Range(0f, 100f) < buggedSpawnChance)
+            {
+                prefabToSpawn = buggedPersonPrefab;
+                isBuggedSpawn = true;
+            }
+        }
+
+        GameObject newPerson = ObtenerDelPool(prefabToSpawn, pos);
+        personasVivas.Add(newPerson);
+        if (isBuggedSpawn) buggedPersonas.Add(newPerson);
+
+        // CONFIGURACIÓN BASE (sin random)
+        ConfigurarPersonaInstanciada(newPerson, false);
+
+        // FORZAR POSICIÓN EXACTA CENTRO
+        newPerson.transform.position = pos;
+
+        // 🔥 FORZAR INFECTADA SI SE PIDE
+        if (infectada)
+        {
+            PersonaInfeccion p = newPerson.GetComponent<PersonaInfeccion>();
+            if (p != null)
+            {
+                p.EstablecerFaseDirecta(p.GetMaxFaseIndex());
+                p.IntentarAvanzarFase();
+            }
+        }
+
+        return newPerson;
+    }
     public void ClearAllPersonas()
     {
         if (limpiandoGradualmente) return;

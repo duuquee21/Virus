@@ -49,6 +49,14 @@ public class LevelTransitioner : MonoBehaviour
     public float duracionColapsoFinal = 0.33f;
     public float velocidadGiroFinal = -1600f;
 
+    [Header("Efecto Final Spawn")]
+    public GameObject spritePulsoPrefab;
+    public int numeroPulsos = 3;
+    public float escalaMaxPulso = 1.3f;
+    public float velocidadPulso = 8f;
+
+    [Header("Spawn Personas Final")]
+    public int personasPorPulso = 10;
     void Awake()
     {
         mainCam = Camera.main;
@@ -287,6 +295,7 @@ public class LevelTransitioner : MonoBehaviour
                 OnImpactShake?.Invoke(intensidadImpacto * 2.5f);
 
             yield return StartCoroutine(DryImpactShake());
+            yield return StartCoroutine(FinalPulseAndSpawn());
         }
         else
         {
@@ -328,4 +337,91 @@ public class LevelTransitioner : MonoBehaviour
         }
         camTransform.localPosition = posOriginal;
     }
+
+    private IEnumerator FinalPulseAndSpawn()
+    {
+        if (spritePulsoPrefab == null || popManager == null)
+            yield break;
+
+        Camera cam = Camera.main;
+        if (cam == null) yield break;
+
+        // --- CONFIGURACIÓN INICIAL ---
+        Vector3 posOriginalCam = cam.transform.position;
+        float zoomOriginal = cam.orthographicSize;
+        Vector3 centroEfecto = posOriginalCam;
+        centroEfecto.z = 0f;
+
+        GameObject pulso = Instantiate(spritePulsoPrefab, centroEfecto, Quaternion.identity);
+        pulso.transform.localScale = Vector3.zero;
+
+        // --- 2. CICLO DE PULSOS E INSTANCIACIÓN ---
+        for (int i = 0; i < numeroPulsos; i++)
+        {
+            // CRECER
+            float t = 0f;
+            while (t < 1f)
+            {
+                t += Time.deltaTime * velocidadPulso;
+                pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaMaxPulso, t);
+                yield return null;
+            }
+
+            // REDUCIR (Implosión)
+            t = 0f;
+            while (t < 1f)
+            {
+                t += Time.deltaTime * velocidadPulso;
+                pulso.transform.localScale = Vector3.one * Mathf.Lerp(escalaMaxPulso, 0f, t);
+                yield return null;
+            }
+
+            // SPAWN DE PERSONAS
+            for (int j = 0; j < personasPorPulso; j++)
+            {
+                Vector2 offset = UnityEngine.Random.insideUnitCircle * 0.5f;
+                Vector3 spawnPos = centroEfecto + (Vector3)offset;
+                GameObject persona = popManager.SpawnPersonAtPosition(spawnPos, true);
+
+                if (persona != null)
+                {
+                    Rigidbody2D rb = persona.GetComponent<Rigidbody2D>();
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector2.zero;
+                        rb.AddForce(offset.normalized * 3f, ForceMode2D.Impulse);
+                    }
+                }
+            }
+        }
+
+        // --- 3. PREPARACIÓN PARA LA EXPLOSIÓN FINAL ---
+
+     
+
+        yield return new WaitForSeconds(0.33f);
+
+        // --- 4. EXPANSIÓN FINAL Y ZOOM OUT (Sin vibración) ---
+        float tFinal = 0f;
+        float escalaObjetivo = escalaMaxPulso * 20f;
+        float zoomObjetivo = zoomOriginal * 1.5f; // Zoom out más pronunciado
+
+        while (tFinal < 1f)
+        {
+            tFinal += Time.deltaTime * (velocidadPulso)/3;
+
+            // Crecimiento
+            pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaObjetivo, tFinal);
+
+            // Zoom Out fluido
+            cam.orthographicSize = Mathf.Lerp(zoomOriginal, zoomObjetivo, tFinal);
+
+            yield return null;
+        }
+
+        pulso.transform.localScale = Vector3.one * escalaObjetivo;
+        cam.orthographicSize = zoomObjetivo;
+    }
+
+
 }
