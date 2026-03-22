@@ -21,6 +21,16 @@ public class PlanetCrontrollator : MonoBehaviour
     public float delayMuerte = 1.5f;
     public float fuerzaVibracion = 0.1f;
 
+
+    [Header("Optimizacion")]
+    [SerializeField] private float uiRefreshInterval = 0.05f;
+    [SerializeField] private float ultraFxCooldown = 0.04f;
+    [SerializeField] private int maxDestroysPerFrame = 8;
+    [SerializeField] private bool refrescarResultadosSoloSiPanelVisible = true;
+
+    private float lastUIRefreshTime = -999f;
+    private float lastUltraFxTime = -999f;
+    private readonly Queue<GameObject> pendingDestroyQueue = new Queue<GameObject>();
     [Header("Efectos de Daño")]
     public GameObject damageTextPrefab;
 
@@ -90,9 +100,9 @@ public class PlanetCrontrollator : MonoBehaviour
     void Update()
     {
         if (pendingDamageHits > 0 && Time.time >= nextDamageFlushTime)
-        {
             FlushPendingDamage();
-        }
+
+        ProcesarDestroyQueue();
 
         if (Time.time - textWindowStart >= 1f)
         {
@@ -100,21 +110,23 @@ public class PlanetCrontrollator : MonoBehaviour
             textsSpawnedThisWindow = 0;
         }
 
-        if (resultsDirty || uiDirty)
+        if (resultsDirty)
         {
-            if (resultsDirty)
-            {
-                if (EndDayResultsPanel.instance != null)
-                    EndDayResultsPanel.instance.RefreshResults();
+            bool panelVisible = EndDayResultsPanel.instance != null &&
+                                EndDayResultsPanel.instance.gameObject.activeInHierarchy;
 
+            if (!refrescarResultadosSoloSiPanelVisible || panelVisible)
+            {
+                EndDayResultsPanel.instance?.RefreshResults();
                 resultsDirty = false;
             }
+        }
 
-            if (uiDirty)
-            {
-                ActualizarUI();
-                uiDirty = false;
-            }
+        if (uiDirty && Time.time >= lastUIRefreshTime + uiRefreshInterval)
+        {
+            ActualizarUI();
+            uiDirty = false;
+            lastUIRefreshTime = Time.time;
         }
     }
 
@@ -134,6 +146,36 @@ public class PlanetCrontrollator : MonoBehaviour
         foreach (Transform child in root)
         {
             transformacionesOriginales[child] = new TransformData(child.localPosition, child.localRotation);
+        }
+    }
+
+    private void DesactivarImpactable(GameObject obj)
+    {
+        if (obj == null) return;
+
+        Collider2D col = obj.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.simulated = false;
+        }
+
+        obj.SetActive(false);
+    }
+
+    private void ProcesarDestroyQueue()
+    {
+        int cantidad = Mathf.Min(maxDestroysPerFrame, pendingDestroyQueue.Count);
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            GameObject go = pendingDestroyQueue.Dequeue();
+            if (go != null)
+                Destroy(go);
         }
     }
 
@@ -158,12 +200,17 @@ public class PlanetCrontrollator : MonoBehaviour
 
         if (scriptInfeccion.alreadyInfected)
         {
-            if (InfectionFeedback.instance != null)
+            if (InfectionFeedback.instance != null && Time.time >= lastUltraFxTime + ultraFxCooldown)
+            {
                 InfectionFeedback.instance.PlayUltraEffect(posicion, Color.white);
+                lastUltraFxTime = Time.time;
+            }
 
             RegistrarDaño(dañoCalculado, fase, TipoImpacto.Carambola);
             TakeDamage(dañoCalculado, posicion);
-            Destroy(obj);
+
+            DesactivarImpactable(obj);
+            pendingDestroyQueue.Enqueue(obj);
             return;
         }
 
