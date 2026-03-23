@@ -6,7 +6,11 @@ using System.Collections;
 
 public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private Image fondo;
+    [Header("Referencias Visuales")]
+    [Tooltip("Arrastra aquí el objeto HIJO que se va a mover y pintar")]
+    public Transform elementoVisual;
+
+    private Image imagenVisual;
     private TextMeshProUGUI texto;
     private Quaternion rotacionOriginal;
     private Coroutine corrutinaActual;
@@ -15,48 +19,56 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public Color colorFondoHover = Color.black;
     public Color colorTextoHover = Color.green;
 
-    [Header("Configuraci�n del Balanceo")]
+    [Header("Configuración del Balanceo")]
     public float anguloShake = 5f;
     public float velocidadGiro = 40f;
     public int repeticiones = 1;
 
     void Awake()
     {
-        fondo = GetComponent<Image>();
-        texto = GetComponentInChildren<TextMeshProUGUI>();
-        rotacionOriginal = transform.localRotation;
+        // Obtenemos los componentes del HIJO visual, no del padre invisible
+        if (elementoVisual != null)
+        {
+            imagenVisual = elementoVisual.GetComponent<Image>();
+            texto = elementoVisual.GetComponentInChildren<TextMeshProUGUI>();
+            rotacionOriginal = elementoVisual.localRotation;
+        }
+        else
+        {
+            Debug.LogError("¡Aviso! No has asignado el 'Elemento Visual' en el inspector del botón.");
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // 1. Matar cualquier movimiento previo para evitar conflictos
+        if (elementoVisual == null) return;
+
         ResetearEstado();
 
-        // 2. Aplicar colores de Hover
-        fondo.color = colorFondoHover;
-        texto.color = colorTextoHover;
+        if (imagenVisual != null) imagenVisual.color = colorFondoHover;
+        if (texto != null) texto.color = colorTextoHover;
 
-        // 3. Iniciar el shake
         corrutinaActual = StartCoroutine(EfectoBalanceoSuave());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ResetearEstado(); // Esto ahora detiene todo y endereza el botón
+        if (elementoVisual == null) return;
 
-        // Aplicar colores base
-        if (fondo != null) fondo.color = Color.white;
+        ResetearEstado();
+
+        if (imagenVisual != null) imagenVisual.color = Color.white;
         if (texto != null) texto.color = Color.black;
     }
 
     private void ResetearEstado()
     {
-        // Detenemos TODAS las corrutinas de este script para asegurar que las "hijas" mueran
-        StopAllCoroutines(); 
+        StopAllCoroutines();
         corrutinaActual = null;
 
-        // Forzamos la rotación al valor inicial exacto
-        transform.localRotation = rotacionOriginal;
+        // Enderezamos el elemento visual
+        if (elementoVisual != null)
+            elementoVisual.localRotation = rotacionOriginal;
     }
 
     IEnumerator EfectoBalanceoSuave()
@@ -66,32 +78,26 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
             yield return StartCoroutine(GirarA(anguloShake));
             yield return StartCoroutine(GirarA(-anguloShake));
         }
-        // Volver al centro suavemente al terminar el ciclo
         yield return StartCoroutine(GirarA(0));
     }
 
     IEnumerator GirarA(float anguloTarget)
     {
         Quaternion destino = Quaternion.Euler(0, 0, anguloTarget);
-    
-        float tiempoSeguridad = 0; 
-        // Cambiamos el bucle para que use tiempo real
-        while (Quaternion.Angle(transform.localRotation, destino) > 0.01f && tiempoSeguridad < 0.5f)
+        float tiempoSeguridad = 0;
+
+        // Ahora rotamos el 'elementoVisual'
+        while (Quaternion.Angle(elementoVisual.localRotation, destino) > 0.01f && tiempoSeguridad < 0.5f)
         {
-            transform.localRotation = Quaternion.Slerp(
-                transform.localRotation, 
-                destino, 
-                // CAMBIO: Usamos unscaledDeltaTime
+            elementoVisual.localRotation = Quaternion.Slerp(
+                elementoVisual.localRotation,
+                destino,
                 Time.unscaledDeltaTime * velocidadGiro
             );
-        
-            // CAMBIO: También el contador de seguridad debe ser independiente
+
             tiempoSeguridad += Time.unscaledDeltaTime;
-        
-            // yield return null sigue funcionando porque se ejecuta cada frame físico, 
-            // pero lo que pase dentro depende del reloj que elijas arriba.
             yield return null;
         }
-        transform.localRotation = destino;
+        elementoVisual.localRotation = destino;
     }
 }
