@@ -626,6 +626,12 @@ public class LevelManager : MonoBehaviour
             animacionExtraTime = null;
         }
 
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+        if (transitioner != null)
+        {
+            transitioner.ResetFinalLevelEffects();
+        }
+
         if (animacionTimer != null)
         {
             StopCoroutine(animacionTimer);
@@ -710,7 +716,8 @@ public class LevelManager : MonoBehaviour
         if (gameUI != null) gameUI.SetActive(true);
 
         ResetCameraZoom();
-
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+        if (transitioner != null) transitioner.ResetFinalLevelEffects();
         if (extraTimeUI != null)
         {
             extraTimeUI.SetActive(false);
@@ -973,62 +980,65 @@ public class LevelManager : MonoBehaviour
     private IEnumerator SlowMotionExitRoutine()
     {
         float currentTime = 0f;
-        float startScale = 1f;
-        float endScale = 0.05f;
-
         if (mainCamera == null) mainCamera = Camera.main;
         if (virusMovementScript != null) virusMovementScript.enabled = false;
 
-        // === NUEVA LÍNEA: Iniciamos la limpieza distribuida aquí ===
-        if (PopulationManager.instance != null)
-        {
-            PopulationManager.instance.StartGradualClear(slowMotionDuration);
-        }
-
+        // 1. Efecto de Zoom y Slow Motion (Los enemigos SIGUEN AQUÍ)
         while (currentTime < slowMotionDuration)
         {
             currentTime += Time.unscaledDeltaTime;
             float t = currentTime / slowMotionDuration;
             float smoothT = t * t * (3f - 2f * t);
 
-            Time.timeScale = Mathf.Lerp(startScale, endScale, t);
+            Time.timeScale = Mathf.Lerp(1f, 0.05f, t);
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
             if (mainCamera != null)
-            {
                 mainCamera.orthographicSize = Mathf.Lerp(defaultZoom, endSessionZoom, smoothT);
-            }
 
             yield return null;
         }
 
+        // 2. Iniciamos el cierre de pantalla (IRIS/NEGRO)
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1);
+            transitionScript.CloseBlackScreen();
+
+            // ESPERAMOS a que la animación de cierre termine (aprox 0.5s según tu código)
+            // Mientras esperamos, los enemigos siguen en pantalla pero el jugador ya no los ve.
+            yield return new WaitForSecondsRealtime(0.6f);
+        }
+
+        // 3. Ahora que estamos SEGUROS de que está en negro, ejecutamos la limpieza
         CompleteEndSessionLogic();
     }
 
     private void CompleteEndSessionLogic()
     {
-        // Iniciamos la transición a negro antes de mostrar el panel
-        if (transitionScript != null)
-        {
-            transitionScript.SetShape(1); // O la forma que prefieras
-            transitionScript.CloseBlackScreen();
-        }
+        // Aquí la pantalla ya está en negro por la espera de la corrutina anterior
         UpdateCursorState(false);
+
+        // Borrado fulminante de enemigos en la oscuridad
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.ClearAllPersonas();
+        }
+
         CleanUpEffectsAndUI();
+
+        // Mostramos el panel de resultados
         StartCoroutine(ShowResultsWithTransition());
     }
 
     private IEnumerator ShowResultsWithTransition()
     {
-        // Esperamos a que la pantalla esté en negro (ajusta el tiempo según tu shader)
-        yield return new WaitForSecondsRealtime(0.5f);
-
+        // Ya no esperamos 0.5s aquí porque ya lo hicimos antes
         Time.timeScale = 0f;
         SetMapsActive(false);
         gameUI.SetActive(false);
 
-        int totalAntes = contagionCoins - monedasGanadasSesion;
-        int totalFinal = totalAntes + monedasGanadasSesion;
+        int totalFinal = contagionCoins;
 
         if (EndDayResultsPanel.instance != null)
         {
@@ -1038,11 +1048,12 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance != null)
             Guardado.instance.AddTotalData(currentSessionInfected);
 
-        // Abrimos el iris/forma para mostrar el panel de resultados
+        // Abrimos para mostrar el panel
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
         }
+        yield return null;
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)

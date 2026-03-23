@@ -514,26 +514,31 @@ public class PopulationManager : MonoBehaviour
     }
     private GameObject ObtenerDelPool(GameObject prefab, Vector3 posicion)
     {
+        if (prefab == null) return null;
+
         if (!poolDePersonas.ContainsKey(prefab))
         {
             poolDePersonas[prefab] = new Queue<GameObject>();
         }
 
-        GameObject obj;
+        GameObject obj = null;
 
-        // Si hay objetos disponibles en el pool, sacamos uno
-        if (poolDePersonas[prefab].Count > 0)
+        // Buscamos en la cola hasta encontrar un objeto que sea VÁLIDO (no destruido)
+        while (poolDePersonas[prefab].Count > 0)
         {
             obj = poolDePersonas[prefab].Dequeue();
-            obj.transform.position = posicion;
-            obj.SetActive(true);
-        }
-        else
-        {
-            // Si no hay, solo entonces instanciamos uno nuevo
-            obj = Instantiate(prefab, posicion, Quaternion.identity);
+
+            // Si el objeto fue destruido físicamente por Destroy(), será null aquí
+            if (obj != null)
+            {
+                obj.transform.position = posicion;
+                obj.SetActive(true);
+                return obj;
+            }
         }
 
+        // Si llegamos aquí, la cola estaba vacía o llena de objetos destruidos
+        obj = Instantiate(prefab, posicion, Quaternion.identity);
         return obj;
     }
 
