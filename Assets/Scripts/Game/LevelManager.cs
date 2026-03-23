@@ -699,14 +699,13 @@ public class LevelManager : MonoBehaviour
     private void StopAllActiveRunEffects()
     {
         // 1. Paramos los generadores para que no creen NADA nuevo
-        BlackSwordSpawner sword = Object.FindFirstObjectByType<BlackSwordSpawner>();
+        BlackSwordSpawner sword = Object.FindFirstObjectByType<BlackSwordSpawner>(FindObjectsInactive.Include);
         if (sword != null) sword.StopAllCoroutines();
 
-        BlackHoleController hole = Object.FindFirstObjectByType<BlackHoleController>();
+        BlackHoleController hole = Object.FindFirstObjectByType<BlackHoleController>(FindObjectsInactive.Include);
         if (hole != null)
         {
             hole.StopAllCoroutines();
-            // Llamamos a un método interno para resetear su contador
             hole.ClearActiveEffects();
         }
 
@@ -1161,6 +1160,9 @@ public class LevelManager : MonoBehaviour
     {
         PersonaInfeccion[] gente = Object.FindObjectsByType<PersonaInfeccion>(FindObjectsSortMode.None);
         foreach (PersonaInfeccion p in gente) if (p != null) Destroy(p.gameObject);
+
+        // AÑADE ESTA LÍNEA para que jamás se olvide de los agujeros negros
+        StopAllActiveRunEffects();
     }
 
     public int GetTotalUnlockedZones()
@@ -1700,6 +1702,11 @@ public class LevelManager : MonoBehaviour
 
     private void CleanUpEffectsAndUI()
     {
+        BlackHoleController hole = Object.FindFirstObjectByType<BlackHoleController>();
+        if (hole != null)
+        {
+            hole.ClearActiveEffects();
+        }
         // 1. Limpiar Sistemas de Partículas y Tajos (Físicos)
         GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
         foreach (GameObject efecto in efectos)

@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class BlackHoleController : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class BlackHoleController : MonoBehaviour
     public float escalaExplosionMutiplicador = 3f;
     public float tiempoExplosionGrow = 0.4f;
 
+    private List<GameObject> agujerosInstanciados = new List<GameObject>();
     void Update()
     {
         // LÓGICA AUTOMÁTICA
@@ -58,20 +60,25 @@ public class BlackHoleController : MonoBehaviour
             }
         }
     }
-
+    private void OnDisable()
+    {
+        ClearActiveEffects();
+    }
     public void SpawnBlackHole()
     {
         if (circuloPrefab == null) return;
 
         agujerosActivos++;
 
-        // Calculamos posición aleatoria única para cada uno
         Vector2 desplazamientoAleatorio = Random.insideUnitCircle * radioDeAparicionAleatoria;
         Vector3 posicionSpawn = transform.position + new Vector3(desplazamientoAleatorio.x, desplazamientoAleatorio.y, 0);
 
         GameObject nuevoAgujero = Instantiate(circuloPrefab, posicionSpawn, Quaternion.identity);
-        ParticleSystem ps = nuevoAgujero.GetComponentInChildren<ParticleSystem>();
 
+        // 2. AÑADE EL AGUJERO A LA LISTA
+        agujerosInstanciados.Add(nuevoAgujero);
+
+        ParticleSystem ps = nuevoAgujero.GetComponentInChildren<ParticleSystem>();
         StartCoroutine(ExecuteBlackHoleSequence(nuevoAgujero, ps));
     }
 
@@ -109,7 +116,7 @@ public class BlackHoleController : MonoBehaviour
             objeto.transform.Rotate(0, 0, velocidadRotacion * Time.deltaTime);
 
             AtraerPersonas(objeto.transform.position);
-
+          
             yield return null;
         }
 
@@ -144,6 +151,7 @@ public class BlackHoleController : MonoBehaviour
             yield return null;
         }
 
+        agujerosInstanciados.Remove(objeto);
         Destroy(objeto);
         DecrementarContador();
     }

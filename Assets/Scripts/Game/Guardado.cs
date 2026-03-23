@@ -656,13 +656,17 @@ public class Guardado : MonoBehaviour
 
         SkillNode.ClearRuntimeState();
 
-        HardResetVariables();
-
+        // 1. PRIMERO: Reseteamos el estado de los nodos en la memoria
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
         foreach (SkillNode node in nodes)
         {
             node.ResetNodeState();
         }
+
+        // 2. SEGUNDO: Hacemos el HardReset
+        // (Al terminar, HardResetVariables llamará a SaveData,
+        // y ahora sí guardará los nodos como "no comprados" en PlayerPrefs).
+        HardResetVariables();
 
         SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
         if (lines != null)
