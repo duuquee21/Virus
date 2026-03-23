@@ -45,6 +45,7 @@ Material:
     - _ColorMask: 15
     - _Distortion: 1
     - _NoiseScale: 10
+    - _RealTime: 18.662136
     - _Scale: 10
     - _Speed: 3
     - _Speed2: 1

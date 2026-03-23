@@ -42,22 +42,21 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // 1. Detener todo inmediatamente
-        ResetearEstado();
+        ResetearEstado(); // Esto ahora detiene todo y endereza el botón
 
-        // 2. Forzar vuelta a la normalidad est�tica
-        fondo.color = Color.white;
-        texto.color = Color.black;
-        transform.localRotation = rotacionOriginal;
+        // Aplicar colores base
+        if (fondo != null) fondo.color = Color.white;
+        if (texto != null) texto.color = Color.black;
     }
 
     private void ResetearEstado()
     {
-        if (corrutinaActual != null)
-        {
-            StopCoroutine(corrutinaActual);
-            corrutinaActual = null;
-        }
+        // Detenemos TODAS las corrutinas de este script para asegurar que las "hijas" mueran
+        StopAllCoroutines(); 
+        corrutinaActual = null;
+
+        // Forzamos la rotación al valor inicial exacto
+        transform.localRotation = rotacionOriginal;
     }
 
     IEnumerator EfectoBalanceoSuave()
