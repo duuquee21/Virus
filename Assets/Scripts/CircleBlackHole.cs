@@ -193,6 +193,12 @@ public class BlackHoleController : MonoBehaviour
         }
     }
 
+    public void ClearActiveEffects()
+    {
+        StopAllCoroutines();
+        agujerosActivos = 0; // REINICIO CRÍTICO
+    }   
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

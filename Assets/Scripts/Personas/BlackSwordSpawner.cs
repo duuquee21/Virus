@@ -39,7 +39,12 @@ public class BlackSwordSpawner : MonoBehaviour
             nextSpawnTime = Time.time + Guardado.instance.hojaSpawnRate;
         }
     }
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        // Si es el del agujero negro, también resetea el contador aquí
+        // agujerosActivos = 0; 
+    }
     IEnumerator ExecuteSlashSequence()
     {
         // 1. Setup inicial
