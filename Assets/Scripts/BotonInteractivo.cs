@@ -15,7 +15,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public Color colorFondoHover = Color.black;
     public Color colorTextoHover = Color.green;
 
-    [Header("Configuración del Balanceo")]
+    [Header("Configuraciï¿½n del Balanceo")]
     public float anguloShake = 5f;
     public float velocidadGiro = 40f;
     public int repeticiones = 1;
@@ -45,7 +45,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         // 1. Detener todo inmediatamente
         ResetearEstado();
 
-        // 2. Forzar vuelta a la normalidad estética
+        // 2. Forzar vuelta a la normalidad estï¿½tica
         fondo.color = Color.white;
         texto.color = Color.black;
         transform.localRotation = rotacionOriginal;
@@ -74,17 +74,23 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     IEnumerator GirarA(float anguloTarget)
     {
         Quaternion destino = Quaternion.Euler(0, 0, anguloTarget);
-
-        // Usamos un contador de seguridad para que no se quede trabado en el while
-        float tiempoSeguridad = 0;
+    
+        float tiempoSeguridad = 0; 
+        // Cambiamos el bucle para que use tiempo real
         while (Quaternion.Angle(transform.localRotation, destino) > 0.01f && tiempoSeguridad < 0.5f)
         {
             transform.localRotation = Quaternion.Slerp(
-                transform.localRotation,
-                destino,
-                Time.deltaTime * velocidadGiro
+                transform.localRotation, 
+                destino, 
+                // CAMBIO: Usamos unscaledDeltaTime
+                Time.unscaledDeltaTime * velocidadGiro
             );
-            tiempoSeguridad += Time.deltaTime;
+        
+            // CAMBIO: TambiÃ©n el contador de seguridad debe ser independiente
+            tiempoSeguridad += Time.unscaledDeltaTime;
+        
+            // yield return null sigue funcionando porque se ejecuta cada frame fÃ­sico, 
+            // pero lo que pase dentro depende del reloj que elijas arriba.
             yield return null;
         }
         transform.localRotation = destino;
