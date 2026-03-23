@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 
@@ -10,7 +11,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
     // Cooldown para prevenir doble clic en botones
     private System.Collections.Generic.Dictionary<string, float> lastClickTimes = new System.Collections.Generic.Dictionary<string, float>();
-    private const float CLICK_COOLDOWN = 0.3f; // 300ms
+    private const float CLICK_COOLDOWN = 0.5f; // Aumentado a 500ms para mando
 
     private bool CanClick(string buttonName)
     {
@@ -102,6 +103,23 @@ public class EndDayResultsPanel : MonoBehaviour
 
     // Partículas de la partida (se pausan mientras se muestra el panel de resumen)
     private readonly System.Collections.Generic.List<ParticleSystem> pausedParticleSystems = new System.Collections.Generic.List<ParticleSystem>();
+
+    private System.Collections.IEnumerator SelectContinueAfterDelay()
+    {
+        yield return null; // Esperar un frame para que los botones estén activos
+        SetSelectedButton(btnContinue);
+    }
+
+    private void SetSelectedButton(GameObject buttonObject)
+    {
+        if (EventSystem.current == null || buttonObject == null) return;
+        var selectable = buttonObject.GetComponent<Selectable>();
+        if (selectable != null)
+        {
+            EventSystem.current.SetSelectedGameObject(buttonObject);
+            selectable.OnSelect(new BaseEventData(EventSystem.current));
+        }
+    }
 
     [Header("Configuración Jackpot")]
     public int jackpotThreshold = 100; // Define cuánto es un "Gran Jackpot"
@@ -205,6 +223,9 @@ public class EndDayResultsPanel : MonoBehaviour
         btnContinue.SetActive(false);
         btnArbol.SetActive(false);
 
+        // Set selected button for controller navigation
+        SetSelectedButton(btnClaim);
+
         totalCuentaFinal = monedasTotales; // Guardamos el total para el skip
 
         UpdateAllTexts(monedasGanadas, monedasTotales);
@@ -217,10 +238,13 @@ public class EndDayResultsPanel : MonoBehaviour
         if (btnClaim != null) btnClaim.SetActive(false); // Desaparece al pulsar
         if (btnContinue != null) btnContinue.SetActive(true);
         if (btnArbol != null) btnArbol.SetActive(true);
+
+        // Seleccionar automáticamente Continue después de un pequeño delay para evitar doble activación
+        StartCoroutine(SelectContinueAfterDelay());
+
         StartCoinTransfer(() =>
         {
             // Al terminar la animación, se muestran los otros dos
-           
         });
     }
     // ======================================================

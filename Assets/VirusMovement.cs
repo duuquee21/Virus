@@ -70,8 +70,8 @@ public class VirusMovement : MonoBehaviour
         }
         if (arrowIndicator != null)
         {
-            // La flecha solo debe estar activa si NO usamos teclado Y el juego está activo
-            bool deberiaMostrarFlecha = !Guardado.instance.UseKeyboard;
+            // La flecha solo debe estar activa si usamos ratón Y el juego está activo
+            bool deberiaMostrarFlecha = Guardado.instance.inputType == Guardado.InputType.Mouse;
 
             if (arrowIndicator.activeSelf != deberiaMostrarFlecha)
             {
@@ -82,14 +82,14 @@ public class VirusMovement : MonoBehaviour
         // 2. Lógica de selección de Input
         if (LevelManager.instance == null || LevelManager.instance.isGameActive || LevelManager.instance.isTransitioning)
         {
-            if (Guardado.instance.UseKeyboard)
+            if (Guardado.instance.inputType == Guardado.InputType.Keyboard || Guardado.instance.inputType == Guardado.InputType.Controller)
             {
-                // MODO TECLADO: Ignoramos el ratón
+                // MODO TECLADO O MANDO: Usamos ejes
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");
                 movementInput = new Vector2(moveX, moveY).normalized;
             }
-            else
+            else if (Guardado.instance.inputType == Guardado.InputType.Mouse)
             {
                 // MODO RATÓN
                 UpdateArrowDirection();
@@ -143,9 +143,8 @@ public class VirusMovement : MonoBehaviour
     {
         if (arrowIndicator != null)
         {
-            // Si UseKeyboard es true, la flecha debe estar DESACTIVADA
-            // Si UseKeyboard es false (ratón), la flecha debe estar ACTIVADA
-            arrowIndicator.SetActive(!Guardado.instance.UseKeyboard);
+            // La flecha debe estar ACTIVADA solo para ratón
+            arrowIndicator.SetActive(Guardado.instance.inputType == Guardado.InputType.Mouse);
         }
     }
 

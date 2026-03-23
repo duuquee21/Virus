@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Controla el panel de ajustes (audio, FPS, pantalla completa e idioma).
@@ -32,6 +33,28 @@ public class SettingsMenu : MonoBehaviour
     [Header("Idioma")]
     public TMP_Dropdown languageDropdown;
 
+    // Control de navegación con mando
+    private int currentSelectedIndex = 0;
+    private UIElement[] uiElements;
+    private bool hasSelectedElement = false;
+    private float lastInputTime = 0f;
+    private const float inputCooldown = 0.25f;
+
+    // Definimos los elementos UI en orden
+    private enum UIElementType { Slider, Toggle, Dropdown }
+    private struct UIElement
+    {
+        public UIElementType type;
+        public Slider slider;
+        public Toggle toggle;
+        public TMP_Dropdown dropdown;
+        public string name;
+
+        public UIElement(Slider s, string n) { type = UIElementType.Slider; slider = s; toggle = null; dropdown = null; name = n; }
+        public UIElement(Toggle t, string n) { type = UIElementType.Toggle; slider = null; toggle = t; dropdown = null; name = n; }
+        public UIElement(TMP_Dropdown d, string n) { type = UIElementType.Dropdown; slider = null; toggle = null; dropdown = d; name = n; }
+    }
+
     // Valores posibles para el dropdown de FPS
     private const string FpsPreferenceKey = "FPSLimit";
     private readonly int[] fpsOptions = new int[] { 30, 60, 120, 0 };
@@ -42,8 +65,23 @@ public class SettingsMenu : MonoBehaviour
         yield return LocalizationSettings.InitializationOperation;
         SetupUI();
 
+        // Inicializar elementos UI para navegación con mando
+        InitializeUIElements();
+
         // Enforce FPS limit and show counter (si está asignado).
         StartCoroutine(UpdateFpsCounter());
+    }
+
+    private void InitializeUIElements()
+    {
+        var elements = new List<UIElement>();
+        if (masterVolumeSlider != null) elements.Add(new UIElement(masterVolumeSlider, "Master Volume"));
+        if (musicVolumeSlider != null) elements.Add(new UIElement(musicVolumeSlider, "Music Volume"));
+        if (sfxVolumeSlider != null) elements.Add(new UIElement(sfxVolumeSlider, "SFX Volume"));
+        if (fpsDropdown != null) elements.Add(new UIElement(fpsDropdown, "FPS"));
+        if (fullscreenToggle != null) elements.Add(new UIElement(fullscreenToggle, "Fullscreen"));
+        if (languageDropdown != null) elements.Add(new UIElement(languageDropdown, "Language"));
+        uiElements = elements.ToArray();
     }
 
     private void SetupUI()
@@ -68,6 +106,15 @@ public class SettingsMenu : MonoBehaviour
         ApplyMasterVolume(master);
         ApplyMusicVolume(music);
         ApplySfxVolume(sfx);
+
+        // Asegura que el primer elemento quede seleccionado después del setup.
+        yield return null; // espera un frame para que la UI esté lista
+        if (uiElements != null && uiElements.Length > 0)
+        {
+            currentSelectedIndex = 0;
+            hasSelectedElement = true;
+            SelectCurrentElement();
+        }
 
         // FPS
         if (fpsDropdown != null)
@@ -109,6 +156,8 @@ public class SettingsMenu : MonoBehaviour
     public void Show()
     {
         if (panel != null) panel.SetActive(true);
+
+        hasSelectedElement = false; // reset para garantizar inicialización en coroutine
         SetupUI();
     }
 
@@ -118,6 +167,11 @@ public class SettingsMenu : MonoBehaviour
     public void Hide()
     {
         if (panel != null) panel.SetActive(false);
+        // Deseleccionar
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     // ======== EVENTOS UI ========
@@ -233,8 +287,169 @@ public class SettingsMenu : MonoBehaviour
     {
         // Aseguramos que ningún otro script cambie el límite de FPS en Update.
         EnforceTargetFrameRate();
+
+        // Forzar primer elemento seleccionado si no hay foco y el panel está abierto.
+        if (panel != null && panel.activeSelf && !hasSelectedElement && uiElements != null && uiElements.Length > 0)
+        {
+            currentSelectedIndex = 0;
+            hasSelectedElement = true;
+            SelectCurrentElement();
+        }
+
+        // Manejar entrada de mando para navegación en menú
+        if (panel != null && panel.activeSelf && uiElements != null && uiElements.Length > 0)
+        {
+            HandleControllerInput();
+        }
     }
 
+    private void HandleControllerInput()
+    {
+        if (panel == null || !panel.activeSelf || uiElements == null || uiElements.Length == 0) return;
+
+        // Si no hay selección activa, forzamos seleccionar el elemento actual.
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == null)
+        {
+            if (!hasSelectedElement)
+            {
+                hasSelectedElement = true;
+                currentSelectedIndex = Mathf.Clamp(currentSelectedIndex, 0, uiElements.Length - 1);
+                SelectCurrentElement();
+                return;
+            }
+        }
+
+        if (Time.time - lastInputTime < inputCooldown) return;
+
+        // Navegación vertical con stick izquierdo (estándar de industria)
+        float vertical = Input.GetAxis("Vertical"); // Stick izquierdo vertical
+        if (Mathf.Abs(vertical) > 0.5f)
+        {
+            if (vertical > 0) // Arriba
+            {
+                currentSelectedIndex = (currentSelectedIndex - 1 + uiElements.Length) % uiElements.Length;
+                hasSelectedElement = true;
+                SelectCurrentElement();
+                lastInputTime = Time.time;
+                return;
+            }
+            else // Abajo
+            {
+                currentSelectedIndex = (currentSelectedIndex + 1) % uiElements.Length;
+                hasSelectedElement = true;
+                SelectCurrentElement();
+                lastInputTime = Time.time;
+                return;
+            }
+        }
+
+        // Ajuste con stick izquierdo horizontal
+        float horizontal = Input.GetAxis("Horizontal");
+        if (Mathf.Abs(horizontal) > 0.1f)
+        {
+            AdjustCurrentElement(horizontal);
+            lastInputTime = Time.time;
+        }
+
+        // Botón A (joystick button 0) para activar/select (estándar Xbox)
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            ActivateCurrentElement();
+            lastInputTime = Time.time;
+        }
+    }
+
+    private void SelectCurrentElement()
+    {
+        if (uiElements == null || uiElements.Length == 0 || EventSystem.current == null) return;
+
+        var element = uiElements[currentSelectedIndex];
+        GameObject obj = null;
+        if (element.slider != null) obj = element.slider.gameObject;
+        else if (element.toggle != null) obj = element.toggle.gameObject;
+        else if (element.dropdown != null) obj = element.dropdown.gameObject;
+
+        if (obj != null)
+        {
+            EventSystem.current.SetSelectedGameObject(obj);
+
+            // Forzar resaltado de Unity
+            var selectable = obj.GetComponent<Selectable>();
+            if (selectable != null)
+            {
+                selectable.OnSelect(new BaseEventData(EventSystem.current));
+            }
+        }
+    }
+
+    private void AdjustCurrentElement(float direction)
+    {
+        var element = uiElements[currentSelectedIndex];
+        switch (element.type)
+        {
+            case UIElementType.Slider:
+                if (element.slider != null)
+                {
+                    element.slider.value += direction * 0.01f; // Ajuste fino
+                    element.slider.value = Mathf.Clamp01(element.slider.value);
+                    // Trigger the change event
+                    if (element.slider == masterVolumeSlider) OnMasterVolumeChanged(element.slider.value);
+                    else if (element.slider == musicVolumeSlider) OnMusicVolumeChanged(element.slider.value);
+                    else if (element.slider == sfxVolumeSlider) OnSfxVolumeChanged(element.slider.value);
+                }
+                break;
+            case UIElementType.Toggle:
+                if (direction > 0.5f) // Derecha para toggle
+                {
+                    if (element.toggle != null)
+                    {
+                        element.toggle.isOn = !element.toggle.isOn;
+                        if (element.toggle == fullscreenToggle) OnFullscreenToggleChanged(element.toggle.isOn);
+                    }
+                }
+                break;
+            case UIElementType.Dropdown:
+                if (direction > 0.5f) // Derecha para siguiente opción
+                {
+                    if (element.dropdown != null)
+                    {
+                        int newValue = (element.dropdown.value + 1) % element.dropdown.options.Count;
+                        element.dropdown.value = newValue;
+                        element.dropdown.RefreshShownValue();
+                        if (element.dropdown == fpsDropdown) OnFpsDropdownChanged(newValue);
+                        else if (element.dropdown == languageDropdown) OnLanguageDropdownChanged(newValue);
+                    }
+                }
+                else if (direction < -0.5f) // Izquierda para anterior
+                {
+                    if (element.dropdown != null)
+                    {
+                        int newValue = (element.dropdown.value - 1 + element.dropdown.options.Count) % element.dropdown.options.Count;
+                        element.dropdown.value = newValue;
+                        element.dropdown.RefreshShownValue();
+                        if (element.dropdown == fpsDropdown) OnFpsDropdownChanged(newValue);
+                        else if (element.dropdown == languageDropdown) OnLanguageDropdownChanged(newValue);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void ActivateCurrentElement()
+    {
+        var element = uiElements[currentSelectedIndex];
+        if (element.type == UIElementType.Toggle && element.toggle != null)
+        {
+            element.toggle.isOn = !element.toggle.isOn;
+            if (element.toggle == fullscreenToggle) OnFullscreenToggleChanged(element.toggle.isOn);
+        }
+        else if (element.type == UIElementType.Dropdown && element.dropdown != null)
+        {
+            // Abrir el dropdown
+            element.dropdown.Show();
+        }
+        // Para sliders, no hay activación especial
+    }
     private void ApplyFullscreen(bool isFull)
     {
         Screen.fullScreen = isFull;

@@ -1665,11 +1665,11 @@ public class LevelManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            // Si usa teclado, el cursor NO se ve. Si usa ratón, SÍ se ve.
-            bool usaTeclado = Guardado.instance != null && Guardado.instance.UseKeyboard;
+            // Si usa teclado o mando, el cursor NO se ve. Si usa ratón, SÍ se ve.
+            bool usaTecladoOMando = Guardado.instance != null && (Guardado.instance.inputType == Guardado.InputType.Keyboard || Guardado.instance.inputType == Guardado.InputType.Controller);
 
-            Cursor.visible = !usaTeclado;
-            Cursor.lockState = usaTeclado ? CursorLockMode.Locked : CursorLockMode.Confined;
+            Cursor.visible = !usaTecladoOMando;
+            Cursor.lockState = usaTecladoOMando ? CursorLockMode.Locked : CursorLockMode.Confined;
         }
         else
         {
