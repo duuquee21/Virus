@@ -846,6 +846,35 @@ public class PersonaInfeccion : MonoBehaviour
                 PopulationManager.instance.SpawnPersonAtBasePhase();
         }
     }
+    public void RegistrarDañoZona()
+    {
+        float daño = ObtenerDañoTotal();
+
+        if (faseActual < 0 || faseActual >= dañoZonaPorFase.Length)
+            return;
+
+        dañoZonaPorFase[faseActual] += daño;
+        dañoTotalZona += daño;
+        golpesAlPlanetaPorFase[faseActual]++;
+    }
+
+    public void RegistrarDañoChoque(float daño)
+    {
+        if (faseActual < 0 || faseActual >= dañoChoquePorFase.Length)
+            return;
+
+        dañoChoquePorFase[faseActual] += daño;
+        dañoTotalChoque += daño;
+    }
+
+    public void RegistrarDañoCarambola(float daño)
+    {
+        if (faseActual < 0 || faseActual >= dañoCarambolaPorFase.Length)
+            return;
+
+        dañoCarambolaPorFase[faseActual] += daño;
+        dañoTotalCarambola += daño;
+    }
 
     public void ReinicioTotalDesdePool(int nuevaFase, Color colorMapa)
     {
