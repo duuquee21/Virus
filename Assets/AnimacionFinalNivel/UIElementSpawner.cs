@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIElementSpawner : MonoBehaviour
@@ -19,13 +20,13 @@ public class UIElementSpawner : MonoBehaviour
 
     [Header("Spawn Distance")]
     public float spawnOffset = 200f;
-    private Vector2 lastSpawnPosition;
-    private bool hasLastSpawn = false;
 
     [Header("Spawn Separation")]
     public float minSpawnDistance = 120f;
-    public int maxSpawnAttempts = 10;
+    public int maxSpawnAttempts = 20;
+
     private RectTransform parentRect;
+    private readonly List<RectTransform> activeElements = new List<RectTransform>();
 
     void Start()
     {
@@ -35,18 +36,21 @@ public class UIElementSpawner : MonoBehaviour
 
     void SpawnElement()
     {
-        if (imagePrefab == null || targetPoint == null || parentRect == null) return;
+        if (imagePrefab == null || targetPoint == null || parentRect == null)
+            return;
+
+        CleanupDestroyedElements();
+
+        if (!TryGetSeparatedSpawnPosition(out Vector2 spawnPos))
+            return;
 
         RectTransform instance = Instantiate(imagePrefab, transform);
 
         float randomScale = Random.Range(scaleRange.x, scaleRange.y);
         instance.localScale = Vector3.one * randomScale;
-
-        Vector2 spawnPos = GetSeparatedSpawnPosition();
         instance.anchoredPosition = spawnPos;
 
-        lastSpawnPosition = spawnPos;
-        hasLastSpawn = true;
+        activeElements.Add(instance);
 
         UIFlyToTarget mover = instance.gameObject.AddComponent<UIFlyToTarget>();
         mover.target = targetPoint;
@@ -54,40 +58,62 @@ public class UIElementSpawner : MonoBehaviour
         mover.rotationSpeed = Random.Range(minTorque, maxTorque);
     }
 
-    Vector2 GetSeparatedSpawnPosition()
+    bool TryGetSeparatedSpawnPosition(out Vector2 validPosition)
     {
-        Vector2 candidate = GetLSpawnPosition();
-
-        if (!hasLastSpawn) return candidate;
-
         for (int i = 0; i < maxSpawnAttempts; i++)
         {
-            candidate = GetLSpawnPosition();
+            Vector2 candidate = GetLSpawnPosition();
 
-            if (Vector2.Distance(candidate, lastSpawnPosition) >= minSpawnDistance)
-                return candidate;
+            if (IsFarEnoughFromAll(candidate))
+            {
+                validPosition = candidate;
+                return true;
+            }
         }
 
-        return candidate;
+        validPosition = Vector2.zero;
+        return false;
+    }
+
+    bool IsFarEnoughFromAll(Vector2 candidate)
+    {
+        for (int i = 0; i < activeElements.Count; i++)
+        {
+            RectTransform element = activeElements[i];
+
+            if (element == null)
+                continue;
+
+            if (Vector2.Distance(candidate, element.anchoredPosition) < minSpawnDistance)
+                return false;
+        }
+
+        return true;
+    }
+
+    void CleanupDestroyedElements()
+    {
+        for (int i = activeElements.Count - 1; i >= 0; i--)
+        {
+            if (activeElements[i] == null)
+                activeElements.RemoveAt(i);
+        }
     }
 
     Vector2 GetLSpawnPosition()
     {
         Vector2 size = parentRect.rect.size;
-
         bool spawnLeftSide = Random.value > 0.5f;
 
         if (spawnLeftSide)
         {
-            // Línea vertical izquierda
-            float y = Random.Range(-size.y / 2, size.y / 2);
-            return new Vector2(-size.x / 2 - spawnOffset, y);
+            float y = Random.Range(-size.y / 2f, size.y / 2f);
+            return new Vector2(-size.x / 2f - spawnOffset, y);
         }
         else
         {
-            // Línea horizontal superior
-            float x = Random.Range(-size.x / 2, size.x / 2);
-            return new Vector2(x, size.y / 2 + spawnOffset);
+            float x = Random.Range(-size.x / 2f, size.x / 2f);
+            return new Vector2(x, size.y / 2f + spawnOffset);
         }
     }
 }
