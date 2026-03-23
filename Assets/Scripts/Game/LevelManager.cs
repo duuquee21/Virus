@@ -422,7 +422,7 @@ public class LevelManager : MonoBehaviour
 
         // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
         // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
-        if (currentTimer <= 0)
+        if (currentTimer <= 0 && !isTransitioning)
         {
             // Verificamos si existe la mejora en el guardado
             // (Asegúrate de que 'tieneTiempoExtra' sea el nombre real del bool en tu script Guardado)
@@ -1016,7 +1016,7 @@ public class LevelManager : MonoBehaviour
     void EndSessionDay()
     {
         // Evitamos que se llame varias veces si el timer llega a 0 y hay lag
-        if (!isGameActive) return;
+        if (!isGameActive || isTransitioning) return;
 
         isGameActive = false;
         StartCoroutine(SlowMotionExitRoutine());
