@@ -863,6 +863,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartSession()
     {
+
         timerStarted = false;
         UpdateCursorState(true);
         checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ

@@ -43,6 +43,10 @@ public class InfectionShaderController : MonoBehaviour
 
     public void AcelerarShaderDeGolpe()
     {
+        // 1. PREVENCIÓN: Si el juego no está activo (estamos en el slow-motion del final), ignoramos el efecto.
+        if (LevelManager.instance != null && !LevelManager.instance.isGameActive)
+            return;
+
         // Si ya está frenando, cancelamos ese frenado para meter un nuevo acelerón
         if (rutinaRecuperacion != null)
             StopCoroutine(rutinaRecuperacion);
@@ -59,7 +63,11 @@ public class InfectionShaderController : MonoBehaviour
         // Vamos reduciendo la velocidad poco a poco hasta la normal
         while (tiempoPasado < tiempoRecuperacion)
         {
-            tiempoPasado += Time.deltaTime;
+            // 2. CORRECCIÓN: Usamos Time.unscaledDeltaTime. 
+            // Esto asegura que la corrutina dure exactamente 1.5 segundos REALES, 
+            // ignorando si el juego está en cámara lenta.
+            tiempoPasado += Time.unscaledDeltaTime;
+
             velocidadActual = Mathf.Lerp(velocidadPico, velocidadNormal, tiempoPasado / tiempoRecuperacion);
             yield return null;
         }
