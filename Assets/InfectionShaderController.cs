@@ -68,4 +68,15 @@ public class InfectionShaderController : MonoBehaviour
         velocidadActual = velocidadNormal;
         rutinaRecuperacion = null;
     }
+
+    public void ForzarReinicio()
+    {
+        if (rutinaRecuperacion != null)
+        {
+            StopCoroutine(rutinaRecuperacion);
+            rutinaRecuperacion = null;
+        }
+
+        velocidadActual = velocidadNormal;
+    }
 }

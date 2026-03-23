@@ -617,6 +617,11 @@ public class LevelManager : MonoBehaviour
         timerStarted = false;
         checkParaExtraTimeRealizado = false;
 
+        if (InfectionShaderController.instance != null)
+        {
+            InfectionShaderController.instance.ForzarReinicio();
+        }
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
