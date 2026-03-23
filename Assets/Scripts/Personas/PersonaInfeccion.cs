@@ -511,7 +511,8 @@ public class PersonaInfeccion : MonoBehaviour
                 InfectionFeedback.instance.PlayPhaseChangeEffect(transform.position, originalColor);
                 lastPhaseEffectTime = Time.time;
             }
-
+            if (InfectionShaderController.instance != null)
+                InfectionShaderController.instance.AcelerarShaderDeGolpe();
             if (transformInfector != null && movementScript != null)
             {
                 Vector2 dirEmpuje = (transform.position - transformInfector.position).normalized;
