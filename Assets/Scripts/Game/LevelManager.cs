@@ -929,6 +929,13 @@ public class LevelManager : MonoBehaviour
         ActivateMap(0);
         SetMapsActive(true);
 
+        PlanetCrontrollator planeta = GetActivePlanet();
+        if (planeta != null)
+        {
+            planeta.ResetHealthToInitial();
+            planeta.ClearPendingDamage();
+        }
+
         isGameActive = true;
         currentSessionInfected = 0;
         monedasGanadasSesion = 0;
