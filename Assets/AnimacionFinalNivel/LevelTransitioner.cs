@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +58,9 @@ public class LevelTransitioner : MonoBehaviour
 
     [Header("Spawn Personas Final")]
     public int personasPorPulso = 10;
+
+    private Dictionary<Transform, Vector3> escalasIniciales = new Dictionary<Transform, Vector3>();
+    private GameObject pulsoInstanciado;
     void Awake()
     {
         mainCam = Camera.main;
@@ -72,7 +76,17 @@ public class LevelTransitioner : MonoBehaviour
             materialFondo = img.material;
             materialFondo.SetFloat(vortexProp, 0f);
         }
-
+        if (lm != null && lm.mapList != null)
+        {
+            foreach (GameObject map in lm.mapList)
+            {
+                if (map != null)
+                {
+                    // Guardamos la escala que pusiste en el Inspector
+                    escalasIniciales[map.transform] = map.transform.localScale;
+                }
+            }
+        }
         lm = LevelManager.instance;
         popManager = FindFirstObjectByType<PopulationManager>();
 
@@ -100,6 +114,18 @@ public class LevelTransitioner : MonoBehaviour
         cachedPlaneta = FindFirstObjectByType<PlanetCrontrollator>(FindObjectsInactive.Include);
     }
 
+    private void CapturarEscalas()
+    {
+        if (escalasIniciales.Count > 0) return; // Si ya las tenemos, no hacemos nada
+        if (lm == null) lm = LevelManager.instance;
+        if (lm?.mapList == null) return;
+
+        foreach (GameObject map in lm.mapList)
+        {
+            if (map != null && !escalasIniciales.ContainsKey(map.transform))
+                escalasIniciales[map.transform] = map.transform.localScale;
+        }
+    }
     private void ResetPlanetRotation()
     {
         if (cachedPlaneta != null)
@@ -423,5 +449,29 @@ public class LevelTransitioner : MonoBehaviour
         cam.orthographicSize = zoomObjetivo;
     }
 
+    // Llama a esto para limpiar cualquier rastro de la animación final
+    public void ResetFinalLevelEffects()
+    {
+        StopAllCoroutines(); // Mata la animación de colapso al instante
+        CapturarEscalas();   // Asegura que sabemos las escalas originales
 
+        if (lm?.mapList != null)
+        {
+            foreach (GameObject map in lm.mapList)
+            {
+                if (map != null && escalasIniciales.TryGetValue(map.transform, out Vector3 original))
+                {
+                    map.transform.localScale = original; // Escala exacta del Inspector
+                    map.transform.rotation = Quaternion.identity;
+                }
+            }
+        }
+
+        if (pulsoInstanciado != null) Destroy(pulsoInstanciado); // Borra el círculo de explosión
+        if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
+        if (mainCam != null) mainCam.orthographicSize = zoomOriginal;
+
+        Time.timeScale = 1f;
+        velocidadActual = 0f;
+    }
 }

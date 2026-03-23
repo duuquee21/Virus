@@ -617,13 +617,26 @@ public class LevelManager : MonoBehaviour
         timerStarted = false;
         checkParaExtraTimeRealizado = false;
 
+        if (InfectionShaderController.instance != null)
+        {
+            InfectionShaderController.instance.ForzarReinicio();
+        }
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
+
+        StopAllActiveRunEffects();
         if (animacionExtraTime != null)
         {
             StopCoroutine(animacionExtraTime);
             animacionExtraTime = null;
+        }
+
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+        if (transitioner != null)
+        {
+            transitioner.ResetFinalLevelEffects();
         }
 
         if (animacionTimer != null)
@@ -683,7 +696,42 @@ public class LevelManager : MonoBehaviour
         if (virusPlayer != null) virusPlayer.SetActive(false);
         if (virusMovementScript != null) virusMovementScript.enabled = false;
     }
+    private void StopAllActiveRunEffects()
+    {
+        // 1. Paramos los generadores para que no creen NADA nuevo
+        BlackSwordSpawner sword = Object.FindFirstObjectByType<BlackSwordSpawner>();
+        if (sword != null) sword.StopAllCoroutines();
 
+        BlackHoleController hole = Object.FindFirstObjectByType<BlackHoleController>();
+        if (hole != null)
+        {
+            hole.StopAllCoroutines();
+            // Llamamos a un método interno para resetear su contador
+            hole.ClearActiveEffects();
+        }
+
+        // 2. BORRADO FÍSICO (Lo más importante para que no se quede pillado el sprite)
+        // Buscamos todos los objetos que tengan tus scripts de efecto y los destruimos
+
+        // Para los Tajos de la Espada (buscamos por el nombre del objeto o un Tag)
+        // Si tus prefabs tienen un tag llamado "Efectos", esto es infalible:
+        GameObject[] efectosEnEscena = GameObject.FindGameObjectsWithTag("Efectos");
+        foreach (GameObject e in efectosEnEscena)
+        {
+            Destroy(e);
+        }
+
+        // Por si no usas Tags, podemos buscar por el nombre que Unity le da al clon
+        // (Ajusta los nombres según cómo se llamen tus prefabs)
+        GameObject[] todos = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (GameObject g in todos)
+        {
+            if (g.name.Contains("Slash") || g.name.Contains("BlackHole") || g.name.Contains("AgujeroNegro"))
+            {
+                Destroy(g);
+            }
+        }
+    }
     private PlanetCrontrollator GetActivePlanet()
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
@@ -710,7 +758,8 @@ public class LevelManager : MonoBehaviour
         if (gameUI != null) gameUI.SetActive(true);
 
         ResetCameraZoom();
-
+        LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
+        if (transitioner != null) transitioner.ResetFinalLevelEffects();
         if (extraTimeUI != null)
         {
             extraTimeUI.SetActive(false);
@@ -973,62 +1022,65 @@ public class LevelManager : MonoBehaviour
     private IEnumerator SlowMotionExitRoutine()
     {
         float currentTime = 0f;
-        float startScale = 1f;
-        float endScale = 0.05f;
-
         if (mainCamera == null) mainCamera = Camera.main;
         if (virusMovementScript != null) virusMovementScript.enabled = false;
 
-        // === NUEVA LÍNEA: Iniciamos la limpieza distribuida aquí ===
-        if (PopulationManager.instance != null)
-        {
-            PopulationManager.instance.StartGradualClear(slowMotionDuration);
-        }
-
+        // 1. Efecto de Zoom y Slow Motion (Los enemigos SIGUEN AQUÍ)
         while (currentTime < slowMotionDuration)
         {
             currentTime += Time.unscaledDeltaTime;
             float t = currentTime / slowMotionDuration;
             float smoothT = t * t * (3f - 2f * t);
 
-            Time.timeScale = Mathf.Lerp(startScale, endScale, t);
+            Time.timeScale = Mathf.Lerp(1f, 0.05f, t);
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
             if (mainCamera != null)
-            {
                 mainCamera.orthographicSize = Mathf.Lerp(defaultZoom, endSessionZoom, smoothT);
-            }
 
             yield return null;
         }
 
+        // 2. Iniciamos el cierre de pantalla (IRIS/NEGRO)
+        if (transitionScript != null)
+        {
+            transitionScript.SetShape(1);
+            transitionScript.CloseBlackScreen();
+
+            // ESPERAMOS a que la animación de cierre termine (aprox 0.5s según tu código)
+            // Mientras esperamos, los enemigos siguen en pantalla pero el jugador ya no los ve.
+            yield return new WaitForSecondsRealtime(0.6f);
+        }
+
+        // 3. Ahora que estamos SEGUROS de que está en negro, ejecutamos la limpieza
         CompleteEndSessionLogic();
     }
 
     private void CompleteEndSessionLogic()
     {
-        // Iniciamos la transición a negro antes de mostrar el panel
-        if (transitionScript != null)
-        {
-            transitionScript.SetShape(1); // O la forma que prefieras
-            transitionScript.CloseBlackScreen();
-        }
+        // Aquí la pantalla ya está en negro por la espera de la corrutina anterior
         UpdateCursorState(false);
+
+        // Borrado fulminante de enemigos en la oscuridad
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.ClearAllPersonas();
+        }
+
         CleanUpEffectsAndUI();
+
+        // Mostramos el panel de resultados
         StartCoroutine(ShowResultsWithTransition());
     }
 
     private IEnumerator ShowResultsWithTransition()
     {
-        // Esperamos a que la pantalla esté en negro (ajusta el tiempo según tu shader)
-        yield return new WaitForSecondsRealtime(0.5f);
-
+        // Ya no esperamos 0.5s aquí porque ya lo hicimos antes
         Time.timeScale = 0f;
         SetMapsActive(false);
         gameUI.SetActive(false);
 
-        int totalAntes = contagionCoins - monedasGanadasSesion;
-        int totalFinal = totalAntes + monedasGanadasSesion;
+        int totalFinal = contagionCoins;
 
         if (EndDayResultsPanel.instance != null)
         {
@@ -1038,11 +1090,12 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance != null)
             Guardado.instance.AddTotalData(currentSessionInfected);
 
-        // Abrimos el iris/forma para mostrar el panel de resultados
+        // Abrimos para mostrar el panel
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
         }
+        yield return null;
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -1639,27 +1692,29 @@ public class LevelManager : MonoBehaviour
 
     private void CleanUpEffectsAndUI()
     {
-        // 1. Limpiar Sistemas de Partículas con el tag "efectos"
+        // 1. Limpiar Sistemas de Partículas y Tajos (Físicos)
         GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
         foreach (GameObject efecto in efectos)
         {
             if (efecto != null) Destroy(efecto);
         }
 
-        // 2. Limpiar Textos Flotantes (FloatingText)
-        // Buscamos todos los objetos que tengan el script FloatingText
+        // 2. Limpiar Textos Flotantes (Sistema de Pool)
+        // Buscamos todos los objetos que tengan el script FloatingText, 
+        // incluyendo los que estén activos en ese momento.
         FloatingText[] textosEnPantalla = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
+
         foreach (FloatingText texto in textosEnPantalla)
         {
-            if (texto != null)
+            if (texto != null && texto.gameObject.activeSelf)
             {
-                // Como tu script usa un sistema de Pool (SetActive(false)), 
-                // los desactivamos en lugar de destruirlos para no romper el Pool.
+                // IMPORTANTE: No usamos Destroy porque romperíamos el Pool.
+                // Simplemente lo devolvemos al estado "apagado".
                 texto.gameObject.SetActive(false);
             }
         }
 
-        Debug.Log($"<color=cyan>[CLEANUP]</color> Partículas y Textos limpiados para la siguiente run.");
+        Debug.Log("<color=cyan>[CLEANUP]</color> Textos y efectos limpiados correctamente.");
     }
     public void UpdateCursorState(bool isPlaying)
     {

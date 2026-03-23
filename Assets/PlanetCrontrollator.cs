@@ -79,8 +79,9 @@ public class PlanetCrontrollator : MonoBehaviour
         Carambola
     }
 
-    void Start()
+    void Awake()
     {
+        GuardarEstadoJerarquia();
         MapData map = GetOwnMapData();
         if (map != null)
         {
@@ -489,5 +490,31 @@ public class PlanetCrontrollator : MonoBehaviour
         {
             MapSequenceManager.instance.NextMap();
         }
+    }
+
+    private void OnEnable()
+    {
+        // Verificamos que ya se hayan guardado las posiciones (para evitar errores en el primer frame)
+        if (transformacionesOriginales != null)
+        {
+            RestaurarPosicionOriginal();
+        }
+    }
+
+    private void RestaurarPosicionOriginal()
+    {
+        if (transformacionesOriginales == null) return;
+
+        foreach (var kvp in transformacionesOriginales)
+        {
+            if (kvp.Key != null)
+            {
+                kvp.Key.localPosition = kvp.Value.localPosition;
+                kvp.Key.localRotation = kvp.Value.localRotation;
+            }
+        }
+
+        // Si quieres que la UI también se resetee visualmente al activarse
+        ActualizarUI();
     }
 }
