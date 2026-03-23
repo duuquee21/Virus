@@ -620,6 +620,8 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
+
+        StopAllActiveRunEffects();
         if (animacionExtraTime != null)
         {
             StopCoroutine(animacionExtraTime);
@@ -689,7 +691,42 @@ public class LevelManager : MonoBehaviour
         if (virusPlayer != null) virusPlayer.SetActive(false);
         if (virusMovementScript != null) virusMovementScript.enabled = false;
     }
+    private void StopAllActiveRunEffects()
+    {
+        // 1. Paramos los generadores para que no creen NADA nuevo
+        BlackSwordSpawner sword = Object.FindFirstObjectByType<BlackSwordSpawner>();
+        if (sword != null) sword.StopAllCoroutines();
 
+        BlackHoleController hole = Object.FindFirstObjectByType<BlackHoleController>();
+        if (hole != null)
+        {
+            hole.StopAllCoroutines();
+            // Llamamos a un método interno para resetear su contador
+            hole.ClearActiveEffects();
+        }
+
+        // 2. BORRADO FÍSICO (Lo más importante para que no se quede pillado el sprite)
+        // Buscamos todos los objetos que tengan tus scripts de efecto y los destruimos
+
+        // Para los Tajos de la Espada (buscamos por el nombre del objeto o un Tag)
+        // Si tus prefabs tienen un tag llamado "Efectos", esto es infalible:
+        GameObject[] efectosEnEscena = GameObject.FindGameObjectsWithTag("Efectos");
+        foreach (GameObject e in efectosEnEscena)
+        {
+            Destroy(e);
+        }
+
+        // Por si no usas Tags, podemos buscar por el nombre que Unity le da al clon
+        // (Ajusta los nombres según cómo se llamen tus prefabs)
+        GameObject[] todos = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (GameObject g in todos)
+        {
+            if (g.name.Contains("Slash") || g.name.Contains("BlackHole") || g.name.Contains("AgujeroNegro"))
+            {
+                Destroy(g);
+            }
+        }
+    }
     private PlanetCrontrollator GetActivePlanet()
     {
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
@@ -1650,27 +1687,29 @@ public class LevelManager : MonoBehaviour
 
     private void CleanUpEffectsAndUI()
     {
-        // 1. Limpiar Sistemas de Partículas con el tag "efectos"
+        // 1. Limpiar Sistemas de Partículas y Tajos (Físicos)
         GameObject[] efectos = GameObject.FindGameObjectsWithTag("Efectos");
         foreach (GameObject efecto in efectos)
         {
             if (efecto != null) Destroy(efecto);
         }
 
-        // 2. Limpiar Textos Flotantes (FloatingText)
-        // Buscamos todos los objetos que tengan el script FloatingText
+        // 2. Limpiar Textos Flotantes (Sistema de Pool)
+        // Buscamos todos los objetos que tengan el script FloatingText, 
+        // incluyendo los que estén activos en ese momento.
         FloatingText[] textosEnPantalla = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
+
         foreach (FloatingText texto in textosEnPantalla)
         {
-            if (texto != null)
+            if (texto != null && texto.gameObject.activeSelf)
             {
-                // Como tu script usa un sistema de Pool (SetActive(false)), 
-                // los desactivamos en lugar de destruirlos para no romper el Pool.
+                // IMPORTANTE: No usamos Destroy porque romperíamos el Pool.
+                // Simplemente lo devolvemos al estado "apagado".
                 texto.gameObject.SetActive(false);
             }
         }
 
-        Debug.Log($"<color=cyan>[CLEANUP]</color> Partículas y Textos limpiados para la siguiente run.");
+        Debug.Log("<color=cyan>[CLEANUP]</color> Textos y efectos limpiados correctamente.");
     }
     public void UpdateCursorState(bool isPlaying)
     {

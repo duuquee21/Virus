@@ -29,7 +29,21 @@ public class FloatingText : MonoBehaviour
         // Variación horizontal inicial
         transform.position += new Vector3(Random.Range(-0.2f, 0.2f), 0, 0);
     }
+    // Añade esto dentro de tu clase FloatingText
+    private void OnDisable()
+    {
+        // Detenemos cualquier proceso pendiente
+        CancelInvoke();
+        StopAllCoroutines();
 
+        // Opcional: Resetear el alfa a 0 para que no parpadee al reactivarse
+        if (textMesh != null)
+        {
+            Color c = textMesh.color;
+            c.a = 0f;
+            textMesh.color = c;
+        }
+    }
     void Update()
     {
         transform.position += Vector3.up * speed * Time.deltaTime;
