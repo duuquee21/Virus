@@ -1229,9 +1229,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.ActivarHojaNegra:
                 if (comprado)
-                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("activado")}");
+                    sb.AppendLine($"{("Activado")}");
                 else
-                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("desactivado")}");
+                    sb.AppendLine($"{("Desactivado")}");
                 break;
 
             case SkillEffectType.MejorarSpawnHojaNegra:

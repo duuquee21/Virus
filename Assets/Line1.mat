@@ -43,7 +43,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CustomTime: 70.68781
+    - _CustomTime: 66.49012
     - _Speed: 1
     m_Colors:
     - _Color: {r: 0.19811314, g: 0.19811314, b: 0.19811314, a: 0.7058824}
