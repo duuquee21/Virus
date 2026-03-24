@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public Button continueButton;
     public TextMeshProUGUI continueInfoText;
     public GameObject jugadorVirus;
+    public GameObject panelFinal; // Arrastra el panel aquí en el Inspector de este script
 
 
 
@@ -585,6 +586,14 @@ public class LevelManager : MonoBehaviour
             SaveCurrentRun();
         }
 
+        // --- NUEVO: Limpieza de Paneles ---
+        // Si tienes una referencia al panel final en este script o en el UI Manager
+        if (panelFinal != null)
+            panelFinal.SetActive(false);
+
+        // Si usas un sistema de fases (Hexágono -> Círculo), 
+        // asegúrate de resetear el estado visual aquí también.
+
         if (AudioManager.instance != null)
             AudioManager.instance.SwitchToMenuMusic();
 
@@ -593,7 +602,6 @@ public class LevelManager : MonoBehaviour
         ResetSceneToNeutralState();
         ShowMainMenu();
     }
-
     public void ActivateMap(int zoneID)
     {
         PlayerPrefs.SetInt("CurrentMapIndex", zoneID);

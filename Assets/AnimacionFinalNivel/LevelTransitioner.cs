@@ -59,6 +59,14 @@ public class LevelTransitioner : MonoBehaviour
     [Header("Spawn Personas Final")]
     public int personasPorPulso = 10;
 
+    [Header("UI Final")]
+    public GameObject panelFinal; // Arrastra aquí tu Panel de Unity UI
+    public float delayAntesDePanel = 0.5f; // Tiempo de espera tras la explosión
+
+    [Header("Referencia al Fondo")]
+    public RectTransform fondoNebula;
+    private Vector3 escalaOriginalFondoNebula; // Para guardar TU escala del inspector
+
     private Dictionary<Transform, Vector3> escalasIniciales = new Dictionary<Transform, Vector3>();
     private GameObject pulsoInstanciado;
     void Awake()
@@ -86,6 +94,10 @@ public class LevelTransitioner : MonoBehaviour
                     escalasIniciales[map.transform] = map.transform.localScale;
                 }
             }
+        }
+        if (fondoNebula != null)
+        {
+            escalaOriginalFondoNebula = fondoNebula.localScale; // Memoriza tu escala del Inspector
         }
         lm = LevelManager.instance;
         popManager = FindFirstObjectByType<PopulationManager>();
@@ -379,6 +391,7 @@ public class LevelTransitioner : MonoBehaviour
         centroEfecto.z = 0f;
 
         GameObject pulso = Instantiate(spritePulsoPrefab, centroEfecto, Quaternion.identity);
+        SpriteRenderer srPulso = pulso.GetComponent<SpriteRenderer>(); // Para el fade final
         pulso.transform.localScale = Vector3.zero;
 
         // --- 2. CICLO DE PULSOS E INSTANCIACIÓN ---
@@ -422,21 +435,18 @@ public class LevelTransitioner : MonoBehaviour
         }
 
         // --- 3. PREPARACIÓN PARA LA EXPLOSIÓN FINAL ---
-
-     
-
         yield return new WaitForSeconds(0.33f);
 
-        // --- 4. EXPANSIÓN FINAL Y ZOOM OUT (Sin vibración) ---
+        // --- 4. EXPANSIÓN FINAL Y ZOOM OUT ---
         float tFinal = 0f;
-        float escalaObjetivo = escalaMaxPulso * 20f;
-        float zoomObjetivo = zoomOriginal * 1.5f; // Zoom out más pronunciado
+        float escalaObjetivo = escalaMaxPulso * 25f; // Aumentado para asegurar que cubra la pantalla
+        float zoomObjetivo = zoomOriginal * 1.5f;
 
         while (tFinal < 1f)
         {
-            tFinal += Time.deltaTime * (velocidadPulso)/3;
+            tFinal += Time.deltaTime * (velocidadPulso / 3f);
 
-            // Crecimiento
+            // Crecimiento de la mancha blanca
             pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaObjetivo, tFinal);
 
             // Zoom Out fluido
@@ -447,27 +457,70 @@ public class LevelTransitioner : MonoBehaviour
 
         pulso.transform.localScale = Vector3.one * escalaObjetivo;
         cam.orthographicSize = zoomObjetivo;
+
+        // --- 5. DESVANECIMIENTO Y PANEL FINAL ---
+        // Pequeña pausa con la pantalla en blanco para impacto emocional
+        yield return new WaitForSeconds(0.5f);
+
+        if (srPulso != null)
+        {
+            float tFade = 0f;
+            Color colorInicial = srPulso.color;
+            while (tFade < 1f)
+            {
+                tFade += Time.deltaTime * 2f; // Velocidad del fade out
+                srPulso.color = Color.Lerp(colorInicial, new Color(colorInicial.r, colorInicial.g, colorInicial.b, 0f), tFade);
+                yield return null;
+            }
+        }
+
+        // Limpieza
+        Destroy(pulso);
+
+        if (fondoNebula != null)
+        {
+            fondoNebula.localScale = escalaOriginalFondoNebula;
+            // Esto devuelve el fondo a su escala de Inspector (ej. 1,1,1 o la que tuvieras)
+        }
+
+        // Activamos el panel de victoria/final
+        if (panelFinal != null)
+        {
+            panelFinal.SetActive(true);
+        }
     }
-
     // Llama a esto para limpiar cualquier rastro de la animación final
-    public void ResetFinalLevelEffects()
+public void ResetFinalLevelEffects()
     {
-        StopAllCoroutines(); // Mata la animación de colapso al instante
-        CapturarEscalas();   // Asegura que sabemos las escalas originales
+        StopAllCoroutines();
 
+        // RESTAURAR FONDO CON TU ESCALA ORIGINAL
+        if (fondoNebula != null)
+        {
+            fondoNebula.gameObject.SetActive(true);
+            fondoNebula.localScale = escalaOriginalFondoNebula; // Usa la del Awake
+        }
+
+        CapturarEscalas();
+
+        // --- RESTAURAR MAPAS (Hexágono, etc.) ---
         if (lm?.mapList != null)
         {
             foreach (GameObject map in lm.mapList)
             {
-                if (map != null && escalasIniciales.TryGetValue(map.transform, out Vector3 original))
+                if (map != null)
                 {
-                    map.transform.localScale = original; // Escala exacta del Inspector
-                    map.transform.rotation = Quaternion.identity;
+                    map.SetActive(true);
+                    if (escalasIniciales.TryGetValue(map.transform, out Vector3 original))
+                    {
+                        map.transform.localScale = original;
+                        map.transform.rotation = Quaternion.identity;
+                    }
                 }
             }
         }
 
-        if (pulsoInstanciado != null) Destroy(pulsoInstanciado); // Borra el círculo de explosión
+        // Reset de efectos visuales y cámara
         if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
         if (mainCam != null) mainCam.orthographicSize = zoomOriginal;
 
