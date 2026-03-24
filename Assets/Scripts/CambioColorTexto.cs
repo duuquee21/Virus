@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class CambioColorTexto : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+// 🎮 AÑADIDO: ISelectHandler y IDeselectHandler para que escuche al mando
+public class CambioColorTexto : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [Header("Referencias")]
     public TextMeshProUGUI texto;
@@ -26,21 +27,38 @@ public class CambioColorTexto : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
     }
 
-    // Se ejecuta al pasar el rat�n por encima
+    // 🖱️ --- RATÓN ---
+    // Se ejecuta al pasar el ratón por encima
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (texto != null)
-        {
-            texto.color = colorHover;
-        }
+        CambiarColor(colorHover);
     }
 
-    // Se ejecuta al quitar el rat�n
+    // Se ejecuta al quitar el ratón
     public void OnPointerExit(PointerEventData eventData)
+    {
+        CambiarColor(colorNormal);
+    }
+
+    // 🎮 --- MANDO ---
+    // Se ejecuta cuando el cursor del mando selecciona este objeto
+    public void OnSelect(BaseEventData eventData)
+    {
+        CambiarColor(colorHover);
+    }
+
+    // Se ejecuta cuando el cursor del mando se va a otro objeto
+    public void OnDeselect(BaseEventData eventData)
+    {
+        CambiarColor(colorNormal);
+    }
+
+    // --- FUNCIÓN INTERNA ---
+    private void CambiarColor(Color nuevoColor)
     {
         if (texto != null)
         {
-            texto.color = colorNormal;
+            texto.color = nuevoColor;
         }
     }
 

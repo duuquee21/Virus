@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
 
-public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+// 🎮 AÑADIDO: ISelectHandler y IDeselectHandler para el mando
+public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [Header("Referencias Visuales")]
     [Tooltip("Arrastra aquí el objeto HIJO que se va a mover y pintar")]
@@ -39,7 +40,30 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
     }
 
+    // 🖱️ --- RATÓN ---
     public void OnPointerEnter(PointerEventData eventData)
+    {
+        ActivarEfecto();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        DesactivarEfecto();
+    }
+
+    // 🎮 --- MANDO ---
+    public void OnSelect(BaseEventData eventData)
+    {
+        ActivarEfecto();
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        DesactivarEfecto();
+    }
+
+    // --- LÓGICA UNIFICADA ---
+    private void ActivarEfecto()
     {
         if (elementoVisual == null) return;
 
@@ -51,7 +75,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         corrutinaActual = StartCoroutine(EfectoBalanceoSuave());
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private void DesactivarEfecto()
     {
         if (elementoVisual == null) return;
 
