@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 249538177827280516, guid: 8e3762e318f66994f9dcae13c4da9089, type: 2}
+  - {fileID: 249538177827280516, guid: 6d66f5fb653191846bda93e7fd6e7b11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,7 +81,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 32765
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3011343205047846322
 MonoBehaviour:
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_text: Sample text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d66f5fb653191846bda93e7fd6e7b11, type: 2}
-  m_sharedMaterial: {fileID: 249538177827280516, guid: 8e3762e318f66994f9dcae13c4da9089, type: 2}
+  m_sharedMaterial: {fileID: 249538177827280516, guid: 6d66f5fb653191846bda93e7fd6e7b11, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -189,5 +189,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac10a73c8403c4458aef2729e9880d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 0.66
+  lifetime: 1
   speed: 2

@@ -222,22 +222,26 @@ public class InfectionFeedback : MonoBehaviour
 
     private IEnumerator ShakeObject(Transform objTransform, int multiplier)
     {
-        // SEGURIDAD: Usamos el valor guardado en el diccionario, no el localPosition actual
+        // Usamos la posición original guardada para evitar desvíos
         Vector3 anchorPos = originalPositions[objTransform];
         float elapsed = 0.0f;
 
         while (elapsed < shakeDuration)
         {
-            float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
-            float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
+            // Al usar Time.deltaTime, si Time.timeScale es 0, 'elapsed' no aumentará
+            // y la posición no se actualizará, pausando la vibración visualmente.
+            if (Time.timeScale > 0)
+            {
+                float x = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
+                float y = Random.Range(-1f, 1f) * shakeMagnitude * multiplier;
 
-            objTransform.localPosition = anchorPos + new Vector3(x, y, 0);
+                objTransform.localPosition = anchorPos + new Vector3(x, y, 0);
+                elapsed += Time.deltaTime;
+            }
 
-            elapsed += Time.deltaTime;
-            yield return null;
+            yield return null; // Espera al siguiente frame
         }
 
-        // Retorno garantizado al punto exacto de inicio
         objTransform.localPosition = anchorPos;
         activeShakes[objTransform] = null;
     }

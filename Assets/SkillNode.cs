@@ -1363,8 +1363,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // --------------------------------------------------------------
     // MAGIA DE LA TRADUCCIÓN NATIVA 
     // --------------------------------------------------------------
+    // --------------------------------------------------------------
+    // MAGIA DE LA TRADUCCIÓN NATIVA 
+    // --------------------------------------------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 🛑 EVITAR QUE EL TOOLTIP SE MUESTRE SI ES EL NODO INICIAL
+        if (isStartingNode) return;
+
         if (SkillTooltip.instance != null)
         {
             // Busca la traducción en tu tabla TextosUI

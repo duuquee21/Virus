@@ -58,6 +58,8 @@ public class PlanetCrontrollator : MonoBehaviour
     private bool muriendo = false;
     private bool initializedHealth = false;
 
+
+
     private struct TransformData
     {
         public Vector3 localPosition;
@@ -197,6 +199,10 @@ public class PlanetCrontrollator : MonoBehaviour
             return;
 
         float dañoCalculado = scriptInfeccion.ObtenerDañoTotal();
+        if (LevelManager.instance != null && LevelManager.instance.IsTimeUp)
+        {
+            dañoCalculado = 0f;
+        }
         int fase = scriptInfeccion.faseActual;
 
         if (scriptInfeccion.alreadyInfected)

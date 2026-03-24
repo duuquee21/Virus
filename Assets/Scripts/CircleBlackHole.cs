@@ -88,7 +88,7 @@ public class BlackHoleController : MonoBehaviour
         float elapsed = 0;
 
         if (ps != null) ps.Play();
-        if (sr != null) { sr.sortingOrder = 32767; sr.color = new Color(0, 0, 0, 0); }
+
 
         bool emisionDetenida = false;
 

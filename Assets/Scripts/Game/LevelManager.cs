@@ -96,6 +96,9 @@ public class LevelManager : MonoBehaviour
 
     // Añade esto en EndDayResultsPanel
 
+    // Añade esto cerca de las otras variables de estado
+    public bool IsTimeUp => currentTimer <= 0;
+
     void Awake()
     {
         if (instance == null) { instance = this; }
