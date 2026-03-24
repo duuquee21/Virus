@@ -39,7 +39,7 @@ public class PopulationManager : MonoBehaviour
     private HashSet<GameObject> buggedPersonas = new HashSet<GameObject>(); // <-- NUEVA CACHÉ
 
     private float checkOutsidersTimer = 0f;
-    private float checkOutsidersInterval = 1f;
+    private float checkOutsidersInterval = 0.1f;
 
     [Header("Pooling")]
     // Diccionario para manejar múltiples pools (uno por cada prefab diferente que tengas)

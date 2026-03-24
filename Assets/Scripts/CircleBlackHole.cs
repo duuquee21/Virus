@@ -84,11 +84,12 @@ public class BlackHoleController : MonoBehaviour
 
     IEnumerator ExecuteBlackHoleSequence(GameObject objeto, ParticleSystem ps)
     {
+        if (objeto == null) yield break; // Safety first
+
         SpriteRenderer sr = objeto.GetComponent<SpriteRenderer>();
         float elapsed = 0;
 
         if (ps != null) ps.Play();
-
 
         bool emisionDetenida = false;
 
@@ -110,26 +111,35 @@ public class BlackHoleController : MonoBehaviour
 
             float t = elapsed / tiempoReduccion;
             float currentScale = Mathf.Lerp(radioInicial, radioFinal, t);
-            objeto.transform.localScale = new Vector3(currentScale, currentScale, 1);
 
+            // Safety check inside loop
+            objeto.transform.localScale = new Vector3(currentScale, currentScale, 1);
             if (sr != null) sr.color = new Color(0, 0, 0, t);
             objeto.transform.Rotate(0, 0, velocidadRotacion * Time.deltaTime);
 
             AtraerPersonas(objeto.transform.position);
-          
+
             yield return null;
         }
 
         // --- FASE 2: FLASH ---
+        // ADDED CHECK HERE
+        if (objeto == null) { DecrementarContador(); yield break; }
+
         if (sr != null)
         {
             sr.color = Color.white;
             objeto.transform.localScale = new Vector3(radioFinal * 1.2f, radioFinal * 1.2f, 1);
         }
+
         yield return new WaitForSeconds(0.05f);
-        if (sr != null) sr.color = Color.black;
 
         // --- FASE 3: EXPLOSIÓN ---
+        // ADDED CHECK HERE
+        if (objeto == null) { DecrementarContador(); yield break; }
+
+        if (sr != null) sr.color = Color.black;
+
         ExplotarEInfectar(objeto.transform.position);
 
         float elapsedExplosion = 0;
@@ -151,8 +161,12 @@ public class BlackHoleController : MonoBehaviour
             yield return null;
         }
 
-        agujerosInstanciados.Remove(objeto);
-        Destroy(objeto);
+        // Final cleanup
+        if (objeto != null)
+        {
+            agujerosInstanciados.Remove(objeto);
+            Destroy(objeto);
+        }
         DecrementarContador();
     }
 
