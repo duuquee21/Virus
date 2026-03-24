@@ -4,10 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Navegación con mando para menús UI basados en Selectable (Button, Toggle, Slider, TMP_Dropdown).
-/// - Vertical: navegación entre elementos
-/// - Submit/A: activa el elemento seleccionado (AHORA LO GESTIONA UNITY POR DEFECTO)
-/// - Cancel/B: cierra panel si se configura
+/// Navegación inteligente que alterna entre Ratón y Mando automáticamente.
 /// </summary>
 public class MenuGamepadNavigator : MonoBehaviour
 {
@@ -21,15 +18,20 @@ public class MenuGamepadNavigator : MonoBehaviour
     public bool preferEventSystemFirst = true;
 
     [Header("Cancel (opcional)")]
-    public GameObject cancelTarget; // panel o botón que se activa con B
+    public GameObject cancelTarget;
 
     private float lastMoveTime;
     private float lastSubmitTime;
     private Selectable lastSelected;
 
+    // 🖱️ NUEVAS VARIABLES: Detectores de dispositivo
+    private Vector3 lastMousePosition;
+    private bool usandoRaton = false;
+
     void OnEnable()
     {
         lastSelected = null;
+        lastMousePosition = Input.mousePosition;
         EnsureInitialSelection();
     }
 
@@ -37,16 +39,55 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         if (EventSystem.current == null) return;
 
+        // 1. 🖱️ DETECTAR RATÓN: Si se mueve o hace clic
+        if (Input.mousePosition != lastMousePosition || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            usandoRaton = true;
+            lastMousePosition = Input.mousePosition;
+
+            // Vaciamos la selección visual para dejar al jugador libre
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+
+        // 2. 🎮 DETECTAR MANDO: Si toca los joysticks o los botones
+        float v = Input.GetAxisRaw("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
+                            Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel") ||
+                            Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1);
+
+        if (tocandoMando)
+        {
+            usandoRaton = false;
+        }
+
+        // 3. 🧠 LÓGICA INTELIGENTE DE SELECCIÓN
         if (EventSystem.current.currentSelectedGameObject == null)
         {
-            EnsureInitialSelection();
+            // Si agarramos el mando y no hay nada seleccionado, recuperamos el foco
+            if (!usandoRaton && tocandoMando)
+            {
+                // Volvemos al último botón que tocamos, o al primero por defecto
+                if (lastSelected != null && lastSelected.gameObject.activeInHierarchy)
+                    Select(lastSelected);
+                else
+                    EnsureInitialSelection();
+            }
+
+            // Aunque el ratón nos haya quitado la selección, el mando debe poder pulsar "Atrás" (B)
+            if (!usandoRaton) HandleCancel();
+
             return;
         }
 
-        HandleNavigation();
-
-        // 🛑 APAGAMOS ESTO PARA EVITAR EL DOBLE CLIC 🛑
-        // HandleSubmit(); 
+        // 4. Si el mando tiene el control, permitimos navegar normalmente
+        if (!usandoRaton)
+        {
+            HandleNavigation();
+        }
 
         HandleCancel();
     }
@@ -60,7 +101,6 @@ public class MenuGamepadNavigator : MonoBehaviour
         }
         else if (preferEventSystemFirst)
         {
-            // Primer Selectable en el objeto y sus hijos
             var s = GetComponentInChildren<Selectable>();
             if (s != null)
                 EventSystem.current.SetSelectedGameObject(s.gameObject);
@@ -80,18 +120,14 @@ public class MenuGamepadNavigator : MonoBehaviour
             if (vertical > 0)
             {
                 Selectable next = current.FindSelectableOnUp();
-                if (next == null && loopNavigation)
-                    next = FindEdgeSelectable(true);
-                if (next != null)
-                    Select(next);
+                if (next == null && loopNavigation) next = FindEdgeSelectable(true);
+                if (next != null) Select(next);
             }
             else
             {
                 Selectable next = current.FindSelectableOnDown();
-                if (next == null && loopNavigation)
-                    next = FindEdgeSelectable(false);
-                if (next != null)
-                    Select(next);
+                if (next == null && loopNavigation) next = FindEdgeSelectable(false);
+                if (next != null) Select(next);
             }
             lastMoveTime = Time.unscaledTime;
             return;
@@ -99,7 +135,6 @@ public class MenuGamepadNavigator : MonoBehaviour
 
         if (Mathf.Abs(horizontal) >= axisThreshold)
         {
-            // Ajustar sliders / dropdowns con stick
             if (current is Slider slider)
             {
                 slider.value += (horizontal > 0 ? 1 : -1) * slider.maxValue * 0.02f;
@@ -115,62 +150,20 @@ public class MenuGamepadNavigator : MonoBehaviour
                 dropdown.RefreshShownValue();
                 dropdown.onValueChanged?.Invoke(next);
             }
-
             lastMoveTime = Time.unscaledTime;
-        }
-    }
-
-    private void HandleSubmit()
-    {
-        if (Time.unscaledTime - lastSubmitTime < moveCooldown) return; // Usar moveCooldown como cooldown para submit
-
-        if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.JoystickButton0))
-        {
-            Selectable current = GetCurrentSelectable();
-            if (current == null) return;
-
-            if (current is Button btn)
-            {
-                btn.onClick?.Invoke();
-            }
-            else if (current is Toggle tog)
-            {
-                tog.isOn = !tog.isOn;
-                tog.onValueChanged?.Invoke(tog.isOn);
-            }
-            else if (current is Slider)
-            {
-                // No action para slider, se controla con left/right
-            }
-            else if (current is TMP_Dropdown drop)
-            {
-                drop.Show();
-            }
-            else
-            {
-                ExecuteEvents.Execute(current.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
-            }
-
-            lastSubmitTime = Time.unscaledTime;
         }
     }
 
     private void HandleCancel()
     {
-        // JoystickButton1 es el botón B (Círculo en PlayStation)
         if (Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             if (cancelTarget != null)
             {
-                // Buscamos si es un botón para seleccionarlo
                 Selectable botonASeleccionar = cancelTarget.GetComponent<Selectable>();
                 if (botonASeleccionar != null)
                 {
                     Select(botonASeleccionar);
-
-                    // Opcional: Si quieres que además de seleccionarse se PULSE automáticamente
-                    // quita las dos barras (//) de la línea de abajo:
-                    // cancelTarget.GetComponent<Button>()?.onClick.Invoke();
                 }
             }
         }
@@ -186,9 +179,9 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         if (selectable == null || EventSystem.current == null) return;
 
-        // Desactivar el efecto del objeto anterior (si lo tiene)
         if (lastSelected != null && lastSelected.gameObject != selectable.gameObject)
         {
+            // Quitamos el efecto del botón anterior si lo tuviera
             var oldEffect = lastSelected.gameObject.GetComponent<ObjetoInteractivoCompleto>();
             if (oldEffect != null) oldEffect.DesactivarEfecto();
 
@@ -198,25 +191,18 @@ public class MenuGamepadNavigator : MonoBehaviour
                 oldSelectable.OnDeselect(new BaseEventData(EventSystem.current));
             }
 
-            // Forzar pointer exit en EventTrigger de selección anterior
             SendPointerExit(lastSelected.gameObject);
         }
 
         EventSystem.current.SetSelectedGameObject(selectable.gameObject);
 
-        // Activa el efecto de la nueva selección si existe el componente
+        // Activamos el efecto del nuevo botón
         var newEffect = selectable.gameObject.GetComponent<ObjetoInteractivoCompleto>();
         if (newEffect != null) newEffect.ActivarEfecto();
 
-        // Forzar eventos de mouse equivalentes (pointer enter)
         SendPointerEnter(selectable.gameObject);
 
-        // Forzar resaltado visual si es necesario
-        if (selectable.transition == Selectable.Transition.SpriteSwap)
-        {
-            selectable.OnSelect(new BaseEventData(EventSystem.current));
-        }
-        else if (selectable.transition == Selectable.Transition.ColorTint)
+        if (selectable.transition == Selectable.Transition.SpriteSwap || selectable.transition == Selectable.Transition.ColorTint)
         {
             selectable.OnSelect(new BaseEventData(EventSystem.current));
         }
