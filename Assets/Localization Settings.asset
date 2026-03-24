@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Localization Settings
   m_EditorClassIdentifier: 
   m_StartupSelectors:
+  - rid: 6267261665783578812
   - rid: 6267261665783578810
   - rid: 6267261665783578811
-  - rid: 6267261665783578812
   m_AvailableLocales:
     rid: 6267261665783578813
   m_AssetDatabase:
