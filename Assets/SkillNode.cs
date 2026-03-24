@@ -2,11 +2,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Localization.Settings; // <-- ESTA ES LA BUENA (No la de UnityEditor)
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+// 🎮 AÑADIDO PARA EL MANDO: ISelectHandler, IDeselectHandler
+public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     private static readonly System.Collections.Generic.Dictionary<string, bool> runtimeUnlocked =
     new System.Collections.Generic.Dictionary<string, bool>();
@@ -205,11 +206,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (((IsDamageSkill() || IsCoinSkill()) && repeatLevel >= maxRepeatLevel) ||
             (IsTimeSkill() && repeatLevel >= maxTimeRepeatLevel))
         {
-            // CAMBIO: El tercer parámetro ahora es TRUE para que el ratón lo detecte
             SetAppearance(true, 1f, true);
-            // El botón se desactiva aquí (es el primer parámetro de SetState)
             SetState(false, Color.gray, false);
-            // Asegurar que la escala reducida se aplique
             SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
             if (fx != null) fx.SetPurchasedState(true);
             return;
@@ -217,13 +215,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (IsUnlocked)
         {
-            // CAMBIO: Aseguramos que se pueda detectar el ratón
             SetAppearance(true, 1f, true);
 
             // Si es una habilidad que NO se puede repetir, desactivamos el botón tras comprarla
             bool canStillBuy = IsDamageSkill() || IsCoinSkill() || IsTimeSkill();
             SetState(canStillBuy, Color.white, false);
-            // Asegurar que la escala reducida se aplique cuando se carga una partida guardada
             SkillNodeHoverFX fx = GetComponent<SkillNodeHoverFX>();
             if (fx != null) fx.SetPurchasedState(true);
             return;
@@ -361,7 +357,53 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             fx.SetPurchasedState(true);
         }
 
+        // 🎮 MANDO: Guardamos si el jugador tenía este botón seleccionado justo ahora
+        bool estabaSeleccionado = false;
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == this.gameObject)
+        {
+            estabaSeleccionado = true;
+        }
+
         RefreshAllNodes();
+
+        // 🎮 MANDO: Si estaba seleccionado y ahora está bloqueado (interactable = false), saltamos
+        if (estabaSeleccionado && button != null && !button.interactable)
+        {
+            SaltarAlNodoMasCercano();
+        }
+    }
+
+    // 🌟 NUEVA FUNCIÓN PARA EL MANDO: Salto automático al nodo más cercano
+    private void SaltarAlNodoMasCercano()
+    {
+        SkillNode[] todosLosNodos = FindObjectsOfType<SkillNode>();
+        Button botonMasCercano = null;
+        float distanciaMinima = float.MaxValue;
+
+        foreach (SkillNode nodo in todosLosNodos)
+        {
+            // Ignoramos este mismo botón
+            if (nodo == this) continue;
+
+            // Solo nos interesan botones que estén visibles y que se puedan pulsar
+            if (nodo.button == null || !nodo.gameObject.activeInHierarchy || !nodo.button.interactable) continue;
+
+            // Medimos la distancia física real en la interfaz
+            float distancia = Vector3.Distance(transform.position, nodo.transform.position);
+
+            if (distancia < distanciaMinima)
+            {
+                distanciaMinima = distancia;
+                botonMasCercano = nodo.button;
+            }
+        }
+
+        // Le decimos al mando que seleccione el botón más cercano
+        if (botonMasCercano != null && EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null); // Limpiamos primero por seguridad
+            EventSystem.current.SetSelectedGameObject(botonMasCercano.gameObject);
+        }
     }
 
     void RefreshAllNodes()
@@ -381,9 +423,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         PlayerPrefs.SetInt("Skill_" + saveID + "_Unlocked", unlocked ? 1 : 0);
         PlayerPrefs.SetInt("Skill_" + saveID + "_Repeat", repeatLevel);
 
-        // -------- AÑADE ESTO AQUÍ --------
         PlayerPrefs.Save();
-        // ---------------------------------
     }
     public void ResetNodeState()
     {
@@ -915,7 +955,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 if (VirusRadiusController.instance != null) VirusRadiusController.instance.ApplyScale();
                 break;
 
-       
+
             // -------------------------
             // VELOCIDAD VIRUS
             // -------------------------
@@ -1199,7 +1239,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float baseInterval = PopulationManager.instance.GetCurrentSpawnInterval(); // intervalo base del juego
                     float actualBonus = 0.5f;
-                 
+
 
                     float actual = baseInterval;
                     float despues = baseInterval - actualBonus;
@@ -1219,7 +1259,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                         sb.AppendLine($"{actual} → {actual + 1}");
                     break;
                 }
-               
+
             case SkillEffectType.ActivarCoralInfeccioso:
                 if (unlocked)
                     sb.AppendLine($"{GetTexto("status_unlocked")}");
@@ -1321,7 +1361,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     // --------------------------------------------------------------
-    // MAGIA DE LA TRADUCCIÓN NATIVA (¡AHORA SÍ ESTÁ BIEN!)
+    // MAGIA DE LA TRADUCCIÓN NATIVA 
     // --------------------------------------------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -1355,6 +1395,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (SkillTooltip.instance != null)
             SkillTooltip.instance.Hide();
+    }
+
+    // 🎮 MAGIA DEL MANDO: Reutilizamos tu lógica exacta del ratón
+    public void OnSelect(BaseEventData eventData)
+    {
+        OnPointerEnter(null);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        OnPointerExit(null);
     }
 
     IEnumerator RebuildTree()
