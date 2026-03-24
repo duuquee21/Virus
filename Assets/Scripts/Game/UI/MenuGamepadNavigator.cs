@@ -26,7 +26,7 @@ public class MenuGamepadNavigator : MonoBehaviour
 
     // 🖱️ NUEVAS VARIABLES: Detectores de dispositivo
     private Vector3 lastMousePosition;
-    private bool usandoRaton = false;
+    public static bool usandoRaton = false;
 
     void OnEnable()
     {

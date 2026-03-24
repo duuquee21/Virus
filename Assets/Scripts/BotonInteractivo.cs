@@ -4,11 +4,9 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
 
-// 🎮 AÑADIDO: ISelectHandler y IDeselectHandler para el mando
 public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [Header("Referencias Visuales")]
-    [Tooltip("Arrastra aquí el objeto HIJO que se va a mover y pintar")]
     public Transform elementoVisual;
 
     private Image imagenVisual;
@@ -27,23 +25,23 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     void Awake()
     {
-        // Obtenemos los componentes del HIJO visual, no del padre invisible
         if (elementoVisual != null)
         {
             imagenVisual = elementoVisual.GetComponent<Image>();
             texto = elementoVisual.GetComponentInChildren<TextMeshProUGUI>();
             rotacionOriginal = elementoVisual.localRotation;
         }
-        else
-        {
-            Debug.LogError("¡Aviso! No has asignado el 'Elemento Visual' en el inspector del botón.");
-        }
     }
 
     // 🖱️ --- RATÓN ---
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ActivarEfecto();
+        // 🛡️ PROTECCIÓN: Solo se activa si el sistema confirma que el ratón manda
+        // Esto evita que el botón "brille" solo porque el cursor estaba ahí quieto al abrirse el panel
+        if (MenuGamepadNavigator.usandoRaton)
+        {
+            ActivarEfecto();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -54,6 +52,9 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     // 🎮 --- MANDO ---
     public void OnSelect(BaseEventData eventData)
     {
+        // 🛡️ PROTECCIÓN: Si estamos con ratón, el mando NO puede activar el efecto visual
+        if (MenuGamepadNavigator.usandoRaton) return;
+
         ActivarEfecto();
     }
 
@@ -62,11 +63,10 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         DesactivarEfecto();
     }
 
-    // --- LÓGICA UNIFICADA ---
+    // --- LÓGICA DE EFECTOS ---
     private void ActivarEfecto()
     {
         if (elementoVisual == null) return;
-
         ResetearEstado();
 
         if (imagenVisual != null) imagenVisual.color = colorFondoHover;
@@ -78,7 +78,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void DesactivarEfecto()
     {
         if (elementoVisual == null) return;
-
         ResetearEstado();
 
         if (imagenVisual != null) imagenVisual.color = Color.white;
@@ -89,8 +88,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         StopAllCoroutines();
         corrutinaActual = null;
-
-        // Enderezamos el elemento visual
         if (elementoVisual != null)
             elementoVisual.localRotation = rotacionOriginal;
     }
@@ -110,7 +107,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         Quaternion destino = Quaternion.Euler(0, 0, anguloTarget);
         float tiempoSeguridad = 0;
 
-        // Ahora rotamos el 'elementoVisual'
         while (Quaternion.Angle(elementoVisual.localRotation, destino) > 0.01f && tiempoSeguridad < 0.5f)
         {
             elementoVisual.localRotation = Quaternion.Slerp(
@@ -118,7 +114,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 destino,
                 Time.unscaledDeltaTime * velocidadGiro
             );
-
             tiempoSeguridad += Time.unscaledDeltaTime;
             yield return null;
         }
