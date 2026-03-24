@@ -665,15 +665,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: ZONE TOTAL
+    m_Localized: Zone Earnings
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: WALL TOTAL
+    m_Localized: Wall Earnings
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: BOUNCE TOTAL
+    m_Localized: Bounce Earnings
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -781,7 +781,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1820888534929408
-    m_Localized: TOTAL DAMAGE
+    m_Localized: Total Damage
     m_Metadata:
       m_Items: []
   - m_Id: 1824803229847552

@@ -663,15 +663,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: TOTAL ZONA
+    m_Localized: Ganado Por Zona
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: TOTAL PARED
+    m_Localized: Gamado Por Pared
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: TOTAL CARAMBOLA
+    m_Localized: Ganado Por Carambolas
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -780,7 +780,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1820888534929408
-    m_Localized: "DA\xD1O TOTAL"
+    m_Localized: "Da\xF1o Total"
     m_Metadata:
       m_Items: []
   - m_Id: 1824803229847552
