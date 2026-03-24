@@ -321,8 +321,8 @@ public class EndDayResultsPanel : MonoBehaviour
         if (zonaCoinsDetailText != null) zonaCoinsDetailText.text = zonaCoinsLines;
         if (zonaDamageDetailText != null) zonaDamageDetailText.text = zonaDamageLines;
 
-        zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} {totalZ} {txtMonedas}</b>";
-        zonaDamageText.text = $"{GetTexto("txt_dano_total")}: {totalDanioZonaCalculado:F0}";
+        zonaMonedasText.text = $"<b>{GetTexto("txt_total_zona")} \n{totalZ}</b>";
+        zonaDamageText.text = $"{GetTexto("txt_dano_total")} \n{totalDanioZonaCalculado:F0}";
         // ===================== CHOQUE =====================
         int totalP = 0;
         string tituloChoque = $"<b>{GetTexto("titulo_ev_pared")}</b>\n\n";
@@ -346,7 +346,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         choqueEvolutionText.text = tituloChoque;
         if (choqueCoinsDetailText != null) choqueCoinsDetailText.text = choqueCoinsLines;
-        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} {totalP} {txtMonedas}</b>";
+        choqueMonedasText.text = $"<b>{GetTexto("txt_total_pared")} \n{totalP}</b>";
 
         // ===================== CARAMBOLA =====================
         int totalC = 0;
@@ -371,7 +371,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
         carambolaEvolutionText.text = tituloCarambola;
         if (carambolaCoinsDetailText != null) carambolaCoinsDetailText.text = carambolaCoinsLines;
-        carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} {totalC} {txtMonedas}</b>";
+        carambolaMonedasText.text = $"<b>{GetTexto("txt_total_carambola")} \n{totalC}</b>";
 
         // ===================== RESUMEN GENERAL =====================
         monedasTempPartida = monedasGanadas;
