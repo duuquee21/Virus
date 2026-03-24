@@ -466,6 +466,7 @@ public class LevelManager : MonoBehaviour
         if (isGameActive)
         {
             timeSinceLastAutoSave += Time.deltaTime;
+            if (Cursor.visible) Cursor.visible = false;
             if (timeSinceLastAutoSave >= autoSaveInterval)
             {
                 SaveCurrentRun();
@@ -1342,17 +1343,18 @@ public class LevelManager : MonoBehaviour
     {
         if (pausePanel == null) return;
         bool estaPausado = pausePanel.activeSelf;
-        if (estaPausado)
+
+        if (estaPausado) // Vamos a reanudar
         {
             pausePanel.SetActive(false);
-            UpdateCursorState(false);
+            UpdateCursorState(true); // <-- CAMBIAR A TRUE
             Time.timeScale = 1f;
             if (virusMovementScript != null) virusMovementScript.enabled = true;
         }
-        else
+        else // Vamos a pausar
         {
             pausePanel.SetActive(true);
-            UpdateCursorState(false);
+            UpdateCursorState(false); // <-- AQUÍ SE QUEDA EN FALSE
             Time.timeScale = 0f;
             if (virusMovementScript != null) virusMovementScript.enabled = false;
         }
@@ -1735,11 +1737,11 @@ public class LevelManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            // Si usa teclado, el cursor NO se ve. Si usa ratón, SÍ se ve.
-            bool usaTeclado = Guardado.instance != null && Guardado.instance.UseKeyboard;
-
-            Cursor.visible = !usaTeclado;
-            Cursor.lockState = usaTeclado ? CursorLockMode.Locked : CursorLockMode.Confined;
+            // Solo lo hacemos invisible. NO lo bloqueamos.
+            Cursor.visible = false;
+            // Confined permite que el ratón se mueva pero no salga de la ventana 
+            // (útil en juegos de PC), o usa None para libertad total.
+            Cursor.lockState = CursorLockMode.None;
         }
         else
         {
