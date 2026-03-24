@@ -40,7 +40,7 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         bool currentlyLocked = !IsParentUnlocked();
         wasLockedByParent = currentlyLocked;
 
-        transform.localScale = Vector3.one;
+      
         RefreshScale();
     }
 
@@ -150,9 +150,17 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
             yield return null;
         }
+        var fx = GetComponent<SkillNodeHoverFX>();
+        if (fx != null)
+        {
+            transform.localScale = fx.purchasedScale < 1f && IsAtLimit() ?
+                                   Vector3.one * fx.purchasedScale : Vector3.one;
+        }
+        else
+        {
+            transform.localScale = Vector3.one;
+        }
 
-        transform.localEulerAngles = startEuler;
-        transform.localScale = targetScale;
         animationCoroutine = null;
     }
 

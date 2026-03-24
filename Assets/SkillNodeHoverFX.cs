@@ -81,19 +81,15 @@ public class SkillNodeHoverFX : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void SetPurchasedState(bool purchased)
     {
         isPurchased = purchased;
-
-        // IMPORTANTE: Definimos la escala según el estado
+        // La escala base ahora depende de si está comprado o no
         Vector3 baseScale = purchased ? Vector3.one * purchasedScale : Vector3.one;
 
-        // Actualizamos tanto la escala actual como la de referencia (originalScale)
-        // para que el OnPointerExit no lo devuelva a un tamaño erróneo
+        // Seteamos los targets para que el Update del Lerp haga su trabajo suavemente
         originalScale = baseScale;
         targetScale = baseScale;
 
-        if (rect == null) rect = GetComponent<RectTransform>();
-        rect.localScale = baseScale;
-
-        if (infoPanel != null) infoPanel.localScale = baseScale;
+        // NO fuerces rect.localScale aquí manualmente si tienes un Lerp en el Update, 
+        // deja que el Update llegue al targetScale.
     }
 
     public void PlayClickFeedback()

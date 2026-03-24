@@ -114,7 +114,7 @@ public class DebugCheatMenu : MonoBehaviour
         if (Btn("+5000 Monedas de Contagio", ref y, btnH))
         {
             if (LevelManager.instance != null)
-                LevelManager.instance.AddCoins(50000000);
+                LevelManager.instance.AddCoins(50);
         }
 
         y += 20;
