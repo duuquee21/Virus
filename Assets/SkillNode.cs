@@ -6,7 +6,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-// 🎮 AÑADIDO PARA EL MANDO: ISelectHandler, IDeselectHandler
+// 🎮 Se queda solo con lo necesario: ISelectHandler y IDeselectHandler
 public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     private static readonly System.Collections.Generic.Dictionary<string, bool> runtimeUnlocked =
@@ -18,6 +18,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // Cooldown para prevenir doble clic
     private float lastClickTime = 0f;
     private const float CLICK_COOLDOWN = 0.3f; // 300ms
+
     public enum SkillEffectType
     {
         None, RandomInitialUpgrade,
@@ -145,8 +146,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public int maxRepeatLevel = 5;
     [Header("Límite especial tiempo extra")]
     public int maxTimeRepeatLevel = 10;
-
-
 
     public bool IsUnlocked =>
         unlocked ||
@@ -1269,9 +1268,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.ActivarHojaNegra:
                 if (comprado)
-                    sb.AppendLine($"{("Activado")}");
+                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("activado")}");
                 else
-                    sb.AppendLine($"{("Desactivado")}");
+                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("desactivado")}");
                 break;
 
             case SkillEffectType.MejorarSpawnHojaNegra:
@@ -1366,6 +1365,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // --------------------------------------------------------------
     // MAGIA DE LA TRADUCCIÓN NATIVA 
     // --------------------------------------------------------------
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         // 🛑 EVITAR QUE EL TOOLTIP SE MUESTRE SI ES EL NODO INICIAL
@@ -1403,10 +1403,16 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             SkillTooltip.instance.Hide();
     }
 
-    // 🎮 MAGIA DEL MANDO: Reutilizamos tu lógica exacta del ratón
+    // 🎮 MAGIA DEL MANDO
     public void OnSelect(BaseEventData eventData)
     {
         OnPointerEnter(null);
+
+        // Movemos la cámara (la protección contra el ratón ahora está en SkillTreeCameraUI)
+        if (SkillTreeCameraUI.instance != null)
+        {
+            SkillTreeCameraUI.instance.EnfocarEnNodo(GetComponent<RectTransform>());
+        }
     }
 
     public void OnDeselect(BaseEventData eventData)

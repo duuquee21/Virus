@@ -25,6 +25,12 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
     private float _targetZoom;
     private Vector2 _targetPosition;
     private Camera _uiCamera;
+    public static SkillTreeCameraUI instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -97,4 +103,23 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
         // Movimiento 1:1 independiente del nivel de Zoom
         _targetPosition += eventData.delta / content.localScale.x;
     }
+    // 📸 NUEVA FUNCIÓN: Centra la cámara en el nodo que el mando seleccione
+    // 📸 NUEVA FUNCIÓN: Centra la cámara en el nodo que el mando seleccione
+    // 📸 NUEVA FUNCIÓN: Centra la cámara en el nodo que el mando seleccione
+    public void EnfocarEnNodo(RectTransform nodoElegido)
+    {
+        // 🛑 EL ESCUDO ANTI-RATÓN DEFINITIVO: 
+        // Ignoramos si está pulsando (o acaba de soltar) el clic izquierdo (0), derecho (1) o la ruleta (2)
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonUp(0) ||
+            Input.GetMouseButton(1) || Input.GetMouseButtonUp(1) ||
+            Input.GetMouseButton(2) || Input.GetMouseButtonUp(2))
+        {
+            return;
+        }
+
+        // Al invertir la posición del nodo, el panel se mueve suavemente en dirección contraria
+        // para dejar ese nodo exactamente en el centro de la pantalla.
+        _targetPosition = -nodoElegido.anchoredPosition;
+    }
+
 }
