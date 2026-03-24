@@ -1,19 +1,26 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.EventSystems;
 
 public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
 {
     [Header("Referencias")]
-    public RectTransform content; // El ·rbol de habilidades
+    public RectTransform content; // El √°rbol de habilidades
 
-    [Header("ConfiguraciÛn de Zoom")]
+    [Header("Configuraci√≥n de Zoom")]
     public float minZoom = 0.5f;
     public float maxZoom = 2.0f;
     public float zoomSensitivity = 0.1f;
     public float zoomSmoothness = 10f;
 
-    [Header("ConfiguraciÛn de Movimiento")]
+    [Header("Configuraci√≥n de Movimiento (Rat√≥n)")]
     public float dragSmoothness = 15f;
+
+    // üéÆ --- NUEVO: CONFIGURACI√ìN PARA EL MANDO ---
+    [Header("Configuraci√≥n de Movimiento (Mando)")]
+    public float joystickPanSpeed = 1500f; // Velocidad de arrastre con el joystick
+    public bool invertirJoystick = false; // True para mover como rat√≥n, False para mover como c√°mara
+    public string joystickDerechoX = "RightHorizontal";
+    public string joystickDerechoY = "RightVertical";
 
     private float _targetZoom;
     private Vector2 _targetPosition;
@@ -31,11 +38,31 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
 
     void Update()
     {
-        // InterpolaciÛn suave de Escala
+        // üéÆ --- L√ìGICA DEL JOYSTICK DERECHO ---
+        float h = Input.GetAxisRaw(joystickDerechoX);
+        float v = Input.GetAxisRaw(joystickDerechoY);
+
+        if (Mathf.Abs(h) > 0.3f || Mathf.Abs(v) > 0.3f)
+        {
+            // Calculamos el movimiento del mando
+            Vector2 inputMando = new Vector2(h, v) * joystickPanSpeed * Time.unscaledDeltaTime;
+
+            if (invertirJoystick)
+            {
+                inputMando = -inputMando;
+            }
+
+            // Aplicamos el movimiento al target position (dividido por el zoom para que la velocidad sea constante)
+            _targetPosition += inputMando / _targetZoom;
+        }
+
+        // --- INTERPOLACI√ìN SUAVE (Tu c√≥digo original) ---
+
+        // Interpolaci√≥n suave de Escala
         float lerpZoom = Mathf.Lerp(content.localScale.x, _targetZoom, Time.deltaTime * zoomSmoothness);
         content.localScale = new Vector3(lerpZoom, lerpZoom, 1f);
 
-        // InterpolaciÛn suave de PosiciÛn
+        // Interpolaci√≥n suave de Posici√≥n
         content.anchoredPosition = Vector2.Lerp(content.anchoredPosition, _targetPosition, Time.deltaTime * dragSmoothness);
     }
 
@@ -47,23 +74,21 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
         // Calculamos el nuevo zoom deseado
         _targetZoom = Mathf.Clamp(_targetZoom + scrollDelta, minZoom, maxZoom);
 
-        // Si el zoom no ha cambiado (llegamos al lÌmite), no hacemos c·lculos
+        // Si el zoom no ha cambiado (llegamos al l√≠mite), no hacemos c√°lculos
         if (Mathf.Approximately(oldZoom, _targetZoom)) return;
 
-        // --- L”GICA DE ANCLAJE AL MOUSE ---
+        // --- L√ìGICA DE ANCLAJE AL MOUSE ---
 
-        // 1. Obtenemos la posiciÛn del ratÛn relativa al 'content' (donde est· el puntero en el mapa)
+        // 1. Obtenemos la posici√≥n del rat√≥n relativa al 'content' (donde est√° el puntero en el mapa)
         RectTransformUtility.ScreenPointToLocalPointInRectangle(content, eventData.position, _uiCamera, out Vector2 mouseLocalPos);
 
         // 2. Calculamos el factor de cambio entre el zoom nuevo y el actual
-        // Si es Zoom Out, este factor ser· menor a 1.
         float multiplier = _targetZoom / oldZoom;
 
-        // 3. Calculamos cu·nto se moverÌa ese punto debido a la escala
-        // Al restar el movimiento, compensamos para que el punto bajo el mouse no se mueva visualmente
+        // 3. Calculamos cu√°nto se mover√≠a ese punto debido a la escala
         Vector2 offset = mouseLocalPos * (multiplier - 1f);
 
-        // Aplicamos el ajuste a la posiciÛn objetivo (multiplicado por la escala actual para normalizar)
+        // Aplicamos el ajuste a la posici√≥n objetivo
         _targetPosition -= offset * oldZoom;
     }
 

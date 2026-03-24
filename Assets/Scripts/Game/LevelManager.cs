@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Localization.Settings; 
+using UnityEngine.Localization.Settings;
+using UnityEngine.EventSystems; // <-- AÑADIDO PARA EL MANDO
 
 public class LevelManager : MonoBehaviour
 {
@@ -29,14 +30,14 @@ public class LevelManager : MonoBehaviour
     public RectTransform marcadorDestinoUI;
     public Canvas canvasPrincipal;
     [SerializeField] public int contagionCoins;
+
     [Header("UI Panels")]
     public GameObject menuPanel;
     public GameObject gameUI;
-   
-    
     public GameObject shinyPanel; // Panel de la Tienda de ADN/Mejoras
     public GameObject zonePanel;  // Panel de Selección de Mapas
     public GameObject pausePanel;
+    public GameObject pauseFirstSelectedButton; // <-- NUEVO: EL BOTÓN QUE SELECCIONA EL MANDO AL PAUSAR
 
     [Header("UI Text (Listas)")]
     public List<TextMeshProUGUI> timerTexts = new List<TextMeshProUGUI>();
@@ -46,8 +47,8 @@ public class LevelManager : MonoBehaviour
 
     [Header("Gameplay")]
     public float gameDuration = 20f;
-   
-     public int monedasGanadasSesion;
+
+    public int monedasGanadasSesion;
 
 
     [Header("Configuración Inicial por Zona")]
@@ -128,7 +129,7 @@ public class LevelManager : MonoBehaviour
         {
             ForceHardReset();
         }
-        
+
         ShowMainMenu();
 
         // Aseguramos que la música del menú suene desde el inicio del juego.
@@ -193,7 +194,7 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var t in contagionCoinsTexts)
             if (t != null)
-                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}"; // <-- CAMBIO AQUÍ
+                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
     }
 
 
@@ -222,7 +223,7 @@ public class LevelManager : MonoBehaviour
     {
         menuPanel.SetActive(true);
         gameUI.SetActive(false);
-        SetMapsActive(false); // <--- AÑADIR ESTA LÍNEA
+        SetMapsActive(false);
         UpdateCursorState(false);
 
         if (pausePanel) pausePanel.SetActive(false);
@@ -275,7 +276,7 @@ public class LevelManager : MonoBehaviour
         if (!isGameActive) return;
 
         currentTimer += seconds;
-        UpdateUI(); // para que el texto del timer refleje el cambio si lo muestras
+        UpdateUI();
     }
 
     public void Button_Continue()
@@ -351,7 +352,7 @@ public class LevelManager : MonoBehaviour
         if (Guardado.instance == null) return;
 
         // 1. Sincronizar VirusRadiusController
-    
+
         // 2. Sincronizar SpeedUpgradeController
         if (SpeedUpgradeController.instance != null)
         {
@@ -386,14 +387,18 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (!isGameActive) return;
-        if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
+
+        // 🎮 AÑADIDO: JoystickButton7 es el botón Start/Menu en mandos de Xbox/PlayStation
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        {
+            TogglePause();
+        }
 
         if (timerStarted)
         {
             currentTimer -= Time.deltaTime;
         }
 
-        // Actualizar textos del timer
         // Actualizar textos del timer
         foreach (var t in timerTexts)
         {
@@ -425,7 +430,6 @@ public class LevelManager : MonoBehaviour
         if (currentTimer <= 0 && !isTransitioning)
         {
             // Verificamos si existe la mejora en el guardado
-            // (Asegúrate de que 'tieneTiempoExtra' sea el nombre real del bool en tu script Guardado)
             bool poseeMejora = Guardado.instance != null && Guardado.instance.hasExtraTimeUnlock;
 
             if (poseeMejora)
@@ -520,7 +524,7 @@ public class LevelManager : MonoBehaviour
                 animacionExtraTime = StartCoroutine(AnimarTextoExtraTime());
             }
         }
-        
+
     }
 
     private IEnumerator AnimarTextoExtraTime()
@@ -866,12 +870,12 @@ public class LevelManager : MonoBehaviour
 
         timerStarted = false;
         UpdateCursorState(true);
-        checkParaExtraTimeRealizado = false; // <--- AÑADE ESTO AQUÍ
+        checkParaExtraTimeRealizado = false;
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f; // Reiniciar contador de auto-save
 
 
-        
+
         if (TutorialManager.instance != null && VirusMovement.instance != null)
         {
             if (!TutorialManager.instance.HasSeenTutorial())
@@ -888,8 +892,8 @@ public class LevelManager : MonoBehaviour
             timerStarted = true;
         }
         if (menuPanel) menuPanel.SetActive(false);
-        ResetCameraZoom(); // <--- IMPORTANTE: Volver al zoom de 14
-                           // RESET DE CÁMARA Y TIEMPO
+        ResetCameraZoom();
+
 
         if (extraTimeUI != null)
         {
@@ -902,7 +906,7 @@ public class LevelManager : MonoBehaviour
         if (mainCamera == null) mainCamera = Camera.main;
         mainCamera.orthographicSize = defaultZoom;
 
-        timerAnimando = false; // <-- RESETEAR ESTO
+        timerAnimando = false;
         if (animacionTimer != null) StopCoroutine(animacionTimer);
 
         // Resetear escala de los textos por si acaso
@@ -951,7 +955,7 @@ public class LevelManager : MonoBehaviour
 
         currentTimer = tiempoTotal;
 
-       
+
 
         // Configuramos el cursor basado SIEMPRE en la elección del usuario
         UpdateCursorState(true);
@@ -969,7 +973,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(TransitionToSession());
     }
 
-  
+
     private IEnumerator TransitionToSession()
     {
         if (transitionScript != null)
@@ -988,7 +992,7 @@ public class LevelManager : MonoBehaviour
     }
     public void ResumeSession()
     {
-      
+
         if (menuPanel) menuPanel.SetActive(false);
 
         Time.timeScale = 1f;
@@ -1120,9 +1124,9 @@ public class LevelManager : MonoBehaviour
 
         if (Guardado.instance)
 
-      
 
-        UpdateUI();
+
+            UpdateUI();
     }
 
     public void GameOver()
@@ -1142,7 +1146,7 @@ public class LevelManager : MonoBehaviour
             }
 
             PlayerPrefs.Save();
-            
+
             // Limpiar el estado de run después de guardar
             Guardado.instance.ClearRunState();
         }
@@ -1152,7 +1156,7 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var t in contagionCoinsTexts)
             if (t != null)
-                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}"; // <-- CAMBIO AQUÍ
+                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }
@@ -1350,6 +1354,12 @@ public class LevelManager : MonoBehaviour
             UpdateCursorState(true); // <-- CAMBIAR A TRUE
             Time.timeScale = 1f;
             if (virusMovementScript != null) virusMovementScript.enabled = true;
+
+            // Limpiamos la selección al quitar la pausa por seguridad
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
         else // Vamos a pausar
         {
@@ -1357,6 +1367,13 @@ public class LevelManager : MonoBehaviour
             UpdateCursorState(false); // <-- AQUÍ SE QUEDA EN FALSE
             Time.timeScale = 0f;
             if (virusMovementScript != null) virusMovementScript.enabled = false;
+
+            // 🎮 MAGIA PARA EL MANDO: Seleccionar el botón automáticamente
+            if (pauseFirstSelectedButton != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(pauseFirstSelectedButton);
+            }
         }
     }
     // --- AÑADIR ESTO A TU LevelManager.cs ---
@@ -1494,7 +1511,7 @@ public class LevelManager : MonoBehaviour
         if (menuPanel) menuPanel.SetActive(false);
         if (gameUI) gameUI.SetActive(false);
 
-       
+
         if (pausePanel) pausePanel.SetActive(false);
         if (shinyPanel) zonePanel.SetActive(false);
 

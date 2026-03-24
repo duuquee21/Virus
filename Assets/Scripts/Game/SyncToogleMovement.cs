@@ -11,8 +11,8 @@ public class SyncToggleMovement : MonoBehaviour
         if (toggle != null && Guardado.instance != null)
         {
             // SetIsOnWithoutNotify cambia el check del UI SIN ejecutar tu toogleMovement()
-            // Como asumo que si el toggle está ON = ratón, le pasamos !UseKeyboard
-            toggle.SetIsOnWithoutNotify(!Guardado.instance.UseKeyboard);
+            // Ahora: ON = Mouse, OFF = Keyboard or Controller
+            toggle.SetIsOnWithoutNotify(Guardado.instance.inputType == Guardado.InputType.Mouse);
         }
     }
 }

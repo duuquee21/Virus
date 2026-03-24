@@ -94,7 +94,9 @@ public class Guardado : MonoBehaviour
 
     public int buggedSpawnLimit = 1; // Límite base (puedes cambiarlo a 0 si no quieres que spawneen sin la primera mejora)
 
-    public bool UseKeyboard = true; // Por si quieres cambiar el método de control desde el guardado
+    
+    public enum InputType { Keyboard, Mouse, Controller }
+    public InputType inputType = InputType.Controller;
 
     void Awake()
     {
@@ -192,7 +194,7 @@ public class Guardado : MonoBehaviour
 
     public void SaveData()
     {
-        PlayerPrefs.SetInt("UseKeyboard", UseKeyboard ? 1 : 0);
+        PlayerPrefs.SetInt("InputType", (int)inputType);
         PlayerPrefs.SetInt("TotalInfected", totalInfected);
         PlayerPrefs.SetInt("CoinMultiplier", coinMultiplier);
         PlayerPrefs.SetInt("StartingCoins", startingCoins);
@@ -269,7 +271,7 @@ public class Guardado : MonoBehaviour
 
     public void LoadData()
     {
-        UseKeyboard = PlayerPrefs.GetInt("UseKeyboard", 1) == 1;
+        inputType = (InputType)PlayerPrefs.GetInt("InputType", 2); // Default to Controller
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
         coinMultiplier = PlayerPrefs.GetInt("CoinMultiplier", 1);
         startingCoins = PlayerPrefs.GetInt("StartingCoins", 0);
@@ -574,8 +576,8 @@ public class Guardado : MonoBehaviour
     }
     public void toogleMovement(bool mouse)
     {
-        UseKeyboard = !mouse;
-        PlayerPrefs.SetInt("UseKeyboard", UseKeyboard ? 1 : 0);
+        inputType = mouse ? InputType.Mouse : InputType.Keyboard;
+        PlayerPrefs.SetInt("InputType", (int)inputType);
         PlayerPrefs.Save();
 
         // Actualizamos la flecha visual
@@ -590,7 +592,7 @@ public class Guardado : MonoBehaviour
             LevelManager.instance.UpdateCursorState(true);
         }
 
-        Debug.Log("Preferencia de control guardada: " + (UseKeyboard ? "Teclado" : "Ratón"));
+        Debug.Log("Preferencia de control guardada: " + inputType);
     }
     public void LoadEvolutionData()
     {
