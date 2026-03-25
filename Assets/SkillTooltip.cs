@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.Localization.Settings;
-
+using UnityEngine.UI;
 public class SkillTooltip : MonoBehaviour
 {
     public static SkillTooltip instance;
@@ -16,47 +16,57 @@ public class SkillTooltip : MonoBehaviour
     public TextMeshProUGUI costText;
 
     [Header("Swing Animation (Juice)")]
-    public float initialAmplitude = 15f; // Fuerza del balanceo inicial (más "gordo")
-    public float swingFrequency = 10f;  // Velocidad de la oscilación
-    public float dampingSpeed = 4f;     // Qué tan rápido se detiene (más alto = se para antes)
+    public float initialAmplitude = 15f;
+    public float swingFrequency = 10f;
+    public float dampingSpeed = 4f;
     private float currentAmplitude = 0f;
-    private float timer = 0f;
-    private bool isAnimating = false;
+    private float swingTimer = 0f;
 
+    [Header("Scale Animation (Pop/Shrink)")]
+    public float scaleSpeed = 15f;
+    private float currentScale = 0f;
+    private float targetScale = 0f;
 
-
-
-    // 1. ¡Actualizado al nombre de tu nueva tabla!
     private string nombreTabla = "TextosJuego";
-
+    private CanvasGroup canvasGroup;
     void Awake()
     {
         instance = this;
-       
-        Hide();
+        ForceHide();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    // Función auxiliar para traducir solo el Coste y el ADN
     string GetTexto(string clave)
     {
         var op = LocalizationSettings.StringDatabase.GetLocalizedString(nombreTabla, clave);
-        if (string.IsNullOrEmpty(op)) return clave; // Si falla, devuelve la clave para que veas el error
+        if (string.IsNullOrEmpty(op)) return clave;
         return op;
     }
 
-    // 2. Modificado para recibir los textos ya traducidos desde SkillNode
     public void Show(string translatedTitle, string translatedDescription, int cost, RectTransform target)
     {
-        gameObject.SetActive(true); // Activar antes de configurar
-    transform.SetAsLastSibling();
-    
-   
+        bool veniaDeFuera = !gameObject.activeSelf;
+
+        if (veniaDeFuera)
+        {
+            // 2. MAGIA: Lo hacemos invisible AHORA MISMO, antes de que Unity intente dibujarlo mal
+            if (canvasGroup != null) canvasGroup.alpha = 0f;
+
+            currentScale = 0.05f;
+            if (rect != null) rect.localScale = new Vector3(0.05f, 0.05f, 1f);
+        }
+
+        gameObject.SetActive(true);
+        transform.SetAsLastSibling();
+
+        if (rect != null) rect.localScale = Vector3.one;
 
         titleText.text = translatedTitle;
         descriptionText.text = translatedDescription;
-
         string textoCoste = GetTexto("txt_coste");
         costText.text = $"{textoCoste}: {cost} ";
+
+        if (rect != null) LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
 
         if (rect != null && target != null)
         {
@@ -64,45 +74,74 @@ public class SkillTooltip : MonoBehaviour
             rect.anchoredPosition += offset;
         }
 
-        gameObject.SetActive(true);
-        StartSwingAnimation();
-    }
+        if (veniaDeFuera)
+        {
+            if (rect != null) rect.localScale = new Vector3(0.05f, 0.05f, 1f);
+        }
 
-    private void StartSwingAnimation()
-    {
-        timer = 0f;
+        targetScale = 1f;
+        swingTimer = 0f;
         currentAmplitude = initialAmplitude;
-        isAnimating = true;
-        if (rect != null) rect.rotation = Quaternion.identity;
     }
 
     void Update()
     {
-        if (!isAnimating || rect == null) return;
+        if (rect == null) return;
 
-        timer += Time.unscaledDeltaTime;
+        // 3. REVELACIÓN: En cuanto empieza a crecer y Unity ya pasó ese primer frame, le quitamos la invisibilidad.
+        if (canvasGroup != null && canvasGroup.alpha == 0f && currentScale > 0.4f)
+        {
+            canvasGroup.alpha = 1f;
+        }
 
-        // 1. Reducimos la amplitud con el tiempo (Damping)
-        currentAmplitude = Mathf.Lerp(currentAmplitude, 0f, Time.unscaledDeltaTime * dampingSpeed);
+        currentScale = Mathf.Lerp(currentScale, targetScale, Time.unscaledDeltaTime * scaleSpeed);
+        rect.localScale = new Vector3(currentScale, currentScale, 1f);
 
-        // 2. Calculamos el ángulo usando Seno
-        float angle = Mathf.Sin(timer * swingFrequency) * currentAmplitude;
-        rect.rotation = Quaternion.Euler(0f, 0f, angle);
-
-        // 3. Si el movimiento es ya imperceptible, lo paramos del todo
-        if (currentAmplitude < 0.1f)
+        if (currentAmplitude > 0.01f)
+        {
+            swingTimer += Time.unscaledDeltaTime;
+            currentAmplitude = Mathf.Lerp(currentAmplitude, 0f, Time.unscaledDeltaTime * dampingSpeed);
+            float angle = Mathf.Sin(swingTimer * swingFrequency) * currentAmplitude;
+            rect.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+        else
         {
             rect.rotation = Quaternion.identity;
-            isAnimating = false;
+        }
+
+        if (targetScale == 0f && currentScale < 0.4f)
+        {
+            currentScale = 0.4f; // Mantenemos la escala en el mismo punto de corte
+            rect.localScale = new Vector3(0.4f, 0.4f, 1f);
+            gameObject.SetActive(false);
         }
     }
 
-    public void Hide()
+    public void Hide(bool forceRigid = false)
     {
-        isAnimating = false;
-        if (rect != null) rect.rotation = Quaternion.identity;
-        gameObject.SetActive(false);
+        targetScale = 0f;
+
+        // Si forzamos la rigidez (porque compramos) O si el balanceo ya era pequeño
+        if (forceRigid || currentAmplitude < 3f)
+        {
+            currentAmplitude = 0f;
+
+            // Forzamos la rotación a 0 en este mismo frame para evitar que gire ni un milímetro más
+            if (rect != null) rect.rotation = Quaternion.identity;
+        }
     }
 
- 
+    public void ForceHide()
+    {
+        targetScale = 0f;
+        currentScale = 0.05f; // Nunca 0
+        currentAmplitude = 0f;
+
+        if (rect != null)
+        {
+            rect.localScale = new Vector3(0.05f, 0.05f, 1f); // Nunca Vector3.zero
+            rect.rotation = Quaternion.identity;
+        }
+        gameObject.SetActive(false);
+    }
 }

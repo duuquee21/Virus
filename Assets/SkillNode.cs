@@ -18,6 +18,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // Cooldown para prevenir doble clic
     private float lastClickTime = 0f;
     private const float CLICK_COOLDOWN = 0.3f; // 300ms
+    private bool isMouseHovered = false;
 
     public enum SkillEffectType
     {
@@ -1260,11 +1261,14 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 }
 
             case SkillEffectType.ActivarCoralInfeccioso:
-                if (unlocked)
-                    sb.AppendLine($"{GetTexto("status_unlocked")}");
-                else
-                    sb.AppendLine($"{GetTexto("coral_infec_desc")}"); // Crea esta clave en tu Localization
-                break;
+                {
+                    
+                    if (unlocked)
+                        sb.AppendLine($"{GetTexto("coral_estado")}: {GetTexto("activado")}");
+                    else
+                        sb.AppendLine($"{GetTexto("coral_estado")}: {GetTexto("desactivado")}");
+                    break;
+                }
 
             case SkillEffectType.ActivarHojaNegra:
                 if (comprado)
@@ -1365,19 +1369,54 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // --------------------------------------------------------------
     // MAGIA DE LA TRADUCCIÓN NATIVA 
     // --------------------------------------------------------------
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // 🛑 EVITAR QUE EL TOOLTIP SE MUESTRE SI ES EL NODO INICIAL
+        isMouseHovered = true;
+        MostrarTooltip();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isMouseHovered = false;
+        if (SkillTooltip.instance != null)
+            SkillTooltip.instance.Hide();
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        // Solo mostramos el tooltip por selección si NO estamos usando el ratón.
+        // Esto evita que el clic de compra reinicie el balanceo.
+        if (!isMouseHovered)
+        {
+            MostrarTooltip();
+        }
+
+        // Movemos la cámara
+        if (SkillTreeCameraUI.instance != null)
+        {
+            SkillTreeCameraUI.instance.EnfocarEnNodo(GetComponent<RectTransform>());
+        }
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        // Solo ocultamos al deseleccionar si el ratón NO está encima
+        if (!isMouseHovered && SkillTooltip.instance != null)
+        {
+            SkillTooltip.instance.Hide();
+        }
+    }
+
+    // Extraemos tu código original a esta función para que quede todo limpio
+    private void MostrarTooltip()
+    {
         if (isStartingNode) return;
 
         if (SkillTooltip.instance != null)
         {
-            // Busca la traducción en tu tabla TextosUI
             string localizedName = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", skillNameKey);
             string localizedDesc = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", descriptionKey);
 
-            // Si por algún motivo falta la traducción, mandamos la Key para no dejarlo en blanco
             if (string.IsNullOrEmpty(localizedName)) localizedName = skillNameKey;
             if (string.IsNullOrEmpty(localizedDesc)) localizedDesc = descriptionKey;
 
@@ -1385,7 +1424,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             if (!string.IsNullOrEmpty(preview))
             {
-                localizedDesc += "\n\n" + preview;
+                // 💡 Usamos <line-height=50%> (o el porcentaje/valor que prefieras) 
+                // para reducir el espacio del salto de línea antes de la preview.
+                localizedDesc += "<line-height=60%>\n\n</line-height>" + preview;
             }
 
             SkillTooltip.instance.Show(
@@ -1396,30 +1437,6 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             );
         }
     }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (SkillTooltip.instance != null)
-            SkillTooltip.instance.Hide();
-    }
-
-    // 🎮 MAGIA DEL MANDO
-    public void OnSelect(BaseEventData eventData)
-    {
-        OnPointerEnter(null);
-
-        // Movemos la cámara (la protección contra el ratón ahora está en SkillTreeCameraUI)
-        if (SkillTreeCameraUI.instance != null)
-        {
-            SkillTreeCameraUI.instance.EnfocarEnNodo(GetComponent<RectTransform>());
-        }
-    }
-
-    public void OnDeselect(BaseEventData eventData)
-    {
-        OnPointerExit(null);
-    }
-
     IEnumerator RebuildTree()
     {
         yield return null;
