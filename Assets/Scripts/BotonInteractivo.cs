@@ -109,6 +109,8 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
             if (imagenVisual != null) imagenVisual.color = colorFondoHover;
             if (texto != null) texto.color = colorTextoHover;
         }
+
+        ActivarEfecto();
     }
 
     public void OnPointerUp(PointerEventData eventData)
