@@ -67,10 +67,11 @@ public class MenuGamepadNavigator : MonoBehaviour
         }
 
         // 2. 🎮 DETECTAR MANDO
+        // 🛑 EL ARREGLO: Quitamos "Submit" y "Cancel" genéricos para que la barra espaciadora o el Enter 
+        // no te secuestren la cámara haciéndose pasar por un mando.
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
         bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
-                            Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel") ||
                             Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1);
 
         if (tocandoMando && usandoRaton)
