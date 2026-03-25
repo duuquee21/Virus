@@ -12,9 +12,9 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Image imagenVisual;
     private TextMeshProUGUI texto;
     private Quaternion rotacionOriginal;
-    private Vector3 escalaOriginal; // NUEVO: Guardar escala original
+    private Vector3 escalaOriginal;
     private Coroutine corrutinaActual;
-    private Coroutine corrutinaPop; // NUEVO: Corrutina separada para el pop
+    private Coroutine corrutinaPop;
 
     private Color colorFondoOriginal;
     private Color colorTextoOriginal;
@@ -38,9 +38,9 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public float velocidadGiro = 40f;
     public int repeticiones = 1;
 
-    [Header("Configuración del Pop (Click)")] // NUEVO: Sección para el pop
-    public float escalaPop = 1.1f; // Escala máxima a la que llegará
-    public float velocidadPop = 15f; // Velocidad de la animación
+    [Header("Configuración del Pop (Click)")]
+    public float escalaPop = 1.1f;
+    public float velocidadPop = 15f;
 
     void Awake()
     {
@@ -52,7 +52,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
             imagenVisual = elementoVisual.GetComponent<Image>();
             texto = elementoVisual.GetComponentInChildren<TextMeshProUGUI>();
             rotacionOriginal = elementoVisual.localRotation;
-            escalaOriginal = elementoVisual.localScale; // NUEVO: Inicializar escala original
+            escalaOriginal = elementoVisual.localScale;
 
             if (imagenVisual != null) colorFondoOriginal = imagenVisual.color;
             if (texto != null) colorTextoOriginal = texto.color;
@@ -65,7 +65,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (elementoVisual != null)
         {
             elementoVisual.localRotation = rotacionOriginal;
-            elementoVisual.localScale = escalaOriginal; // Asegurar escala correcta al activar
+            elementoVisual.localScale = escalaOriginal;
         }
     }
 
@@ -106,7 +106,7 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (MenuGamepadNavigator.usandoRaton)
         {
-            EjecutarSonidoClick();
+            // Cambiamos el color visualmente para indicar presión
             if (imagenVisual != null) imagenVisual.color = colorFondoHover;
             if (texto != null) texto.color = colorTextoHover;
         }
@@ -114,7 +114,20 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (MenuGamepadNavigator.usandoRaton) EjecutarEfectoSoltar();
+        if (MenuGamepadNavigator.usandoRaton)
+        {
+            // CORRECCIÓN: Solo ejecuta el efecto y el sonido si el ratón sigue dentro del botón
+            if (elPunteroEstaEncima)
+            {
+                EjecutarSonidoClick(); // El sonido ahora suena al soltar dentro
+                EjecutarEfectoSoltar();
+            }
+            else
+            {
+                // Si soltó fuera, nos aseguramos de que los colores vuelvan a la normalidad
+                ActualizarColoresPorEstado();
+            }
+        }
     }
 
     // 🎮 --- MANDO ---
@@ -177,7 +190,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (elementoVisual == null) return;
 
-        // NUEVO: Lanzar el efecto Pop de escala
         if (corrutinaPop != null) StopCoroutine(corrutinaPop);
         corrutinaPop = StartCoroutine(EfectoPopEscala());
 
@@ -207,21 +219,19 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
         estaSeleccionado = false;
         elPunteroEstaEncima = false;
         if (corrutinaActual != null) StopCoroutine(corrutinaActual);
-        if (corrutinaPop != null) StopCoroutine(corrutinaPop); // También resetear el pop
+        if (corrutinaPop != null) StopCoroutine(corrutinaPop);
 
         if (imagenVisual != null) imagenVisual.color = colorFondoOriginal;
         if (texto != null) texto.color = colorTextoOriginal;
-        if (elementoVisual != null) elementoVisual.localScale = escalaOriginal; // Resetear escala
+        if (elementoVisual != null) elementoVisual.localScale = escalaOriginal;
     }
 
     // --- CORRUTINAS ---
 
-    // NUEVO: Corrutina para el efecto Pop
     IEnumerator EfectoPopEscala()
     {
         Vector3 escalaObjetivo = escalaOriginal * escalaPop;
 
-        // Fase 1: Crecer (Pop!)
         float t = 0;
         while (t < 1f)
         {
@@ -229,17 +239,16 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
             elementoVisual.localScale = Vector3.Lerp(escalaOriginal, escalaObjetivo, t);
             yield return null;
         }
-        elementoVisual.localScale = escalaObjetivo; // Asegurar escala final del pop
+        elementoVisual.localScale = escalaObjetivo;
 
-        // Fase 2: Volver a la original
         t = 0;
         while (t < 1f)
         {
-            t += Time.unscaledDeltaTime * velocidadPop * 0.75f; // Un poco más lento al volver
+            t += Time.unscaledDeltaTime * velocidadPop * 0.75f;
             elementoVisual.localScale = Vector3.Lerp(escalaObjetivo, escalaOriginal, t);
             yield return null;
         }
-        elementoVisual.localScale = escalaOriginal; // Asegurar escala original final
+        elementoVisual.localScale = escalaOriginal;
         corrutinaPop = null;
     }
 
