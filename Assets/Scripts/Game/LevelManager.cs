@@ -94,6 +94,10 @@ public class LevelManager : MonoBehaviour
     private int lastActiveMapIndex = -1;
     private PopulationManager cachedPopManager;
 
+    // --- NUEVAS VARIABLES PARA LA ANIMACIÓN ---
+    private float visualCoins; // El número que se ve actualmente
+    private Coroutine coinAnimationCoroutine;
+
     // Añade esto en EndDayResultsPanel
 
     // Añade esto cerca de las otras variables de estado
@@ -143,6 +147,8 @@ public class LevelManager : MonoBehaviour
         {
             timerIconOriginalScale = timerIcon.rectTransform.localScale;
         }
+
+        visualCoins = contagionCoins;
     }
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
@@ -189,7 +195,7 @@ public class LevelManager : MonoBehaviour
         set
         {
             contagionCoins = value;
-            UpdateCoinsUI();
+            UpdateUI(); // Llamamos a UpdateUI que ahora gestiona la animación
         }
     }
 
@@ -1157,9 +1163,42 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateUI()
     {
+        // Si ya hay una animación corriendo, la paramos para empezar la nueva
+        if (coinAnimationCoroutine != null) StopCoroutine(coinAnimationCoroutine);
+        coinAnimationCoroutine = StartCoroutine(AnimateCoins());
+    }
+    private IEnumerator AnimateCoins()
+    {
+        // Velocidad de la animación: puedes ajustar el '0.5f' 
+        // Cuanto menor sea el número, más rápido llegará al destino
+        float duration = 0.5f;
+        float elapsed = 0f;
+        float startValue = visualCoins;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // unscaled para que funcione aunque el juego esté en pausa o slow motion
+
+            // Interpolación lineal entre el valor actual y el objetivo
+            visualCoins = Mathf.Lerp(startValue, contagionCoins, elapsed / duration);
+
+            // Actualizamos todos los textos con el valor redondeado
+            string coinText = $"{GetTexto("txt_monedas_ui")}: {Mathf.FloorToInt(visualCoins)}";
+
+            foreach (var t in contagionCoinsTexts)
+            {
+                if (t != null) t.text = coinText;
+            }
+
+            yield return null;
+        }
+
+        // Al terminar, nos aseguramos de que el valor sea exacto
+        visualCoins = contagionCoins;
         foreach (var t in contagionCoinsTexts)
-            if (t != null)
-                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
+        {
+            if (t != null) t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
+        }
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }
