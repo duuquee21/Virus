@@ -40,10 +40,16 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
         bool currentlyLocked = !IsParentUnlocked();
         wasLockedByParent = currentlyLocked;
 
-      
+        // IMPORTANTE: Forzar el refresco de escala al inicio
         RefreshScale();
-    }
 
+        // Asegurar que si no está comprado, la escala sea 1 inmediatamente
+        if (!IsAtLimit())
+        {
+            transform.localScale = Vector3.one;
+        }
+    }
+   
     void Update()
     {
         if (skillNode == null || LevelManager.instance == null) return;
@@ -106,6 +112,7 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
     {
         if (nodeImage != null && sprite != null)
         {
+            // Solo disparamos la animación si pasamos de estar bloqueado a estar disponible
             if (wasLockedByParent && !isCurrentlyLocked)
             {
                 nodeImage.sprite = sprite;
@@ -114,6 +121,8 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
             else if (nodeImage.sprite != sprite)
             {
                 nodeImage.sprite = sprite;
+                // Si no hay animación, nos aseguramos de que la escala sea 1
+                if (animationCoroutine == null) transform.localScale = Vector3.one;
             }
         }
 
@@ -150,18 +159,20 @@ public class SkillNodeStateController : MonoBehaviour, IPointerEnterHandler, IPo
 
             yield return null;
         }
+        yield return new WaitForEndOfFrame();
+
         var fx = GetComponent<SkillNodeHoverFX>();
         if (fx != null)
         {
-            transform.localScale = fx.purchasedScale < 1f && IsAtLimit() ?
-                                   Vector3.one * fx.purchasedScale : Vector3.one;
+            // En lugar de mover el transform a mano, actualizamos el estado del FX
+            // para que su Lerp se encargue de mantenerlo ahí.
+            fx.SetPurchasedState(IsAtLimit());
         }
         else
         {
-            transform.localScale = Vector3.one;
+            transform.localScale = IsAtLimit() ? Vector3.one * overshootFactor : Vector3.one;
         }
 
-        animationCoroutine = null;
     }
 
     bool IsParentUnlocked()

@@ -31,6 +31,15 @@ public class BlackSwordSpawner : MonoBehaviour
     public float multiplicadorVelocidadFinal = 3f;
     public float multiplicadorGrosorFinal = 3f;
 
+    [Header("Audio")]
+    public AudioClip sonidoSpawn;
+    [Range(0f, 1f)] public float volumenAudio = 1f;
+    private AudioSource miAudioSource;
+
+    void Awake()
+    {
+        miAudioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
         if (Guardado.instance.hojaNegraData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
@@ -53,6 +62,11 @@ public class BlackSwordSpawner : MonoBehaviour
         Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
         GameObject slash = Instantiate(slashPrefab, posicionSpawn, randomRotation);
+        if (sonidoSpawn != null && miAudioSource != null)
+        {
+            // Esto ignora la posición 3D si lo configuras como 2D
+            miAudioSource.PlayOneShot(sonidoSpawn, volumenAudio);
+        }
         SpriteRenderer sr = slash.GetComponent<SpriteRenderer>();
         Transform t = slash.transform;
 
