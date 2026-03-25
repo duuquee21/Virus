@@ -36,12 +36,16 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     // 🖱️ --- RATÓN ---
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // 🛡️ PROTECCIÓN: Solo se activa si el sistema confirma que el ratón manda
-        // Esto evita que el botón "brille" solo porque el cursor estaba ahí quieto al abrirse el panel
-        if (MenuGamepadNavigator.usandoRaton)
+        // Forzamos al juego a entrar en modo ratón inmediatamente
+        MenuGamepadNavigator.usandoRaton = true;
+
+        // Limpiamos cualquier botón que el mando tuviera seleccionado por ahí
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
         {
-            ActivarEfecto();
+            EventSystem.current.SetSelectedGameObject(null);
         }
+
+        ActivarEfecto();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -52,7 +56,15 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     // 🎮 --- MANDO ---
     public void OnSelect(BaseEventData eventData)
     {
-        // 🛡️ PROTECCIÓN: Si estamos con ratón, el mando NO puede activar el efecto visual
+        // 🛡️ EL PARCHE DEFINITIVO:
+        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f ||
+            Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f ||
+            Input.GetButton("Submit"))
+        {
+            MenuGamepadNavigator.usandoRaton = false; // Forzamos el modo mando
+        }
+
+        // Si estamos en modo ratón, ignoramos la selección para no molestar
         if (MenuGamepadNavigator.usandoRaton) return;
 
         ActivarEfecto();
