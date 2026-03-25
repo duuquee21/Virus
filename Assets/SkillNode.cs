@@ -374,8 +374,20 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     // 🌟 NUEVA FUNCIÓN PARA EL MANDO: Salto automático al nodo más cercano
+    // 🌟 NUEVA FUNCIÓN PARA EL MANDO: Salto automático al nodo más cercano
     private void SaltarAlNodoMasCercano()
     {
+        // 🛑 EL ARREGLO: Si el jugador está usando el ratón, NO saltamos automáticamente.
+        // Lo dejamos libre para que mueva el ratón a donde quiera.
+        if (MenuGamepadNavigator.usandoRaton)
+        {
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null); // Vaciamos por si acaso
+            }
+            return; // Abortamos la misión de salto
+        }
+
         SkillNode[] todosLosNodos = FindObjectsOfType<SkillNode>();
         Button botonMasCercano = null;
         float distanciaMinima = float.MaxValue;
