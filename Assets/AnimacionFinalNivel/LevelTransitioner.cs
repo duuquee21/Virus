@@ -415,23 +415,9 @@ public class LevelTransitioner : MonoBehaviour
                 yield return null;
             }
 
-            // SPAWN DE PERSONAS
-            for (int j = 0; j < personasPorPulso; j++)
-            {
-                Vector2 offset = UnityEngine.Random.insideUnitCircle * 0.5f;
-                Vector3 spawnPos = centroEfecto + (Vector3)offset;
-                GameObject persona = popManager.SpawnPersonAtPosition(spawnPos, true);
+         
 
-                if (persona != null)
-                {
-                    Rigidbody2D rb = persona.GetComponent<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        rb.linearVelocity = Vector2.zero;
-                        rb.AddForce(offset.normalized * 3f, ForceMode2D.Impulse);
-                    }
-                }
-            }
+          
         }
 
         // --- 3. PREPARACIÓN PARA LA EXPLOSIÓN FINAL ---

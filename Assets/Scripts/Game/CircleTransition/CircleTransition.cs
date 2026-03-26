@@ -4,16 +4,24 @@ using UnityEngine.UI;
 
 namespace Collections.Shaders.ShapeTransition
 {
+    // 1. EL ENUM DEBE ESTAR AQUÍ (DENTRO DEL NAMESPACE)
     public enum TransitionShape { Circle = 0, Hexagon = 1, Pentagon = 2 }
 
     public class ShapeTransition : MonoBehaviour
     {
-        public TransitionShape selectedShape; // Aparecerá como un dropdown en Unity
-        private Image _blackScreen;
+        public TransitionShape selectedShape; // Ahora ya debería reconocerlo
 
+        [Header("Settings")]
+        [SerializeField] private float transitionDuration = 0.7f;
+        [SerializeField] private float rotationAmount = 3.14f;
+
+        private Image _blackScreen;
+        private bool _isOpen = true;
+        private Coroutine _currentTransition;
+
+        // IDs de las propiedades del Shader
         private static readonly int RADIUS = Shader.PropertyToID("_Radius");
-        private static readonly int CENTER_X = Shader.PropertyToID("_CenterX");
-        private static readonly int CENTER_Y = Shader.PropertyToID("_CenterY");
+        private static readonly int ROTATION = Shader.PropertyToID("_Rotation");
         private static readonly int ASPECT = Shader.PropertyToID("_Aspect");
         private static readonly int SHAPE = Shader.PropertyToID("_Shape");
 
@@ -25,64 +33,80 @@ namespace Collections.Shaders.ShapeTransition
         private void Start()
         {
             UpdateShaderProperties();
-            _blackScreen.material.SetFloat(RADIUS, 1.5f); // Totalmente abierto
+            // Estado inicial: abierto
+            _blackScreen.material.SetFloat(RADIUS, 1.5f);
+            _blackScreen.material.SetFloat(ROTATION, 0f);
+            _isOpen = true;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) OpenBlackScreen();
-            if (Input.GetKeyDown(KeyCode.Alpha2)) CloseBlackScreen();
+            // Control con la tecla P
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ToggleTransition();
+            }
+        }
+
+        public void ToggleTransition()
+        {
+            if (_isOpen) CloseBlackScreen();
+            else OpenBlackScreen();
+
+            _isOpen = !_isOpen;
         }
 
         public void OpenBlackScreen()
         {
             UpdateShaderProperties();
-            StartCoroutine(Transition(0.6f, 0, 1.5f));
+            if (_currentTransition != null) StopCoroutine(_currentTransition);
+            // Va desde cerrado (0) hasta abierto (1.5)
+            _currentTransition = StartCoroutine(Transition(0f, 1.5f, rotationAmount, 0f));
         }
 
         public void CloseBlackScreen()
         {
             UpdateShaderProperties();
-            // Cambiamos el valor final de 0 a -0.1f para asegurar que la forma desaparezca del todo
-            StartCoroutine(Transition(0.6f, 1.5f, -0.1f));
+            if (_currentTransition != null) StopCoroutine(_currentTransition);
+            // Va desde abierto (1.5) hasta cerrado (-0.1)
+            _currentTransition = StartCoroutine(Transition(1.5f, -0.1f, 0f, rotationAmount));
+        }
+
+        private IEnumerator Transition(float startRad, float endRad, float startRot, float endRot)
+        {
+            var mat = _blackScreen.material;
+            float time = 0f;
+            while (time < transitionDuration)
+            {
+                time += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(time / transitionDuration);
+
+                // Suavizado de movimiento (Ease In Out)
+                float smoothT = t * t * (3f - 2f * t);
+
+                mat.SetFloat(RADIUS, Mathf.Lerp(startRad, endRad, smoothT));
+                mat.SetFloat(ROTATION, Mathf.Lerp(startRot, endRot, smoothT));
+
+                yield return null;
+            }
+            mat.SetFloat(RADIUS, endRad);
+            mat.SetFloat(ROTATION, endRot);
+            _currentTransition = null;
         }
 
         private void UpdateShaderProperties()
         {
+            if (_blackScreen == null) return;
             var mat = _blackScreen.material;
-            mat.SetFloat(CENTER_X, 0.5f);
-            mat.SetFloat(CENTER_Y, 0.5f);
             mat.SetFloat(ASPECT, (float)Screen.width / Screen.height);
-
-            // Enviamos el índice del Enum (0, 1 o 2) al shader
             mat.SetInt(SHAPE, (int)selectedShape);
         }
 
-        private IEnumerator Transition(float duration, float start, float end)
-        {
-            var mat = _blackScreen.material;
-            float time = 0f;
-            while (time < duration)
-            {
-                time += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(time / duration);
-                float smoothT = t * t * (3f - 2f * t);
-                mat.SetFloat(RADIUS, Mathf.Lerp(start, end, smoothT));
-                yield return null;
-            }
-            mat.SetFloat(RADIUS, end);
-        }
-
-        // Añade esto a tu script de transición (el que está en el namespace Collections.Shaders.CircleTransition)
+        // Método por si quieres cambiar la forma por código (ej. desde un botón)
         public void SetShape(int shapeIndex)
         {
-            // 1. Actualizamos la variable interna para que UpdateShaderProperties use el valor correcto
             selectedShape = (TransitionShape)shapeIndex;
-
-            // 2. Aplicamos al material inmediatamente
-            var mat = _blackScreen.material;
-            mat.SetInt(SHAPE, shapeIndex);
-            mat.SetFloat(ASPECT, (float)Screen.width / Screen.height);
+            UpdateShaderProperties();
         }
     }
 }

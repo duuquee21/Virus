@@ -39,7 +39,8 @@ public class LevelManager : MonoBehaviour
     public GameObject zonePanel;  // Panel de Selección de Mapas
     public GameObject pausePanel;
     public GameObject pauseFirstSelectedButton; // <-- NUEVO: EL BOTÓN QUE SELECCIONA EL MANDO AL PAUSAR
-
+    public GameObject settingsPanel;
+    public GameObject settingsFirstSelectedButton;
     [Header("UI Text (Listas)")]
     public List<TextMeshProUGUI> timerTexts = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> sessionScoreTexts = new List<TextMeshProUGUI>();
@@ -95,6 +96,10 @@ public class LevelManager : MonoBehaviour
     private int lastActiveMapIndex = -1;
     private PopulationManager cachedPopManager;
 
+    // --- NUEVAS VARIABLES PARA LA ANIMACIÓN ---
+    private float visualCoins; // El número que se ve actualmente
+    private Coroutine coinAnimationCoroutine;
+
     // Añade esto en EndDayResultsPanel
 
     // Añade esto cerca de las otras variables de estado
@@ -144,6 +149,8 @@ public class LevelManager : MonoBehaviour
         {
             timerIconOriginalScale = timerIcon.rectTransform.localScale;
         }
+
+        visualCoins = contagionCoins;
     }
 
     // --- FUNCIONES DE CONTROL DE PANELES (RESTAURADAS) ---
@@ -190,7 +197,7 @@ public class LevelManager : MonoBehaviour
         set
         {
             contagionCoins = value;
-            UpdateCoinsUI();
+            UpdateUI(); // Llamamos a UpdateUI que ahora gestiona la animación
         }
     }
 
@@ -339,7 +346,11 @@ public class LevelManager : MonoBehaviour
         // Inyectamos el Hexágono (1)
         if (transitionScript != null) transitionScript.SetShape(1);
 
-        StartCoroutine(TransitionRoutine(menuPanel, null, true));
+        // 🛑 EL ARREGLO: 
+        // Si el panel de ajustes está abierto, cerramos ese. Si no, cerramos el menú principal.
+        GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
+
+        StartCoroutine(TransitionRoutine(panelToClose, null, true));
     }
     void ForceHardReset()
     {
@@ -1165,9 +1176,42 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateUI()
     {
+        // Si ya hay una animación corriendo, la paramos para empezar la nueva
+        if (coinAnimationCoroutine != null) StopCoroutine(coinAnimationCoroutine);
+        coinAnimationCoroutine = StartCoroutine(AnimateCoins());
+    }
+    private IEnumerator AnimateCoins()
+    {
+        // Velocidad de la animación: puedes ajustar el '0.5f' 
+        // Cuanto menor sea el número, más rápido llegará al destino
+        float duration = 0.5f;
+        float elapsed = 0f;
+        float startValue = visualCoins;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // unscaled para que funcione aunque el juego esté en pausa o slow motion
+
+            // Interpolación lineal entre el valor actual y el objetivo
+            visualCoins = Mathf.Lerp(startValue, contagionCoins, elapsed / duration);
+
+            // Actualizamos todos los textos con el valor redondeado
+            string coinText = $"{GetTexto("txt_monedas_ui")}: {Mathf.FloorToInt(visualCoins)}";
+
+            foreach (var t in contagionCoinsTexts)
+            {
+                if (t != null) t.text = coinText;
+            }
+
+            yield return null;
+        }
+
+        // Al terminar, nos aseguramos de que el valor sea exacto
+        visualCoins = contagionCoins;
         foreach (var t in contagionCoinsTexts)
-            if (t != null)
-                t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
+        {
+            if (t != null) t.text = $"{GetTexto("txt_monedas_ui")}: {contagionCoins}";
+        }
     }
 
     public void LostToMenu() { ResetRunData(); ShowMainMenu(); }
@@ -1467,7 +1511,8 @@ public class LevelManager : MonoBehaviour
         // 1. Si el panel de resultados tiene monedas pendientes, procesar animación primero
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
-            EndDayResultsPanel.instance.StartCoinTransfer(() => {
+            EndDayResultsPanel.instance.StartCoinTransfer(() =>
+            {
                 // Una vez terminadas las monedas, lanzamos la transición al árbol
                 StartCoroutine(TransitionToSkillTree());
             });
@@ -1775,6 +1820,65 @@ public class LevelManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+
+    }
+
+    // =========================================================
+    // ⚙️ FUNCIONES DEL MENÚ DE AJUSTES ⚙️
+    // =========================================================
+
+    public void OpenSettingsPanel()
+    {
+        if (pausePanel != null && pausePanel.activeSelf) pausePanel.SetActive(false);
+        if (menuPanel != null && menuPanel.activeSelf) menuPanel.SetActive(false);
+
+        if (settingsPanel != null) settingsPanel.SetActive(true);
+
+        if (!MenuGamepadNavigator.usandoRaton)
+        {
+            if (settingsFirstSelectedButton != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(settingsFirstSelectedButton);
+            }
+        }
+        else
+        {
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+    }
+
+    public void CloseSettingsPanel()
+    {
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+
+        if (isGameActive)
+        {
+            if (pausePanel != null) pausePanel.SetActive(true);
+
+            if (!MenuGamepadNavigator.usandoRaton)
+            {
+                if (pauseFirstSelectedButton != null && EventSystem.current != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(pauseFirstSelectedButton);
+                }
+            }
+            else
+            {
+                if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+        else
+        {
+            if (menuPanel != null) menuPanel.SetActive(true);
+
+            if (MenuGamepadNavigator.usandoRaton && EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }

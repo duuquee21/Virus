@@ -838,7 +838,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (Guardado.instance != null && PopulationManager.instance != null)
         {
-            if (PopulationManager.instance.GetTotalPopulationCount() > 50)
+            if (PopulationManager.instance.GetTotalPopulationCount() > 70)
                 return;
 
             float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;

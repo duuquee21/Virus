@@ -33,6 +33,7 @@ Material:
     - _CenterX: 0.5
     - _CenterY: 0.5
     - _Radius: 1.5
+    - _Rotation: 0
     - _Roundness: 0.1
     - _Shape: 1
     m_Colors:
