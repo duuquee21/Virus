@@ -20,7 +20,6 @@ public class MenuGamepadNavigator : MonoBehaviour
     private float lastMoveTime;
     private Selectable lastSelected;
 
-    // Memoria global
     public static Vector3 lastMousePosition;
     public static bool usandoRaton = true;
 
@@ -28,7 +27,10 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         lastMousePosition = Input.mousePosition;
 
-        // Solo si sabemos con certeza que usa mando, seleccionamos algo al abrir
+        // 🛑 NUEVO: Borramos la memoria siempre al abrir un menú nuevo. 
+        // Así evitamos que intente seleccionar botones de otros menús que ya están cerrados.
+        lastSelected = null;
+
         if (!usandoRaton)
         {
             EnsureInitialSelection();
@@ -39,7 +41,6 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         if (EventSystem.current == null) return;
 
-        // 1. 🖱️ DETECTAR RATÓN (Con pequeño margen para evitar vibraciones de la mesa)
         Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
         bool ratonMovido = mouseDelta.sqrMagnitude > 2.0f;
         bool clicRaton = Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2);
@@ -48,14 +49,16 @@ public class MenuGamepadNavigator : MonoBehaviour
         {
             if (!usandoRaton)
             {
-                usandoRaton = true; // Volvemos a modo ratón
+                usandoRaton = true;
 
-                // 🛑 APAGADO FORZOSO DEL BOTÓN
+                // 🛑 AHORA TAMBIÉN APAGA LOS NODOS DEL ÁRBOL 🛑
                 if (lastSelected != null)
                 {
-                    // ¡AQUÍ ESTABA EL ERROR! Ahora sí busca tu BotonInteractivo
                     var botonScript = lastSelected.GetComponent<BotonInteractivo>();
                     if (botonScript != null) botonScript.OnDeselect(null);
+
+                    var skillScript = lastSelected.GetComponent<SkillNode>();
+                    if (skillScript != null) skillScript.OnDeselect(null);
                 }
 
                 if (EventSystem.current.currentSelectedGameObject != null)
@@ -66,9 +69,6 @@ public class MenuGamepadNavigator : MonoBehaviour
             lastMousePosition = Input.mousePosition;
         }
 
-        // 2. 🎮 DETECTAR MANDO
-        // 🛑 EL ARREGLO: Quitamos "Submit" y "Cancel" genéricos para que la barra espaciadora o el Enter 
-        // no te secuestren la cámara haciéndose pasar por un mando.
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
         bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
@@ -76,9 +76,8 @@ public class MenuGamepadNavigator : MonoBehaviour
 
         if (tocandoMando && usandoRaton)
         {
-            usandoRaton = false; // Pasamos a modo mando
+            usandoRaton = false;
 
-            // 💡 ENCENDIDO FORZOSO DEL BOTÓN
             GameObject botonGuardado = lastSelected != null ? lastSelected.gameObject : null;
             EventSystem.current.SetSelectedGameObject(null);
 
@@ -92,7 +91,6 @@ public class MenuGamepadNavigator : MonoBehaviour
             }
         }
 
-        // 3. LÓGICA INTELIGENTE DE SELECCIÓN
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             if (!usandoRaton) HandleCancel();
@@ -111,8 +109,77 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         if (EventSystem.current == null) return;
 
-        // ¡SEGUNDO ERROR ARREGLADO! Ahora usamos nuestro propio Select para que se guarde en lastSelected
-        if (firstSelectable != null)
+        // 🌟 LA MAGIA DEL ÁRBOL DE HABILIDADES 🌟
+        // Buscamos si estamos en un menú que tenga nodos de habilidad
+        SkillNode[] nodosArbol = FindObjectsOfType<SkillNode>();
+
+        if (nodosArbol.Length > 0)
+        {
+            SkillNode mejorNodo = null;
+            float distanciaMinima = float.MaxValue;
+
+            // Usamos el centro de la pantalla como punto de mira
+            Vector2 centroPantalla = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+            // PASO 1: Buscar el nodo más cercano QUE PODAMOS PAGAR
+            foreach (SkillNode nodo in nodosArbol)
+            {
+                // Solo nos interesan nodos visibles y que se puedan pulsar (desbloqueados o siguientes en la rama)
+                if (nodo.button == null || !nodo.gameObject.activeInHierarchy || !nodo.button.interactable) continue;
+
+                // Chequeamos si el jugador tiene monedas suficientes para este nodo
+                bool puedePagar = false;
+                if (LevelManager.instance != null)
+                {
+                    puedePagar = LevelManager.instance.ContagionCoins >= nodo.CoinCost;
+                }
+
+                if (puedePagar)
+                {
+                    // Calculamos cuál está más cerca del centro de la pantalla ahora mismo
+                    Vector2 posicionPantalla = RectTransformUtility.WorldToScreenPoint(null, nodo.transform.position);
+                    float distancia = Vector2.Distance(centroPantalla, posicionPantalla);
+
+                    if (distancia < distanciaMinima)
+                    {
+                        distanciaMinima = distancia;
+                        mejorNodo = nodo;
+                    }
+                }
+            }
+
+            // Si encontró uno perfecto (comprable), lo selecciona, centra la cámara y corta aquí
+            if (mejorNodo != null)
+            {
+                Select(mejorNodo.button);
+                return;
+            }
+
+            // PASO 2: Si somos pobres y no podemos pagar nada, pillamos el nodo interactuable más cercano al centro
+            distanciaMinima = float.MaxValue;
+            foreach (SkillNode nodo in nodosArbol)
+            {
+                if (nodo.button == null || !nodo.gameObject.activeInHierarchy || !nodo.button.interactable) continue;
+
+                Vector2 posicionPantalla = RectTransformUtility.WorldToScreenPoint(null, nodo.transform.position);
+                float distancia = Vector2.Distance(centroPantalla, posicionPantalla);
+
+                if (distancia < distanciaMinima)
+                {
+                    distanciaMinima = distancia;
+                    mejorNodo = nodo;
+                }
+            }
+
+            if (mejorNodo != null)
+            {
+                Select(mejorNodo.button);
+                return;
+            }
+        }
+
+        // --- LÓGICA ORIGINAL PARA OTROS MENÚS (Ajustes, Pantalla de Título, etc.) ---
+        if (firstSelectable != null && firstSelectable.gameObject.activeInHierarchy && firstSelectable.interactable)
         {
             Select(firstSelectable);
         }
@@ -131,7 +198,6 @@ public class MenuGamepadNavigator : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         Selectable current = GetCurrentSelectable();
 
-        // ⬆️⬇️ NAVEGACIÓN VERTICAL (Arriba y Abajo)
         if (Mathf.Abs(vertical) >= axisThreshold && current != null)
         {
             if (vertical > 0)
@@ -150,7 +216,6 @@ public class MenuGamepadNavigator : MonoBehaviour
             return;
         }
 
-        // ⬅️➡️ NAVEGACIÓN HORIZONTAL (Izquierda y Derecha)
         if (Mathf.Abs(horizontal) >= axisThreshold)
         {
             if (current is Slider slider)
@@ -159,7 +224,7 @@ public class MenuGamepadNavigator : MonoBehaviour
                 slider.value = Mathf.Clamp(slider.value, slider.minValue, slider.maxValue);
                 slider.onValueChanged?.Invoke(slider.value);
             }
-            else if (current is TMP_Dropdown dropdown) // (Por si te queda algún dropdown viejo)
+            else if (current is TMP_Dropdown dropdown)
             {
                 int next = dropdown.value + (horizontal > 0 ? 1 : -1);
                 if (next < 0) next = dropdown.options.Count - 1;
@@ -168,7 +233,6 @@ public class MenuGamepadNavigator : MonoBehaviour
                 dropdown.RefreshShownValue();
                 dropdown.onValueChanged?.Invoke(next);
             }
-            // 🌟 AQUI ESTÁ LA MAGIA PARA TU NUEVA RULETA 🌟
             else if (current != null)
             {
                 var selectorHorizontal = current.GetComponent<SelectorHorizontalUI>();
@@ -208,11 +272,13 @@ public class MenuGamepadNavigator : MonoBehaviour
     {
         if (selectable == null || EventSystem.current == null) return;
 
-        // Si venimos de otro botón, lo apagamos
         if (lastSelected != null && lastSelected.gameObject != selectable.gameObject)
         {
             var oldEffect = lastSelected.GetComponent<BotonInteractivo>();
             if (oldEffect != null) oldEffect.OnDeselect(null);
+
+            var oldSkill = lastSelected.GetComponent<SkillNode>();
+            if (oldSkill != null) oldSkill.OnDeselect(null);
 
             var oldSelectable = lastSelected.GetComponent<Selectable>();
             if (oldSelectable != null)
@@ -221,19 +287,19 @@ public class MenuGamepadNavigator : MonoBehaviour
             }
         }
 
-        // Seleccionamos el nuevo
         EventSystem.current.SetSelectedGameObject(selectable.gameObject);
 
-        // Encendemos el nuevo
         var newEffect = selectable.GetComponent<BotonInteractivo>();
         if (newEffect != null) newEffect.OnSelect(null);
+
+        var newSkill = selectable.GetComponent<SkillNode>();
+        if (newSkill != null) newSkill.OnSelect(null);
 
         if (selectable.transition == Selectable.Transition.SpriteSwap || selectable.transition == Selectable.Transition.ColorTint)
         {
             selectable.OnSelect(new BaseEventData(EventSystem.current));
         }
 
-        // GUARDAMOS EN MEMORIA
         lastSelected = selectable;
     }
 

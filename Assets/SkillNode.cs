@@ -1381,8 +1381,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     // --------------------------------------------------------------
     // MAGIA DE LA TRADUCCIÓN NATIVA 
     // --------------------------------------------------------------
+    // --------------------------------------------------------------
+    // LÓGICA DE RATÓN / MANDO Y TOOLTIPS
+    // --------------------------------------------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 🛑 PARCHE: Forzamos el modo ratón y limpiamos selecciones fantasma
+        MenuGamepadNavigator.usandoRaton = true;
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
         isMouseHovered = true;
         MostrarTooltip();
     }
@@ -1396,8 +1406,17 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnSelect(BaseEventData eventData)
     {
-        // Solo mostramos el tooltip por selección si NO estamos usando el ratón.
-        // Esto evita que el clic de compra reinicie el balanceo.
+        // 🛑 PARCHE DEFINITIVO: Le preguntamos al mando si de verdad tiene el control
+        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f ||
+            Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f ||
+            Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            MenuGamepadNavigator.usandoRaton = false;
+        }
+
+        // Si es ratón, bloqueamos el auto-foco de la cámara y los tooltips duplicados
+        if (MenuGamepadNavigator.usandoRaton) return;
+
         if (!isMouseHovered)
         {
             MostrarTooltip();
