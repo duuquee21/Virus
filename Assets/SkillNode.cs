@@ -1274,20 +1274,18 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.ActivarCoralInfeccioso:
                 {
-                    
-                    if (unlocked)
-                        sb.AppendLine($"{GetTexto("coral_estado")}: {GetTexto("activado")}");
-                    else
-                        sb.AppendLine($"{GetTexto("coral_estado")}: {GetTexto("desactivado")}");
+                    // Elegimos si la palabra es activado o desactivado según el bool
+                    string estadoCoral = unlocked ? GetTexto("activado") : GetTexto("desactivado");
+                    sb.AppendLine($"{GetTexto("coral_estado")}: {estadoCoral}");
                     break;
                 }
 
             case SkillEffectType.ActivarHojaNegra:
-                if (comprado)
-                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("activado")}");
-                else
-                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {GetTexto("desactivado")}");
-                break;
+                {
+                    string estadoHoja = comprado ? GetTexto("activado") : GetTexto("desactivado");
+                    sb.AppendLine($"{GetTexto("hojanegra_estado")}: {estadoHoja}");
+                    break;
+                }
 
             case SkillEffectType.MejorarSpawnHojaNegra:
                 {

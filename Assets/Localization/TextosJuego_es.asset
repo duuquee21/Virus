@@ -663,15 +663,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: Ganado Por Zona
+    m_Localized: ATRAPADAS
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: Gamado Por Pared
+    m_Localized: PARED INFECTA
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: Ganado Por Carambolas
+    m_Localized: CARAMBOLA
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -780,7 +780,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1820888534929408
-    m_Localized: "Da\xF1o Total"
+    m_Localized: "DA\xD1O"
     m_Metadata:
       m_Items: []
   - m_Id: 1824803229847552
@@ -1024,6 +1024,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6455552390254592
     m_Localized: "Atr\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993568980992
+    m_Localized: Estado del coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952512
+    m_Localized: Estado de la hoja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952513
+    m_Localized: Activado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952514
+    m_Localized: Desactivado
     m_Metadata:
       m_Items: []
   references:
