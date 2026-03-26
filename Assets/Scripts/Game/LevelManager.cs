@@ -38,7 +38,8 @@ public class LevelManager : MonoBehaviour
     public GameObject zonePanel;  // Panel de Selección de Mapas
     public GameObject pausePanel;
     public GameObject pauseFirstSelectedButton; // <-- NUEVO: EL BOTÓN QUE SELECCIONA EL MANDO AL PAUSAR
-
+    public GameObject settingsPanel;
+    public GameObject settingsFirstSelectedButton;
     [Header("UI Text (Listas)")]
     public List<TextMeshProUGUI> timerTexts = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> sessionScoreTexts = new List<TextMeshProUGUI>();
@@ -344,7 +345,11 @@ public class LevelManager : MonoBehaviour
         // Inyectamos el Hexágono (1)
         if (transitionScript != null) transitionScript.SetShape(1);
 
-        StartCoroutine(TransitionRoutine(menuPanel, null, true));
+        // 🛑 EL ARREGLO: 
+        // Si el panel de ajustes está abierto, cerramos ese. Si no, cerramos el menú principal.
+        GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
+
+        StartCoroutine(TransitionRoutine(panelToClose, null, true));
     }
     void ForceHardReset()
     {
@@ -1498,7 +1503,8 @@ public class LevelManager : MonoBehaviour
         // 1. Si el panel de resultados tiene monedas pendientes, procesar animación primero
         if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
-            EndDayResultsPanel.instance.StartCoinTransfer(() => {
+            EndDayResultsPanel.instance.StartCoinTransfer(() =>
+            {
                 // Una vez terminadas las monedas, lanzamos la transición al árbol
                 StartCoroutine(TransitionToSkillTree());
             });
@@ -1806,6 +1812,65 @@ public class LevelManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+
+    }
+
+    // =========================================================
+    // ⚙️ FUNCIONES DEL MENÚ DE AJUSTES ⚙️
+    // =========================================================
+
+    public void OpenSettingsPanel()
+    {
+        if (pausePanel != null && pausePanel.activeSelf) pausePanel.SetActive(false);
+        if (menuPanel != null && menuPanel.activeSelf) menuPanel.SetActive(false);
+
+        if (settingsPanel != null) settingsPanel.SetActive(true);
+
+        if (!MenuGamepadNavigator.usandoRaton)
+        {
+            if (settingsFirstSelectedButton != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(settingsFirstSelectedButton);
+            }
+        }
+        else
+        {
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+    }
+
+    public void CloseSettingsPanel()
+    {
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+
+        if (isGameActive)
+        {
+            if (pausePanel != null) pausePanel.SetActive(true);
+
+            if (!MenuGamepadNavigator.usandoRaton)
+            {
+                if (pauseFirstSelectedButton != null && EventSystem.current != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(pauseFirstSelectedButton);
+                }
+            }
+            else
+            {
+                if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+        else
+        {
+            if (menuPanel != null) menuPanel.SetActive(true);
+
+            if (MenuGamepadNavigator.usandoRaton && EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }
