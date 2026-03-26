@@ -1,32 +1,33 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
-public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+// üéÆ A√ëADIDO: ISelectHandler, IDeselectHandler (para moverse) y ISubmitHandler (para pulsar con el mando)
+public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
 {
-    [Header("ConfiguraciÛn de RotaciÛn (Hex·gono)")]
+    [Header("Configuraci√≥n de Rotaci√≥n (Hex√°gono)")]
     public Vector3 velocidadRotacionMax = new Vector3(0, 0, 100);
     [Range(0.1f, 20f)] public float suavizadoRegresoRotacion = 10f;
     [Range(0.1f, 10f)] public float suavizadoFrenadoRotacion = 2f;
 
-    [Header("ConfiguraciÛn de PosiciÛn (Hex·gono)")]
+    [Header("Configuraci√≥n de Posici√≥n (Hex√°gono)")]
     public Vector2 offsetPosicion = new Vector2(0f, 20f);
     [Range(0.1f, 20f)] public float suavizadoMovimiento = 5f;
 
-    [Header("ConfiguraciÛn del Pop (Click)")]
+    [Header("Configuraci√≥n del Pop (Click)")]
     public float escalaPop = 1.15f;
     public float velocidadPop = 15f;
 
-    [Header("ConfiguraciÛn del Balanceo (SOLO TEXTO)")]
+    [Header("Configuraci√≥n del Balanceo (SOLO TEXTO)")]
     public TextMeshProUGUI textoOpcional;
     public float anguloShakeTexto = 10f;
     public float velocidadGiroShakeTexto = 60f;
     public int repeticionesShakeTexto = 1;
 
-    [Header("ConfiguraciÛn Visual")]
+    [Header("Configuraci√≥n Visual")]
     public Sprite spriteNormal;
     public Sprite spriteAlPasarRaton;
     public Color colorNormal = Color.white;
@@ -36,7 +37,7 @@ public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPo
     public Color colorTextoNormal = Color.white;
     public Color colorTextoHover = Color.yellow;
 
-    [Header("ConfiguraciÛn de Audio")]
+    [Header("Configuraci√≥n de Audio")]
     public AudioClip sonidoHover;
     public AudioClip sonidoClick;
 
@@ -95,7 +96,62 @@ public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPo
         transform.localPosition = Vector3.Lerp(transform.localPosition, posicionObjetivo, Time.deltaTime * suavizadoMovimiento);
     }
 
+    // ==========================================
+    // üñ±Ô∏è CONTROLES DE RAT√ìN
+    // ==========================================
     public void OnPointerEnter(PointerEventData eventData)
+    {
+        MenuGamepadNavigator.usandoRaton = true;
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null); // Limpiamos selecci√≥n del mando
+        }
+        ActivarEfectosHover();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        DesactivarEfectosHover();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        EjecutarEfectoClick();
+    }
+
+    // ==========================================
+    // üéÆ CONTROLES DE MANDO
+    // ==========================================
+    public void OnSelect(BaseEventData eventData)
+    {
+        // El escudo anti-rat√≥n
+        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f ||
+            Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f ||
+            Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            MenuGamepadNavigator.usandoRaton = false;
+        }
+
+        if (MenuGamepadNavigator.usandoRaton) return;
+
+        ActivarEfectosHover();
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        DesactivarEfectosHover();
+    }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+        // Se ejecuta cuando pulsas la "A" (o Cruz) del mando teniendo el objeto seleccionado
+        EjecutarEfectoClick();
+    }
+
+    // ==========================================
+    // ‚ú® L√ìGICA VISUAL UNIFICADA
+    // ==========================================
+    private void ActivarEfectosHover()
     {
         estaEncima = true;
         posicionObjetivo = posicionOriginal + (Vector3)offsetPosicion;
@@ -106,8 +162,6 @@ public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPo
 
         if (textoOpcional != null)
         {
-            // Si ya hay una animaciÛn corriendo, no hacemos nada (asÌ permitimos que termine la anterior)
-            // O podrÌas usar StopCoroutine si prefieres que se reinicie al entrar de nuevo.
             if (corrutinaBalanceoTexto == null)
             {
                 corrutinaBalanceoTexto = StartCoroutine(EfectoBalanceoTexto());
@@ -115,15 +169,23 @@ public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPo
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private void DesactivarEfectosHover()
     {
         estaEncima = false;
         posicionObjetivo = posicionOriginal;
         ActualizarVisuales(spriteNormal, colorNormal, colorTextoNormal);
-
-        // NO reseteamos aquÌ para que la animaciÛn que ya empezÛ pueda terminar su ciclo sola.
     }
 
+    private void EjecutarEfectoClick()
+    {
+        ReproducirSonido(sonidoClick);
+        if (corrutinaPop != null) StopCoroutine(corrutinaPop);
+        corrutinaPop = StartCoroutine(EfectoPopEscala());
+    }
+
+    // ==========================================
+    // ‚öôÔ∏è M√âTODOS INTERNOS Y CORRUTINAS
+    // ==========================================
     private void ResetearRotacionTextoInmediato()
     {
         if (corrutinaBalanceoTexto != null)
@@ -151,25 +213,14 @@ public class HexagonoInteractivoFinal : MonoBehaviour, IPointerEnterHandler, IPo
         transform.localPosition = posicionOriginal;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        ReproducirSonido(sonidoClick);
-        if (corrutinaPop != null) StopCoroutine(corrutinaPop);
-        corrutinaPop = StartCoroutine(EfectoPopEscala());
-    }
-
     IEnumerator EfectoBalanceoTexto()
     {
-        // Se ejecuta el n˙mero exacto de veces configurado
         for (int i = 0; i < repeticionesShakeTexto; i++)
         {
             yield return StartCoroutine(GirarTextoA(anguloShakeTexto));
             yield return StartCoroutine(GirarTextoA(-anguloShakeTexto));
         }
-
-        // REGRESO FINAL GARANTIZADO AL CENTRO (siempre se ejecuta tras el bucle)
         yield return StartCoroutine(GirarTextoA(0));
-
         corrutinaBalanceoTexto = null;
     }
 
