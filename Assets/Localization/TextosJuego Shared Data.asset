@@ -1115,6 +1115,22 @@ MonoBehaviour:
     m_Key: settings_back
     m_Metadata:
       m_Items: []
+  - m_Id: 7266993568980992
+    m_Key: coral_estado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952512
+    m_Key: hojanegra_estado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952513
+    m_Key: activado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952514
+    m_Key: desactivado
+    m_Metadata:
+      m_Items: []
   - m_Id: 5067856513572864
     m_Key: skill_spawnbug_tit
     m_Metadata:

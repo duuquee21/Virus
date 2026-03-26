@@ -665,15 +665,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: Zone Earnings
+    m_Localized: TRAPPED
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: Wall Earnings
+    m_Localized: INFECTED WALL
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: Bounce Earnings
+    m_Localized: BOUNCE
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -781,7 +781,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1820888534929408
-    m_Localized: Total Damage
+    m_Localized: DAMAGE
     m_Metadata:
       m_Items: []
   - m_Id: 1824803229847552
@@ -1019,6 +1019,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6455552390254592
     m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993568980992
+    m_Localized: Coral status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952512
+    m_Localized: Blade status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952513
+    m_Localized: Activated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7266993589952514
+    m_Localized: Desactivated
     m_Metadata:
       m_Items: []
   references:
