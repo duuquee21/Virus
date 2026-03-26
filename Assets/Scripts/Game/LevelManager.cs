@@ -403,18 +403,27 @@ public class LevelManager : MonoBehaviour
     {
         if (!isGameActive) return;
 
-        // 🎮 AÑADIDO: JoystickButton7 es el botón Start/Menu en mandos de Xbox/PlayStation
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
-            TogglePause();
+            if (settingsPanel != null && settingsPanel.activeSelf)
+            {
+                CloseSettingsPanel();
+            }
+            else
+            {
+                TogglePause();
+            }
+            return;
         }
+
+        if (pausePanel != null && pausePanel.activeSelf)
+            return;
 
         if (timerStarted)
         {
             currentTimer -= Time.deltaTime;
         }
 
-        // Actualizar textos del timer
         foreach (var t in timerTexts)
         {
             if (t != null)
@@ -422,14 +431,12 @@ public class LevelManager : MonoBehaviour
                 if (currentTimer > 0)
                 {
                     t.text = currentTimer.ToString("F1") + "s";
-                    // Aseguramos que si el tiempo vuelve a ser > 0 (por un powerup), la escala sea normal
                     t.rectTransform.localScale = Vector3.one;
                 }
                 else
                 {
-                    t.text = "0.0s"; // Forzamos el 0.0 visual
+                    t.text = "0.0s";
 
-                    // Si el timer llega a 0 y no hemos empezado a animar, arrancamos el "latido"
                     if (!timerAnimando)
                     {
                         timerAnimando = true;
@@ -440,16 +447,12 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
-        // --- LÓGICA DE TIEMPO EXTRA Y FIN DE SESIÓN ---
         if (currentTimer <= 0 && !isTransitioning)
         {
-            // Verificamos si existe la mejora en el guardado
             bool poseeMejora = Guardado.instance != null && Guardado.instance.hasExtraTimeUnlock;
 
             if (poseeMejora)
             {
-                // 1. Lógica de candidatos (Solo si tiene la mejora)
                 if (!checkParaExtraTimeRealizado)
                 {
                     figurasCandidatas.Clear();
@@ -464,28 +467,30 @@ public class LevelManager : MonoBehaviour
                     checkParaExtraTimeRealizado = true;
                 }
 
-                // 2. Validar si los candidatos siguen dentro
                 if (figurasCandidatas.Count > 0)
-                {
                     ValidarEstadoTiempoExtra();
-                }
                 else
-                {
                     EndSessionDay();
-                }
             }
             else
             {
-                // Si no tiene la mejora o no hay instancia de guardado, termina al instante
                 EndSessionDay();
             }
         }
 
-        // Sistema de guardado automático de monedas cada X segundos
-        if (isGameActive)
+        bool enMenuUI =
+         (pausePanel != null && pausePanel.activeSelf) ||
+         (settingsPanel != null && settingsPanel.activeSelf) ||
+         (shinyPanel != null && shinyPanel.activeSelf) ||
+         (zonePanel != null && zonePanel.activeSelf);
+
+        if (!enMenuUI)
         {
             timeSinceLastAutoSave += Time.deltaTime;
-            if (Cursor.visible) Cursor.visible = false;
+
+            if (Cursor.visible)
+                Cursor.visible = false;
+
             if (timeSinceLastAutoSave >= autoSaveInterval)
             {
                 SaveCurrentRun();
@@ -1833,7 +1838,15 @@ public class LevelManager : MonoBehaviour
         if (pausePanel != null && pausePanel.activeSelf) pausePanel.SetActive(false);
         if (menuPanel != null && menuPanel.activeSelf) menuPanel.SetActive(false);
 
+        if (isGameActive)
+        {
+            Time.timeScale = 0f;
+            if (virusMovementScript != null) virusMovementScript.enabled = false;
+        }
+
         if (settingsPanel != null) settingsPanel.SetActive(true);
+
+        UpdateCursorState(false);
 
         if (!MenuGamepadNavigator.usandoRaton)
         {
@@ -1846,9 +1859,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             if (EventSystem.current != null)
-            {
                 EventSystem.current.SetSelectedGameObject(null);
-            }
         }
     }
 
@@ -1860,6 +1871,11 @@ public class LevelManager : MonoBehaviour
         {
             if (pausePanel != null) pausePanel.SetActive(true);
 
+            Time.timeScale = 0f;
+            if (virusMovementScript != null) virusMovementScript.enabled = false;
+
+            UpdateCursorState(false);
+
             if (!MenuGamepadNavigator.usandoRaton)
             {
                 if (pauseFirstSelectedButton != null && EventSystem.current != null)
@@ -1870,14 +1886,17 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+                if (EventSystem.current != null)
+                    EventSystem.current.SetSelectedGameObject(null);
             }
         }
         else
         {
             if (menuPanel != null) menuPanel.SetActive(true);
 
-            if (MenuGamepadNavigator.usandoRaton && EventSystem.current != null)
+            UpdateCursorState(false);
+
+            if (EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(null);
         }
     }
