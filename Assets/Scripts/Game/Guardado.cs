@@ -580,16 +580,22 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("InputType", (int)inputType);
         PlayerPrefs.Save();
 
-        // Actualizamos la flecha visual
         if (VirusMovement.instance != null)
         {
             VirusMovement.instance.UpdateMovementVisuals();
         }
 
-        // ACTUALIZAR EL CURSOR SI ESTAMOS EN PARTIDA
-        if (LevelManager.instance != null && LevelManager.instance.isGameActive)
+        if (LevelManager.instance != null)
         {
-            LevelManager.instance.UpdateCursorState(true);
+            bool settingsAbiertos = LevelManager.instance.settingsPanel != null && LevelManager.instance.settingsPanel.activeSelf;
+            bool pausaAbierta = LevelManager.instance.pausePanel != null && LevelManager.instance.pausePanel.activeSelf;
+
+            if (settingsAbiertos || pausaAbierta)
+                LevelManager.instance.UpdateCursorState(false);
+            else if (LevelManager.instance.isGameActive)
+                LevelManager.instance.UpdateCursorState(true);
+            else
+                LevelManager.instance.UpdateCursorState(false);
         }
 
         Debug.Log("Preferencia de control guardada: " + inputType);
