@@ -106,7 +106,6 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (MenuGamepadNavigator.usandoRaton)
         {
-            // Cambiamos el color visualmente para indicar presión
             if (imagenVisual != null) imagenVisual.color = colorFondoHover;
             if (texto != null) texto.color = colorTextoHover;
         }
@@ -116,15 +115,13 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (MenuGamepadNavigator.usandoRaton)
         {
-            // CORRECCIÓN: Solo ejecuta el efecto y el sonido si el ratón sigue dentro del botón
             if (elPunteroEstaEncima)
             {
-                EjecutarSonidoClick(); // El sonido ahora suena al soltar dentro
+                EjecutarSonidoClick();
                 EjecutarEfectoSoltar();
             }
             else
             {
-                // Si soltó fuera, nos aseguramos de que los colores vuelvan a la normalidad
                 ActualizarColoresPorEstado();
             }
         }
@@ -142,14 +139,13 @@ public class BotonInteractivo : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         if (MenuGamepadNavigator.usandoRaton) return;
 
-        elPunteroEstaEncima = true;
         ActivarEfecto();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        if (MenuGamepadNavigator.usandoRaton) return;
-        elPunteroEstaEncima = false;
+        // 🛑 EL ARREGLO: Quitamos la condición que bloqueaba el apagado. 
+        // Si el juego dice que nos deseleccionemos (sea por mando o por ratón), obedecemos.
         DesactivarEfecto();
     }
 
