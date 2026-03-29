@@ -1179,6 +1179,14 @@ MonoBehaviour:
     m_Key: skill_blackholeamount_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 8351394210566144
+    m_Key: button_mainmenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8351394239926272
+    m_Key: txt_demotext
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

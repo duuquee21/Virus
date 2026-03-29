@@ -52,6 +52,10 @@ public class LevelManager : MonoBehaviour
 
     public int monedasGanadasSesion;
 
+    [Header("Configuración de Demo")]
+    public bool esVersionDemo = false; // Márcarlo en Unity para exportar la demo
+    public GameObject panelFinDemo; // El panel que dice "¡Gracias por jugar!"
+
 
     [Header("Configuración Inicial por Zona")]
     public int[] faseInicialPorMapa;
@@ -620,6 +624,16 @@ public class LevelManager : MonoBehaviour
     }
     public void ActivateMap(int zoneID)
     {
+        // 🛑 EL MURO DEFINITIVO DE LA DEMO 🛑
+        // Da igual si el juego intenta cargar el mapa por una transición, 
+        // o si el jugador hace clic en un botón de la tienda de zonas.
+        // Si intenta cargar el Pentágono (1) o superior, ¡ZAS!, pantalla de demo.
+        if (esVersionDemo && zoneID > 0)
+        {
+            MostrarFinDeDemo();
+            return; // Cortamos la ejecución, el mapa nunca llega a cargar.
+        }
+
         PlayerPrefs.SetInt("CurrentMapIndex", zoneID);
 
         // Limpieza usando la caché
@@ -1444,6 +1458,16 @@ public class LevelManager : MonoBehaviour
     {
         if (!isGameActive) return;
 
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int nextMap = currentMap + 1;
+
+        // 🛑 EL MURO DE LA DEMO (¡Puesto aquí, antes de cualquier transición!) 🛑
+        if (esVersionDemo && nextMap > 0)
+        {
+            MostrarFinDeDemo();
+            return; // Cortamos en seco, no hay transición que valga
+        }
+
         // Buscamos el script de transición en la escena
         LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
 
@@ -1454,22 +1478,27 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            // Si por alguna razón no está el script de giro, 
-            // hace el cambio normal que tenías antes para no romper el juego
+            // Si por alguna razón no está el script de giro, hace el cambio normal
             StartCoroutine(WaitAndChangeMap());
         }
     }
 
     private IEnumerator WaitAndChangeMap()
     {
-        // En lugar de isGameActive = false (que detiene el spawn), 
-        // podrías dejarlo activo si quieres que sigan naciendo durante la transición.
-
         yield return new WaitForSecondsRealtime(0.5f);
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
         int nextMap = currentMap + 1;
 
+        // 🛑 EL MURO DE LA DEMO 🛑
+        // Si es la versión demo, y vamos a pasar a un mapa mayor que el 0 (Hexágono)...
+        if (esVersionDemo && nextMap > 0)
+        {
+            MostrarFinDeDemo(); // Lanzamos el final épico
+            yield break; // Cortamos la corrutina aquí mismo para que no cargue el siguiente mapa
+        }
+
+        // Si NO es demo, o seguimos en un mapa permitido, el juego continúa normal
         if (nextMap < mapList.Length)
         {
             ActivateMap(nextMap);
@@ -1478,11 +1507,8 @@ public class LevelManager : MonoBehaviour
             PopulationManager pm = Object.FindFirstObjectByType<PopulationManager>();
             if (pm != null)
             {
-                pm.RefreshSpawnArea(); // Ahora los nuevos nacerán en el nuevo mapa
+                pm.RefreshSpawnArea();
             }
-
-            // No reseteamos currentSessionInfected si quieres que sea una sola carrera continua
-            // currentSessionInfected = 0; 
         }
     }
 
@@ -1899,5 +1925,57 @@ public class LevelManager : MonoBehaviour
             if (EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(null);
         }
+    }
+
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
+    public void MostrarFinDeDemo()
+    {
+        // 1. Apagamos el estado del juego y el tiempo
+        isGameActive = false;
+        Time.timeScale = 0f;
+
+        // 2. 🧽 LIMPIEZA TOTAL: Hacemos desaparecer al jugador y los controles
+        if (virusPlayer != null) virusPlayer.SetActive(false);
+        if (virusMovementScript != null) virusMovementScript.enabled = false;
+
+        // 3. 🧽 LIMPIEZA TOTAL: Borramos todos los enemigos de la pantalla
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.ClearAllPersonas();
+        }
+
+        // 4. 🧽 LIMPIEZA TOTAL: Borramos tajos, agujeros negros, etc.
+        StopAllActiveRunEffects();
+
+        // 5. Ocultamos la interfaz normal
+        if (gameUI != null) gameUI.SetActive(false);
+        if (zonePanel != null) zonePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+
+        // 6. ¡Mostramos el panel épico de Fin de Demo!
+        if (panelFinDemo != null) panelFinDemo.SetActive(true);
+
+        // 7. 🎮 Magia para el Mando
+        if (!MenuGamepadNavigator.usandoRaton && panelFinDemo != null)
+        {
+            Button primerBotonDemo = panelFinDemo.GetComponentInChildren<Button>();
+            if (primerBotonDemo != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(primerBotonDemo.gameObject);
+            }
+        }
+        else if (MenuGamepadNavigator.usandoRaton && EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
+        UpdateCursorState(false);
     }
 }

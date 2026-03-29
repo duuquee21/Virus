@@ -1042,6 +1042,14 @@ MonoBehaviour:
     m_Localized: Desactivado
     m_Metadata:
       m_Items: []
+  - m_Id: 8351394210566144
+    m_Localized: Menu Principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8351394239926272
+    m_Localized: GRACIAS POR JUGAR LA DEMO
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
