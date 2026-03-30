@@ -507,6 +507,19 @@ public class PlanetCrontrollator : MonoBehaviour
         }
     }
 
+    public void SetVisibleUI(bool estado)
+    {
+        // Buscamos el objeto padre de la barra para apagar todo el conjunto (outline + barra)
+        if (healthBarOutLine != null && healthBarOutLine.transform.parent != null)
+        {
+            healthBarOutLine.transform.parent.gameObject.SetActive(estado);
+        }
+        else if (healthBarOutLine != null)
+        {
+            healthBarOutLine.gameObject.SetActive(estado);
+        }
+    }
+
     private void RestaurarPosicionOriginal()
     {
         if (transformacionesOriginales == null) return;

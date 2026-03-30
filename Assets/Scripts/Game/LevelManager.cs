@@ -1442,15 +1442,7 @@ public class LevelManager : MonoBehaviour
     {
         if (!isGameActive) return;
 
-        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
-        int nextMap = currentMap + 1;
-
-        if (esVersionDemo && nextMap > 0)
-        {
-            MostrarFinDeDemo();
-            return;
-        }
-
+        // 1. Quitamos el bloqueo de la demo de aquí para que la transición PUEDA empezar
         LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
 
         if (transitioner != null)
@@ -1462,7 +1454,6 @@ public class LevelManager : MonoBehaviour
             StartCoroutine(WaitAndChangeMap());
         }
     }
-
     private IEnumerator WaitAndChangeMap()
     {
         yield return new WaitForSecondsRealtime(0.5f);

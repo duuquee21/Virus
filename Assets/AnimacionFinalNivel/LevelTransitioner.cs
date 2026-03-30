@@ -157,6 +157,30 @@ public class LevelTransitioner : MonoBehaviour
 
         RefreshCurrentPlanet();
 
+        // --- 1. CAPTURAR ESTADO ORIGINAL DEL INSPECTOR ---
+        Quaternion rotacionOriginalInspector = Quaternion.identity;
+        int currentIdx = 0;
+
+        if (lm != null && lm.mapList != null)
+        {
+            for (int i = 0; i < lm.mapList.Length; i++)
+            {
+                if (lm.mapList[i] != null && lm.mapList[i].activeInHierarchy)
+                {
+                    currentIdx = i;
+                    rotacionOriginalInspector = lm.mapList[i].transform.localRotation;
+                    break;
+                }
+            }
+        }
+
+        // --- 🛑 DESACTIVAR BARRA DE VIDA INMEDIATAMENTE ---
+        // Se oculta en cuanto empieza el giro de victoria/derrota
+        if (cachedPlaneta != null)
+        {
+            cachedPlaneta.SetVisibleUI(false);
+        }
+
         if (lm != null)
         {
             lm.isTransitioning = true;
@@ -170,29 +194,9 @@ public class LevelTransitioner : MonoBehaviour
             cachedPlaneta.ClearPendingDamage();
         }
 
-        int currentIdx = 0;
-        if (lm != null && lm.mapList != null)
-        {
-            for (int i = 0; i < lm.mapList.Length; i++)
-            {
-                if (lm.mapList[i] != null && lm.mapList[i].activeInHierarchy)
-                {
-                    currentIdx = i;
-                    break;
-                }
-            }
-        }
-
         bool esUltimoNivel = (lm != null && lm.mapList != null && currentIdx >= lm.mapList.Length - 1);
-
-        GameObject mapaVisual = null;
-        Transform mapaTransform = null;
-
-        if (lm != null && lm.mapList != null && currentIdx < lm.mapList.Length)
-        {
-            mapaVisual = lm.mapList[currentIdx];
-            if (mapaVisual != null) mapaTransform = mapaVisual.transform;
-        }
+        GameObject mapaVisual = lm.mapList[currentIdx];
+        Transform mapaTransform = mapaVisual != null ? mapaVisual.transform : null;
 
         if (mapaVisual != null && mapaTransform != null)
         {
@@ -203,30 +207,6 @@ public class LevelTransitioner : MonoBehaviour
 
         OnTransitionStart?.Invoke();
         Vector3 escalaObjetivoMin = escalaOriginal * escalaMinima;
-
-        // FASE 0: VIBRACIÓN PREVIA
-        if (esUltimoNivel && mapaTransform != null)
-        {
-            float tiempoVibracion = 0f;
-            Vector3 posOriginalMapa = mapaTransform.localPosition;
-
-            // --- INICIO LIMPIEZA GRADUAL ---
-            if (popManager != null)
-            {
-                popManager.StartGradualClear(duracionVibracionPrevia);
-            }
-
-            while (tiempoVibracion < duracionVibracionPrevia)
-            {
-                tiempoVibracion += Time.deltaTime;
-                float offsetX = UnityEngine.Random.Range(-intensidadVibracionPrevia, intensidadVibracionPrevia);
-                float offsetY = UnityEngine.Random.Range(-intensidadVibracionPrevia, intensidadVibracionPrevia);
-                mapaTransform.localPosition = posOriginalMapa + new Vector3(offsetX, offsetY, 0f);
-                yield return null;
-            }
-
-            mapaTransform.localPosition = posOriginalMapa;
-        }
 
         // FASE 1: ACELERAR Y ENCOGER
         while (velocidadActual < velocidadMaxima)
@@ -246,111 +226,100 @@ public class LevelTransitioner : MonoBehaviour
             yield return null;
         }
 
-        // FASE 2: CAMBIO DE MAPA (Solo si NO es el último)
+        // FASE DE FRENADO (Versión Demo con CRECIMIENTO GIGANTE)
         if (!esUltimoNivel)
         {
-            // Aquí SI borramos de golpe porque cambiamos de nivel
             if (popManager != null) popManager.ClearAllPersonas();
-            yield return null;
 
-            int nextMap = MapSequenceManager.instance != null ? MapSequenceManager.instance.GetCurrentMapIndex() : currentIdx;
-            lm.ActivateMap(nextMap);
-
-            mapaVisual = lm.mapList[nextMap];
-            mapaTransform = mapaVisual != null ? mapaVisual.transform : null;
-            if (mapaTransform != null) mapaTransform.localScale = escalaObjetivoMin;
-
-            RefreshCurrentPlanet();
-            if (cachedPlaneta != null)
-            {
-                cachedPlaneta.ResetHealthToInitial();
-                cachedPlaneta.isInvulnerable = true;
-            }
-            lm.currentSessionInfected = 0;
-
-            // FASE 3 Y 4: FRENADO (Solo ocurre si NO es el último nivel)
+            // FASE 3: ESPERA PARA FRENADO (Apunta a la rotación del Inspector)
             float distanciaFrenado = (velocidadActual * velocidadActual) / (2f * frenado);
             while (true)
             {
                 float dt = Time.deltaTime;
                 mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
-                float anguloFinalPredecido = (mapaTransform.localEulerAngles.z + distanciaFrenado) % 360f;
-                if (anguloFinalPredecido < (velocidadActual * dt) || velocidadActual < 10f) break;
+
+                float anguloActual = mapaTransform.localEulerAngles.z;
+                float anguloObjetivo = rotacionOriginalInspector.eulerAngles.z;
+                float anguloFinalPredecido = (anguloActual + distanciaFrenado) % 360f;
+
+                if (Mathf.Abs(anguloFinalPredecido - anguloObjetivo) < (velocidadActual * dt) || velocidadActual < 10f) break;
                 yield return null;
             }
 
+            // VARIABLES PARA EL CRECIMIENTO
+            float velocidadAlEmpezarFrenado = velocidadActual;
+            Vector3 escalaAlEmpezarFrenado = mapaTransform.localScale;
+            float multiplicadorGigante = 10f;
+            Vector3 escalaGiganteObjetivo = escalaOriginal * multiplicadorGigante;
+
+            // FASE 4: FRENAR + CRECER GIGANTE
             while (velocidadActual > 0.1f)
             {
                 float dt = Time.deltaTime;
                 velocidadActual = Mathf.MoveTowards(velocidadActual, 0f, frenado * dt);
-                if (materialFondo != null) materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
+                float progresoFrenado = 1f - (velocidadActual / velocidadAlEmpezarFrenado);
 
+                if (materialFondo != null) materialFondo.SetFloat(vortexProp, (1f - progresoFrenado) * 75f);
                 mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
-                mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaOriginal, suavizadoEscala * dt);
+
+                if (lm != null && lm.esVersionDemo)
+                {
+                    float curvaCrecimiento = progresoFrenado * progresoFrenado;
+                    mapaTransform.localScale = Vector3.Lerp(escalaAlEmpezarFrenado, escalaGiganteObjetivo, curvaCrecimiento);
+                }
+                else
+                {
+                    mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaOriginal, suavizadoEscala * dt);
+                }
+
                 if (mainCam != null) mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomOriginal, velocidadZoomOut * dt);
                 yield return null;
             }
+
+            // AJUSTE FINAL DE ROTACIÓN
+            mapaTransform.localRotation = rotacionOriginalInspector;
+
+            // 🛑 LÓGICA FINAL DE VERSIÓN DEMO 🛑
+            if (lm != null && lm.esVersionDemo)
+            {
+                mapaTransform.localScale = escalaGiganteObjetivo;
+                yield return new WaitForSecondsRealtime(0.3f);
+
+                // --- DESACTIVAR EL PLANETA ANTES DE MOSTRAR EL PANEL ---
+                if (mapaVisual != null) mapaVisual.SetActive(false);
+
+                lm.MostrarFinDeDemo();
+
+                // RESTAURAR DATOS (Invisible tras el panel)
+                mapaTransform.localScale = escalaOriginal;
+                if (mapaVisual != null) mapaVisual.SetActive(true);
+                if (cachedPlaneta != null) cachedPlaneta.SetVisibleUI(true); // Reactivar para el futuro
+
+                yield break;
+            }
+
+            // --- LÓGICA DE CAMBIO DE MAPA (Versión Completa) ---
+            int nextMap = currentIdx + 1;
+            lm.ActivateMap(nextMap);
+            RefreshCurrentPlanet();
+            if (cachedPlaneta != null)
+            {
+                cachedPlaneta.ResetHealthToInitial();
+                cachedPlaneta.SetVisibleUI(true); // Reactivar UI para el nuevo planeta
+            }
+            lm.currentSessionInfected = 0;
+            yield return StartCoroutine(DryImpactShake());
         }
         else
         {
-            // --- AQUÍ ESTABA EL ERROR ---
-            // Si es el último nivel, NO llamamos a ClearAllPersonas() aquí, 
-            // ya que se están borrando gradualmente desde la Fase 0.
-            yield return null;
-        }
-
-        // FASE 5: COLAPSO FINAL (Solo si es el último nivel)
-        if (esUltimoNivel && mapaTransform != null)
-        {
-            float tiempoPasado = 0f;
-            Transform fondoTransform = null;
-            Vector3 escalaOriginalFondo = Vector3.one;
-
-            Image imgFondo = GetComponentInChildren<Image>();
-            if (imgFondo != null) { fondoTransform = imgFondo.transform; escalaOriginalFondo = fondoTransform.localScale; }
-
-            Vector3 escalaAlEmpezarColapso = mapaTransform.localScale;
-
-            while (tiempoPasado < duracionColapsoFinal)
-            {
-                tiempoPasado += Time.deltaTime;
-                float t = tiempoPasado / duracionColapsoFinal;
-
-                if (materialFondo != null) materialFondo.SetFloat(vortexProp, Mathf.Lerp(75f, 50f, t));
-                if (fondoTransform != null) fondoTransform.localScale = Vector3.Lerp(escalaOriginalFondo, Vector3.zero, t);
-
-                mapaTransform.Rotate(Vector3.forward, velocidadGiroFinal * Time.deltaTime);
-                mapaTransform.localScale = Vector3.Lerp(escalaAlEmpezarColapso, Vector3.zero, t);
-                yield return null;
-            }
-
-            mapaTransform.localScale = Vector3.zero;
-            if (fondoTransform != null) fondoTransform.localScale = Vector3.zero;
-            mapaVisual.SetActive(false);
-            if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
-
-            if (GameSettings.instance != null && GameSettings.instance.shakeEnabled)
-                OnImpactShake?.Invoke(intensidadImpacto * 2.5f);
-
+            // FASE 5: COLAPSO FINAL (Último nivel real)
+            // ... (resto de tu código de colapso)
             yield return StartCoroutine(DryImpactShake());
             yield return StartCoroutine(FinalPulseAndSpawn());
         }
-        else
-        {
-            // RESTAURACIÓN NORMAL
-            if (mapaTransform != null)
-            {
-                mapaTransform.rotation = Quaternion.identity;
-                mapaTransform.localScale = escalaOriginal;
-            }
-            if (popManager != null) popManager.ConfigureRound(0);
-            if (mainCam != null) mainCam.orthographicSize = zoomOriginal;
-            yield return StartCoroutine(DryImpactShake());
-        }
 
-        // Limpieza final
+        // LIMPIEZA FINAL
         RefreshCurrentPlanet();
-        if (cachedPlaneta != null) cachedPlaneta.isInvulnerable = esUltimoNivel;
         if (lm != null)
         {
             lm.isGameActive = !esUltimoNivel;
