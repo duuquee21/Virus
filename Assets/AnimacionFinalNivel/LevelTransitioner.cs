@@ -174,9 +174,8 @@ public class LevelTransitioner : MonoBehaviour
             }
         }
 
-        // --- 🛑 DESACTIVAR BARRA DE VIDA INMEDIATAMENTE ---
-        // Se oculta en cuanto empieza el giro de victoria/derrota
-        if (cachedPlaneta != null)
+        // --- 🛑 DESACTIVAR BARRA DE VIDA SOLO SI ES DEMO ---
+        if (lm != null && lm.esVersionDemo && cachedPlaneta != null)
         {
             cachedPlaneta.SetVisibleUI(false);
         }
@@ -226,12 +225,11 @@ public class LevelTransitioner : MonoBehaviour
             yield return null;
         }
 
-        // FASE DE FRENADO (Versión Demo con CRECIMIENTO GIGANTE)
         if (!esUltimoNivel)
         {
             if (popManager != null) popManager.ClearAllPersonas();
 
-            // FASE 3: ESPERA PARA FRENADO (Apunta a la rotación del Inspector)
+            // FASE 3: ESPERA PARA FRENADO
             float distanciaFrenado = (velocidadActual * velocidadActual) / (2f * frenado);
             while (true)
             {
@@ -246,13 +244,12 @@ public class LevelTransitioner : MonoBehaviour
                 yield return null;
             }
 
-            // VARIABLES PARA EL CRECIMIENTO
             float velocidadAlEmpezarFrenado = velocidadActual;
             Vector3 escalaAlEmpezarFrenado = mapaTransform.localScale;
             float multiplicadorGigante = 10f;
             Vector3 escalaGiganteObjetivo = escalaOriginal * multiplicadorGigante;
 
-            // FASE 4: FRENAR + CRECER GIGANTE
+            // FASE 4: FRENAR (+ CRECER SI ES DEMO)
             while (velocidadActual > 0.1f)
             {
                 float dt = Time.deltaTime;
@@ -276,58 +273,55 @@ public class LevelTransitioner : MonoBehaviour
                 yield return null;
             }
 
-            // AJUSTE FINAL DE ROTACIÓN
             mapaTransform.localRotation = rotacionOriginalInspector;
 
-            // 🛑 LÓGICA FINAL DE VERSIÓN DEMO 🛑
+            // 🛑 LÓGICA FINAL VERSIÓN DEMO
             if (lm != null && lm.esVersionDemo)
             {
                 mapaTransform.localScale = escalaGiganteObjetivo;
                 yield return new WaitForSecondsRealtime(0.3f);
-
-                // --- DESACTIVAR EL PLANETA ANTES DE MOSTRAR EL PANEL ---
                 if (mapaVisual != null) mapaVisual.SetActive(false);
-
                 lm.MostrarFinDeDemo();
-
-                // RESTAURAR DATOS (Invisible tras el panel)
                 mapaTransform.localScale = escalaOriginal;
                 if (mapaVisual != null) mapaVisual.SetActive(true);
-                if (cachedPlaneta != null) cachedPlaneta.SetVisibleUI(true); // Reactivar para el futuro
-
+                if (cachedPlaneta != null) cachedPlaneta.SetVisibleUI(true);
                 yield break;
             }
 
-            // --- LÓGICA DE CAMBIO DE MAPA (Versión Completa) ---
+            // --- ✅ LÓGICA VERSIÓN COMPLETA (Arreglo de Prefabs y UI) ---
             int nextMap = currentIdx + 1;
             lm.ActivateMap(nextMap);
+
+            mapaVisual = lm.mapList[nextMap];
+            if (mapaVisual != null)
+            {
+                mapaVisual.transform.localScale = escalaOriginal;
+                mapaVisual.transform.localRotation = rotacionOriginalInspector;
+            }
+
             RefreshCurrentPlanet();
+
             if (cachedPlaneta != null)
             {
                 cachedPlaneta.ResetHealthToInitial();
-                cachedPlaneta.SetVisibleUI(true); // Reactivar UI para el nuevo planeta
+                cachedPlaneta.SetVisibleUI(true); // Siempre visible en versión completa
             }
+
+            if (popManager != null) popManager.ConfigureRound(nextMap);
+
             lm.currentSessionInfected = 0;
+            lm.isGameActive = true;
+            if (lm.virusMovementScript != null) lm.virusMovementScript.enabled = true;
+
             yield return StartCoroutine(DryImpactShake());
         }
         else
         {
-            // FASE 5: COLAPSO FINAL (Último nivel real)
-            // ... (resto de tu código de colapso)
-            yield return StartCoroutine(DryImpactShake());
             yield return StartCoroutine(FinalPulseAndSpawn());
         }
 
-        // LIMPIEZA FINAL
-        RefreshCurrentPlanet();
-        if (lm != null)
-        {
-            lm.isGameActive = !esUltimoNivel;
-            lm.isTransitioning = false;
-            if (lm.virusMovementScript != null) lm.virusMovementScript.enabled = !esUltimoNivel;
-        }
+        lm.isTransitioning = false;
         Time.timeScale = 1f;
-        velocidadActual = 0f;
         if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
     }
 
