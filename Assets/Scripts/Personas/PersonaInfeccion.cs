@@ -481,6 +481,7 @@ public class PersonaInfeccion : MonoBehaviour
         {
             if (TutorialManager.instance != null)
                 TutorialManager.instance.OnFirstPhaseAdvance();
+            LevelManager.instance.StartTimer();
         }
 
         if (LevelManager.instance != null)

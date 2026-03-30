@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Localization.Settings;
 using UnityEngine.EventSystems; // <-- AÑADIDO PARA EL MANDO
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -74,6 +74,8 @@ public class LevelManager : MonoBehaviour
 
     [Header("Transición")]
     public Collections.Shaders.ShapeTransition.ShapeTransition transitionScript;
+    public float tiempoEsperaEnNegro = 0.2f; // <-- NUEVO: Tiempo que se queda la pantalla en negro total
+
 
     [Header("Extra Time Settings")]
     public GameObject extraTimeUI; // Arrastra aquí el objeto de texto "Extra Time"
@@ -108,6 +110,7 @@ public class LevelManager : MonoBehaviour
 
     // Añade esto cerca de las otras variables de estado
     public bool IsTimeUp => currentTimer <= 0;
+
 
     void Awake()
     {
@@ -236,7 +239,9 @@ public class LevelManager : MonoBehaviour
 
     void ShowMainMenu()
     {
-        menuPanel.SetActive(true);
+        // IMPORTANTE: Quitamos el menuPanel.SetActive(true) de aquí si DoPanelTransition ya lo va a encender
+        // menuPanel.SetActive(true); 
+
         gameUI.SetActive(false);
         SetMapsActive(false);
         UpdateCursorState(false);
@@ -244,9 +249,11 @@ public class LevelManager : MonoBehaviour
         if (pausePanel) pausePanel.SetActive(false);
         if (zonePanel) zonePanel.SetActive(false);
         if (shinyPanel) shinyPanel.SetActive(false);
+        if (panelFinal) panelFinal.SetActive(false);
 
         virusPlayer.SetActive(false);
 
+        // Lógica del botón continuar...
         if (continueButton != null)
         {
             continueButton.gameObject.SetActive(true);
@@ -307,54 +314,63 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadRunRoutine()
     {
-        if (transitionScript != null)
+        // 1. Definimos TODA la lógica de carga como una acción que ocurrirá en la oscuridad total
+        System.Action cargaEnLaOscuridad = () =>
         {
-            transitionScript.SetShape(1);
-            transitionScript.CloseBlackScreen();
-            yield return new WaitForSecondsRealtime(0.5f);
-        }
+            // Limpiamos el estado actual por si acaso
+            ResetSceneToNeutralState();
 
-        ResetSceneToNeutralState();
+            // Recuperamos los datos guardados de PlayerPrefs
+            float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
+            int savedCoins = PlayerPrefs.GetInt("Run_Coins", 0);
+            int savedMapIndex = PlayerPrefs.GetInt("Run_MapIndex", 0);
+            float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", -1f);
 
-        float savedTimer = PlayerPrefs.GetFloat("Run_Timer", gameDuration);
-        int savedCoins = PlayerPrefs.GetInt("Run_Coins", 0);
-        int savedMapIndex = PlayerPrefs.GetInt("Run_MapIndex", 0);
-        float savedPlanetHealth = PlayerPrefs.GetFloat("Run_PlanetHealth", -1f);
-        ContagionCoins = savedCoins;
+            // Aplicamos las monedas
+            ContagionCoins = savedCoins;
 
-        if (Guardado.instance != null)
-            Guardado.instance.LoadEvolutionData();
+            // Cargamos evoluciones y estadísticas
+            if (Guardado.instance != null)
+                Guardado.instance.LoadEvolutionData();
 
-        PersonaInfeccion.LoadStats();
+            PersonaInfeccion.LoadStats();
 
-        yield return null;
+            // Reconstruimos el árbol de habilidades para que refleje lo cargado
+            RebuildSkillTree();
 
-        RebuildSkillTree();
-        yield return null;
+            // Sincronizamos los controladores (velocidad, radio, etc)
+            SyncControllersWithSavedData();
 
-        SyncControllersWithSavedData();
-        yield return null;
+            // Limpiamos el sistema de rejilla espacial
+            Movement.espacialGrid.Clear();
 
-        Movement.espacialGrid.Clear();
+            // Iniciamos la sesión con los datos recuperados
+            // Nota: StartLoadedSession activa el GameUI y desactiva el MenuPanel
+            StartLoadedSession(savedTimer, savedMapIndex, savedPlanetHealth);
 
-        StartLoadedSession(savedTimer, savedMapIndex, savedPlanetHealth);
+            Debug.Log("<color=green>[LOAD]</color> Partida recuperada con éxito en la oscuridad.");
+        };
 
-        if (transitionScript != null)
-            transitionScript.OpenBlackScreen();
+        // 2. Ejecutamos la transición unificada usando nuestro método maestro
+        // Esto aplicará: Cierre Hexágono -> tiempoEsperaEnNegro -> Ejecutar cargaEnLaOscuridad -> Abrir Hexágono
+        DoPanelTransition(menuPanel, null, cargaEnLaOscuridad);
 
-        Debug.Log("<color=green>[LOAD]</color> Continue restaurado correctamente.");
+        yield break; // Salimos de la corrutina vieja ya que DoPanelTransition toma el control
     }
     public void NewGameFromMainMenu()
     {
+        // 1. Preparamos los datos de la nueva partida (borrar progreso previo de la run)
         ResetRunData();
-        // Inyectamos el Hexágono (1)
-        if (transitionScript != null) transitionScript.SetShape(1);
 
-        // 🛑 EL ARREGLO: 
-        // Si el panel de ajustes está abierto, cerramos ese. Si no, cerramos el menú principal.
+        // 2. Identificamos qué panel cerrar (Ajustes si estaba abierto, o el Menú Principal)
         GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
 
-        StartCoroutine(TransitionRoutine(panelToClose, null, true));
+        // 3. Usamos el método unificado
+        // Pasamos 'null' en el panel a abrir porque 'StartSession' se encarga de encender el GameUI
+        DoPanelTransition(panelToClose, null, () => {
+            StartSession();
+            Debug.Log("Sesión iniciada tras el tiempo de espera en negro.");
+        });
     }
     void ForceHardReset()
     {
@@ -482,27 +498,48 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        // --- LÓGICA DINÁMICA DEL CURSOR ---
         bool enMenuUI =
-         (pausePanel != null && pausePanel.activeSelf) ||
-         (settingsPanel != null && settingsPanel.activeSelf) ||
-         (shinyPanel != null && shinyPanel.activeSelf) ||
-         (zonePanel != null && zonePanel.activeSelf);
+           (pausePanel != null && pausePanel.activeSelf) ||
+           (settingsPanel != null && settingsPanel.activeSelf) ||
+           (shinyPanel != null && shinyPanel.activeSelf) ||
+           (zonePanel != null && zonePanel.activeSelf) ||
+           (panelFinDemo != null && panelFinDemo.activeSelf) ||
+           (panelFinal != null && panelFinal.activeSelf);
 
-        if (!enMenuUI)
+        if (isGameActive && !enMenuUI)
         {
+            // Solo entramos aquí si estamos jugando y no hay menús abiertos
+            if (Guardado.instance != null)
+            {
+                // Si el modo es Teclado o Mando, ocultamos el cursor
+                if (Guardado.instance.inputType == Guardado.InputType.Keyboard ||
+                    Guardado.instance.inputType == Guardado.InputType.Controller)
+                {
+                    if (Cursor.visible) Cursor.visible = false;
+                }
+                else // Si el modo es Mouse, lo mostramos
+                {
+                    if (!Cursor.visible) Cursor.visible = true;
+                }
+            }
+
+            // Lógica de auto-guardado que ya tenías
             timeSinceLastAutoSave += Time.deltaTime;
-
-            if (Cursor.visible)
-                Cursor.visible = false;
-
             if (timeSinceLastAutoSave >= autoSaveInterval)
             {
                 SaveCurrentRun();
                 timeSinceLastAutoSave = 0f;
-                Debug.Log($"<color=cyan>[AUTO-SAVE]</color> Monedas guardadas automáticamente: {contagionCoins}");
             }
         }
+        else
+        {
+            // Si estamos en un menú o el juego no ha empezado, SIEMPRE mostrar cursor
+            if (!Cursor.visible) Cursor.visible = true;
+        }
     }
+
+
     private IEnumerator AnimarRespiracionTimer()
     {
         while (timerAnimando)
@@ -601,26 +638,37 @@ public class LevelManager : MonoBehaviour
     }
     public void ReturnToMenu()
     {
+        // 1. Lógica de guardado previa si la partida está activa
         if (isGameActive && Guardado.instance != null)
         {
             SaveCurrentRun();
         }
 
-        // --- NUEVO: Limpieza de Paneles ---
-        // Si tienes una referencia al panel final en este script o en el UI Manager
-        if (panelFinal != null)
-            panelFinal.SetActive(false);
+        // 2. Definimos qué queremos que pase "en la oscuridad" (limpieza de escena)
+        System.Action logicEnLaOscuridad = () => {
+            // Detener música de juego y poner la de menú
+            if (AudioManager.instance != null)
+                AudioManager.instance.SwitchToMenuMusic();
 
-        // Si usas un sistema de fases (Hexágono -> Círculo), 
-        // asegúrate de resetear el estado visual aquí también.
+            SkillNode.ClearRuntimeState();
 
-        if (AudioManager.instance != null)
-            AudioManager.instance.SwitchToMenuMusic();
+            // Limpieza física de la escena (borrar enemigos, proyectiles, etc.)
+            ResetSceneToNeutralState();
 
-        SkillNode.ClearRuntimeState();
+            // Configurar el panel de menú principal
+            ShowMainMenu();
 
-        ResetSceneToNeutralState();
-        ShowMainMenu();
+            // Aseguramos que el panel final de resultados se apague si venimos de ahí
+            if (panelFinal != null) panelFinal.SetActive(false);
+            if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null)
+                EndDayResultsPanel.instance.panel.SetActive(false);
+        };
+
+        // 3. Lanzamos la transición unificada
+        // El 'panelToClose' será el de pausa o el de resultados, según cuál esté abierto
+        GameObject panelActual = (pausePanel.activeSelf) ? pausePanel : (panelFinal != null && panelFinal.activeSelf ? panelFinal : gameUI);
+
+        DoPanelTransition(panelActual, menuPanel, logicEnLaOscuridad);
     }
     public void ActivateMap(int zoneID)
     {
@@ -795,6 +843,7 @@ public class LevelManager : MonoBehaviour
         checkParaExtraTimeRealizado = false;
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f;
+        timerStarted = false;
 
         if (menuPanel != null) menuPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
@@ -870,7 +919,7 @@ public class LevelManager : MonoBehaviour
 
         isTransitioning = false;
         isGameActive = true;
-        timerStarted = true;
+       
 
         if (virusPlayer != null) virusPlayer.SetActive(true);
         if (virusMovementScript != null) virusMovementScript.enabled = true;
@@ -905,33 +954,44 @@ public class LevelManager : MonoBehaviour
         ContagionCoins = Guardado.instance != null ? Guardado.instance.startingCoins : 0;
         UpdateUI();
     }
+    // Método para iniciar el timer manualmente (como OnFirstPhaseAdvanced)
+    public void StartTimer()
+    {
+        if (!isGameActive) return; // Seguridad: No iniciar si no estamos en partida
 
+        timerStarted = true;
+        Debug.Log("<color=orange>[TIMER]</color> ¡Reloj activado!");
+
+        // Opcional: Aquí podrías disparar algún sonido de "Go!" o feedback visual
+    }
     public void StartSession()
     {
-
-        timerStarted = false;
+        timerStarted = false; // El timer siempre empieza en FALSE
         UpdateCursorState(true);
         checkParaExtraTimeRealizado = false;
         figurasCandidatas.Clear();
-        timeSinceLastAutoSave = 0f; // Reiniciar contador de auto-save
+        timeSinceLastAutoSave = 0f;
 
-
-
+        // --- LÓGICA DE TUTORIAL / INICIO PAUSADO ---
         if (TutorialManager.instance != null && VirusMovement.instance != null)
         {
             if (!TutorialManager.instance.HasSeenTutorial())
             {
                 TutorialManager.instance.StartTutorial(VirusMovement.instance.transform);
+                // timerStarted sigue siendo false aquí
             }
             else
             {
-                timerStarted = true;
+                // Incluso si ya vio el tutorial, lo dejamos en false. 
+                // El timer empezará cuando infecte a la primera persona.
+                timerStarted = false;
             }
         }
         else
         {
-            timerStarted = true;
+            timerStarted = false; // Sin tutorial también empieza pausado
         }
+
         if (menuPanel) menuPanel.SetActive(false);
         ResetCameraZoom();
 
@@ -1258,20 +1318,70 @@ public class LevelManager : MonoBehaviour
         if (isSoftRestarting) return;
         isSoftRestarting = true;
 
-        if (EndDayResultsPanel.instance != null &&
-            EndDayResultsPanel.instance.panel != null &&
-            EndDayResultsPanel.instance.panel.activeSelf &&
-            EndDayResultsPanel.instance.TieneMonedasPendientes)
+        // 1. Identificamos qué panel estamos cerrando (Resultados o Pausa)
+        GameObject panelARecerrar = (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel.activeSelf)
+                                    ? EndDayResultsPanel.instance.panel
+                                    : pausePanel;
+
+        // 2. Si hay monedas pendientes de animar en resultados, las transferimos primero
+        if (panelARecerrar == EndDayResultsPanel.instance.panel && EndDayResultsPanel.instance.TieneMonedasPendientes)
         {
             EndDayResultsPanel.instance.StartCoinTransfer(() =>
             {
-                Debug.Log("Animación de monedas terminada.");
-                StartCoroutine(SoftRestartTransitionRoutine());
+                DoPanelTransition(panelARecerrar, null, () => EjecutarLogicaCargaSoftRestart());
             });
-            return;
+        }
+        else
+        {
+            // 3. Transición directa
+            DoPanelTransition(panelARecerrar, null, () => EjecutarLogicaCargaSoftRestart());
+        }
+    }
+
+    private void EjecutarLogicaCargaSoftRestart()
+    {
+        Debug.Log("<color=yellow>[SOFT RESTART]</color> Ejecutando limpieza en oscuridad total.");
+
+        // A. Reset de variables de sesión
+        monedasGanadasSesion = 0;
+        currentSessionInfected = 0;
+
+        // B. Reset de Mapas y Planetas
+        PlayerPrefs.SetInt("CurrentMapIndex", 0);
+        PlayerPrefs.Save();
+
+        // --- NUEVO: ASEGURAR QUE LOS PANELES DE TIENDA SE CIERREN ---
+        if (shinyPanel != null) shinyPanel.SetActive(false); // <--- AÑADE ESTA LÍNEA
+        if (zonePanel != null) zonePanel.SetActive(false);   // Por seguridad, esta también
+                                                             // -----------------------------------------------------------
+
+        if (MapSequenceManager.instance != null)
+            MapSequenceManager.instance.ResetToFirstMap();
+
+        if (Object.FindFirstObjectByType<ManualSetCycler>() != null)
+            Object.FindFirstObjectByType<ManualSetCycler>().ResetCycler();
+
+        // Resetear posiciones y estados de todos los mapas
+        for (int i = 0; i < mapList.Length; i++)
+        {
+            if (mapList[i] != null)
+            {
+                mapList[i].transform.rotation = Quaternion.identity;
+                mapList[i].SetActive(i == 0); // Solo activamos el primero
+            }
         }
 
-        StartCoroutine(SoftRestartTransitionRoutine());
+        // Resetear salud de todos los planetas
+        PlanetCrontrollator[] planetas = Object.FindObjectsByType<PlanetCrontrollator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var p in planetas) p.ResetHealthToInitial();
+
+        // C. Limpieza de enemigos y efectos
+        CleanUpScene();
+
+        // D. Iniciar la nueva sesión
+        StartSession();
+
+        isSoftRestarting = false;
     }
 
     private IEnumerator SoftRestartTransitionRoutine()
@@ -1539,20 +1649,14 @@ public class LevelManager : MonoBehaviour
 
     public void OpenSkillTreePanel()
     {
-        // 1. Si el panel de resultados tiene monedas pendientes, procesar animación primero
-        if (EndDayResultsPanel.instance.panel.activeSelf && EndDayResultsPanel.instance.TieneMonedasPendientes)
-        {
-            EndDayResultsPanel.instance.StartCoinTransfer(() =>
-            {
-                // Una vez terminadas las monedas, lanzamos la transición al árbol
-                StartCoroutine(TransitionToSkillTree());
-            });
-        }
-        else
-        {
-            // Si no hay monedas pendientes, transición directa
-            StartCoroutine(TransitionToSkillTree());
-        }
+        System.Action logic = () => {
+            RefreshSkillTreeVisualOnly();
+            SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
+            if (lines != null) { lines.ResetAllLinesVisuals(); lines.RefreshAllLinesFromNodes(); }
+        };
+
+        GameObject origin = (EndDayResultsPanel.instance.panel.activeSelf) ? EndDayResultsPanel.instance.panel : zonePanel;
+        DoPanelTransition(origin, shinyPanel, logic);
     }
 
     private IEnumerator TransitionToSkillTree()
@@ -1839,92 +1943,53 @@ public class LevelManager : MonoBehaviour
     }
     public void UpdateCursorState(bool isPlaying)
     {
-        if (isPlaying)
-        {
-            // Solo lo hacemos invisible. NO lo bloqueamos.
-            Cursor.visible = false;
-            // Confined permite que el ratón se mueva pero no salga de la ventana 
-            // (útil en juegos de PC), o usa None para libertad total.
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
+        // Si estamos en un menú (isPlaying = false), el cursor siempre debe verse
+        if (!isPlaying)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            return;
         }
 
+        // Si estamos jugando, dependemos del tipo de entrada
+        if (Guardado.instance != null)
+        {
+            if (Guardado.instance.inputType == Guardado.InputType.Mouse)
+            {
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.visible = false;
+            }
+        }
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // =========================================================
     // ⚙️ FUNCIONES DEL MENÚ DE AJUSTES ⚙️
     // =========================================================
 
+    // =========================================================
+    // ⚙️ AJUSTES CON SINCRONIZACIÓN MILIMÉTRICA ⚙️
+    // =========================================================
+
     public void OpenSettingsPanel()
     {
-        if (pausePanel != null && pausePanel.activeSelf) pausePanel.SetActive(false);
-        if (menuPanel != null && menuPanel.activeSelf) menuPanel.SetActive(false);
+        // Si estamos en juego, pausamos el tiempo antes
+        if (isGameActive) { Time.timeScale = 0f; virusMovementScript.enabled = false; }
 
-        if (isGameActive)
-        {
-            Time.timeScale = 0f;
-            if (virusMovementScript != null) virusMovementScript.enabled = false;
-        }
-
-        if (settingsPanel != null) settingsPanel.SetActive(true);
-
-        UpdateCursorState(false);
-
-        if (!MenuGamepadNavigator.usandoRaton)
-        {
-            if (settingsFirstSelectedButton != null && EventSystem.current != null)
-            {
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(settingsFirstSelectedButton);
-            }
-        }
-        else
-        {
-            if (EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(null);
-        }
+        GameObject origin = (pausePanel.activeSelf) ? pausePanel : menuPanel;
+        DoPanelTransition(origin, settingsPanel, null, settingsFirstSelectedButton);
     }
 
     public void CloseSettingsPanel()
     {
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
         if (isGameActive)
-        {
-            if (pausePanel != null) pausePanel.SetActive(true);
-
-            Time.timeScale = 0f;
-            if (virusMovementScript != null) virusMovementScript.enabled = false;
-
-            UpdateCursorState(false);
-
-            if (!MenuGamepadNavigator.usandoRaton)
-            {
-                if (pauseFirstSelectedButton != null && EventSystem.current != null)
-                {
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(pauseFirstSelectedButton);
-                }
-            }
-            else
-            {
-                if (EventSystem.current != null)
-                    EventSystem.current.SetSelectedGameObject(null);
-            }
-        }
+            DoPanelTransition(settingsPanel, pausePanel, null, pauseFirstSelectedButton);
         else
-        {
-            if (menuPanel != null) menuPanel.SetActive(true);
-
-            UpdateCursorState(false);
-
-            if (EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(null);
-        }
+            DoPanelTransition(settingsPanel, menuPanel);
     }
 
     // =========================================================
@@ -1977,5 +2042,79 @@ public class LevelManager : MonoBehaviour
         }
 
         UpdateCursorState(false);
+    }
+
+// =========================================================
+// 🌀 SISTEMA DE TRANSICIÓN UNIFICADO (HEXÁGONO)
+// =========================================================
+
+    /// <param name="panelToClose">Panel que se apaga al cerrarse el hexágono.</param>
+    /// <param name="panelToOpen">Panel que se enciende antes de abrirse el hexágono.</param>
+    /// <param name="actionBeforeOpen">Acción extra (ej. StartSession) a ejecutar en la oscuridad total.</param>
+    /// <param name="firstSelectable">Botón para resaltar con el mando al abrir el nuevo panel.</param>
+public void DoPanelTransition(GameObject panelToClose, GameObject panelToOpen, System.Action actionBeforeOpen = null, GameObject firstSelectable = null)
+    {
+        StartCoroutine(UniversalTransitionRoutine(panelToClose, panelToOpen, actionBeforeOpen, firstSelectable));
+    }
+
+    private IEnumerator UniversalTransitionRoutine(GameObject panelToClose, GameObject panelToOpen, System.Action actionBeforeOpen, GameObject firstSelectable)
+    {
+        if (transitionScript != null)
+        {
+            // 1. Configurar Hexágono y cerrar
+            transitionScript.SetShape(1);
+            transitionScript.CloseBlackScreen();
+
+            // Esperamos a que la animación de cierre termine (0.55s es lo que tarda el shader)
+            yield return new WaitForSecondsRealtime(0.55f);
+
+            // --- NUEVO: TIEMPO EXTRA EN NEGRO ---
+            // Aquí la pantalla ya está 100% negra. Se quedará así el tiempo que pongas en 'tiempoEsperaEnNegro'
+            if (tiempoEsperaEnNegro > 0)
+            {
+                yield return new WaitForSecondsRealtime(tiempoEsperaEnNegro);
+            }
+        }
+
+        // --- 🌑 ESTAMOS EN OSCURIDAD TOTAL (Y ya hemos esperado el tiempo extra) 🌑 ---
+
+        // 2. Intercambio de Paneles
+        if (panelToClose != null) panelToClose.SetActive(false);
+        if (panelToOpen != null) panelToOpen.SetActive(true);
+
+        // 3. Ejecutar lógica adicional
+        actionBeforeOpen?.Invoke();
+
+        // 4. Configurar selección de Mando
+        if (firstSelectable != null && !MenuGamepadNavigator.usandoRaton)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstSelectable);
+        }
+        else if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        // 5. Abrir Transición
+        if (transitionScript != null)
+        {
+            transitionScript.OpenBlackScreen();
+        }
+    }
+
+    public void CerrarJuego()
+    {
+        // Esto cierra la aplicación una vez exportada (Build)
+        Application.Quit();
+
+        // Esto detiene el modo "Play" dentro del editor de Unity
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
+        Debug.Log("El juego se ha cerrado");
     }
 }

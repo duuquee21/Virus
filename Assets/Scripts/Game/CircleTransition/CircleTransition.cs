@@ -39,15 +39,6 @@ namespace Collections.Shaders.ShapeTransition
             _isOpen = true;
         }
 
-        private void Update()
-        {
-            // Control con la tecla P
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                ToggleTransition();
-            }
-        }
-
         public void ToggleTransition()
         {
             if (_isOpen) CloseBlackScreen();
