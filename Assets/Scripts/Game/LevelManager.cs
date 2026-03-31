@@ -53,6 +53,8 @@ public class LevelManager : MonoBehaviour
     [Header("Configuración de Demo")]
     public bool esVersionDemo = false;
     public GameObject panelFinDemo;
+    public RectTransform logoDemo; // 🌟 NUEVO: El logo que va a saltar
+    public string urlSteam = "https://store.steampowered.com/app/4550150/Get_Rid_Of_Those_Corners?beta=0"; // 🌟 NUEVO: Tu enlace de Steam
 
     [Header("Configuración Inicial por Zona")]
     public int[] faseInicialPorMapa;
@@ -601,9 +603,17 @@ public class LevelManager : MonoBehaviour
             if (panelFinal != null) panelFinal.SetActive(false);
             if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null)
                 EndDayResultsPanel.instance.panel.SetActive(false);
+
+            // 🛑 ARREGLO: APAGAMOS EL PANEL DE LA DEMO PARA QUE NO ESTORBE
+            if (panelFinDemo != null) panelFinDemo.SetActive(false);
         };
 
-        GameObject panelActual = (pausePanel.activeSelf) ? pausePanel : (panelFinal != null && panelFinal.activeSelf ? panelFinal : gameUI);
+        // 🛑 ARREGLO: LE ENSEÑAMOS A LA TRANSICIÓN CUÁL ES EL PANEL QUE TIENE QUE CERRAR
+        GameObject panelActual = gameUI;
+        if (pausePanel != null && pausePanel.activeSelf) panelActual = pausePanel;
+        else if (panelFinal != null && panelFinal.activeSelf) panelActual = panelFinal;
+        else if (panelFinDemo != null && panelFinDemo.activeSelf) panelActual = panelFinDemo; // <- AQUÍ ESTÁ LA MAGIA
+
         DoPanelTransition(panelActual, menuPanel, logicEnLaOscuridad);
     }
 
@@ -1478,10 +1488,15 @@ public class LevelManager : MonoBehaviour
 
     public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
     {
+        // 🛑 EVITAMOS que salgan números si estamos en los resultados del día...
         if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null && EndDayResultsPanel.instance.panel.activeSelf)
             return;
 
-        AddCoins(puntosGanados);
+        // 🛑 ... ¡O si estamos en la pantalla de Fin de Demo!
+        if (panelFinDemo != null && panelFinDemo.activeSelf)
+            return;
+
+        AddCoins(puntosGanados); // Sumamos el dinero
 
         if (prefabTextoPuntos == null || canvasPrincipal == null || marcadorDestinoUI == null)
         {
@@ -1756,30 +1771,66 @@ public class LevelManager : MonoBehaviour
             DoPanelTransition(settingsPanel, menuPanel);
     }
 
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
     public void MostrarFinDeDemo()
     {
+        isTransitioning = false; // 🔨 ROMPEMOS EL ESCUDO POR LA FUERZA AQUÍ
         isGameActive = false;
         Time.timeScale = 0f;
 
+        // 1. 🧽 LIMPIEZA TOTAL: Hacemos desaparecer al jugador y los controles
         if (virusPlayer != null) virusPlayer.SetActive(false);
         if (virusMovementScript != null) virusMovementScript.enabled = false;
 
+        // 2. 🧽 LIMPIEZA TOTAL: Borramos todos los enemigos de la pantalla
         if (PopulationManager.instance != null)
         {
             PopulationManager.instance.ClearAllPersonas();
         }
 
+        // 3. 🧽 LIMPIEZA TOTAL: Borramos tajos, agujeros negros, etc.
         StopAllActiveRunEffects();
 
+        // 4. 💥 EL FRANCOTIRADOR DEFINITIVO PARA TODOS LOS NÚMEROS FLOTANTES 💥
+        // -> Pulveriza los puntos verdes/monedas (FloatingScoreUI)
+        FloatingScoreUI[] puntos = Object.FindObjectsByType<FloatingScoreUI>(FindObjectsSortMode.None);
+        foreach (var p in puntos)
+        {
+            if (p != null) Destroy(p.gameObject);
+        }
+
+        // -> Apaga los números de daño rojo/blanco (-8) que usan el sistema de Pool (FloatingText)
+        FloatingText[] danos = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
+        foreach (var d in danos)
+        {
+            if (d != null) d.gameObject.SetActive(false);
+        }
+
+        // 5. Ocultamos la interfaz normal
         if (gameUI != null) gameUI.SetActive(false);
         if (zonePanel != null) zonePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
 
-        if (panelFinDemo != null) panelFinDemo.SetActive(true);
+        // 6. 🌟 MOSTRAMOS EL PANEL Y ANIMAMOS EL LOGO
+        if (panelFinDemo != null)
+        {
+            panelFinDemo.SetActive(true);
+            if (logoDemo != null) StartCoroutine(AnimarLogoDemo());
+        }
 
+        // 7. 🎮 Magia para el Mando
         if (!MenuGamepadNavigator.usandoRaton && panelFinDemo != null)
         {
+            // Busca el primer botón que haya dentro del panel (ej: "Añadir a Wishlist")
             Button primerBotonDemo = panelFinDemo.GetComponentInChildren<Button>();
             if (primerBotonDemo != null && EventSystem.current != null)
             {
@@ -1795,6 +1846,36 @@ public class LevelManager : MonoBehaviour
         UpdateCursorState(false);
     }
 
+    // 🌟 ANIMACIÓN DEL LOGO (Efecto POP con rebote)
+    private IEnumerator AnimarLogoDemo()
+    {
+        logoDemo.localScale = Vector3.zero; // Empieza invisible (tamaño 0)
+        float duration = 0.6f; // Medio segundo de animación
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // unscaled porque el juego está en pausa (timeScale = 0)
+            float progreso = elapsed / duration;
+
+            // Fórmula matemática para hacer el rebote (Ease Out Back)
+            float tension = 2.0f;
+            float t = progreso - 1f;
+            float escala = 1f + (t * t * ((tension + 1f) * t + tension));
+
+            logoDemo.localScale = new Vector3(escala, escala, 1f);
+            yield return null;
+        }
+
+        logoDemo.localScale = Vector3.one; // Aseguramos que termine a tamaño normal perfecto
+    }
+
+    // 🌟 BOTÓN DE STEAM
+    public void Boton_IrASteam()
+    {
+        // Abre el navegador del PC y lo lleva a tu página
+        Application.OpenURL(urlSteam);
+    }
     // =========================================================
     // 🌀 SISTEMA DE TRANSICIÓN UNIFICADO (HEXÁGONO)
     // =========================================================

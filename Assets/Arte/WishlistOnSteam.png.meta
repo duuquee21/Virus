@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 3390f42f29e01f34ab8e51952220cdb2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3110915666547570656
+    second: WishlistOnSteam_0
+  - first:
+      213: -8272049773327648327
+    second: WishlistOnSteam_1
+  - first:
+      213: 7169720833732809547
+    second: WishlistOnSteam_2
+  - first:
+      213: 525443138731970976
+    second: WishlistOnSteam_3
+  - first:
+      213: -527566914455791103
+    second: WishlistOnSteam_4
+  - first:
+      213: 4149201904950146258
+    second: WishlistOnSteam_5
+  - first:
+      213: 6850780769631604467
+    second: WishlistOnSteam_6
+  - first:
+      213: -1558114158896113695
+    second: WishlistOnSteam_7
+  - first:
+      213: 1063048083143602095
+    second: WishlistOnSteam_8
+  - first:
+      213: -5118713429692208552
+    second: WishlistOnSteam_9
+  - first:
+      213: 9146260364807156791
+    second: WishlistOnSteam_10
+  - first:
+      213: -8628017551010681218
+    second: WishlistOnSteam_11
+  - first:
+      213: -2800897778832831061
+    second: WishlistOnSteam_12
+  - first:
+      213: -928724570934315322
+    second: WishlistOnSteam_13
+  - first:
+      213: 6285159153595446675
+    second: WishlistOnSteam_14
+  - first:
+      213: 7285566545690896324
+    second: WishlistOnSteam_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WishlistOnSteam_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 106
+        width: 638
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e7f3cef0513c2b20800000000000000
+      internalID: 3110915666547570656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_1
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 518
+        width: 206
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b97470fe86c33d80800000000000000
+      internalID: -8272049773327648327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_2
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 518
+        width: 27
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b439c598c17ff7360800000000000000
+      internalID: 7169720833732809547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_3
+      rect:
+        serializedVersion: 2
+        x: 1026
+        y: 516
+        width: 108
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a119c130cfba4700800000000000000
+      internalID: 525443138731970976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_4
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 518
+        width: 119
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a1d9cbfa4bda8f0800000000000000
+      internalID: -527566914455791103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_5
+      rect:
+        serializedVersion: 2
+        x: 1307
+        y: 518
+        width: 96
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d47ded262de49930800000000000000
+      internalID: 4149201904950146258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_6
+      rect:
+        serializedVersion: 2
+        x: 1419
+        y: 518
+        width: 27
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fe08ff10dcd21f50800000000000000
+      internalID: 6850780769631604467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_7
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 516
+        width: 108
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e79d7f7d67706ae0800000000000000
+      internalID: -1558114158896113695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_8
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 518
+        width: 114
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf2fee6994b0ce00800000000000000
+      internalID: 1063048083143602095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_9
+      rect:
+        serializedVersion: 2
+        x: 1751
+        y: 516
+        width: 144
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85aac2c714da6f8b0800000000000000
+      internalID: -5118713429692208552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_10
+      rect:
+        serializedVersion: 2
+        x: 1918
+        y: 518
+        width: 119
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 734b093c75b0eee70800000000000000
+      internalID: 9146260364807156791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_11
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 172
+        width: 212
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7e2c2420cf134880800000000000000
+      internalID: -8628017551010681218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_12
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 176
+        width: 226
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad0d785f463129d0800000000000000
+      internalID: -2800897778832831061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_13
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 176
+        width: 200
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c6784f5ce18c13f0800000000000000
+      internalID: -928724570934315322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_14
+      rect:
+        serializedVersion: 2
+        x: 1434
+        y: 176
+        width: 287
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 395f9d233fe593750800000000000000
+      internalID: 6285159153595446675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WishlistOnSteam_15
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 176
+        width: 290
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c720673c288b1560800000000000000
+      internalID: 7285566545690896324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      WishlistOnSteam_0: 3110915666547570656
+      WishlistOnSteam_1: -8272049773327648327
+      WishlistOnSteam_10: 9146260364807156791
+      WishlistOnSteam_11: -8628017551010681218
+      WishlistOnSteam_12: -2800897778832831061
+      WishlistOnSteam_13: -928724570934315322
+      WishlistOnSteam_14: 6285159153595446675
+      WishlistOnSteam_15: 7285566545690896324
+      WishlistOnSteam_2: 7169720833732809547
+      WishlistOnSteam_3: 525443138731970976
+      WishlistOnSteam_4: -527566914455791103
+      WishlistOnSteam_5: 4149201904950146258
+      WishlistOnSteam_6: 6850780769631604467
+      WishlistOnSteam_7: -1558114158896113695
+      WishlistOnSteam_8: 1063048083143602095
+      WishlistOnSteam_9: -5118713429692208552
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
