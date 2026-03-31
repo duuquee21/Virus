@@ -99,24 +99,8 @@ public class LevelManager : MonoBehaviour
     private Coroutine coinAnimationCoroutine;
 
     public bool IsTimeUp => currentTimer <= 0;
-
-    // 🛑 COOLDOWN GLOBAL PARA BOTONES 🛑
-    [Header("Configuración Antispam")]
-    public float tiempoCooldownBotones = 1.5f; // Tiempo de espera en segundos (Modificable en Unity)
-    private float lastUIClickTime = 0f;
-
-    public bool CanClickUI()
-    {
-        // Comprobamos si ha pasado suficiente tiempo desde el último clic
-        if (Time.unscaledTime - lastUIClickTime < tiempoCooldownBotones)
-        {
-            return false; // Escudo activado: bloquea el clic
-        }
-
-        // Si ha pasado el tiempo, registramos el nuevo clic y le damos paso
-        lastUIClickTime = Time.unscaledTime;
-        return true;
-    }
+    private bool isSoftRestarting = false;
+    public bool IsSoftRestarting => isSoftRestarting;
 
     void Awake()
     {
@@ -162,16 +146,18 @@ public class LevelManager : MonoBehaviour
         visualCoins = contagionCoins;
     }
 
-    public void OpenShinyShop() { if (!CanClickUI()) return; if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
+    // 🛡️ ESCUDOS AÑADIDOS A LOS BOTONES 🛡️
+    public void OpenShinyShop() { if (isTransitioning) return; if (shinyPanel != null) { shinyPanel.SetActive(true); UpdateUI(); } }
 
     public void CloseShinyShop()
     {
-        if (!CanClickUI()) return;
+        if (isTransitioning) return;
         StartCoroutine(TransitionBackFromSkillTree());
     }
 
     private IEnumerator TransitionBackFromSkillTree()
     {
+        isTransitioning = true; // Bloqueo anti-spam
         if (transitionScript != null)
         {
             transitionScript.SetShape(1);
@@ -188,10 +174,11 @@ public class LevelManager : MonoBehaviour
         {
             transitionScript.OpenBlackScreen();
         }
+        isTransitioning = false; // Desbloqueo
     }
 
-    public void OpenZoneShop() { if (!CanClickUI()) return; if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
-    public void CloseZoneShop() { if (!CanClickUI()) return; if (zonePanel != null) zonePanel.SetActive(false); }
+    public void OpenZoneShop() { if (isTransitioning) return; if (zonePanel != null) { zonePanel.SetActive(true); UpdateUI(); } }
+    public void CloseZoneShop() { if (isTransitioning) return; if (zonePanel != null) zonePanel.SetActive(false); }
 
     public void AddCoins(int amount)
     {
@@ -276,7 +263,7 @@ public class LevelManager : MonoBehaviour
 
     public void Button_NewGame()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (Guardado.instance) Guardado.instance.ResetAllProgress();
 
@@ -302,7 +289,7 @@ public class LevelManager : MonoBehaviour
 
     public void Button_Continue()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
         LoadRunAndStart();
     }
 
@@ -344,6 +331,7 @@ public class LevelManager : MonoBehaviour
 
     public void NewGameFromMainMenu()
     {
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
         ResetRunData();
 
         GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
@@ -595,7 +583,7 @@ public class LevelManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (isGameActive && Guardado.instance != null)
         {
@@ -661,7 +649,6 @@ public class LevelManager : MonoBehaviour
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
-
 
         StopAllActiveRunEffects();
         if (animacionExtraTime != null)
@@ -992,11 +979,13 @@ public class LevelManager : MonoBehaviour
 
     public void StartSessionWithTransition()
     {
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
         StartCoroutine(TransitionToSession());
     }
 
     private IEnumerator TransitionToSession()
     {
+        isTransitioning = true; // 🛡️ Bloqueo activado
         if (transitionScript != null)
         {
             transitionScript.CloseBlackScreen();
@@ -1008,12 +997,14 @@ public class LevelManager : MonoBehaviour
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f); // Tiempo de apertura
         }
+        isTransitioning = false; // 🛡️ Bloqueo desactivado
     }
 
     public void ResumeSession()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (menuPanel) menuPanel.SetActive(false);
 
@@ -1055,6 +1046,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator SlowMotionExitRoutine()
     {
+        isTransitioning = true; // 🛡️ Bloqueo durante la salida lenta
         float currentTime = 0f;
         if (mainCamera == null) mainCamera = Camera.main;
         if (virusMovementScript != null) virusMovementScript.enabled = false;
@@ -1116,8 +1108,9 @@ public class LevelManager : MonoBehaviour
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f);
         }
-        yield return null;
+        isTransitioning = false; // 🛡️ Se acaba la transición de muerte, soltamos el bloqueo
     }
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
@@ -1203,14 +1196,10 @@ public class LevelManager : MonoBehaviour
         return count;
     }
 
-    private bool isSoftRestarting = false;
-    public bool IsSoftRestarting => isSoftRestarting;
-
     public void SoftRestartRun()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning || isSoftRestarting) return; // 🛡️ Bloqueo anti-spam
 
-        if (isSoftRestarting) return;
         isSoftRestarting = true;
 
         GameObject panelARecerrar = (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel.activeSelf)
@@ -1269,6 +1258,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator SoftRestartTransitionRoutine()
     {
+        isTransitioning = true; // 🛡️ Bloqueo
         if (transitionScript != null)
         {
             transitionScript.SetShape(1);
@@ -1341,9 +1331,13 @@ public class LevelManager : MonoBehaviour
         StartSession();
 
         if (transitionScript != null)
+        {
             transitionScript.OpenBlackScreen();
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
 
         isSoftRestarting = false;
+        isTransitioning = false; // 🛡️ Desbloqueo
     }
 
     private void EjecutarSoftRestartLogica()
@@ -1406,7 +1400,7 @@ public class LevelManager : MonoBehaviour
 
     public void TogglePause()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (pausePanel == null) return;
         bool estaPausado = pausePanel.activeSelf;
@@ -1440,9 +1434,8 @@ public class LevelManager : MonoBehaviour
 
     public void NextMapTransition()
     {
-        if (!isGameActive) return;
+        if (!isGameActive || isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
-        // 1. Quitamos el bloqueo de la demo de aquí para que la transición PUEDA empezar
         LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
 
         if (transitioner != null)
@@ -1456,6 +1449,7 @@ public class LevelManager : MonoBehaviour
     }
     private IEnumerator WaitAndChangeMap()
     {
+        isTransitioning = true; // 🛡️ Bloqueo activado
         yield return new WaitForSecondsRealtime(0.5f);
 
         int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
@@ -1464,6 +1458,7 @@ public class LevelManager : MonoBehaviour
         if (esVersionDemo && nextMap > 0)
         {
             MostrarFinDeDemo();
+            isTransitioning = false; // 🛡️ Desbloqueo si hay demo final
             yield break;
         }
 
@@ -1478,6 +1473,7 @@ public class LevelManager : MonoBehaviour
                 pm.RefreshSpawnArea();
             }
         }
+        isTransitioning = false; // 🛡️ Desbloqueo normal
     }
 
     public void MostrarPuntosVoladores(Vector3 posicionPersona, int puntosGanados)
@@ -1504,7 +1500,7 @@ public class LevelManager : MonoBehaviour
 
     public void OpenSkillTreePanel()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         System.Action logic = () => {
             RefreshSkillTreeVisualOnly();
@@ -1514,42 +1510,6 @@ public class LevelManager : MonoBehaviour
 
         GameObject origin = (EndDayResultsPanel.instance.panel.activeSelf) ? EndDayResultsPanel.instance.panel : zonePanel;
         DoPanelTransition(origin, shinyPanel, logic);
-    }
-
-    private IEnumerator TransitionToSkillTree()
-    {
-        if (transitionScript != null)
-        {
-            transitionScript.SetShape(1);
-            transitionScript.CloseBlackScreen();
-            yield return new WaitForSecondsRealtime(0.5f);
-        }
-
-        if (EndDayResultsPanel.instance != null)
-            EndDayResultsPanel.instance.panel.SetActive(false);
-
-        if (zonePanel != null) zonePanel.SetActive(false);
-
-        if (shinyPanel != null)
-        {
-            shinyPanel.SetActive(true);
-            UpdateUI();
-        }
-        RefreshSkillTreeVisualOnly();
-
-        SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
-        if (lines != null)
-        {
-            lines.ResetAllLinesVisuals();
-            lines.RefreshAllLinesFromNodes();
-        }
-
-        yield return new WaitForSecondsRealtime(0.1f);
-
-        if (transitionScript != null)
-        {
-            transitionScript.OpenBlackScreen();
-        }
     }
 
     private void EjecutarAbrirSkillTree()
@@ -1588,7 +1548,7 @@ public class LevelManager : MonoBehaviour
 
     public void ContinueCurrentMap()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         Time.timeScale = 1f;
 
@@ -1668,32 +1628,8 @@ public class LevelManager : MonoBehaviour
 
     public void ChangePanelWithTransition(GameObject panelToClose, GameObject panelToOpen)
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
-        StartCoroutine(TransitionRoutine(panelToClose, panelToOpen));
-    }
-
-    private IEnumerator TransitionRoutine(GameObject panelToClose, GameObject panelToOpen, bool isStartingSession = false)
-    {
-        if (transitionScript != null)
-        {
-            transitionScript.CloseBlackScreen();
-            yield return new WaitForSecondsRealtime(0.5f);
-        }
-
-        if (panelToClose != null) panelToClose.SetActive(false);
-        if (panelToOpen != null) panelToOpen.SetActive(true);
-
-        if (isStartingSession)
-        {
-            StartSession();
-        }
-
-        yield return new WaitForEndOfFrame();
-
-        if (transitionScript != null)
-        {
-            transitionScript.OpenBlackScreen();
-        }
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
+        DoPanelTransition(panelToClose, panelToOpen);
     }
 
     private void SetMapsActive(bool state)
@@ -1800,13 +1736,9 @@ public class LevelManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    // =========================================================
-    // ⚙️ FUNCIONES DEL MENÚ DE AJUSTES ⚙️
-    // =========================================================
-
     public void OpenSettingsPanel()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (isGameActive) { Time.timeScale = 0f; virusMovementScript.enabled = false; }
 
@@ -1816,7 +1748,7 @@ public class LevelManager : MonoBehaviour
 
     public void CloseSettingsPanel()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (isGameActive)
             DoPanelTransition(settingsPanel, pausePanel, null, pauseFirstSelectedButton);
@@ -1824,9 +1756,6 @@ public class LevelManager : MonoBehaviour
             DoPanelTransition(settingsPanel, menuPanel);
     }
 
-    // =========================================================
-    // 🛑 LÓGICA DE LA DEMO 🛑
-    // =========================================================
     public void MostrarFinDeDemo()
     {
         isGameActive = false;
@@ -1872,11 +1801,14 @@ public class LevelManager : MonoBehaviour
 
     public void DoPanelTransition(GameObject panelToClose, GameObject panelToOpen, System.Action actionBeforeOpen = null, GameObject firstSelectable = null)
     {
+        if (isTransitioning) return; // 🛡️ Evita solapamientos
         StartCoroutine(UniversalTransitionRoutine(panelToClose, panelToOpen, actionBeforeOpen, firstSelectable));
     }
 
     private IEnumerator UniversalTransitionRoutine(GameObject panelToClose, GameObject panelToOpen, System.Action actionBeforeOpen, GameObject firstSelectable)
     {
+        isTransitioning = true; // 🛡️ ACTIVA EL ESCUDO
+
         if (transitionScript != null)
         {
             transitionScript.SetShape(1);
@@ -1894,14 +1826,25 @@ public class LevelManager : MonoBehaviour
 
         actionBeforeOpen?.Invoke();
 
-        if (firstSelectable != null && !MenuGamepadNavigator.usandoRaton)
+        // 🛑 EL TRUCO MÁGICO: Esperamos 1 frame para que a Unity le dé tiempo a encender los botones
+        yield return null;
+
+        // 🎮 LÓGICA DE SELECCIÓN ARREGLADA
+        if (!MenuGamepadNavigator.usandoRaton)
         {
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(firstSelectable);
+            if (firstSelectable != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(firstSelectable);
+            }
         }
-        else if (EventSystem.current != null)
+        else
         {
-            EventSystem.current.SetSelectedGameObject(null);
+            // 🖱️ Si usamos ratón, limpiamos la selección
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
 
         yield return new WaitForEndOfFrame();
@@ -1909,12 +1852,15 @@ public class LevelManager : MonoBehaviour
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
+            yield return new WaitForSecondsRealtime(0.55f);
         }
+
+        isTransitioning = false; // 🛡️ DESACTIVA EL ESCUDO: YA PUEDEN CLICAR OTRA VEZ
     }
 
     public void CerrarJuego()
     {
-        if (!CanClickUI()) return; // 🛡️ ANTISPAM
+        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         Application.Quit();
 
