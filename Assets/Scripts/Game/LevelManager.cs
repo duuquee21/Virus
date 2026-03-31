@@ -1446,6 +1446,17 @@ public class LevelManager : MonoBehaviour
     {
         if (!isGameActive || isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
+        int currentMap = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+        int nextMap = currentMap + 1;
+
+        // 🛑 EL MURO DE LA DEMO 🛑
+        // Lo ponemos AQUÍ ARRIBA, ¡antes de que el juego intente hacer el pantallazo blanco o girar la cámara!
+        if (esVersionDemo && nextMap > 0)
+        {
+            MostrarFinDeDemo();
+            return; // Cortamos en seco. El pantallazo blanco nunca llegará a ocurrir.
+        }
+
         LevelTransitioner transitioner = Object.FindFirstObjectByType<LevelTransitioner>();
 
         if (transitioner != null)
@@ -1780,57 +1791,50 @@ public class LevelManager : MonoBehaviour
     // =========================================================
     // 🛑 LÓGICA DE LA DEMO 🛑
     // =========================================================
+    // =========================================================
+    // 🛑 LÓGICA DE LA DEMO 🛑
+    // =========================================================
     public void MostrarFinDeDemo()
     {
-        isTransitioning = false; // 🔨 ROMPEMOS EL ESCUDO POR LA FUERZA AQUÍ
+        isTransitioning = false; // 🔨 ROMPEMOS EL ESCUDO
         isGameActive = false;
         Time.timeScale = 0f;
 
-        // 1. 🧽 LIMPIEZA TOTAL: Hacemos desaparecer al jugador y los controles
+        // 1. 🧽 LIMPIEZA DE JUGADOR
         if (virusPlayer != null) virusPlayer.SetActive(false);
         if (virusMovementScript != null) virusMovementScript.enabled = false;
 
-        // 2. 🧽 LIMPIEZA TOTAL: Borramos todos los enemigos de la pantalla
-        if (PopulationManager.instance != null)
-        {
-            PopulationManager.instance.ClearAllPersonas();
-        }
-
-        // 3. 🧽 LIMPIEZA TOTAL: Borramos tajos, agujeros negros, etc.
+        // 2. 🧽 LIMPIEZA DE ENEMIGOS Y EFECTOS
+        if (PopulationManager.instance != null) PopulationManager.instance.ClearAllPersonas();
         StopAllActiveRunEffects();
 
-        // 4. 💥 EL FRANCOTIRADOR DEFINITIVO PARA TODOS LOS NÚMEROS FLOTANTES 💥
-        // -> Pulveriza los puntos verdes/monedas (FloatingScoreUI)
+        // 3. 💥 FRANCOTIRADOR DE NÚMEROS FLOTANTES
         FloatingScoreUI[] puntos = Object.FindObjectsByType<FloatingScoreUI>(FindObjectsSortMode.None);
-        foreach (var p in puntos)
-        {
-            if (p != null) Destroy(p.gameObject);
-        }
+        foreach (var p in puntos) if (p != null) Destroy(p.gameObject);
 
-        // -> Apaga los números de daño rojo/blanco (-8) que usan el sistema de Pool (FloatingText)
         FloatingText[] danos = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
-        foreach (var d in danos)
-        {
-            if (d != null) d.gameObject.SetActive(false);
-        }
+        foreach (var d in danos) if (d != null) d.gameObject.SetActive(false);
 
-        // 5. Ocultamos la interfaz normal
+        // 🚀 NUEVO: LIMPIEZA DE ENTORNO (Adiós al mapa gigante)
+        SetMapsActive(false); // Apaga el Hexágono y cualquier otro mapa
+        ResetCameraZoom();    // Devuelve la cámara a su tamaño normal por si acaso
+
+        // 4. OCULTAR INTERFAZ
         if (gameUI != null) gameUI.SetActive(false);
         if (zonePanel != null) zonePanel.SetActive(false);
         if (shinyPanel != null) shinyPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
 
-        // 6. 🌟 MOSTRAMOS EL PANEL Y ANIMAMOS EL LOGO
+        // 5. 🌟 MOSTRAR PANEL DEMO Y ANIMAR LOGO
         if (panelFinDemo != null)
         {
             panelFinDemo.SetActive(true);
             if (logoDemo != null) StartCoroutine(AnimarLogoDemo());
         }
 
-        // 7. 🎮 Magia para el Mando
+        // 6. 🎮 CONTROLES MANDO
         if (!MenuGamepadNavigator.usandoRaton && panelFinDemo != null)
         {
-            // Busca el primer botón que haya dentro del panel (ej: "Añadir a Wishlist")
             Button primerBotonDemo = panelFinDemo.GetComponentInChildren<Button>();
             if (primerBotonDemo != null && EventSystem.current != null)
             {
