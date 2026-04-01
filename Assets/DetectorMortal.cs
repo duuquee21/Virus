@@ -12,6 +12,20 @@ public class DetectorMortal : MonoBehaviour
     [Header("Ajustes de Destrucción")]
     public float tiempoEsperaCoral = 0.2f;
 
+    [Header("Sonidos")]
+    public AudioClip clipComer;
+    public AudioClip clipDestruir;
+    private AudioSource audioManagerSource;
+
+    [Header("Efectos Visuales")]
+    public GameObject prefabParticulasComer;
+
+    [Header("Game Feel - Texto")]
+    public float multiplicadorEscalaPop = 1.5f; // Cuánto crecerá el texto (1.5 = 50% más grande)
+    public float tiempoEfectoPop = 0.15f; // Cuánto dura la animación completa de crecer y encoger
+    private Vector3 escalaOriginalTexto;
+    private Coroutine corrutinaPopActiva;
+
     private void Start()
     {
         if (prefabTexto != null)
@@ -19,7 +33,9 @@ public class DetectorMortal : MonoBehaviour
             GameObject objTexto = Instantiate(prefabTexto, transform.position, Quaternion.identity, transform);
             textoInstanciado = objTexto.GetComponent<TextMeshPro>();
 
-            // --- SOLUCIÓN DE CAPAS ---
+            // Guardamos la escala original para saber a qué tamaño debe volver
+            escalaOriginalTexto = textoInstanciado.transform.localScale;
+
             AjustarCapaTexto();
         }
 
@@ -28,31 +44,35 @@ public class DetectorMortal : MonoBehaviour
             capacidadActual = Guardado.instance.coralCapacity;
             ActualizarInterfaz();
         }
+
+        // --- BUSCAR EL AUDIOMANAGER ---
+        GameObject audioManagerObj = GameObject.Find("SFXSource");
+        if (audioManagerObj != null)
+        {
+            audioManagerSource = audioManagerObj.GetComponent<AudioSource>();
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró ningún GameObject llamado 'AudioManager' en la escena.");
+        }
     }
 
     private void AjustarCapaTexto()
     {
         if (textoInstanciado == null) return;
 
-        // Intentamos obtener el SpriteRenderer del objeto actual o del padre
         SpriteRenderer srPadre = GetComponentInParent<SpriteRenderer>();
 
         if (srPadre != null)
         {
-            // Copiamos la capa exacta del padre
             textoInstanciado.sortingLayerID = srPadre.sortingLayerID;
-            // Lo ponemos justo una unidad por encima
             textoInstanciado.sortingOrder = srPadre.sortingOrder + 1;
         }
         else
         {
-            // Si no hay SpriteRenderer, al menos asegúrate de que no use "Overlay"
-            // Puedes asignar una capa específica manualmente si lo prefieres
             textoInstanciado.sortingOrder = 1;
         }
     }
-
-    
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -61,11 +81,33 @@ public class DetectorMortal : MonoBehaviour
             PersonaInfeccion persona = other.GetComponent<PersonaInfeccion>();
             if (persona == null) return;
 
+            bool causaraDestruccion = (capacidadActual - 1 <= 0);
+
+            if (!Guardado.instance.coralInfeciosoActivo && (persona.faseActual >= 5 || persona.alreadyInfected))
+            {
+                causaraDestruccion = true;
+            }
+
+            if (causaraDestruccion)
+            {
+                if (audioManagerSource != null && clipDestruir != null)
+                    audioManagerSource.PlayOneShot(clipDestruir);
+            }
+            else
+            {
+                if (audioManagerSource != null && clipComer != null)
+                    audioManagerSource.PlayOneShot(clipComer);
+
+                if (prefabParticulasComer != null)
+                {
+                    GenerarParticulas(other.transform.position);
+                }
+            }
+
             ReducirCapacidad();
 
             if (!Guardado.instance.coralInfeciosoActivo)
             {
-                // ... lógica de destrucción (se mantiene igual) ...
                 if (persona.faseActual >= 5 || persona.alreadyInfected)
                 {
                     StartCoroutine(SecuenciaDestruccionPadre(transform.parent != null ? transform.parent.gameObject : gameObject));
@@ -79,20 +121,31 @@ public class DetectorMortal : MonoBehaviour
             }
             else
             {
-                // 1. Avanza la fase de la persona
                 persona.IntentarAvanzarFase();
 
-                // 2. Aplicar el lanzamiento aleatorio
                 Movement mov = persona.GetComponent<Movement>();
                 if (mov != null)
                 {
-                    // Genera una dirección al azar (360 grados)
                     Vector2 direccionAleatoria = Random.insideUnitCircle.normalized;
-
-                    // Aplica el empuje usando las fuerzas propias de la persona
                     mov.AplicarEmpuje(direccionAleatoria, persona.fuerzaRetroceso, persona.fuerzaRotacion);
                 }
             }
+        }
+    }
+
+    private void GenerarParticulas(Vector3 posicion)
+    {
+        GameObject particulasObj = Instantiate(prefabParticulasComer, posicion, Quaternion.identity);
+
+        ParticleSystem ps = particulasObj.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            float tiempoDeVidaTotal = ps.main.duration + ps.main.startLifetime.constantMax;
+            Destroy(particulasObj, tiempoDeVidaTotal);
+        }
+        else
+        {
+            Destroy(particulasObj, 2f);
         }
     }
 
@@ -100,12 +153,59 @@ public class DetectorMortal : MonoBehaviour
     {
         capacidadActual--;
         ActualizarInterfaz();
+
+        // --- DISPARAR EL EFECTO POP ---
+        if (textoInstanciado != null && gameObject.activeInHierarchy)
+        {
+            // Si ya hay una animación en curso, la detenemos para no causar conflictos de escala
+            if (corrutinaPopActiva != null)
+            {
+                StopCoroutine(corrutinaPopActiva);
+            }
+            corrutinaPopActiva = StartCoroutine(EfectoPopTexto());
+        }
+
         if (capacidadActual <= 0) EjecutarDesaparecerEnPadre();
     }
 
     private void ActualizarInterfaz()
     {
         if (textoInstanciado != null) textoInstanciado.text = capacidadActual.ToString();
+    }
+
+    // --- NUEVA CORRUTINA PARA EL EFECTO POP ---
+    private IEnumerator EfectoPopTexto()
+    {
+        float tiempoMedio = tiempoEfectoPop / 2f;
+        Vector3 escalaObjetivo = escalaOriginalTexto * multiplicadorEscalaPop;
+
+        // Fase 1: Crecer rápido
+        float tiempo = 0;
+        while (tiempo < tiempoMedio)
+        {
+            if (textoInstanciado == null) yield break; // Seguridad por si se destruye en el proceso
+
+            tiempo += Time.deltaTime;
+            textoInstanciado.transform.localScale = Vector3.Lerp(escalaOriginalTexto, escalaObjetivo, tiempo / tiempoMedio);
+            yield return null;
+        }
+
+        // Fase 2: Volver a la normalidad
+        tiempo = 0;
+        while (tiempo < tiempoMedio)
+        {
+            if (textoInstanciado == null) yield break;
+
+            tiempo += Time.deltaTime;
+            textoInstanciado.transform.localScale = Vector3.Lerp(escalaObjetivo, escalaOriginalTexto, tiempo / tiempoMedio);
+            yield return null;
+        }
+
+        // Asegurarnos de que quede exactamente en la escala original al terminar
+        if (textoInstanciado != null)
+        {
+            textoInstanciado.transform.localScale = escalaOriginalTexto;
+        }
     }
 
     private void EjecutarDesaparecerEnPadre()

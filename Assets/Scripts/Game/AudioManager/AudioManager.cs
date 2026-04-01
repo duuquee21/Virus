@@ -41,11 +41,11 @@ public class AudioManager : MonoBehaviour
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
         UpdateMixerVolume("MusicVol", musicVol);
         UpdateMixerVolume("SFXVol", sfxVol);
-
         if (musicSource != null)
         {
             musicSource.volume = 1f;
             musicSource.mute = false;
+            musicSource.loop = true; // <--- AÑADE ESTA LÍNEA
         }
 
         Debug.Log($"[AudioManager] Start: master={master}, music={musicVol}, sfx={sfxVol}, musicSource={(musicSource!=null ? "ok" : "NULL")}");

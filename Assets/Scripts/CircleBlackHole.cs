@@ -7,11 +7,15 @@ public class BlackHoleController : MonoBehaviour
     [Header("Referencias")]
     public GameObject circuloPrefab;
 
+    [Header("Audio")]
+    public AudioClip blackHoleSFX;
+    [Range(0f, 1f)] public float volumenSFX = 1f;
+    private AudioSource sfxSource; // Referencia al componente de audio
+
     [Header("Configuración de Spawn Automático")]
     public float frecuenciaSpawn = 3.0f;
     private float nextSpawnTime;
 
-    // Contador interno para limitar la cantidad simultánea
     private int agujerosActivos = 0;
 
     [Header("Configuración de Spawn Posición")]
@@ -34,24 +38,35 @@ public class BlackHoleController : MonoBehaviour
     public float tiempoExplosionGrow = 0.4f;
 
     private List<GameObject> agujerosInstanciados = new List<GameObject>();
+
+    void Start()
+    {
+        // Busca el objeto por nombre y extrae su AudioSource
+        GameObject sourceObj = GameObject.Find("SFXSource");
+        if (sourceObj != null)
+        {
+            sfxSource = sourceObj.GetComponent<AudioSource>();
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró el objeto 'SFXSource' en la escena.");
+        }
+    }
+
     void Update()
     {
-        // LÓGICA AUTOMÁTICA
         if (Guardado.instance.agujeroNegroData &&
             Time.time > nextSpawnTime &&
             LevelManager.instance.isGameActive)
         {
-            // CAMBIO CLAVE: Mientras falten agujeros para llegar al límite, los spawneamos todos de golpe
             while (agujerosActivos < Guardado.instance.cantidadMaxAgujeros)
             {
                 SpawnBlackHole();
             }
 
-            // Una vez lanzados todos, calculamos el tiempo para la siguiente "oleada"
             nextSpawnTime = Time.time + Guardado.instance.agujeroSpawnRate;
         }
 
-        // Input manual para testeo (permite rellenar hasta el límite)
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (agujerosActivos < Guardado.instance.cantidadMaxAgujeros)
@@ -60,22 +75,28 @@ public class BlackHoleController : MonoBehaviour
             }
         }
     }
+
     private void OnDisable()
     {
         ClearActiveEffects();
     }
+
     public void SpawnBlackHole()
     {
         if (circuloPrefab == null) return;
 
         agujerosActivos++;
 
+        // --- REPRODUCCIÓN DE AUDIO ---
+        if (sfxSource != null && blackHoleSFX != null)
+        {
+            sfxSource.PlayOneShot(blackHoleSFX, volumenSFX);
+        }
+
         Vector2 desplazamientoAleatorio = Random.insideUnitCircle * radioDeAparicionAleatoria;
         Vector3 posicionSpawn = transform.position + new Vector3(desplazamientoAleatorio.x, desplazamientoAleatorio.y, 0);
 
         GameObject nuevoAgujero = Instantiate(circuloPrefab, posicionSpawn, Quaternion.identity);
-
-        // 2. AÑADE EL AGUJERO A LA LISTA
         agujerosInstanciados.Add(nuevoAgujero);
 
         ParticleSystem ps = nuevoAgujero.GetComponentInChildren<ParticleSystem>();
@@ -84,7 +105,7 @@ public class BlackHoleController : MonoBehaviour
 
     IEnumerator ExecuteBlackHoleSequence(GameObject objeto, ParticleSystem ps)
     {
-        if (objeto == null) yield break; // Safety first
+        if (objeto == null) yield break;
 
         SpriteRenderer sr = objeto.GetComponent<SpriteRenderer>();
         float elapsed = 0;
@@ -112,7 +133,6 @@ public class BlackHoleController : MonoBehaviour
             float t = elapsed / tiempoReduccion;
             float currentScale = Mathf.Lerp(radioInicial, radioFinal, t);
 
-            // Safety check inside loop
             objeto.transform.localScale = new Vector3(currentScale, currentScale, 1);
             if (sr != null) sr.color = new Color(0, 0, 0, t);
             objeto.transform.Rotate(0, 0, velocidadRotacion * Time.deltaTime);
@@ -122,8 +142,6 @@ public class BlackHoleController : MonoBehaviour
             yield return null;
         }
 
-        // --- FASE 2: FLASH ---
-        // ADDED CHECK HERE
         if (objeto == null) { DecrementarContador(); yield break; }
 
         if (sr != null)
@@ -134,8 +152,6 @@ public class BlackHoleController : MonoBehaviour
 
         yield return new WaitForSeconds(0.05f);
 
-        // --- FASE 3: EXPLOSIÓN ---
-        // ADDED CHECK HERE
         if (objeto == null) { DecrementarContador(); yield break; }
 
         if (sr != null) sr.color = Color.black;
@@ -161,7 +177,6 @@ public class BlackHoleController : MonoBehaviour
             yield return null;
         }
 
-        // Final cleanup
         if (objeto != null)
         {
             agujerosInstanciados.Remove(objeto);
@@ -176,7 +191,6 @@ public class BlackHoleController : MonoBehaviour
         if (agujerosActivos < 0) agujerosActivos = 0;
     }
 
-    // Los métodos AtraerPersonas, ExplotarEInfectar y OnDrawGizmos se mantienen igual
     void AtraerPersonas(Vector3 centro)
     {
         Collider2D[] personas = Physics2D.OverlapCircleAll(centro, radioDeAtraccionEfectiva);
@@ -218,8 +232,8 @@ public class BlackHoleController : MonoBehaviour
     public void ClearActiveEffects()
     {
         StopAllCoroutines();
-        agujerosActivos = 0; // REINICIO CRÍTICO
-    }   
+        agujerosActivos = 0;
+    }
 
     private void OnDrawGizmosSelected()
     {

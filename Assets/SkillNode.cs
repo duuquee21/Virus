@@ -516,7 +516,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.MultiplyRadius150: Guardado.instance.AddRadiusMultiplier(0.50f); Guardado.instance.SaveData(); break; //old
             case SkillEffectType.MultiplyRadius200: Guardado.instance.AddRadiusMultiplier(1.00f); Guardado.instance.SaveData(); break; //old
 
-            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(7.5f); Guardado.instance.SaveData(); break;
+            case SkillEffectType.IncreasePopulation25: Guardado.instance.AddPopulationBonus(7f); Guardado.instance.SaveData(); break;
             case SkillEffectType.IncreasePopulation50: Guardado.instance.AddPopulationBonus(0.50f); Guardado.instance.SaveData(); break;
             case SkillEffectType.HalveZoneCosts: Guardado.instance.ActivateZoneDiscount(); Guardado.instance.SaveData(); break; //old
 
@@ -1197,7 +1197,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.IncreasePopulation50:
                 {
                     float actualTotal = PopulationManager.instance.GetRoundInitialPopulation();
-                    float despuesTotal = actualTotal + 1; // Ajusta según tu lógica
+                    float despuesTotal = actualTotal + 7; // Ajusta según tu lógica
 
                     if (comprado) sb.AppendLine($"{actualTotal:F0}");
                     else sb.AppendLine($"{actualTotal:F0} → {despuesTotal:F0}");

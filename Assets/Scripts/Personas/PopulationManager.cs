@@ -131,11 +131,13 @@ public class PopulationManager : MonoBehaviour
         StartCoroutine(SpawnInitialPopulationRoutine(poblacionReal));
     }
 
+    // --- MODIFICACIÓN DEL SPAWN INICIAL ---
     private IEnumerator SpawnInitialPopulationRoutine(int cantidad)
     {
         for (int i = 0; i < cantidad; i++)
         {
-            SpawnPerson(false);
+            // true: SÍ permitimos que nazcan bugeados al instanciar las primeras figuras
+            SpawnLogic(false, true);
             yield return null;
         }
     }
@@ -156,7 +158,8 @@ public class PopulationManager : MonoBehaviour
         if (timer >= spawnInterval)
         {
             UpdateBuggedChance();
-            SpawnPerson(true);
+            // false: NO permitimos bugeados por respawn automático
+            SpawnLogic(true, false);
             timer = 0;
         }
     }
@@ -203,34 +206,48 @@ public class PopulationManager : MonoBehaviour
         buggedPersonas.RemoveWhere(obj => obj == null); // <-- LIMPIRAR CACHÉ DE BUGEADOS
     }
 
-    void SpawnPerson(bool allowRandomPhase)
+    // --- NUEVA LÓGICA UNIFICADA DE PREFABS ---
+    private GameObject ObtenerPrefabAdecuado(bool permitirBugged, out bool esBugged)
+    {
+        esBugged = false;
+        GameObject prefabSeleccionado = currentPrefab;
+
+        if (permitirBugged && buggedPersonPrefab != null && Guardado.instance != null)
+        {
+            buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos conteo exacto
+
+            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
+            {
+                prefabSeleccionado = buggedPersonPrefab;
+                esBugged = true;
+            }
+        }
+
+        return prefabSeleccionado;
+    }
+
+    // --- NUEVA LÓGICA UNIFICADA DE SPAWN ---
+    void SpawnLogic(bool allowRandomPhase, bool permitirBugeado)
     {
         if (currentPrefab == null || currentSpawnCollider == null) return;
 
         Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
 
-        // --- LÓGICA DE SPAWN BUGGEADO CON LÍMITE ---
-        buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos un conteo exacto
-
-        GameObject prefabToSpawn = currentPrefab;
-        bool isBuggedSpawn = false;
-
-        if (buggedPersonPrefab != null && Guardado.instance != null)
-        {
-            // Verificamos si NO hemos superado el límite y si pasamos la probabilidad
-            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
-            {
-                prefabToSpawn = buggedPersonPrefab;
-                isBuggedSpawn = true;
-            }
-        }
+        bool isBuggedSpawn;
+        GameObject prefabToSpawn = ObtenerPrefabAdecuado(permitirBugeado, out isBuggedSpawn);
 
         GameObject newPerson = ObtenerDelPool(prefabToSpawn, spawnPos);
         personasVivas.Add(newPerson);
 
-        if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
+        if (isBuggedSpawn) buggedPersonas.Add(newPerson);
 
         ConfigurarPersonaInstanciada(newPerson, allowRandomPhase);
+    }
+
+    // Mantenemos la función original como wrapper por si otros scripts la llaman
+    void SpawnPerson(bool allowRandomPhase)
+    {
+        SpawnLogic(allowRandomPhase, false);
     }
 
     private void ConfigurarPersonaInstanciada(GameObject newPerson, bool allowRandomPhase)
@@ -372,19 +389,9 @@ public class PopulationManager : MonoBehaviour
         UpdateBuggedChance();
         buggedPersonas.RemoveWhere(obj => obj == null);
 
-        GameObject prefabToSpawn = currentPrefab;
-        bool isBuggedSpawn = false;
-
-        // lógica de bugged igual que el spawn normal
-        if (buggedPersonPrefab != null && Guardado.instance != null)
-        {
-            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit &&
-                Random.Range(0f, 100f) < buggedSpawnChance)
-            {
-                prefabToSpawn = buggedPersonPrefab;
-                isBuggedSpawn = true;
-            }
-        }
+        // false: Este es un spawn manual/posicional, no queremos bugeados aquí
+        bool isBuggedSpawn;
+        GameObject prefabToSpawn = ObtenerPrefabAdecuado(false, out isBuggedSpawn);
 
         GameObject newPerson = ObtenerDelPool(prefabToSpawn, pos);
         personasVivas.Add(newPerson);
@@ -430,31 +437,8 @@ public class PopulationManager : MonoBehaviour
 
     public void SpawnPersonAtBasePhase()
     {
-        if (currentPrefab == null || currentSpawnCollider == null) return;
-
-        UpdateBuggedChance();
-        buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos un conteo exacto
-
-        Vector3 spawnPos = GetRandomPointInCollider(currentSpawnCollider);
-
-        GameObject prefabToSpawn = currentPrefab;
-        bool isBuggedSpawn = false;
-
-        if (buggedPersonPrefab != null && Guardado.instance != null)
-        {
-            // Verificamos límite y probabilidad
-            if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
-            {
-                prefabToSpawn = buggedPersonPrefab;
-                isBuggedSpawn = true;
-            }
-        }
-
-        GameObject newPerson = ObtenerDelPool(prefabToSpawn, spawnPos);
-        personasVivas.Add(newPerson);
-        if (isBuggedSpawn) buggedPersonas.Add(newPerson); // Añadimos a su caché específica
-
-        ConfigurarPersonaInstanciada(newPerson, false);
+        // false: Tampoco queremos bugeados en esta llamada
+        SpawnLogic(false, false);
     }
 
     IEnumerator GrowFromZero(Transform target, Vector3 finalScale)
@@ -553,5 +537,4 @@ public class PopulationManager : MonoBehaviour
 
         poolDePersonas[prefabOriginal].Enqueue(obj);
     }
-
 }

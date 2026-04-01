@@ -90,9 +90,9 @@ public class Guardado : MonoBehaviour
     public float spawnBaseOnMaxPhaseChance = 0f;
     public int cantidadMaxAgujeros = 1; // Límite de
 
-    public float buggedSpawnChance = 0f; // Probabilidad de que spawnee un enemigo bugueado
+    public float buggedSpawnChance = 100f; // Probabilidad de que spawnee un enemigo bugueado
 
-    public int buggedSpawnLimit = 1; // Límite base (puedes cambiarlo a 0 si no quieres que spawneen sin la primera mejora)
+    public int buggedSpawnLimit = 0; // Límite base (puedes cambiarlo a 0 si no quieres que spawneen sin la primera mejora)
 
     
     public enum InputType { Keyboard, Mouse, Controller }
@@ -173,9 +173,9 @@ public class Guardado : MonoBehaviour
         cantidadMaxAgujeros = 1;
         spawnBaseOnMaxPhaseChance = 0f;
 
-        buggedSpawnChance = 0f;
+        buggedSpawnChance = 100f;
 
-        buggedSpawnLimit = 1; // O el valor inicial que prefieras
+        buggedSpawnLimit = 0; // O el valor inicial que prefieras
 
         VirusRadiusController.instance.ApplyScale();
 
@@ -318,7 +318,7 @@ public class Guardado : MonoBehaviour
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 5f);
         spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
-        buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 0f); // 0f es el valor inicial
+        buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 100f); // 0f es el valor inicial
         PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
