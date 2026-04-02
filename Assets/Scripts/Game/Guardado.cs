@@ -94,7 +94,10 @@ public class Guardado : MonoBehaviour
 
     public int buggedSpawnLimit = 0; // Límite base (puedes cambiarlo a 0 si no quieres que spawneen sin la primera mejora)
 
-    
+
+    public bool usarRatonParaMover = false;
+    public InputType lastNonMouseInputType = InputType.Controller;
+
     public enum InputType { Keyboard, Mouse, Controller }
     public InputType inputType = InputType.Controller;
 
@@ -256,7 +259,8 @@ public class Guardado : MonoBehaviour
 
         PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
         PlayerPrefs.SetInt("CantidadMaxAgujeros", cantidadMaxAgujeros);
-
+        PlayerPrefs.SetInt("UsarRatonParaMover", usarRatonParaMover ? 1 : 0);
+        PlayerPrefs.SetInt("LastNonMouseInputType", (int)lastNonMouseInputType);
 
 
 
@@ -319,6 +323,8 @@ public class Guardado : MonoBehaviour
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 5f);
         spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
         buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 100f); // 0f es el valor inicial
+        usarRatonParaMover = PlayerPrefs.GetInt("UsarRatonParaMover", 0) == 1;
+        lastNonMouseInputType = (InputType)PlayerPrefs.GetInt("LastNonMouseInputType", 2);
         PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -576,8 +582,24 @@ public class Guardado : MonoBehaviour
     }
     public void toogleMovement(bool mouse)
     {
-        inputType = mouse ? InputType.Mouse : InputType.Keyboard;
+        if (mouse)
+        {
+            // Guardamos el tipo anterior real antes de pasar a modo ratón
+            if (inputType != InputType.Mouse)
+                lastNonMouseInputType = inputType;
+
+            inputType = InputType.Mouse;
+        }
+        else
+        {
+            // Al quitar ratón, recuperamos el tipo anterior real
+            inputType = (lastNonMouseInputType == InputType.Mouse)
+                ? InputType.Keyboard
+                : lastNonMouseInputType;
+        }
+
         PlayerPrefs.SetInt("InputType", (int)inputType);
+        PlayerPrefs.SetInt("LastNonMouseInputType", (int)lastNonMouseInputType);
         PlayerPrefs.Save();
 
         if (VirusMovement.instance != null)
@@ -598,7 +620,7 @@ public class Guardado : MonoBehaviour
                 LevelManager.instance.UpdateCursorState(false);
         }
 
-        Debug.Log("Preferencia de control guardada: " + inputType);
+        Debug.Log("Preferencia de control guardada: " + inputType + " | Último no-ratón: " + lastNonMouseInputType);
     }
     public void LoadEvolutionData()
     {
