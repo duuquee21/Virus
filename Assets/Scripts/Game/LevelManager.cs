@@ -854,7 +854,12 @@ public class LevelManager : MonoBehaviour
 
         if (virusPlayer != null) virusPlayer.SetActive(true);
         if (virusMovementScript != null) virusMovementScript.enabled = true;
-
+        if (virusPlayer != null)
+        {
+            virusPlayer.SetActive(true);
+            // 🌟 NUEVO: Resetear posición al centro
+            virusPlayer.transform.position = Vector3.zero;
+        }
         if (AudioManager.instance != null)
             AudioManager.instance.SwitchToGameMusic();
 
@@ -983,6 +988,9 @@ public class LevelManager : MonoBehaviour
 
         gameUI.SetActive(true);
         virusPlayer.SetActive(true);
+
+        // 🌟 NUEVO: Resetear posición al centro
+        virusPlayer.transform.position = Vector3.zero;
         if (virusMovementScript != null) virusMovementScript.enabled = true;
         UpdateUI();
     }

@@ -12,6 +12,8 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
     public float zoomSensitivity = 0.1f;
     public float zoomSmoothness = 10f;
 
+    public float mouseDragSensitivity = 0.5f;
+
     [Header("Configuración de Movimiento (Ratón)")]
     public float dragSmoothness = 15f;
 
@@ -100,8 +102,8 @@ public class SkillTreeCameraUI : MonoBehaviour, IDragHandler, IScrollHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Movimiento 1:1 independiente del nivel de Zoom
-        _targetPosition += eventData.delta / content.localScale.x;
+        // Multiplicamos por la sensibilidad antes de aplicar el zoom
+        _targetPosition += (eventData.delta * mouseDragSensitivity) / content.localScale.x;
     }
     // 📸 NUEVA FUNCIÓN: Centra la cámara en el nodo que el mando seleccione
     // 📸 NUEVA FUNCIÓN: Centra la cámara en el nodo que el mando seleccione

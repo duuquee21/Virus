@@ -67,13 +67,7 @@ public class BlackHoleController : MonoBehaviour
             nextSpawnTime = Time.time + Guardado.instance.agujeroSpawnRate;
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (agujerosActivos < Guardado.instance.cantidadMaxAgujeros)
-            {
-                SpawnBlackHole();
-            }
-        }
+      
     }
 
     private void OnDisable()

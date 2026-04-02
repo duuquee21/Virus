@@ -1481,4 +1481,29 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         foreach (var node in nodes)
             node.CheckIfShouldShow();
     }
+
+#if UNITY_EDITOR
+    // Este método solo se ejecuta dentro del Editor de Unity
+    private void OnValidate()
+    {
+        // Si el saveID está vacío, no comprobamos nada aún
+        if (string.IsNullOrEmpty(saveID)) return;
+
+        // Buscamos todos los nodos de habilidad en la escena actual
+        SkillNode[] allNodes = FindObjectsOfType<SkillNode>(true);
+
+        foreach (SkillNode node in allNodes)
+        {
+            // Si el nodo es otro objeto distinto pero tiene el mismo ID
+            if (node != this && node.saveID == this.saveID)
+            {
+                Debug.LogError($"<color=red>⚠️ ¡SAVE ID DUPLICADO!</color> El nodo <b>{gameObject.name}</b> comparte el ID <b>'{saveID}'</b> con el nodo <b>{node.gameObject.name}</b>. " +
+                    "Esto causará errores graves en el guardado. ¡Cámbialo ahora!");
+
+                // Opcional: Podrías marcar el objeto en la jerarquía para identificarlo mejor
+                // UnityEditor.Selection.activeGameObject = gameObject;
+            }
+        }
+    }
+#endif
 }

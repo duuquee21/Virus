@@ -3,7 +3,7 @@ Shader "Custom/ShapeTransitionRounded"
     Properties
     {
         _Color ("Color", Color) = (0,0,0,1)
-        _Radius ("Size", Range(-0.1, 1.5)) = 0.5
+        _Radius ("Size", Range(-0.1, 2)) = 0.5
         _Roundness ("Roundness", Range(0.0, 0.5)) = 0.1
         _CenterX ("Center X", Range(0.0, 1.0)) = 0.5
         _CenterY ("Center Y", Range(0.0, 1.0)) = 0.5

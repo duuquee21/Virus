@@ -4,12 +4,11 @@ using UnityEngine.UI;
 
 namespace Collections.Shaders.ShapeTransition
 {
-    // 1. EL ENUM DEBE ESTAR AQUÍ (DENTRO DEL NAMESPACE)
     public enum TransitionShape { Circle = 0, Hexagon = 1, Pentagon = 2 }
 
     public class ShapeTransition : MonoBehaviour
     {
-        public TransitionShape selectedShape; // Ahora ya debería reconocerlo
+        public TransitionShape selectedShape;
 
         [Header("Settings")]
         [SerializeField] private float transitionDuration = 0.7f;
@@ -19,7 +18,6 @@ namespace Collections.Shaders.ShapeTransition
         private bool _isOpen = true;
         private Coroutine _currentTransition;
 
-        // IDs de las propiedades del Shader
         private static readonly int RADIUS = Shader.PropertyToID("_Radius");
         private static readonly int ROTATION = Shader.PropertyToID("_Rotation");
         private static readonly int ASPECT = Shader.PropertyToID("_Aspect");
@@ -33,10 +31,15 @@ namespace Collections.Shaders.ShapeTransition
         private void Start()
         {
             UpdateShaderProperties();
-            // Estado inicial: abierto
-            _blackScreen.material.SetFloat(RADIUS, 1.5f);
+            // Estado inicial: abierto a 2.0f
+            _blackScreen.material.SetFloat(RADIUS, 2.0f);
             _blackScreen.material.SetFloat(ROTATION, 0f);
             _isOpen = true;
+        }
+
+        private void Update()
+        {
+            UpdateShaderProperties();
         }
 
         public void ToggleTransition()
@@ -51,16 +54,16 @@ namespace Collections.Shaders.ShapeTransition
         {
             UpdateShaderProperties();
             if (_currentTransition != null) StopCoroutine(_currentTransition);
-            // Va desde cerrado (0) hasta abierto (1.5)
-            _currentTransition = StartCoroutine(Transition(0f, 1.5f, rotationAmount, 0f));
+            // Va desde cerrado (0) hasta abierto (2.0f)
+            _currentTransition = StartCoroutine(Transition(0f, 2.0f, rotationAmount, 0f));
         }
 
         public void CloseBlackScreen()
         {
             UpdateShaderProperties();
             if (_currentTransition != null) StopCoroutine(_currentTransition);
-            // Va desde abierto (1.5) hasta cerrado (-0.1)
-            _currentTransition = StartCoroutine(Transition(1.5f, -0.1f, 0f, rotationAmount));
+            // Va desde abierto (2.0f) hasta cerrado (-0.1f para asegurar el cierre total)
+            _currentTransition = StartCoroutine(Transition(2.0f, -0.1f, 0f, rotationAmount));
         }
 
         private IEnumerator Transition(float startRad, float endRad, float startRot, float endRot)
@@ -71,8 +74,6 @@ namespace Collections.Shaders.ShapeTransition
             {
                 time += Time.unscaledDeltaTime;
                 float t = Mathf.Clamp01(time / transitionDuration);
-
-                // Suavizado de movimiento (Ease In Out)
                 float smoothT = t * t * (3f - 2f * t);
 
                 mat.SetFloat(RADIUS, Mathf.Lerp(startRad, endRad, smoothT));
@@ -88,12 +89,12 @@ namespace Collections.Shaders.ShapeTransition
         private void UpdateShaderProperties()
         {
             if (_blackScreen == null) return;
-            var mat = _blackScreen.material;
-            mat.SetFloat(ASPECT, (float)Screen.width / Screen.height);
+            var mat = _blackScreen.materialForRendering;
+            float aspect = (float)Screen.width / Screen.height;
+            mat.SetFloat(ASPECT, aspect);
             mat.SetInt(SHAPE, (int)selectedShape);
         }
 
-        // Método por si quieres cambiar la forma por código (ej. desde un botón)
         public void SetShape(int shapeIndex)
         {
             selectedShape = (TransitionShape)shapeIndex;
