@@ -1853,25 +1853,26 @@ public class LevelManager : MonoBehaviour
     // 🌟 ANIMACIÓN DEL LOGO (Efecto POP con rebote)
     private IEnumerator AnimarLogoDemo()
     {
-        logoDemo.localScale = Vector3.zero; // Empieza invisible (tamaño 0)
-        float duration = 0.6f; // Medio segundo de animación
+        Vector3 escalaFinal = new Vector3(0.7f, 0.7f, 1f);
+        logoDemo.localScale = Vector3.zero;
+
+        float duration = 0.6f;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            elapsed += Time.unscaledDeltaTime; // unscaled porque el juego está en pausa (timeScale = 0)
+            elapsed += Time.unscaledDeltaTime;
             float progreso = elapsed / duration;
 
-            // Fórmula matemática para hacer el rebote (Ease Out Back)
             float tension = 2.0f;
             float t = progreso - 1f;
-            float escala = 1f + (t * t * ((tension + 1f) * t + tension));
+            float rebote = 1f + (t * t * ((tension + 1f) * t + tension));
 
-            logoDemo.localScale = new Vector3(escala, escala, 1f);
+            logoDemo.localScale = escalaFinal * rebote;
             yield return null;
         }
 
-        logoDemo.localScale = Vector3.one; // Aseguramos que termine a tamaño normal perfecto
+        logoDemo.localScale = escalaFinal;
     }
 
     // 🌟 BOTÓN DE STEAM
