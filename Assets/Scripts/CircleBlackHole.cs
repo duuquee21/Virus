@@ -95,8 +95,7 @@ public class BlackHoleController : MonoBehaviour
 
         Vector2 desplazamientoAleatorio = Random.insideUnitCircle * radioDeAparicionAleatoria;
         Vector3 posicionSpawn = transform.position + new Vector3(desplazamientoAleatorio.x, desplazamientoAleatorio.y, 0);
-
-        GameObject nuevoAgujero = Instantiate(circuloPrefab, posicionSpawn, Quaternion.identity);
+        GameObject nuevoAgujero = Instantiate(circuloPrefab, posicionSpawn, Quaternion.identity, transform);
         agujerosInstanciados.Add(nuevoAgujero);
 
         ParticleSystem ps = nuevoAgujero.GetComponentInChildren<ParticleSystem>();
@@ -232,7 +231,19 @@ public class BlackHoleController : MonoBehaviour
     public void ClearActiveEffects()
     {
         StopAllCoroutines();
+
+        for (int i = agujerosInstanciados.Count - 1; i >= 0; i--)
+        {
+            if (agujerosInstanciados[i] != null)
+            {
+                agujerosInstanciados[i].SetActive(false);
+                Destroy(agujerosInstanciados[i]);
+            }
+        }
+
+        agujerosInstanciados.Clear();
         agujerosActivos = 0;
+        nextSpawnTime = 0f;
     }
 
     private void OnDrawGizmosSelected()
