@@ -995,7 +995,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5067856530350086
-    m_Localized: Las celulas negras infectan las figuras en vez de eliminarlas
+    m_Localized: Desbloquea las Celulas Negras
     m_Metadata:
       m_Items: []
   - m_Id: 5067856530350087
