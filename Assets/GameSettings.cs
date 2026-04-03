@@ -69,25 +69,24 @@ public class GameSettings : MonoBehaviour
     {
         isFullscreen = isFull;
 
+#if UNITY_WEBGL
+        // CÓDIGO SOLO PARA WEB (Itch.io)
+        // En web, el navegador manda. Solo pedimos el cambio de estado.
+        Screen.fullScreen = isFull;
+#else
+        // CÓDIGO PARA PC (Windows/Mac/Linux)
         if (isFull)
         {
-            // 1. Obtenemos la resolución nativa del monitor
             Resolution maxRes = Screen.currentResolution;
-
-            // 2. Establecemos el modo ANTES que la resolución para resetear flags del SO
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-
-            // 3. Aplicamos la resolución
             Screen.SetResolution(maxRes.width, maxRes.height, true);
-
-            Debug.Log($"Cambiando a Fullscreen: {maxRes.width}x{maxRes.height}");
         }
         else
         {
-            // Al volver a ventana, forzamos el modo windowed explícitamente
             Screen.fullScreenMode = FullScreenMode.Windowed;
             Screen.SetResolution(1280, 720, false);
         }
+#endif
 
         PlayerPrefs.SetInt("Fullscreen", isFull ? 1 : 0);
         PlayerPrefs.Save();

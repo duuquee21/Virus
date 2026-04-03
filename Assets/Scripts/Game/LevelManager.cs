@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
     public GameObject panelFinDemo;
     public RectTransform logoDemo; // 🌟 NUEVO: El logo que va a saltar
     public string urlSteam = "https://store.steampowered.com/app/4550150/Get_Rid_Of_Those_Corners?beta=0"; // 🌟 NUEVO: Tu enlace de Steam
+    public string urlDiscord = "https://discord.gg/guwArTV7"; // 🌟 NUEVO: Tu enlace de Steam
 
     [Header("Configuración Inicial por Zona")]
     public int[] faseInicialPorMapa;
@@ -1888,6 +1889,12 @@ public class LevelManager : MonoBehaviour
     {
         // Abre el navegador del PC y lo lleva a tu página
         Application.OpenURL(urlSteam);
+    }
+
+    public void Boton_IrADC()
+    {
+        // Abre el navegador del PC y lo lleva a tu página
+        Application.OpenURL(urlDiscord);
     }
     // =========================================================
     // 🌀 SISTEMA DE TRANSICIÓN UNIFICADO (HEXÁGONO)
