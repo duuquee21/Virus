@@ -440,6 +440,7 @@ public class Guardado : MonoBehaviour
     public void ActivarCoralInfeccioso()
     {
         coralInfeciosoActivo = true;
+        AddBuggedSpawnLimit(1);
     }
 
     public void MejorarCapacidadCoral(int extra)
