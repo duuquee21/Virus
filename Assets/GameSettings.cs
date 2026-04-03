@@ -70,22 +70,22 @@ public class GameSettings : MonoBehaviour
         isFullscreen = isFull;
 
 #if UNITY_WEBGL
-        // CÓDIGO SOLO PARA WEB (Itch.io)
-        // En web, el navegador manda. Solo pedimos el cambio de estado.
+        // En WebGL, lo ideal es usar solo Screen.fullScreen
+        // No fuerces resoluciones específicas aquí para evitar parpadeos
         Screen.fullScreen = isFull;
 #else
-        // CÓDIGO PARA PC (Windows/Mac/Linux)
-        if (isFull)
-        {
-            Resolution maxRes = Screen.currentResolution;
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-            Screen.SetResolution(maxRes.width, maxRes.height, true);
-        }
-        else
-        {
-            Screen.fullScreenMode = FullScreenMode.Windowed;
-            Screen.SetResolution(1280, 720, false);
-        }
+    // Tu código de PC actual está perfecto
+    if (isFull)
+    {
+        Resolution maxRes = Screen.currentResolution;
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        Screen.SetResolution(maxRes.width, maxRes.height, true);
+    }
+    else
+    {
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+        Screen.SetResolution(1280, 720, false);
+    }
 #endif
 
         PlayerPrefs.SetInt("Fullscreen", isFull ? 1 : 0);
