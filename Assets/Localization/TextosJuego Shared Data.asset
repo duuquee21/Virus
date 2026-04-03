@@ -1187,6 +1187,10 @@ MonoBehaviour:
     m_Key: txt_demotext
     m_Metadata:
       m_Items: []
+  - m_Id: 10243228876722176
+    m_Key: btn_reanudar
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

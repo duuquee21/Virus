@@ -309,7 +309,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787841
-    m_Localized: Hexagon hit harder.
+    m_Localized: Hexagon hit harder the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787851
@@ -317,7 +317,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787852
-    m_Localized: Pentagons hit harder.
+    m_Localized: Pentagons hit harder the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787862
@@ -325,7 +325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787863
-    m_Localized: Squares hit harder.
+    m_Localized: Squares hit harder the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826974982144
@@ -1043,6 +1043,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 8351394239926272
     m_Localized: THANK YOU FOR PLAYING THE DEMO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243228876722176
+    m_Localized: Resume
     m_Metadata:
       m_Items: []
   references:

@@ -307,7 +307,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787841
-    m_Localized: Los hexagonos golpean mas fuerte.
+    m_Localized: Los hexagonos golpean mas fuerte las paredes.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787851
@@ -1048,6 +1048,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 8351394239926272
     m_Localized: GRACIAS POR JUGAR LA DEMO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243228876722176
+    m_Localized: Reanudar
     m_Metadata:
       m_Items: []
   references:
