@@ -68,11 +68,30 @@ public class GameSettings : MonoBehaviour
     public void SetFullscreen(bool isFull)
     {
         isFullscreen = isFull;
-        Screen.fullScreen = isFullscreen;
+
+        if (isFull)
+        {
+            // 1. Obtenemos la resolución nativa del monitor
+            Resolution maxRes = Screen.currentResolution;
+
+            // 2. Establecemos el modo ANTES que la resolución para resetear flags del SO
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+
+            // 3. Aplicamos la resolución
+            Screen.SetResolution(maxRes.width, maxRes.height, true);
+
+            Debug.Log($"Cambiando a Fullscreen: {maxRes.width}x{maxRes.height}");
+        }
+        else
+        {
+            // Al volver a ventana, forzamos el modo windowed explícitamente
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            Screen.SetResolution(1280, 720, false);
+        }
+
         PlayerPrefs.SetInt("Fullscreen", isFull ? 1 : 0);
         PlayerPrefs.Save();
     }
-
     public void SetFPS(int fps)
     {
         targetFPS = fps;
