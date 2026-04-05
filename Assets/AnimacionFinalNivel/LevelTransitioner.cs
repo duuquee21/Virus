@@ -161,7 +161,7 @@ public class LevelTransitioner : MonoBehaviour
         if (manualSetCycler != null)
             manualSetCycler.TriggerTransition(velocidadMaxima / aceleracion, velocidadMaxima / frenado);
 
-        // FASE 0: VIBRACIÓN (Solo Normal + Último Nivel - Script 1)
+        // FASE 0: VIBRACIÓN (Solo Normal + Último Nivel)
         if (!lm.esVersionDemo && esUltimoNivel)
         {
             float tiempoVibracion = 0f;
@@ -186,7 +186,10 @@ public class LevelTransitioner : MonoBehaviour
             float dt = Time.deltaTime;
             velocidadActual += aceleracion * dt;
             if (materialFondo != null) materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
-            if (mainCam != null) mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
+            
+            // MODIFICACIÓN: Solo hacer zoom de cámara si ES demo
+            if (lm.esVersionDemo && mainCam != null) 
+                mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
 
             mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
             mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaObjetivoMin, suavizadoEscala * dt);
@@ -200,7 +203,7 @@ public class LevelTransitioner : MonoBehaviour
 
             if (lm.esVersionDemo)
             {
-                // COMPORTAMIENTO DEMO (Script 2)
+                // COMPORTAMIENTO DEMO
                 float velAlEmpezar = velocidadActual;
                 Vector3 escalaAlEmpezar = mapaTransform.localScale;
                 while (velocidadActual > 0.1f)
@@ -215,7 +218,7 @@ public class LevelTransitioner : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.3f);
                 if (mapaVisual != null) mapaVisual.SetActive(false);
                 lm.MostrarFinDeDemo();
-                // Restauramos para que si reabre, no esté roto
+                
                 mapaTransform.localScale = escalaOriginal;
                 if (mapaVisual != null) mapaVisual.SetActive(true);
                 if (cachedPlaneta != null) cachedPlaneta.SetVisibleUI(true);
@@ -223,7 +226,7 @@ public class LevelTransitioner : MonoBehaviour
             }
             else
             {
-                // COMPORTAMIENTO NORMAL (Script 1)
+                // COMPORTAMIENTO NORMAL (Igual a la versión antigua)
                 int nextIdx = MapSequenceManager.instance != null ? MapSequenceManager.instance.GetCurrentMapIndex() : currentIdx + 1;
                 lm.ActivateMap(nextIdx);
 
@@ -248,7 +251,10 @@ public class LevelTransitioner : MonoBehaviour
                     if (materialFondo != null) materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
                     mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
                     mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaOriginal, suavizadoEscala * dt);
-                    if (mainCam != null) mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomOriginal, velocidadZoomOut * dt);
+                    
+                    // Solo restauramos zoom si por algún motivo se cambió (seguridad)
+                  //  if (mainCam != null) mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomOriginal, velocidadZoomOut * dt);
+                    
                     yield return null;
                 }
                 mapaTransform.rotation = Quaternion.identity;
@@ -258,7 +264,7 @@ public class LevelTransitioner : MonoBehaviour
         }
         else
         {
-            // ÚLTIMO NIVEL (Script 1)
+            // ÚLTIMO NIVEL
             yield return StartCoroutine(FinalPulseAndSpawn());
         }
 
@@ -276,11 +282,16 @@ public class LevelTransitioner : MonoBehaviour
         Time.timeScale = 1f;
         velocidadActual = 0f;
         if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
-        if (mainCam != null) mainCam.orthographicSize = zoomOriginal;
+        if (mainCam != null && lm.esVersionDemo)
+        {
+            mainCam.orthographicSize = zoomOriginal;
+        }
 
         yield return StartCoroutine(DryImpactShake());
     }
 
+    // ... (El resto de funciones DryImpactShake, FinalPulseAndSpawn y ResetFinalLevelEffects se mantienen igual)
+    
     private IEnumerator DryImpactShake()
     {
         if (GameSettings.instance == null || !GameSettings.instance.shakeEnabled || camTransform == null) yield break;
