@@ -28,9 +28,9 @@ public class Movement : MonoBehaviour
 
     // ===== SPATIAL HASH GRID =====
     private CircleCollider2D circleCollider;
-    public static Dictionary<Vector2Int, HashSet<Movement>> espacialGrid = new Dictionary<Vector2Int, HashSet<Movement>>();
-    private static float tamañoCelda = 0.5f;
+    public static Dictionary<Vector2Int, List<Movement>> espacialGrid = new Dictionary<Vector2Int, List<Movement>>();
     private Vector2Int ultimaPosicionGrid;
+    private static float tamañoCelda = 2f;
     private HashSet<Movement> objetosColisionadosEsteFrame = new HashSet<Movement>();
 
 
@@ -308,22 +308,6 @@ public class Movement : MonoBehaviour
         if (progreso >= 1f) gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!collision.collider.CompareTag("Pared")) return;
-
-        ContactPoint2D contact = collision.GetContact(0);
-        Vector2 normal = contact.normal;
-
-        direccion = Vector2.Reflect(direccion, normal).normalized;
-
-        if (estaEmpujado)
-        {
-            Vector2 nuevaVelocidad = Vector2.Reflect(rb.linearVelocity, normal);
-            rb.linearVelocity = nuevaVelocidad;
-        }
-    }
-
     private void OnDestroy()
     {
         // Desregistrar del grid al destruir
@@ -358,85 +342,76 @@ public class Movement : MonoBehaviour
 
         Vector2Int nuevaPosicion = ObtenerPosicionGrid();
 
-        // Si cambió de celda, actualizar el diccionario
         if (nuevaPosicion != ultimaPosicionGrid)
         {
-            // Remover de la celda anterior
-            if (espacialGrid.ContainsKey(ultimaPosicionGrid))
+            // Remover de la celda vieja
+            if (espacialGrid.TryGetValue(ultimaPosicionGrid, out List<Movement> listaVieja))
             {
-                espacialGrid[ultimaPosicionGrid].Remove(this);
-                if (espacialGrid[ultimaPosicionGrid].Count == 0)
-                {
-                    espacialGrid.Remove(ultimaPosicionGrid);
-                }
+                listaVieja.Remove(this);
+                // No eliminamos la clave del diccionario para evitar la sobrecarga de rehacerla
             }
 
-            // Agregar a la nueva celda
-            if (!espacialGrid.ContainsKey(nuevaPosicion))
+            // Añadir a la nueva celda
+            if (!espacialGrid.TryGetValue(nuevaPosicion, out List<Movement> listaNueva))
             {
-                espacialGrid[nuevaPosicion] = new HashSet<Movement>();
+                listaNueva = new List<Movement>(32); // Pre-asignamos memoria
+                espacialGrid[nuevaPosicion] = listaNueva;
             }
-            espacialGrid[nuevaPosicion].Add(this);
-            ultimaPosicionGrid = nuevaPosicion;
-        }
-        else if (!espacialGrid.ContainsKey(nuevaPosicion) || !espacialGrid[nuevaPosicion].Contains(this))
-        {
-            // Primera vez o se perdió del registro, re-agregar
-            if (!espacialGrid.ContainsKey(nuevaPosicion))
-            {
-                espacialGrid[nuevaPosicion] = new HashSet<Movement>();
-            }
-            espacialGrid[nuevaPosicion].Add(this);
+            listaNueva.Add(this);
             ultimaPosicionGrid = nuevaPosicion;
         }
     }
 
     private void DetectarColisionesCircleToCircle()
     {
-        if (circleCollider == null || personaInfeccion == null) return;
-
-        if (personaInfeccion.alreadyInfected) return;
+        if (circleCollider == null || personaInfeccion == null || personaInfeccion.alreadyInfected) return;
 
         Vector2Int miPosGrid = ObtenerPosicionGrid();
         float miRadio = circleCollider.radius * transform.localScale.x;
         Vector2 miPosicion = (Vector2)transform.position;
+        int miID = gameObject.GetInstanceID(); // Cacheamos el ID
 
-        // Limpiar conjunto de colisiones del frame anterior
-        objetosColisionadosEsteFrame.Clear();
-
-        // Revisar 9 celdas (la actual + 8 adyacentes)
+        // Revisar 9 celdas
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
             {
-                Vector2Int celdaAdyacente = miPosGrid + new Vector2Int(x, y);
+                Vector2Int celdaAdyacente = new Vector2Int(miPosGrid.x + x, miPosGrid.y + y);
 
-                if (espacialGrid.ContainsKey(celdaAdyacente))
+                if (espacialGrid.TryGetValue(celdaAdyacente, out List<Movement> posiblesColisiones))
                 {
-                    foreach (Movement otra in espacialGrid[celdaAdyacente])
+                    int count = posiblesColisiones.Count;
+                    // Usamos un loop 'for' clásico en lugar de 'foreach' para máximo rendimiento
+                    for (int i = 0; i < count; i++)
                     {
-                        if (otra == this || otra.personaInfeccion == null) continue;
-                        if (objetosColisionadosEsteFrame.Contains(otra)) continue; // Ya procesada
+                        Movement otra = posiblesColisiones[i];
+
+                        // El ID determina quién calcula. Evita doble cálculo y elimina la necesidad 
+                        // del HashSet 'objetosColisionadosEsteFrame' que tenías antes (¡Gran ahorro!)
+                        if (otra == this || otra.personaInfeccion == null || miID > otra.gameObject.GetInstanceID())
+                            continue;
 
                         Vector2 otraPosicion = (Vector2)otra.transform.position;
                         float otroRadio = otra.circleCollider.radius * otra.transform.localScale.x;
 
-                        // Circle-to-Circle: comparar distancia al cuadrado vs suma de radios al cuadrado
-                        float distanciaCuadrada = (miPosicion - otraPosicion).sqrMagnitude;
-                        float sumaRadiosCuadrada = (miRadio + otroRadio) * (miRadio + otroRadio);
+                        // Matemáticas rápidas sin Raíz Cuadrada (SqrMagnitude)
+                        float dx = miPosicion.x - otraPosicion.x;
+                        float dy = miPosicion.y - otraPosicion.y;
+                        float distanciaCuadrada = (dx * dx) + (dy * dy);
+
+                        float sumaRadios = miRadio + otroRadio;
+                        float sumaRadiosCuadrada = sumaRadios * sumaRadios;
 
                         if (distanciaCuadrada < sumaRadiosCuadrada)
                         {
-                            ProcesarColisionCircleToCircle(otra, otroRadio, otraPosicion, distanciaCuadrada);
-                            objetosColisionadosEsteFrame.Add(otra);
+                            ProcesarColisionCircleToCircle(otra, otraPosicion, distanciaCuadrada);
                         }
                     }
                 }
             }
         }
     }
-
-    private void ProcesarColisionCircleToCircle(Movement otra, float otroRadio, Vector2 otraPosicion, float distanciaCuadrada)
+    private void ProcesarColisionCircleToCircle(Movement otra, Vector2 otraPosicion, float distanciaCuadrada)
     {
         // Evitar procesar dos veces la misma colisión
         if (this.gameObject.GetInstanceID() > otra.gameObject.GetInstanceID()) return;

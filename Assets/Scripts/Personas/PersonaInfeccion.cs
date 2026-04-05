@@ -103,6 +103,8 @@ public class PersonaInfeccion : MonoBehaviour
 
     public float lastPlanetImpactTime = -999f;
 
+
+    private static float ultimoTiempoTextoVolador = 0f;
     void Awake()
     {
         escalaOriginal = transform.localScale;
@@ -243,7 +245,9 @@ public class PersonaInfeccion : MonoBehaviour
     {
         progreso = Mathf.Clamp01(progreso);
 
-        if (Mathf.Abs(progreso - lastProgressSent) > 0.01f)
+        // Cambiamos de 0.01f a 0.05f. 
+        // Reduce la carga del Canvas en un 80% al actualizar solo cada 5% de progreso.
+        if (Mathf.Abs(progreso - lastProgressSent) > 0.05f)
         {
             ActualizarProgresoBarras(progreso);
             lastProgressSent = progreso;
@@ -699,8 +703,18 @@ public class PersonaInfeccion : MonoBehaviour
             if (LevelManager.instance != null && faseAnterior < valorPorFase.Length)
             {
                 int monedasADar = GetCoinsForPhase(faseAnterior);
-                LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
-                SpawnFloatingMoney(monedasADar);
+
+                // Solo mostramos el texto flotante si realmente no estamos saturando el frame
+                if (Time.time - ultimoTiempoTextoVolador >= 0.05f)
+                {
+                    LevelManager.instance.MostrarPuntosVoladores(transform.position, monedasADar);
+                    SpawnFloatingMoney(monedasADar);
+                }
+                else
+                {
+                    // Sumamos el dinero silenciosamente sin generar coste gráfico
+                    LevelManager.instance.AddCoins(monedasADar);
+                }
             }
 
             if (InfectionFeedback.instance != null && Time.time >= lastPhaseEffectTime + phaseEffectCooldown)
@@ -733,8 +747,12 @@ public class PersonaInfeccion : MonoBehaviour
 
     private void SpawnFloatingMoney(int cantidad)
     {
-        if (TextPooler.Instance == null)
-            return;
+        if (TextPooler.Instance == null) return;
+
+        // OPTIMIZACIÓN: Si han pasado menos de 0.05s desde el último texto de CUALQUIER persona, 
+        // cancelamos la creación visual del texto para evitar tirones (el dinero se suma igual en LevelManager).
+        if (Time.time - ultimoTiempoTextoVolador < 0.05f) return;
+        ultimoTiempoTextoVolador = Time.time;
 
         GameObject obj = TextPooler.Instance.SpawnText(transform.position, "+" + cantidad.ToString());
 
@@ -746,7 +764,6 @@ public class PersonaInfeccion : MonoBehaviour
         if (tm != null)
             tm.color = Color.white;
     }
-
     private int GetCoinsForPhase(int fase)
     {
         int baseCoins = (fase < valorPorFase.Length) ? valorPorFase[fase] : 0;
@@ -839,9 +856,23 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (Guardado.instance != null && PopulationManager.instance != null)
         {
-            if (PopulationManager.instance.GetTotalPopulationCount() > 70)
+            // 1. Detectar el límite de población según el mapa
+            int limitePoblacion = 100; // Límite por defecto
+
+            // Obtenemos el índice del mapa actual desde PlayerPrefs (como hace tu LevelManager)
+            int currentMapIndex = PlayerPrefs.GetInt("CurrentMapIndex", 0);
+
+            // Si es el 4to mapa (índice 3), bajamos el límite a 50
+            if (currentMapIndex == 3)
+            {
+                limitePoblacion = 50;
+            }
+
+            // 2. Aplicar el límite detectado
+            if (PopulationManager.instance.GetTotalPopulationCount() > limitePoblacion)
                 return;
 
+            // 3. Lógica de spawn original
             float chance = Guardado.instance.spawnBaseOnMaxPhaseChance;
             if (Random.value < chance)
                 PopulationManager.instance.SpawnPersonAtBasePhase();

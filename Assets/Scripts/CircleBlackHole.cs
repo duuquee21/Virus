@@ -39,6 +39,8 @@ public class BlackHoleController : MonoBehaviour
 
     private List<GameObject> agujerosInstanciados = new List<GameObject>();
 
+    private Collider2D[] collidersAfectados = new Collider2D[100]; // Límite de 100 afectados por frame
+
     void Start()
     {
         // Busca el objeto por nombre y extrae su AudioSource
@@ -186,20 +188,26 @@ public class BlackHoleController : MonoBehaviour
 
     void AtraerPersonas(Vector3 centro)
     {
-        Collider2D[] personas = Physics2D.OverlapCircleAll(centro, radioDeAtraccionEfectiva);
-        foreach (var col in personas)
+        // Cero generación de basura. Rellena el array existente.
+        int numColliders = Physics2D.OverlapCircleNonAlloc(centro, radioDeAtraccionEfectiva, collidersAfectados);
+
+        for (int i = 0; i < numColliders; i++)
         {
+            Collider2D col = collidersAfectados[i];
             if (col.CompareTag("Persona"))
             {
-                Rigidbody2D rbPersona = col.GetComponent<Rigidbody2D>();
+                Rigidbody2D rbPersona = col.GetComponent<Rigidbody2D>(); // Idealmente deberías tener esto cacheado, pero es aceptable si no son miles.
                 Movement mov = col.GetComponent<Movement>();
+
                 if (rbPersona != null)
                 {
                     if (mov != null) mov.SetEstaEmpujado(true, rbPersona.linearVelocity.normalized);
                     Vector2 direccionHaciaCentro = (Vector2)centro - rbPersona.position;
                     float distancia = direccionHaciaCentro.magnitude;
+
+                    // Optimizamos la división
                     float intensidad = fuerzaAtraccion / (distancia + 0.8f);
-                    rbPersona.AddForce(direccionHaciaCentro.normalized * intensidad * 10f, ForceMode2D.Force);
+                    rbPersona.AddForce(direccionHaciaCentro.normalized * (intensidad * 10f), ForceMode2D.Force);
                 }
             }
         }

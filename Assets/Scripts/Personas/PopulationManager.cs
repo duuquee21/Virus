@@ -421,10 +421,11 @@ public class PopulationManager : MonoBehaviour
         if (limpiandoGradualmente) return;
         foreach (var p in personasVivas)
         {
-            if (p != null) Destroy(p);
+            if (p != null) DevolverAlPool(p, currentPrefab); // <--- Usa el pool, NO el Destroy
         }
         personasVivas.Clear();
-        buggedPersonas.Clear(); // <-- VACIAR CACHÉ
+        buggedPersonas.Clear();
+
 
         foreach (var c in coralesVivos)
         {
