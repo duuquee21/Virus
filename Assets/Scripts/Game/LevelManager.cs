@@ -113,6 +113,18 @@ public class LevelManager : MonoBehaviour
         cachedPopManager = Object.FindFirstObjectByType<PopulationManager>();
     }
 
+    public void BloquearControlesUI()
+    {
+        if (EventSystem.current != null)
+            EventSystem.current.enabled = false;
+    }
+
+    public void DesbloquearControlesUI()
+    {
+        if (EventSystem.current != null)
+            EventSystem.current.enabled = true;
+    }
+
     string GetTexto(string clave)
     {
         var op = LocalizationSettings.StringDatabase.GetLocalizedString("TextosJuego", clave);
@@ -1488,7 +1500,7 @@ public class LevelManager : MonoBehaviour
         if (esVersionDemo && nextMap > 0)
         {
             MostrarFinDeDemo();
-            isTransitioning = false; // 🛡️ Desbloqueo si hay demo final
+            // ❌ HEMOS BORRADO EL DESBLOQUEO AQUÍ. La transición de la demo se encarga ahora.
             yield break;
         }
 
@@ -1794,69 +1806,68 @@ public class LevelManager : MonoBehaviour
     // =========================================================
     // 🛑 LÓGICA DE LA DEMO 🛑
     // =========================================================
-    // =========================================================
-    // 🛑 LÓGICA DE LA DEMO 🛑
-    // =========================================================
-    // =========================================================
-    // 🛑 LÓGICA DE LA DEMO 🛑
-    // =========================================================
-    // =========================================================
-    // 🛑 LÓGICA DE LA DEMO 🛑
-    // =========================================================
     public void MostrarFinDeDemo()
     {
-        isTransitioning = false; // 🔨 ROMPEMOS EL ESCUDO
+        // Evitamos que se ejecute dos veces
+        if (panelFinDemo != null && panelFinDemo.activeSelf) return;
+
+        // 1. APAGADO INSTANTÁNEO Y DESBLOQUEO
+        isTransitioning = false;
+        DesbloquearControlesUI();
         isGameActive = false;
         Time.timeScale = 0f;
 
-        // 1. 🧽 LIMPIEZA DE JUGADOR
+        // 2. Limpieza radical del entorno (0 frames de espera)
+        SetMapsActive(false);
+        ResetCameraZoom();
+
+        if (gameUI != null) gameUI.SetActive(false);
+        if (zonePanel != null) zonePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+
         if (virusPlayer != null) virusPlayer.SetActive(false);
         if (virusMovementScript != null) virusMovementScript.enabled = false;
-
-        // 2. 🧽 LIMPIEZA DE ENEMIGOS Y EFECTOS
         if (PopulationManager.instance != null) PopulationManager.instance.ClearAllPersonas();
         StopAllActiveRunEffects();
 
-        // 3. 💥 FRANCOTIRADOR DE NÚMEROS FLOTANTES
         FloatingScoreUI[] puntos = Object.FindObjectsByType<FloatingScoreUI>(FindObjectsSortMode.None);
         foreach (var p in puntos) if (p != null) Destroy(p.gameObject);
 
         FloatingText[] danos = Object.FindObjectsByType<FloatingText>(FindObjectsSortMode.None);
         foreach (var d in danos) if (d != null) d.gameObject.SetActive(false);
 
-        // 🚀 NUEVO: LIMPIEZA DE ENTORNO (Adiós al mapa gigante)
-        SetMapsActive(false); // Apaga el Hexágono y cualquier otro mapa
-        ResetCameraZoom();    // Devuelve la cámara a su tamaño normal por si acaso
-
-        // 4. OCULTAR INTERFAZ
-        if (gameUI != null) gameUI.SetActive(false);
-        if (zonePanel != null) zonePanel.SetActive(false);
-        if (shinyPanel != null) shinyPanel.SetActive(false);
-        if (pausePanel != null) pausePanel.SetActive(false);
-
-        // 5. 🌟 MOSTRAR PANEL DEMO Y ANIMAR LOGO
+        // 3. ENCENDIDO INSTANTÁNEO DEL PANEL (¡BAM!)
         if (panelFinDemo != null)
         {
             panelFinDemo.SetActive(true);
             if (logoDemo != null) StartCoroutine(AnimarLogoDemo());
         }
 
-        // 6. 🎮 CONTROLES MANDO
+        UpdateCursorState(false);
+
+        // 4. Aseguramos el mando sin esperas largas
+        StartCoroutine(SeleccionarBotonDemoSeguro());
+    }
+
+    // 🎮 Minicorrutina para evitar el "Bug del Frame 0" con el mando
+    private IEnumerator SeleccionarBotonDemoSeguro()
+    {
+        yield return null; // Solo esperamos 1 frame para que los botones "nazcan"
+
         if (!MenuGamepadNavigator.usandoRaton && panelFinDemo != null)
         {
-            Button primerBotonDemo = panelFinDemo.GetComponentInChildren<Button>();
-            if (primerBotonDemo != null && EventSystem.current != null)
+            Button btn = panelFinDemo.GetComponentInChildren<Button>();
+            if (btn != null && EventSystem.current != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(primerBotonDemo.gameObject);
+                EventSystem.current.SetSelectedGameObject(btn.gameObject);
             }
         }
-        else if (MenuGamepadNavigator.usandoRaton && EventSystem.current != null)
+        else if (EventSystem.current != null)
         {
             EventSystem.current.SetSelectedGameObject(null);
         }
-
-        UpdateCursorState(false);
     }
 
     // 🌟 ANIMACIÓN DEL LOGO (Efecto POP con rebote)
