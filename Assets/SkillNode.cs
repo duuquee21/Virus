@@ -728,6 +728,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
             case SkillEffectType.ActivarCoralInfeccioso:
                 Guardado.instance.coralInfeciosoActivo = true;
+                Guardado.instance.AddBuggedSpawnLimit(1);; // Si quieres que al activarlo ya tenga 1 de límite extra para spawns infectados
                 Guardado.instance.SaveData();
                 break;
 

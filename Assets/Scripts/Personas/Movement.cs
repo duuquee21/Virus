@@ -70,6 +70,8 @@ public class Movement : MonoBehaviour
         // 1. PREDICCIÓN DE IMPACTO
         PredecirColisionParedes();
 
+        if (this == null || !gameObject.activeInHierarchy) return;
+
         // 2. Movimiento
         ManejarMovimientoNormal();
 
@@ -102,7 +104,7 @@ public class Movement : MonoBehaviour
     /// </summary>
     private void PredecirColisionParedes()
     {
-        if (rb.linearVelocity.sqrMagnitude < 0.1f) return;
+        if (rb == null || rb.linearVelocity.sqrMagnitude < 0.1f) return;
 
         float distanciaFrame = rb.linearVelocity.magnitude * Time.fixedDeltaTime;
         Vector2 direccionMovimiento = rb.linearVelocity.normalized;
@@ -112,24 +114,20 @@ public class Movement : MonoBehaviour
 
         if (hit.collider != null && hit.collider.CompareTag("Pared"))
         {
-
             if (personaInfeccion != null) personaInfeccion.IntentarSpawnPorChoquePared();
-            // === NUEVO: APLICAR DAÑO MANUALMENTE ===
-            // Buscamos el script del planeta en el objeto con el que chocamos
+
             PlanetCrontrollator planeta = hit.collider.GetComponent<PlanetCrontrollator>();
             if (planeta != null)
             {
-                // Le enviamos este gameObject, el punto del impacto y le decimos que es un Choque
                 planeta.ProcesarImpacto(this.gameObject, hit.point, PlanetCrontrollator.TipoImpacto.Choque);
             }
 
-            if (!gameObject.activeInHierarchy) return;
-            // =======================================
+            // --- SOLUCIÓN CRÍTICA ---
+            // Si el planeta destruyó este objeto o lo desactivó, salimos del método inmediatamente.
+            if (this == null || !gameObject.activeInHierarchy) return;
 
-            // Ejecutamos tu lógica exacta de rebote de inmediato
+            // Solo si seguimos vivos, procesamos el rebote físico
             ProcesarReboteContraPared(hit.point, hit.normal);
-
-            // Separar ligeramente el objeto de la pared para evitar que se quede pegado
             transform.position = hit.centroid + (hit.normal * 0.05f);
         }
     }
