@@ -247,7 +247,7 @@ public class PersonaInfeccion : MonoBehaviour
 
         // Cambiamos de 0.01f a 0.05f. 
         // Reduce la carga del Canvas en un 80% al actualizar solo cada 5% de progreso.
-        if (Mathf.Abs(progreso - lastProgressSent) > 0.05f)
+        if (Mathf.Abs(progreso - lastProgressSent) > 0.01f)
         {
             ActualizarProgresoBarras(progreso);
             lastProgressSent = progreso;

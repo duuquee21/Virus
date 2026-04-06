@@ -180,6 +180,10 @@ public class Guardado : MonoBehaviour
 
         buggedSpawnLimit = 0; // O el valor inicial que prefieras
 
+        // IMPORTANTE: Borra las llaves específicas para que no cargue basura
+        PlayerPrefs.DeleteKey("BuggedSpawnLimit");
+        PlayerPrefs.DeleteKey("BuggedSpawnChance");
+
         VirusRadiusController.instance.ApplyScale();
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
@@ -243,6 +247,7 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("HojaFases", hojaFases);
         PlayerPrefs.SetInt("AgujeroNegroData", agujeroNegroData ? 1 : 0);
         PlayerPrefs.SetFloat("AgujeroSpawnRate", agujeroSpawnRate);
+        PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit); // Ahora sí, aquí va el Set
 
         PlayerPrefs.SetFloat("SpawnBaseOnMaxPhaseChance", spawnBaseOnMaxPhaseChance);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
@@ -325,7 +330,7 @@ public class Guardado : MonoBehaviour
         buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 100f); // 0f es el valor inicial
         usarRatonParaMover = PlayerPrefs.GetInt("UsarRatonParaMover", 0) == 1;
         lastNonMouseInputType = (InputType)PlayerPrefs.GetInt("LastNonMouseInputType", 2);
-        PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit);
+        buggedSpawnLimit = PlayerPrefs.GetInt("BuggedSpawnLimit", 0);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = PlayerPrefs.GetFloat("InfectSpeedPhase_" + i, 1f);
