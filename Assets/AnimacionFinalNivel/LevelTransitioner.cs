@@ -24,6 +24,18 @@ public class LevelTransitioner : MonoBehaviour
     public float velocidadZoomIn = 5f;
     public float velocidadZoomOut = 3f;
 
+    [Header("Configuración de Explosión Final")]
+    public GameObject prefabExplosion;
+    public float escalaMaximaExplosion1 = 5f;
+    public float tiempoCrecimiento1 = 0.2f;
+    public float tiempoEncogimiento = 0.15f;
+
+    public float escalaMaximaExplosion2 = 8f;
+    public float tiempoCrecimiento2 = 0.4f;
+
+    public float tiempoCambioColorNegro = 1.5f;
+    private GameObject instanciaExplosionActual;
+
     [Header("Referencias")]
     public ManualSetCycler manualSetCycler;
     public static event Action<float> OnImpactShake;
@@ -42,20 +54,9 @@ public class LevelTransitioner : MonoBehaviour
     public Material materialFondo;
     private readonly string vortexProp = "_VortexStrength";
 
-    [Header("Configuración Final (Último Nivel)")]
-    public float duracionVibracionPrevia = 1.5f;
-    public float intensidadVibracionPrevia = 0.2f;
-    public float duracionColapsoFinal = 0.33f;
-    public float velocidadGiroFinal = -1600f;
-
-    [Header("Efecto Final Spawn")]
-    public GameObject spritePulsoPrefab;
-    public int numeroPulsos = 3;
-    public float escalaMaxPulso = 1.3f;
-    public float velocidadPulso = 8f;
-
     [Header("UI y Fondo")]
     public GameObject panelFinal;
+    public GameObject panelHUD;
     public RectTransform fondoNebula;
     private Vector3 escalaOriginalFondoNebula;
     private Dictionary<Transform, Vector3> escalasIniciales = new Dictionary<Transform, Vector3>();
@@ -124,16 +125,18 @@ public class LevelTransitioner : MonoBehaviour
             cachedPlaneta.transform.rotation = Quaternion.identity;
     }
 
-    private void ForzarEscalaMapasAUno()
+    private void ForzarEscalaMapasAUno(bool ignorarUltimoMapa = false)
     {
         if (lm == null) lm = LevelManager.instance;
         if (lm?.mapList == null) return;
 
-        foreach (GameObject map in lm.mapList)
+        for (int i = 0; i < lm.mapList.Length; i++)
         {
-            if (map != null)
+            if (lm.mapList[i] != null)
             {
-                map.transform.localScale = Vector3.one;
+                if (ignorarUltimoMapa && i == lm.mapList.Length - 1) continue;
+
+                lm.mapList[i].transform.localScale = Vector3.one;
             }
         }
     }
@@ -152,7 +155,7 @@ public class LevelTransitioner : MonoBehaviour
         ForzarEscalaMapasAUno();
 
         lm.isTransitioning = true;
-        lm.isGameActive = false;
+      
 
         if (lm.virusMovementScript != null)
             lm.virusMovementScript.enabled = false;
@@ -187,27 +190,9 @@ public class LevelTransitioner : MonoBehaviour
         if (manualSetCycler != null)
             manualSetCycler.TriggerTransition(velocidadMaxima / aceleracion, velocidadMaxima / frenado);
 
-        if (!lm.esVersionDemo && esUltimoNivel)
-        {
-            float tiempoVibracion = 0f;
-            Vector3 posOriginalMapa = mapaTransform.localPosition;
-
-            if (popManager != null)
-                popManager.StartGradualClear(duracionVibracionPrevia);
-
-            while (tiempoVibracion < duracionVibracionPrevia)
-            {
-                tiempoVibracion += Time.deltaTime;
-                mapaTransform.localPosition = posOriginalMapa + (Vector3)(UnityEngine.Random.insideUnitCircle * intensidadVibracionPrevia);
-                yield return null;
-            }
-
-            mapaTransform.localPosition = posOriginalMapa;
-        }
-
         OnTransitionStart?.Invoke();
 
-        Vector3 escalaObjetivoMin = escalaOriginal * escalaMinima;
+        Vector3 escalaObjetivoMin = esUltimoNivel ? Vector3.zero : (escalaOriginal * escalaMinima);
 
         while (velocidadActual < velocidadMaxima)
         {
@@ -224,6 +209,18 @@ public class LevelTransitioner : MonoBehaviour
             mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaObjetivoMin, suavizadoEscala * dt);
 
             yield return null;
+        }
+
+        if (esUltimoNivel)
+        {
+            mapaTransform.localScale = Vector3.zero;
+
+            if (prefabExplosion != null)
+            {
+                if (instanciaExplosionActual != null) Destroy(instanciaExplosionActual);
+                instanciaExplosionActual = Instantiate(prefabExplosion, Vector3.zero, Quaternion.identity);
+                StartCoroutine(AnimarExplosion(instanciaExplosionActual.transform));
+            }
         }
 
         if (!esUltimoNivel)
@@ -340,16 +337,12 @@ public class LevelTransitioner : MonoBehaviour
                 ForzarEscalaMapasAUno();
             }
         }
-        else
-        {
-            yield return StartCoroutine(FinalPulseAndSpawn());
-        }
 
         RefreshCurrentPlanet();
 
         if (cachedPlaneta != null)
         {
-            cachedPlaneta.isInvulnerable = esUltimoNivel;
+            cachedPlaneta.isInvulnerable = esUltimoNivel;  
             cachedPlaneta.SetVisibleUI(true);
         }
 
@@ -368,15 +361,99 @@ public class LevelTransitioner : MonoBehaviour
         if (mainCam != null && lm.esVersionDemo)
             mainCam.orthographicSize = zoomOriginal;
 
-        ForzarEscalaMapasAUno();
+        ForzarEscalaMapasAUno(esUltimoNivel);
         yield return null;
-        ForzarEscalaMapasAUno();
+        ForzarEscalaMapasAUno(esUltimoNivel);
         yield return null;
-        ForzarEscalaMapasAUno();
+        ForzarEscalaMapasAUno(esUltimoNivel);
 
         yield return StartCoroutine(DryImpactShake());
 
-        ForzarEscalaMapasAUno();
+        ForzarEscalaMapasAUno(esUltimoNivel);
+    }
+
+    private IEnumerator AnimarExplosion(Transform explosionTransform)
+    {
+        // --- MODIFICACIÓN: Desactivar HUD al empezar la transición ---
+        if (panelHUD != null)
+        {
+            panelHUD.SetActive(false);
+        }
+        explosionTransform.localScale = Vector3.zero;
+        Vector3 escalaObjetivo1 = Vector3.one * escalaMaximaExplosion1;
+        Vector3 escalaObjetivo2 = Vector3.one * escalaMaximaExplosion2;
+        float tiempo;
+
+        // Fase 1: Crecer de 0 a Max 1
+        tiempo = 0f;
+        while (tiempo < tiempoCrecimiento1)
+        {
+            tiempo += Time.deltaTime;
+            explosionTransform.localScale = Vector3.Lerp(Vector3.zero, escalaObjetivo1, tiempo / tiempoCrecimiento1);
+            yield return null;
+        }
+        explosionTransform.localScale = escalaObjetivo1;
+
+        // Fase 2: Encoger de Max 1 a 0
+        tiempo = 0f;
+        while (tiempo < tiempoEncogimiento)
+        {
+            tiempo += Time.deltaTime;
+            explosionTransform.localScale = Vector3.Lerp(escalaObjetivo1, Vector3.zero, tiempo / tiempoEncogimiento);
+            yield return null;
+        }
+        explosionTransform.localScale = Vector3.zero;
+
+        // Fase 3: Crecer de nuevo de 0 a Max 2
+        tiempo = 0f;
+        while (tiempo < tiempoCrecimiento2)
+        {
+            tiempo += Time.deltaTime;
+            explosionTransform.localScale = Vector3.Lerp(Vector3.zero, escalaObjetivo2, tiempo / tiempoCrecimiento2);
+            yield return null;
+        }
+        explosionTransform.localScale = escalaObjetivo2;
+
+        // --- MODIFICACIÓN: Activamos el panel final aquí ---
+        if (panelFinal != null)
+        {
+            panelFinal.SetActive(true);
+        }
+        // ---------------------------------------------------
+
+        // Fase 4: Cambiar color a negro lentamente
+        SpriteRenderer[] renderers2D = explosionTransform.GetComponentsInChildren<SpriteRenderer>();
+        Image[] imagesUI = explosionTransform.GetComponentsInChildren<Image>();
+
+        if (renderers2D.Length > 0 || imagesUI.Length > 0)
+        {
+            Dictionary<SpriteRenderer, Color> coloresOriginales2D = new Dictionary<SpriteRenderer, Color>();
+            foreach (var sr in renderers2D) coloresOriginales2D[sr] = sr.color;
+
+            Dictionary<Image, Color> coloresOriginalesUI = new Dictionary<Image, Color>();
+            foreach (var img in imagesUI) coloresOriginalesUI[img] = img.color;
+
+            tiempo = 0f;
+            while (tiempo < tiempoCambioColorNegro)
+            {
+                tiempo += Time.deltaTime;
+                float progreso = tiempo / tiempoCambioColorNegro;
+
+                foreach (var sr in renderers2D)
+                {
+                    sr.color = Color.Lerp(coloresOriginales2D[sr], Color.black, progreso);
+                }
+                foreach (var img in imagesUI)
+                {
+                    img.color = Color.Lerp(coloresOriginalesUI[img], Color.black, progreso);
+                }
+
+                yield return null;
+            }
+
+            foreach (var sr in renderers2D) sr.color = Color.black;
+            foreach (var img in imagesUI) img.color = Color.black;
+        }
     }
 
     private IEnumerator DryImpactShake()
@@ -397,95 +474,28 @@ public class LevelTransitioner : MonoBehaviour
         camTransform.localPosition = posOriginal;
     }
 
-    private IEnumerator FinalPulseAndSpawn()
-    {
-        if (spritePulsoPrefab == null || popManager == null)
-            yield break;
-
-        Camera cam = Camera.main;
-        if (cam == null)
-            yield break;
-
-        Vector3 posOriginalCam = cam.transform.position;
-        float zoomOrig = cam.orthographicSize;
-        Vector3 centroEfecto = new Vector3(posOriginalCam.x, posOriginalCam.y, 0f);
-
-        GameObject pulso = Instantiate(spritePulsoPrefab, centroEfecto, Quaternion.identity);
-        SpriteRenderer srPulso = pulso.GetComponent<SpriteRenderer>();
-        pulso.transform.localScale = Vector3.zero;
-
-        for (int i = 0; i < numeroPulsos; i++)
-        {
-            float t = 0f;
-            while (t < 1f)
-            {
-                t += Time.deltaTime * velocidadPulso;
-                pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaMaxPulso, t);
-                yield return null;
-            }
-
-            t = 0f;
-            while (t < 1f)
-            {
-                t += Time.deltaTime * velocidadPulso;
-                pulso.transform.localScale = Vector3.one * Mathf.Lerp(escalaMaxPulso, 0f, t);
-                yield return null;
-            }
-        }
-
-        yield return new WaitForSeconds(0.33f);
-
-        float tFinal = 0f;
-        float escalaObjetivo = escalaMaxPulso * 25f;
-        float zoomObjetivo = zoomOrig * 1.5f;
-
-        while (tFinal < 1f)
-        {
-            tFinal += Time.deltaTime * (velocidadPulso / 3f);
-            pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaObjetivo, tFinal);
-            cam.orthographicSize = Mathf.Lerp(zoomOrig, zoomObjetivo, tFinal);
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-
-        if (srPulso != null)
-        {
-            float tFade = 0f;
-            Color colorInicial = srPulso.color;
-
-            while (tFade < 1f)
-            {
-                tFade += Time.deltaTime * 2f;
-                srPulso.color = Color.Lerp(
-                    colorInicial,
-                    new Color(colorInicial.r, colorInicial.g, colorInicial.b, 0f),
-                    tFade
-                );
-                yield return null;
-            }
-        }
-
-        Destroy(pulso);
-
-        if (fondoNebula != null)
-            fondoNebula.localScale = escalaOriginalFondoNebula;
-
-        if (panelFinal != null)
-            panelFinal.SetActive(true);
-
-        ForzarEscalaMapasAUno();
-    }
-
     public void ResetFinalLevelEffects()
     {
         StopAllCoroutines();
+
+        if (instanciaExplosionActual != null)
+        {
+            Destroy(instanciaExplosionActual);
+        }
+
+        // --- MODIFICACIÓN: Ocultamos el panel si el jugador reinicia ---
+        if (panelFinal != null)
+        {
+            panelFinal.SetActive(false);
+        }
+        // ---------------------------------------------------------------
 
         if (fondoNebula != null)
         {
             fondoNebula.gameObject.SetActive(true);
             fondoNebula.localScale = escalaOriginalFondoNebula;
         }
+        if (panelHUD != null) panelHUD.SetActive(true);
 
         if (lm == null) lm = LevelManager.instance;
 
