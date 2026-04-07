@@ -80,11 +80,36 @@ public class MapSequenceManager : MonoBehaviour
     {
         if (maps == null || maps.Count == 0) return;
 
+        // --- LÓGICA DE LOGROS ANTES DE PASAR AL SIGUIENTE ---
+        // Guardamos el índice del mapa que ACABAMOS de completar
+        int completedMapIndex = currentMapIndex;
+
+        switch (completedMapIndex)
+        {
+            case 0: // Completó Hexágono
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_HEX");
+                break;
+            case 1: // Completó Pentágono
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_PEN");
+                break;
+            case 2: // Completó Cuadrado
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_CUA");
+                break;
+            case 3: // Completó Triángulo
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_TRI");
+                break;
+        }
+        // ---------------------------------------------------
+
         currentMapIndex++;
 
         if (currentMapIndex >= maps.Count)
         {
             Debug.Log("Juego completado");
+
+            // Logro por pasarse TODO el juego (el último mapa era el Círculo)
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_GAME");
+
             currentMapIndex = maps.Count - 1;
             return;
         }

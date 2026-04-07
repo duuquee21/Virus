@@ -26,14 +26,26 @@ public class MenuGamepadNavigator : MonoBehaviour
     void OnEnable()
     {
         lastMousePosition = Input.mousePosition;
-
-        // 🛑 NUEVO: Borramos la memoria siempre al abrir un menú nuevo. 
-        // Así evitamos que intente seleccionar botones de otros menús que ya están cerrados.
         lastSelected = null;
 
+        // 🛑 NUEVO: Si no estamos usando el ratón, forzamos la selección inmediata.
+        // Usamos una pequeña espera (un frame) para que a Unity le dé tiempo a activar todo.
         if (!usandoRaton)
         {
-            EnsureInitialSelection();
+            StartCoroutine(ForzarSeleccionInicialAlActivar());
+        }
+    }
+
+    private System.Collections.IEnumerator ForzarSeleccionInicialAlActivar()
+    {
+        yield return null; // Esperamos 1 frame a que el UI se asiente
+        EnsureInitialSelection();
+
+        // Si después de EnsureInitialSelection el EventSystem sigue vacío, 
+        // lo intentamos una vez más con el firstSelectable
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == null)
+        {
+            if (firstSelectable != null) Select(firstSelectable);
         }
     }
 
