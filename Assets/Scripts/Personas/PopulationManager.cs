@@ -94,7 +94,26 @@ public class PopulationManager : MonoBehaviour
         nuevaCopia.transform.localScale = Vector3.zero;
         StartCoroutine(GrowFromZero(nuevaCopia.transform, targetScale));
     }
+    public void HardResetPool()
+    {
+        // 1. Destruir físicamente todos los objetos en las colas del pool
+        foreach (var pool in poolDePersonas.Values)
+        {
+            while (pool.Count > 0)
+            {
+                GameObject obj = pool.Dequeue();
+                if (obj != null) Destroy(obj);
+            }
+        }
+        poolDePersonas.Clear();
 
+        // 2. Limpiar las listas de seguimiento
+        personasVivas.Clear();
+        coralesVivos.Clear();
+        buggedPersonas.Clear();
+
+        Debug.Log("<color=red>Pool y Listas de población vaciadas por completo.</color>");
+    }
     public void RefreshSpawnArea()
     {
         GameObject areaObj = GameObject.FindWithTag("SpawnArea");
@@ -212,10 +231,10 @@ public class PopulationManager : MonoBehaviour
         esBugged = false;
         GameObject prefabSeleccionado = currentPrefab;
 
-        if (permitirBugged && buggedPersonPrefab != null && Guardado.instance != null)
+        // Si el límite en Guardado es 0 o menor, ignoramos la lógica de bugeados
+        if (permitirBugged && buggedPersonPrefab != null && Guardado.instance != null && Guardado.instance.buggedSpawnLimit > 0)
         {
-            buggedPersonas.RemoveWhere(obj => obj == null); // Aseguramos conteo exacto
-
+            buggedPersonas.RemoveWhere(obj => obj == null);
             if (buggedPersonas.Count < Guardado.instance.buggedSpawnLimit && Random.Range(0f, 100f) < buggedSpawnChance)
             {
                 prefabSeleccionado = buggedPersonPrefab;
