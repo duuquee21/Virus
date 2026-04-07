@@ -11,10 +11,21 @@ public class AlphaButtonClick : MonoBehaviour
 
     void Start()
     {
-        // Obtenemos el componente Image asociado a este botón
         Image buttonImage = GetComponent<Image>();
 
-        // Le asignamos el umbral mínimo de alpha
+        // Esto te avisará en la consola si la textura no es legible
+        if (buttonImage.sprite != null && buttonImage.sprite.texture != null)
+        {
+            try
+            {
+                buttonImage.sprite.texture.GetPixel(0, 0);
+            }
+            catch (System.Exception)
+            {
+                Debug.LogError("¡Error! La textura '" + buttonImage.sprite.name + "' no tiene activado 'Read/Write Enabled'.");
+            }
+        }
+
         buttonImage.alphaHitTestMinimumThreshold = alphaThreshold;
     }
 }
