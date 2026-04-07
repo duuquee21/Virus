@@ -208,7 +208,10 @@ public class PopulationManager : MonoBehaviour
             if (!areaReferencia.OverlapPoint(obj.transform.position))
             {
                 toRemove.Add(obj);
-                DevolverAlPool(obj, currentPrefab);
+
+                // AÑADIDO: Comprobamos en qué caja debe ir si se sale de la pantalla
+                GameObject cajaCorrecta = buggedPersonas.Contains(obj) ? buggedPersonPrefab : currentPrefab;
+                DevolverAlPool(obj, cajaCorrecta);
             }
         }
 
@@ -438,13 +441,19 @@ public class PopulationManager : MonoBehaviour
     public void ClearAllPersonas()
     {
         if (limpiandoGradualmente) return;
+
         foreach (var p in personasVivas)
         {
-            if (p != null) DevolverAlPool(p, currentPrefab); // <--- Usa el pool, NO el Destroy
+            if (p != null)
+            {
+                // AÑADIDO: Comprobamos en qué caja debe ir
+                GameObject cajaCorrecta = buggedPersonas.Contains(p) ? buggedPersonPrefab : currentPrefab;
+                DevolverAlPool(p, cajaCorrecta);
+            }
         }
+
         personasVivas.Clear();
         buggedPersonas.Clear();
-
 
         foreach (var c in coralesVivos)
         {
