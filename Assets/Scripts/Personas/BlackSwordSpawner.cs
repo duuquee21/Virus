@@ -36,24 +36,59 @@ public class BlackSwordSpawner : MonoBehaviour
     [Range(0f, 1f)] public float volumenAudio = 1f;
     private AudioSource miAudioSource;
 
+    // --- VARIABLES AÑADIDAS PARA EL CONTROL ---
+    private List<GameObject> tajosActivos = new List<GameObject>();
+    private bool juegoEstabaActivo = false; // Nos dirá si acabamos de salir al menú
+
     void Awake()
     {
         miAudioSource = GetComponent<AudioSource>();
     }
+
     void Update()
     {
+        // --- 1. DETECCIÓN DE SALIDA AL MENÚ ---
+        // Si en el frame anterior estábamos jugando y ahora no (porque pausaste o saliste al menú)
+        if (juegoEstabaActivo && !LevelManager.instance.isGameActive)
+        {
+            LimpiarTajos(); // Borramos todo lo que haya quedado en pantalla
+        }
+
+        // Guardamos el estado para comprobarlo en el siguiente frame
+        juegoEstabaActivo = LevelManager.instance.isGameActive;
+
+        // --- 2. TU LÓGICA DE SPAWN NORMAL ---
         if (Guardado.instance.hojaNegraData && Time.time > nextSpawnTime && LevelManager.instance.isGameActive)
         {
             StartCoroutine(ExecuteSlashSequence());
             nextSpawnTime = Time.time + Guardado.instance.hojaSpawnRate;
         }
     }
+
     private void OnDisable()
     {
-        StopAllCoroutines();
+        // Si el objeto entero se desactiva, limpiamos por si acaso
+        LimpiarTajos();
+
         // Si es el del agujero negro, también resetea el contador aquí
         // agujerosActivos = 0; 
     }
+
+    // --- NUEVA FUNCIÓN DE LIMPIEZA TOTAL ---
+    public void LimpiarTajos()
+    {
+        StopAllCoroutines(); // Detenemos las animaciones a medias
+
+        foreach (GameObject tajo in tajosActivos)
+        {
+            if (tajo != null)
+            {
+                Destroy(tajo);
+            }
+        }
+        tajosActivos.Clear(); // Dejamos la lista vacía
+    }
+
     IEnumerator ExecuteSlashSequence()
     {
         // 1. Setup inicial
@@ -62,6 +97,10 @@ public class BlackSwordSpawner : MonoBehaviour
         Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
         GameObject slash = Instantiate(slashPrefab, posicionSpawn, randomRotation);
+
+        // --- AÑADIDO: Metemos el tajo en la lista nada más crearlo ---
+        tajosActivos.Add(slash);
+
         if (sonidoSpawn != null && miAudioSource != null)
         {
             // Esto ignora la posición 3D si lo configuras como 2D
@@ -140,6 +179,9 @@ public class BlackSwordSpawner : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        // --- AÑADIDO: Lo sacamos de la lista justo antes de destruirlo por proceso natural ---
+        tajosActivos.Remove(slash);
         Destroy(slash);
     }
 
@@ -175,6 +217,5 @@ public class BlackSwordSpawner : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(transform.position, radioDeAparicion);
-
     }
 }
