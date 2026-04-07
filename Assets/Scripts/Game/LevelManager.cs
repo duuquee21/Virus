@@ -105,6 +105,8 @@ public class LevelManager : MonoBehaviour
     private bool isSoftRestarting = false;
     public bool IsSoftRestarting => isSoftRestarting;
 
+    private GameObject panelPrevioAjustes;
+
     void Awake()
     {
         if (instance == null) { instance = this; }
@@ -408,20 +410,32 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (!isGameActive) return;
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
+            if (isTransitioning) return; // 🛡️ Escudo anti-spam
+
+            // 1. Si Ajustes está abierto, el botón cierra los ajustes
             if (settingsPanel != null && settingsPanel.activeSelf)
             {
                 CloseSettingsPanel();
+                return;
             }
-            else
+
+            // 2. Si estamos en el Menú Principal (o en la Demo), ignoramos el botón
+            if ((menuPanel != null && menuPanel.activeSelf) ||
+                (panelFinDemo != null && panelFinDemo.activeSelf))
             {
-                TogglePause();
+                return;
             }
+
+            // 3. En CUALQUIER otro panel (Juego, Tiendas, Resultados...), activamos la Pausa
+            TogglePause();
             return;
         }
+        if (!isGameActive) return;
+
+        
 
         if (pausePanel != null && pausePanel.activeSelf)
             return;
@@ -1450,9 +1464,15 @@ public class LevelManager : MonoBehaviour
         if (estaPausado)
         {
             pausePanel.SetActive(false);
-            UpdateCursorState(true);
             Time.timeScale = 1f;
-            if (virusMovementScript != null) virusMovementScript.enabled = true;
+
+            // 🛑 ARREGLO: Solo le devolvemos el movimiento al jugador y le quitamos el ratón 
+            // si realmente estábamos en mitad del juego. Si estábamos en la tienda, lo dejamos bloqueado.
+            if (isGameActive)
+            {
+                UpdateCursorState(true);
+                if (virusMovementScript != null) virusMovementScript.enabled = true;
+            }
 
             if (EventSystem.current != null)
             {
@@ -1800,20 +1820,24 @@ public class LevelManager : MonoBehaviour
 
         if (isGameActive) { Time.timeScale = 0f; virusMovementScript.enabled = false; }
 
-        GameObject origin = (pausePanel.activeSelf) ? pausePanel : menuPanel;
-        DoPanelTransition(origin, settingsPanel, null, settingsFirstSelectedButton);
+        // 🛑 NUEVO: Guardamos exactamente qué panel estaba abierto (Pausa o Menú)
+        panelPrevioAjustes = (pausePanel.activeSelf) ? pausePanel : menuPanel;
+
+        DoPanelTransition(panelPrevioAjustes, settingsPanel, null, settingsFirstSelectedButton);
     }
 
     public void CloseSettingsPanel()
     {
         if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
-        if (isGameActive)
-            DoPanelTransition(settingsPanel, pausePanel, null, pauseFirstSelectedButton);
-        else
-            DoPanelTransition(settingsPanel, menuPanel);
-    }
+        // 🛑 NUEVO: Volvemos al panel que guardamos antes, en vez de adivinar
+        GameObject panelDestino = panelPrevioAjustes != null ? panelPrevioAjustes : menuPanel;
 
+        // Si volvemos a la pausa, le decimos al mando que seleccione el primer botón
+        GameObject botonDestino = (panelDestino == pausePanel) ? pauseFirstSelectedButton : null;
+
+        DoPanelTransition(settingsPanel, panelDestino, null, botonDestino);
+    }
     // =========================================================
     // 🛑 LÓGICA DE LA DEMO 🛑
     // =========================================================
@@ -1930,12 +1954,13 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator UniversalTransitionRoutine(GameObject panelToClose, GameObject panelToOpen, System.Action actionBeforeOpen, GameObject firstSelectable)
     {
-        isTransitioning = true; // 🛡️ ACTIVA EL ESCUDO
+        isTransitioning = true; // 🛡️ ACTIVA EL ESCUDO MIENTRAS VAMOS A NEGRO
 
         if (transitionScript != null)
         {
             transitionScript.SetShape(1);
             transitionScript.CloseBlackScreen();
+            // ⏳ Aquí SÍ esperamos porque no queremos que toquen nada mientras la pantalla se apaga
             yield return new WaitForSecondsRealtime(0.55f);
 
             if (tiempoEsperaEnNegro > 0)
@@ -1944,12 +1969,13 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        // Intercambiamos los paneles en la oscuridad
         if (panelToClose != null) panelToClose.SetActive(false);
         if (panelToOpen != null) panelToOpen.SetActive(true);
 
         actionBeforeOpen?.Invoke();
 
-        // 🛑 EL TRUCO MÁGICO: Esperamos 1 frame para que a Unity le dé tiempo a encender los botones
+        // Esperamos 1 frame para que Unity detecte los botones nuevos
         yield return null;
 
         // 🎮 LÓGICA DE SELECCIÓN ARREGLADA
@@ -1963,7 +1989,6 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            // 🖱️ Si usamos ratón, limpiamos la selección
             if (EventSystem.current != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
@@ -1972,13 +1997,16 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
+        // 🔓 ¡MAGIA AQUÍ! Soltamos el escudo YA MISMO. 
+        // El jugador ya puede clicar el nuevo menú aunque todavía se esté aclarando la pantalla.
+        isTransitioning = false;
+
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
+            // La pantalla hace su animación de abrirse durante 0.55s, pero ya no bloquea al jugador.
             yield return new WaitForSecondsRealtime(0.55f);
         }
-
-        isTransitioning = false; // 🛡️ DESACTIVA EL ESCUDO: YA PUEDEN CLICAR OTRA VEZ
     }
 
     public void CerrarJuego()
@@ -1992,5 +2020,15 @@ public class LevelManager : MonoBehaviour
 #endif
 
         Debug.Log("El juego se ha cerrado");
+    }
+
+    // Llama a esto cada vez que abras el Skill Tree
+    public void SeleccionarPrimerNodoSkill(GameObject primerNodo)
+    {
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(primerNodo);
+        }
     }
 }
