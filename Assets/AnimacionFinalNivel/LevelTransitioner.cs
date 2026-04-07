@@ -79,11 +79,13 @@ public class LevelTransitioner : MonoBehaviour
         lm = LevelManager.instance;
         popManager = FindFirstObjectByType<PopulationManager>();
 
-        if (fondoNebula != null) escalaOriginalFondoNebula = fondoNebula.localScale;
+        if (fondoNebula != null)
+            escalaOriginalFondoNebula = fondoNebula.localScale;
 
         CapturarEscalas();
         RefreshCurrentPlanet();
         ResetPlanetRotation();
+        ForzarEscalaMapasAUno();
     }
 
     private void RefreshCurrentPlanet()
@@ -104,14 +106,15 @@ public class LevelTransitioner : MonoBehaviour
 
     private void CapturarEscalas()
     {
-        if (escalasIniciales.Count > 0) return;
         if (lm == null) lm = LevelManager.instance;
         if (lm?.mapList == null) return;
 
         foreach (GameObject map in lm.mapList)
         {
             if (map != null && !escalasIniciales.ContainsKey(map.transform))
-                escalasIniciales[map.transform] = map.transform.localScale;
+            {
+                escalasIniciales[map.transform] = Vector3.one;
+            }
         }
     }
 
@@ -119,6 +122,20 @@ public class LevelTransitioner : MonoBehaviour
     {
         if (cachedPlaneta != null)
             cachedPlaneta.transform.rotation = Quaternion.identity;
+    }
+
+    private void ForzarEscalaMapasAUno()
+    {
+        if (lm == null) lm = LevelManager.instance;
+        if (lm?.mapList == null) return;
+
+        foreach (GameObject map in lm.mapList)
+        {
+            if (map != null)
+            {
+                map.transform.localScale = Vector3.one;
+            }
+        }
     }
 
     public void StartLevelTransition()
@@ -131,16 +148,22 @@ public class LevelTransitioner : MonoBehaviour
     {
         if (lm == null) lm = LevelManager.instance;
         RefreshCurrentPlanet();
+        CapturarEscalas();
+        ForzarEscalaMapasAUno();
 
         lm.isTransitioning = true;
         lm.isGameActive = false;
-        if (lm.virusMovementScript != null) lm.virusMovementScript.enabled = false;
+
+        if (lm.virusMovementScript != null)
+            lm.virusMovementScript.enabled = false;
 
         if (cachedPlaneta != null)
         {
             cachedPlaneta.isInvulnerable = true;
             cachedPlaneta.ClearPendingDamage();
-            if (lm.esVersionDemo) cachedPlaneta.SetVisibleUI(false);
+
+            if (lm.esVersionDemo)
+                cachedPlaneta.SetVisibleUI(false);
         }
 
         int currentIdx = 0;
@@ -154,19 +177,23 @@ public class LevelTransitioner : MonoBehaviour
         }
 
         bool esUltimoNivel = (currentIdx >= lm.mapList.Length - 1);
+
         GameObject mapaVisual = lm.mapList[currentIdx];
         Transform mapaTransform = mapaVisual.transform;
-        escalaOriginal = mapaTransform.localScale;
+
+        escalaOriginal = Vector3.one;
+        mapaTransform.localScale = Vector3.one;
 
         if (manualSetCycler != null)
             manualSetCycler.TriggerTransition(velocidadMaxima / aceleracion, velocidadMaxima / frenado);
 
-        // FASE 0: VIBRACIÓN (Solo Normal + Último Nivel)
         if (!lm.esVersionDemo && esUltimoNivel)
         {
             float tiempoVibracion = 0f;
             Vector3 posOriginalMapa = mapaTransform.localPosition;
-            if (popManager != null) popManager.StartGradualClear(duracionVibracionPrevia);
+
+            if (popManager != null)
+                popManager.StartGradualClear(duracionVibracionPrevia);
 
             while (tiempoVibracion < duracionVibracionPrevia)
             {
@@ -174,73 +201,109 @@ public class LevelTransitioner : MonoBehaviour
                 mapaTransform.localPosition = posOriginalMapa + (Vector3)(UnityEngine.Random.insideUnitCircle * intensidadVibracionPrevia);
                 yield return null;
             }
+
             mapaTransform.localPosition = posOriginalMapa;
         }
 
-        // FASE 1: ACELERAR Y ENCOGER
         OnTransitionStart?.Invoke();
+
         Vector3 escalaObjetivoMin = escalaOriginal * escalaMinima;
 
         while (velocidadActual < velocidadMaxima)
         {
             float dt = Time.deltaTime;
             velocidadActual += aceleracion * dt;
-            if (materialFondo != null) materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
-            
-            // MODIFICACIÓN: Solo hacer zoom de cámara si ES demo
-            if (lm.esVersionDemo && mainCam != null) 
+
+            if (materialFondo != null)
+                materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
+
+            if (lm.esVersionDemo && mainCam != null)
                 mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomMaximo, velocidadZoomIn * dt);
 
             mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
             mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaObjetivoMin, suavizadoEscala * dt);
+
             yield return null;
         }
 
-        // FASE 2: SALIDA
         if (!esUltimoNivel)
         {
-            if (popManager != null) popManager.ClearAllPersonas();
+            if (popManager != null)
+                popManager.ClearAllPersonas();
 
             if (lm.esVersionDemo)
             {
-                // COMPORTAMIENTO DEMO
                 float velAlEmpezar = velocidadActual;
                 Vector3 escalaAlEmpezar = mapaTransform.localScale;
+
                 while (velocidadActual > 0.1f)
                 {
                     float dt = Time.deltaTime;
                     velocidadActual = Mathf.MoveTowards(velocidadActual, 0f, frenado * dt);
                     float progreso = 1f - (velocidadActual / velAlEmpezar);
+
                     mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
                     mapaTransform.localScale = Vector3.Lerp(escalaAlEmpezar, escalaOriginal * 10f, progreso * progreso);
+
                     yield return null;
                 }
+
                 yield return new WaitForSecondsRealtime(0.3f);
-                if (mapaVisual != null) mapaVisual.SetActive(false);
+
+                if (mapaVisual != null)
+                    mapaVisual.SetActive(false);
+
                 lm.MostrarFinDeDemo();
-                
-                mapaTransform.localScale = escalaOriginal;
-                if (mapaVisual != null) mapaVisual.SetActive(true);
-                if (cachedPlaneta != null) cachedPlaneta.SetVisibleUI(true);
+
+                mapaTransform.localScale = Vector3.one;
+
+                if (mapaVisual != null)
+                    mapaVisual.SetActive(true);
+
+                ForzarEscalaMapasAUno();
+
+                if (cachedPlaneta != null)
+                    cachedPlaneta.SetVisibleUI(true);
+
                 yield break;
             }
             else
             {
-                // COMPORTAMIENTO NORMAL (Igual a la versión antigua)
-                int nextIdx = MapSequenceManager.instance != null ? MapSequenceManager.instance.GetCurrentMapIndex() : currentIdx + 1;
+                int nextIdx;
+
+                if (MapSequenceManager.instance != null)
+                {
+                    MapSequenceManager.instance.NextMap();
+                    nextIdx = MapSequenceManager.instance.GetCurrentMapIndex();
+                }
+                else
+                {
+                    nextIdx = currentIdx + 1;
+                }
+
                 lm.ActivateMap(nextIdx);
+
+                ForzarEscalaMapasAUno();
 
                 mapaVisual = lm.mapList[nextIdx];
                 mapaTransform = mapaVisual.transform;
-                mapaTransform.localScale = escalaObjetivoMin;
+
+                Vector3 escalaOriginalNuevoMapa = Vector3.one;
+                Vector3 escalaMinNuevoMapa = escalaOriginalNuevoMapa * escalaMinima;
+
+                mapaTransform.localScale = escalaMinNuevoMapa;
 
                 float distanciaFrenado = (velocidadActual * velocidadActual) / (2f * frenado);
+
                 while (true)
                 {
                     float dt = Time.deltaTime;
                     mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
+
                     float anguloFinalPredecido = (mapaTransform.localEulerAngles.z + distanciaFrenado) % 360f;
-                    if (anguloFinalPredecido < (velocidadActual * dt) || velocidadActual < 10f) break;
+                    if (anguloFinalPredecido < (velocidadActual * dt) || velocidadActual < 10f)
+                        break;
+
                     yield return null;
                 }
 
@@ -248,69 +311,100 @@ public class LevelTransitioner : MonoBehaviour
                 {
                     float dt = Time.deltaTime;
                     velocidadActual = Mathf.MoveTowards(velocidadActual, 0f, frenado * dt);
-                    if (materialFondo != null) materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
+
+                    if (materialFondo != null)
+                        materialFondo.SetFloat(vortexProp, (velocidadActual / velocidadMaxima) * 75f);
+
                     mapaTransform.Rotate(Vector3.forward, velocidadActual * dt);
-                    mapaTransform.localScale = Vector3.Lerp(mapaTransform.localScale, escalaOriginal, suavizadoEscala * dt);
-                    
-                    // Solo restauramos zoom si por algún motivo se cambió (seguridad)
-                  //  if (mainCam != null) mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomOriginal, velocidadZoomOut * dt);
-                    
+                    mapaTransform.localScale = Vector3.Lerp(
+                        mapaTransform.localScale,
+                        Vector3.one,
+                        suavizadoEscala * dt
+                    );
+
                     yield return null;
                 }
+
                 mapaTransform.rotation = Quaternion.identity;
-                mapaTransform.localScale = escalaOriginal;
-                if (popManager != null) popManager.ConfigureRound(nextIdx);
+                mapaTransform.localScale = Vector3.one;
+
+                ForzarEscalaMapasAUno();
+
+                if (popManager != null)
+                    popManager.ConfigureRound(nextIdx);
+
+                yield return null;
+                ForzarEscalaMapasAUno();
+
+                yield return null;
+                ForzarEscalaMapasAUno();
             }
         }
         else
         {
-            // ÚLTIMO NIVEL
             yield return StartCoroutine(FinalPulseAndSpawn());
         }
 
-        // LIMPIEZA FINAL
         RefreshCurrentPlanet();
+
         if (cachedPlaneta != null)
         {
             cachedPlaneta.isInvulnerable = esUltimoNivel;
             cachedPlaneta.SetVisibleUI(true);
         }
+
         lm.isGameActive = !esUltimoNivel;
         lm.isTransitioning = false;
-        if (lm.virusMovementScript != null) lm.virusMovementScript.enabled = !esUltimoNivel;
+
+        if (lm.virusMovementScript != null)
+            lm.virusMovementScript.enabled = !esUltimoNivel;
 
         Time.timeScale = 1f;
         velocidadActual = 0f;
-        if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
+
+        if (materialFondo != null)
+            materialFondo.SetFloat(vortexProp, 0f);
+
         if (mainCam != null && lm.esVersionDemo)
-        {
             mainCam.orthographicSize = zoomOriginal;
-        }
+
+        ForzarEscalaMapasAUno();
+        yield return null;
+        ForzarEscalaMapasAUno();
+        yield return null;
+        ForzarEscalaMapasAUno();
 
         yield return StartCoroutine(DryImpactShake());
+
+        ForzarEscalaMapasAUno();
     }
 
-    // ... (El resto de funciones DryImpactShake, FinalPulseAndSpawn y ResetFinalLevelEffects se mantienen igual)
-    
     private IEnumerator DryImpactShake()
     {
-        if (GameSettings.instance == null || !GameSettings.instance.shakeEnabled || camTransform == null) yield break;
+        if (GameSettings.instance == null || !GameSettings.instance.shakeEnabled || camTransform == null)
+            yield break;
+
         Vector3 posOriginal = camTransform.localPosition;
         float fuerzaActual = intensidadImpacto;
+
         while (fuerzaActual > 0.01f)
         {
             camTransform.localPosition = posOriginal + (Vector3)(UnityEngine.Random.insideUnitCircle * fuerzaActual);
             fuerzaActual = Mathf.Lerp(fuerzaActual, 0f, Time.deltaTime * velocidadRetorno);
             yield return null;
         }
+
         camTransform.localPosition = posOriginal;
     }
 
     private IEnumerator FinalPulseAndSpawn()
     {
-        if (spritePulsoPrefab == null || popManager == null) yield break;
+        if (spritePulsoPrefab == null || popManager == null)
+            yield break;
+
         Camera cam = Camera.main;
-        if (cam == null) yield break;
+        if (cam == null)
+            yield break;
 
         Vector3 posOriginalCam = cam.transform.position;
         float zoomOrig = cam.orthographicSize;
@@ -329,6 +423,7 @@ public class LevelTransitioner : MonoBehaviour
                 pulso.transform.localScale = Vector3.one * Mathf.Lerp(0f, escalaMaxPulso, t);
                 yield return null;
             }
+
             t = 0f;
             while (t < 1f)
             {
@@ -358,50 +453,65 @@ public class LevelTransitioner : MonoBehaviour
         {
             float tFade = 0f;
             Color colorInicial = srPulso.color;
+
             while (tFade < 1f)
             {
                 tFade += Time.deltaTime * 2f;
-                srPulso.color = Color.Lerp(colorInicial, new Color(colorInicial.r, colorInicial.g, colorInicial.b, 0f), tFade);
+                srPulso.color = Color.Lerp(
+                    colorInicial,
+                    new Color(colorInicial.r, colorInicial.g, colorInicial.b, 0f),
+                    tFade
+                );
                 yield return null;
             }
         }
 
         Destroy(pulso);
-        if (fondoNebula != null) fondoNebula.localScale = escalaOriginalFondoNebula;
-        if (panelFinal != null) panelFinal.SetActive(true);
+
+        if (fondoNebula != null)
+            fondoNebula.localScale = escalaOriginalFondoNebula;
+
+        if (panelFinal != null)
+            panelFinal.SetActive(true);
+
+        ForzarEscalaMapasAUno();
     }
 
     public void ResetFinalLevelEffects()
     {
         StopAllCoroutines();
+
         if (fondoNebula != null)
         {
             fondoNebula.gameObject.SetActive(true);
             fondoNebula.localScale = escalaOriginalFondoNebula;
         }
 
-        CapturarEscalas();
+        if (lm == null) lm = LevelManager.instance;
 
         if (lm?.mapList != null)
         {
-            foreach (GameObject map in lm.mapList)
+            for (int i = 0; i < lm.mapList.Length; i++)
             {
-                if (map != null)
-                {
-                    map.SetActive(true);
-                    if (escalasIniciales.TryGetValue(map.transform, out Vector3 original))
-                    {
-                        map.transform.localScale = original;
-                        map.transform.rotation = Quaternion.identity;
-                    }
-                }
+                GameObject map = lm.mapList[i];
+                if (map == null) continue;
+
+                map.transform.localScale = Vector3.one;
+                map.transform.rotation = Quaternion.identity;
             }
         }
 
-        if (materialFondo != null) materialFondo.SetFloat(vortexProp, 0f);
-        if (mainCam != null) mainCam.orthographicSize = zoomOriginal;
+        RefreshCurrentPlanet();
+
+        if (materialFondo != null)
+            materialFondo.SetFloat(vortexProp, 0f);
+
+        if (mainCam != null)
+            mainCam.orthographicSize = zoomOriginal;
 
         Time.timeScale = 1f;
         velocidadActual = 0f;
+
+        ForzarEscalaMapasAUno();
     }
 }

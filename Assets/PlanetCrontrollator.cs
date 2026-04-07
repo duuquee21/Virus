@@ -64,11 +64,13 @@ public class PlanetCrontrollator : MonoBehaviour
     {
         public Vector3 localPosition;
         public Quaternion localRotation;
+        public Vector3 localScale;
 
-        public TransformData(Vector3 pos, Quaternion rot)
+        public TransformData(Vector3 pos, Quaternion rot, Vector3 scale)
         {
             localPosition = pos;
             localRotation = rot;
+            localScale = scale;
         }
     }
 
@@ -144,11 +146,19 @@ public class PlanetCrontrollator : MonoBehaviour
 
         Transform root = transform.parent != null ? transform.parent : transform;
 
-        transformacionesOriginales[root] = new TransformData(root.localPosition, root.localRotation);
+        transformacionesOriginales[root] = new TransformData(
+            root.localPosition,
+            root.localRotation,
+            root.localScale
+        );
 
         foreach (Transform child in root)
         {
-            transformacionesOriginales[child] = new TransformData(child.localPosition, child.localRotation);
+            transformacionesOriginales[child] = new TransformData(
+                child.localPosition,
+                child.localRotation,
+                child.localScale
+            );
         }
     }
 
@@ -432,6 +442,7 @@ public class PlanetCrontrollator : MonoBehaviour
                 {
                     kvp.Key.localPosition = kvp.Value.localPosition;
                     kvp.Key.localRotation = kvp.Value.localRotation;
+                    kvp.Key.localScale = kvp.Value.localScale;
                 }
             }
         }
@@ -484,17 +495,10 @@ public class PlanetCrontrollator : MonoBehaviour
 
         ClearPendingDamage();
 
-        // 1. Forzamos la transición visual directamente para que haga la animación
         LevelTransitioner transitioner = FindFirstObjectByType<LevelTransitioner>();
         if (transitioner != null)
         {
             transitioner.StartLevelTransition();
-        }
-
-        // 2. Llamamos al SequenceManager para que intente avanzar el índice o actualizar su estado
-        if (MapSequenceManager.instance != null)
-        {
-            MapSequenceManager.instance.NextMap();
         }
     }
 
@@ -530,10 +534,10 @@ public class PlanetCrontrollator : MonoBehaviour
             {
                 kvp.Key.localPosition = kvp.Value.localPosition;
                 kvp.Key.localRotation = kvp.Value.localRotation;
+                kvp.Key.localScale = kvp.Value.localScale;
             }
         }
 
-        // Si quieres que la UI también se resetee visualmente al activarse
         ActualizarUI();
     }
 }
