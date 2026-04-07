@@ -418,6 +418,10 @@ public class LevelTransitioner : MonoBehaviour
         if (panelFinal != null)
         {
             panelFinal.SetActive(true);
+            Debug.Log("Juego completado");
+
+            // Logro por pasarse TODO el juego (el último mapa era el Círculo)
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_GAME");
         }
         // ---------------------------------------------------
 

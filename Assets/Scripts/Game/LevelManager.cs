@@ -107,7 +107,7 @@ public class LevelManager : MonoBehaviour
 
     private Queue<float> infectionTimestamps = new Queue<float>();
 
-    private bool[] figuresCaughtInRun = new bool[5];
+    private bool[] figurasAtrapadasRun = new bool[5];
 
     private GameObject panelPrevioAjustes;
 
@@ -316,7 +316,7 @@ public class LevelManager : MonoBehaviour
 
         if (Guardado.instance) Guardado.instance.ResetAllProgress();
 
-        SteamManagerCustom.Instance.UnlockAchievement("ACH_NEWGAME_TOTAL");
+        SteamManagerCustom.Instance.UnlockAchievement("ACH_NEWGAME");
 
         RebuildSkillTree();
 
@@ -2066,26 +2066,20 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void RegisterFigureTypeInfected(int phase)
+    public void RegistrarTipoInfectado(int fase)
     {
-        if (phase < 0 || phase >= figuresCaughtInRun.Length) return;
+        if (fase < 0 || fase > 4) return;
+        figurasAtrapadasRun[fase] = true;
 
-        figuresCaughtInRun[phase] = true;
+        // ACH_1OFITS: Full Set (Uno de cada en una run)
+        bool tieneTodos = true;
+        for (int i = 0; i < 5; i++) if (!figurasAtrapadasRun[i]) tieneTodos = false;
+        if (tieneTodos) SteamManagerCustom.Instance.UnlockAchievement("ACH_1OFITS");
 
-        // Comprobar si ya tenemos todos
-        bool allCaught = true;
-        for (int i = 0; i < figuresCaughtInRun.Length; i++)
-        {
-            if (!figuresCaughtInRun[i])
-            {
-                allCaught = false;
-                break;
-            }
-        }
-
-        if (allCaught)
-        {
-            SteamManagerCustom.Instance.UnlockAchievement("ACH_1OFITS");
-        }
+        // ACH_1000INF: Unstoppable (1000 infectados totales)
+        // Asumiendo que guardas el total histórico en PlayerPrefs
+        int totalHisto = PlayerPrefs.GetInt("TotalInfectadosHistoricos", 0) + 1;
+        PlayerPrefs.SetInt("TotalInfectadosHistoricos", totalHisto);
+        if (totalHisto >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_1000INF");
     }
 }

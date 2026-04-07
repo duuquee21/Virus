@@ -347,6 +347,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         // 6. Aplicamos el efecto (UNA SOLA VEZ)
         ApplyEffect();
 
+        Guardado.instance.CheckSkillAchievements();
+
         // 7. Actualizamos la Interfaz y damos Feedback visual
         LevelManager.instance.UpdateUI();
 
