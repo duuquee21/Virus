@@ -558,6 +558,11 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetInt("Run_Map", currentMap);
         PlayerPrefs.SetFloat("Run_PlanetHealth", planetHealth);
 
+        // Chequeo de logros de monedas por run
+        if (currentCoins >= 10) SteamManagerCustom.Instance.UnlockAchievement("ACH_COINSRUN_10");
+        if (currentCoins >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_COINSRUN_100");
+        if (currentCoins >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_COINSRUN_1000");
+
         PlayerPrefs.Save();
     }
     public void ClearRunState()
@@ -663,6 +668,12 @@ public class Guardado : MonoBehaviour
     public void AddTotalData(int val)
     {
         totalInfected += val;
+
+        // Disparar logros según el total acumulado
+        if (totalInfected >= 1) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
+        if (totalInfected >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
+        if (totalInfected >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
+        if (totalInfected >= 10000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
     }
 
     public void SetRadiusMultiplier(float val)
@@ -745,5 +756,36 @@ public class Guardado : MonoBehaviour
         
         PlayerPrefs.Save();
         Debug.Log("<color=yellow>[Guardado]</color> Datos guardados antes de cerrar aplicación");
+    }
+
+    public void CheckSkillAchievements()
+    {
+        // Buscamos todos los SkillNodes que existen en el árbol
+        SkillNode[] allNodes = Object.FindObjectsByType<SkillNode>(FindObjectsSortMode.None);
+        int totalSkills = allNodes.Length;
+        int unlockedCount = 0;
+
+        foreach (SkillNode node in allNodes)
+        {
+            // Usamos la propiedad IsUnlocked que ya tiene tu script
+            if (node.IsUnlocked)
+            {
+                unlockedCount++;
+            }
+        }
+
+        // 1. Logro por la primera compra
+        if (unlockedCount >= 1)
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPRA_1");
+
+        // 2. Logros por porcentaje de progreso
+        float porcentaje = (float)unlockedCount / totalSkills;
+
+        if (porcentaje >= 0.25f) SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPRA_25");
+        if (porcentaje >= 0.50f) SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPRA_50");
+
+        // 3. Logro final: Todas las habilidades
+        if (unlockedCount >= totalSkills && totalSkills > 0)
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPRA_TODO");
     }
 }

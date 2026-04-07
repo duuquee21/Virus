@@ -105,6 +105,10 @@ public class LevelManager : MonoBehaviour
     private bool isSoftRestarting = false;
     public bool IsSoftRestarting => isSoftRestarting;
 
+    private Queue<float> infectionTimestamps = new Queue<float>();
+
+    private bool[] figuresCaughtInRun = new bool[5];
+
     void Awake()
     {
         if (instance == null) { instance = this; }
@@ -222,6 +226,34 @@ public class LevelManager : MonoBehaviour
     public void RegisterInfection()
     {
         currentSessionInfected++;
+
+        // --- LÓGICA DE LOGROS DE VELOCIDAD ---
+        float currentTime = Time.time;
+        infectionTimestamps.Enqueue(currentTime);
+
+        // Mantenemos solo las últimas 10 infecciones en la lista
+        while (infectionTimestamps.Count > 10)
+        {
+            infectionTimestamps.Dequeue();
+        }
+
+        // Si tenemos exactamente 10, comparamos el tiempo de la primera con la última
+        if (infectionTimestamps.Count == 10)
+        {
+            float timeElapsed = currentTime - infectionTimestamps.Peek();
+
+            if (timeElapsed <= 5f)
+            {
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_10IN5");
+            }
+
+            if (timeElapsed <= 10f)
+            {
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_10IN10");
+            }
+        }
+        // ---------------------------------------
+
         UpdateUI();
     }
 
@@ -281,6 +313,8 @@ public class LevelManager : MonoBehaviour
         if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
 
         if (Guardado.instance) Guardado.instance.ResetAllProgress();
+
+        SteamManagerCustom.Instance.UnlockAchievement("ACH_NEWGAME_TOTAL");
 
         RebuildSkillTree();
 
@@ -1992,5 +2026,28 @@ public class LevelManager : MonoBehaviour
 #endif
 
         Debug.Log("El juego se ha cerrado");
+    }
+
+    public void RegisterFigureTypeInfected(int phase)
+    {
+        if (phase < 0 || phase >= figuresCaughtInRun.Length) return;
+
+        figuresCaughtInRun[phase] = true;
+
+        // Comprobar si ya tenemos todos
+        bool allCaught = true;
+        for (int i = 0; i < figuresCaughtInRun.Length; i++)
+        {
+            if (!figuresCaughtInRun[i])
+            {
+                allCaught = false;
+                break;
+            }
+        }
+
+        if (allCaught)
+        {
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_1OFITS");
+        }
     }
 }
