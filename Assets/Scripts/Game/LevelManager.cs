@@ -347,9 +347,18 @@ public class LevelManager : MonoBehaviour
     public void NewGameFromMainMenu()
     {
         if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
+
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.HardResetPool();
+        }
+
         ResetRunData();
 
         GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
+
+        // LIMPIEZA CLAVE AQUÍ
+    
 
         DoPanelTransition(panelToClose, null, () => {
             StartSession();
@@ -791,6 +800,7 @@ public class LevelManager : MonoBehaviour
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f;
         timerStarted = false;
+        PopulationManager.instance.HardResetPool();
 
         if (menuPanel != null) menuPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
@@ -918,6 +928,7 @@ public class LevelManager : MonoBehaviour
         checkParaExtraTimeRealizado = false;
         figurasCandidatas.Clear();
         timeSinceLastAutoSave = 0f;
+        PopulationManager.instance.HardResetPool();
 
         if (TutorialManager.instance != null && VirusMovement.instance != null)
         {
