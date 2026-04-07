@@ -692,16 +692,14 @@ public class Guardado : MonoBehaviour
 
         SkillNode.ClearRuntimeState();
 
-        // 1. PRIMERO: Reseteamos el estado de los nodos en la memoria
+        // 1. Reseteamos el estado de los nodos en la memoria
         SkillNode[] nodes = FindObjectsOfType<SkillNode>(true);
         foreach (SkillNode node in nodes)
         {
             node.ResetNodeState();
         }
 
-        // 2. SEGUNDO: Hacemos el HardReset
-        // (Al terminar, HardResetVariables llamará a SaveData,
-        // y ahora sí guardará los nodos como "no comprados" en PlayerPrefs).
+        // 2. Hacemos el HardReset de las variables
         HardResetVariables();
 
         SkillTreeLinesUI lines = FindFirstObjectByType<SkillTreeLinesUI>();
@@ -709,6 +707,25 @@ public class Guardado : MonoBehaviour
         {
             lines.ResetAllLinesVisuals();
             lines.RefreshAllLinesFromNodes();
+        }
+
+        // --- 3. LA ANIQUILACIÓN DEFINITIVA ---
+
+        // Llamamos al Nuke del spawner
+        if (PopulationManager.instance != null)
+        {
+            PopulationManager.instance.NukeMapAndPools();
+        }
+
+        // 4. EL CORTAFUEGOS FINAL: Cazamos cualquier impostor suelto por su nombre
+        GameObject[] todosLosObjetos = FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in todosLosObjetos)
+        {
+            // Si el objeto se llama BuggedPerson o BlackHole (aunque sea un clon), muere.
+            if (obj.name.Contains("BuggedPerson") || obj.name.Contains("BlackHole"))
+            {
+                Destroy(obj);
+            }
         }
     }
 

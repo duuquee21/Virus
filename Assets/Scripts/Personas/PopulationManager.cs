@@ -442,11 +442,14 @@ public class PopulationManager : MonoBehaviour
     {
         if (limpiandoGradualmente) return;
 
-        foreach (var p in personasVivas)
+        // 1. Creamos una COPIA de la lista para poder borrar sin que dé error
+        List<GameObject> copiaVivos = new List<GameObject>(personasVivas);
+
+        foreach (var p in copiaVivos)
         {
             if (p != null)
             {
-                // AÑADIDO: Comprobamos en qué caja debe ir
+                // Comprobamos en qué caja (pool) debe ir para no mezclarlos
                 GameObject cajaCorrecta = buggedPersonas.Contains(p) ? buggedPersonPrefab : currentPrefab;
                 DevolverAlPool(p, cajaCorrecta);
             }
@@ -455,7 +458,9 @@ public class PopulationManager : MonoBehaviour
         personasVivas.Clear();
         buggedPersonas.Clear();
 
-        foreach (var c in coralesVivos)
+        // Hacemos lo mismo con los corales por si acaso
+        List<GameObject> copiaCorales = new List<GameObject>(coralesVivos);
+        foreach (var c in copiaCorales)
         {
             if (c != null) Destroy(c);
         }
@@ -463,7 +468,6 @@ public class PopulationManager : MonoBehaviour
 
         timer = 0;
     }
-
     public void SpawnPersonAtBasePhase()
     {
         // false: Tampoco queremos bugeados en esta llamada
@@ -534,36 +538,83 @@ public class PopulationManager : MonoBehaviour
             poolDePersonas[prefab] = new Queue<GameObject>();
         }
 
-        GameObject obj = null;
-
-        // Buscamos en la cola hasta encontrar un objeto que sea VÁLIDO (no destruido)
+        // Buscamos en la caja hasta encontrar uno válido
         while (poolDePersonas[prefab].Count > 0)
         {
-            obj = poolDePersonas[prefab].Dequeue();
+            GameObject obj = poolDePersonas[prefab].Dequeue();
 
-            // Si el objeto fue destruido físicamente por Destroy(), será null aquí
             if (obj != null)
             {
-                obj.transform.position = posicion;
-                obj.SetActive(true);
-                return obj;
+                // CONTROL DE SEGURIDAD EXTRA:
+                // Si un impostor logró colarse en esta caja antes de aplicar este parche, 
+                // lo detectamos aquí mismo y lo eliminamos. ¡El pool se limpia solo!
+                if (obj.name.Contains(prefab.name))
+                {
+                    obj.transform.position = posicion;
+                    obj.SetActive(true);
+                    return obj;
+                }
+                else
+                {
+                    // ¡Era un infiltrado de la run anterior! Lo destruimos para siempre.
+                    Destroy(obj);
+                }
             }
         }
 
-        // Si llegamos aquí, la cola estaba vacía o llena de objetos destruidos
-        obj = Instantiate(prefab, posicion, Quaternion.identity);
-        return obj;
+        // Si la caja estaba vacía o solo tenía impostores, creamos uno nuevo 100% puro
+        GameObject nuevoObj = Instantiate(prefab, posicion, Quaternion.identity);
+        return nuevoObj;
     }
 
     public void DevolverAlPool(GameObject obj, GameObject prefabOriginal)
     {
-        obj.SetActive(false); // Esto dispara el OnDisable() y se desregistra de las listas
+        if (obj == null) return;
 
-        if (!poolDePersonas.ContainsKey(prefabOriginal))
+        // 1. EL PORTERO: Miramos su nombre real, sin importar de qué lista venga.
+        GameObject cajaCorrecta = prefabOriginal;
+
+        if (buggedPersonPrefab != null && obj.name.Contains(buggedPersonPrefab.name))
         {
-            poolDePersonas[prefabOriginal] = new Queue<GameObject>();
+            cajaCorrecta = buggedPersonPrefab;
+        }
+        else if (currentPrefab != null && obj.name.Contains(currentPrefab.name))
+        {
+            cajaCorrecta = currentPrefab;
         }
 
-        poolDePersonas[prefabOriginal].Enqueue(obj);
+        // 2. Lo desactivamos (ahora no importa si se borra de las listas aquí)
+        obj.SetActive(false);
+
+        // 3. Lo metemos en su caja blindada
+        if (!poolDePersonas.ContainsKey(cajaCorrecta))
+        {
+            poolDePersonas[cajaCorrecta] = new Queue<GameObject>();
+        }
+
+        poolDePersonas[cajaCorrecta].Enqueue(obj);
+    }
+
+    public void NukeMapAndPools()
+    {
+        // 1. Destruimos FÍSICAMENTE todo lo que esté vivo en las listas (nada de guardarlos en cajas)
+        foreach (GameObject obj in personasVivas) { if (obj != null) Destroy(obj); }
+        foreach (GameObject obj in buggedPersonas) { if (obj != null) Destroy(obj); }
+        foreach (GameObject obj in coralesVivos) { if (obj != null) Destroy(obj); }
+
+        personasVivas.Clear();
+        buggedPersonas.Clear();
+        coralesVivos.Clear();
+
+        // 2. Vaciamos las cajas del Pool y destruimos la "basura" que haya dentro
+        foreach (var pool in poolDePersonas.Values)
+        {
+            while (pool.Count > 0)
+            {
+                GameObject obj = pool.Dequeue();
+                if (obj != null) Destroy(obj);
+            }
+        }
+        poolDePersonas.Clear();
     }
 }
