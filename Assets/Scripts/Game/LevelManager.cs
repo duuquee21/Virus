@@ -111,6 +111,8 @@ public class LevelManager : MonoBehaviour
 
     private GameObject panelPrevioAjustes;
 
+    private float tiempoInicioZona;
+
     void Awake()
     {
         if (instance == null) { instance = this; }
@@ -255,6 +257,11 @@ public class LevelManager : MonoBehaviour
             }
         }
         // ---------------------------------------
+
+        if (PopulationManager.instance != null && currentSessionInfected >= PopulationManager.instance.totalPersonasEnRonda)
+        {
+            CheckRelampagoAchievement();
+        }
 
         UpdateUI();
     }
@@ -966,6 +973,7 @@ public class LevelManager : MonoBehaviour
         if (!isGameActive) return;
 
         timerStarted = true;
+        tiempoInicioZona = Time.time;
         Debug.Log("<color=orange>[TIMER]</color> ¡Reloj activado!");
     }
 
@@ -2081,5 +2089,21 @@ public class LevelManager : MonoBehaviour
         int totalHisto = PlayerPrefs.GetInt("TotalInfectadosHistoricos", 0) + 1;
         PlayerPrefs.SetInt("TotalInfectadosHistoricos", totalHisto);
         if (totalHisto >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_1000INF");
+    }
+
+    public void CheckRelampagoAchievement()
+    {
+        // Calculamos cuánto ha pasado desde que se activó el timer
+        float tiempoEmpleado = Time.time - tiempoInicioZona;
+
+        // Si tardó 10 segundos o menos... ¡Logro!
+        if (tiempoEmpleado <= 10f)
+        {
+            if (SteamManagerCustom.Instance != null)
+            {
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_LIGHTNING");
+                Debug.Log("<color=cyan>[LOGRO]</color> ¡Relámpago desbloqueado! Tiempo: " + tiempoEmpleado);
+            }
+        }
     }
 }

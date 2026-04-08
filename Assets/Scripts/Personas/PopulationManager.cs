@@ -47,6 +47,8 @@ public class PopulationManager : MonoBehaviour
 
     private bool limpiandoGradualmente = false;
 
+    public int totalPersonasEnRonda;
+
     void Awake()
     {
         instance = this;
