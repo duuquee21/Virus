@@ -67,11 +67,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826945622026
-    m_Localized: Zone Evolutions
+    m_Localized: Corners destroyed by radius
     m_Metadata:
       m_Items: []
   - m_Id: 826945622027
-    m_Localized: Wall Evolutions
+    m_Localized: Corners destroyed against walls
     m_Metadata:
       m_Items: []
   - m_Id: 826945622028
@@ -92,10 +92,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 826945622035
     m_Localized: Cost
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826949816320
-    m_Localized: Shiny DNA
     m_Metadata:
       m_Items: []
   - m_Id: 826949816321
@@ -169,7 +165,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816361
-    m_Localized: Basic rebounds between figures
+    m_Localized: Basic Rebound Upgrade
     m_Metadata:
       m_Items: []
   - m_Id: 826949816362
@@ -201,7 +197,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816369
-    m_Localized: Speeds up the infection time for triangles.
+    m_Localized: Speeds up the destruction time for triangles.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010627
@@ -209,7 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010628
-    m_Localized: Speeds up the infection time for squares.
+    m_Localized: Speeds up the destruction time for squares.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010634
@@ -217,7 +213,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010635
-    m_Localized: Speeds up the infection time for hexagons.
+    m_Localized: Speeds up the destruction time for hexagons.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010641
@@ -225,7 +221,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010642
-    m_Localized: Speeds up the infection time for pentagons.
+    m_Localized: Speeds up the destruction time for pentagons.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010648
@@ -233,7 +229,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010649
-    m_Localized: Speeds up the infection time for circles.
+    m_Localized: Speeds up the destruction time for circles.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010655
@@ -241,7 +237,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010656
-    m_Localized: Speeds up the rate at which new figures arrive on the map.
+    m_Localized: Speeds up the spawn rate of new shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 826954010666
@@ -253,27 +249,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010673
-    m_Localized: Infectious Aura
+    m_Localized: Destruction radio
     m_Metadata:
       m_Items: []
   - m_Id: 826954010674
-    m_Localized: Your infection zone grows.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204934
-    m_Localized: Infection speed x1.5
+    m_Localized: The radius of your destruction zone grows.
     m_Metadata:
       m_Items: []
   - m_Id: 826958204935
-    m_Localized: Increases infection speed by x1.5
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204939
-    m_Localized: Level of radio 120%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204940
-    m_Localized: Upgrades radio controles by 120%
+    m_Localized: Improves infection level to 120%
     m_Metadata:
       m_Items: []
   - m_Id: 826958204950
@@ -289,7 +273,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826958204960
-    m_Localized: Chance to scratch 1 extra second off the clock.
+    m_Localized: Chance to scratch 1 extra second off the clock when destroying a
+      corner.
     m_Metadata:
       m_Items: []
   - m_Id: 826962399238
@@ -309,7 +294,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787841
-    m_Localized: Hexagon hit harder the walls.
+    m_Localized: Increases the damage of the hexagons to the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787851
@@ -317,7 +302,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787852
-    m_Localized: Pentagons hit harder the walls.
+    m_Localized: Increases the damage of the pentagons to the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826970787862
@@ -325,39 +310,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826970787863
-    m_Localized: Squares hit harder the walls.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982144
-    m_Localized: Damage dealt square 140%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982145
-    m_Localized: The damage caused by the square to the area increases to 140%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982146
-    m_Localized: Damage dealt square 160%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982147
-    m_Localized: The damage caused by the square to the area increases to 160%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982148
-    m_Localized: Damage dealt square 180%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982149
-    m_Localized: The damage caused by the square to the area increases to 180%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982150
-    m_Localized: Damage dealt square 200%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982151
-    m_Localized: The damage caused by the square to the area increases to 200%.
+    m_Localized: Increases the damage of the squares to the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826974982152
@@ -365,79 +318,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982153
-    m_Localized: Triangles hit harder.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982154
-    m_Localized: Damage dealt Triangle 140%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982155
-    m_Localized: The damage caused by the triangle to the area increases to 140%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982156
-    m_Localized: Damage dealt Triangle 160%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982157
-    m_Localized: The damage caused by the triangle to the area increases to 160%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982158
-    m_Localized: Damage dealt Triangle 180%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982159
-    m_Localized: The damage caused by the triangle to the area increases to 180%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982160
-    m_Localized: Damage dealt Triangle 200%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982161
-    m_Localized: The damage caused by the triangle to the area increases to 200%.
+    m_Localized: Increases the damage of the triangles to the walls.
     m_Metadata:
       m_Items: []
   - m_Id: 826974982162
     m_Localized: Circular Fury
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982163
-    m_Localized: Circles hit harder.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982164
-    m_Localized: Damage dealt Hexagon 140%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982165
-    m_Localized: The damage caused by the hexagon to the area increases to 140%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982166
-    m_Localized: Damage dealt Hexagon 160%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982167
-    m_Localized: The damage caused by the hexagon to the area increases to 160%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982168
-    m_Localized: Damage dealt Hexagon 180%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982169
-    m_Localized: The damage caused by the hexagon to the area increases to 180%.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982170
-    m_Localized: Damage dealt Circle 200%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982171
-    m_Localized: The damage caused by the circle to the area increases to 200%.
     m_Metadata:
       m_Items: []
   - m_Id: 826974982173
@@ -453,39 +338,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982177
-    m_Localized: 'Probability of skipping a phase: 5%'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982178
-    m_Localized: Skip Stages 10%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982179
-    m_Localized: 'Probability of skipping a phase: 10%'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982180
-    m_Localized: Skip Stages 15 %
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982181
-    m_Localized: 'Probability of skipping a phase: 15%'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982182
-    m_Localized: Skip Stages 20%
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982183
-    m_Localized: 'Probability of skipping a phase: 20%'
+    m_Localized: Increases the probability of destroying two corners at the same
+      time
     m_Metadata:
       m_Items: []
   - m_Id: 826974982185
-    m_Localized: Extra Capture 5%
+    m_Localized: 'Extra Capture '
     m_Metadata:
       m_Items: []
   - m_Id: 826974982186
-    m_Localized: 'Chance of capturing an extra figure : 5%'
+    m_Localized: 'Chance of capturing an extra figure '
     m_Metadata:
       m_Items: []
   - m_Id: 826979176450
@@ -569,83 +431,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176472
-    m_Localized: Population Boom
+    m_Localized: Baby Boom
     m_Metadata:
       m_Items: []
   - m_Id: 826979176473
-    m_Localized: Adds shapes at the start of the match.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176474
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176475
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176476
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176477
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176478
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176479
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176480
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176481
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176482
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176483
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176484
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176485
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176486
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176487
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176488
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176489
-    m_Localized: Number of figures at the start of the run +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176490
-    m_Localized: Number Initial Figures +10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176491
-    m_Localized: Number of figures at the start of the run +10
+    m_Localized: Increases the amount of initial shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 826979176492
@@ -657,23 +447,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826979176510
-    m_Localized: Infectious Wall
+    m_Localized: Destructive Wall
     m_Metadata:
       m_Items: []
   - m_Id: 826979176511
-    m_Localized: The figures can skip a level by bouncing off the wall.
+    m_Localized: Increases the probability of destroying a corner when crashing into
+      the wall
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: TRAPPED
+    m_Localized: Coins by radius destruction
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: INFECTED WALL
+    m_Localized: Coins by wall destruction
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: BOUNCE
+    m_Localized: Coins by destruction with shapes
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -681,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23259459145728
-    m_Localized: Earn more coins when capturing a hexagon.
+    m_Localized: Earn more coins when destroying an hexagon.
     m_Metadata:
       m_Items: []
   - m_Id: 23963821199360
@@ -689,23 +480,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393664
-    m_Localized: Earn more coins when capturing a pentagon.
+    m_Localized: Earn more coins when destroying a pentagon.
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393665
-    m_Localized: Square Loot
+    m_Localized: Square-Loot
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393666
-    m_Localized: Earn more coins when capturing a square.
+    m_Localized: Earn more coins when destroying a square.
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393668
-    m_Localized: Earn more coins when capturing a triangle.
+    m_Localized: Earn more coins when destroying a triangle.
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393669
-    m_Localized: Circular Loot
+    m_Localized: Circular-Loot
     m_Metadata:
       m_Items: []
   - m_Id: 23963825393670
@@ -713,7 +504,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36237889818624
-    m_Localized: Tri Loot
+    m_Localized: Tri-Loot
     m_Metadata:
       m_Items: []
   - m_Id: 1103911079616512
@@ -769,7 +560,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1104860493881344
-    m_Localized: figures
+    m_Localized: shapes
     m_Metadata:
       m_Items: []
   - m_Id: 1104870593765376
@@ -781,7 +572,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1820888534929408
-    m_Localized: DAMAGE
+    m_Localized: Damage
     m_Metadata:
       m_Items: []
   - m_Id: 1824803229847552
@@ -789,7 +580,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1825111343419392
-    m_Localized: SkillTree
+    m_Localized: Skill Tree
     m_Metadata:
       m_Items: []
   - m_Id: 1826841913249792
@@ -817,7 +608,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129921
-    m_Localized: Capture the last figure in your radius when time ends.
+    m_Localized: The round is not over until the figures that are within your radius
+      are destroyed
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129923
@@ -825,7 +617,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129924
-    m_Localized: Chance for hexagons to lose a side against the wall.
+    m_Localized: Increases the chance for hexagons to lose a side against a wall.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129925
@@ -833,7 +625,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129926
-    m_Localized: Chance for pentagons to lose a side against the wall.
+    m_Localized: Increases the chance for pentagons to lose a side against a wall.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129927
@@ -841,7 +633,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129928
-    m_Localized: Chance for squares to lose a side against the wall.
+    m_Localized: Increases the chance for squares to lose a side against a wall.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129929
@@ -849,7 +641,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129930
-    m_Localized: Chance for triangles to lose a side against the wall.
+    m_Localized: Increases the chance for triangles to lose a side against a wall.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129931
@@ -857,7 +649,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129932
-    m_Localized: Chance for circles to lose a side against the wall.
+    m_Localized: Increases the chance for circles to get infected whenh hitting against
+      a wall.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129934
@@ -865,7 +658,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129935
-    m_Localized: Chance for the hexagon to lose a side when hitting another shape.
+    m_Localized: ' Increases the chance for hexagons to collide with other shapes.'
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129936
@@ -873,7 +666,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129937
-    m_Localized: Chance for the pentagon to lose a side when hitting another shape.
+    m_Localized: ' Increases the chance for pentagons to collide with other shapes.'
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129938
@@ -881,7 +674,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129939
-    m_Localized: Chance for the square  to lose a side when hitting another shape.
+    m_Localized: ' Increases the chance for squares to collide with other shapes.'
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129940
@@ -889,7 +682,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129941
-    m_Localized: Chance for the triangle  to lose a side when hitting another shape.
+    m_Localized: ' Increases the chance for triangles to collide with other shapes.'
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129942
@@ -897,7 +690,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129943
-    m_Localized: Chance for the circle  to lose a side when hitting another shape.
+    m_Localized: ' Increases the chance for circles to collide with other shapes.'
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676992
@@ -909,11 +702,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3381372799209473
-    m_Localized: Summons a black hole that absorbs shapes.
+    m_Localized: Summons a Black Hole that absorbs shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676993
-    m_Localized: Speeds up the creation of black holes to swallow more shapes.
+    m_Localized: Speeds up the spawn rate of Black Holes.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676994
@@ -921,7 +714,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676995
-    m_Localized: Summons the Black Leaf on the map to sow absolute chaos.
+    m_Localized: Summons the Black Leaf.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676996
@@ -929,7 +722,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676997
-    m_Localized: The Black Leaf hits with more force.
+    m_Localized: The Black Leaf destroys more corners per figure at a time.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676998
@@ -937,7 +730,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676999
-    m_Localized: Increases the chance for a Black Leaf to sprout.
+    m_Localized: Increases the spawn rate of Black Leafs.
     m_Metadata:
       m_Items: []
   - m_Id: 3616385972543488
@@ -965,7 +758,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5067856530350080
-    m_Localized: Increase the chance of spawning a black cell
+    m_Localized: Increases the chance of spawning a black cell
     m_Metadata:
       m_Items: []
   - m_Id: 5067856530350081
@@ -1006,7 +799,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5067856530350090
-    m_Localized: Increases the amount of simultanious black holes
+    m_Localized: Increases the amount of simultanious Black Holes
     m_Metadata:
       m_Items: []
   - m_Id: 5108470592544768
@@ -1034,7 +827,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7266993589952514
-    m_Localized: Desactivated
+    m_Localized: Deactivated
     m_Metadata:
       m_Items: []
   - m_Id: 8351394210566144

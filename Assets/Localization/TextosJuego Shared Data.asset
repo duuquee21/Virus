@@ -103,10 +103,6 @@ MonoBehaviour:
     m_Key: txt_coste
     m_Metadata:
       m_Items: []
-  - m_Id: 826949816320
-    m_Key: txt_adn
-    m_Metadata:
-      m_Items: []
   - m_Id: 826949816321
     m_Key: skill_coinsx2_tit
     m_Metadata:
@@ -319,30 +315,6 @@ MonoBehaviour:
     m_Key: skill_radius_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 9172339707917
-    m_Key: MULTIPLICADOR VELOCIDAD INFECCION
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204934
-    m_Key: skill_infectionSpeedMulti_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204935
-    m_Key: skill_infectionSpeed_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9172339707918
-    m_Key: NIVEL RADIO
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204939
-    m_Key: skill_radioControl_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826958204940
-    m_Key: skill_radioControl_desc
-    m_Metadata:
-      m_Items: []
   - m_Id: 9172339707919
     m_Key: NIVEL VELOCIDAD
     m_Metadata:
@@ -373,6 +345,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 826962399238
     m_Key: skill_infectionSpeed_tit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826958204935
+    m_Key: skill_infectionSpeed_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707922
@@ -423,38 +399,6 @@ MonoBehaviour:
     m_Key: skill_zoneDamageSqr_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 826974982144
-    m_Key: skill_zoneDamageSqr2_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982145
-    m_Key: skill_zoneDamageSqr2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982146
-    m_Key: skill_zoneDamageSqr3_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982147
-    m_Key: skill_zoneDamageSqr3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982148
-    m_Key: skill_zoneDamageSqr4_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982149
-    m_Key: skill_zoneDamageSqr4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982150
-    m_Key: skill_zoneDamageSqr5_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982151
-    m_Key: skill_zoneDamageSqr5_desc
-    m_Metadata:
-      m_Items: []
   - m_Id: 826974982152
     m_Key: skill_zoneDamageTri_tit
     m_Metadata:
@@ -463,76 +407,8 @@ MonoBehaviour:
     m_Key: skill_zoneDamageTri_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 826974982154
-    m_Key: skill_zoneDamageTri2_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982155
-    m_Key: skill_zoneDamageTri2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982156
-    m_Key: skill_zoneDamageTri3_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982157
-    m_Key: skill_zoneDamageTri3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982158
-    m_Key: skill_zoneDamageTri4_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982159
-    m_Key: skill_zoneDamageTri4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982160
-    m_Key: skill_zoneDamageTri5_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982161
-    m_Key: skill_zoneDamageTri5_desc
-    m_Metadata:
-      m_Items: []
   - m_Id: 826974982162
     m_Key: skill_zoneDamageCir_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982163
-    m_Key: skill_zoneDamageCir_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982164
-    m_Key: skill_zoneDamageCir2_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982165
-    m_Key: skill_zoneDamageCir2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982166
-    m_Key: skill_zoneDamageCir3_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982167
-    m_Key: skill_zoneDamageCir3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982168
-    m_Key: skill_zoneDamageCir4_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982169
-    m_Key: skill_zoneDamageCir4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982170
-    m_Key: skill_zoneDamageCir5_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982171
-    m_Key: skill_zoneDamageCir5_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707926
@@ -557,30 +433,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 826974982177
     m_Key: skill_skipStages_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982178
-    m_Key: skill_skipStages2_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982179
-    m_Key: skill_skipStages2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982180
-    m_Key: skill_skipStages3_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982181
-    m_Key: skill_skipStages3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982182
-    m_Key: skill_skipStages4_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826974982183
-    m_Key: skill_skipStages4_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9172339707928
@@ -693,78 +545,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 826979176473
     m_Key: skill_initialFigures_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176474
-    m_Key: skill_initialFigures2_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176475
-    m_Key: skill_initialFigures2_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176476
-    m_Key: skill_initialFigures3_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176477
-    m_Key: skill_initialFigures3_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176478
-    m_Key: skill_initialFigures4_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176479
-    m_Key: skill_initialFigures4_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176480
-    m_Key: skill_initialFigures5_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176481
-    m_Key: skill_initialFigures5_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176482
-    m_Key: skill_initialFigures6_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176483
-    m_Key: skill_initialFigures6_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176484
-    m_Key: skill_initialFigures7_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176485
-    m_Key: skill_initialFigures7_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176486
-    m_Key: skill_initialFigures8_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176487
-    m_Key: skill_initialFigures8_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176488
-    m_Key: skill_initialFigures9_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176489
-    m_Key: skill_initialFigures9_desc
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176490
-    m_Key: skill_initialFigures10_tit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 826979176491
-    m_Key: skill_initialFigures10_desc
     m_Metadata:
       m_Items: []
   - m_Id: 826979176492
