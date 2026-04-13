@@ -129,10 +129,10 @@ MonoBehaviour:
   coloresFases: []
   resistenciaPorFase:
   - 1.2
+  - 1.4
+  - 1.6
+  - 1.8
   - 2
-  - 3
-  - 4
-  - 5
   prefabsBarraFalsa:
   - {fileID: 7112969088149162466}
   - {fileID: 4215085554657058544}

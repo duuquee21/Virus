@@ -688,39 +688,39 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 Guardado.instance.SaveData();
                 break;
             // Fase 0 (Hexágono)
-            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase0_10: Guardado.instance.AddInfectSpeedPerPhase(0, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase0_20: Guardado.instance.AddInfectSpeedPerPhase(0, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase0_30: Guardado.instance.AddInfectSpeedPerPhase(0, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase0_40: Guardado.instance.AddInfectSpeedPerPhase(0, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase0_50: Guardado.instance.AddInfectSpeedPerPhase(0, 0.30f); break;
 
             // Fase 1 (Pentágono)
-            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase1_10: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_20: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_30: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_40: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase1_50: Guardado.instance.AddInfectSpeedPerPhase(1, 0.30f); break;
 
             // Fase 2 (Cuadrado)
-            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase2_10: Guardado.instance.AddInfectSpeedPerPhase(2, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase2_20: Guardado.instance.AddInfectSpeedPerPhase(2, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase2_30: Guardado.instance.AddInfectSpeedPerPhase(2, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase2_40: Guardado.instance.AddInfectSpeedPerPhase(2, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase2_50: Guardado.instance.AddInfectSpeedPerPhase(2, 0.30f); break;
 
             // Fase 3 (Triángulo)
-            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase3_10: Guardado.instance.AddInfectSpeedPerPhase(3, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase3_20: Guardado.instance.AddInfectSpeedPerPhase(3, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase3_30: Guardado.instance.AddInfectSpeedPerPhase(3, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase3_40: Guardado.instance.AddInfectSpeedPerPhase(3, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase3_50: Guardado.instance.AddInfectSpeedPerPhase(3, 0.30f); break;
 
             // Fase 4 (Círculo)
-            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.20f); break;
-            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.20f); break;
+            case SkillEffectType.InfectSpeedPhase4_10: Guardado.instance.AddInfectSpeedPerPhase(4, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase4_20: Guardado.instance.AddInfectSpeedPerPhase(4, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase4_30: Guardado.instance.AddInfectSpeedPerPhase(4, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase4_40: Guardado.instance.AddInfectSpeedPerPhase(4, 0.30f); break;
+            case SkillEffectType.InfectSpeedPhase4_50: Guardado.instance.AddInfectSpeedPerPhase(4, 0.30f); break;
 
             case SkillEffectType.UnlockExtraTimeLogic:
                 // Llamamos al método que creamos en el paso anterior en Guardado.cs
@@ -1029,7 +1029,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float resistencia = 1f;
                     float descuentoActual = g.infectSpeedPerPhase[0] - 1f; // El excedente de 1 es el descuento
-                    float descuentoNuevo = descuentoActual + 0.20f; // <-- Baja 0.20s exactos por compra
+                    float descuentoNuevo = descuentoActual + 0.30f; // <-- Baja 0.20s exactos por compra
 
                     float tiempoBase = (PersonaInfeccion.globalInfectTime * resistencia);
                     float tiempoActual = Mathf.Max(0.2f, tiempoBase - descuentoActual);
@@ -1047,7 +1047,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float resistencia = 1.2f;
                     float descuentoActual = g.infectSpeedPerPhase[1] - 1f;
-                    float descuentoNuevo = descuentoActual + 0.20f;
+                    float descuentoNuevo = descuentoActual + 0.30f;
 
                     float tiempoBase = (PersonaInfeccion.globalInfectTime * resistencia);
                     float tiempoActual = Mathf.Max(0.2f, tiempoBase - descuentoActual);
@@ -1065,7 +1065,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float resistencia = 1.5f;
                     float descuentoActual = g.infectSpeedPerPhase[2] - 1f;
-                    float descuentoNuevo = descuentoActual + 0.20f;
+                    float descuentoNuevo = descuentoActual + 0.30f;
 
                     float tiempoBase = (PersonaInfeccion.globalInfectTime * resistencia);
                     float tiempoActual = Mathf.Max(0.2f, tiempoBase - descuentoActual);
@@ -1083,7 +1083,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float resistencia = 1.8f;
                     float descuentoActual = g.infectSpeedPerPhase[3] - 1f;
-                    float descuentoNuevo = descuentoActual + 0.20f;
+                    float descuentoNuevo = descuentoActual + 0.30f;
 
                     float tiempoBase = (PersonaInfeccion.globalInfectTime * resistencia);
                     float tiempoActual = Mathf.Max(0.2f, tiempoBase - descuentoActual);
@@ -1101,7 +1101,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float resistencia = 2.2f;
                     float descuentoActual = g.infectSpeedPerPhase[4] - 1f;
-                    float descuentoNuevo = descuentoActual + 0.20f;
+                    float descuentoNuevo = descuentoActual + 0.30f;
 
                     float tiempoBase = (PersonaInfeccion.globalInfectTime * resistencia);
                     float tiempoActual = Mathf.Max(0.2f, tiempoBase - descuentoActual);

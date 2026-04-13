@@ -13,10 +13,17 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
-    [Header("Configuración Música")]
+    [Header("Configuración Música (Playlists)")]
     public float fadeDuration = 1.0f;
-    public AudioClip menuMusic;
-    public AudioClip gameMusic;
+
+    // 1. Cambiamos las canciones individuales por Arrays (Listas)
+    public AudioClip[] menuMusicPlaylist;
+    public AudioClip[] gameMusicPlaylist;
+
+    // Variables internas para gestionar la playlist actual
+    private AudioClip[] currentPlaylist;
+    private Coroutine playlistCoroutine;
+    private int currentTrackIndex = 0;
 
     [Header("Efectos de Sonido (Clips)")]
     public AudioClip buyUpgradeSound;
@@ -41,36 +48,29 @@ public class AudioManager : MonoBehaviour
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
         UpdateMixerVolume("MusicVol", musicVol);
         UpdateMixerVolume("SFXVol", sfxVol);
+
         if (musicSource != null)
         {
             musicSource.volume = 1f;
             musicSource.mute = false;
-            musicSource.loop = true; // <--- AÑADE ESTA LÍNEA
+            // 2. MUY IMPORTANTE: Quitamos el loop para saber cuándo termina la canción
+            musicSource.loop = false;
         }
 
-        Debug.Log($"[AudioManager] Start: master={master}, music={musicVol}, sfx={sfxVol}, musicSource={(musicSource!=null ? "ok" : "NULL")}");
+        Debug.Log($"[AudioManager] Start: master={master}, music={musicVol}, sfx={sfxVol}, musicSource={(musicSource != null ? "ok" : "NULL")}");
 
-        if (menuMusic != null && musicSource != null)
-        {
-            musicSource.clip = menuMusic;
-            musicSource.Play();
-            Debug.Log($"[AudioManager] Reproduciendo menuMusic: {menuMusic.name}");
-        }
-        else
-        {
-            if (menuMusic == null) Debug.LogWarning("[AudioManager] menuMusic no asignado");
-            if (musicSource == null) Debug.LogWarning("[AudioManager] musicSource no asignado");
-        }
+        // Iniciamos directamente la música del menú usando el nuevo sistema
+        SwitchToMenuMusic();
     }
 
-    // Método centralizado para el volumen (Escala logarítmica para el Mixer)
+    // Método centralizado para el volumen
     public void UpdateMixerVolume(string parameterName, float sliderValue)
     {
         float dB = Mathf.Log10(Mathf.Max(0.0001f, sliderValue)) * 20;
         mainMixer.SetFloat(parameterName, dB);
     }
 
-    // --- TUS MÉTODOS DE SFX ORIGINALES ---
+    // --- MÉTODOS DE SFX ORIGINALES ---
     public void PlaySFX(AudioClip clip)
     {
         if (clip != null && sfxSource != null)
@@ -85,34 +85,93 @@ public class AudioManager : MonoBehaviour
     public void PlayClick() { PlaySFX(clickSound); }
 
     // --- GESTIÓN DE MÚSICA Y FADE ---
-    public void SwitchToGameMusic() { if (musicSource.clip != gameMusic) StartCoroutine(FadeTrack(gameMusic)); }
-    public void SwitchToMenuMusic() { if (musicSource.clip != menuMusic) StartCoroutine(FadeTrack(menuMusic)); }
+    public void SwitchToGameMusic()
+    {
+        if (currentPlaylist != gameMusicPlaylist)
+            StartCoroutine(FadeAndSwitchPlaylist(gameMusicPlaylist));
+    }
 
-    private IEnumerator FadeTrack(AudioClip newClip)
+    public void SwitchToMenuMusic()
+    {
+        if (currentPlaylist != menuMusicPlaylist)
+            StartCoroutine(FadeAndSwitchPlaylist(menuMusicPlaylist));
+    }
+
+    private IEnumerator FadeAndSwitchPlaylist(AudioClip[] newPlaylist)
     {
         float currentTime = 0f;
         float startVolume = musicSource != null ? musicSource.volume : 1f;
 
-        // Bajar volumen de la fuente (no del mixer)
-        while (currentTime < fadeDuration)
+        // Bajar volumen (Fade out)
+        if (musicSource.isPlaying)
         {
-            currentTime += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(startVolume, 0f, currentTime / fadeDuration);
-            yield return null;
+            while (currentTime < fadeDuration)
+            {
+                currentTime += Time.deltaTime;
+                musicSource.volume = Mathf.Lerp(startVolume, 0f, currentTime / fadeDuration);
+                yield return null;
+            }
         }
 
         musicSource.Stop();
-        musicSource.clip = newClip;
-        musicSource.Play();
 
-        // Subir volumen de la fuente
-        currentTime = 0f;
-        while (currentTime < fadeDuration)
+        // Detenemos la rutina de la playlist anterior para que no se pisen
+        if (playlistCoroutine != null)
         {
-            currentTime += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(0f, 1f, currentTime / fadeDuration);
-            yield return null;
+            StopCoroutine(playlistCoroutine);
         }
-        musicSource.volume = 1f;
+
+        // Asignamos la nueva playlist
+        currentPlaylist = newPlaylist;
+
+        // Iniciamos el reproductor de la lista
+        if (currentPlaylist != null && currentPlaylist.Length > 0)
+        {
+            playlistCoroutine = StartCoroutine(PlayPlaylistRoutine());
+        }
+        else
+        {
+            Debug.LogWarning("[AudioManager] La playlist está vacía o no asignada.");
+        }
+    }
+
+    // 3. Nueva rutina que reproduce las canciones en bucle
+    private IEnumerator PlayPlaylistRoutine()
+    {
+        currentTrackIndex = 0;
+        bool isFirstTrack = true;
+
+        while (true) // Este bucle mantiene viva la playlist
+        {
+            musicSource.clip = currentPlaylist[currentTrackIndex];
+            musicSource.Play();
+
+            // Solo hacemos el fade-in para la primera canción al cambiar de playlist
+            if (isFirstTrack)
+            {
+                float currentTime = 0f;
+                while (currentTime < fadeDuration)
+                {
+                    currentTime += Time.deltaTime;
+                    musicSource.volume = Mathf.Lerp(0f, 1f, currentTime / fadeDuration);
+                    yield return null;
+                }
+                isFirstTrack = false;
+            }
+
+            musicSource.volume = 1f; // Aseguramos el volumen máximo tras el fade
+
+            // Esperamos hasta que la canción actual deje de sonar
+            yield return new WaitWhile(() => musicSource.isPlaying);
+
+            // Pasamos a la siguiente canción
+            currentTrackIndex++;
+
+            // Si hemos llegado al final de la lista, volvemos a la primera canción (Loop de playlist)
+            if (currentTrackIndex >= currentPlaylist.Length)
+            {
+                currentTrackIndex = 0;
+            }
+        }
     }
 }
