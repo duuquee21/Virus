@@ -1295,7 +1295,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = g.hojaSpawnRate;
                     float extra = GetFloat(0.1f);
                     if (comprado) sb.AppendLine($"{actual:F2}");
-                    else sb.AppendLine($"{actual:F2} → {(actual + extra):F2}");
+                    else sb.AppendLine($"{actual:F2} → {(actual - extra):F2}");
                     break;
                 }
             case SkillEffectType.MejorarDmgHojaNegra:
@@ -1311,7 +1311,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = g.agujeroSpawnRate;
                     float extra = GetFloat(0.1f);
                     if (comprado) sb.AppendLine($"{actual:F2}");
-                    else sb.AppendLine($"{actual:F2} → {(actual + extra):F2}");
+                    else sb.AppendLine($"{actual:F2} → {(actual - extra):F2}");
                     break;
                 }
 
@@ -1364,11 +1364,11 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             case SkillEffectType.IncreaseRadiusLevel:
                 {
                     int actual = g.radiusLevel;
-                    int despues = actual + GetInt(1);
+                    int despues = actual+1 + GetInt(1);
                     if (comprado)
-                        sb.AppendLine($"{actual}");
+                        sb.AppendLine($"{actual+1}");
                     else
-                        sb.AppendLine($"{actual} → {despues}");
+                        sb.AppendLine($"{actual+1} → {despues}");
                     break;
                 }
         }
