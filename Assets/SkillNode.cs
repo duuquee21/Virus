@@ -1011,7 +1011,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float actual = g.infectSpeedMultiplier;
                     float bonus = (effectType == SkillEffectType.InfectSpeed100) ? 1f :
-                                  (effectType == SkillEffectType.InfectSpeed50) ? 0.5f : 0.25f;
+                                   (effectType == SkillEffectType.InfectSpeed50) ? 0.5f : 0.25f;
                     float despues = actual + bonus;
 
                     if (comprado) sb.AppendLine($"{GetTexto("prev_vel_infec")}: {actual:F2}");
@@ -1152,8 +1152,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float actual = g.addTimeOnPhaseChance * 100f;
                     float despues = (g.addTimeOnPhaseChance + 0.05f) * 100f;
-                    if (comprado) sb.AppendLine($"{actual:F0}%");
-                    else sb.AppendLine($"{actual:F0}% → {despues:F0}%");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_prob_tiempo")}: {actual:F0}%");
+                    else sb.AppendLine($"{GetTexto("prev_prob_tiempo")}: {actual:F0}% → {despues:F0}%");
                     break;
                 }
             case SkillEffectType.DoubleUpgradeChance05:
@@ -1164,8 +1164,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float actual = g.doubleUpgradeChance * 100f;
                     float despues = (g.doubleUpgradeChance + 0.05f) * 100f;
-                    if (comprado) sb.AppendLine($"{actual:F0}%");
-                    else sb.AppendLine($"{actual:F0}% → {despues:F0}%");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_prob_crit")}: {actual:F0}%");
+                    else sb.AppendLine($"{GetTexto("prev_prob_crit")}: {actual:F0}% → {despues:F0}%");
                     break;
                 }
             case SkillEffectType.RandomSpawnAnyPhase5:
@@ -1202,8 +1202,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actualTotal = PopulationManager.instance.GetRoundInitialPopulation();
                     float despuesTotal = actualTotal + 7; // Ajusta según tu lógica
 
-                    if (comprado) sb.AppendLine($"{actualTotal:F0}");
-                    else sb.AppendLine($"{actualTotal:F0} → {despuesTotal:F0}");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_pob_inicial")}: {actualTotal:F0}");
+                    else sb.AppendLine($"{GetTexto("prev_pob_inicial")}: {actualTotal:F0} → {despuesTotal:F0}");
                     break;
                 }
 
@@ -1259,8 +1259,8 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     float actual = baseInterval;
                     float despues = baseInterval - actualBonus;
 
-                    if (comprado) sb.AppendLine($"{actual:F2}s");
-                    else sb.AppendLine($"{actual:F2}s → {despues:F2}s");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_spawn_rate")}: {actual:F2}s");
+                    else sb.AppendLine($"{GetTexto("prev_spawn_rate")}: {actual:F2}s → {despues:F2}s");
                     break;
                 }
 
@@ -1269,9 +1269,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     int actual = g.coralCapacity;
                     if (comprado)
-                        sb.AppendLine($"{actual}");
+                        sb.AppendLine($"{GetTexto("prev_cap_coral")}: {actual}");
                     else
-                        sb.AppendLine($"{actual} → {actual + 1}");
+                        sb.AppendLine($"{GetTexto("prev_cap_coral")}: {actual} → {actual + 1}");
                     break;
                 }
 
@@ -1294,24 +1294,24 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float actual = g.hojaSpawnRate;
                     float extra = GetFloat(0.1f);
-                    if (comprado) sb.AppendLine($"{actual:F2}");
-                    else sb.AppendLine($"{actual:F2} → {(actual - extra):F2}");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_spawn_hoja")}: {actual:F2}");
+                    else sb.AppendLine($"{GetTexto("prev_spawn_hoja")}: {actual:F2} → {(actual - extra):F2}");
                     break;
                 }
             case SkillEffectType.MejorarDmgHojaNegra:
                 {
                     int actual = g.hojaFases;
                     int extra = GetInt(1);
-                    if (comprado) sb.AppendLine($"{actual}");
-                    else sb.AppendLine($"{actual} → {actual + extra}");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_dmg_hoja")}: {actual} {GetTexto("prev_esquinas")}");
+                    else sb.AppendLine($"{GetTexto("prev_dmg_hoja")}: {actual} → {actual + extra} {GetTexto("prev_esquinas")}");
                     break;
                 }
             case SkillEffectType.MejorarSpawnAgujeroNegro:
                 {
                     float actual = g.agujeroSpawnRate;
                     float extra = GetFloat(0.1f);
-                    if (comprado) sb.AppendLine($"{actual:F2}");
-                    else sb.AppendLine($"{actual:F2} → {(actual - extra):F2}");
+                    if (comprado) sb.AppendLine($"{GetTexto("prev_spawn_agujero")}: {actual:F2}");
+                    else sb.AppendLine($"{GetTexto("prev_spawn_agujero")}: {actual:F2} → {(actual - extra):F2}");
                     break;
                 }
 
@@ -1331,7 +1331,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 {
                     float actual = g.buggedSpawnChance;
                     float despues = actual + 5f;
-                    if (comprado) sb.AppendLine($" {actual}%");
+                    if (comprado) sb.AppendLine($"{actual}%");
                     else sb.AppendLine($"{actual}% → {despues}%");
                     break;
                 }
@@ -1342,9 +1342,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     int despues = actual + GetInt(1);
 
                     if (comprado)
-                        sb.AppendLine($"{actual}");
+                        sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual}");
                     else
-                        sb.AppendLine($"{actual} → {despues}");
+                        sb.AppendLine($"{GetTexto("prev_limite_bug")}: {actual} → {despues}");
                     break;
                 }
 
@@ -1355,20 +1355,20 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                     int despues = actual + extra;
 
                     if (comprado)
-                        sb.AppendLine($"{actual}");
+                        sb.AppendLine($"{GetTexto("prev_max_agujeros")}: {actual}");
                     else
-                        sb.AppendLine($"{actual} → {despues}");
+                        sb.AppendLine($"{GetTexto("prev_max_agujeros")}: {actual} → {despues}");
                     break;
                 }
 
             case SkillEffectType.IncreaseRadiusLevel:
                 {
                     int actual = g.radiusLevel;
-                    int despues = actual+1 + GetInt(1);
+                    int despues = actual + 1 + GetInt(1);
                     if (comprado)
-                        sb.AppendLine($"{actual+1}");
+                        sb.AppendLine($"{GetTexto("prev_nivel_radio")}: {actual + 1}");
                     else
-                        sb.AppendLine($"{actual+1} → {despues}");
+                        sb.AppendLine($"{GetTexto("prev_nivel_radio")}: {actual + 1} → {despues}");
                     break;
                 }
         }
