@@ -151,9 +151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816337
-    m_Localized: '
-
-      A little more time'
+    m_Localized: 5 more minutes...
     m_Metadata:
       m_Items: []
   - m_Id: 826949816338
@@ -201,7 +199,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010627
-    m_Localized: Square-Capture+
+    m_Localized: Square-Capture
     m_Metadata:
       m_Items: []
   - m_Id: 826954010628
@@ -209,7 +207,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010634
-    m_Localized: Hexa-Capture+
+    m_Localized: Hexa-Capture
     m_Metadata:
       m_Items: []
   - m_Id: 826954010635
@@ -217,7 +215,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010641
-    m_Localized: Penta-Capture+
+    m_Localized: Penta-Capture
     m_Metadata:
       m_Items: []
   - m_Id: 826954010642
@@ -225,7 +223,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010648
-    m_Localized: Cir-Capture+
+    m_Localized: Cir-Capture
     m_Metadata:
       m_Items: []
   - m_Id: 826954010649
@@ -456,15 +454,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: Coins by radius destruction
+    m_Localized: Earned by radius destruction
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: Coins by wall destruction
+    m_Localized: Earned by wall destruction
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: Coins by destruction with shapes
+    m_Localized: Earned by destruction with shapes
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -840,6 +838,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 10243228876722176
     m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149080820117504
+    m_Localized: Extra Time Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718784
+    m_Localized: Critical Hit Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718785
+    m_Localized: Initial Shape Amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718786
+    m_Localized: Shape Spawn Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718787
+    m_Localized: Bugged Capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718788
+    m_Localized: Black Leaf Spawn Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718789
+    m_Localized: Black Leaf Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718790
+    m_Localized: corners
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718791
+    m_Localized: Black Hole Spawn Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718792
+    m_Localized: Bugged spawn limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718793
+    m_Localized: Max Black Holes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718794
+    m_Localized: Radius level
     m_Metadata:
       m_Items: []
   references:

@@ -971,6 +971,54 @@ MonoBehaviour:
     m_Key: btn_reanudar
     m_Metadata:
       m_Items: []
+  - m_Id: 14149080820117504
+    m_Key: prev_prob_tiempo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718784
+    m_Key: prev_prob_crit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718785
+    m_Key: prev_pob_inicial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718786
+    m_Key: prev_spawn_rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718787
+    m_Key: prev_cap_coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718788
+    m_Key: prev_spawn_hoja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718789
+    m_Key: prev_dmg_hoja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718790
+    m_Key: prev_esquinas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718791
+    m_Key: prev_spawn_agujero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718792
+    m_Key: prev_limite_bug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718793
+    m_Key: prev_max_agujeros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718794
+    m_Key: prev_nivel_radio
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

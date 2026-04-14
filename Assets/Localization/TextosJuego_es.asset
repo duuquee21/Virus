@@ -199,7 +199,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010627
-    m_Localized: Cuadra-Captura+
+    m_Localized: Cuadra-Captura
     m_Metadata:
       m_Items: []
   - m_Id: 826954010628
@@ -207,7 +207,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010634
-    m_Localized: Hexa-Captura+
+    m_Localized: Hexa-Captura
     m_Metadata:
       m_Items: []
   - m_Id: 826954010635
@@ -215,7 +215,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010641
-    m_Localized: Penta-Captura+
+    m_Localized: Penta-Captura
     m_Metadata:
       m_Items: []
   - m_Id: 826954010642
@@ -223,7 +223,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010648
-    m_Localized: Cir-Captura+
+    m_Localized: Cir-Captura
     m_Metadata:
       m_Items: []
   - m_Id: 826954010649
@@ -453,15 +453,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9172310347776
-    m_Localized: "Monedas por destrucci\xF3n por radio"
+    m_Localized: "Ganado por destrucci\xF3n por radio"
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513600
-    m_Localized: "Monedas por destrucci\xF3n con pared"
+    m_Localized: "Ganadoo por destrucci\xF3n con pared"
     m_Metadata:
       m_Items: []
   - m_Id: 9172335513601
-    m_Localized: "Monedas por destrucci\xF3n con carambola"
+    m_Localized: "Ganado por destrucci\xF3n con carambola"
     m_Metadata:
       m_Items: []
   - m_Id: 23259438174208
@@ -846,6 +846,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 10243228876722176
     m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149080820117504
+    m_Localized: Probabilidad tiempo extra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718784
+    m_Localized: "Probabilidad golpe cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718785
+    m_Localized: Cantidad de figuras inicial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718786
+    m_Localized: "Velocidad aparici\xF3n figuras"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718787
+    m_Localized: Capacidad de corales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718788
+    m_Localized: "Aparici\xF3n de hoja negra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718789
+    m_Localized: "Da\xF1o de hoja negra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718790
+    m_Localized: esquinas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718791
+    m_Localized: "Aparici\xF3n de agujero negro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718792
+    m_Localized: "L\xEDmite de figuras bug"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718793
+    m_Localized: "M\xE1ximo de agujeros negros"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14149081113718794
+    m_Localized: Nivel de radio
     m_Metadata:
       m_Items: []
   references:
