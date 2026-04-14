@@ -600,8 +600,18 @@ public class PersonaInfeccion : MonoBehaviour
         {
             spritePersona.sprite = fasesSprites[faseActual];
 
-            if (coloresFases != null && faseActual < coloresFases.Length)
-                spritePersona.color = coloresFases[faseActual];
+            if (LevelManager.instance != null && faseActual < LevelManager.instance.coloresPorMapa.Length)
+            {
+                Color colorFase = LevelManager.instance.coloresPorMapa[faseActual];
+                colorFase.a = 1f; // 🌟 CORRECCIÓN: Forzamos opacidad al máximo
+                spritePersona.color = colorFase;
+            }
+            else if (coloresFases != null && faseActual < coloresFases.Length)
+            {
+                Color colorFase = coloresFases[faseActual];
+                colorFase.a = 1f; // 🌟 CORRECCIÓN
+                spritePersona.color = colorFase;
+            }
         }
 
         if (fillingBarInnerImages != null &&
@@ -639,7 +649,18 @@ public class PersonaInfeccion : MonoBehaviour
 
     private IEnumerator FlashCambioFase()
     {
-        Color colorObjetivo = (faseActual < coloresFases.Length) ? coloresFases[faseActual] : originalColor;
+        Color colorObjetivo = originalColor;
+
+        if (LevelManager.instance != null && faseActual < LevelManager.instance.coloresPorMapa.Length)
+        {
+            colorObjetivo = LevelManager.instance.coloresPorMapa[faseActual];
+            colorObjetivo.a = 1f; // 🌟 CORRECCIÓN: Forzamos opacidad al máximo
+        }
+        else if (faseActual < coloresFases.Length)
+        {
+            colorObjetivo = coloresFases[faseActual];
+            colorObjetivo.a = 1f; // 🌟 CORRECCIÓN
+        }
 
         if (spritePersona != null)
             spritePersona.color = Color.white;
@@ -648,6 +669,8 @@ public class PersonaInfeccion : MonoBehaviour
 
         if (spritePersona != null)
             spritePersona.color = colorObjetivo;
+
+        originalColor = colorObjetivo;
     }
 
     void Desaparecer()
@@ -928,17 +951,8 @@ public class PersonaInfeccion : MonoBehaviour
             colorCoroutine = null;
         }
 
-        if (trail1 != null)
-        {
-            trail1.Clear();
-            trail1.emitting = false;
-        }
-
-        if (trail2 != null)
-        {
-            trail2.Clear();
-            trail2.emitting = false;
-        }
+        if (trail1 != null) { trail1.Clear(); trail1.emitting = false; }
+        if (trail2 != null) { trail2.Clear(); trail2.emitting = false; }
 
         if (infectionBarCanvas != null)
             infectionBarCanvas.SetActive(false);
@@ -951,8 +965,18 @@ public class PersonaInfeccion : MonoBehaviour
             spritePersona.color = Color.white;
 
         faseActual = nuevaFase;
-        originalColor = colorMapa;
-        AplicarColor(colorMapa);
+
+        // 🌟 NUEVA LÓGICA: Ignoramos 'colorMapa' y cogemos el color de LevelManager basado en 'nuevaFase'
+        Color colorDeFase = colorMapa; // Fallback por defecto
+        if (LevelManager.instance != null && nuevaFase < LevelManager.instance.coloresPorMapa.Length)
+        {
+            colorDeFase = LevelManager.instance.coloresPorMapa[nuevaFase];
+        }
+
+        colorDeFase.a = 1f;
+
+        originalColor = colorDeFase;
+        AplicarColor(colorDeFase);
 
         if (particulasDeFuego != null)
             particulasDeFuego.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
