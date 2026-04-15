@@ -38,7 +38,7 @@ public class Guardado : MonoBehaviour
     [Header("Habilidad Especial")]
 
     public bool destroyCoralOnInfectedImpact = false;
-    public float probabilidadDuplicarChoque = 0f;
+    public float probabilidadDuplicarChoque = 100f;
     public int nivelCarambola = -1; // 0 = desactivada, 1-5 niveles
 
     [Header("Mejoras de Daño Individuales")]
@@ -87,7 +87,7 @@ public class Guardado : MonoBehaviour
 
     public bool agujeroNegroData = false; // Ejemplo de variable para el sistema de Hoja Negra
     public float agujeroSpawnRate;
-    public float spawnBaseOnMaxPhaseChance = 0f;
+    public float spawnBaseOnMaxPhaseChance = 100f;
     public int cantidadMaxAgujeros = 1; // Límite de
 
     public float buggedSpawnChance = 100f; // Probabilidad de que spawnee un enemigo bugueado
@@ -137,7 +137,7 @@ public class Guardado : MonoBehaviour
         keepUpgradesOnReset = false;
         keepZonesUnlocked = false;
         hasExtraTimeUnlock = false; // <--- AÑADIDO
-    probabilidadDuplicarChoque = 0f;
+    probabilidadDuplicarChoque = 100f;
         paredInfectivaActiva = false;
         nivelParedInfectiva = 1;
         radiusMultiplier = 1.0f;
@@ -174,7 +174,7 @@ public class Guardado : MonoBehaviour
         agujeroNegroData = false;
         agujeroSpawnRate = 5f;
         cantidadMaxAgujeros = 1;
-        spawnBaseOnMaxPhaseChance = 0f;
+        spawnBaseOnMaxPhaseChance = 100f;
 
         buggedSpawnChance = 100f;
 
@@ -308,7 +308,7 @@ public class Guardado : MonoBehaviour
 
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
-        probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 0f);
+        probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 100f);
         extraBaseTime = PlayerPrefs.GetFloat("ExtraBaseTime", 0f);
         addTimeOnPhaseChance = PlayerPrefs.GetFloat("AddTimeOnPhaseChance", 0f);
         doubleUpgradeChance = PlayerPrefs.GetFloat("DoubleUpgradeChance", 0f);
@@ -326,7 +326,7 @@ public class Guardado : MonoBehaviour
         hojaFases = PlayerPrefs.GetInt("HojaFases", 1);
         agujeroNegroData = PlayerPrefs.GetInt("AgujeroNegroData", 0) == 1;
         agujeroSpawnRate = PlayerPrefs.GetFloat("AgujeroSpawnRate", 5f);
-        spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 0f);
+        spawnBaseOnMaxPhaseChance = PlayerPrefs.GetFloat("SpawnBaseOnMaxPhaseChance", 100f);
         buggedSpawnChance = PlayerPrefs.GetFloat("BuggedSpawnChance", 100f); // 0f es el valor inicial
         usarRatonParaMover = PlayerPrefs.GetInt("UsarRatonParaMover", 0) == 1;
         lastNonMouseInputType = (InputType)PlayerPrefs.GetInt("LastNonMouseInputType", 2);
