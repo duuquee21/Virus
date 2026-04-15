@@ -411,6 +411,12 @@ public class Movement : MonoBehaviour
     }
     private void ProcesarColisionCircleToCircle(Movement otra, Vector2 otraPosicion, float distanciaCuadrada)
     {
+        // Si alguno de los dos objetos fue destruido o desactivado en este mismo frame (por otra carambola), abortamos.
+        if (this == null || !gameObject.activeInHierarchy ||
+            otra == null || !otra.gameObject.activeInHierarchy)
+        {
+            return;
+        }
         // Evitar procesar dos veces la misma colisión
         if (this.gameObject.GetInstanceID() > otra.gameObject.GetInstanceID()) return;
 
