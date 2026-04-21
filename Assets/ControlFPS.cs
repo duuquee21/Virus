@@ -5,7 +5,7 @@ public class ControlFPS : MonoBehaviour
     [Header("Referencia al nuevo Selector")]
     public SelectorHorizontalUI selectorFPS;
 
-    int[] fpsValues = { 30, 60, 120, 144, 240 };
+    int[] fpsValues = { 30, 60, 120, 144, 244 };
 
     // 🚀 TRUCO PRO: Sigue siendo útil para el primer milisegundo de arranque
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -28,22 +28,29 @@ public class ControlFPS : MonoBehaviour
         Application.targetFrameRate = savedFPS;
         Debug.Log("<color=yellow>[Ajustes]</color> Refrescando FPS reales al abrir el menú: " + savedFPS);
 
-        // 2. Sincronizamos la ruleta visual
-        for (int i = 0; i < fpsValues.Length; i++)
+        // 2. Sincronizamos la ruleta visual y las opciones del selector
+        if (selectorFPS != null)
         {
-            if (fpsValues[i] == savedFPS)
+            // Opciones y valores sincronizados
+            selectorFPS.opciones = new System.Collections.Generic.List<string>();
+            int defaultIndex = 0;
+            for (int i = 0; i < fpsValues.Length; i++)
             {
-                if (selectorFPS != null)
-                {
-                    selectorFPS.EstablecerIndice(i);
-                }
-                break;
+                selectorFPS.opciones.Add(fpsValues[i].ToString());
+                if (fpsValues[i] == savedFPS) defaultIndex = i;
             }
+            selectorFPS.EstablecerIndice(defaultIndex);
+            selectorFPS.SendMessage("ActualizarTexto", SendMessageOptions.DontRequireReceiver);
         }
     }
 
     public void ChangeFPS(int index)
     {
+
+        // Seguridad: clamp del índice para evitar errores
+        if (index < 0 || index >= fpsValues.Length)
+            index = 0;
+
         int fps = fpsValues[index];
 
         QualitySettings.vSyncCount = 0;
@@ -51,6 +58,13 @@ public class ControlFPS : MonoBehaviour
 
         PlayerPrefs.SetInt("FPSLimit", fps);
         PlayerPrefs.Save();
+
+        // Actualiza visualmente el texto del selector
+        if (selectorFPS != null)
+        {
+            selectorFPS.EstablecerIndice(index);
+            selectorFPS.SendMessage("ActualizarTexto", SendMessageOptions.DontRequireReceiver);
+        }
 
         Debug.Log("<color=yellow>[Ajustes]</color> FPS cambiados manualmente a: " + fps);
     }

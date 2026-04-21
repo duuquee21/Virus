@@ -1,3 +1,7 @@
+// Soporte para Input System
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,10 +9,15 @@ using TMPro;
 
 public class MenuGamepadNavigator : MonoBehaviour
 {
+    // Para navegación por flanco
+    private float prevVertical = 0f;
+    private float prevHorizontal = 0f;
+    private bool verticalReady = true;
+    private bool horizontalReady = true;
     [Header("Navegación")]
     public Selectable firstSelectable;
-    public float moveCooldown = 0.18f;
-    public float axisThreshold = 0.5f;
+    public float moveCooldown = 0.5f;
+    public float axisThreshold = 0.8f;
 
     [Header("Opciones")]
     public bool loopNavigation = true;
@@ -83,6 +92,20 @@ public class MenuGamepadNavigator : MonoBehaviour
 
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
+
+        // SIEMPRE: Prueba lectura D-Pad con Input System y navega igual que el stick
+        try {
+            var gamepad = UnityEngine.InputSystem.Gamepad.current;
+            if (gamepad != null)
+            {
+                // Horizontal (selectores)
+                if (gamepad.dpad.left.wasPressedThisFrame) { h = -1f; }
+                if (gamepad.dpad.right.wasPressedThisFrame) { h = 1f; }
+                // Vertical (navegación)
+                if (gamepad.dpad.up.wasPressedThisFrame) { v = 1f; }
+                if (gamepad.dpad.down.wasPressedThisFrame) { v = -1f; }
+            }
+        } catch (System.Exception e) { Debug.LogWarning("InputSystem not available: " + e.Message); }
         bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
                             Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1);
 
@@ -210,7 +233,8 @@ public class MenuGamepadNavigator : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         Selectable current = GetCurrentSelectable();
 
-        if (Mathf.Abs(vertical) >= axisThreshold && current != null)
+        // --- NAVEGACIÓN VERTICAL POR FLANCO (debounce estricto) ---
+        if (verticalReady && Mathf.Abs(vertical) >= axisThreshold && current != null)
         {
             if (vertical > 0)
             {
@@ -225,10 +249,12 @@ public class MenuGamepadNavigator : MonoBehaviour
                 if (next != null) Select(next);
             }
             lastMoveTime = Time.unscaledTime;
-            return;
+            verticalReady = false;
         }
+        if (Mathf.Abs(vertical) < axisThreshold * 0.5f) verticalReady = true;
 
-        if (Mathf.Abs(horizontal) >= axisThreshold)
+        // --- NAVEGACIÓN HORIZONTAL POR FLANCO (debounce estricto) ---
+        if (horizontalReady && Mathf.Abs(horizontal) >= axisThreshold)
         {
             if (current is Slider slider)
             {
@@ -254,9 +280,10 @@ public class MenuGamepadNavigator : MonoBehaviour
                     else selectorHorizontal.Anterior();
                 }
             }
-
             lastMoveTime = Time.unscaledTime;
+            horizontalReady = false;
         }
+        if (Mathf.Abs(horizontal) < axisThreshold * 0.5f) horizontalReady = true;
     }
 
     private void HandleCancel()

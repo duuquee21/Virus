@@ -14,11 +14,11 @@ public class ControlIdioma : MonoBehaviour
         // 1. Esperamos a que Unity cargue los diccionarios de idiomas al arrancar
         yield return LocalizationSettings.InitializationOperation;
 
-        // 2. Averiguamos qué idioma está puesto ahora mismo (0 = Inglés, 1 = Español, etc...)
+        // 2. Averiguamos quï¿½ idioma estï¿½ puesto ahora mismo (0 = Inglï¿½s, 1 = Espaï¿½ol, etc...)
         var idiomaActual = LocalizationSettings.SelectedLocale;
         int indiceGuardado = LocalizationSettings.AvailableLocales.Locales.IndexOf(idiomaActual);
 
-        // Si por algún motivo da error, por defecto ponemos el 0
+        // Si por algï¿½n motivo da error, por defecto ponemos el 0
         if (indiceGuardado < 0) indiceGuardado = 0;
 
         // 3. Sincronizamos la ruleta visual con el idioma real
@@ -28,7 +28,7 @@ public class ControlIdioma : MonoBehaviour
         }
     }
 
-    // Esta función la llamará la ruleta cuando le des a Izquierda/Derecha
+    // Esta funciï¿½n la llamarï¿½ la ruleta cuando le des a Izquierda/Derecha
     public void CambiarIdioma(int indice)
     {
         if (cambiandoIdioma) return; // Evita que el jugador cambie 5 veces por segundo y cuelgue el juego
@@ -40,13 +40,22 @@ public class ControlIdioma : MonoBehaviour
     {
         cambiandoIdioma = true;
 
-        // Esperamos por si acaso el sistema está ocupado
+        // Esperamos por si acaso el sistema estï¿½ ocupado
         yield return LocalizationSettings.InitializationOperation;
 
         // Cambiamos el idioma internamente
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[indice];
 
         Debug.Log($"<color=cyan>[Ajustes]</color> Idioma cambiado a: {LocalizationSettings.SelectedLocale.Identifier.Code}");
+
+        // Refuerza la sincronizaciÃ³n visual tras el cambio
+        if (selectorIdioma != null)
+        {
+            var idiomaActual = LocalizationSettings.SelectedLocale;
+            int indiceReal = LocalizationSettings.AvailableLocales.Locales.IndexOf(idiomaActual);
+            if (indiceReal < 0) indiceReal = 0;
+            selectorIdioma.EstablecerIndice(indiceReal);
+        }
 
         cambiandoIdioma = false;
     }
