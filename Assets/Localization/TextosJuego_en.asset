@@ -888,6 +888,10 @@ MonoBehaviour:
     m_Localized: Radius level
     m_Metadata:
       m_Items: []
+  - m_Id: 16763145928044544
+    m_Localized: Increases the damage of the circles to the walls.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

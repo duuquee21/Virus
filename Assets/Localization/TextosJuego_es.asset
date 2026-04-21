@@ -896,6 +896,10 @@ MonoBehaviour:
     m_Localized: Nivel de radio
     m_Metadata:
       m_Items: []
+  - m_Id: 16763145928044544
+    m_Localized: "Aumenta el da\xF1o de los circulos a las paredes."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
