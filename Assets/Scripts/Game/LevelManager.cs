@@ -555,10 +555,14 @@ public class LevelManager : MonoBehaviour
                 if (Guardado.instance.inputType == Guardado.InputType.Keyboard ||
                     Guardado.instance.inputType == Guardado.InputType.Controller)
                 {
+                    // Oculta y bloquea el cursor si no es ratón
+                    Cursor.lockState = CursorLockMode.Locked;
                     if (Cursor.visible) Cursor.visible = false;
                 }
                 else
                 {
+                    // Muestra y desbloquea el cursor si es ratón
+                    Cursor.lockState = CursorLockMode.None;
                     if (!Cursor.visible) Cursor.visible = true;
                 }
             }
@@ -572,7 +576,16 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            if (!Cursor.visible) Cursor.visible = true;
+            // En menús, solo muestra el cursor si se está usando ratón
+            Cursor.lockState = CursorLockMode.None;
+            if (MenuGamepadNavigator.usandoRaton)
+            {
+                if (!Cursor.visible) Cursor.visible = true;
+            }
+            else
+            {
+                if (Cursor.visible) Cursor.visible = false;
+            }
         }
     }
 

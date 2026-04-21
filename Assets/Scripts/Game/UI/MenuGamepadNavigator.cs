@@ -37,12 +37,12 @@ public class MenuGamepadNavigator : MonoBehaviour
         lastMousePosition = Input.mousePosition;
         lastSelected = null;
 
-        // 🛑 NUEVO: Si no estamos usando el ratón, forzamos la selección inmediata.
-        // Usamos una pequeña espera (un frame) para que a Unity le dé tiempo a activar todo.
-        if (!usandoRaton)
-        {
-            StartCoroutine(ForzarSeleccionInicialAlActivar());
-        }
+        // Siempre arrancamos en modo mando (cursor oculto) hasta que se mueva el ratón
+        usandoRaton = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        StartCoroutine(ForzarSeleccionInicialAlActivar());
     }
 
     private System.Collections.IEnumerator ForzarSeleccionInicialAlActivar()
@@ -58,12 +58,17 @@ public class MenuGamepadNavigator : MonoBehaviour
         }
     }
 
-    void Update()
+   void Update()
     {
         if (EventSystem.current == null) return;
 
-        Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
-        bool ratonMovido = mouseDelta.sqrMagnitude > 2.0f;
+        // =========================================================
+        // 🖱️ LÓGICA DEL RATÓN (A prueba de cursores custom)
+        // =========================================================
+        // Leemos el láser del ratón directamente para saber si lo has movido físicamente
+        float movX = Input.GetAxis("Mouse X");
+        float movY = Input.GetAxis("Mouse Y");
+        bool ratonMovido = Mathf.Abs(movX) > 0.1f || Mathf.Abs(movY) > 0.1f;
         bool clicRaton = Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2);
 
         if (ratonMovido || clicRaton)
@@ -71,8 +76,12 @@ public class MenuGamepadNavigator : MonoBehaviour
             if (!usandoRaton)
             {
                 usandoRaton = true;
+                
+                // 🖱️ DESBLOQUEA Y MUESTRA EL CURSOR
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true; 
 
-                // 🛑 AHORA TAMBIÉN APAGA LOS NODOS DEL ÁRBOL 🛑
+                // Apaga selección de nodos si venías de mando
                 if (lastSelected != null)
                 {
                     var botonScript = lastSelected.GetComponent<BotonInteractivo>();
@@ -87,31 +96,38 @@ public class MenuGamepadNavigator : MonoBehaviour
                     EventSystem.current.SetSelectedGameObject(null);
                 }
             }
-            lastMousePosition = Input.mousePosition;
         }
 
+        // =========================================================
+        // 🎮 LÓGICA DEL MANDO
+        // =========================================================
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
-        // SIEMPRE: Prueba lectura D-Pad con Input System y navega igual que el stick
+        bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
+                            Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1);
+
+#if ENABLE_INPUT_SYSTEM
         try {
             var gamepad = UnityEngine.InputSystem.Gamepad.current;
             if (gamepad != null)
             {
-                // Horizontal (selectores)
-                if (gamepad.dpad.left.wasPressedThisFrame) { h = -1f; }
-                if (gamepad.dpad.right.wasPressedThisFrame) { h = 1f; }
-                // Vertical (navegación)
-                if (gamepad.dpad.up.wasPressedThisFrame) { v = 1f; }
-                if (gamepad.dpad.down.wasPressedThisFrame) { v = -1f; }
+                if (gamepad.dpad.left.wasPressedThisFrame) { h = -1f; tocandoMando = true; }
+                if (gamepad.dpad.right.wasPressedThisFrame) { h = 1f; tocandoMando = true; }
+                if (gamepad.dpad.up.wasPressedThisFrame) { v = 1f; tocandoMando = true; }
+                if (gamepad.dpad.down.wasPressedThisFrame) { v = -1f; tocandoMando = true; }
+                if (gamepad.buttonSouth.wasPressedThisFrame || gamepad.buttonEast.wasPressedThisFrame) { tocandoMando = true; }
             }
-        } catch (System.Exception e) { Debug.LogWarning("InputSystem not available: " + e.Message); }
-        bool tocandoMando = Mathf.Abs(v) >= axisThreshold || Mathf.Abs(h) >= axisThreshold ||
-                            Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1);
+        } catch { }
+#endif
 
         if (tocandoMando && usandoRaton)
         {
             usandoRaton = false;
+            
+            // 🎮 CONGELA Y OCULTA EL CURSOR CUSTOM
+            Cursor.lockState = CursorLockMode.Locked; 
+            Cursor.visible = false; 
 
             GameObject botonGuardado = lastSelected != null ? lastSelected.gameObject : null;
             EventSystem.current.SetSelectedGameObject(null);
@@ -126,6 +142,9 @@ public class MenuGamepadNavigator : MonoBehaviour
             }
         }
 
+        // =========================================================
+        // ⚙️ NAVEGACIÓN Y CANCELACIÓN
+        // =========================================================
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             if (!usandoRaton) HandleCancel();
@@ -134,7 +153,7 @@ public class MenuGamepadNavigator : MonoBehaviour
 
         if (!usandoRaton)
         {
-            HandleNavigation();
+            HandleNavigation(v, h); 
         }
 
         HandleCancel();
@@ -225,12 +244,11 @@ public class MenuGamepadNavigator : MonoBehaviour
         }
     }
 
-    private void HandleNavigation()
+    private void HandleNavigation(float vertical, float horizontal)
     {
+        // Respetamos el tiempo de enfriamiento (cooldown)
         if (Time.unscaledTime - lastMoveTime < moveCooldown) return;
 
-        float vertical = Input.GetAxisRaw("Vertical");
-        float horizontal = Input.GetAxisRaw("Horizontal");
         Selectable current = GetCurrentSelectable();
 
         // --- NAVEGACIÓN VERTICAL POR FLANCO (debounce estricto) ---
@@ -285,7 +303,6 @@ public class MenuGamepadNavigator : MonoBehaviour
         }
         if (Mathf.Abs(horizontal) < axisThreshold * 0.5f) horizontalReady = true;
     }
-
     private void HandleCancel()
     {
         if (Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.JoystickButton1))

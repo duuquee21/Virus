@@ -6,7 +6,7 @@ public class CursorManager : MonoBehaviour
     [SerializeField] private Texture2D cursorNormal;
     [SerializeField] private Texture2D cursorClick;
 
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     [SerializeField] private Vector2 hotspot = Vector2.zero; // (0,0) es la esquina superior izquierda
 
     void Start()
@@ -17,17 +17,18 @@ public class CursorManager : MonoBehaviour
 
     void Update()
     {
-        // Detectar si se acaba de presionar el botón IZQUIERDO del ratón (0)
+        // Detectar si se acaba de presionar el botï¿½n IZQUIERDO del ratï¿½n (0)
         if (Input.GetMouseButtonDown(0))
         {
             SetearCursor(cursorClick);
         }
 
-        // Detectar si se acaba de soltar el botón IZQUIERDO del ratón (0)
+        // Detectar si se acaba de soltar el botï¿½n IZQUIERDO del ratï¿½n (0)
         if (Input.GetMouseButtonUp(0))
         {
             SetearCursor(cursorNormal);
         }
+        // Nunca forzar Cursor.visible aquÃ­, solo cambiar la textura
     }
 
     // Funciones para mayor claridad y poder llamarlas desde fuera si quieres
