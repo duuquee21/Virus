@@ -1528,10 +1528,36 @@ public class LevelManager : MonoBehaviour
             Time.timeScale = 0f;
             if (virusMovementScript != null) virusMovementScript.enabled = false;
 
+            // 🧹 NUEVO: Limpiamos los textos flotantes al entrar en pausa
+            LimpiarTextosFlotantes();
+
             if (pauseFirstSelectedButton != null && EventSystem.current != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(pauseFirstSelectedButton);
+            }
+        }
+    }
+
+    private void LimpiarTextosFlotantes()
+    {
+        // 1. Limpiamos los textos genéricos (FloatingText) mandándolos de vuelta a su pool
+        FloatingText[] textosEnPantalla = Object.FindObjectsByType<FloatingText>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (FloatingText texto in textosEnPantalla)
+        {
+            if (texto != null)
+            {
+                texto.gameObject.SetActive(false);
+            }
+        }
+
+        // 2. Limpiamos los textos de puntos voladores (FloatingScoreUI) destruyéndolos
+        FloatingScoreUI[] puntosEnPantalla = Object.FindObjectsByType<FloatingScoreUI>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (FloatingScoreUI punto in puntosEnPantalla)
+        {
+            if (punto != null)
+            {
+                Destroy(punto.gameObject);
             }
         }
     }

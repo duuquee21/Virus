@@ -49112,7 +49112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &858966970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -62801,7 +62801,7 @@ MonoBehaviour:
   shinyStoreTexts: []
   gameDuration: 5
   monedasGanadasSesion: 0
-  esVersionDemo: 0
+  esVersionDemo: 1
   panelFinDemo: {fileID: 1841855403}
   logoDemo: {fileID: 1001576855}
   urlSteam: https://store.steampowered.com/app/4550150/Get_Rid_Of_Those_Corners?beta=0
