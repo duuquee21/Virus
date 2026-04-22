@@ -5,15 +5,43 @@ using System.Collections.Generic;
 
 public class SelectorHorizontalUI : MonoBehaviour
 {
-    [Header("Referencias Visuales")]
-    public TextMeshProUGUI textoOpcion; // El texto del medio (ej: "Español", "60 FPS")
+    // Para evitar repeticiones rÃ¡pidas
+    private float dpadCooldown = 0.25f;
+    private float lastDpadTime = 0f;
 
-    [Header("Configuración")]
-    public List<string> opciones = new List<string>(); // Aquí escribes tus opciones en el Inspector
-    public int indiceActual = 0; // Por defecto empieza en la primera opción
+    void Update()
+    {
+        // Solo responde si estÃ¡ seleccionado en el EventSystem
+        if (!gameObject.activeInHierarchy || !UnityEngine.EventSystems.EventSystem.current) return;
+        if (UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != gameObject) return;
+
+        // Soporte para Input System
+        try {
+            var gamepad = UnityEngine.InputSystem.Gamepad.current;
+            if (gamepad != null && Time.unscaledTime - lastDpadTime > dpadCooldown)
+            {
+                if (gamepad.dpad.left.wasPressedThisFrame)
+                {
+                    Anterior();
+                    lastDpadTime = Time.unscaledTime;
+                }
+                if (gamepad.dpad.right.wasPressedThisFrame)
+                {
+                    Siguiente();
+                    lastDpadTime = Time.unscaledTime;
+                }
+            }
+        } catch { }
+    }
+    [Header("Referencias Visuales")]
+    public TextMeshProUGUI textoOpcion; // El texto del medio (ej: "Espaï¿½ol", "60 FPS")
+
+    [Header("Configuraciï¿½n")]
+    public List<string> opciones = new List<string>(); // Aquï¿½ escribes tus opciones en el Inspector
+    public int indiceActual = 0; // Por defecto empieza en la primera opciï¿½n
 
     [Header("Eventos")]
-    // Esto te permitirá arrastrar funciones (como cambiar el idioma) directamente en el Inspector
+    // Esto te permitirï¿½ arrastrar funciones (como cambiar el idioma) directamente en el Inspector
     public UnityEvent<int> onValueChanged;
 
     void Start()
@@ -26,7 +54,7 @@ public class SelectorHorizontalUI : MonoBehaviour
         if (opciones.Count == 0) return;
 
         indiceActual++;
-        // Si nos pasamos de la última, volvemos a la primera (efecto ruleta)
+        // Si nos pasamos de la ï¿½ltima, volvemos a la primera (efecto ruleta)
         if (indiceActual >= opciones.Count) indiceActual = 0;
 
         ActualizarTexto();
@@ -38,7 +66,7 @@ public class SelectorHorizontalUI : MonoBehaviour
         if (opciones.Count == 0) return;
 
         indiceActual--;
-        // Si bajamos de la primera, vamos a la última (efecto ruleta)
+        // Si bajamos de la primera, vamos a la ï¿½ltima (efecto ruleta)
         if (indiceActual < 0) indiceActual = opciones.Count - 1;
 
         ActualizarTexto();

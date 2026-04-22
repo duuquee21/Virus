@@ -200,6 +200,11 @@ public class EndDayResultsPanel : MonoBehaviour
         // Detenemos y limpiamos las partículas de la partida para que desaparezcan al abrir el panel
         StopGameplayParticles();
 
+        // Siempre arrancamos el panel en modo mando (cursor oculto) hasta que se mueva el ratón
+        MenuGamepadNavigator.usandoRaton = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         // Eliminamos los números voladores y textos flotantes que puedan estar activos
         var floatingScores = FindObjectsOfType<FloatingScoreUI>(true);
         foreach (var fs in floatingScores)
