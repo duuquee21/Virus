@@ -62801,7 +62801,7 @@ MonoBehaviour:
   shinyStoreTexts: []
   gameDuration: 5
   monedasGanadasSesion: 0
-  esVersionDemo: 1
+  esVersionDemo: 0
   panelFinDemo: {fileID: 1841855403}
   logoDemo: {fileID: 1001576855}
   urlSteam: https://store.steampowered.com/app/4550150/Get_Rid_Of_Those_Corners?beta=0
