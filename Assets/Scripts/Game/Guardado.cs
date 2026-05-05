@@ -732,12 +732,16 @@ public class Guardado : MonoBehaviour
         GameObject[] todosLosObjetos = FindObjectsOfType<GameObject>();
         foreach (GameObject obj in todosLosObjetos)
         {
-            // Si el objeto se llama BuggedPerson o BlackHole (aunque sea un clon), muere.
             if (obj.name.Contains("BuggedPerson") || obj.name.Contains("BlackHole"))
             {
                 Destroy(obj);
             }
         }
+
+        PlayerPrefs.SetInt("PanelFinalVisto", 0);
+        PlayerPrefs.Save();
+
+        Debug.Log("ResetAllProgress: PanelFinalVisto reseteado a 0");
     }
 
     // ========== GUARDADO AL CERRAR LA APLICACIÓN ==========

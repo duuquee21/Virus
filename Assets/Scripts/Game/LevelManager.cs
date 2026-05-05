@@ -319,9 +319,13 @@ public class LevelManager : MonoBehaviour
 
     public void Button_NewGame()
     {
-        if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
+        if (isTransitioning) return;
+
+        ResetPanelFinalParaNuevaPartida();
 
         if (Guardado.instance) Guardado.instance.ResetAllProgress();
+
+        ResetPanelFinalParaNuevaPartida();
 
         SteamManagerCustom.Instance.UnlockAchievement("ACH_NEWGAME");
 
@@ -401,12 +405,17 @@ public class LevelManager : MonoBehaviour
         GameObject panelToClose = (settingsPanel != null && settingsPanel.activeSelf) ? settingsPanel : menuPanel;
 
         // LIMPIEZA CLAVE AQUÍ
-    
+
 
         DoPanelTransition(panelToClose, null, () => {
+            PlayerPrefs.SetInt("PanelFinalVisto", 0);
+            PlayerPrefs.Save();
+
+            Debug.Log("PanelFinalVisto reseteado por nueva partida");
+
             StartSession();
             Debug.Log("Sesión iniciada tras el tiempo de espera en negro.");
-        });
+    });
     }
 
     void ForceHardReset()
@@ -2144,5 +2153,66 @@ public class LevelManager : MonoBehaviour
                 Debug.Log("<color=cyan>[LOGRO]</color> ¡Relámpago desbloqueado! Tiempo: " + tiempoEmpleado);
             }
         }
+    }
+
+    public void MostrarPanelFinalUnaSolaVez()
+    {
+        int yaVisto = PlayerPrefs.GetInt("PanelFinalVisto", 0);
+
+        Debug.Log("PanelFinalVisto antes de decidir = " + yaVisto);
+
+        isGameActive = false;
+        Time.timeScale = 0f;
+
+        SetMapsActive(false);
+
+        if (gameUI != null) gameUI.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (zonePanel != null) zonePanel.SetActive(false);
+        if (shinyPanel != null) shinyPanel.SetActive(false);
+
+        UpdateCursorState(false);
+
+        if (yaVisto == 0)
+        {
+            Debug.Log("Primera vez: mostrando PanelFinal.");
+
+            PlayerPrefs.SetInt("PanelFinalVisto", 1);
+            PlayerPrefs.Save();
+
+            if (EndDayResultsPanel.instance != null && EndDayResultsPanel.instance.panel != null)
+                EndDayResultsPanel.instance.panel.SetActive(false);
+
+            if (panelFinal != null)
+                panelFinal.SetActive(true);
+
+            return;
+        }
+
+        Debug.Log("Panel final ya visto: mostrando resultados.");
+
+        if (panelFinal != null)
+            panelFinal.SetActive(false);
+
+        if (EndDayResultsPanel.instance != null)
+            EndDayResultsPanel.instance.ShowResults(monedasGanadasSesion, contagionCoins);
+    }
+    public void BotonPanelFinalSalirMenu()
+    {
+        Time.timeScale = 1f;
+
+        if (panelFinal != null)
+            panelFinal.SetActive(false);
+
+        ReturnToMenu();
+    }
+
+    private void ResetPanelFinalParaNuevaPartida()
+    {
+        PlayerPrefs.DeleteKey("PanelFinalVisto");
+        PlayerPrefs.SetInt("PanelFinalVisto", 0);
+        PlayerPrefs.Save();
+
+        Debug.Log("RESET FINAL REAL: PanelFinalVisto = " + PlayerPrefs.GetInt("PanelFinalVisto", -1));
     }
 }

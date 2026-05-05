@@ -374,89 +374,108 @@ public class LevelTransitioner : MonoBehaviour
 
     private IEnumerator AnimarExplosion(Transform explosionTransform)
     {
-        // --- MODIFICACIÓN: Desactivar HUD al empezar la transición ---
         if (panelHUD != null)
         {
             panelHUD.SetActive(false);
         }
+
         explosionTransform.localScale = Vector3.zero;
+
         Vector3 escalaObjetivo1 = Vector3.one * escalaMaximaExplosion1;
         Vector3 escalaObjetivo2 = Vector3.one * escalaMaximaExplosion2;
         float tiempo;
 
-        // Fase 1: Crecer de 0 a Max 1
+        // Fase 1: crecer de 0 a escala 1
         tiempo = 0f;
         while (tiempo < tiempoCrecimiento1)
         {
             tiempo += Time.deltaTime;
-            explosionTransform.localScale = Vector3.Lerp(Vector3.zero, escalaObjetivo1, tiempo / tiempoCrecimiento1);
+            explosionTransform.localScale = Vector3.Lerp(
+                Vector3.zero,
+                escalaObjetivo1,
+                tiempo / tiempoCrecimiento1
+            );
+
             yield return null;
         }
+
         explosionTransform.localScale = escalaObjetivo1;
 
-        // Fase 2: Encoger de Max 1 a 0
+        // Fase 2: encoger de escala 1 a 0
         tiempo = 0f;
         while (tiempo < tiempoEncogimiento)
         {
             tiempo += Time.deltaTime;
-            explosionTransform.localScale = Vector3.Lerp(escalaObjetivo1, Vector3.zero, tiempo / tiempoEncogimiento);
+            explosionTransform.localScale = Vector3.Lerp(
+                escalaObjetivo1,
+                Vector3.zero,
+                tiempo / tiempoEncogimiento
+            );
+
             yield return null;
         }
+
         explosionTransform.localScale = Vector3.zero;
 
-        // Fase 3: Crecer de nuevo de 0 a Max 2
+        // Fase 3: crecer de nuevo hasta escala 2
         tiempo = 0f;
         while (tiempo < tiempoCrecimiento2)
         {
             tiempo += Time.deltaTime;
-            explosionTransform.localScale = Vector3.Lerp(Vector3.zero, escalaObjetivo2, tiempo / tiempoCrecimiento2);
+            explosionTransform.localScale = Vector3.Lerp(
+                Vector3.zero,
+                escalaObjetivo2,
+                tiempo / tiempoCrecimiento2
+            );
+
             yield return null;
         }
+
         explosionTransform.localScale = escalaObjetivo2;
 
-        // --- MODIFICACIÓN: Activamos el panel final aquí ---
-        if (panelFinal != null)
-        {
-            panelFinal.SetActive(true);
-            Debug.Log("Juego completado");
+        // Fase 4: encoger la explosión final hasta desaparecer
+        tiempo = 0f;
+        Vector3 escalaInicioEncogidoFinal = explosionTransform.localScale;
 
-            // Logro por pasarse TODO el juego (el último mapa era el Círculo)
-            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_GAME");
+        while (tiempo < tiempoEncogimiento)
+        {
+            tiempo += Time.deltaTime;
+            explosionTransform.localScale = Vector3.Lerp(
+                escalaInicioEncogidoFinal,
+                Vector3.zero,
+                tiempo / tiempoEncogimiento
+            );
+
+            yield return null;
         }
-        // ---------------------------------------------------
 
-        // Fase 4: Cambiar color a negro lentamente
-        SpriteRenderer[] renderers2D = explosionTransform.GetComponentsInChildren<SpriteRenderer>();
-        Image[] imagesUI = explosionTransform.GetComponentsInChildren<Image>();
+        explosionTransform.localScale = Vector3.zero;
 
-        if (renderers2D.Length > 0 || imagesUI.Length > 0)
+        if (instanciaExplosionActual != null)
         {
-            Dictionary<SpriteRenderer, Color> coloresOriginales2D = new Dictionary<SpriteRenderer, Color>();
-            foreach (var sr in renderers2D) coloresOriginales2D[sr] = sr.color;
+            Destroy(instanciaExplosionActual);
+            instanciaExplosionActual = null;
+        }
 
-            Dictionary<Image, Color> coloresOriginalesUI = new Dictionary<Image, Color>();
-            foreach (var img in imagesUI) coloresOriginalesUI[img] = img.color;
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.MostrarPanelFinalUnaSolaVez();
+            BlackHoleController[] blackHoles = FindObjectsByType<BlackHoleController>(
+    FindObjectsInactive.Include,
+    FindObjectsSortMode.None
+);
 
-            tiempo = 0f;
-            while (tiempo < tiempoCambioColorNegro)
+            foreach (BlackHoleController blackHole in blackHoles)
             {
-                tiempo += Time.deltaTime;
-                float progreso = tiempo / tiempoCambioColorNegro;
-
-                foreach (var sr in renderers2D)
-                {
-                    sr.color = Color.Lerp(coloresOriginales2D[sr], Color.black, progreso);
-                }
-                foreach (var img in imagesUI)
-                {
-                    img.color = Color.Lerp(coloresOriginalesUI[img], Color.black, progreso);
-                }
-
-                yield return null;
+                if (blackHole != null)
+                    blackHole.ClearActiveEffects();
             }
+            Debug.Log("Juego completado");
+        }
 
-            foreach (var sr in renderers2D) sr.color = Color.black;
-            foreach (var img in imagesUI) img.color = Color.black;
+        if (SteamManagerCustom.Instance != null)
+        {
+            SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_GAME");
         }
     }
 

@@ -103,14 +103,18 @@ public class MapSequenceManager : MonoBehaviour
 
         currentMapIndex++;
 
-        if (currentMapIndex >= 5)
+        if (currentMapIndex >= maps.Count)
         {
-            Debug.Log("Juego completado");
-
-            // Logro por pasarse TODO el juego (el último mapa era el Círculo)
-            //SteamManagerCustom.Instance.UnlockAchievement("ACH_COMPLETE_GAME");
+            Debug.Log("Juego completado. Llamando al final una sola vez.");
 
             currentMapIndex = maps.Count - 1;
+            SaveCurrentMapIndex();
+
+            if (LevelManager.instance != null)
+            {
+                LevelManager.instance.MostrarPanelFinalUnaSolaVez();
+            }
+
             return;
         }
 

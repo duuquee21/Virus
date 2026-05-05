@@ -21685,7 +21685,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477016455}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b47ab5c5231b2047a7c68f5726ca82f, type: 3}
   m_Name: 
@@ -35979,7 +35979,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1157957837}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: ReturnToMenu
+        m_MethodName: BotonPanelFinalSalirMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
