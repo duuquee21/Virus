@@ -155,7 +155,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816338
-    m_Localized: ' +2s time to keep infecting.'
+    m_Localized: 2 seconds extra per round.
     m_Metadata:
       m_Items: []
   - m_Id: 826949816360
@@ -341,11 +341,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826974982185
-    m_Localized: 'Extra Capture '
+    m_Localized: Extra Capture
     m_Metadata:
       m_Items: []
   - m_Id: 826974982186
-    m_Localized: 'Chance of capturing an extra figure '
+    m_Localized: Chance of capturing an extra figure
     m_Metadata:
       m_Items: []
   - m_Id: 826979176450
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1828125194113025
-    m_Localized: 'Play '
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 1828125194113026
@@ -656,7 +656,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129935
-    m_Localized: ' Increases the chance for hexagons to collide with other shapes.'
+    m_Localized: Increases the chance for hexagons to collide with other shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129936
@@ -664,7 +664,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129937
-    m_Localized: ' Increases the chance for pentagons to collide with other shapes.'
+    m_Localized: Increases the chance for pentagons to collide with other shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129938
@@ -672,7 +672,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129939
-    m_Localized: ' Increases the chance for squares to collide with other shapes.'
+    m_Localized: Increases the chance for squares to collide with other shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129940
@@ -680,7 +680,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129941
-    m_Localized: ' Increases the chance for triangles to collide with other shapes.'
+    m_Localized: Increases the chance for triangles to collide with other shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129942
@@ -688,7 +688,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129943
-    m_Localized: ' Increases the chance for circles to collide with other shapes.'
+    m_Localized: Increases the chance for circles to collide with other shapes.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676992
@@ -890,6 +890,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 16763145928044544
     m_Localized: Increases the damage of the circles to the walls.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22379552545722368
+    m_Localized: Tutorial
     m_Metadata:
       m_Items: []
   references:

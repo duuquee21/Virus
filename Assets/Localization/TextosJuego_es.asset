@@ -155,7 +155,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826949816338
-    m_Localized: ' +2s tiempo para seguir infectando.'
+    m_Localized: 2 segundos extra por ronda.
     m_Metadata:
       m_Items: []
   - m_Id: 826949816360
@@ -247,7 +247,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 826954010673
-    m_Localized: 'Radio de destruccion '
+    m_Localized: Radio de destruccion
     m_Metadata:
       m_Items: []
   - m_Id: 826954010674
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1828125194113025
-    m_Localized: 'Jugar '
+    m_Localized: Jugar
     m_Metadata:
       m_Items: []
   - m_Id: 1828125194113026
@@ -660,8 +660,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129935
-    m_Localized: 'Aumenta la probabilidad de que los hexagonos choquen contra otras
-      figuras. '
+    m_Localized: Aumenta la probabilidad de que los hexagonos choquen contra otras
+      figuras.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129936
@@ -669,8 +669,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129937
-    m_Localized: 'Aumenta la probabilidad de que los pentagonos choquen contra otras
-      figuras. '
+    m_Localized: Aumenta la probabilidad de que los pentagonos choquen contra otras
+      figuras.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129938
@@ -678,8 +678,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129939
-    m_Localized: 'Aumenta la probabilidad de que los cuadrados choquen contra otras
-      figuras. '
+    m_Localized: Aumenta la probabilidad de que los cuadrados choquen contra otras
+      figuras.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129940
@@ -687,8 +687,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129941
-    m_Localized: 'Aumenta la probabilidad de que los triangulos choquen contra otras
-      figuras. '
+    m_Localized: Aumenta la probabilidad de que los triangulos choquen contra otras
+      figuras.
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129942
@@ -696,8 +696,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2831660866129943
-    m_Localized: 'Aumenta la probabilidad de que los circulos choquen contra otras
-      figuras. '
+    m_Localized: Aumenta la probabilidad de que los circulos choquen contra otras
+      figuras.
     m_Metadata:
       m_Items: []
   - m_Id: 3391644670676992
@@ -898,6 +898,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 16763145928044544
     m_Localized: "Aumenta el da\xF1o de los circulos a las paredes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22379552545722368
+    m_Localized: Tutorial
     m_Metadata:
       m_Items: []
   references:

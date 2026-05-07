@@ -411,6 +411,10 @@ MonoBehaviour:
     m_Key: skill_zoneDamageCir_tit
     m_Metadata:
       m_Items: []
+  - m_Id: 16763145928044544
+    m_Key: skill_zoneDamageCir_desc
+    m_Metadata:
+      m_Items: []
   - m_Id: 9172339707926
     m_Key: REBOTE CON CORAL
     m_Metadata:
@@ -1019,8 +1023,8 @@ MonoBehaviour:
     m_Key: prev_nivel_radio
     m_Metadata:
       m_Items: []
-  - m_Id: 16763145928044544
-    m_Key: skill_zoneDamageCir_desc
+  - m_Id: 22379552545722368
+    m_Key: btn_tutorial
     m_Metadata:
       m_Items: []
   m_Metadata:
