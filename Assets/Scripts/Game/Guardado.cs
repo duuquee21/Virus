@@ -669,11 +669,12 @@ public class Guardado : MonoBehaviour
     {
         totalInfected += val;
 
-        // Disparar logros según el total acumulado
         if (totalInfected >= 1) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
         if (totalInfected >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
         if (totalInfected >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
         if (totalInfected >= 10000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
+
+        SaveData(); //Cada vez que sumes infectados, se guarda en el PC.
     }
 
     public void SetRadiusMultiplier(float val)

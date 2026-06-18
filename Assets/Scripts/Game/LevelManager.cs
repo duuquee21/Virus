@@ -1217,21 +1217,27 @@ public class LevelManager : MonoBehaviour
 
         int totalFinal = contagionCoins;
 
+        //Registramos los infectados en el sistema de logros y forzamos el guardado inmediato
+        if (Guardado.instance != null)
+        {
+            Guardado.instance.AddTotalData(currentSessionInfected);
+            Guardado.instance.SaveData(); // 💾 ¡Forzamos el guardado de datos YA!
+        }
+
+        //Mostramos el panel al jugador, ahora que sus datos están a salvo
         if (EndDayResultsPanel.instance != null)
         {
             EndDayResultsPanel.instance.ShowResults(monedasGanadasSesion, totalFinal);
         }
-
-        if (Guardado.instance != null)
-            Guardado.instance.AddTotalData(currentSessionInfected);
 
         if (transitionScript != null)
         {
             transitionScript.OpenBlackScreen();
             yield return new WaitForSecondsRealtime(0.5f);
         }
-        isTransitioning = false; // 🛡️ Se acaba la transición de muerte, soltamos el bloqueo
+        isTransitioning = false;
     }
+
 
     public void OnEndDayResultsFinished(int earnings, int dummy)
     {
