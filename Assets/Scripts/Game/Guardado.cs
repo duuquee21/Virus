@@ -306,6 +306,9 @@ public class Guardado : MonoBehaviour
         timeLevel = PlayerPrefs.GetInt("TimeLevel", 1);
         infectionSpeedLevel = PlayerPrefs.GetInt("InfectionSpeedLevel", 1);
 
+        //Total infectados para el logro
+        totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
+
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
         probabilidadDuplicarChoque = PlayerPrefs.GetFloat("ProbDuplicar", 100f);
@@ -355,7 +358,19 @@ public class Guardado : MonoBehaviour
             controller.RefreshScale();
         }
 
-      
+        CheckRetroactiveAchievements();
+    }
+
+    private void CheckRetroactiveAchievements()
+    {
+        // Si el jugador ya tiene los datos guardados en su PC, Steam se enterará nada más abrir el juego
+        if (SteamManagerCustom.Instance != null)
+        {
+            if (totalInfected >= 1) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
+            if (totalInfected >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
+            if (totalInfected >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
+            if (totalInfected >= 2000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
+        }
     }
 
     // --- MÉTODOS PÚBLICOS DE ACTUALIZACIÓN ---
@@ -672,7 +687,7 @@ public class Guardado : MonoBehaviour
         if (totalInfected >= 1) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
         if (totalInfected >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
         if (totalInfected >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
-        if (totalInfected >= 10000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
+        if (totalInfected >= 2000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
 
         SaveData(); //Cada vez que sumes infectados, se guarda en el PC.
     }
