@@ -106,6 +106,14 @@ public class Guardado : MonoBehaviour
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
 
+        if (SteamManager.Initialized)
+        {
+            // Cambia "ID_DE_TU_LOGRO" por el nombre exacto que le pusiste en Steamworks (ej: "ACH_COMPRA_TODO")
+            Steamworks.SteamUserStats.SetAchievement("ACH_ATRAPA_10000");
+            Steamworks.SteamUserStats.StoreStats(); // Obliga a Steam a registrarlo ya
+            Debug.Log("<color=green>[LOGRO FORZADO]</color> Logro desbloqueado inmediatamente al iniciar.");
+        }
+
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
             infectSpeedPerPhase[i] = 1f;
@@ -369,7 +377,7 @@ public class Guardado : MonoBehaviour
             if (totalInfected >= 1) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
             if (totalInfected >= 100) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
             if (totalInfected >= 1000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
-            if (totalInfected >= 2000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
+            //if (totalInfected >= 2000) SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
         }
     }
 
