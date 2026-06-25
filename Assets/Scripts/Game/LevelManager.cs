@@ -352,6 +352,7 @@ public class LevelManager : MonoBehaviour
     public void Button_Continue()
     {
         if (isTransitioning) return; // 🛡️ Bloqueo anti-spam
+        Guardado.instance.AddGamePlayed();
         LoadRunAndStart();
     }
 
@@ -1324,6 +1325,7 @@ public class LevelManager : MonoBehaviour
 
     public void SoftRestartRun()
     {
+        Guardado.instance.AddGamePlayed();
         if (isTransitioning || isSoftRestarting) return; // 🛡️ Bloqueo anti-spam
 
         isSoftRestarting = true;

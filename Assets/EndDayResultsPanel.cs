@@ -408,6 +408,7 @@ public class EndDayResultsPanel : MonoBehaviour
 
     public void OnClickContinue()
     {
+        Guardado.instance.AddGamePlayed();
         if (LevelManager.instance == null) return;
         if (LevelManager.instance.IsSoftRestarting) return;
 

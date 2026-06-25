@@ -101,18 +101,38 @@ public class Guardado : MonoBehaviour
     public enum InputType { Keyboard, Mouse, Controller }
     public InputType inputType = InputType.Controller;
 
+    public int totalGamesPlayed = 0;
+
+
+    public void AddGamePlayed()
+    {
+        totalGamesPlayed++; // Sumamos una partida
+        Debug.Log($"<color=cyan>[PARTIDA REGISTRADA]</color> Total de partidas jugadas: {totalGamesPlayed}");
+
+        // Desbloquear logros usando tu sistema real (SteamManagerCustom)
+        if (SteamManagerCustom.Instance != null)
+        {
+            if (totalGamesPlayed >= 1)
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1");
+
+            if (totalGamesPlayed >= 16)
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_100");
+
+            if (totalGamesPlayed >= 36)
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_1000");
+
+            if (totalGamesPlayed >= 60)
+                SteamManagerCustom.Instance.UnlockAchievement("ACH_ATRAPA_10000");
+        }
+
+        SaveData(); // Guardamos en memoria
+        PlayerPrefs.Save(); // Forzamos el guardado en el disco duro
+    }
+
     void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
-
-        if (SteamManager.Initialized)
-        {
-            // Cambia "ID_DE_TU_LOGRO" por el nombre exacto que le pusiste en Steamworks (ej: "ACH_COMPRA_TODO")
-            Steamworks.SteamUserStats.SetAchievement("ACH_ATRAPA_10000");
-            Steamworks.SteamUserStats.StoreStats(); // Obliga a Steam a registrarlo ya
-            Debug.Log("<color=green>[LOGRO FORZADO]</color> Logro desbloqueado inmediatamente al iniciar.");
-        }
 
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -257,6 +277,8 @@ public class Guardado : MonoBehaviour
         PlayerPrefs.SetFloat("AgujeroSpawnRate", agujeroSpawnRate);
         PlayerPrefs.SetInt("BuggedSpawnLimit", buggedSpawnLimit); // Ahora sí, aquí va el Set
 
+        PlayerPrefs.SetInt("TotalGamesPlayed", totalGamesPlayed);
+
         PlayerPrefs.SetFloat("SpawnBaseOnMaxPhaseChance", spawnBaseOnMaxPhaseChance);
         for (int i = 0; i < infectSpeedPerPhase.Length; i++)
         {
@@ -316,6 +338,7 @@ public class Guardado : MonoBehaviour
 
         //Total infectados para el logro
         totalInfected = PlayerPrefs.GetInt("TotalInfected", 0);
+        totalGamesPlayed = PlayerPrefs.GetInt("TotalGamesPlayed", 0);
 
         paredInfectivaActiva = PlayerPrefs.GetInt("ParedInfectivaActiva", 0) == 1;
         nivelParedInfectiva = PlayerPrefs.GetInt("NivelPared", 0);
